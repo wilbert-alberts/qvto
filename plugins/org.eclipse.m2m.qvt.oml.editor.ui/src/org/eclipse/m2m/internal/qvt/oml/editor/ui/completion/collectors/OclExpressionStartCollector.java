@@ -26,17 +26,10 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 
 public class OclExpressionStartCollector extends AbstractCollector {
     private static final int[] INAPPLICABLE_BRACING_EXPRESSIONS = {
-        QvtOpLPGParsersym.TK_object,
-        QvtOpLPGParsersym.TK_mapping,
         QvtOpLPGParsersym.TK_switch,
         QvtOpLPGParsersym.TK_Tuple
     };
-    
-    private static final int[] INAPPLICABLE_BRACING_EXPRESSIONS_WITH_MAPPING_CLAUSES = 
-        LightweightParserUtil.uniteIntArrays(INAPPLICABLE_BRACING_EXPRESSIONS, 
-                LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
-    
-    
+        
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
@@ -51,7 +44,7 @@ public class OclExpressionStartCollector extends AbstractCollector {
 		    }
 		}
 		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_LBRACE)) {
-		    IToken parentBracingExpression = data.getParentBracingExpression(INAPPLICABLE_BRACING_EXPRESSIONS_WITH_MAPPING_CLAUSES, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
+		    IToken parentBracingExpression = data.getParentBracingExpression(INAPPLICABLE_BRACING_EXPRESSIONS, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
 		    if ((parentBracingExpression != null) 
 		            && QvtCompletionData.isKindOf(parentBracingExpression, INAPPLICABLE_BRACING_EXPRESSIONS)) {
 		        return false;

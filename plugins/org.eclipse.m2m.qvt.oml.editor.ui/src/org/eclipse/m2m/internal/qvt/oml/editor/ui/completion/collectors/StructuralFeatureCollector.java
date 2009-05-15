@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 import java.util.Collection;
 
 import lpg.lpgjavaruntime.IToken;
+import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -125,6 +126,27 @@ public class StructuralFeatureCollector extends AbstractCollector {
                         return QvtCompletionData.extractTokens(firstTypeToken, 
                                 QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
                     }
+                } else {
+                	IToken token = lParen;
+                	IToken lastColoncolon = null;
+                	for (;;) {
+                		IToken prevToken = LightweightParserUtil.getPreviousToken(token);
+                		if ((prevToken == null) || QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_mapping)) {
+                			break;
+                		}
+                		if (QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                			lastColoncolon = prevToken;
+                		}
+                		if ((QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_inout)) && (lastColoncolon != null)) {
+                			PrsStream prsStream = token.getPrsStream();
+                			IToken[] tokenArray = new IToken[lastColoncolon.getTokenIndex() - token.getTokenIndex()];
+                			for (int i = token.getTokenIndex(); i < lastColoncolon.getTokenIndex(); i++) {
+                				tokenArray[i - token.getTokenIndex()] = prsStream.getTokenAt(i);
+                			}
+                			return tokenArray;
+                		}
+                		token = prevToken;
+                	}
                 }
             }
         }
