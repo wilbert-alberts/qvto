@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: DirectionKindEnum.java,v 1.2 2008/12/23 15:28:10 aigdalov Exp $
+ * $Id: DirectionKindEnum.java,v 1.3 2009/05/15 10:21:26 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -39,7 +39,9 @@ public enum DirectionKindEnum implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DEFAULT(0, "DEFAULT", "DEFAULT"), /**
+	DEFAULT(0, "DEFAULT", "DEFAULT"), //$NON-NLS-1$ //$NON-NLS-2$ 
+	
+	/**
 	 * The '<em><b>In</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
