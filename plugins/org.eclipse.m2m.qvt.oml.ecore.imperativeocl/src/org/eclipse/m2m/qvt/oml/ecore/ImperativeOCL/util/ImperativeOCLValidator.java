@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLValidator.java,v 1.6 2009/02/20 12:52:31 radvorak Exp $
+ * $Id: ImperativeOCLValidator.java,v 1.7 2009/05/15 16:14:34 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -101,7 +101,7 @@ public class ImperativeOCLValidator extends EObjectValidator {
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
 	 */
-	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL";
+	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL"; //$NON-NLS-1$
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.

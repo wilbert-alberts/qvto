@@ -8,7 +8,7 @@
  * Contributors:
  *     Adolfo Sanchez-Barbudo Herrera - initial API and implementation
  * 
- * $Id: ImperativeOCLToStringVisitor.java,v 1.2 2009/01/27 16:03:20 radvorak Exp $
+ * $Id: ImperativeOCLToStringVisitor.java,v 1.3 2009/05/15 16:14:34 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -58,7 +58,9 @@ import org.eclipse.ocl.utilities.TypedElement;
  */
 public class ImperativeOCLToStringVisitor extends  ToStringVisitor<EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint>
 				implements ImperativeOCLVisitor<String>{
-
+	
+	private static final String NOT_IMPLEMENTED = "<not-implemented-in-string-visitor>"; //$NON-NLS-1$
+	
 	
 	public static ImperativeOCLToStringVisitor getInstance(TypedElement<EClassifier> element) {
 		Environment<?, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, ?, ?> env = Environment.Registry.INSTANCE.getEnvironmentFor(element);
@@ -69,87 +71,87 @@ public class ImperativeOCLToStringVisitor extends  ToStringVisitor<EClassifier, 
 		super(env);		
 	}
 	public String visitAltExp(AltExp astNode) {		
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitAssertExp(AssertExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitAssignExp(AssignExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitBlockExp(BlockExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitBreakExp(BreakExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitCatchtExp(CatchExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitComputeExp(ComputeExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitContinueExp(ContinueExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitDictLiteralExp(DictLiteralExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitDictLiteralPart(DictLiteralPart astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitForExp(ForExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitImperativeIterateExp(DictLiteralExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitInstantiationExp(InstantiationExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitLogExp(LogExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitOrderedTupleLiteralExp(OrderedTupleLiteralExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitOrderedTupleLiteralPart(OrderedTupleLiteralPart astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitRaiseExp(RaiseExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitReturnExp(ReturnExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitSwitchExp(SwitchExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitTryExp(LogExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitUnlinkExp(UnlinkExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitUnpackExp(LogExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitVariableInitExp(LogExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitImperativeIterateExp(ImperativeIterateExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitTryExp(TryExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitUnpackExp(UnpackExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitVariableInitExp(VariableInitExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 	public String visitWhileExp(WhileExp astNode) {
-		return "<not-implemented-in-string-visitor>";
+		return NOT_IMPLEMENTED;
 	}
 }
