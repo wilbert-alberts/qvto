@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EDirectionKind.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: EDirectionKind.java,v 1.3 2009/05/15 11:59:42 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
@@ -37,7 +37,7 @@ public enum EDirectionKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    IN(0, "IN", "IN"),
+    IN(0, "IN", "IN"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
 	 * The '<em><b>INOUT</b></em>' literal object.
@@ -47,7 +47,7 @@ public enum EDirectionKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    INOUT(1, "INOUT", "INOUT"),
+    INOUT(1, "INOUT", "INOUT"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
 	 * The '<em><b>OUT</b></em>' literal object.
@@ -57,14 +57,14 @@ public enum EDirectionKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    OUT(2, "OUT", "OUT");
+    OUT(2, "OUT", "OUT"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
 	 * The '<em><b>IN</b></em>' literal value.
