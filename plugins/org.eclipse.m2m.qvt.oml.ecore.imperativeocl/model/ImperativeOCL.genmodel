@@ -3,8 +3,8 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="&lt;copyright>&#xD;&#xA;Copyright (c) 2008 Open Canarias S.L. and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;    Adolfo Sanchez-Barbudo Herrera - initial API and implementation&#xD;&#xA;&lt;/copyright>"
     modelDirectory="/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/src" modelPluginID="org.eclipse.m2m.qvt.oml.ecore.imperativeocl"
-    modelName="ImperativeOCL" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
-    copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.ocl/model/OCL.genmodel#//ocl platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.genmodel#//ocl">
+    modelName="ImperativeOCL" nonNLSMarkers="true" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.ocl/model/OCL.genmodel#//ocl platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.genmodel#//ocl">
   <foreignModel>ImperativeOCL.ecore</foreignModel>
   <genPackages prefix="ImperativeOCL" basePackage="org.eclipse.m2m.qvt.oml.ecore"
       disposableProviderFactory="true" contentTypeIdentifier="org.eclipse.m2m.qvt.oml.ecore.imperativeocl"
