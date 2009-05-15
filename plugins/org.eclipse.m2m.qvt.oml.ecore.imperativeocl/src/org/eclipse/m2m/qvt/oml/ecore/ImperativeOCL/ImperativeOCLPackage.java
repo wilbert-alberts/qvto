@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLPackage.java,v 1.2 2009/01/25 23:10:43 radvorak Exp $
+ * $Id: ImperativeOCLPackage.java,v 1.3 2009/05/15 16:13:50 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -43,7 +43,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "ImperativeOCL";
+	String eNAME = "ImperativeOCL"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +51,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/qvt/1.0/ImperativeOCL";
+	String eNS_URI = "http://www.eclipse.org/qvt/1.0/ImperativeOCL"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -59,7 +59,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "eimpocl";
+	String eNS_PREFIX = "eimpocl"; //$NON-NLS-1$
 
 	/**
 	 * The package content type ID.
@@ -67,7 +67,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eCONTENT_TYPE = "org.eclipse.m2m.qvt.oml.ecore.imperativeocl";
+	String eCONTENT_TYPE = "org.eclipse.m2m.qvt.oml.ecore.imperativeocl"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

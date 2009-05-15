@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: SeverityKind.java,v 1.1 2008/09/02 20:01:44 radvorak Exp $
+ * $Id: SeverityKind.java,v 1.2 2009/05/15 16:13:50 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -38,7 +38,7 @@ public enum SeverityKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ERROR(0, "error", "error"),
+	ERROR(0, "error", "error"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Warning</b></em>' literal object.
@@ -48,7 +48,7 @@ public enum SeverityKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	WARNING(1, "warning", "warning"),
+	WARNING(1, "warning", "warning"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Fatal</b></em>' literal object.
@@ -58,7 +58,7 @@ public enum SeverityKind implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	FATAL(2, "fatal", "fatal");
+	FATAL(2, "fatal", "fatal"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Error</b></em>' literal value.
