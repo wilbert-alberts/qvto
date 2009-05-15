@@ -43,7 +43,7 @@ public interface DataType extends Type {
 	 * @return the value of the '<em>Attributes</em>' containment reference list.
 	 * @see simpleuml.SimpleumlPackage#getDataType_Attributes()
 	 * @see simpleuml.Property#getOwner
-	 * @model type="simpleuml.Property" opposite="owner" containment="true"
+	 * @model opposite="owner" containment="true"
 	 * @generated
 	 */
     EList<Property> getAttributes();

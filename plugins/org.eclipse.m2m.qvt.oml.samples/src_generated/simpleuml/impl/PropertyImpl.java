@@ -46,7 +46,7 @@ public class PropertyImpl extends ModelElementImpl implements Property {
 	 * @generated
 	 * @ordered
 	 */
-    protected Type type = null;
+    protected Type type;
 
     /**
 	 * <!-- begin-user-doc -->
@@ -111,7 +111,7 @@ public class PropertyImpl extends ModelElementImpl implements Property {
 	 * @generated
 	 */
     public DataType getOwner() {
-		if (eContainerFeatureID != SimpleumlPackage.PROPERTY__OWNER) return null;
+		if (eContainerFeatureID() != SimpleumlPackage.PROPERTY__OWNER) return null;
 		return (DataType)eContainer();
 	}
 
@@ -131,9 +131,9 @@ public class PropertyImpl extends ModelElementImpl implements Property {
 	 * @generated
 	 */
     public void setOwner(DataType newOwner) {
-		if (newOwner != eInternalContainer() || (eContainerFeatureID != SimpleumlPackage.PROPERTY__OWNER && newOwner != null)) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID() != SimpleumlPackage.PROPERTY__OWNER && newOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newOwner))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
@@ -183,7 +183,7 @@ public class PropertyImpl extends ModelElementImpl implements Property {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case SimpleumlPackage.PROPERTY__OWNER:
 				return eInternalContainer().eInverseRemove(this, SimpleumlPackage.DATA_TYPE__ATTRIBUTES, DataType.class, msgs);
 		}

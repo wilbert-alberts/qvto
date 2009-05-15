@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -62,7 +63,7 @@ public class GeneralizationItemProvider
 	 * @generated
 	 */
     @Override
-	public List getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -83,8 +84,8 @@ public class GeneralizationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Generalization_general_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Generalization_general_feature", "_UI_Generalization_type"),
+				 getString("_UI_Generalization_general_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Generalization_general_feature", "_UI_Generalization_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SimpleumlPackage.Literals.GENERALIZATION__GENERAL,
 				 true,
 				 false,
@@ -105,8 +106,8 @@ public class GeneralizationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Generalization_isSubstitutable_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Generalization_isSubstitutable_feature", "_UI_Generalization_type"),
+				 getString("_UI_Generalization_isSubstitutable_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Generalization_isSubstitutable_feature", "_UI_Generalization_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SimpleumlPackage.Literals.GENERALIZATION__IS_SUBSTITUTABLE,
 				 true,
 				 false,
@@ -124,7 +125,7 @@ public class GeneralizationItemProvider
 	 */
     @Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Generalization"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Generalization")); //$NON-NLS-1$
 	}
 
     /**
@@ -136,7 +137,7 @@ public class GeneralizationItemProvider
     @Override
 	public String getText(Object object) {
 		Generalization generalization = (Generalization)object;
-		return getString("_UI_Generalization_type") + " " + generalization.isIsSubstitutable();
+		return getString("_UI_Generalization_type") + " " + generalization.isIsSubstitutable(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
     /**
@@ -159,14 +160,14 @@ public class GeneralizationItemProvider
 	}
 
     /**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     @Override
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

@@ -70,7 +70,7 @@ public interface ModelElement extends EObject{
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotype</em>' attribute list.
 	 * @see simpleuml.SimpleumlPackage#getModelElement_Stereotype()
-	 * @model type="java.lang.String" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
     EList<String> getStereotype();
@@ -86,7 +86,7 @@ public interface ModelElement extends EObject{
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tagged Value</em>' containment reference list.
 	 * @see simpleuml.SimpleumlPackage#getModelElement_TaggedValue()
-	 * @model type="simpleuml.TaggedValue" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
     EList<TaggedValue> getTaggedValue();

@@ -17,9 +17,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -60,7 +61,7 @@ public class EnumerationItemProvider
 	 * @generated
 	 */
     @Override
-	public List getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -77,7 +78,7 @@ public class EnumerationItemProvider
 	 * @generated
 	 */
     @Override
-	public Collection getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(SimpleumlPackage.Literals.ENUMERATION__OWNED_LITERAL);
@@ -86,6 +87,19 @@ public class EnumerationItemProvider
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+				/**
 	 * This returns Enumeration.gif.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -93,7 +107,7 @@ public class EnumerationItemProvider
 	 */
     @Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Enumeration"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Enumeration")); //$NON-NLS-1$
 	}
 
     /**
@@ -106,8 +120,8 @@ public class EnumerationItemProvider
 	public String getText(Object object) {
 		String label = ((Enumeration)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Enumeration_type") :
-			getString("_UI_Enumeration_type") + " " + label;
+			getString("_UI_Enumeration_type") : //$NON-NLS-1$
+			getString("_UI_Enumeration_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
     /**
@@ -130,31 +144,20 @@ public class EnumerationItemProvider
 	}
 
     /**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     @Override
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
 				(SimpleumlPackage.Literals.ENUMERATION__OWNED_LITERAL,
 				 SimpleumlFactory.eINSTANCE.createEnumerationLiteral()));
-	}
-
-    /**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-	public ResourceLocator getResourceLocator() {
-		return SimpleUMLEditPlugin.INSTANCE;
 	}
 
 }

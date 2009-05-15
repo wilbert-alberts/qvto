@@ -72,7 +72,7 @@ public abstract class ModelElementImpl extends EObjectImpl implements ModelEleme
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<String> stereotype = null;
+    protected EList<String> stereotype;
 
     /**
 	 * The cached value of the '{@link #getTaggedValue() <em>Tagged Value</em>}' containment reference list.
@@ -82,7 +82,7 @@ public abstract class ModelElementImpl extends EObjectImpl implements ModelEleme
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<TaggedValue> taggedValue = null;
+    protected EList<TaggedValue> taggedValue;
 
     /**
 	 * <!-- begin-user-doc -->
@@ -253,9 +253,9 @@ public abstract class ModelElementImpl extends EObjectImpl implements ModelEleme
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", stereotype: ");
+		result.append(", stereotype: "); //$NON-NLS-1$
 		result.append(stereotype);
 		result.append(')');
 		return result.toString();

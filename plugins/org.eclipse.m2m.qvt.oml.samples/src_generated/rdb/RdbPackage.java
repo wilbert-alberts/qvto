@@ -38,7 +38,7 @@ public interface RdbPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNAME = "rdb";
+    String eNAME = "rdb"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -46,7 +46,7 @@ public interface RdbPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb";
+    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -54,7 +54,7 @@ public interface RdbPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_PREFIX = "rdb";
+    String eNS_PREFIX = "rdb"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

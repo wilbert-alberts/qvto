@@ -13,10 +13,10 @@ package simpleuml.presentation;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -77,6 +78,24 @@ import simpleuml.provider.SimpleUMLEditPlugin;
  */
 public class SimpleumlModelWizard extends Wizard implements INewWizard {
     /**
+	 * The supported extensions for created files.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final List<String> FILE_EXTENSIONS =
+		Collections.unmodifiableList(Arrays.asList(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameExtensions").split("\\s*,\\s*"))); //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
+	 * A formatted list of supported file extensions, suitable for display.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final String FORMATTED_FILE_EXTENSIONS =
+		SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+				/**
 	 * This caches an instance of the model package.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -130,7 +149,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected List initialObjectNames;
+    protected List<String> initialObjectNames;
 
     /**
 	 * This just records the information.
@@ -141,8 +160,8 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
     public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		setWindowTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_Wizard_label"));
-		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SimpleUMLEditPlugin.INSTANCE.getImage("full/wizban/NewSimpleuml")));
+		setWindowTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_Wizard_label")); //$NON-NLS-1$
+		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SimpleUMLEditPlugin.INSTANCE.getImage("full/wizban/NewSimpleuml"))); //$NON-NLS-1$
 	}
 
     /**
@@ -151,11 +170,10 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected Collection getInitialObjectNames() {
+    protected Collection<String> getInitialObjectNames() {
 		if (initialObjectNames == null) {
-			initialObjectNames = new ArrayList();
-			for (Iterator classifiers = simpleumlPackage.getEClassifiers().iterator(); classifiers.hasNext(); ) {
-				EClassifier eClassifier = (EClassifier)classifiers.next();
+			initialObjectNames = new ArrayList<String>();
+			for (EClassifier eClassifier : simpleumlPackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					EClass eClass = (EClass)eClassifier;
 					if (!eClass.isAbstract()) {
@@ -163,7 +181,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 					}
 				}
 			}
-			Collections.sort(initialObjectNames, java.text.Collator.getInstance());
+			Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
 		}
 		return initialObjectNames;
 	}
@@ -221,7 +239,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 
 							// Save the contents of the resource to the file system.
 							//
-							Map options = new HashMap();
+							Map<Object, Object> options = new HashMap<Object, Object>();
 							options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
 							resource.save(options);
 						}
@@ -259,7 +277,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 					 workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
 			}
 			catch (PartInitException exception) {
-				MessageDialog.openError(workbenchWindow.getShell(), SimpleUMLEditPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+				MessageDialog.openError(workbenchWindow.getShell(), SimpleUMLEditPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage()); //$NON-NLS-1$
 				return false;
 			}
 
@@ -297,21 +315,15 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
         @Override
 		protected boolean validatePage() {
 			if (super.validatePage()) {
-				// Make sure the file ends in ".simpleuml".
-				//
-				String requiredExt = SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameExtension");
-				String enteredExt = new Path(getFileName()).getFileExtension();
-				if (enteredExt == null || !enteredExt.equals(requiredExt)) {
-					setErrorMessage(SimpleUMLEditPlugin.INSTANCE.getString("_WARN_FilenameExtension", new Object [] { requiredExt }));
+				String extension = new Path(getFileName()).getFileExtension();
+				if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
+					String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension"; //$NON-NLS-1$ //$NON-NLS-2$
+					setErrorMessage(SimpleUMLEditPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
 					return false;
 				}
-				else {
-					return true;
-				}
+				return true;
 			}
-			else {
-				return false;
-			}
+			return false;
 		}
 
         /**
@@ -343,7 +355,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
 		 */
-        protected List encodings;
+        protected List<String> encodings;
 
         /**
 		 * <!-- begin-user-doc -->
@@ -383,7 +395,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 
 			Label containerLabel = new Label(composite, SWT.LEFT);
 			{
-				containerLabel.setText(SimpleUMLEditPlugin.INSTANCE.getString("_UI_ModelObject"));
+				containerLabel.setText(SimpleUMLEditPlugin.INSTANCE.getString("_UI_ModelObject")); //$NON-NLS-1$
 
 				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
@@ -398,8 +410,8 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 				initialObjectField.setLayoutData(data);
 			}
 
-			for (Iterator i = getInitialObjectNames().iterator(); i.hasNext(); ) {
-				initialObjectField.add(getLabel((String)i.next()));
+			for (String objectName : getInitialObjectNames()) {
+				initialObjectField.add(getLabel(objectName));
 			}
 
 			if (initialObjectField.getItemCount() == 1) {
@@ -409,7 +421,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 
 			Label encodingLabel = new Label(composite, SWT.LEFT);
 			{
-				encodingLabel.setText(SimpleUMLEditPlugin.INSTANCE.getString("_UI_XMLEncoding"));
+				encodingLabel.setText(SimpleUMLEditPlugin.INSTANCE.getString("_UI_XMLEncoding")); //$NON-NLS-1$
 
 				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
@@ -423,8 +435,8 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 				encodingField.setLayoutData(data);
 			}
 
-			for (Iterator i = getEncodings().iterator(); i.hasNext(); ) {
-				encodingField.add((String)i.next());
+			for (String encoding : getEncodings()) {
+				encodingField.add(encoding);
 			}
 
 			encodingField.select(0);
@@ -483,8 +495,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
         public String getInitialObjectName() {
 			String label = initialObjectField.getText();
 
-			for (Iterator i = getInitialObjectNames().iterator(); i.hasNext(); ) {
-				String name = (String)i.next();
+			for (String name : getInitialObjectNames()) {
 				if (getLabel(name).equals(label)) {
 					return name;
 				}
@@ -509,7 +520,7 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 		 */
         protected String getLabel(String typeName) {
 			try {
-				return SimpleUMLEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
+				return SimpleUMLEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			catch(MissingResourceException mre) {
 				SimpleUMLEditPlugin.INSTANCE.log(mre);
@@ -522,10 +533,11 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
          * <!-- end-user-doc -->
 		 * @generated
 		 */
-        protected Collection getEncodings() {
+        protected Collection<String> getEncodings() {
 			if (encodings == null) {
-				encodings = new ArrayList();
-				for (StringTokenizer stringTokenizer = new StringTokenizer(SimpleUMLEditPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
+				encodings = new ArrayList<String>();
+				for (StringTokenizer stringTokenizer = new StringTokenizer(SimpleUMLEditPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) //$NON-NLS-1$
+				{
 					encodings.add(stringTokenizer.nextToken());
 				}
 			}
@@ -543,10 +555,10 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 	public void addPages() {
 		// Create a page, set the title, and the initial model file name.
 		//
-		newFileCreationPage = new SimpleumlModelWizardNewFileCreationPage("Whatever", selection);
-		newFileCreationPage.setTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_label"));
-		newFileCreationPage.setDescription(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_description"));
-		newFileCreationPage.setFileName(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameDefaultBase") + "." + SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameExtension"));
+		newFileCreationPage = new SimpleumlModelWizardNewFileCreationPage("Whatever", selection); //$NON-NLS-1$
+		newFileCreationPage.setTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_label")); //$NON-NLS-1$
+		newFileCreationPage.setDescription(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_description")); //$NON-NLS-1$
+		newFileCreationPage.setFileName(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
 		addPage(newFileCreationPage);
 
 		// Try and get the resource selection to determine a current directory for the file dialog.
@@ -572,19 +584,19 @@ public class SimpleumlModelWizard extends Wizard implements INewWizard {
 
 					// Make up a unique new name here.
 					//
-					String defaultModelBaseFilename = SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameDefaultBase");
-					String defaultModelFilenameExtension = SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameExtension");
-					String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
+					String defaultModelBaseFilename = SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditorFilenameDefaultBase"); //$NON-NLS-1$
+					String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
+					String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension; //$NON-NLS-1$
 					for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i) {
-						modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
+						modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension; //$NON-NLS-1$
 					}
 					newFileCreationPage.setFileName(modelFilename);
 				}
 			}
 		}
-		initialObjectCreationPage = new SimpleumlModelWizardInitialObjectCreationPage("Whatever2");
-		initialObjectCreationPage.setTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_label"));
-		initialObjectCreationPage.setDescription(SimpleUMLEditPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+		initialObjectCreationPage = new SimpleumlModelWizardInitialObjectCreationPage("Whatever2"); //$NON-NLS-1$
+		initialObjectCreationPage.setTitle(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlModelWizard_label")); //$NON-NLS-1$
+		initialObjectCreationPage.setDescription(SimpleUMLEditPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
 		addPage(initialObjectCreationPage);
 	}
 

@@ -38,7 +38,7 @@ public interface SimpleumlPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNAME = "simpleuml";
+    String eNAME = "simpleuml"; //$NON-NLS-1$
 
     /**
 	 * The package namespace URI.
@@ -46,7 +46,7 @@ public interface SimpleumlPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml";
+    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"; //$NON-NLS-1$
 
     /**
 	 * The package namespace name.
@@ -54,7 +54,7 @@ public interface SimpleumlPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_PREFIX = "uml";
+    String eNS_PREFIX = "uml"; //$NON-NLS-1$
 
     /**
 	 * The singleton instance of the package.

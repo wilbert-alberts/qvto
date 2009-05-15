@@ -40,24 +40,24 @@ public interface Generalization extends EObject {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>General</em>' reference.
-	 * @see #setGeneral(simpleuml.Class)
+	 * @see #setGeneral(Class)
 	 * @see simpleuml.SimpleumlPackage#getGeneralization_General()
 	 * @model
 	 * @generated
 	 */
-    simpleuml.Class getGeneral();
+    Class getGeneral();
 
     /**
 	 * Sets the value of the '{@link simpleuml.Generalization#getGeneral <em>General</em>}' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>General</em>' reference.
 	 * @see #getGeneral()
 	 * @generated
 	 */
-    void setGeneral(simpleuml.Class value);
+	void setGeneral(Class value);
 
-    /**
+				/**
 	 * Returns the value of the '<em><b>Is Substitutable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
      * <p>

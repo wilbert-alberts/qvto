@@ -129,7 +129,7 @@ public class ColumnRefConstraintItemProvider
             String name = col.getName();
             columns += name == null?"":name + (i.hasNext()?", ":"");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         }
-        return (label == null?"":label) + "(" + columns + ")"; //$NON-NLS-2$
+        return (label == null?"":label) + "(" + columns + ")";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
     }
 
     /**

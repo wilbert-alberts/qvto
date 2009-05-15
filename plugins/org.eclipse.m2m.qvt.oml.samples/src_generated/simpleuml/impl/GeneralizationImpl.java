@@ -43,7 +43,7 @@ public class GeneralizationImpl extends EObjectImpl implements Generalization {
 	 * @generated
 	 * @ordered
 	 */
-    protected simpleuml.Class general = null;
+    protected simpleuml.Class general;
 
     /**
 	 * The default value of the '{@link #isIsSubstitutable() <em>Is Substitutable</em>}' attribute.
@@ -155,7 +155,7 @@ public class GeneralizationImpl extends EObjectImpl implements Generalization {
 				if (resolve) return getGeneral();
 				return basicGetGeneral();
 			case SimpleumlPackage.GENERALIZATION__IS_SUBSTITUTABLE:
-				return isIsSubstitutable() ? Boolean.TRUE : Boolean.FALSE;
+				return isIsSubstitutable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -172,7 +172,7 @@ public class GeneralizationImpl extends EObjectImpl implements Generalization {
 				setGeneral((simpleuml.Class)newValue);
 				return;
 			case SimpleumlPackage.GENERALIZATION__IS_SUBSTITUTABLE:
-				setIsSubstitutable(((Boolean)newValue).booleanValue());
+				setIsSubstitutable((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -222,7 +222,7 @@ public class GeneralizationImpl extends EObjectImpl implements Generalization {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isSubstitutable: ");
+		result.append(" (isSubstitutable: "); //$NON-NLS-1$
 		result.append(isSubstitutable);
 		result.append(')');
 		return result.toString();

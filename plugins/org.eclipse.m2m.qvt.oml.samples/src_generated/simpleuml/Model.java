@@ -22,7 +22,7 @@ package simpleuml;
  * @model
  * @generated
  */
-public interface Model extends simpleuml.Package{
+public interface Model extends Package{
     /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

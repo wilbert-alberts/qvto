@@ -5,7 +5,7 @@
     editDirectory="org.eclipse.m2m.qvt.oml.samples/src_generated" editorDirectory="org.eclipse.m2m.qvt.oml.samples/src_generated"
     modelPluginID="org.eclipse.m2m.qvt.oml.samples" runtimeJar="true" modelName="SimpleUML"
     editPluginClass="simpleuml.provider.SimpleUMLEditPlugin" editorPluginClass="simpleuml.presentation.SimpleUMLEditorPlugin"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0">
+    nonNLSMarkers="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0">
   <foreignModel>SimpleUML.ecore</foreignModel>
   <genPackages prefix="Simpleuml" ecorePackage="SimpleUML.ecore#/">
     <genClasses ecoreClass="SimpleUML.ecore#//Model">

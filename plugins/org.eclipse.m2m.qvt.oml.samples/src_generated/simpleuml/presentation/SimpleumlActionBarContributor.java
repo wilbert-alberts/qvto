@@ -13,7 +13,6 @@ package simpleuml.presentation;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -78,11 +77,12 @@ public class SimpleumlActionBarContributor
 	 * @generated
 	 */
     protected IAction showPropertiesViewAction =
-        new Action(SimpleUMLEditPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) {
+        new Action(SimpleUMLEditPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
+		{
 			@Override
 			public void run() {
 				try {
-					getPage().showView("org.eclipse.ui.views.PropertySheet");
+					getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
 				}
 				catch (PartInitException exception) {
 					SimpleUMLEditPlugin.INSTANCE.log(exception);
@@ -98,7 +98,8 @@ public class SimpleumlActionBarContributor
 	 * @generated
 	 */
     protected IAction refreshViewerAction =
-        new Action(SimpleUMLEditPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) {
+        new Action(SimpleUMLEditPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) //$NON-NLS-1$
+		{
 			@Override
 			public boolean isEnabled() {
 				return activeEditorPart instanceof IViewerProvider;
@@ -122,7 +123,7 @@ public class SimpleumlActionBarContributor
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected Collection createChildActions;
+    protected Collection<IAction> createChildActions;
 
     /**
 	 * This is the menu manager into which menu contribution items should be added for CreateChild actions.
@@ -139,7 +140,7 @@ public class SimpleumlActionBarContributor
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected Collection createSiblingActions;
+    protected Collection<IAction> createSiblingActions;
 
     /**
 	 * This is the menu manager into which menu contribution items should be added for CreateSibling actions.
@@ -170,8 +171,8 @@ public class SimpleumlActionBarContributor
 	 */
     @Override
 	public void contributeToToolBar(IToolBarManager toolBarManager) {
-		toolBarManager.add(new Separator("simpleuml-settings"));
-		toolBarManager.add(new Separator("simpleuml-additions"));
+		toolBarManager.add(new Separator("simpleuml-settings")); //$NON-NLS-1$
+		toolBarManager.add(new Separator("simpleuml-additions")); //$NON-NLS-1$
 	}
 
     /**
@@ -185,22 +186,22 @@ public class SimpleumlActionBarContributor
 	public void contributeToMenu(IMenuManager menuManager) {
 		super.contributeToMenu(menuManager);
 
-		IMenuManager submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditor_menu"), "simpleumlMenuID");
-		menuManager.insertAfter("additions", submenuManager);
-		submenuManager.add(new Separator("settings"));
-		submenuManager.add(new Separator("actions"));
-		submenuManager.add(new Separator("additions"));
-		submenuManager.add(new Separator("additions-end"));
+		IMenuManager submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_SimpleumlEditor_menu"), "simpleumlMenuID"); //$NON-NLS-1$ //$NON-NLS-2$
+		menuManager.insertAfter("additions", submenuManager); //$NON-NLS-1$
+		submenuManager.add(new Separator("settings")); //$NON-NLS-1$
+		submenuManager.add(new Separator("actions")); //$NON-NLS-1$
+		submenuManager.add(new Separator("additions")); //$NON-NLS-1$
+		submenuManager.add(new Separator("additions-end")); //$NON-NLS-1$
 
 		// Prepare for CreateChild item addition or removal.
 		//
-		createChildMenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
-		submenuManager.insertBefore("additions", createChildMenuManager);
+		createChildMenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
+		submenuManager.insertBefore("additions", createChildMenuManager); //$NON-NLS-1$
 
 		// Prepare for CreateSibling item addition or removal.
 		//
-		createSiblingMenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
-		submenuManager.insertBefore("additions", createSiblingMenuManager);
+		createSiblingMenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
+		submenuManager.insertBefore("additions", createSiblingMenuManager); //$NON-NLS-1$
 
 		// Force an update because Eclipse hides empty menus now.
 		//
@@ -265,8 +266,8 @@ public class SimpleumlActionBarContributor
 
 		// Query the new selection for appropriate new child/sibling descriptors
 		//
-		Collection newChildDescriptors = null;
-		Collection newSiblingDescriptors = null;
+		Collection<?> newChildDescriptors = null;
+		Collection<?> newSiblingDescriptors = null;
 
 		ISelection selection = event.getSelection();
 		if (selection instanceof IStructuredSelection && ((IStructuredSelection)selection).size() == 1) {
@@ -300,11 +301,11 @@ public class SimpleumlActionBarContributor
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected Collection generateCreateChildActions(Collection descriptors, ISelection selection) {
-		Collection actions = new ArrayList();
+    protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection) {
+		Collection<IAction> actions = new ArrayList<IAction>();
 		if (descriptors != null) {
-			for (Iterator i = descriptors.iterator(); i.hasNext(); ) {
-				actions.add(new CreateChildAction(activeEditorPart, selection, i.next()));
+			for (Object descriptor : descriptors) {
+				actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
 			}
 		}
 		return actions;
@@ -317,11 +318,11 @@ public class SimpleumlActionBarContributor
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected Collection generateCreateSiblingActions(Collection descriptors, ISelection selection) {
-		Collection actions = new ArrayList();
+    protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection) {
+		Collection<IAction> actions = new ArrayList<IAction>();
 		if (descriptors != null) {
-			for (Iterator i = descriptors.iterator(); i.hasNext(); ) {
-				actions.add(new CreateSiblingAction(activeEditorPart, selection, i.next()));
+			for (Object descriptor : descriptors) {
+				actions.add(new CreateSiblingAction(activeEditorPart, selection, descriptor));
 			}
 		}
 		return actions;
@@ -331,15 +332,14 @@ public class SimpleumlActionBarContributor
 	 * This populates the specified <code>manager</code> with {@link org.eclipse.jface.action.ActionContributionItem}s
 	 * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection,
 	 * by inserting them before the specified contribution item <code>contributionID</code>.
-	 * If <code>ID</code> is <code>null</code>, they are simply added.
+	 * If <code>contributionID</code> is <code>null</code>, they are simply added.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected void populateManager(IContributionManager manager, Collection actions, String contributionID) {
+    protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID) {
 		if (actions != null) {
-			for (Iterator i = actions.iterator(); i.hasNext(); ) {
-				IAction action = (IAction)i.next();
+			for (IAction action : actions) {
 				if (contributionID != null) {
 					manager.insertBefore(contributionID, action);
 				}
@@ -357,7 +357,7 @@ public class SimpleumlActionBarContributor
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected void depopulateManager(IContributionManager manager, Collection actions) {
+    protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions) {
 		if (actions != null) {
 			IContributionItem[] items = manager.getItems();
 			for (int i = 0; i < items.length; i++) {
@@ -391,13 +391,13 @@ public class SimpleumlActionBarContributor
 		super.menuAboutToShow(menuManager);
 		MenuManager submenuManager = null;
 
-		submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
+		submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
 		populateManager(submenuManager, createChildActions, null);
-		menuManager.insertBefore("edit", submenuManager);
+		menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
 
-		submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+		submenuManager = new MenuManager(SimpleUMLEditPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
 		populateManager(submenuManager, createSiblingActions, null);
-		menuManager.insertBefore("edit", submenuManager);
+		menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
 	}
 
     /**
@@ -408,11 +408,11 @@ public class SimpleumlActionBarContributor
 	 */
     @Override
 	protected void addGlobalActions(IMenuManager menuManager) {
-		menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-		menuManager.insertAfter("ui-actions", showPropertiesViewAction);
+		menuManager.insertAfter("additions-end", new Separator("ui-actions")); //$NON-NLS-1$ //$NON-NLS-2$
+		menuManager.insertAfter("ui-actions", showPropertiesViewAction); //$NON-NLS-1$
 
 		refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());		
-		menuManager.insertAfter("ui-actions", refreshViewerAction);
+		menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
 
 		super.addGlobalActions(menuManager);
 	}

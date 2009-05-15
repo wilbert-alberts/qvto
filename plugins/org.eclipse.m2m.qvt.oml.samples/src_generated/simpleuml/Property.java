@@ -69,7 +69,7 @@ public interface Property extends ModelElement {
 	 * @see #setOwner(DataType)
 	 * @see simpleuml.SimpleumlPackage#getProperty_Owner()
 	 * @see simpleuml.DataType#getAttributes
-	 * @model opposite="attributes" required="true"
+	 * @model opposite="attributes" required="true" transient="false"
 	 * @generated
 	 */
     DataType getOwner();

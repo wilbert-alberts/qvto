@@ -46,7 +46,7 @@ public class EnumerationImpl extends TypeImpl implements Enumeration {
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<EnumerationLiteral> ownedLiteral = null;
+    protected EList<EnumerationLiteral> ownedLiteral;
 
     /**
 	 * <!-- begin-user-doc -->

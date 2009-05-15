@@ -43,7 +43,7 @@ public interface Package extends Classifier, Packageable {
 	 * @return the value of the '<em>Owned Elements</em>' containment reference list.
 	 * @see simpleuml.SimpleumlPackage#getPackage_OwnedElements()
 	 * @see simpleuml.Packageable#getOwner
-	 * @model type="simpleuml.Packageable" opposite="owner" containment="true"
+	 * @model opposite="owner" containment="true"
 	 * @generated
 	 */
     EList<Packageable> getOwnedElements();

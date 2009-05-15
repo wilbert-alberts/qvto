@@ -41,7 +41,7 @@ public interface Enumeration extends Type {
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Literal</em>' containment reference list.
 	 * @see simpleuml.SimpleumlPackage#getEnumeration_OwnedLiteral()
-	 * @model type="simpleuml.EnumerationLiteral" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
     EList<EnumerationLiteral> getOwnedLiteral();

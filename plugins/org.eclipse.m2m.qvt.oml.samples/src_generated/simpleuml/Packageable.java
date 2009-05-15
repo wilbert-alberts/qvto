@@ -40,22 +40,22 @@ public interface Packageable extends EObject {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owner</em>' container reference.
-	 * @see #setOwner(simpleuml.Package)
+	 * @see #setOwner(Package)
 	 * @see simpleuml.SimpleumlPackage#getPackageable_Owner()
 	 * @see simpleuml.Package#getOwnedElements
-	 * @model opposite="ownedElements"
+	 * @model opposite="ownedElements" transient="false"
 	 * @generated
 	 */
-    simpleuml.Package getOwner();
+    Package getOwner();
 
     /**
 	 * Sets the value of the '{@link simpleuml.Packageable#getOwner <em>Owner</em>}' container reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Owner</em>' container reference.
 	 * @see #getOwner()
 	 * @generated
 	 */
-    void setOwner(simpleuml.Package value);
+	void setOwner(Package value);
 
 } // Packageable

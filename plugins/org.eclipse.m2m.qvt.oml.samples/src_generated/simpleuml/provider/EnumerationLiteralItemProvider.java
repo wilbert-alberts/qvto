@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -62,7 +63,7 @@ public class EnumerationLiteralItemProvider
 	 * @generated
 	 */
     @Override
-	public List getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -82,8 +83,8 @@ public class EnumerationLiteralItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EnumerationLiteral_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EnumerationLiteral_name_feature", "_UI_EnumerationLiteral_type"),
+				 getString("_UI_EnumerationLiteral_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EnumerationLiteral_name_feature", "_UI_EnumerationLiteral_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SimpleumlPackage.Literals.ENUMERATION_LITERAL__NAME,
 				 true,
 				 false,
@@ -101,7 +102,7 @@ public class EnumerationLiteralItemProvider
 	 */
     @Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EnumerationLiteral"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EnumerationLiteral")); //$NON-NLS-1$
 	}
 
     /**
@@ -114,8 +115,8 @@ public class EnumerationLiteralItemProvider
 	public String getText(Object object) {
 		String label = ((EnumerationLiteral)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_EnumerationLiteral_type") :
-			getString("_UI_EnumerationLiteral_type") + " " + label;
+			getString("_UI_EnumerationLiteral_type") : //$NON-NLS-1$
+			getString("_UI_EnumerationLiteral_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
     /**
@@ -138,14 +139,14 @@ public class EnumerationLiteralItemProvider
 	}
 
     /**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     @Override
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

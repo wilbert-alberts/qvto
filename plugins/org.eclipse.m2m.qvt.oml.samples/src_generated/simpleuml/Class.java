@@ -42,7 +42,7 @@ public interface Class extends DataType {
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Generalizations</em>' containment reference list.
 	 * @see simpleuml.SimpleumlPackage#getClass_Generalizations()
-	 * @model type="simpleuml.Generalization" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
     EList<Generalization> getGeneralizations();

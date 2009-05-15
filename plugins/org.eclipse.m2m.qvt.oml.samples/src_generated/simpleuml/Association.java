@@ -39,24 +39,24 @@ public interface Association extends ModelElement, Packageable {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' reference.
-	 * @see #setSource(simpleuml.Class)
+	 * @see #setSource(Class)
 	 * @see simpleuml.SimpleumlPackage#getAssociation_Source()
 	 * @model required="true"
 	 * @generated
 	 */
-    simpleuml.Class getSource();
+    Class getSource();
 
     /**
 	 * Sets the value of the '{@link simpleuml.Association#getSource <em>Source</em>}' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source</em>' reference.
 	 * @see #getSource()
 	 * @generated
 	 */
-    void setSource(simpleuml.Class value);
+	void setSource(Class value);
 
-    /**
+				/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
      * <p>
@@ -65,21 +65,21 @@ public interface Association extends ModelElement, Packageable {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(simpleuml.Class)
+	 * @see #setTarget(Class)
 	 * @see simpleuml.SimpleumlPackage#getAssociation_Target()
 	 * @model required="true"
 	 * @generated
 	 */
-    simpleuml.Class getTarget();
+    Class getTarget();
 
     /**
 	 * Sets the value of the '{@link simpleuml.Association#getTarget <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Target</em>' reference.
 	 * @see #getTarget()
 	 * @generated
 	 */
-    void setTarget(simpleuml.Class value);
+	void setTarget(Class value);
 
 } // Association

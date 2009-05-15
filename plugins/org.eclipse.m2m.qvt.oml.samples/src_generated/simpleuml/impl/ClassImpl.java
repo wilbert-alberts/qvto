@@ -48,7 +48,7 @@ public class ClassImpl extends DataTypeImpl implements simpleuml.Class {
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<Generalization> generalizations = null;
+    protected EList<Generalization> generalizations;
 
     /**
 	 * The default value of the '{@link #isAbstract() <em>Abstract</em>}' attribute.
@@ -147,7 +147,7 @@ public class ClassImpl extends DataTypeImpl implements simpleuml.Class {
 			case SimpleumlPackage.CLASS__GENERALIZATIONS:
 				return getGeneralizations();
 			case SimpleumlPackage.CLASS__ABSTRACT:
-				return isAbstract() ? Boolean.TRUE : Boolean.FALSE;
+				return isAbstract();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -166,7 +166,7 @@ public class ClassImpl extends DataTypeImpl implements simpleuml.Class {
 				getGeneralizations().addAll((Collection<? extends Generalization>)newValue);
 				return;
 			case SimpleumlPackage.CLASS__ABSTRACT:
-				setAbstract(((Boolean)newValue).booleanValue());
+				setAbstract((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -216,7 +216,7 @@ public class ClassImpl extends DataTypeImpl implements simpleuml.Class {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (abstract: ");
+		result.append(" (abstract: "); //$NON-NLS-1$
 		result.append(abstract_);
 		result.append(')');
 		return result.toString();

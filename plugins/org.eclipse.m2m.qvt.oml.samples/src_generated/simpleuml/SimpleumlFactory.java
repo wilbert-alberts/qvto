@@ -46,7 +46,7 @@ public interface SimpleumlFactory extends EFactory {
 	 * @return a new object of class '<em>Package</em>'.
 	 * @generated
 	 */
-    simpleuml.Package createPackage();
+    Package createPackage();
 
     /**
 	 * Returns a new object of class '<em>Class</em>'.
@@ -55,7 +55,7 @@ public interface SimpleumlFactory extends EFactory {
 	 * @return a new object of class '<em>Class</em>'.
 	 * @generated
 	 */
-    simpleuml.Class createClass();
+    Class createClass();
 
     /**
 	 * Returns a new object of class '<em>Property</em>'.

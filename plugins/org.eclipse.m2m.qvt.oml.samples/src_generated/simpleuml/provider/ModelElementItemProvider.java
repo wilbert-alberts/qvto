@@ -18,9 +18,11 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -63,7 +65,7 @@ public class ModelElementItemProvider
 	 * @generated
 	 */
     @Override
-	public List getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -84,8 +86,8 @@ public class ModelElementItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelElement_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelElement_name_feature", "_UI_ModelElement_type"),
+				 getString("_UI_ModelElement_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelElement_name_feature", "_UI_ModelElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SimpleumlPackage.Literals.MODEL_ELEMENT__NAME,
 				 true,
 				 false,
@@ -106,8 +108,8 @@ public class ModelElementItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelElement_stereotype_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelElement_stereotype_feature", "_UI_ModelElement_type"),
+				 getString("_UI_ModelElement_stereotype_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelElement_stereotype_feature", "_UI_ModelElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SimpleumlPackage.Literals.MODEL_ELEMENT__STEREOTYPE,
 				 true,
 				 false,
@@ -126,7 +128,7 @@ public class ModelElementItemProvider
 	 * @generated
 	 */
     @Override
-	public Collection getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(SimpleumlPackage.Literals.MODEL_ELEMENT__TAGGED_VALUE);
@@ -135,6 +137,19 @@ public class ModelElementItemProvider
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+				/**
 	 * This returns ModelElement.gif.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -142,7 +157,7 @@ public class ModelElementItemProvider
 	 */
     @Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ModelElement"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ModelElement")); //$NON-NLS-1$
 	}
 
     /**
@@ -155,8 +170,8 @@ public class ModelElementItemProvider
 	public String getText(Object object) {
 		String label = ((ModelElement)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ModelElement_type") :
-			getString("_UI_ModelElement_type") + " " + label;
+			getString("_UI_ModelElement_type") : //$NON-NLS-1$
+			getString("_UI_ModelElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
     /**
@@ -183,14 +198,14 @@ public class ModelElementItemProvider
 	}
 
     /**
-	 * This adds to the collection of {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing all of the children that can be created under this object.
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     @Override
-	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add

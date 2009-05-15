@@ -49,7 +49,7 @@ public class PackageImpl extends ClassifierImpl implements simpleuml.Package {
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<Packageable> ownedElements = null;
+    protected EList<Packageable> ownedElements;
 
     /**
 	 * <!-- begin-user-doc -->
@@ -76,7 +76,7 @@ public class PackageImpl extends ClassifierImpl implements simpleuml.Package {
 	 * @generated
 	 */
     public simpleuml.Package getOwner() {
-		if (eContainerFeatureID != SimpleumlPackage.PACKAGE__OWNER) return null;
+		if (eContainerFeatureID() != SimpleumlPackage.PACKAGE__OWNER) return null;
 		return (simpleuml.Package)eContainer();
 	}
 
@@ -96,9 +96,9 @@ public class PackageImpl extends ClassifierImpl implements simpleuml.Package {
 	 * @generated
 	 */
     public void setOwner(simpleuml.Package newOwner) {
-		if (newOwner != eInternalContainer() || (eContainerFeatureID != SimpleumlPackage.PACKAGE__OWNER && newOwner != null)) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID() != SimpleumlPackage.PACKAGE__OWNER && newOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newOwner))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
@@ -165,7 +165,7 @@ public class PackageImpl extends ClassifierImpl implements simpleuml.Package {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case SimpleumlPackage.PACKAGE__OWNER:
 				return eInternalContainer().eInverseRemove(this, SimpleumlPackage.PACKAGE__OWNED_ELEMENTS, simpleuml.Package.class, msgs);
 		}

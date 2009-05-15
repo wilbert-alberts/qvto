@@ -40,7 +40,7 @@ public interface DatatypesPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNAME = "datatypes";
+    String eNAME = "datatypes"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -48,7 +48,7 @@ public interface DatatypesPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb/datatypes";
+    String eNS_URI = "http://www.eclipse.org/qvt/1.0.0/Operational/examples/rdb/datatypes"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -56,7 +56,7 @@ public interface DatatypesPackage extends EPackage {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String eNS_PREFIX = "datatypes";
+    String eNS_PREFIX = "datatypes"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

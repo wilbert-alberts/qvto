@@ -46,7 +46,7 @@ public class DataTypeImpl extends TypeImpl implements DataType {
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<Property> attributes = null;
+    protected EList<Property> attributes;
 
     /**
 	 * <!-- begin-user-doc -->

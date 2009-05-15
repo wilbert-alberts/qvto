@@ -44,7 +44,7 @@ public class SimpleumlFactoryImpl extends EFactoryImpl implements SimpleumlFacto
 	 */
 	public static SimpleumlFactory init() {
 		try {
-			SimpleumlFactory theSimpleumlFactory = (SimpleumlFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"); 
+			SimpleumlFactory theSimpleumlFactory = (SimpleumlFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"); //$NON-NLS-1$ 
 			if (theSimpleumlFactory != null) {
 				return theSimpleumlFactory;
 			}
@@ -85,7 +85,7 @@ public class SimpleumlFactoryImpl extends EFactoryImpl implements SimpleumlFacto
 			case SimpleumlPackage.GENERALIZATION: return createGeneralization();
 			case SimpleumlPackage.TAGGED_VALUE: return createTaggedValue();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
