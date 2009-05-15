@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: VarParameterValue.java,v 1.2 2008/12/18 15:18:10 radvorak Exp $
+ * $Id: VarParameterValue.java,v 1.3 2009/05/15 12:02:27 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace;
 
@@ -40,7 +40,7 @@ public interface VarParameterValue extends EObject {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation";
+    String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation"; //$NON-NLS-1$
 
     /**
 	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
