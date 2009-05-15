@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.m2m.qvt.oml" version="2">
+    <resource path="_generated/org/eclipse/m2m/internal/qvt/oml/expressions/VisitableASTNode.java" type="org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ASTNode"/>
+                <message_argument value="VisitableASTNode"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="Visitable"/>
+                <message_argument value="VisitableASTNode"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
