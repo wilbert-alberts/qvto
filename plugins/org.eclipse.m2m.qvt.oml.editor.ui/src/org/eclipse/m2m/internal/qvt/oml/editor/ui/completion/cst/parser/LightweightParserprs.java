@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParserprs.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
+* $Id: LightweightParserprs.java,v 1.63 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParserprs.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
+* $Id: LightweightParserprs.java,v 1.63 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParserprs.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
+* $Id: LightweightParserprs.java,v 1.63 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParserprs.java,v 1.62 2009/05/14 09:15:30 sboyko Exp $
+* $Id: LightweightParserprs.java,v 1.63 2009/05/16 12:59:24 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -4417,321 +4417,321 @@ public class LightweightParserprs implements lpg.lpgjavaruntime.ParseTable, Ligh
 
     public interface Name {
         public final static String name[] = {
-            "",
-            "+",
-            "-",
-            "*",
-            "/",
-            ">",
-            "<",
-            "=",
-            ">=",
-            "<=",
-            "<>",
-            "(",
-            ")",
-            "{",
-            "}",
-            "[",
-            "]",
-            "->",
-            "|",
-            ",",
-            ":",
-            "::",
-            ";",
-            ".",
-            "..",
-            "@pre",
-            "^",
-            "^^",
-            "?",
-            "+=",
-            ":=",
-            "@",
-            "!",
-            "!=",
-            "::=",
-            "$empty",
-            "NUMERIC_OPERATION",
-            "STRING_LITERAL",
-            "INTEGER_LITERAL",
-            "REAL_LITERAL",
-            "INTEGER_RANGE_START",
-            "class",
-            "composes",
-            "constructor",
-            "datatype",
-            "default",
-            "derived",
-            "do",
-            "elif",
-            "enum",
-            "except",
-            "exception",
-            "from",
-            "literal",
-            "ordered",
-            "primitive",
-            "raise",
-            "readonly",
-            "references",
-            "tag",
-            "try",
-            "typedef",
-            "unlimited",
-            "invalid",
-            "STEREOTYPE_QUALIFIER_OPEN",
-            "STEREOTYPE_QUALIFIER_CLOSE",
-            "MULTIPLICITY_RANGE",
-            "TILDE_SIGN",
-            "self",
-            "inv",
-            "pre",
-            "post",
-            "endpackage",
-            "def",
-            "if",
-            "then",
-            "else",
-            "endif",
-            "and",
-            "or",
-            "xor",
-            "not",
-            "implies",
-            "let",
-            "in",
-            "true",
-            "false",
-            "body",
-            "derive",
-            "init",
-            "null",
-            "Set",
-            "Bag",
-            "Sequence",
-            "Collection",
-            "OrderedSet",
-            "iterate",
-            "forAll",
-            "exists",
-            "isUnique",
-            "any",
-            "one",
-            "collect",
-            "select",
-            "reject",
-            "collectNested",
-            "sortedBy",
-            "closure",
-            "oclIsKindOf",
-            "oclIsTypeOf",
-            "oclAsType",
-            "oclIsNew",
-            "oclIsUndefined",
-            "oclIsInvalid",
-            "oclIsInState",
-            "allInstances",
-            "String",
-            "Integer",
-            "UnlimitedNatural",
-            "Real",
-            "Boolean",
-            "Tuple",
-            "OclAny",
-            "OclVoid",
-            "Invalid",
-            "OclMessage",
-            "OclInvalid",
-            "end",
-            "while",
-            "when",
-            "var",
-            "log",
-            "assert",
-            "with",
-            "switch",
-            "case",
-            "xselect",
-            "xcollect",
-            "selectOne",
-            "collectOne",
-            "collectselect",
-            "collectselectOne",
-            "return",
-            "forEach",
-            "forOne",
-            "compute",
-            "new",
-            "List",
-            "Dict",
-            "break",
-            "continue",
-            "out",
-            "object",
-            "transformation",
-            "import",
-            "library",
-            "metamodel",
-            "mapping",
-            "query",
-            "helper",
-            "inout",
-            "configuration",
-            "intermediate",
-            "property",
-            "opposites",
-            "population",
-            "map",
-            "xmap",
-            "late",
-            "resolve",
-            "resolveone",
-            "resolveIn",
-            "resolveoneIn",
-            "invresolve",
-            "invresolveone",
-            "invresolveIn",
-            "invresolveoneIn",
-            "modeltype",
-            "uses",
-            "where",
-            "refines",
-            "access",
-            "extends",
-            "blackbox",
-            "abstract",
-            "static",
-            "result",
-            "main",
-            "this",
-            "rename",
-            "inherits",
-            "merges",
-            "disjuncts",
-            "IDENTIFIER",
-            "ERROR_TOKEN",
-            "EOF_TOKEN",
-            "keywordAsIdentifier1",
-            "keywordAsIdentifier",
-            "oclExpressionCS",
-            "impliesExpCS",
-            "andOrXorExpCS",
-            "andOrXorWithLet",
-            "equalityExpCS",
-            "equalityWithLet",
-            "relationalExpCS",
-            "relationalWithLet",
-            "ifExpCSPrec",
-            "additiveWithLet",
-            "additiveExpCS",
-            "multiplicativeExpCS",
-            "multiplicativeWithLet",
-            "unaryExpCS",
-            "unaryWithLet",
-            "dotArrowExpCS",
-            "oclExpCS",
-            "callExpCS",
-            "messageExpCS",
-            "pathNameCS",
-            "simpleNameCS",
-            "keywordOperationCallExpCS",
-            "collectionTypeIdentifierCS",
-            "collectionLiteralPartsCS",
-            "collectionLiteralPartCS",
-            "integerLiteralExpCS",
-            "unlimitedNaturalLiteralExpCS",
-            "stringLiteralExpCS",
-            "variableListCS2",
-            "featureCallExpCS",
-            "loopExpCS",
-            "iterContents",
-            "variableCS",
-            "typeCS",
-            "variableCS2",
-            "variableListCS",
-            "argumentsCS",
-            "letExpSubCS",
-            "oclMessageArgumentsCS",
-            "oclMessageArgCS",
-            "qualifier",
-            "param_list",
-            "complete_signature",
-            "simple_signature",
-            "param",
-            "qvtErrorToken",
-            "typespec",
-            "declarator",
-            "declarator1",
-            "typeCS2",
-            "scoped_identifier",
-            "scoped_identifier2",
-            "scoped_identifier_list",
-            "expression_semi_list",
-            "expression_semi_list_element",
-            "expression_block",
-            "expression_statement",
-            "qualifiedNameCS",
-            "qvtIdentifierCS",
-            "letExpSubCS3",
-            "iteratorExpCSToken",
-            "literalSimpleCS",
-            "dictLiteralPartCS",
-            "dictLiteralPartListCS",
-            "var_init_declarator_list",
-            "var_init_declarator",
-            "var_init_op",
-            "assignStatementCS",
-            "whileBodyCS",
-            "forOpCode",
-            "forExpDeclaratorList",
-            "ifExpBodyCS",
-            "switchBodyExpCS",
-            "switchDeclaratorCS",
-            "switchAltExpCSList",
-            "switchAltExpCS",
-            "logExpCS",
-            "imperativeIteratorExpCSToken12",
-            "imperativeIteratorExpCSToken3",
-            "imperativeIteratorExpCSToken",
-            "imperativeIterContents12",
-            "imperativeIterContents3",
-            "unit_element",
-            "unit",
-            "_tag",
-            "transformation_h",
-            "library_h",
-            "transformation_signature",
-            "module_usageList",
-            "moduleref",
-            "module_usage",
-            "moduleref_list",
-            "module_element",
-            "packageref_list",
-            "packageref",
-            "uri",
-            "type_list",
-            "classifierFeatureList",
-            "classifierFeatureCS",
-            "identifier_list",
-            "feature_key",
-            "multiplicity_range",
-            "helper_header",
-            "helper_info",
-            "helper_kind",
-            "constructor_header",
-            "entry_header",
-            "mapping_full_header",
-            "mapping_header",
-            "mapping_extra",
-            "mapping_extension_key",
-            "objectDeclCS",
-            "objectIdentifierCS",
-            "resolveOpArgsExpCS",
-            "resolveOp",
-            "resolveInOp",
-            "resolveResolveInExpCS"
+            "", //$NON-NLS-1$
+            "+", //$NON-NLS-1$
+            "-", //$NON-NLS-1$
+            "*", //$NON-NLS-1$
+            "/", //$NON-NLS-1$
+            ">", //$NON-NLS-1$
+            "<", //$NON-NLS-1$
+            "=", //$NON-NLS-1$
+            ">=", //$NON-NLS-1$
+            "<=", //$NON-NLS-1$
+            "<>", //$NON-NLS-1$
+            "(", //$NON-NLS-1$
+            ")", //$NON-NLS-1$
+            "{", //$NON-NLS-1$
+            "}", //$NON-NLS-1$
+            "[", //$NON-NLS-1$
+            "]", //$NON-NLS-1$
+            "->", //$NON-NLS-1$
+            "|", //$NON-NLS-1$
+            ",", //$NON-NLS-1$
+            ":", //$NON-NLS-1$
+            "::", //$NON-NLS-1$
+            ";", //$NON-NLS-1$
+            ".", //$NON-NLS-1$
+            "..", //$NON-NLS-1$
+            "@pre", //$NON-NLS-1$
+            "^", //$NON-NLS-1$
+            "^^", //$NON-NLS-1$
+            "?", //$NON-NLS-1$
+            "+=", //$NON-NLS-1$
+            ":=", //$NON-NLS-1$
+            "@", //$NON-NLS-1$
+            "!", //$NON-NLS-1$
+            "!=", //$NON-NLS-1$
+            "::=", //$NON-NLS-1$
+            "$empty", //$NON-NLS-1$
+            "NUMERIC_OPERATION", //$NON-NLS-1$
+            "STRING_LITERAL", //$NON-NLS-1$
+            "INTEGER_LITERAL", //$NON-NLS-1$
+            "REAL_LITERAL", //$NON-NLS-1$
+            "INTEGER_RANGE_START", //$NON-NLS-1$
+            "class", //$NON-NLS-1$
+            "composes", //$NON-NLS-1$
+            "constructor", //$NON-NLS-1$
+            "datatype", //$NON-NLS-1$
+            "default", //$NON-NLS-1$
+            "derived", //$NON-NLS-1$
+            "do", //$NON-NLS-1$
+            "elif", //$NON-NLS-1$
+            "enum", //$NON-NLS-1$
+            "except", //$NON-NLS-1$
+            "exception", //$NON-NLS-1$
+            "from", //$NON-NLS-1$
+            "literal", //$NON-NLS-1$
+            "ordered", //$NON-NLS-1$
+            "primitive", //$NON-NLS-1$
+            "raise", //$NON-NLS-1$
+            "readonly", //$NON-NLS-1$
+            "references", //$NON-NLS-1$
+            "tag", //$NON-NLS-1$
+            "try", //$NON-NLS-1$
+            "typedef", //$NON-NLS-1$
+            "unlimited", //$NON-NLS-1$
+            "invalid", //$NON-NLS-1$
+            "STEREOTYPE_QUALIFIER_OPEN", //$NON-NLS-1$
+            "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
+            "MULTIPLICITY_RANGE", //$NON-NLS-1$
+            "TILDE_SIGN", //$NON-NLS-1$
+            "self", //$NON-NLS-1$
+            "inv", //$NON-NLS-1$
+            "pre", //$NON-NLS-1$
+            "post", //$NON-NLS-1$
+            "endpackage", //$NON-NLS-1$
+            "def", //$NON-NLS-1$
+            "if", //$NON-NLS-1$
+            "then", //$NON-NLS-1$
+            "else", //$NON-NLS-1$
+            "endif", //$NON-NLS-1$
+            "and", //$NON-NLS-1$
+            "or", //$NON-NLS-1$
+            "xor", //$NON-NLS-1$
+            "not", //$NON-NLS-1$
+            "implies", //$NON-NLS-1$
+            "let", //$NON-NLS-1$
+            "in", //$NON-NLS-1$
+            "true", //$NON-NLS-1$
+            "false", //$NON-NLS-1$
+            "body", //$NON-NLS-1$
+            "derive", //$NON-NLS-1$
+            "init", //$NON-NLS-1$
+            "null", //$NON-NLS-1$
+            "Set", //$NON-NLS-1$
+            "Bag", //$NON-NLS-1$
+            "Sequence", //$NON-NLS-1$
+            "Collection", //$NON-NLS-1$
+            "OrderedSet", //$NON-NLS-1$
+            "iterate", //$NON-NLS-1$
+            "forAll", //$NON-NLS-1$
+            "exists", //$NON-NLS-1$
+            "isUnique", //$NON-NLS-1$
+            "any", //$NON-NLS-1$
+            "one", //$NON-NLS-1$
+            "collect", //$NON-NLS-1$
+            "select", //$NON-NLS-1$
+            "reject", //$NON-NLS-1$
+            "collectNested", //$NON-NLS-1$
+            "sortedBy", //$NON-NLS-1$
+            "closure", //$NON-NLS-1$
+            "oclIsKindOf", //$NON-NLS-1$
+            "oclIsTypeOf", //$NON-NLS-1$
+            "oclAsType", //$NON-NLS-1$
+            "oclIsNew", //$NON-NLS-1$
+            "oclIsUndefined", //$NON-NLS-1$
+            "oclIsInvalid", //$NON-NLS-1$
+            "oclIsInState", //$NON-NLS-1$
+            "allInstances", //$NON-NLS-1$
+            "String", //$NON-NLS-1$
+            "Integer", //$NON-NLS-1$
+            "UnlimitedNatural", //$NON-NLS-1$
+            "Real", //$NON-NLS-1$
+            "Boolean", //$NON-NLS-1$
+            "Tuple", //$NON-NLS-1$
+            "OclAny", //$NON-NLS-1$
+            "OclVoid", //$NON-NLS-1$
+            "Invalid", //$NON-NLS-1$
+            "OclMessage", //$NON-NLS-1$
+            "OclInvalid", //$NON-NLS-1$
+            "end", //$NON-NLS-1$
+            "while", //$NON-NLS-1$
+            "when", //$NON-NLS-1$
+            "var", //$NON-NLS-1$
+            "log", //$NON-NLS-1$
+            "assert", //$NON-NLS-1$
+            "with", //$NON-NLS-1$
+            "switch", //$NON-NLS-1$
+            "case", //$NON-NLS-1$
+            "xselect", //$NON-NLS-1$
+            "xcollect", //$NON-NLS-1$
+            "selectOne", //$NON-NLS-1$
+            "collectOne", //$NON-NLS-1$
+            "collectselect", //$NON-NLS-1$
+            "collectselectOne", //$NON-NLS-1$
+            "return", //$NON-NLS-1$
+            "forEach", //$NON-NLS-1$
+            "forOne", //$NON-NLS-1$
+            "compute", //$NON-NLS-1$
+            "new", //$NON-NLS-1$
+            "List", //$NON-NLS-1$
+            "Dict", //$NON-NLS-1$
+            "break", //$NON-NLS-1$
+            "continue", //$NON-NLS-1$
+            "out", //$NON-NLS-1$
+            "object", //$NON-NLS-1$
+            "transformation", //$NON-NLS-1$
+            "import", //$NON-NLS-1$
+            "library", //$NON-NLS-1$
+            "metamodel", //$NON-NLS-1$
+            "mapping", //$NON-NLS-1$
+            "query", //$NON-NLS-1$
+            "helper", //$NON-NLS-1$
+            "inout", //$NON-NLS-1$
+            "configuration", //$NON-NLS-1$
+            "intermediate", //$NON-NLS-1$
+            "property", //$NON-NLS-1$
+            "opposites", //$NON-NLS-1$
+            "population", //$NON-NLS-1$
+            "map", //$NON-NLS-1$
+            "xmap", //$NON-NLS-1$
+            "late", //$NON-NLS-1$
+            "resolve", //$NON-NLS-1$
+            "resolveone", //$NON-NLS-1$
+            "resolveIn", //$NON-NLS-1$
+            "resolveoneIn", //$NON-NLS-1$
+            "invresolve", //$NON-NLS-1$
+            "invresolveone", //$NON-NLS-1$
+            "invresolveIn", //$NON-NLS-1$
+            "invresolveoneIn", //$NON-NLS-1$
+            "modeltype", //$NON-NLS-1$
+            "uses", //$NON-NLS-1$
+            "where", //$NON-NLS-1$
+            "refines", //$NON-NLS-1$
+            "access", //$NON-NLS-1$
+            "extends", //$NON-NLS-1$
+            "blackbox", //$NON-NLS-1$
+            "abstract", //$NON-NLS-1$
+            "static", //$NON-NLS-1$
+            "result", //$NON-NLS-1$
+            "main", //$NON-NLS-1$
+            "this", //$NON-NLS-1$
+            "rename", //$NON-NLS-1$
+            "inherits", //$NON-NLS-1$
+            "merges", //$NON-NLS-1$
+            "disjuncts", //$NON-NLS-1$
+            "IDENTIFIER", //$NON-NLS-1$
+            "ERROR_TOKEN", //$NON-NLS-1$
+            "EOF_TOKEN", //$NON-NLS-1$
+            "keywordAsIdentifier1", //$NON-NLS-1$
+            "keywordAsIdentifier", //$NON-NLS-1$
+            "oclExpressionCS", //$NON-NLS-1$
+            "impliesExpCS", //$NON-NLS-1$
+            "andOrXorExpCS", //$NON-NLS-1$
+            "andOrXorWithLet", //$NON-NLS-1$
+            "equalityExpCS", //$NON-NLS-1$
+            "equalityWithLet", //$NON-NLS-1$
+            "relationalExpCS", //$NON-NLS-1$
+            "relationalWithLet", //$NON-NLS-1$
+            "ifExpCSPrec", //$NON-NLS-1$
+            "additiveWithLet", //$NON-NLS-1$
+            "additiveExpCS", //$NON-NLS-1$
+            "multiplicativeExpCS", //$NON-NLS-1$
+            "multiplicativeWithLet", //$NON-NLS-1$
+            "unaryExpCS", //$NON-NLS-1$
+            "unaryWithLet", //$NON-NLS-1$
+            "dotArrowExpCS", //$NON-NLS-1$
+            "oclExpCS", //$NON-NLS-1$
+            "callExpCS", //$NON-NLS-1$
+            "messageExpCS", //$NON-NLS-1$
+            "pathNameCS", //$NON-NLS-1$
+            "simpleNameCS", //$NON-NLS-1$
+            "keywordOperationCallExpCS", //$NON-NLS-1$
+            "collectionTypeIdentifierCS", //$NON-NLS-1$
+            "collectionLiteralPartsCS", //$NON-NLS-1$
+            "collectionLiteralPartCS", //$NON-NLS-1$
+            "integerLiteralExpCS", //$NON-NLS-1$
+            "unlimitedNaturalLiteralExpCS", //$NON-NLS-1$
+            "stringLiteralExpCS", //$NON-NLS-1$
+            "variableListCS2", //$NON-NLS-1$
+            "featureCallExpCS", //$NON-NLS-1$
+            "loopExpCS", //$NON-NLS-1$
+            "iterContents", //$NON-NLS-1$
+            "variableCS", //$NON-NLS-1$
+            "typeCS", //$NON-NLS-1$
+            "variableCS2", //$NON-NLS-1$
+            "variableListCS", //$NON-NLS-1$
+            "argumentsCS", //$NON-NLS-1$
+            "letExpSubCS", //$NON-NLS-1$
+            "oclMessageArgumentsCS", //$NON-NLS-1$
+            "oclMessageArgCS", //$NON-NLS-1$
+            "qualifier", //$NON-NLS-1$
+            "param_list", //$NON-NLS-1$
+            "complete_signature", //$NON-NLS-1$
+            "simple_signature", //$NON-NLS-1$
+            "param", //$NON-NLS-1$
+            "qvtErrorToken", //$NON-NLS-1$
+            "typespec", //$NON-NLS-1$
+            "declarator", //$NON-NLS-1$
+            "declarator1", //$NON-NLS-1$
+            "typeCS2", //$NON-NLS-1$
+            "scoped_identifier", //$NON-NLS-1$
+            "scoped_identifier2", //$NON-NLS-1$
+            "scoped_identifier_list", //$NON-NLS-1$
+            "expression_semi_list", //$NON-NLS-1$
+            "expression_semi_list_element", //$NON-NLS-1$
+            "expression_block", //$NON-NLS-1$
+            "expression_statement", //$NON-NLS-1$
+            "qualifiedNameCS", //$NON-NLS-1$
+            "qvtIdentifierCS", //$NON-NLS-1$
+            "letExpSubCS3", //$NON-NLS-1$
+            "iteratorExpCSToken", //$NON-NLS-1$
+            "literalSimpleCS", //$NON-NLS-1$
+            "dictLiteralPartCS", //$NON-NLS-1$
+            "dictLiteralPartListCS", //$NON-NLS-1$
+            "var_init_declarator_list", //$NON-NLS-1$
+            "var_init_declarator", //$NON-NLS-1$
+            "var_init_op", //$NON-NLS-1$
+            "assignStatementCS", //$NON-NLS-1$
+            "whileBodyCS", //$NON-NLS-1$
+            "forOpCode", //$NON-NLS-1$
+            "forExpDeclaratorList", //$NON-NLS-1$
+            "ifExpBodyCS", //$NON-NLS-1$
+            "switchBodyExpCS", //$NON-NLS-1$
+            "switchDeclaratorCS", //$NON-NLS-1$
+            "switchAltExpCSList", //$NON-NLS-1$
+            "switchAltExpCS", //$NON-NLS-1$
+            "logExpCS", //$NON-NLS-1$
+            "imperativeIteratorExpCSToken12", //$NON-NLS-1$
+            "imperativeIteratorExpCSToken3", //$NON-NLS-1$
+            "imperativeIteratorExpCSToken", //$NON-NLS-1$
+            "imperativeIterContents12", //$NON-NLS-1$
+            "imperativeIterContents3", //$NON-NLS-1$
+            "unit_element", //$NON-NLS-1$
+            "unit", //$NON-NLS-1$
+            "_tag", //$NON-NLS-1$
+            "transformation_h", //$NON-NLS-1$
+            "library_h", //$NON-NLS-1$
+            "transformation_signature", //$NON-NLS-1$
+            "module_usageList", //$NON-NLS-1$
+            "moduleref", //$NON-NLS-1$
+            "module_usage", //$NON-NLS-1$
+            "moduleref_list", //$NON-NLS-1$
+            "module_element", //$NON-NLS-1$
+            "packageref_list", //$NON-NLS-1$
+            "packageref", //$NON-NLS-1$
+            "uri", //$NON-NLS-1$
+            "type_list", //$NON-NLS-1$
+            "classifierFeatureList", //$NON-NLS-1$
+            "classifierFeatureCS", //$NON-NLS-1$
+            "identifier_list", //$NON-NLS-1$
+            "feature_key", //$NON-NLS-1$
+            "multiplicity_range", //$NON-NLS-1$
+            "helper_header", //$NON-NLS-1$
+            "helper_info", //$NON-NLS-1$
+            "helper_kind", //$NON-NLS-1$
+            "constructor_header", //$NON-NLS-1$
+            "entry_header", //$NON-NLS-1$
+            "mapping_full_header", //$NON-NLS-1$
+            "mapping_header", //$NON-NLS-1$
+            "mapping_extra", //$NON-NLS-1$
+            "mapping_extension_key", //$NON-NLS-1$
+            "objectDeclCS", //$NON-NLS-1$
+            "objectIdentifierCS", //$NON-NLS-1$
+            "resolveOpArgsExpCS", //$NON-NLS-1$
+            "resolveOp", //$NON-NLS-1$
+            "resolveInOp", //$NON-NLS-1$
+            "resolveResolveInExpCS" //$NON-NLS-1$
         };
     };
     public final static String name[] = Name.name;

@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.65 2009/05/14 09:15:29 sboyko Exp $
+* $Id: LightweightParser.java,v 1.66 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.65 2009/05/14 09:15:29 sboyko Exp $
+* $Id: LightweightParser.java,v 1.66 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.65 2009/05/14 09:15:29 sboyko Exp $
+* $Id: LightweightParser.java,v 1.66 2009/05/16 12:59:24 sboyko Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.65 2009/05/14 09:15:29 sboyko Exp $
+* $Id: LightweightParser.java,v 1.66 2009/05/16 12:59:24 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -178,15 +178,15 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 		}
 		catch(UnimplementedTerminalsException e) {
 			java.util.ArrayList<?> unimplemented_symbols = e.getSymbols();
-			String error = "The Lexer will not scan the following token(s):";
+			String error = "The Lexer will not scan the following token(s):"; //$NON-NLS-1$
 			for (int i = 0; i < unimplemented_symbols.size(); i++) {
 				Integer id = (Integer) unimplemented_symbols.get(i);
-				error += "\t" + LightweightParsersym.orderedTerminalSymbols[id.intValue()];			   
+				error += "\t" + LightweightParsersym.orderedTerminalSymbols[id.intValue()]; //$NON-NLS-1$			   
 			}
-			throw new RuntimeException(error + "\n");						
+			throw new RuntimeException(error + "\n"); //$NON-NLS-1$
 		}
 		catch(UndefinedEofSymbolException e) {
-			throw new RuntimeException("The Lexer does not implement the Eof symbol " +
+			throw new RuntimeException("The Lexer does not implement the Eof symbol " + //$NON-NLS-1$
 				 LightweightParsersym.orderedTerminalSymbols[LightweightParserprs.EOFT_SYMBOL]);
 		} 
 	}
@@ -210,7 +210,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 		return parseTokensToCST(null, error_repair_count);
 	}
 		
-	@SuppressWarnings("nls")
 	@Override
 	public CSTNode parseTokensToCST(Monitor monitor, int error_repair_count) {
 		ParseTable prsTable = new LightweightParserprs();
@@ -219,10 +218,10 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			dtParser = new BacktrackingParser(monitor, this, prsTable, this);
 		}
 		catch (NotBacktrackParseTableException e) {
-			throw new RuntimeException("****Error: Regenerate LightweightParserprs.java with -NOBACKTRACK option");
+			throw new RuntimeException("****Error: Regenerate LightweightParserprs.java with -NOBACKTRACK option"); //$NON-NLS-1$
 		}
 		catch (BadParseSymFileException e) {
-			throw new RuntimeException("****Error: Bad Parser Symbol File -- LightweightParsersym.java. Regenerate LightweightParserprs.java");
+			throw new RuntimeException("****Error: Bad Parser Symbol File -- LightweightParsersym.java. Regenerate LightweightParserprs.java"); //$NON-NLS-1$
 		}
 
 		try {
@@ -252,10 +251,10 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 	protected void OnParseError(BadParseException e) {
 		System.err.println(getFileName());
 		java.util.ArrayList<?> tokens = getTokens();
-		String result = getName(e.error_token) + " ~~ ";
+		String result = getName(e.error_token) + " ~~ "; //$NON-NLS-1$
 		for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
 			result += tokens.get(i).toString();
-			result += " ";
+			result += " "; //$NON-NLS-1$
 		}
 		System.err.println(result);
 	}
@@ -2374,7 +2373,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			case 260: {
 				
 				PathNameCS result = (PathNameCS)dtParser.getSym(1);
-				result = extendPathNameCS(result, "");
+				result = extendPathNameCS(result, ""); //$NON-NLS-1$
 				setOffsets(result, result, getIToken(dtParser.getToken(2)));
 				dtParser.setSym1(result);
 	  		  break;
@@ -2519,7 +2518,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 			case 279: {
 				
 				PathNameCS result = (PathNameCS)dtParser.getSym(1);
-				result = extendPathNameCS(result, "");
+				result = extendPathNameCS(result, ""); //$NON-NLS-1$
 				setOffsets(result, result, getIToken(dtParser.getToken(2)));
 				dtParser.setSym1(result);
 	  		  break;
