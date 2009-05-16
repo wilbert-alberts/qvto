@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
+* $Id: QvtOpLexersym.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
+* $Id: QvtOpLexersym.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -141,110 +141,110 @@ public interface QvtOpLexersym {
       Char_EOF = 102;
 
       public final static String orderedTerminalSymbols[] = {
-                 "",
-                 "0",
-                 "1",
-                 "2",
-                 "3",
-                 "4",
-                 "5",
-                 "6",
-                 "7",
-                 "8",
-                 "9",
-                 "Equal",
-                 "e",
-                 "E",
-                 "p",
-                 "r",
-                 "Dot",
-                 "GreaterThan",
-                 "a",
-                 "b",
-                 "c",
-                 "d",
-                 "f",
-                 "g",
-                 "h",
-                 "i",
-                 "j",
-                 "k",
-                 "l",
-                 "m",
-                 "n",
-                 "o",
-                 "q",
-                 "s",
-                 "t",
-                 "u",
-                 "v",
-                 "w",
-                 "x",
-                 "y",
-                 "z",
-                 "_",
-                 "A",
-                 "B",
-                 "C",
-                 "D",
-                 "F",
-                 "G",
-                 "H",
-                 "I",
-                 "J",
-                 "K",
-                 "L",
-                 "M",
-                 "N",
-                 "O",
-                 "P",
-                 "Q",
-                 "R",
-                 "S",
-                 "T",
-                 "U",
-                 "V",
-                 "W",
-                 "X",
-                 "Y",
-                 "Z",
-                 "AfterASCIINotAcute",
-                 "Minus",
-                 "LessThan",
-                 "Plus",
-                 "Slash",
-                 "Star",
-                 "Space",
-                 "DollarSign",
-                 "Caret",
-                 "Colon",
-                 "HT",
-                 "DoubleQuote",
-                 "VerticalBar",
-                 "Exclamation",
-                 "AtSign",
-                 "BackQuote",
-                 "Tilde",
-                 "SemiColon",
-                 "LeftBrace",
-                 "RightBrace",
-                 "LeftBracket",
-                 "RightBracket",
-                 "QuestionMark",
-                 "Comma",
-                 "LeftParen",
-                 "RightParen",
-                 "LF",
-                 "CR",
-                 "Percent",
-                 "Sharp",
-                 "Ampersand",
-                 "BackSlash",
-                 "SingleQuote",
-                 "FF",
-                 "Acute",
-                 "EOF",
-                 "CtlCharNotWS"
+                 "", //$NON-NLS-1$
+                 "0", //$NON-NLS-1$
+                 "1", //$NON-NLS-1$
+                 "2", //$NON-NLS-1$
+                 "3", //$NON-NLS-1$
+                 "4", //$NON-NLS-1$
+                 "5", //$NON-NLS-1$
+                 "6", //$NON-NLS-1$
+                 "7", //$NON-NLS-1$
+                 "8", //$NON-NLS-1$
+                 "9", //$NON-NLS-1$
+                 "Equal", //$NON-NLS-1$
+                 "e", //$NON-NLS-1$
+                 "E", //$NON-NLS-1$
+                 "p", //$NON-NLS-1$
+                 "r", //$NON-NLS-1$
+                 "Dot", //$NON-NLS-1$
+                 "GreaterThan", //$NON-NLS-1$
+                 "a", //$NON-NLS-1$
+                 "b", //$NON-NLS-1$
+                 "c", //$NON-NLS-1$
+                 "d", //$NON-NLS-1$
+                 "f", //$NON-NLS-1$
+                 "g", //$NON-NLS-1$
+                 "h", //$NON-NLS-1$
+                 "i", //$NON-NLS-1$
+                 "j", //$NON-NLS-1$
+                 "k", //$NON-NLS-1$
+                 "l", //$NON-NLS-1$
+                 "m", //$NON-NLS-1$
+                 "n", //$NON-NLS-1$
+                 "o", //$NON-NLS-1$
+                 "q", //$NON-NLS-1$
+                 "s", //$NON-NLS-1$
+                 "t", //$NON-NLS-1$
+                 "u", //$NON-NLS-1$
+                 "v", //$NON-NLS-1$
+                 "w", //$NON-NLS-1$
+                 "x", //$NON-NLS-1$
+                 "y", //$NON-NLS-1$
+                 "z", //$NON-NLS-1$
+                 "_", //$NON-NLS-1$
+                 "A", //$NON-NLS-1$
+                 "B", //$NON-NLS-1$
+                 "C", //$NON-NLS-1$
+                 "D", //$NON-NLS-1$
+                 "F", //$NON-NLS-1$
+                 "G", //$NON-NLS-1$
+                 "H", //$NON-NLS-1$
+                 "I", //$NON-NLS-1$
+                 "J", //$NON-NLS-1$
+                 "K", //$NON-NLS-1$
+                 "L", //$NON-NLS-1$
+                 "M", //$NON-NLS-1$
+                 "N", //$NON-NLS-1$
+                 "O", //$NON-NLS-1$
+                 "P", //$NON-NLS-1$
+                 "Q", //$NON-NLS-1$
+                 "R", //$NON-NLS-1$
+                 "S", //$NON-NLS-1$
+                 "T", //$NON-NLS-1$
+                 "U", //$NON-NLS-1$
+                 "V", //$NON-NLS-1$
+                 "W", //$NON-NLS-1$
+                 "X", //$NON-NLS-1$
+                 "Y", //$NON-NLS-1$
+                 "Z", //$NON-NLS-1$
+                 "AfterASCIINotAcute", //$NON-NLS-1$
+                 "Minus", //$NON-NLS-1$
+                 "LessThan", //$NON-NLS-1$
+                 "Plus", //$NON-NLS-1$
+                 "Slash", //$NON-NLS-1$
+                 "Star", //$NON-NLS-1$
+                 "Space", //$NON-NLS-1$
+                 "DollarSign", //$NON-NLS-1$
+                 "Caret", //$NON-NLS-1$
+                 "Colon", //$NON-NLS-1$
+                 "HT", //$NON-NLS-1$
+                 "DoubleQuote", //$NON-NLS-1$
+                 "VerticalBar", //$NON-NLS-1$
+                 "Exclamation", //$NON-NLS-1$
+                 "AtSign", //$NON-NLS-1$
+                 "BackQuote", //$NON-NLS-1$
+                 "Tilde", //$NON-NLS-1$
+                 "SemiColon", //$NON-NLS-1$
+                 "LeftBrace", //$NON-NLS-1$
+                 "RightBrace", //$NON-NLS-1$
+                 "LeftBracket", //$NON-NLS-1$
+                 "RightBracket", //$NON-NLS-1$
+                 "QuestionMark", //$NON-NLS-1$
+                 "Comma", //$NON-NLS-1$
+                 "LeftParen", //$NON-NLS-1$
+                 "RightParen", //$NON-NLS-1$
+                 "LF", //$NON-NLS-1$
+                 "CR", //$NON-NLS-1$
+                 "Percent", //$NON-NLS-1$
+                 "Sharp", //$NON-NLS-1$
+                 "Ampersand", //$NON-NLS-1$
+                 "BackSlash", //$NON-NLS-1$
+                 "SingleQuote", //$NON-NLS-1$
+                 "FF", //$NON-NLS-1$
+                 "Acute", //$NON-NLS-1$
+                 "EOF", //$NON-NLS-1$
+                 "CtlCharNotWS" //$NON-NLS-1$
              };
 
     public final static boolean isValidForParser = true;

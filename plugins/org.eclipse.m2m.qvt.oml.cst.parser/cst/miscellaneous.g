@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.30 2009/05/14 09:15:14 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.31 2009/05/16 12:50:26 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -87,15 +87,15 @@ $Define
 			}
 			catch(UnimplementedTerminalsException e) {
 				java.util.ArrayList<?> unimplemented_symbols = e.getSymbols();
-				String error = "The Lexer will not scan the following token(s):";
+				String error = "The Lexer will not scan the following token(s):"; //$NON-NLS-1$
 				for (int i = 0; i < unimplemented_symbols.size(); i++) {
 					Integer id = (Integer) unimplemented_symbols.get(i);
-					error += "\t" + $sym_type.orderedTerminalSymbols[id.intValue()];			   
+					error += "\t" + $sym_type.orderedTerminalSymbols[id.intValue()]; //$NON-NLS-1$			   
 				}
-				throw new RuntimeException(error + "\n");						
+				throw new RuntimeException(error + "\n"); //$NON-NLS-1$
 			}
 			catch(UndefinedEofSymbolException e) {
-				throw new RuntimeException("The Lexer does not implement the Eof symbol " +
+				throw new RuntimeException("The Lexer does not implement the Eof symbol " + //$NON-NLS-1$
 					 $sym_type.orderedTerminalSymbols[$prs_type.EOFT_SYMBOL]);
 			} 
 		}
@@ -119,7 +119,6 @@ $Define
 			return parseTokensToCST(null, error_repair_count);
 		}
 			
-		@SuppressWarnings("nls")
 		@Override
 		public $ast_type parseTokensToCST(Monitor monitor, int error_repair_count) {
 			ParseTable prsTable = new $prs_type();
@@ -128,10 +127,10 @@ $Define
 				dtParser = new BacktrackingParser(monitor, this, prsTable, this);
 			}
 			catch (NotBacktrackParseTableException e) {
-				throw new RuntimeException("****Error: Regenerate $prs_type.java with -NOBACKTRACK option");
+				throw new RuntimeException("****Error: Regenerate $prs_type.java with -NOBACKTRACK option"); //$NON-NLS-1$
 			}
 			catch (BadParseSymFileException e) {
-				throw new RuntimeException("****Error: Bad Parser Symbol File -- $sym_type.java. Regenerate $prs_type.java");
+				throw new RuntimeException("****Error: Bad Parser Symbol File -- $sym_type.java. Regenerate $prs_type.java"); //$NON-NLS-1$
 			}
 
 			try {
@@ -161,10 +160,10 @@ $Define
 		protected void OnParseError(BadParseException e) {
 			System.err.println(getFileName());
 			java.util.ArrayList<?> tokens = getTokens();
-			String result = getName(e.error_token) + " ~~ ";
+			String result = getName(e.error_token) + " ~~ "; //$NON-NLS-1$
 			for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
 				result += tokens.get(i).toString();
-				result += " ";
+				result += " "; //$NON-NLS-1$
 			}
 			System.err.println(result);
 		}
@@ -275,7 +274,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.30 2009/05/14 09:15:14 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.31 2009/05/16 12:50:26 sboyko Exp $
  */
 	./
 $End
@@ -592,7 +591,7 @@ $Rules
 	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, "");
+					result = extendPathNameCS(result, ""); //$NON-NLS-1$
 					setOffsets(result, result, getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
@@ -703,7 +702,7 @@ $Rules
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, "");
+					result = extendPathNameCS(result, ""); //$NON-NLS-1$
 					setOffsets(result, result, getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava

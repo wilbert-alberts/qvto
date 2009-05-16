@@ -15,7 +15,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: EssentialOCL.g,v 1.3 2009/03/12 15:03:52 aigdalov Exp $
+-- * $Id: EssentialOCL.g,v 1.4 2009/05/16 12:50:27 sboyko Exp $
 -- */
 --
 -- The EssentialOCL Parser
@@ -132,7 +132,6 @@ $Define
 		@Override
 		public String[] orderedTerminalSymbols() { return $sym_type.orderedTerminalSymbols; }
 			
-		@SuppressWarnings("nls")
 		@Override
 		public $ast_type parseTokensToCST(Monitor monitor, int error_repair_count) {
 			ParseTable prsTable = new $prs_type();
@@ -194,7 +193,7 @@ $Notice
 $copyright_contributions
  * </copyright>
  *
- * $Id: EssentialOCL.g,v 1.3 2009/03/12 15:03:52 aigdalov Exp $
+ * $Id: EssentialOCL.g,v 1.4 2009/05/16 12:50:27 sboyko Exp $
  */
 	./
 $End

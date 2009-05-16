@@ -13,7 +13,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
 */
 /**
 * <copyright>
@@ -29,7 +29,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.78 2009/05/14 09:15:14 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -42,7 +42,6 @@ import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.parser.OCLKWLexer;
 
-@SuppressWarnings("nls")
 public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
 {
     private static ParseTable prs = new QvtOpLexerprs();
@@ -66,9 +65,8 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
         oclEnvironment = environment;
     }
     
-    @SuppressWarnings("nls")
 	public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] chars) {
-		this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE);
+		this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE); //$NON-NLS-1$
 		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
 	}
 
@@ -112,7 +110,7 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
     public void lexToTokens(Monitor monitor, AbstractParser parser)
     {
         if (getInputChars() == null)
-            throw new NullPointerException("LexStream was not initialized");
+            throw new NullPointerException("LexStream was not initialized"); //$NON-NLS-1$
 
         this.parser = parser;
 

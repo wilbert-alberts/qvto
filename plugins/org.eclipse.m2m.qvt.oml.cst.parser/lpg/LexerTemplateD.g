@@ -130,7 +130,6 @@ $End
 
 $Headers
     /.
-    @SuppressWarnings("nls")
     public class $action_type extends $super_stream_class implements $exp_type, $sym_type, RuleAction$additional_interfaces
     {
         private static ParseTable prs = new $prs_type();
@@ -154,9 +153,8 @@ $Headers
             oclEnvironment = environment;
         }
         
-        @SuppressWarnings("nls")
 		public $action_class($environment_class environment, char[] chars) {
-			this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE);
+			this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE); //$NON-NLS-1$
 			kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
 		}
 
@@ -200,7 +198,7 @@ $Headers
         public void lexToTokens(Monitor monitor, $prs_stream_class parser)
         {
             if (getInputChars() == null)
-                throw new NullPointerException("LexStream was not initialized");
+                throw new NullPointerException("LexStream was not initialized"); //$NON-NLS-1$
 
             this.parser = parser;
 
