@@ -43,8 +43,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
  */
 
 public class QvtCompletionProcessor implements IContentAssistProcessor {
-    private final static char[] ACTIVATION = {
-        '.', '>' /* -> */};
+    private final static char[] ACTIVATION = {'.', '>' /* -> */, '@'};
     private final int INITIAL_CATEGORY_INDEX = -1;
     private final int NO_CATEGORY_INDEX = -1;
 
