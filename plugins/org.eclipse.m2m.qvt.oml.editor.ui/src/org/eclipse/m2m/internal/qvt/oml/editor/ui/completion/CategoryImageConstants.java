@@ -32,4 +32,5 @@ public class CategoryImageConstants {
     public static final String TEMPLATE = "cat-template"; //$NON-NLS-1$
     public static final String QVT_QUERY = "qvt-query"; //$NON-NLS-1$
     public static final String QVT_MAPPING = "qvt-mapping"; //$NON-NLS-1$
+    public static final String QVT_SRC_FILE = "qvt_src_file"; //$NON-NLS-1$
 }

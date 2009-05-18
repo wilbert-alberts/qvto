@@ -54,6 +54,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.editors.text.TextEditor;
@@ -206,7 +207,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
 
 		// Update QVT Outline page selection
 		if (monitor != null && !monitor.isCanceled()) {
-			refresh();
+			refresh(unit);
 		}
 	}
     
@@ -217,14 +218,23 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
     @Override
 	public void doSave(IProgressMonitor progress) {
         super.doSave(progress);
-        refresh();
+        CompiledUnit unit = ((QvtDocumentProvider)getDocumentProvider()).getCompiledModule();
+        if(unit != null) {
+        	refresh(unit);
+        }
     }
     
-    public void selectionChanged(final TextSelection selection) {
+    void selectionChanged(final TextSelection selection) {
         if (myTreeViewer != null && !myTreeViewer.getControl().isDisposed()) {
             myTreeViewer.removeSelectionChangedListener(myOutlineSelectionListener);
             
-            myOutlineSelector.selectCorrespondingNode(selection);
+            try {
+	            if(isOutlineVisible()) {            
+	            	myOutlineSelector.selectCorrespondingNode(selection);
+	            }
+            } catch(RuntimeException e) {
+            	Activator.log(e);
+            }
             
             myTreeViewer.addSelectionChangedListener(myOutlineSelectionListener);
         }
@@ -385,7 +395,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
     }
     
     
-    private void refresh() {
+    private void refresh(final CompiledUnit unit) {
         IWorkbenchPartSite s = getSite();
         if (s == null) {
             return;
@@ -398,12 +408,13 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
         s.getShell().getDisplay().syncExec(new Runnable() {
             public void run() {
             	if (myTreeViewer != null && !myTreeViewer.getControl().isDisposed()) {
-                    CompiledUnit unit = ((QvtDocumentProvider)getDocumentProvider()).getCompiledModule();
                     if (unit != null) {
                     	QvtOutlineInput input = (QvtOutlineInput) myTreeViewer.getInput();
                     	input.compilationUnitUpdated(unit);
                         myTreeViewer.refresh();
-                        selectionChanged((TextSelection)getSelectionProvider().getSelection());
+                        if(getSelectionProvider() != null) {
+                        	selectionChanged((TextSelection)getSelectionProvider().getSelection());
+                        }
                     }
                 }
             }
@@ -501,7 +512,22 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
 		}
 		return false;
 	}    
-    
+ 
+	private boolean isOutlineVisible() {
+		if(getSite() == null) {
+			return false;
+		}
+		
+		if(getSite().getPage() != null) {
+	    	IViewPart findView = getSite().getPage().findView("org.eclipse.ui.views.ContentOutline"); //$NON-NLS-1$
+	    	if(findView != null && findView.getViewSite().getPage().isPartVisible(findView)) {
+	    		return true;
+	    	}
+		}
+		
+		return false;
+	}
+		
     private class ASTProvider implements IQVTReconcilingListener {
     	private IDocumentListener fDocListener;
         private boolean fNeedsReconciling = true;

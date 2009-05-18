@@ -69,7 +69,10 @@ public class QvtOutlineNodeSelector {
     			pos.setStartOffset(elem.getStartOffset());
     			pos.setEndOffset(elem.getEndOffset());
     			if (isInside(selection, pos)) {
-    				return node;
+    				List<OutlineNode> nextChildren = node.getChildren();
+    				if(nextChildren == null || nextChildren.isEmpty()) {
+    					return node;
+    				}
     			}
     		}
 
@@ -79,11 +82,18 @@ public class QvtOutlineNodeSelector {
     		}
     	}
     	
+    	CSTNode rootSyntaxElement = root.getSyntaxElement();
+		if(rootSyntaxElement != null && isInside(selection, rootSyntaxElement)) {
+    		return root;
+    	}
     	return null;
     }
     
     private boolean isInside(final TextSelection selection, final CSTNode elementPositions) {
-    	return elementPositions.getStartOffset() <= selection.getOffset() && elementPositions.getStartOffset() + elementPositions.getEndOffset() >= selection.getOffset();
+    	int startOffset = elementPositions.getStartOffset();
+		int endOffset = elementPositions.getEndOffset();
+		int selectedOffset = selection.getOffset();
+		return startOffset <= selectedOffset && endOffset >= selectedOffset;
     }
     
 	private final TreeViewer myViewer;

@@ -24,7 +24,9 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
@@ -32,13 +34,18 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
+import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.types.VoidType;
@@ -46,7 +53,7 @@ import org.eclipse.swt.graphics.Image;
 
 public class QvtOutlineLabelProvider implements ILabelProvider {
 	
-	public static final String RENAMES_NODE = "renamings"; //$NON-NLS-1$
+	public static final String TAGS_NODE = "tags"; //$NON-NLS-1$
     public static final String METAMODELS_NODE = "metamodels"; //$NON-NLS-1$
     public static final String IMPORTS_NODE = "imports"; //$NON-NLS-1$
     public static final String PROPERTIES_NODE = "properties"; //$NON-NLS-1$
@@ -63,22 +70,34 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 			case QvtOutlineNodeType.IMPORTED_MODULES:
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.METAMODEL:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_EXTERNAL_ARCHIVE);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.PACKAGE);
+				
+			case QvtOutlineNodeType.TYPE:	
 			case QvtOutlineNodeType.MAPPING_MODULE:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_PACKAGE);
-			case QvtOutlineNodeType.RENAMES:
+				return CompletionProposalUtil.getImage(CategoryImageConstants.CLASS);
+				
+			case QvtOutlineNodeType.UNIT:
+				return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_SRC_FILE);				
+			case QvtOutlineNodeType.TAGS:
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
-			case QvtOutlineNodeType.RENAME:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_PUBLIC);
+			case QvtOutlineNodeType.TAG:
+				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPDECL);
 			case QvtOutlineNodeType.PROPERTIES:
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.PROPERTY:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_FIELD_PUBLIC);
-			case QvtOutlineNodeType.MAPPING_RULE: {
-				if (node.getSyntaxElement() instanceof MappingQueryCS) {
-					return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_QUERY);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.PROPERTY);
+			case QvtOutlineNodeType.MAPPING_RULE: {				
+				CSTNode syntaxElement = node.getSyntaxElement();
+				if (syntaxElement instanceof MappingMethodCS) {
+					if(syntaxElement instanceof MappingRuleCS) {
+						return CompletionProposalUtil.getImage(CategoryImageConstants.MAPPING);
+					} else if(syntaxElement instanceof MappingQueryCS) {
+						return CompletionProposalUtil.getImage(CategoryImageConstants.IMPERATIVE_OPERATION);
+					} else if(syntaxElement instanceof ConstructorCS) {
+						return CompletionProposalUtil.getImage(CategoryImageConstants.OPERATION);
+					}
 				}
-				return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_MAPPING);
+				
 			}
 			case QvtOutlineNodeType.IMPORTED_LIBRARY:
 				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
@@ -117,6 +136,39 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 
     public static String getRenameLabel(final RenameCS r) {
     	return r.getOriginalName().getStringSymbol() + " := " + r.getSimpleNameCS().getValue(); //$NON-NLS-1$
+    }
+    
+    public static String getTagLabel(final TagCS tag) {
+    	StringBuilder buf = new StringBuilder();
+    	if(tag.getName() != null) {
+    		buf.append(tag.getName().getStringSymbol()).append(' ');
+    	}
+    	
+    	ScopedNameCS scopedNameCS = tag.getScopedNameCS();    	
+    	if(scopedNameCS != null) {
+    		if(scopedNameCS.getTypeCS() != null) {
+    			String type = getTypeAsString(scopedNameCS.getTypeCS());
+    			buf.append(type).append("::"); //$NON-NLS-1$
+    		}
+    		if(scopedNameCS.getName() != null) {
+    			buf.append(scopedNameCS.getName());
+    		}
+    	}
+    	
+    	buf.append(" = "); //$NON-NLS-1$
+    	if(tag.getOclExpressionCS() instanceof StringLiteralExpCS) {
+    		StringLiteralExpCS stringLiteralExpCS = (StringLiteralExpCS) tag.getOclExpressionCS();
+    		buf.append(stringLiteralExpCS.getStringSymbol());
+    	}
+		return buf.toString();
+    }    
+    
+    public static String getClassifierLabel(final ClassifierDefCS classifierDefCS) {
+    	SimpleNameCS simpleNameCS = classifierDefCS.getSimpleNameCS();
+    	if(simpleNameCS != null && simpleNameCS.getValue() != null) {
+    		return simpleNameCS.getValue();
+    	}
+    	return "..."; //$NON-NLS-1$
     }
     
     public static String getPropertyLabel(final ModulePropertyCS prop) {
