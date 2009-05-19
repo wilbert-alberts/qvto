@@ -30,11 +30,11 @@ public class AccessorCollector extends AbstractCallExpSourceCollector {
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
         EClassifier classifier = getCallExpSourceType(leftToken, data);
-        CompletionProposalUtil.addContextProposals(proposals, classifier, QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_DOT), data);
+        CompletionProposalUtil.addContextProposals(proposals, classifier, QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_DOT), false, data);
         if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_ARROW)) {
             CollectionType collection = (CollectionType) classifier;
             EClassifier elementType = collection.getElementType();
-            CompletionProposalUtil.addContextProposals(proposals, elementType, false, data);
+            CompletionProposalUtil.addContextProposals(proposals, elementType, false, false, data);
         }
     }
 

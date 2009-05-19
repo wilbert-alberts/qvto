@@ -66,6 +66,6 @@ public class IteratorShorthandCollector extends AbstractCollector {
         } else {
             elementType = sourceType;
         }
-        CompletionProposalUtil.addContextProposals(proposals, elementType, true, data);
+        CompletionProposalUtil.addContextProposals(proposals, elementType, true, true, data);
     }
 }

@@ -120,7 +120,8 @@ public class CompletionProposalUtil {
         CompletionProposalUtil.addKeywords(proposals, RVALUE_TERMINALS, data);
     }
     
-    public static final void addContextProposals(Collection<ICompletionProposal> proposals, EClassifier owner, boolean addResolveFamily, QvtCompletionData data) {
+    public static final void addContextProposals(Collection<ICompletionProposal> proposals, EClassifier owner, 
+    		boolean addResolveFamily, boolean isImplicitSource, QvtCompletionData data) {
         CompletionProposalUtil.addStructuralFeatures(proposals, owner, data);
         CompletionProposalUtil.addOperations(proposals, owner, data);
         CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.MAPPING_CALL_TERMINALS, data);
@@ -130,7 +131,8 @@ public class CompletionProposalUtil {
         }
         if (addResolveFamily) {
             CompletionProposalUtil.addKeyword(proposals, QvtOpLPGParsersym.TK_late, data);
-            CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS, data);
+            int[] resolveTerminals = isImplicitSource ? LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS : LightweightParserUtil.RESOLVE_FAMILY_TERMINALS; 
+            CompletionProposalUtil.addKeywords(proposals, resolveTerminals, data);
         }
     }
     
