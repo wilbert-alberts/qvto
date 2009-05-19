@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -98,7 +99,8 @@ public class TestQvtInterpreter extends TestTransformation {
             } else {
             	int i = 0;            	
             	for (Object object : output.getOutParamValues()) {
-            		ModelExtentContents outExtent = new ModelParameterExtent((EObject)object, null).getContents();            		
+            		ModelExtentContents outExtent = new ModelParameterExtent(
+            				Collections.singletonList((EObject) object), null, null).getContents();            		
             		URI extentURI = saveModel("extent.param" + (++i), outExtent, new EclipseFile(transformation));            		
 					result.put(outExtent, extentURI);
             	}
