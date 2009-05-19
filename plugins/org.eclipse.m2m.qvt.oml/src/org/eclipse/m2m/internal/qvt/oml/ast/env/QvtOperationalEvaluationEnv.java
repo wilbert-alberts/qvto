@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapt
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackTraceBuilder;
@@ -47,6 +48,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -433,8 +435,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			assert model != null;
 			targetExtent = model.getExtent();			
 		}
-				
-		targetExtent.addObject(newObject);
+		
+		if (isReadonlyGuardEnabled()) {
+			targetExtent.guardAddObject(newObject);
+		}
+		else {
+			targetExtent.addObject(newObject);
+		}
 		return newObject;
 	}
 
@@ -481,7 +488,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			eStructuralFeature = shadow.getProperty();
 		}
 
-		checkReadonlyGuard(eStructuralFeature, exprValue, owner);
+		if (isReadonlyGuardEnabled()) {
+			checkReadonlyGuard(eStructuralFeature, exprValue, owner);
+		}
 		
         if(eStructuralFeature.getEType() instanceof CollectionType) {
         	// OCL collection type used directly, set in module properties
@@ -540,6 +549,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         } else {
         	owner.eUnset(eStructuralFeature);
         }
+	}
+
+	private boolean isReadonlyGuardEnabled() {
+		return getContext().getSessionData() != null
+				&& getContext().getSessionData().getValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED) == Boolean.TRUE;
 	}
 
 	@SuppressWarnings("unchecked")

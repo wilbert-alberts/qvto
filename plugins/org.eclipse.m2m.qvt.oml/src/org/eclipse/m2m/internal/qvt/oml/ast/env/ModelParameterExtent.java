@@ -56,7 +56,7 @@ public class ModelParameterExtent {
 		myAdditionalEObjects = new ArrayList<EObject>(INITIAL_EXTENT_SIZE);
 		myModelParameter = modelParameter;
 		
-		if (myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN) {
+		if (isReadonly()) {
 			for (EObject eObj : myInitialEObjects) {
 				eObj.eAdapters().add(new ReadonlyExtentAdapter());
 			}			
@@ -104,13 +104,19 @@ public class ModelParameterExtent {
 		}
 	}
 		
-	public void addObject(EObject eObject) {
+	public void guardAddObject(EObject eObject) {
 		if (eObject != null) {
-			if (myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN) {
+			if (isReadonly()) {
 				throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
 						myModelParameter.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(myModelParameter.getEType()))); //$NON-NLS-1$
 			}
-
+		}
+		
+		addObject(eObject);
+	}
+	
+	public void addObject(EObject eObject) {
+		if (eObject != null) {
 			myAdditionalEObjects.add(eObject);
 			getInMemoryResource(true).getContents().add(eObject);
 			
@@ -201,7 +207,22 @@ public class ModelParameterExtent {
 	public String toString() {
 		return myInitialEObjects.isEmpty() ? super.toString() : myInitialEObjects.toString();
 	}
+
+	public void dispose() {
+		if (isReadonly()) {
+			for (EObject eObj : myInitialEObjects) {
+				Adapter adapter = EcoreUtil.getAdapter(eObj.eAdapters(), ReadonlyExtentAdapter.class);
+				if (adapter != null) {
+					eObj.eAdapters().remove(adapter);
+				}
+			}			
+		}
+	}
 	
+	private boolean isReadonly() {
+		return myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN;
+	}
+
 	private void purgeContents() {
 		purgeContents(myInitialEObjects, false);
 		purgeContents(myAdditionalEObjects, true);		
