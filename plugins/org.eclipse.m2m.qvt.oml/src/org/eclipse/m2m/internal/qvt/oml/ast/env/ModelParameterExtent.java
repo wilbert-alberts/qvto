@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -32,6 +33,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
+import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * @author sboyko
@@ -40,19 +47,20 @@ import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 public class ModelParameterExtent {
 		
 	public ModelParameterExtent(ResourceSet rs) {
-		this(Collections.<EObject>emptyList(), rs);
+		this(Collections.<EObject>emptyList(), rs, null);
 	}	
 
-	public ModelParameterExtent(EObject initialEObj, ResourceSet rs) {
-		this(Collections.singletonList(initialEObj), rs);
-	}
-			
-	public ModelParameterExtent(List<EObject> initialEObjs, ResourceSet rs) {
+	public ModelParameterExtent(List<EObject> initialEObjs, ResourceSet rs, ModelParameter modelParameter) {
 		myResourceSet = rs;
-		myInitialEObjects = new ArrayList<EObject>();
-		myInitialEObjects.addAll(initialEObjs);
-		
+		myInitialEObjects = new ArrayList<EObject>(initialEObjs);
 		myAdditionalEObjects = new ArrayList<EObject>(INITIAL_EXTENT_SIZE);
+		myModelParameter = modelParameter;
+		
+		if (myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN) {
+			for (EObject eObj : myInitialEObjects) {
+				eObj.eAdapters().add(new ReadonlyExtentAdapter());
+			}			
+		}
 	}
 
 	private Resource getInMemoryResource(boolean createOnDemand) {
@@ -82,13 +90,27 @@ public class ModelParameterExtent {
 	public ResourceSet getResourceSet() {
 		return myResourceSet;
 	}
+	
+	public ModelParameter getModelParameter() {
+		return myModelParameter;
+	}
 
-	public boolean isEmpty() {
-		return myInitialEObjects.isEmpty() && myAdditionalEObjects.isEmpty();
+	public static void throwIfReadonlyExtent(EObject eObj) {
+		Adapter adapter = EcoreUtil.getAdapter(eObj.eAdapters(), ReadonlyExtentAdapter.class);
+		if (adapter != null) {
+			ModelParameter modelParameter = ((ReadonlyExtentAdapter) adapter).getModelParameterExtent().myModelParameter;
+			throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
+					modelParameter.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(modelParameter.getEType()))); //$NON-NLS-1$
+		}
 	}
 		
 	public void addObject(EObject eObject) {
 		if (eObject != null) {
+			if (myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN) {
+				throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
+						myModelParameter.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(myModelParameter.getEType()))); //$NON-NLS-1$
+			}
+
 			myAdditionalEObjects.add(eObject);
 			getInMemoryResource(true).getContents().add(eObject);
 			
@@ -256,7 +278,8 @@ public class ModelParameterExtent {
 	
 	
 	private final List<EObject> myInitialEObjects;
-	private final List<EObject> myAdditionalEObjects; 
+	private final List<EObject> myAdditionalEObjects;
+	private final ModelParameter myModelParameter;
 
 	
 	private static class ExtentContents implements ModelExtentContents {
@@ -357,5 +380,29 @@ public class ModelParameterExtent {
 		}
 	}
 
+	private class ReadonlyExtentAdapter extends AbstractGenericAdapter<ReadonlyExtentAdapter> {
+
+		public ReadonlyExtentAdapter() {
+		}
+		
+		public ModelParameterExtent getModelParameterExtent() {
+			return ModelParameterExtent.this;
+		}
+		
+		public boolean isAdapterForType(Object type) {	
+			return ReadonlyExtentAdapter.class == type;
+		}
+
+	    @Override
+	    public boolean equals(Object obj) {
+	        return obj instanceof ReadonlyExtentAdapter;
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return ReadonlyExtentAdapter.class.hashCode();
+	    }
+	    
+	}
 
 }

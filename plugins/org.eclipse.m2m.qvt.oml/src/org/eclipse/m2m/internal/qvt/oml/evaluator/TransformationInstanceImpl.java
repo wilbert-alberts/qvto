@@ -56,9 +56,9 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
     			fChangeGuards = new LinkedList<QvtChangeRecorder>();
     		}
     		
-			QvtChangeRecorder changeRecorder = new QvtChangeRecorder(parameter);
-			fChangeGuards.add(changeRecorder);
-			changeRecorder.beginRecording(extent.getExtent().getInitialObjects());
+//			QvtChangeRecorder changeRecorder = new QvtChangeRecorder(parameter);
+//			fChangeGuards.add(changeRecorder);
+//			changeRecorder.beginRecording(extent.getExtent().getInitialObjects());
     	}
 	}
 	

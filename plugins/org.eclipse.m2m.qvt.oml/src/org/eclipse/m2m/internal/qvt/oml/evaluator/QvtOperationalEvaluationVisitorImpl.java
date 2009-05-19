@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -894,7 +895,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (evalResult.getModelExtents().isEmpty()) {
             if (callResult.myResult instanceof EObject) {
                 // compatibility reason, make the main() operation return value available in an extent
-            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult, null);
+            	ModelParameterExtent modelParameter = new ModelParameterExtent(
+            			Collections.singletonList((EObject) callResult.myResult), null, null);
                 evalResult.getModelExtents().add(modelParameter.getContents());
             } else {
                 return callResult.myResult;

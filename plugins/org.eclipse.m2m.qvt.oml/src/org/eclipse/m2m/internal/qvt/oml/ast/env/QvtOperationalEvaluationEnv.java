@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
@@ -471,7 +472,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if(target instanceof ModuleInstance) {
 			ModuleInstance moduleTarget = (ModuleInstance) target;
 			owner = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
-		}		
+		}
 		
 		if (eStructuralFeature instanceof ContextualProperty) {
 			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
@@ -479,6 +480,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			owner = shadow.getPropertyRuntimeOwner(owner);
 			eStructuralFeature = shadow.getProperty();
 		}
+
+		checkReadonlyGuard(eStructuralFeature, exprValue, owner);
 		
         if(eStructuralFeature.getEType() instanceof CollectionType) {
         	// OCL collection type used directly, set in module properties
@@ -537,6 +540,37 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         } else {
         	owner.eUnset(eStructuralFeature);
         }
+	}
+
+	@SuppressWarnings("unchecked")
+	private void checkReadonlyGuard(EStructuralFeature eStructuralFeature, Object exprValue, EObject owner) {
+		EObject auxParent = owner;
+		while (auxParent != null) {
+			ModelParameterExtent.throwIfReadonlyExtent(auxParent);
+			auxParent = auxParent.eContainer();
+		}
+
+		if (eStructuralFeature instanceof EReference && ((EReference) eStructuralFeature).isContainment()) {
+			Collection<EObject> assignedObjects = new ArrayList<EObject>();
+			if (exprValue instanceof EObject) {
+				assignedObjects.add((EObject) exprValue);
+			}
+			else if (exprValue instanceof Collection<?>) {
+				for (Object element : (Collection<Object>) exprValue) {
+					if (element instanceof EObject) {
+						assignedObjects.add((EObject) element);
+					}
+				}
+			}
+			
+			for (EObject eObj : assignedObjects) {
+				auxParent = eObj;
+				while (auxParent != null) {
+					ModelParameterExtent.throwIfReadonlyExtent(auxParent);
+					auxParent = auxParent.eContainer();
+				}
+			}
+		}
 	}
 
 
