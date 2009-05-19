@@ -29,8 +29,8 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml.ui"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
-		suite.addTest(AllEditorTests.suite());
         suite.addTest(CompletionTests.suite());
+		suite.addTest(AllEditorTests.suite());
 		//$JUnit-END$
 		return suite;
 	}
