@@ -194,7 +194,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 				if(nextArg == null || nextArg.getContent().isEmpty()) {
 					throw new IllegalArgumentException("Non-empty model argument is required"); //$NON-NLS-1$
 		    	} else {
-		    		extent = new ModelParameterExtent(nextArg.getContent(), compilerRS);
+		    		extent = new ModelParameterExtent(nextArg.getContent(), compilerRS, modelParam);
 		    	}
 				
 			} else {
