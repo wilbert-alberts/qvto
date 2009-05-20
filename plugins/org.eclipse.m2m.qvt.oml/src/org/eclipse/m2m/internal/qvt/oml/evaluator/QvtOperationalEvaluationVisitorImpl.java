@@ -687,7 +687,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(vTable != null) {
 			EClassifier sourceEClass = getEvaluationEnvironment().getType(source);
 			if(sourceEClass != null) {
-				actualOperation = vTable.lookupActualOperation(sourceEClass, getEnvironment());
+				InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+				EOperation oper = vTable.lookupActualOperation(sourceEClass, getEnvironment(), internEnv);
+				if(oper != null) {
+					actualOperation = oper;
+				}
 			}
 		}
 		return actualOperation;

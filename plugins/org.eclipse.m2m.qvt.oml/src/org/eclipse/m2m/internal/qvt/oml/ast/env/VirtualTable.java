@@ -21,6 +21,8 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
 
@@ -81,12 +83,12 @@ abstract class VirtualTable implements IVirtualOperationTable {
 	}
 
 	@SuppressWarnings("unchecked")	
-	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env) {
-		return lookupActualOperation(actualContextType, env, null);
+	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, InternalEvaluationEnv evalEnv) {
+		return lookupActualOperation(actualContextType, env, null, evalEnv);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope) {
+	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope, InternalEvaluationEnv evalEnv) {
 		if(actualContextType == null || env == null) {
 			throw new IllegalArgumentException();
 		}
@@ -105,21 +107,25 @@ abstract class VirtualTable implements IVirtualOperationTable {
 		if(scope == null) {
 			for (EOperation nextOperation : getModuleScopeOperations(scope)) {
 				if(env.getUMLReflection().getOwningClassifier(nextOperation) == actualContextType) {
-					return nextOperation;
+					if(isOperationInScope(nextOperation, evalEnv)) {
+						return nextOperation;
+					}
 				}
 			}
 		}
 		
 		for (EOperation nextOperation : getOperations()) {
 			if(env.getUMLReflection().getOwningClassifier(nextOperation) == actualContextType) {
-				return nextOperation;
+				if(isOperationInScope(nextOperation, evalEnv)) {
+					return nextOperation;
+				}
 			} 
 		}
 
 		if(actualContextType instanceof EClass) {
 			// try lookup in actual type's super-types for the closest match
 			for (EClass superClass : ((EClass)actualContextType).getESuperTypes()) {
-				EOperation superOperation = lookupActualOperation(superClass, env, scope);
+				EOperation superOperation = lookupActualOperation(superClass, env, scope, evalEnv);
 				if(superOperation != null) {
 					return superOperation;
 				}
@@ -155,5 +161,21 @@ abstract class VirtualTable implements IVirtualOperationTable {
 	
 	private Collection<EOperation> getOperations() {
 		return fOperations != null ? fOperations : Collections.<EOperation>emptySet();
+	}
+	
+	private boolean isOperationInScope(EOperation operation, InternalEvaluationEnv evalEnv) {
+		if(evalEnv != null && operation != null) {
+			Module module = QvtOperationalParserUtil.getOwningModule(operation);
+			if(module != null) {
+				ThisInstanceResolver thisResolver = evalEnv.getThisResolver();
+				return thisResolver != null && thisResolver.getThisInstanceOf(module) != null;
+			} else {
+				// coming from metamodel or the OCL Standard Library
+				// call-able in any scope
+				return true;
+			}
+		}
+			
+		return false;
 	}
 }

@@ -56,12 +56,13 @@ public interface IVirtualOperationTable {
 	 *            different from the owning type resolved at compilation time
 	 * @param env
 	 *            parsing environment used for type, operation resolution
+	 * @param evalEnv TODO
 	 * @return the resulting operation or <code>null</code> if no one was
 	 *         found.
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
 	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env);
+	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, InternalEvaluationEnv evalEnv);
 
 	/**
 	 * Performs actual operation lookup according to virtual semantics for the
@@ -81,11 +82,11 @@ public interface IVirtualOperationTable {
 	 *            the module in which the resulting operation was manifested as
 	 *            visible by previous call to
 	 *            {@link #addOperationInModule(EOperation, Module)}
-	 * 
+	 * @param evalEnv TODO
 	 * @return the resulting operation or <code>null</code> if no one was
 	 *         found.
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
 	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope);	
+	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope, InternalEvaluationEnv evalEnv);	
 }
