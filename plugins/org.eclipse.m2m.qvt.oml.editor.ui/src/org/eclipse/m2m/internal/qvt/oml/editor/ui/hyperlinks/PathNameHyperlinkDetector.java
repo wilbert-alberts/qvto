@@ -84,7 +84,10 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					} else if(cstNode instanceof MappingModuleCS) {
 						MappingModuleCS moduleCS = (MappingModuleCS) cstNode;
 						if(moduleCS.getHeaderCS() != null) {
-							cstNode = moduleCS.getHeaderCS(); 
+							cstNode = moduleCS.getHeaderCS();
+							if(moduleCS.getHeaderCS().getPathNameCS() != null) {
+								cstNode = moduleCS.getHeaderCS().getPathNameCS(); 
+							}
 						}
 					} else if(cstNode instanceof ClassifierDefCS) {
 						cstNode = ((ClassifierDefCS) cstNode).getSimpleNameCS();
