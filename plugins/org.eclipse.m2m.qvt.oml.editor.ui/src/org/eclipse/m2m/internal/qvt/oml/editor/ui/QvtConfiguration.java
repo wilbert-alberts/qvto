@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
@@ -99,7 +100,8 @@ public class QvtConfiguration extends SourceViewerConfiguration {
         myContentAssistant = new ContentAssistant();
         
         QvtCompletionProcessor processor = new QvtCompletionProcessor(myEditor, sourceViewer, myContentAssistant);
-//        QvtTemplateCompletionProcessor processor = new QvtTemplateCompletionProcessor(); 
+//        QvtTemplateCompletionProcessor processor = new QvtTemplateCompletionProcessor();
+		myContentAssistant.setRestoreCompletionProposalSize(getSettings("completion_proposal_size")); //$NON-NLS-1$
         myContentAssistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
         myContentAssistant.setContentAssistProcessor(processor, QvtPartitionScanner.QVT_STRING);
         myContentAssistant.setDocumentPartitioning(QvtPartitionScanner.QVT_PARTITIONING);
@@ -147,7 +149,15 @@ public class QvtConfiguration extends SourceViewerConfiguration {
     	return detectors.toArray(new IHyperlinkDetector[detectors.size()]);
     }
     
-    private QvtDoubleClickStrategy doubleClickStrategy;
+	private IDialogSettings getSettings(String sectionName) {
+		IDialogSettings settings= Activator.getDefault().getDialogSettings().getSection(sectionName);
+		if (settings == null)
+			settings= Activator.getDefault().getDialogSettings().addNewSection(sectionName);
+
+		return settings;
+	}
+
+	private QvtDoubleClickStrategy doubleClickStrategy;
     private QvtScanner scanner;
     private ColorManager myColorManager;
     private ContentAssistant myContentAssistant;
