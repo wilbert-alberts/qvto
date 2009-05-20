@@ -457,6 +457,8 @@ public class QvtOperationalVisitorCS
 			for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
 				Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
 				if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
+					moduleQualifier.setAst(extendedModule);
+					
 					EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
 					EOperation operation = null;
 					try { 
@@ -1662,7 +1664,8 @@ public class QvtOperationalVisitorCS
     
     
 	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {        
-        Module module = QvtOperationalParserUtil.createModule(moduleCS);        
+        Module module = QvtOperationalParserUtil.createModule(moduleCS);
+        moduleCS.setAst(module);
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
         // AST binding
@@ -1850,6 +1853,8 @@ public class QvtOperationalVisitorCS
 			astNode.setEndPosition(ownedTagCS.getEndOffset());
 			
 			module.getOwnedTag().add(ownedTag);
+			
+			scopedNameCS.setAst(element);
 		}
 	}
 
@@ -2139,6 +2144,10 @@ public class QvtOperationalVisitorCS
 		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eFeature);
 		astNode.setStartPosition(propCS.getStartOffset());
 		astNode.setEndPosition(propCS.getEndOffset());
+		
+        if(myCompilerOptions.isGenerateCompletionData()) {
+    		ASTSyntheticNodeAccess.setCST(astNode, propCS);
+        }
 		
 		// handle stereotype qualifiers
 		Set<String> handledStereotypes = new HashSet<String>(2);
@@ -2528,6 +2537,11 @@ public class QvtOperationalVisitorCS
         
 		module.setName(unitSimpleName);
 		module.setNsPrefix(unitSimpleName);
+		
+		headerCS.setAst(module);
+		if(headerCS.getPathNameCS() != null) {
+			headerCS.getPathNameCS().setAst(module);
+		}
 		
 		if (module instanceof OperationalTransformation) {
 		    visitOperationalTransformationSignature(headerCS, env, (OperationalTransformation) module);
