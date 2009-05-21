@@ -10,7 +10,7 @@ windowTitle="QVTo Javadoc";
 groupTitle="QVTOo";
 
 # files to exclude from javadoc process - use Ant syntax
-javadocExclusions="<exclude name=\"**/internal/**\"/> <exclude name=\"**/examples/**\"/> <exclude name=\"**/tests/**\"/>";
+javadocExclusions="<exclude name=\"**/internal/**\"/> <exclude name=\"**/examples/**\"/> <exclude name=\"**/tests/**\"/> <exclude name=\"**/ocl.legacy.libraries/**\"/>";
 
 # END CUSTOMIZATIONS
 
