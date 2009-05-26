@@ -3506,7 +3506,18 @@ public class QvtOperationalVisitorCS
 		if(mappingParam != null) {
 			mappingParam.setExtent(typeSpec.myExtent);
 			if (mappingParam.getExtent() == null) {
-				mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+				
+				boolean isEntryPoint = false;
+				if (paramCS.eContainer() instanceof MappingDeclarationCS) {
+					isEntryPoint = QvtOperationalEnv.MAIN.equals(((MappingDeclarationCS) paramCS.eContainer()).getSimpleNameCS().getValue());
+				}
+				
+				if (isEntryPoint) {
+					mappingParam.setExtent(env.resolveModelParameterDeprecated(typeSpec.myType, directionKind));
+				}
+				else {
+					mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+				}
 				if (mappingParam.getExtent() == null && directionKind == DirectionKind.OUT) {
 					env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
 				}

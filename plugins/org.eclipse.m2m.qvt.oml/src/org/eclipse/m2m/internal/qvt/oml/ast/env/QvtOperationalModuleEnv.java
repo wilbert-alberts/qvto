@@ -86,7 +86,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		
 		List<ModelParameter> myModelParameters = getModelParameters();
 		for (ModelParameter modelParam : myModelParameters) {
-			if (directionKind == DirectionKind.OUT) {
+			if (directionKind != DirectionKind.IN) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
 				}
@@ -116,7 +116,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		List<ModelParameter> modelParameters = getModelParameters();
 		List<String> result = new ArrayList<String>(modelParameters.size());
 		for (ModelParameter modelParam : modelParameters) {
-			if (directionKind == DirectionKind.OUT) {
+			if (directionKind != DirectionKind.IN) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
 				}
@@ -138,7 +138,48 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		return findModelParameter(type, directionKind, getModelParameters());
 	}
 	
+	public ModelParameter resolveModelParameterDeprecated(EClassifier type, DirectionKind directionKind) {
+		if (!isMayBelongToExtent(type)) {
+			return null;
+		}
+		return findModelParameterDeprecated(type, directionKind, getModelParameters());
+	}
+	
 	static ModelParameter findModelParameter(EClassifier type, DirectionKind directionKind, 
+			Collection<ModelParameter> modelParameters) {
+		EObject rootContainer = EcoreUtil.getRootContainer(type);
+		
+		// lookup explicit extent 
+		for (ModelParameter modelParam : modelParameters) {
+			if (directionKind != DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			
+			ModelType modelType = QvtOperationalUtil.getModelType(modelParam);
+			if(modelType != null) {
+				List<EPackage> metamodels = modelType.getMetamodel();
+				if (!metamodels.isEmpty() && rootContainer == metamodels.get(0)) {
+					return modelParam;
+				}
+			}
+		}
+		
+		// lookup implicit extent 
+		for (ModelParameter modelParam : modelParameters) {
+			if (directionKind != DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			return modelParam;
+		}
+		
+		return null;
+	}    
+    
+	static ModelParameter findModelParameterDeprecated(EClassifier type, DirectionKind directionKind, 
 			Collection<ModelParameter> modelParameters) {
 		EObject rootContainer = EcoreUtil.getRootContainer(type);
 		
