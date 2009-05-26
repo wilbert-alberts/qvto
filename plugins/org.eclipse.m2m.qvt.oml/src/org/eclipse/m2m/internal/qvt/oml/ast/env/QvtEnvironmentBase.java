@@ -463,6 +463,9 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 				result.add(nextImportedEnv);
 				result.addAll(nextImportedEnv.getAllExtendedModules());
 			} 
+			// safety check for the case somebody in the hierarchy tries to extend us 
+			result.remove(this);
+			
 			fAllExtendedModuleEnvs = Collections.unmodifiableList(new ArrayList<QvtEnvironmentBase>(result));			
 		}
 		
@@ -586,9 +589,8 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 				
 				if(ownerType == nextOwner || !isContextual) {
 					if(definingModule != next.getEContainingClass()) {
-						// FIXME - skip imported by access 
-						// we try to override operation from extended module
-						if(!usesImplicitExtendsImport()) {						
+						// we try to override operation only from extended modules
+						if(!usesImplicitExtendsImport() && isImportedByExtends(next)) {
 							result = new CollisionStatus(next, CollisionStatus.OVERRIDES);
 						}
 					} else {
@@ -604,6 +606,20 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 	private boolean isImportedByAccess(EOperation operation) {
 		Module definingModule = QvtOperationalParserUtil.getOwningModule(operation);
 		for (QvtEnvironmentBase nextImport : getImportsByAccess()) {
+			if(definingModule == nextImport.getModuleContextType()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isImportedByExtends(EOperation operation) {
+		Module definingModule = QvtOperationalParserUtil.getOwningModule(operation);
+		if(definingModule == null) {
+			return false;
+		}
+		
+		for (QvtEnvironmentBase nextImport : getAllExtendedModules()) {
 			if(definingModule == nextImport.getModuleContextType()) {
 				return true;
 			}
