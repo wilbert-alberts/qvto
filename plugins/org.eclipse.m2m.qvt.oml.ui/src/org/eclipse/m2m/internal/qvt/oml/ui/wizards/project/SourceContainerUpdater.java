@@ -64,7 +64,11 @@ class SourceContainerUpdater {
 		IStatus result = Status.OK_STATUS;
 		
     	if(srcContainerPath == null || srcContainerPath.length() == 0) {
-    		return QVTUIPlugin.createStatus(IStatus.INFO, Messages.SourceContainerUpdater_ProjectAsSourceFolderNotRecommened);
+    		// Remark:
+    		// Allow this as we can avoid the problem with the source folder interference 
+    		// with namespaces when deployed
+    		
+    		//return QVTUIPlugin.createStatus(IStatus.INFO, Messages.SourceContainerUpdater_ProjectAsSourceFolderNotRecommened);
     	} else if(srcContainerPath.trim().length() == 0) {
     		return QVTUIPlugin.createStatus(IStatus.ERROR, Messages.SourceContainerUpdater_NonBlankSourceFolderExpected); 
     	} else {
