@@ -39,10 +39,12 @@ mapping inout EPackage::updateSelfWithResult() : EClass {
 mapping inout EPackage::passedNullInout(inout eClass : EClass ) : EClass {
 	init {
 		assert fatal (eClass.oclIsUndefined());
-		result := object eClass : EClass@outModel { 
+		result := object eClass : EClass { 
 			name := 'passedNullInout';
 		};
 		
+		assert fatal (outModel.objects()->includes(result));
+
 		self.eClassifiers += eClass;
 	}
 	
