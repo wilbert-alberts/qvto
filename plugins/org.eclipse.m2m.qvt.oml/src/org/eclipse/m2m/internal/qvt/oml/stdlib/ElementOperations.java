@@ -240,9 +240,9 @@ public class ElementOperations extends AbstractContextualOperations {
 			EObject subObject = iter.next();
 			boolean accept = filterFlag == FILTER_ALL;
 			if(FILTER_OF_KIND == filterFlag) {
-				accept = evalEnv.isKindOf(eObject, type);
+				accept = evalEnv.isKindOf(subObject, type);
 			} else if(FILTER_OF_TYPE == filterFlag) {
-				accept = eObject.eClass() == type;					
+				accept = subObject.eClass() == type;					
 			}
 			if(accept) {
 				result.add(subObject);
@@ -256,9 +256,9 @@ public class ElementOperations extends AbstractContextualOperations {
 		for(EObject subObject : eObject.eContents()) {
 			boolean accept = filterFlag == FILTER_ALL;
 			if(FILTER_OF_KIND == filterFlag) {
-				accept = evalEnv.isKindOf(eObject, type);
+				accept = evalEnv.isKindOf(subObject, type);
 			} else if(FILTER_OF_TYPE == filterFlag) {
-				accept = eObject.eClass() == type;					
+				accept = subObject.eClass() == type;					
 			}
 			if(accept) {
 				result.add(subObject);
