@@ -252,35 +252,6 @@
     </editor>
   </extension>    
 
-
-   <extension
-         id="org.eclipse.m2m.qvt.oml.examples.omg.OMG_Examples"
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            category="org.eclipse.ui.Examples/org.eclipse.m2m.qvt.oml.samples.category"
-            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
-            icon="icons/pr-MDA.gif"
-            id="org.eclipse.m2m.qvt.oml.examples.omg.OMG_Examples"
-            name="%OMG_Examples_name"
-            project="true">
-      </wizard>
-   </extension>
-   <extension
-         point="org.eclipse.emf.common.ui.examples">
-      <example
-            pageImage="icons/pr-MDA_wizard.gif"
-            wizardID="org.eclipse.m2m.qvt.oml.examples.omg.OMG_Examples">
-         <projectDescriptor
-               contentURI="projects/org.eclipse.m2m.qvt.oml.examples.omg/"
-               description="%OMG_Examples_description"
-               name="org.eclipse.m2m.qvt.oml.examples.omg">
-         </projectDescriptor>
-         <fileToOpen
-               location="org.eclipse.m2m.qvt.oml.examples.omg/transform/Uml2Rdb.qvto">
-         </fileToOpen>
-      </example>
-   </extension>
-
    <extension
          id="org.eclipse.m2m.qvt.oml.examples.Blackbox"
          point="org.eclipse.ui.newWizards">
