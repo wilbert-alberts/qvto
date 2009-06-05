@@ -175,7 +175,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         outConsole.add(consoleLogger.getBuffer().toString());
     }
         
-    private static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
+    public static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
     		List<TargetUriData> targetData, final String traceFileName, IContext context) throws Exception {
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);

@@ -30,13 +30,17 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
+import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -305,8 +309,11 @@ public class QvtoAntTransformationTask extends Task {
 	                	throw new MdaException(status);
 	                }      	
 	        		
-	        		QvtLaunchConfigurationDelegateBase.doLaunch(transformation,
-	        				inObjects, targetData, getConfiguration(), getTraceUri(QvtoAntTransformationTask.this));
+					Context createContext = QvtLaunchUtil.createContext(getConfiguration());
+					createContext.setLog(createQVTLog());
+					
+					QvtLaunchConfigurationDelegateBase.doLaunch(transformation,
+						inObjects, targetData, getTraceUri(QvtoAntTransformationTask.this), createContext);
 	        		
 	        		transformation.cleanup();
 	            }
@@ -317,11 +324,35 @@ public class QvtoAntTransformationTask extends Task {
 	        r.run();
 	    } 
 	    catch (Exception e) {
-	        e.printStackTrace();
+	    	if(e instanceof RuntimeException && e instanceof QvtRuntimeException == false) {
+	    		e.printStackTrace();
+	    	}
+
 	        throw new BuildException(StatusUtil.getExceptionMessages(e), e);
 	    }
 	
-	    System.out.println(NLS.bind(Messages.TransformationExecuted, getModuleURI(this)));   
+	    log(NLS.bind(Messages.TransformationExecuted, getModuleURI(this)));   
+	}    
+
+	private Log createQVTLog() {
+		return new Log() {
+
+			public void log(int level, String message, Object param) {
+				log(message, param);
+			}
+
+			public void log(int level, String message) {
+				log(message);
+			}
+
+			public void log(String message, Object param) {
+				QvtoAntTransformationTask.this.log(message + " , data:" + String.valueOf(param)); //$NON-NLS-1$
+			}
+
+			public void log(String message) {
+				QvtoAntTransformationTask.this.log(message);					
+			}
+		};
 	}    
 	
 	/**
