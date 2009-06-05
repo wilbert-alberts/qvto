@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.m2m.qvt.oml.samples" version="2">
+    <resource path="src_generated/simpleuml/presentation/SimpleumlEditor.java" type="simpleuml.presentation.SimpleumlEditor">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="initializeEditingDomain()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src_generated/simpleuml/presentation/SimpleumlModelWizard.java" type="simpleuml.presentation.SimpleumlModelWizard">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="FORMATTED_FILE_EXTENSIONS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="FILE_EXTENSIONS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
