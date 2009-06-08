@@ -44,6 +44,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
+		suite.addTestSuite(IntermediatePropertyCleanupTest.class);
 		suite.addTest(AllCompileTests.suite());
 		suite.addTest(AllCallAPITests.suite());
 				
