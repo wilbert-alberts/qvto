@@ -734,7 +734,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
-    	return doVisitTransformation(transformation);
+    	try {
+    		return doVisitTransformation(transformation);
+    	} finally {
+    		IntermediatePropertyModelAdapter.cleanup(transformation);
+		}    		
     }
     
     public Object visitModule(Module module) {
@@ -751,9 +755,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			e.printQvtStackTrace(printWriter);
 			getContext().getLog().log(strWriter.getBuffer().toString());
 			throw e;
+		} finally {
+			IntermediatePropertyModelAdapter.cleanup(module);
 		}
     }        
-    
+        
     /**
 	 * Executes the given helper operation with actual arguments passed.
 	 * 

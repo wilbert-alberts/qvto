@@ -12,9 +12,12 @@
 
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
@@ -24,6 +27,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -116,4 +121,24 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
 			return owner;
 		}
 	}
+	/* https://bugs.eclipse.org/bugs/show_bug.cgi?id=279251 */
+    public static void cleanup(Module module) {
+    	cleanup(module, new HashSet<Module>());
+    }
+
+    private static void cleanup(Module module, Set<Module> processed) {
+		Adapter adapter = EcoreUtil.getExistingAdapter(module, IntermediatePropertyModelAdapter.class);
+		if(adapter != null) {
+			module.eAdapters().remove(adapter);
+		}
+		
+		processed.add(module);
+		
+    	for(ModuleImport nextImport : module.getModuleImport()) {
+    		Module importedModule = nextImport.getImportedModule();
+    		if(!processed.contains(importedModule)) {
+    			cleanup(importedModule, processed);
+    		}
+    	}
+    }
 }

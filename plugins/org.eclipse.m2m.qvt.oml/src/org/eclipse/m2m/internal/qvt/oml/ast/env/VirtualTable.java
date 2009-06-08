@@ -28,8 +28,9 @@ import org.eclipse.ocl.Environment;
 
 /**
  * Virtual table class grouping related virtual operations to the table  owning operation.
+ * @since 2.0
  */
-abstract class VirtualTable implements IVirtualOperationTable {
+public abstract class VirtualTable implements IVirtualOperationTable {
 	private List<EOperation> fOperations;
 	private Map<Module, List<EOperation>> fModule2OperationsMap;
 	
@@ -159,7 +160,7 @@ abstract class VirtualTable implements IVirtualOperationTable {
 		return fModule2OperationsMap.get(module); 
 	}
 	
-	private Collection<EOperation> getOperations() {
+	public Collection<EOperation> getOperations() {
 		return fOperations != null ? fOperations : Collections.<EOperation>emptySet();
 	}
 	
