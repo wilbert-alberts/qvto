@@ -1,7 +1,7 @@
 !*** M2M QVT Operational (QVTO) map ********************************************
 
 !*** QVT features ***************************************************************************
-feature@org.eclipse.m2m.qvt.oml.sdk=v20090316-1930,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.sdk-feature
+feature@org.eclipse.m2m.qvt.oml.sdk=v20090701-2200,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.sdk-feature
 feature@org.eclipse.m2m.qvt.oml=v20090316-1930,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.feature
 feature@org.eclipse.m2m.qvt.oml.common=v20090410-1820,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.common.feature
 feature@org.eclipse.m2m.qvt.oml.editor=v20090701-2200,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.editor.feature
