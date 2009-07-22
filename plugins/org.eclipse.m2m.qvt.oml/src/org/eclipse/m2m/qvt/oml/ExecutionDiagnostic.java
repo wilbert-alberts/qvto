@@ -26,9 +26,9 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
  * 
  * @since 2.0
  * 
- * @noextend This class is not intended to be subclassed by clients.
+ * @noextend This class is not intended to be sub-classed by clients.
  */
-public final class ExecutionDiagnostic extends BasicDiagnostic {
+public class ExecutionDiagnostic extends BasicDiagnostic {
 
 	/**
 	 * The execution was terminated by failed QVT assertion.
@@ -57,15 +57,15 @@ public final class ExecutionDiagnostic extends BasicDiagnostic {
 
 	private List<ExecutionStackTraceElement> fStackTrace;
 
-	ExecutionDiagnostic(int severity, int code, String message, Object[] data) {
+	protected ExecutionDiagnostic(int severity, int code, String message, Object[] data) {
 		super(severity, SOURCE, code, message, data);
 	}
 
-	ExecutionDiagnostic(int severity, int code, String message) {
+	protected ExecutionDiagnostic(int severity, int code, String message) {
 		super(severity, SOURCE, code, message, null);
 	}
 
-	void setStackTrace(List<? extends ExecutionStackTraceElement> stackElements) {
+	protected void setStackTrace(List<? extends ExecutionStackTraceElement> stackElements) {
 		fStackTrace = new ArrayList<ExecutionStackTraceElement>(stackElements);
 	}
 
