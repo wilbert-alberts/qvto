@@ -19,16 +19,30 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 
 
 public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
+	
+    private Registry fRegistry;	
+	
     public EmfStandaloneMetamodelProvider() {
+    	this(EPackage.Registry.INSTANCE);
     }
+    
+    public EmfStandaloneMetamodelProvider(EPackage.Registry packageRegistry) {
+    	if(packageRegistry == null) {
+    		throw new IllegalArgumentException();
+    	}
+
+    	fRegistry = packageRegistry;
+    }    
     
 	public IMetamodelDesc[] getMetamodels() {
         List<IMetamodelDesc> descs = new ArrayList<IMetamodelDesc>();
-        List<String> uris = new ArrayList<String>(EPackage.Registry.INSTANCE.keySet());
+
+		List<String> uris = new ArrayList<String>(fRegistry.keySet());
         
         Map<String,String> uri2ns = getUriToNamespaceMap();
         
@@ -36,7 +50,7 @@ public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
             String namespace = uri2ns.get(uri);
 
             try {
-                Object pack = EPackage.Registry.INSTANCE.get(uri);
+                Object pack = fRegistry.get(uri);
                 if (pack instanceof EPackage.Descriptor) {
                 	descs.add(new EmfMetamodelDesc((EPackage.Descriptor) pack, uri, namespace));
                 } else if (pack instanceof EPackage) {
