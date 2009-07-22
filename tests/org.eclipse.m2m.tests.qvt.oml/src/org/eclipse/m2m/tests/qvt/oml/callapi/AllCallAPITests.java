@@ -19,9 +19,14 @@ public class AllCallAPITests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for org.eclipse.m2m.tests.qvt.oml.callapi");
 		//$JUnit-BEGIN$
+		suite.addTestSuite(DynamicModelInvocationTest.class);
 		suite.addTestSuite(BasicModelExtentTest.class);
 		suite.addTestSuite(InvocationTest.class);
-		suite.addTestSuite(InvocationExtTest.class);		
+		suite.addTestSuite(InvocationExtTest.class);
+		
+		suite.addTestSuite(Invocation2Test.class);
+		suite.addTestSuite(InvocationExt2Test.class);		
+		
 		//$JUnit-END$
 		return suite;
 	}
