@@ -2598,8 +2598,8 @@ public class QvtOperationalVisitorCS
                 varParam.setName(paramNameCS.getValue());
                 paramNameCS.setAst(varParam);
             } else {
-            	// just set the parameter position, to reduce nulls AST and avoid serialization issues
-                varParam.setName(String.valueOf(headerCS.getParameters().indexOf(paramCS)));
+            	// just set the parameter position, to reduce nulls AST and avoid serialization issues 
+                varParam.setName(QvtEnvironmentBase.GENERATED_NAME_SPECIAL_PREFIX + String.valueOf(headerCS.getParameters().indexOf(paramCS)));
             }
             varParam.setEType(type);
             DirectionKindEnum directionKind = paramCS.getDirectionKind();

@@ -90,7 +90,12 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 	}	
 	
-    private static final String TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX = "$temp_"; //$NON-NLS-1$
+	/**
+	 * Special prefix for generated identifiers
+	 */
+	public static final String GENERATED_NAME_SPECIAL_PREFIX = "$"; //$NON-NLS-1$
+	
+    private static final String TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX = GENERATED_NAME_SPECIAL_PREFIX + "temp_"; //$NON-NLS-1$
     private int myTemporaryNameGeneratorInt = 0;
     /*
      * List of declared variables and implicit variables, including "self".
