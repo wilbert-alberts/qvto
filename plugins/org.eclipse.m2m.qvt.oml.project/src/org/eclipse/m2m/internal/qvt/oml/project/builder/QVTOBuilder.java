@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -49,12 +50,15 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 
 
 
 public class QVTOBuilder extends IncrementalProjectBuilder {
 	
-    public interface BuildListener {
+    public static final String SAVE_AST_XMI = "internal.save.xmi";
+
+	public interface BuildListener {
         void buildPerformed();
     }
 	
@@ -212,6 +216,10 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 
 	        units = compiler.compile(allUnits.toArray(new UnitProxy[allUnits.size()]),
 						options, new SubProgressMonitor(monitor, 1));
+	        
+	        if(shouldSaveXMI()) {
+	        	BinXMISerializer.saveUnitXMI(units);
+	        }
 		}
 		catch(OperationCanceledException e) {
 			throw e;
@@ -312,12 +320,26 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     public static void removeBuildListener(final BuildListener l) {
         ourListeners.remove(l);
     }
-    
-    
+        
     private static void fireBuildEvent() {
         for (BuildListener l : ourListeners) {
             l.buildPerformed();
         }
     }
 
+    private boolean shouldSaveXMI() {
+		try {
+			ICommand buildCommand = NatureUtils.findCommand(getProject(), QVTOProjectPlugin.BUILDER_ID);
+			if(buildCommand != null) {
+				Map<?, ?> arguments = buildCommand.getArguments();
+				// Remark: internal option for saving xmi, used for testing at the moment
+				Object strValue = arguments.get(SAVE_AST_XMI); //$NON-NLS-1$
+				return Boolean.valueOf(String.valueOf(strValue));
+			}
+		} catch (CoreException e) {
+			QVTOProjectPlugin.log(e);
+		}
+
+		return false;		
+    }
 }
