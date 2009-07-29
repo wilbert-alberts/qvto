@@ -31,6 +31,8 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -107,10 +109,12 @@ public class QvtCompilerFacade {
 	}
 	
 	static boolean isEditingInQvtSourceContainer(ITextEditor editor) {
-		if(editor.getEditorInput() == null) {
+		IEditorInput editorInput = editor.getEditorInput();
+		if(editorInput instanceof IFileEditorInput == false) {
 			return false;
 		}
-		IFile file = ((FileEditorInput) editor.getEditorInput()).getFile();
+
+		IFile file = ((FileEditorInput) editorInput).getFile();
 		if(file != null && file.exists()) {
 			try {
 				IContainer srcContainer = QVTOBuilderConfig.getConfig(file.getProject()).getSourceContainer();
