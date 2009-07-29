@@ -27,32 +27,31 @@ public class WorkspaceQvtModule extends QvtModule {
         myModule = null;
         myCompiler = null;
     }
-	
-	@Override
-	public String toString() {
-        return myTransformationFile.getFullPath().toString();
+	    
+    protected CompiledUnit loadModule() throws MdaException {
+        QvtCompilerOptions options = getQvtCompilerOptions();
+        if (options == null) {
+            options = new QvtCompilerOptions();
+        }
+        
+    	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, options, null);  
+        myCompiler = result.getCompiler();
+    	return result.getCompiledModule();
     }
-    
+	
     @Override
-    public Module getModule() throws MdaException {
+    public final Module getModule() throws MdaException {
         if(myModule == null) {
+            myUnit = loadModule();
+            myModule = myUnit.getModules().isEmpty() ? null : myUnit.getModules().get(0);
+            
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
                 options = new QvtCompilerOptions();
-            }
-            
-        	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, options, null);
-        	myUnit = result.getCompiledModule();
-//            QvtEngine engine = QvtEngine.getInstance(myTransformationFile);
-//            myUnit = engine.compileUnit(new EclipseFile(myTransformationFile), getQvtCompilerOptions(), null);
-            
+            }            
             if (!options.isModuleWithErrorAllowed()) {
             	checkModuleErrors(myUnit);
-            }
-
-            // FIXME - 
-            myModule = myUnit.getModules().isEmpty() ? null : myUnit.getModules().get(0);
-            myCompiler = result.getCompiler();
+            }            
         }
         
         return myModule;
@@ -74,8 +73,13 @@ public class WorkspaceQvtModule extends QvtModule {
         return myTransformationFile;
     }
     
+	@Override
+	public String toString() {
+        return myTransformationFile.getFullPath().toString();
+    }    
+    
     private final IFile myTransformationFile;
     private Module myModule;
     private CompiledUnit myUnit;    
-    private QVTOCompiler myCompiler;
+    protected QVTOCompiler myCompiler;
 }
