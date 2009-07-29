@@ -28,19 +28,19 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Aleksandr Igdalov
@@ -54,7 +54,7 @@ public class QvtCompletionData {
         QvtOpLPGParsersym.TK_inherits, QvtOpLPGParsersym.TK_merges, QvtOpLPGParsersym.TK_disjuncts
     };
 
-    private final QvtEditor myEditor;
+    private final ITextEditor myEditor;
     private final ITextViewer myViewer;
     private final IDocument myDocument;
     private final int myOffset;
@@ -72,7 +72,7 @@ public class QvtCompletionData {
 
     private IToken myParentImperativeOperation;
 
-    public QvtCompletionData(QvtEditor editor, ITextViewer viewer, int offset) {
+    public QvtCompletionData(ITextEditor editor, ITextViewer viewer, UnitProxy unit, int offset) {
         myEditor = editor;
         myViewer = viewer;
         myDocument = viewer.getDocument();
@@ -80,9 +80,9 @@ public class QvtCompletionData {
         try {
             myIFile = ((FileEditorInput) myEditor.getEditorInput()).getFile();
             myCharSet = myIFile.getCharset();
-            myCFile = editor.getUnit();
+            myCFile = unit;
             myQvtCompiler = createQvtCompiler();
-            myLexer = myQvtCompiler.createLexer(editor.getUnit());
+            myLexer = myQvtCompiler.createLexer(unit);
 
             myPrsStream = myLexer.getPrsStream();
             getLeftTokenAndCurrentToken();
@@ -98,10 +98,6 @@ public class QvtCompletionData {
     
     public MetamodelRegistry getMetamodelRegistry() {
     	return myQvtCompiler.getKernel().getMetamodelRegistry(myCFile.getURI());
-    }
-
-    public QvtEditor getEditor() {
-        return myEditor;
     }
 
     public ITextViewer getViewer() {
@@ -136,10 +132,6 @@ public class QvtCompletionData {
         return myUserData;
     }
     
-    public IFile getIFile() {
-        return myIFile;
-    }
-
     public UnitProxy getCFile() {
         return myCFile;
     }

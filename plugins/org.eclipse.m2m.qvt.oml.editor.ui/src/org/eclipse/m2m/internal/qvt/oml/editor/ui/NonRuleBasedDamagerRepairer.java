@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
@@ -22,6 +21,7 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextPresentation;
 import org.eclipse.jface.text.presentation.IPresentationDamager;
 import org.eclipse.jface.text.presentation.IPresentationRepairer;
+import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.swt.custom.StyleRange;
 
 public class NonRuleBasedDamagerRepairer
@@ -30,15 +30,17 @@ public class NonRuleBasedDamagerRepairer
     /** The document this object works on */
     protected IDocument fDocument;
     /** The default text attribute if non is returned as data by the current token */
-    protected TextAttribute fDefaultTextAttribute;
-    
-    /**
-     * Constructor for NonRuleBasedDamagerRepairer.
-     */
-    public NonRuleBasedDamagerRepairer(TextAttribute defaultTextAttribute) {
-        Assert.isNotNull(defaultTextAttribute);
+    //protected TextAttribute fDefaultTextAttribute;
 
-        fDefaultTextAttribute = defaultTextAttribute;
+    protected IToken fToken;    
+    
+    
+    public NonRuleBasedDamagerRepairer(IToken token) {
+    	if(token == null) {
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	fToken = token;
     }
 
     /**
@@ -121,7 +123,7 @@ public class NonRuleBasedDamagerRepairer
             presentation,
             region.getOffset(),
             region.getLength(),
-            fDefaultTextAttribute);
+            (TextAttribute) fToken.getData());
     }
 
     /**

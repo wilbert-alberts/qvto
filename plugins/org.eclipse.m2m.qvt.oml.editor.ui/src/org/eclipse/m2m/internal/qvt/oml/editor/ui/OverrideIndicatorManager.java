@@ -1,5 +1,6 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,22 +73,27 @@ class OverrideIndicatorManager implements IQVTReconcilingListener {
 		UMLReflection<?, EClassifier, EOperation, ?, ?, EParameter, ?, ?, ?, ?> uml = 
 			QvtOperationalEnvFactory.INSTANCE.createEnvironment().getUMLReflection();
 				
-		Map<Annotation, Position> annotationMap = new HashMap<Annotation, Position>(50);
+		Map<Annotation, Position> annotationMap = Collections.emptyMap();
 
-		for(MappingModuleCS moduleCS : unit.getUnitCST().getModules()) {
-			for(MappingMethodCS methodCS : moduleCS.getMethods()) {
-				if (progressMonitor.isCanceled()) {
-					return;
-				}
-				
-				if(methodCS.getAst() instanceof ImperativeOperation) {
-					ImperativeOperation imperativeOperation = (ImperativeOperation) methodCS.getAst();
-					if(imperativeOperation.getOverridden() != null) {
-						String text = NLS.bind(Messages.OverrideAnnotationText, SignatureUtil.getOperationSignature(uml, imperativeOperation.getOverridden()));
-						Annotation annotation = new Annotation(ANNOTATION_TYPE, false, text);
-						
-						Position position = new Position(methodCS.getStartOffset(), 1);						
-						annotationMap.put(annotation, position);
+		if(unit != null && unit.getUnitCST() != null) {
+			for(MappingModuleCS moduleCS : unit.getUnitCST().getModules()) {
+				for(MappingMethodCS methodCS : moduleCS.getMethods()) {
+					if (progressMonitor.isCanceled()) {
+						return;
+					}
+					
+					if(methodCS.getAst() instanceof ImperativeOperation) {
+						ImperativeOperation imperativeOperation = (ImperativeOperation) methodCS.getAst();
+						if(imperativeOperation.getOverridden() != null) {
+							String text = NLS.bind(Messages.OverrideAnnotationText, SignatureUtil.getOperationSignature(uml, imperativeOperation.getOverridden()));
+							Annotation annotation = new Annotation(ANNOTATION_TYPE, false, text);
+							
+							Position position = new Position(methodCS.getStartOffset(), 1);
+							if(annotationMap.isEmpty()) {
+								annotationMap = new HashMap<Annotation, Position>();
+							}
+							annotationMap.put(annotation, position);
+						}
 					}
 				}
 			}

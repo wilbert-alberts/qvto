@@ -17,10 +17,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
+import org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.ColorManager;
 import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
 
 /**
  * The activator class controls the plug-in life cycle
@@ -36,7 +38,7 @@ public class Activator extends AbstractUIPlugin {
 	
     private TemplateStore myTemplateStore;
     private ContributionContextTypeRegistry myContextTypeRegistry;
-        
+    private org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.ColorManager fColorManager;
 	
 	/**
 	 * The constructor
@@ -53,6 +55,13 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 	}
+		
+	public synchronized ColorManager getColorManager() {
+		if (fColorManager == null) {
+			fColorManager = new ColorManager(true);
+		}
+		return fColorManager;
+	}	
 
 	/*
 	 * (non-Javadoc)
@@ -60,8 +69,16 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
+		try {
+			plugin = null;
+			
+			if(fColorManager != null) {
+				fColorManager.dispose();
+			}
+
+		} finally {
+			super.stop(context);
+		}
 	}
 
 	/**

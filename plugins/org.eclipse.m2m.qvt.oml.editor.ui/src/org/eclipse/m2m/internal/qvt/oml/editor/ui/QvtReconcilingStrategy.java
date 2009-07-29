@@ -21,6 +21,7 @@ import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 
 public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilingStrategyExtension {
@@ -29,12 +30,14 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
 	private IProgressMonitor myMonitor;
 	private IDocument myDocument;
 	private IQVTReconcilingListener myReconcilingListener;	
-	private final QvtEditor myEditor;
+	private final ITextEditor myEditor;
 	private int myLoggedCompilationExceptionsCount = 0;
 
-    public QvtReconcilingStrategy(final QvtEditor editor) {
+    public QvtReconcilingStrategy(final ITextEditor editor) {
         myEditor = editor;
-        myReconcilingListener = editor;
+        if(editor instanceof IQVTReconcilingListener) {
+			myReconcilingListener = (IQVTReconcilingListener) editor;
+        }
     }
     
     public void setDocument(final IDocument document) {

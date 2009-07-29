@@ -21,7 +21,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks.IHyperlinkDetectorHelper.IDetectionContext;
 import org.eclipse.ocl.cst.CSTNode;
 
@@ -31,8 +30,12 @@ import org.eclipse.ocl.cst.CSTNode;
  */
 public class QvtHyperlinkDetector implements IHyperlinkDetector {
 
-	public QvtHyperlinkDetector(QvtEditor editor) {
-		myEditor = editor;
+	private final QvtDocumentProvider myDocumentProvider;
+	private final IHyperlinkDetectorHelper[] myHelpers;
+
+	
+	public QvtHyperlinkDetector(QvtDocumentProvider documentProvider) {
+		myDocumentProvider = documentProvider;
 		myHelpers = new IHyperlinkDetectorHelper[] {
 				new ImportHyperlinkDetector(),
 				new ModelTypeHyperlinkDetector(),
@@ -46,18 +49,14 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 	}
 
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer, final IRegion region, boolean canShowMultipleHyperlinks) {
-		QvtDocumentProvider documentProvider = getDocumentProvider();
-		if (documentProvider == null) {
-			return null;
-		}
-		CompiledUnit compiledUnit = documentProvider.getCompiledModule();
+		CompiledUnit compiledUnit = myDocumentProvider.getCompiledModule();
 		if (compiledUnit == null) {
 			return null;
 		}
 
 		List<CSTNode> elements = CSTHelper.selectTargetedElements(compiledUnit.getUnitCST(), region);
 		
-		Context context = new Context(documentProvider.getCompiledModule(), region, textViewer);		
+		Context context = new Context(myDocumentProvider.getCompiledModule(), region, textViewer);		
 		
 		for (CSTNode element : elements) {
 			for (IHyperlinkDetectorHelper helper : myHelpers) {
@@ -75,16 +74,7 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		return null;
 	}
 	
-
-	
-	private QvtDocumentProvider getDocumentProvider() {
-		return (QvtDocumentProvider) myEditor.getDocumentProvider();
-	}
-	
-	private final QvtEditor myEditor;
-	
-	private final IHyperlinkDetectorHelper[] myHelpers;
-	
+		
 	/**
 	 * Context reusable for different elements.
 	 */

@@ -52,7 +52,7 @@ public class OpenDeclarationAction extends TextEditorAction {
 		}
 
 		IRegion region = new Region(range.x, range.y);
-		IHyperlink[] links = new QvtHyperlinkDetector(qvtEditor).detectHyperlinks(sourceViewer, region, false);
+		IHyperlink[] links = new QvtHyperlinkDetector(qvtEditor.getQVTDocumentProvider()).detectHyperlinks(sourceViewer, region, false);
 		if(links != null && links.length > 0) {
 			links[0].open();
 		} else {

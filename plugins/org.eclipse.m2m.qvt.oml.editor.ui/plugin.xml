@@ -230,5 +230,25 @@
             textStylePreferenceKey="overrideIndicatorTextStyle"
             textStylePreferenceValue="SQUIGGLES">
 	  </specification>
-	</extension>        
+	</extension>
+	
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.eclipse.m2m.internal.qvt.oml.editor.ui.QVTEditorPreferencesInitializer"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page name="%editorPreferencePage"           
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.QVTEditorPreferencePage"
+            id="org.eclipse.m2m.qvt.oml.editor.ui.preferences.QVTEditorPreferencePage">
+      </page>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page name="%syntaxColorPreferencePage"           
+            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.QVTColorsPreferencePage"
+            category="org.eclipse.m2m.qvt.oml.editor.ui.preferences.QVTEditorPreferencePage"
+            id="org.eclipse.m2m.qvt.oml.editor.ui.preferences.ColoringPreferencePage">
+      </page>
+   </extension>
+   
 </plugin>

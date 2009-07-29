@@ -24,7 +24,10 @@ public class QvtDocumentSetupParticipant implements IDocumentSetupParticipant {
 
 	public void setup(IDocument document) {
 		IDocumentPartitioner partitioner = new FastPartitioner(new QvtPartitionScanner(), new String[] {
-				QvtPartitionScanner.QVT_STRING, QvtPartitionScanner.QVT_COMMENT });
+				QvtPartitionScanner.QVT_STRING, 
+				QvtPartitionScanner.QVT_SL_COMMENT,
+				QvtPartitionScanner.QVT_ML_COMMENT,
+				QvtPartitionScanner.QVT_DOCUMENTATION});
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
 			extension3.setDocumentPartitioner(QvtPartitionScanner.QVT_PARTITIONING, partitioner);

@@ -14,8 +14,8 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 import java.io.IOException;
 
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
 import org.eclipse.jface.text.DocumentCommand;
-import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextUtilities;
@@ -23,12 +23,22 @@ import org.eclipse.jface.text.TextUtilities;
 /**
  * @author vrepeshko
  */
-public class QvtIndentAutoEditStrategy implements IAutoEditStrategy {
+public class QvtIndentAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 
+	public QvtIndentAutoEditStrategy() {
+		super();
+	}
+	
+	@Override
 	public void customizeDocumentCommand(IDocument document, DocumentCommand command) {
 		String newLineDelimeter = getNewLineDelimeter(document, command);
+		boolean customized = false;
 		if (newLineDelimeter != null) {
-			smartAutoIndentAfterNewLine(document, command, newLineDelimeter);
+			customized = smartAutoIndentAfterNewLine(document, command, newLineDelimeter);
+		}
+		
+		if(!customized) {
+			super.customizeDocumentCommand(document, command);
 		}
 	}
 
@@ -42,9 +52,9 @@ public class QvtIndentAutoEditStrategy implements IAutoEditStrategy {
 	 * @param newLineDelimeter
 	 *            the new line delimenter to use when needed
 	 */
-	private void smartAutoIndentAfterNewLine(IDocument document, DocumentCommand command, String newLineDelimeter) {
+	private boolean smartAutoIndentAfterNewLine(IDocument document, DocumentCommand command, String newLineDelimeter) {
 		if (!checkCommandOffset(document, command)) {
-			return;
+			return false;
 		}
 
 		try {
@@ -52,21 +62,24 @@ public class QvtIndentAutoEditStrategy implements IAutoEditStrategy {
 			int currentLineStart = info.getOffset();
 			String whiteSpace = DocumentUtils.getStartingWhiteSpace(document, currentLineStart, command.offset);
 			String currentLineText = document.get(currentLineStart, info.getLength());
-			command.text = command.text + whiteSpace;
+			String cmdText = command.text + whiteSpace;
 			if (currentLineText.trim().endsWith("{")) { //$NON-NLS-1$
-				command.text += '\t';
+				cmdText += '\t';
 				if (computeBraceBalance(document) > 0) {
-					command.caretOffset = command.offset + command.text.length();
+					command.caretOffset = command.offset + cmdText.length();
 					command.shiftsCaret = false;
-					command.text += newLineDelimeter + whiteSpace + "}"; //$NON-NLS-1$
+					cmdText += newLineDelimeter + whiteSpace + "}"; //$NON-NLS-1$
+					command.text = cmdText;
+					return true;
 				}
-				return;
 			}
 		} catch (BadLocationException e) {
 			// ignore
 		} catch (IOException e) {
 			// ignore
 		}
+		
+		return false;
 	}
 
 	private int computeBraceBalance(IDocument document) throws IOException {

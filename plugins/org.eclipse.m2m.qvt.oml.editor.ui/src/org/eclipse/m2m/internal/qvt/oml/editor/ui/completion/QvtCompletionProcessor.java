@@ -28,7 +28,7 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectorregistry.CategoryDescriptor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectorregistry.CollectorDescriptor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectorregistry.CollectorRegistry;
@@ -36,6 +36,7 @@ import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.keys.IBindingService;
+import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 /**
@@ -52,10 +53,10 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
 	private List<CategoryDescriptor> myCategories;
     private int myCategoryIndex = INITIAL_CATEGORY_INDEX;
 
-    private final QvtEditor myEditor;
+    private final ITextEditor myEditor;
     private int myOffset = -1;
     
-    public QvtCompletionProcessor(final QvtEditor editor, final ISourceViewer sourceViewer, ContentAssistant contentAssistant) {
+    public QvtCompletionProcessor(final ITextEditor editor, final ISourceViewer sourceViewer, ContentAssistant contentAssistant) {
         myEditor = editor;
 		myContentAssistant = contentAssistant;
 		
@@ -104,10 +105,14 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
 		});
     }
 
-    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
-            int offset) {
+    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
         try {
-            QvtCompletionData data = new QvtCompletionData(myEditor, viewer, offset);
+        	UnitProxy unitProxy = (UnitProxy) myEditor.getAdapter(UnitProxy.class);
+        	if(unitProxy == null) {
+        		return null;
+        	}
+        	
+            QvtCompletionData data = new QvtCompletionData(myEditor, viewer, unitProxy, offset);
             if (!data.isValid()) {
                 return disableNextCodeCompletionPage();
             }

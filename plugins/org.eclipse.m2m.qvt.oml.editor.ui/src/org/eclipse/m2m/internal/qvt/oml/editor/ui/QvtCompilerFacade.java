@@ -32,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author vrepeshko
@@ -40,7 +41,7 @@ public class QvtCompilerFacade {
 	
 	private QvtCompilerFacade() {}
 	
-	public CompiledUnit compile(final QvtEditor editor, final IDocument document, 
+	public CompiledUnit compile(final ITextEditor editor, final IDocument document, 
 			QvtCompilerOptions options, IProgressMonitor monitor) {
 		if (!checkEditor(editor)) {
 			return null;
@@ -99,13 +100,13 @@ public class QvtCompilerFacade {
 		return ourInstance;
 	}
 	
-	private boolean checkEditor(final QvtEditor editor) {
+	private boolean checkEditor(final ITextEditor editor) {
 		return editor != null 
 			&& editor.getEditorInput() instanceof FileEditorInput
 			&& editor.getDocumentProvider() != null;
 	}
 	
-	static boolean isEditingInQvtSourceContainer(QvtEditor editor) {
+	static boolean isEditingInQvtSourceContainer(ITextEditor editor) {
 		if(editor.getEditorInput() == null) {
 			return false;
 		}
