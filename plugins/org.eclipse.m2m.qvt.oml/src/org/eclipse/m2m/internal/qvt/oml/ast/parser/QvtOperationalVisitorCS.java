@@ -1638,6 +1638,8 @@ public class QvtOperationalVisitorCS
             elem = EcoreFactory.eINSTANCE.createVariable();
             elem.setType(objectExp.getType());
             objectExp.setReferredObject(elem);
+            
+            body.getVariable().add(elem);
 			}
         String varName = (objectExp.getName() == null) ? env.generateTemporaryName() : objectExp.getName();
         objectExp.setName(varName);
@@ -1746,6 +1748,8 @@ public class QvtOperationalVisitorCS
 			else {
 				operation = ExpressionsFactory.eINSTANCE.createHelper();
 			}
+			
+			methodCS.setAst(operation);
 			
 			if (visitMappingDeclarationCS(methodCS, env, operation)) {
 				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
@@ -1859,7 +1863,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	private void visitIntermediateClassesCS(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
-		
+		IntermediateClassFactory intermediateClassFactory = null;
 		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
 		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
@@ -1873,7 +1877,11 @@ public class QvtOperationalVisitorCS
 				continue;
 			}
 
-			EClass eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
+			if(intermediateClassFactory == null) {
+				intermediateClassFactory = new IntermediateClassFactory(module);
+			}
+			EClass eClassifier = intermediateClassFactory.createIntermediateClassifier();
+			
 			ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eClassifier);
 			astNode.setStartPosition(classifierDefCS.getStartOffset());
 			astNode.setEndPosition(classifierDefCS.getEndOffset());
@@ -1888,7 +1896,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		if (!createdIntermClasses.isEmpty()) {
-			IntermediateClassFactory.getFactory(module).registerModelType(env);
+			assert intermediateClassFactory != null;
+			env.registerModelType(intermediateClassFactory.getIntermediateModelType());
 		}
 
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
@@ -2058,11 +2067,6 @@ public class QvtOperationalVisitorCS
 			}
 			
 			initClassifierPropertyCS(propCS, eFeature, env);
-
-			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
-			if (initExp != null) {
-				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
-			}
 		}
 	}
 
@@ -2594,7 +2598,8 @@ public class QvtOperationalVisitorCS
                 varParam.setName(paramNameCS.getValue());
                 paramNameCS.setAst(varParam);
             } else {
-                varParam.setName(""); //$NON-NLS-1$
+            	// just set the parameter position, to reduce nulls AST and avoid serialization issues
+                varParam.setName(String.valueOf(headerCS.getParameters().indexOf(paramCS)));
             }
             varParam.setEType(type);
             DirectionKindEnum directionKind = paramCS.getDirectionKind();
@@ -3246,7 +3251,7 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
-		
+		mappingDeclarationCS.setAst(operation);
 		operation.setIsBlackbox(mappingMethodCS.isBlackBox());
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());

@@ -88,7 +88,7 @@ public class QvtOperationalParserUtil {
 	
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
 	
-	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
+	public static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
 	private static final String QVT_IS_ABSTACT = "abstract"; //$NON-NLS-1$
 	private static final String QVT_IS_STATIC = "static"; //$NON-NLS-1$	
 	
@@ -187,6 +187,10 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static void setInitExpression(EStructuralFeature moduleFeature, OCLExpression<EClassifier> expression) {
+		if(expression == null) {
+			// possible NPE caused by parsing errors => no AST expression produce			
+			return; 
+		}
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		annotation.setSource(QVT_INIT_EXPRESSION_URI);
 		annotation.getContents().add(expression);

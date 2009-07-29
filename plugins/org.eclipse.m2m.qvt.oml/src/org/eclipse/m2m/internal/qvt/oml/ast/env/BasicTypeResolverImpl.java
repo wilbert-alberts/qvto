@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
@@ -161,15 +161,17 @@ class BasicTypeResolverImpl
 	
     @Override
 	protected Resource createResource() {
-		return new XMIResourceImpl(URI.createURI("ocl:///qvto.env.ecore")); //$NON-NLS-1$
+		// Note: we need Ecore resource to serialize EAnnotations properly
+		return new EcoreResourceFactoryImpl().createResource(URI.createURI("ocl:///qvto.env.ecore")); //$NON-NLS-1$
 	}
         
     @Override
     protected EPackage createTuplePackage() {
         EPackage result = super.createTuplePackage();
-        if(result instanceof Module == false) {
-        	result.setEFactoryInstance(new TupleFactory());
-        }
+// Note: tuples supported by the central Module factory
+//        if(result instanceof Module == false) {
+//        	result.setEFactoryInstance(new TupleFactory());
+//        }
         return result;
     }
     

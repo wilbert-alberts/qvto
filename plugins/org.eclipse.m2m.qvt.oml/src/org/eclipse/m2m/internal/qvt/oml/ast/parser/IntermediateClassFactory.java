@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,15 +23,14 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -42,58 +42,86 @@ import org.eclipse.ocl.expressions.OCLExpression;
 
 /**
  * @author sboyko
- *
+ * 
  */
 public class IntermediateClassFactory extends EFactoryImpl {
-	
-	public static IntermediateClassFactory getFactory(Module module) {
-		IntermediateClassFactory usedFactory = null;
-		
-		IntermediateClassAdapter adapter = (IntermediateClassAdapter) EcoreUtil.getAdapter(module.eAdapters(),
-				IntermediateClassAdapter.class);
-    	if (adapter == null) {
-    		usedFactory = new IntermediateClassFactory(module);
-    		adapter = new IntermediateClassAdapter(usedFactory);
-    		module.eAdapters().add(adapter);
-    	}
-    	else {
-    		usedFactory = adapter.getOwnedFactory();
-    	}
 
-		return usedFactory;
+	public static IntermediateClassFactory getFactory(Module module) {
+		for (EPackage subPackage : module.getESubpackages()) {
+			// should be fast we will always have a single and the only 
+			// intermediate package
+			if(isIntermediatePackage(subPackage)) {
+				EFactory eFactory = subPackage.getEFactoryInstance();
+				if(eFactory.getClass().equals(IntermediateClassFactory.class)) {
+					return (IntermediateClassFactory) eFactory;
+				}
+			}
+		}
+		return null;
 	}
-	
-	
-	private IntermediateClassFactory(Module module) {
+
+	public IntermediateClassFactory(EPackage intermediatePackage) {
+		if(isIntermediatePackage(intermediatePackage) == false) {
+			throw new IllegalArgumentException("Requires intermediate package"); //$NON-NLS-1$
+		}
+		myModule = (Module) intermediatePackage.getESuperPackage();
+		myIntermediatePackage = intermediatePackage;
+		myIntermediatePackage.setEFactoryInstance(this);
+
+		EClassifier intermModuleType = myModule.getEClassifier(INTERMEDIATE_MODELTYPE_NAME);
+		if(intermModuleType instanceof ModelType == false) {
+			throw new IllegalArgumentException("Intermediate model type must exist"); //$NON-NLS-1$
+		}
+		
+		myIntermediateModelType = (ModelType) intermModuleType;		
+	}
+
+	public IntermediateClassFactory(Module module) {
 		super();
 		myModule = module;
-		
+
 		/*
-		 * 8.2.1.3 Module
-		 *   The model type package is also named '_INTERMEDIATE'. This package is nested by the 
-		 * transformation (by means of the inherited Package::nestedPackage property).
+		 * 8.2.1.3 Module The model type package is also named '_INTERMEDIATE'.
+		 * This package is nested by the transformation (by means of the
+		 * inherited Package::nestedPackage property).
 		 */
-		myIntermediatePackage = new IntermediatePackage(this);
+		myIntermediatePackage = EcoreFactory.eINSTANCE.createEPackage();
+		myIntermediatePackage.setEFactoryInstance(this);
+
 		myIntermediatePackage.setName(INTERMEDIATE_MODELTYPE_NAME);
-		myIntermediatePackage.setNsPrefix(INTERMEDIATE_MODELTYPE_NAME.toLowerCase());
-		myIntermediatePackage.setNsURI(ExpressionsPackage.eNS_URI + "/" + INTERMEDIATE_MODELTYPE_NAME); //$NON-NLS-1$
+		myIntermediatePackage.setNsPrefix(INTERMEDIATE_PACKAGE_NAME);
+		myIntermediatePackage.setNsURI(ExpressionsPackage.eNS_URI
+				+ "/" + INTERMEDIATE_MODELTYPE_NAME); //$NON-NLS-1$
 		module.getESubpackages().add(myIntermediatePackage);
 
 		/*
-		 * 8.2.1.3 Module
-		 *   If the module contains the declaration of intermediate classes (see 
-		 * OperationalTransformation::intermediateClass	definition) a model type named '_INTERMEDIATE' 
-		 * is automatically defined and inserted in the list of owned types.
+		 * 8.2.1.3 Module If the module contains the declaration of intermediate
+		 * classes (see OperationalTransformation::intermediateClass definition)
+		 * a model type named '_INTERMEDIATE' is automatically defined and
+		 * inserted in the list of owned types.
 		 */
-		myIntermediateModelType = ExpressionsFactory.eINSTANCE.createModelType();
+		myIntermediateModelType = ExpressionsFactory.eINSTANCE
+				.createModelType();
 		myIntermediateModelType.setName(INTERMEDIATE_MODELTYPE_NAME);
-		myIntermediateModelType.getMetamodel().add(myIntermediatePackage); // metamodel: Package [1..*] {ordered}
-		module.getUsedModelType().add(myIntermediateModelType); // usedModelType : ModelType [0..*] {ordered}
-		module.getEClassifiers().add(myIntermediateModelType);  // /ownedType : Type [0..*] (from Package) {composes,ordered}
-		
+		myIntermediateModelType.getMetamodel().add(myIntermediatePackage); // metamodel:
+																			// Package
+																			// [1..*]
+																			// {ordered}
+		module.getUsedModelType().add(myIntermediateModelType); // usedModelType
+																// : ModelType
+																// [0..*]
+																// {ordered}
+		module.getEClassifiers().add(myIntermediateModelType); // /ownedType :
+																// Type [0..*]
+																// (from
+																// Package)
+																// {composes,ordered}
+
 		myIntermediateModelType.getMetamodel().add(myIntermediatePackage);
-		// No need to use a metamodel adapter, the package is referenced by the modeltype directly
-		//ModelTypeMetamodelsAdapter.addMetamodel(myIntermediateModelType, myIntermediatePackage);
+		// No need to use a metamodel adapter, the package is referenced by the
+		// modeltype directly
+		// ModelTypeMetamodelsAdapter.addMetamodel(myIntermediateModelType,
+		// myIntermediatePackage);
 	}
 
 	@Override
@@ -104,264 +132,255 @@ public class IntermediateClassFactory extends EFactoryImpl {
 			}
 			myInstantiatedClasses.add(class_);
 		}
-		//return super.create(class_);
+		// return super.create(class_);
+
+		if (myClassifierInitializations.get(class_) == null) {
+			cacheClassifierInitExp(class_);
+		}
+
 		return new IntermediateClassInstance(class_);
 	}
-	
-	@Override
-	protected EObject basicCreate(EClass class_) {
-		return super.basicCreate(class_);
-	}
-	
+
 	public EClass createIntermediateClassifier() {
 		EClass eClassifier = EcoreFactory.eINSTANCE.createEClass();
-		
+
 		/*
-		 * 8.2.1.3 Module
-		 * Associations
-		 *   /ownedType : Type [0..*] (from Package) {composes,ordered}
-		 *   
-		 *   All the types being defined by this module. Specifically this includes the model types, 
-		 * locally defined classes, and any composite type used to define the type of a variable or a 
-		 * parameter - for instance a 'Set(MyMetaclass)' user-defined datatype.
+		 * 8.2.1.3 Module Associations /ownedType : Type [0..] (from Package)
+		 * {composes,ordered}
+		 * 
+		 * All the types being defined by this module. Specifically this
+		 * includes the model types, locally defined classes, and any composite
+		 * type used to define the type of a variable or a parameter - for
+		 * instance a 'Set(MyMetaclass)' user-defined datatype.
 		 */
-		//myModule.getEClassifiers().add(eClassifier);
+		// myModule.getEClassifiers().add(eClassifier);
 		myIntermediatePackage.getEClassifiers().add(eClassifier);
 
 		/*
-		 * 8.2.1.1 OperationalTransformation
-		 * Associations
-		 *   intermediateClass : Class [*] {ordered}
-		 *   
-		 *   The classes that are defined explicitly by the transformation writer to contain structured 
-		 * intermediate data used for the purpose of the transformation. These intermediate classes are
-		 * to be distinguished from the trace classes that are implicitly and automatically derived from
-		 * the relations. Instances of intermediate classes do not survive the execution of the 
-		 * transformation, except for ensuring trace persistence.
+		 * 8.2.1.1 OperationalTransformation Associations intermediateClass :
+		 * Class [] {ordered}
+		 * 
+		 * The classes that are defined explicitly by the transformation writer
+		 * to contain structured intermediate data used for the purpose of the
+		 * transformation. These intermediate classes are to be distinguished
+		 * from the trace classes that are implicitly and automatically derived
+		 * from the relations. Instances of intermediate classes do not survive
+		 * the execution of the transformation, except for ensuring trace
+		 * persistence.
 		 */
 		if (myModule instanceof OperationalTransformation) {
-			((OperationalTransformation) myModule).getIntermediateClass().add(eClassifier);
+			((OperationalTransformation) myModule).getIntermediateClass().add(
+					eClassifier);
 		}
-		
+
 		return eClassifier;
 	}
-	
-	public void registerModelType(QvtOperationalEnv env) {
-		env.registerModelType(myIntermediateModelType);
-	}
 
-	public static boolean isIntermediateModelType(ModelType modelType) { 
-		return modelType.eContainer() instanceof OperationalTransformation &&
-				INTERMEDIATE_MODELTYPE_NAME.equals(modelType.getName());
+	public ModelType getIntermediateModelType() {
+		return myIntermediateModelType;
+	}
+	
+	public static boolean isIntermediateModelType(ModelType modelType) {
+		return modelType.eContainer() instanceof OperationalTransformation
+				&& INTERMEDIATE_MODELTYPE_NAME.equals(modelType.getName());
 	}
 
 	public static boolean isIntermediateClass(EClassifier class_) {
 		if (class_ == null) {
 			return false;
 		}
+
 		EPackage ePackage = class_.getEPackage();
-		if (ePackage != null && INTERMEDIATE_MODELTYPE_NAME.equals(ePackage.getName())) {
-			// FIXME - add check if the owning intermediate package is owned by a module
-			// as any meta-model package of identical name might cause its classes to 
-			// be recognized as intermediate
-			return true;
-		}
-		return false;
+		return ePackage != null && isIntermediatePackage(ePackage);
+	}
+	
+	public static boolean isIntermediatePackage(EPackage ePackage) {
+		return INTERMEDIATE_MODELTYPE_NAME.equals(ePackage.getName())
+				&& ePackage.getESuperPackage() instanceof Module;
 	}
 
-	public void addClassifierPropertyInit(EClass classifier, EStructuralFeature feature, OCLExpression<EClassifier> expression) {
-		Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations.get(classifier);
+	public void cacheClassifierInitExp(EClass clazz) {
+		Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations
+				.get(clazz);
 		if (clsFeatures == null) {
-			clsFeatures = new LinkedHashMap<EStructuralFeature, OCLExpression<EClassifier>>(2);
-			myClassifierInitializations.put(classifier, clsFeatures);
+			// Remark: follow the declaration order during feature
+			// initialization
+			clsFeatures = new LinkedHashMap<EStructuralFeature, OCLExpression<EClassifier>>(
+					2);
+			myClassifierInitializations.put(clazz, clsFeatures);
 		}
-		clsFeatures.put(feature, expression);
+
+		for (EStructuralFeature next : clazz.getEAllStructuralFeatures()) {
+			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil
+					.getInitExpression(next);
+			if (initExp != null) {
+				clsFeatures.put(next, initExp);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void doInstancePropertyInit(Object instance, QvtOperationalEvaluationVisitor evalEnv) {
+	public void doInstancePropertyInit(Object instance,
+			QvtOperationalEvaluationVisitor evalEnv) {
 		if (false == instance instanceof EObject) {
 			return;
 		}
 		EObject eInstance = (EObject) instance;
-		
+
 		try {
 			myIsInitInProgress++;
-			
+
 			List<EClass> allSuperClasses = new ArrayList<EClass>(2);
 			allSuperClasses.add(eInstance.eClass());
 			allSuperClasses.addAll(eInstance.eClass().getEAllSuperTypes());
-			
+
 			for (EClass nextClass : allSuperClasses) {
-				Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations.get(nextClass);
+				Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations
+						.get(nextClass);
 				if (clsFeatures == null) {
 					continue;
 				}
 				for (EStructuralFeature eFeature : clsFeatures.keySet()) {
-					IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(eFeature.eAdapters(),
-							IntermediateStaticFieldAdapter.class);
-			    	if (adapter != null && adapter.isInitialized()) {
-			    		continue;
-			    	}
-			    	
-					OCLExpression<EClassifier> expression = clsFeatures.get(eFeature);
+					IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
+							.getAdapter(eFeature.eAdapters(),
+									IntermediateStaticFieldAdapter.class);
+					if (adapter != null && adapter.isInitialized()) {
+						continue;
+					}
+
+					OCLExpression<EClassifier> expression = clsFeatures
+							.get(eFeature);
 					Object evalResult = evalEnv.visitExpression(expression);
 
 					// temporary switch off read-only property
 					boolean isChangeable = eFeature.isChangeable();
 					eFeature.setChangeable(true);
-					
+
 					Object eValue = eInstance.eGet(eFeature);
 					if (eValue instanceof Collection) {
 						if (evalResult instanceof Collection) {
-							((Collection<Object>) eValue).addAll((Collection<Object>) evalResult);
-						}
-						else {
+							((Collection<Object>) eValue)
+									.addAll((Collection<Object>) evalResult);
+						} else {
 							((Collection<Object>) eValue).add(evalResult);
 						}
-					}
-					else {
+					} else {
 						eInstance.eSet(eFeature, evalResult);
 					}
-					
+
 					eFeature.setChangeable(isChangeable);
 				}
 			}
-		}
-		finally {
+		} finally {
 			myIsInitInProgress--;
 			if (myIsInitInProgress == 0) {
 				myInstantiatedClasses.clear();
 			}
 		}
-	}	
+	}
 
 	public static void markFeatureAsStatic(EStructuralFeature eFeature) {
-		IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(eFeature.eAdapters(),
-				IntermediateStaticFieldAdapter.class);
-    	if (adapter == null) {
-    		adapter = new IntermediateStaticFieldAdapter();
-    		eFeature.eAdapters().add(adapter);
-    	}
-	}
-
-	
-	private static class IntermediatePackage extends EPackageImpl {
-		IntermediatePackage(EFactoryImpl factory) {
-			super(factory);
+		IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
+				.getAdapter(eFeature.eAdapters(),
+						IntermediateStaticFieldAdapter.class);
+		if (adapter == null) {
+			adapter = new IntermediateStaticFieldAdapter();
+			eFeature.eAdapters().add(adapter);
 		}
 	}
-	
-	
+
+	public static boolean isFeatureStatic(EStructuralFeature eFeature) {
+		return EcoreUtil.getAdapter(eFeature.eAdapters(),
+				IntermediateStaticFieldAdapter.class) != null;
+	}
+
 	private static class IntermediateClassInstance extends DynamicEObjectImpl {
 		IntermediateClassInstance(EClass eClass) {
 			super(eClass);
 		}
-		
+
 		@Override
-		public Object eGet(EStructuralFeature feature, boolean resolve, boolean coreType) {
-			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(feature.eAdapters(),
-					IntermediateStaticFieldAdapter.class);
-	    	if (adapter != null) {
-	    		return adapter.eGet(feature);
-	    	}
-	    	
+		public Object eGet(EStructuralFeature feature, boolean resolve,
+				boolean coreType) {
+			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
+					.getAdapter(feature.eAdapters(),
+							IntermediateStaticFieldAdapter.class);
+			if (adapter != null) {
+				return adapter.eGet(feature);
+			}
+
 			return super.eGet(feature, resolve, coreType);
 		}
-		
+
 		@Override
 		public void eSet(EStructuralFeature feature, Object newValue) {
-			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil.getAdapter(feature.eAdapters(),
-					IntermediateStaticFieldAdapter.class);
-	    	if (adapter != null) {
-	    		adapter.eSet(feature, newValue);
-	    	}
-	    	
+			IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
+					.getAdapter(feature.eAdapters(),
+							IntermediateStaticFieldAdapter.class);
+			if (adapter != null) {
+				adapter.eSet(feature, newValue);
+			}
+
 			super.eSet(feature, newValue);
 		}
-		
+
 		@Override
 		public String toString() {
 			return eClass().getName();
 		}
 	}
-	
 
-	private static class IntermediateClassAdapter extends AbstractGenericAdapter<IntermediateClassAdapter> {
-		
-		IntermediateClassAdapter(IntermediateClassFactory ownedFactory) {
-			myOwnedFactory = ownedFactory;
-		}
-		
-		IntermediateClassFactory getOwnedFactory() {
-			return myOwnedFactory;
-		}
-		
-		public boolean isAdapterForType(Object type) {	
-			return IntermediateClassAdapter.class == type;
+	private static class IntermediateStaticFieldAdapter extends
+			AbstractGenericAdapter<IntermediateStaticFieldAdapter> {
+
+		private IntermediateStaticFieldAdapter() {
+			super();
 		}
 
-	    @Override
-	    public boolean equals(Object obj) {
-	        return obj instanceof IntermediateClassAdapter;
-	    }
+		public Object eGet(EStructuralFeature eFeature) {
+			return myValue;
+		}
 
-	    @Override
-	    public int hashCode() {
-	        return IntermediateClassAdapter.class.hashCode();
-	    }
-	    
-	    private final IntermediateClassFactory myOwnedFactory;
+		public void eSet(EStructuralFeature eFeature, Object value) {
+			myValue = value;
+			myIsInitialized = true;
+		}
 
-	}
+		public boolean isInitialized() {
+			return myIsInitialized;
+		}
 
-	
-	private static class IntermediateStaticFieldAdapter extends AbstractGenericAdapter<IntermediateStaticFieldAdapter> {
-		
-	    public Object eGet(EStructuralFeature eFeature) {
-	    	return myValue;
-	    }
-	    
-	    public void eSet(EStructuralFeature eFeature, Object value) {
-	    	myValue = value;
-	    	myIsInitialized = true;
-	    }
-	    
-	    public boolean isInitialized() {
-	    	return myIsInitialized;
-	    }
-
-		public boolean isAdapterForType(Object type) {	
+		public boolean isAdapterForType(Object type) {
 			return IntermediateStaticFieldAdapter.class == type;
 		}
 
 		@Override
-	    public boolean equals(Object obj) {
-	        return obj instanceof IntermediateStaticFieldAdapter;
-	    }
+		public boolean equals(Object obj) {
+			return obj instanceof IntermediateStaticFieldAdapter;
+		}
 
-	    @Override
-	    public int hashCode() {
-	        return IntermediateStaticFieldAdapter.class.hashCode();
-	    }
-	    
-	    private Object myValue = null;
-	    private boolean myIsInitialized = false;
-	    
+		@Override
+		public int hashCode() {
+			return IntermediateStaticFieldAdapter.class.hashCode();
+		}
+
+		private Object myValue = null;
+		private boolean myIsInitialized = false;
+
 	}
-	
-	
+
 	private final EPackage myIntermediatePackage;
-	
+
 	private final Module myModule;
-	
+
 	private final ModelType myIntermediateModelType;
-	
-	private final Map<EClass, Map<EStructuralFeature, OCLExpression<EClassifier>>> myClassifierInitializations 
-			= new LinkedHashMap<EClass, Map<EStructuralFeature,OCLExpression<EClassifier>>>(2);
+
+	private final Map<EClass, Map<EStructuralFeature, OCLExpression<EClassifier>>> myClassifierInitializations = new HashMap<EClass, Map<EStructuralFeature, OCLExpression<EClassifier>>>();
 	private int myIsInitInProgress = 0;
 	private final Set<EClass> myInstantiatedClasses = new HashSet<EClass>(2);
 
 	private static final String INTERMEDIATE_MODELTYPE_NAME = "_INTERMEDIATE"; //$NON-NLS-1$
+
+	private static final String INTERMEDIATE_PACKAGE_NAME = INTERMEDIATE_MODELTYPE_NAME.toLowerCase();
 
 }

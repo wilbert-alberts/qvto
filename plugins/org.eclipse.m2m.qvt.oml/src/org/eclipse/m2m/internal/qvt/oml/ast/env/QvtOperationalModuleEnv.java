@@ -21,8 +21,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -39,8 +40,9 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 
 	private Module myContextModule;	
 	
-	QvtOperationalModuleEnv(EPackage.Registry registry) {
-		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
+	QvtOperationalModuleEnv(EPackage.Registry registry, Resource resource) {
+		super(registry, resource != null ?
+				resource : new EcoreResourceFactoryImpl().createResource(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
 
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
         // TODO - solve in QVT grammar

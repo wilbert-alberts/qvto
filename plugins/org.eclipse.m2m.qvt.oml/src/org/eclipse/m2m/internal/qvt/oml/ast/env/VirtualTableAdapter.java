@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EOperation;
 /**
  * Virtual table adapter grouping related virtual operations to the adapted target operation.
  */
-class VirtualTableAdapter extends AdapterImpl {
+public class VirtualTableAdapter extends AdapterImpl {
 	
 	private VirtualTable fVTable;
 	
@@ -47,7 +47,7 @@ class VirtualTableAdapter extends AdapterImpl {
 	 *            it does not exist
 	 * @return the virtual table, never <code>null</code>
 	 */
-	static VirtualTableAdapter getAdapter(EOperation operation, boolean createOnDemand) {
+	public static VirtualTableAdapter getAdapter(EOperation operation, boolean createOnDemand) {
 		for (Adapter adapter : operation.eAdapters()) {
 			if(adapter instanceof VirtualTableAdapter) {
 				return (VirtualTableAdapter) adapter;

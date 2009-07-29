@@ -95,7 +95,7 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 	}
 	
 	public QvtOperationalModuleEnv createModuleEnvironment(final Module module) {		
-		QvtOperationalModuleEnv env = new QvtOperationalModuleEnv(getEPackageRegistry());
+		QvtOperationalModuleEnv env = new QvtOperationalModuleEnv(getEPackageRegistry(), module.eResource());
 		env.setFactory(this);		
 		env.setContextModule(module);
 		QvtOperationalStdLibrary.INSTANCE.importTo(env);		

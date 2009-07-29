@@ -99,7 +99,9 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			Diagnostic diagnostic = javaModuleLoader.loadModule(nextModuleHandle);
 			
 			if(DiagnosticUtil.isSuccess(diagnostic)) {
-				loadedModules.add(javaModuleLoader.getLoadedModule());
+				QvtOperationalModuleEnv nextModuleEnv = javaModuleLoader.getLoadedModule();
+				nextModuleEnv.getTypeResolver().getResource().setURI(descriptor.getURI());
+				loadedModules.add(nextModuleEnv);
 				
 				if(diagnostic.getSeverity() != Diagnostic.OK) {
 					QvtPlugin.log(BasicDiagnostic.toIStatus(diagnostic));

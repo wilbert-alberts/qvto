@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -2047,11 +2048,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				}
 			} else {
 				newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
-				if (IntermediateClassFactory.isIntermediateClass(type)) {
-					EPackage superPackage = type.getEPackage().getESuperPackage();
-					assert superPackage instanceof Module;
-					Module intermPackage = (Module) superPackage;					
-					IntermediateClassFactory.getFactory(intermPackage).doInstancePropertyInit(newInstance, getQVTVisitor());
+
+				EFactory eFactory = type.getEPackage().getEFactoryInstance();
+				if(eFactory instanceof IntermediateClassFactory) {
+					IntermediateClassFactory intermFactory = (IntermediateClassFactory) eFactory;
+					intermFactory.doInstancePropertyInit(newInstance, getQVTVisitor());
 				}
 			}
 

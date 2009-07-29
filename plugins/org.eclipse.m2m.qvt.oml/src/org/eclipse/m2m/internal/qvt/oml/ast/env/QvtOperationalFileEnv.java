@@ -21,7 +21,7 @@ public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 	private final URI myFile;    
 	
 	protected QvtOperationalFileEnv(final URI file, final QvtCompilerKernel kernel) {
-		super(new EPackageRegistryImpl());
+		super(new EPackageRegistryImpl(), null);
 
 		myFile = file;
         myKernel = kernel;

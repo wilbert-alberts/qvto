@@ -45,12 +45,13 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		void created(ModuleInstance moduleInstance);
 	}
 
+	private TupleFactory fTupleFactory;
 	private List<PostCreateHandler> fPostCreateHandlers = Collections.emptyList();
 
 	public ModuleInstanceFactory() {
-		super();
+		fTupleFactory = new TupleFactory();
 	}
-		
+	
 	public void addPostCreateHandler(PostCreateHandler postCreateHandler) {
 		if (postCreateHandler == null) {
 			throw new IllegalArgumentException();
@@ -66,7 +67,10 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 	@Override
 	public EObject create(EClass eClass) {
 		if (getEPackage() != eClass.getEPackage() || eClass.isAbstract()) {
-			if (eClass instanceof Module == false) {
+			if(eClass instanceof TupleType) {
+				return fTupleFactory.create(eClass); 
+			} 
+			else if (eClass instanceof Module == false) {
 				// relax the constraint for Module being also a package
 				throw new IllegalArgumentException(
 						"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

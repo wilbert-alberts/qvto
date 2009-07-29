@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
@@ -58,6 +59,8 @@ import org.eclipse.ocl.util.TypeUtil;
 
 public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOStandardLibrary {
 	
+	public static final String NS_URI = "http://www.eclipse.org/m2m/qvt/oml/1.0.0/Stdlib"; //$NON-NLS-1$
+
 	public static final String QVT_STDLIB_MODULE_NAME = "Stdlib"; //$NON-NLS-1$
 	
 	public static final QvtOperationalStdLibrary INSTANCE = createLibrary();	
@@ -91,13 +94,14 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 
 	private QvtOperationalStdLibrary() {
 		fStdlibModule = createLibrary(QVT_STDLIB_MODULE_NAME);
+		fStdlibModule.setNsURI(NS_URI);
 		
-		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl());
+		fEnv = new QvtOperationalModuleEnv(new EPackageRegistryImpl(), null);
 		fEnv.setContextModule(fStdlibModule);
 		fFactory = new StdlibFactory(this);
 		
 		assert fStdlibModule.eResource() != null;
-		fStdlibModule.eResource().setURI(URI.createURI("qvto:/Stdlib.ecore")); //$NON-NLS-1$		
+		fStdlibModule.eResource().setURI(URI.createURI(fStdlibModule.getNsURI())); //$NON-NLS-1$		
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
@@ -115,6 +119,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		// add non-standard legacy operations
 		modelOperations = new ModelOperations(this);
 		anyOperations = new OclAnyOperations(this);		
+		
+		// register stdlib package  
+		EPackage.Registry.INSTANCE.put(fStdlibModule.getNsURI(), fStdlibModule);
 	}	
 	
 	private void defineStandardOperations() {
