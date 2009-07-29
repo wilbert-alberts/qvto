@@ -59,7 +59,7 @@ public class TestEditorHyperLinks extends AbstractTestQvtEditorSupport {
 		for (SourceHyperLink sourceHLink : hyperLinkBindings.getHyperLinks()) {
 			IRegion pointerReg = new Region(sourceHLink.link.getAnnotatedRegion().getOffset(), 0);
 			
-			IHyperlink[] hyperlinks = new QvtHyperlinkDetector(fEditor).detectHyperlinks(fEditor.getEditorSourceViewer(), pointerReg, false);
+			IHyperlink[] hyperlinks = new QvtHyperlinkDetector(fEditor.getQVTDocumentProvider()).detectHyperlinks(fEditor.getEditorSourceViewer(), pointerReg, false);
 			assertNotNull(message("No hyperlink detected for", sourceHLink), hyperlinks); //$NON-NLS-1$
 			assertEquals(1, hyperlinks.length);
 			
