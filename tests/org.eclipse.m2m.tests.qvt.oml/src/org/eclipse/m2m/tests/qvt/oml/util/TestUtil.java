@@ -181,6 +181,12 @@ public class TestUtil extends Assert {
         ResourcesPlugin.getWorkspace().setDescription(workspaceDescription);
 	}
 	
+	public static void turnOnAutoBuilding() throws CoreException {
+		IWorkspaceDescription workspaceDescription = ResourcesPlugin.getWorkspace().getDescription();
+        workspaceDescription.setAutoBuilding(true);
+        ResourcesPlugin.getWorkspace().setDescription(workspaceDescription);
+	}	
+	
 	public static void copyFolder(final IProject project, final String folderName) throws Exception {
 		File sourceFolder = getPluginRelativeFolder(folderName);
 		File destFolder = new File(project.getLocation().toString());

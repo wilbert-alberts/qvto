@@ -62,4 +62,9 @@ public class JavalessQvtTest extends TestQvtInterpreter {
 		
 		super.setUp();
 	}
+	
+	@Override
+	protected ITransformer getTransformer() {	
+		return TRANSFORMER;
+	}
 }
