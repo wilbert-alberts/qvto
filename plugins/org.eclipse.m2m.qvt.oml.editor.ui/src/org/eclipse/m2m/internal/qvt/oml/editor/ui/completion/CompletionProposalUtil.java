@@ -222,7 +222,8 @@ public class CompletionProposalUtil {
             addProposalIfNecessary(proposals, info, data);
         }
         for (Variable<EClassifier, EParameter> variable : env.getVariables()) {
-            if ((variable.getName() != null) && (variable.getName().trim().length() > 0)) {
+            String name = variable.getName();            
+			if ((name != null) && (name.trim().length() > 0) && !name.startsWith(QvtEnvironmentBase.GENERATED_NAME_SPECIAL_PREFIX)) {
             	QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(variable, data);
                 addProposalIfNecessary(proposals, info, data);
             }
