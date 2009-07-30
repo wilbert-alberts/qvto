@@ -12,9 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer;
 
 
-
-
-import org.eclipse.jdt.internal.ui.javaeditor.SemanticHighlighting;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
@@ -144,7 +141,7 @@ public class SemanticHighlightingManager implements IPropertyChangeListener, IHi
 	 */
 	public static class HighlightedRange extends Region {
 		/**
-		 * The highlighting key as returned by {@link SemanticHighlighting#getPreferenceKey()}.
+		 * The highlighting key as returned by {@link Highlighting#getPreferenceKey()}.
 		 */
 		private String fKey;
 
@@ -157,7 +154,7 @@ public class SemanticHighlightingManager implements IPropertyChangeListener, IHi
 		}
 
 		/**
-		 * @return the highlighting key as returned by {@link SemanticHighlighting#getPreferenceKey()}
+		 * @return the highlighting key as returned by {@link Highlighting#getPreferenceKey()}
 		 */
 		public String getKey() {
 			return fKey;
