@@ -606,9 +606,11 @@ class SemanticHighlightingPresenter implements ITextPresentationListener, ITextI
 		fSourceViewer = sourceViewer;
 		fPresentationReconciler = backgroundPresentationReconciler;
 
-		// FIXME - 
-		//sourceViewer.prependTextPresentationListener(this);
-		fSourceViewer.addTextPresentationListener(this);
+		// Note - we need to make our presentation listener first
+		// to ensure that hyperlink and annotations presenters gets nicely 
+		// merged over our presentation styling
+		sourceViewer.prependTextPresentationListener(this);
+		//fSourceViewer.addTextPresentationListener(this);
 		
 		fSourceViewer.addTextInputListener(this);
 		manageDocument(fSourceViewer.getDocument());
