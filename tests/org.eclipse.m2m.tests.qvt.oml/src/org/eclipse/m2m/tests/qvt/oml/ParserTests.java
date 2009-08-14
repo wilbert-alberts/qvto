@@ -84,6 +84,7 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("collectionAssignment", 4, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("overload_multipleParams", 0, 19), //$NON-NLS-1$
     	TestData.createSourceChecked("overload_singleParam", 0, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("mainInLibrary", 1, 0), //$NON-NLS-1$
