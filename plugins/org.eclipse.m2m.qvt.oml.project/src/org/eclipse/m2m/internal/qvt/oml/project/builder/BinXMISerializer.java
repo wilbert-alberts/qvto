@@ -77,7 +77,7 @@ public class BinXMISerializer {
 			
 			if(!next.getErrors().isEmpty()) {
 				Diagnostic diagnostic = EcoreUtil.computeDiagnostic(next, false);
-				QVTOProjectPlugin.getDefault().log(BasicDiagnostic.toIStatus(diagnostic));
+				QVTOProjectPlugin.log(BasicDiagnostic.toIStatus(diagnostic));
 			}
 		}
 	}
