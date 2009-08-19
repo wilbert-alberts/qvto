@@ -127,7 +127,7 @@ branch=""; getBranch $PWD; #echo branch=$branch;
 Dflags=$Dflags" "-Dplatform=linux.gtk
 os=linux
 ws=gtk
-arch=x86_64
+arch=x86
 
 # default value to determine if eclipse should be reinstalled between running of tests
 installmode="clean"
