@@ -106,4 +106,17 @@
 
     </extension>    
 
+   <extension point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.m2m.qvt.oml.wizardCategory"
+            class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.ant.NewCompositeTransformationWizard"
+            icon="icons/anttasks.gif"
+            id="com.borland.m2m.qvt.common.wizards.NewCompositeTransformationWizard"
+            name="%transformationSetWizardName">
+         <description>
+         	%transformationSetWizardName.description
+         </description>
+      </wizard>
+   </extension>
+
 </plugin>
