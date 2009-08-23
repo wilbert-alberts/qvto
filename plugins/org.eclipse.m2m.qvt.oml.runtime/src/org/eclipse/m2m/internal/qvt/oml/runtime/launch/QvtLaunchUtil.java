@@ -101,8 +101,10 @@ public class QvtLaunchUtil {
 
 	public static Context createContext(Map<String, Object> configProps) {
 		Context context = new Context();
-    	for (String name : configProps.keySet()) {
-			context.setConfigProperty(name, configProps.get(name));
+		if (configProps != null) {
+	    	for (String name : configProps.keySet()) {
+				context.setConfigProperty(name, configProps.get(name));
+			}
 		}
         return context;
 	}

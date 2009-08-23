@@ -145,7 +145,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     public static void doLaunch(QvtTransformation transformation, List<ModelContent> inObjs, Map<String, Object> configProps,
     		List<ModelExtentContents> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
 
-        IStatus status = QvtValidator.validateTransformation(transformation, inObjs);                    
+        IStatus status = QvtValidator.validateTransformation(transformation, inObjs, null);                    
         if (status.getSeverity() > IStatus.WARNING) {
         	throw new MdaException(status);
         }      	

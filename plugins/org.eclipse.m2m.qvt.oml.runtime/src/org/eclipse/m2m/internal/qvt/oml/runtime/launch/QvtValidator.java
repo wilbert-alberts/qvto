@@ -78,7 +78,8 @@ public class QvtValidator {
         return result;
 	}
 	
-	public static IStatus validateTransformation(QvtTransformation transformation, List<ModelContent> inModels) throws MdaException {
+	public static IStatus validateTransformation(QvtTransformation transformation, List<ModelContent> inModels,
+			String traceFileName) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
 
         if (!transformation.hasEntryOperation()) {
@@ -116,6 +117,14 @@ public class QvtValidator {
 			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_SuperfluousInputTransfParam, superfluousParams.toString()));
 		}
 
+    	IStatus traceStatus = validateTrace(traceFileName, traceFileName != null); 
+        if (StatusUtil.isError(traceStatus)) {
+        	return traceStatus;
+        }
+        if (traceStatus.getSeverity() > result.getSeverity()) {
+    		result = traceStatus;
+    	}
+		
         return result;
 	}
 	

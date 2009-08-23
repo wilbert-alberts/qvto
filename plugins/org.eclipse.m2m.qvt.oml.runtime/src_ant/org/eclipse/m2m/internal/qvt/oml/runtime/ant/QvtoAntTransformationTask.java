@@ -304,7 +304,9 @@ public class QvtoAntTransformationTask extends Task {
 	            	
 	        		loadTransformationParams(transformation, inObjects, targetData);
 	
-	                IStatus status = QvtValidator.validateTransformation(transformation, inObjects);                    
+	        		String traceUri = getTraceUri(QvtoAntTransformationTask.this);
+	        		
+	                IStatus status = QvtValidator.validateTransformation(transformation, inObjects, traceUri);                    
 	                if (status.getSeverity() > IStatus.WARNING) {
 	                	throw new MdaException(status);
 	                }      	
@@ -312,8 +314,7 @@ public class QvtoAntTransformationTask extends Task {
 					Context createContext = QvtLaunchUtil.createContext(getConfiguration());
 					createContext.setLog(createQVTLog());
 					
-					QvtLaunchConfigurationDelegateBase.doLaunch(transformation,
-						inObjects, targetData, getTraceUri(QvtoAntTransformationTask.this), createContext);
+					QvtLaunchConfigurationDelegateBase.doLaunch(transformation, inObjects, targetData, traceUri, createContext);
 	        		
 	        		transformation.cleanup();
 	            }
