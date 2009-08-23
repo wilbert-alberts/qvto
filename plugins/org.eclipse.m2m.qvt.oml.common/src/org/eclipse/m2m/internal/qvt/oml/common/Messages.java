@@ -33,4 +33,5 @@ public class Messages extends NLS {
     public static String TransformationRegistry_UnknownMetamodel;
     public static String TransformationRegistry_NoElements;
     
+    public static String InvalidFilePath;    
 }
