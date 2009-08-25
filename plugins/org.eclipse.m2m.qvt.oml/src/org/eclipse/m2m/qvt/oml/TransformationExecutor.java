@@ -12,7 +12,9 @@
 package org.eclipse.m2m.qvt.oml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -26,6 +28,10 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.Messages;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
@@ -34,11 +40,17 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
@@ -72,6 +84,7 @@ public final class TransformationExecutor {
 	 */
 
 	private URI fURI;
+	private EPackage.Registry fPackageRegistry;
 	private CompiledUnit fCompiledUnit;
 	private QvtCompilerKernel fCompilerKernel;
 	private ExecutionDiagnostic fLoadDiagnostic;
@@ -92,7 +105,17 @@ public final class TransformationExecutor {
 
 		fURI = uri;
 	}
-
+	
+	public TransformationExecutor(URI uri, EPackage.Registry registry) {
+		this(uri);
+		
+		if (registry == null) {
+			throw new IllegalArgumentException("null package registry"); //$NON-NLS-1$
+		}
+		
+		fPackageRegistry = registry;
+	}	
+			
 	/**
 	 * Attempts to load the transformation referred by this executor and checks
 	 * if it is valid for execution.
@@ -210,7 +233,7 @@ public final class TransformationExecutor {
 			return;
 		}
 
-		QVTOCompiler compiler = new QVTOCompiler(unit.getResolver());
+		QVTOCompiler compiler = createCompiler(unit.getResolver());
 		try {
 			fCompiledUnit = compiler.compile(unit, null, null);
 			fCompilerKernel = compiler.getKernel();
@@ -411,4 +434,58 @@ public final class TransformationExecutor {
 	public String toString() {
 		return "QVTO-Executor: " + fURI; //$NON-NLS-1$
 	}
+	
+	private QVTOCompiler createCompiler(UnitResolver unitResolver) {
+		if(fPackageRegistry == null) {
+			return new QVTOCompiler(unitResolver);
+		}
+		
+		final EPackageRegistryImpl packageRegistryImpl = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
+		packageRegistryImpl.putAll(fPackageRegistry);
+		
+		IMetamodelRegistryProvider metamodelRegistryProvider = new WorkspaceMetamodelRegistryProvider(createResourceSet(packageRegistryImpl)) {
+			IMetamodelProvider registry = new EmfStandaloneMetamodelProvider(packageRegistryImpl);
+			@Override
+			public MetamodelRegistry getRegistry(IRepositoryContext context) {
+				MetamodelRegistry result = super.getRegistry(context);
+				if(result == MetamodelRegistry.getInstance()) {
+					// FIXME - get rid of this hack by providing
+					// a protected method WorkspaceProvider::getDelegateRegistry();
+					// which by default returns MetamodelRegistry.getInstance()
+					result = new MetamodelRegistry(registry);
+				}
+				return result;
+			}
+		};
+
+		return new QVTOCompiler(unitResolver, metamodelRegistryProvider);
+	}
+	
+	/*
+	 * TODO - org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler.createResourceSet()
+	 * - involve the Package registry based resource uri map??? 
+	 */
+	private static ResourceSet createResourceSet(EPackage.Registry packageRegistry) {
+		ResourceSetImpl rs = new ResourceSetImpl();
+		if(packageRegistry != null) {
+			rs.setPackageRegistry(packageRegistry);
+			
+			Map<URI, Resource> uriResourceMap = new HashMap<URI, Resource>();			
+			for(Object nextEntry : packageRegistry.values()) {				
+				if(nextEntry instanceof EPackage) {
+					EPackage ePackage = (EPackage) nextEntry;
+					Resource resource = ePackage.eResource();
+					if(resource != null) {
+						uriResourceMap.put(resource.getURI(), resource);
+					}
+				}				
+			}
+			
+			if(!uriResourceMap.isEmpty()) {
+				rs.setURIResourceMap(uriResourceMap);
+			}
+		}
+		
+		return rs;
+	}	
 }
