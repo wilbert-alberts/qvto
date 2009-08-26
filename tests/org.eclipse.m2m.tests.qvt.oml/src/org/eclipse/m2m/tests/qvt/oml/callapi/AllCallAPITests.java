@@ -21,7 +21,11 @@ public class AllCallAPITests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(BasicModelExtentTest.class);
 		suite.addTestSuite(InvocationTest.class);
-		suite.addTestSuite(InvocationExtTest.class);		
+		suite.addTestSuite(InvocationExtTest.class);
+		suite.addTestSuite(DynamicModelInvocationTest.class);
+		suite.addTestSuite(DynamicRegisteredModelInvocationTest.class);
+		//suite.addTestSuite(ChildInTreeInputInvocationTest.class);
+		
 		//$JUnit-END$
 		return suite;
 	}
