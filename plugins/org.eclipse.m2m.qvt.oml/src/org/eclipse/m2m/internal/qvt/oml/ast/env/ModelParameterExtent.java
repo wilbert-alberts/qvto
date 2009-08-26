@@ -135,9 +135,9 @@ public class ModelParameterExtent {
 		List<EObject> objects = new ArrayList<EObject>();
 
 		for (EObject eObj : myInitialEObjects) {
-			if (eObj.eContainer() == null) {
-				objects.add(eObj);
-			}
+			// Remark: we allow the initial object to have eContainer != null
+			// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287711
+			objects.add(eObj);
 		}
 		
 		for (EObject eObj : myAdditionalEObjects) {
