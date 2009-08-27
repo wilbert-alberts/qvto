@@ -15,6 +15,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -61,6 +62,24 @@ public class ModelParameterExtent {
 				eObj.eAdapters().add(new ReadonlyExtentAdapter());
 			}			
 		}
+		
+		// Remark: 
+		// As initial objects may have non-null containers, so can be in the middle of an object tree,
+		// we need to track its original container as in [inout] extents the container my change during 
+		// transformation execution. If the container of an initial object changes, it's not a root object
+		Map<EObject, EObject> containerMap = null;
+		if(myInitialEObjects != null && !myInitialEObjects.isEmpty()) {
+			for (EObject nextInitialRoot : myInitialEObjects) {
+				if(nextInitialRoot.eContainer() != null) {
+					if(containerMap == null) {
+						containerMap = new HashMap<EObject, EObject>();
+					}
+					containerMap.put(nextInitialRoot, nextInitialRoot.eContainer());
+				}
+			}
+		}
+		
+		myInitialObj2ContainerMap = (containerMap != null) ? containerMap : Collections.<EObject, EObject>emptyMap();
 	}
 
 	private Resource getInMemoryResource(boolean createOnDemand) {
@@ -137,7 +156,12 @@ public class ModelParameterExtent {
 		for (EObject eObj : myInitialEObjects) {
 			// Remark: we allow the initial object to have eContainer != null
 			// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287711
-			objects.add(eObj);
+			EObject eContainer = eObj.eContainer();
+			if(eContainer == null || eContainer == myInitialObj2ContainerMap.get(eObj)) {
+				// if the initial objects retains its original container, IOW it still 
+				// represents a root object in the extent
+				objects.add(eObj);	
+			}			
 		}
 		
 		for (EObject eObj : myAdditionalEObjects) {
@@ -232,17 +256,17 @@ public class ModelParameterExtent {
 		ArrayList<EObject> result = null;		
 		for (Iterator<EObject> it = elements.iterator(); it.hasNext();) {
 			EObject nextElement = (EObject) it.next();
-			if(nextElement.eContainer() == null) {
+			EObject eContainer = nextElement.eContainer();			
+			if(eContainer == null || 
+				(elements == myInitialEObjects && eContainer == myInitialObj2ContainerMap.get(nextElement))) {
 				if(result == null) {
 					result = new ArrayList<EObject>(elements.size());			
 				}
 				result.add(nextElement);
-			}
-			else {
-				if (isResetResource 
-						&& ((InternalEObject) nextElement).eDirectResource() instanceof ExtentResource) {
-					
-					((InternalEObject) nextElement).eSetResource(null, null);
+			} else {		
+				InternalEObject internElement = (InternalEObject) nextElement;
+				if (isResetResource && internElement.eDirectResource() instanceof ExtentResource) {		
+					internElement.eSetResource(null, null);
 				}
 			}
 		}
@@ -301,6 +325,7 @@ public class ModelParameterExtent {
 	private final List<EObject> myInitialEObjects;
 	private final List<EObject> myAdditionalEObjects;
 	private final ModelParameter myModelParameter;
+	private final Map<EObject, EObject> myInitialObj2ContainerMap;
 
 	
 	private static class ExtentContents implements ModelExtentContents {
