@@ -55,6 +55,8 @@ import org.eclipse.ocl.cst.RealLiteralExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.ecore.PrimitiveType;
+import org.eclipse.ocl.util.OCLStandardLibraryUtil;
+import org.eclipse.ocl.utilities.PredefinedType;
 
 
 class QVTSemanticHighlighter {
@@ -236,6 +238,24 @@ class QVTSemanticHighlighter {
 			}
 			
 			if(isStdlibElement(operation)) {
+				int operCode = OCLStandardLibraryUtil.getOperationCode(operation.getName());
+				switch(operCode) {
+				case PredefinedType.NOT:
+				case PredefinedType.OR:
+				case PredefinedType.AND:
+				case PredefinedType.XOR:
+				case PredefinedType.DIVIDE:
+				case PredefinedType.EQUAL:
+				case PredefinedType.NOT_EQUAL:
+				case PredefinedType.GREATER_THAN:
+				case PredefinedType.GREATER_THAN_EQUAL:
+				case PredefinedType.LESS_THAN:
+				case PredefinedType.LESS_THAN_EQUAL:
+				case PredefinedType.MINUS:
+				case PredefinedType.PLUS:
+				case PredefinedType.TIMES:
+					return false;					
+				}
 				return fCollector.visitToken(callCS.getSimpleNameCS(), INDEX_STDLIB_ELEMENT);
 			}
 		} else if(ast instanceof EStructuralFeature) {
