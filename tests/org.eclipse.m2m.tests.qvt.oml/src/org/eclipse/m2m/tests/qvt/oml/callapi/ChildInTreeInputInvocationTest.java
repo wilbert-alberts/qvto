@@ -69,7 +69,7 @@ public class ChildInTreeInputInvocationTest extends TestCase {
 		EPackage inObject = EcoreFactory.eINSTANCE.createEPackage();
 		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		EAttribute attribute = EcoreFactory.eINSTANCE.createEAttribute();
-		attribute.setName("input");
+		attribute.setName("input"); //$NON-NLS-1$
 		eClass.getEStructuralFeatures().add(attribute);
 		inObject.getEClassifiers().add(eClass);
 		
@@ -88,6 +88,8 @@ public class ChildInTreeInputInvocationTest extends TestCase {
 		assertEquals(Diagnostic.OK, diagnostic.getSeverity());
 		assertEquals(0, diagnostic.getCode());		
 		
+		assertFalse(fInput.getContents().isEmpty());
+		
 		List<?> outContents = fOutput.getContents();
 		assertEquals(1, outContents.size());		
 		assertOutputObject(fOutput);
@@ -96,6 +98,7 @@ public class ChildInTreeInputInvocationTest extends TestCase {
 		BasicModelExtent nextOut = new BasicModelExtent();
 		fContext = new ExecutionContextImpl();
 		ExecutionDiagnostic nextDiagnostic = fExecutor.execute(fContext, fInput, nextOut);
+		assertFalse(fInput.getContents().isEmpty());
 		
 		assertOutputObject(nextOut);
 		assertEquals(Diagnostic.OK, nextDiagnostic.getSeverity());
