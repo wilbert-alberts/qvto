@@ -1543,7 +1543,13 @@ public class QvtOperationalVisitorCS
 				// skip DataTypes as the instantiatedClass property expects Class
 				// let's make AST validation to complain on missing class.
 				// Note: Still can be derived from the referred object if specified explicitly
-				objectExp.setInstantiatedClass((EClass)objectTypeSpec.myType);
+				EClass derivedInstantiatedClass = (EClass) objectTypeSpec.myType;
+				objectExp.setInstantiatedClass(derivedInstantiatedClass);
+				if (outExpCS.getSimpleNameCS() == null && (derivedInstantiatedClass.isAbstract() || derivedInstantiatedClass.isInterface())) {			
+					// always creates a new instance, ensure non-abstract type. 
+					String typeName = QvtOperationalParserUtil.safeGetQualifiedName(env, derivedInstantiatedClass);
+					env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, typeName), outExpCS);
+				}
 			}
 			objectExp.setExtent(objectTypeSpec.myExtent);
 			
