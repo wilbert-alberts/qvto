@@ -84,6 +84,7 @@ public class ParserTests {
     }
     
     private static TestData[] ourData = new TestData[] {
+    	TestData.createSourceChecked("abstractout", 3, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("collectionAssignment", 4, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("overload_multipleParams", 0, 19), //$NON-NLS-1$
     	TestData.createSourceChecked("overload_singleParam", 0, 0), //$NON-NLS-1$
@@ -149,7 +150,6 @@ public class ParserTests {
         new TestData("initvariable", 1), //$NON-NLS-1$
         new TestData("missingvariablereference", 1), //$NON-NLS-1$
         new TestData("optionalout", 0), //$NON-NLS-1$
-        new TestData("abstractout", 1), //$NON-NLS-1$
         new TestData("nonassignableout", 1), //$NON-NLS-1$
         TestData.createSourceChecked("wrongout", 3, 0), //$NON-NLS-1$
         new TestData("outininitvar", 0), //$NON-NLS-1$
