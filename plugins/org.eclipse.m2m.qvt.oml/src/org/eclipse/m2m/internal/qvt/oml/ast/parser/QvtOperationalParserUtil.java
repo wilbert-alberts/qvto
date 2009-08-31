@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
@@ -323,6 +325,10 @@ public class QvtOperationalParserUtil {
 		// check was added due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=275824
 		if (variableType instanceof EDataType && initialiserType instanceof EDataType && variableType instanceof PredefinedType<?> == false) {
 			if (((EDataType) variableType).getInstanceClass() == ((EDataType) initialiserType).getInstanceClass()) {
+				return true;
+			}
+			if (initialiserType instanceof EEnum &&
+					initialiserType == ExtendedMetaData.INSTANCE.getBaseType((EDataType) variableType )) {
 				return true;
 			}
 		}
