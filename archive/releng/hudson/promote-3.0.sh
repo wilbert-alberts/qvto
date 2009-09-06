@@ -1,0 +1,1 @@
+/opt/public/common/apache-ant-1.7.1/bin/ant -f /opt/users/hudsonbuild/.hudson/jobs/cbi-m2m-qvtoml-3.0/workspace/build/org.eclipse.qvtoml.releng/promote.xml \ -Dpromote.properties=/opt/users/hudsonbuild/.hudson/jobs/cbi-m2m-qvtoml-3.0/workspace/build/org.eclipse.qvtoml.releng/promote.properties
