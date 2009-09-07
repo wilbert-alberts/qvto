@@ -47,9 +47,19 @@ import org.eclipse.osgi.util.NLS;
  */
 public class ModelParameterExtent {
 		
+	public ModelParameterExtent() {
+		this((ResourceSet) null);
+	}
+	
 	public ModelParameterExtent(ResourceSet rs) {
 		this(Collections.<EObject>emptyList(), rs, null);
 	}	
+	
+	public ModelParameterExtent(ModelParameterExtent extentToCopy) {
+		this(new ArrayList<EObject>(EcoreUtil.copyAll(extentToCopy.getRootObjects())),
+			extentToCopy.getResourceSet(), 
+			extentToCopy.getModelParameter());
+	}
 
 	public ModelParameterExtent(List<EObject> initialEObjs, ResourceSet rs, ModelParameter modelParameter) {
 		myResourceSet = rs;
@@ -106,11 +116,11 @@ public class ModelParameterExtent {
 		return myInMemoryResource;
 	}
 			
-	public ResourceSet getResourceSet() {
+	private ResourceSet getResourceSet() {
 		return myResourceSet;
 	}
 	
-	public ModelParameter getModelParameter() {
+	private ModelParameter getModelParameter() {
 		return myModelParameter;
 	}
 

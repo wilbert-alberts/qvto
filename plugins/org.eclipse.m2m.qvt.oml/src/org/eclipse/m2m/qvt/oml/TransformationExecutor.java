@@ -290,7 +290,7 @@ public final class TransformationExecutor {
 			if (modelParam.getKind() != org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
 				nextExtent = new ModelParameterExtent(nextArg.getContents(), null, modelParam);
 			} else {
-				nextExtent = new ModelParameterExtent(null);
+				nextExtent = new ModelParameterExtent();
 			}
 
 			extents.add(nextExtent);
