@@ -28,6 +28,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.ocl.ecore.FeatureCallExp;
+import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.utilities.ASTNode;
 
 /**
@@ -149,8 +151,19 @@ public class QvtStackTraceBuilder {
     	// traverse up to the enclosing operation scope, taking the closest 
     	// offset which has been initialized    	
     	EObject currentIPObject = evalEnv.getCurrentIP();
+    	
     	if(currentIPObject instanceof ASTNode) {
     		ASTNode astNode = (ASTNode) currentIPObject;
+    		
+			if(astNode.getStartPosition() < 0 && astNode instanceof VariableExp<?, ?>) {
+				// Remark: special processing for implicit source variables represented as
+				// synthetic variable expression in AST. These do not have any CST representation
+				// but are rather synthetic nodes => point to the call AST
+				if(astNode.eContainer() instanceof FeatureCallExp) {
+					astNode = (FeatureCallExp) astNode.eContainer();
+				}
+			}    		
+    		
     		return astNode.getStartPosition();
     	}
     	

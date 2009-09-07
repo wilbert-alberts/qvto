@@ -549,16 +549,21 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
     public Object visitMappingBody(MappingBody mappingBody) {
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+        MappingOperation currentMappingCalled = (MappingOperation) mappingBody.getOperation();
 		
 		setupInitialResultVariables(mappingBody);
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
             initExp.accept(getVisitor());
         }
-
-        Object result = createOrGetResult((MappingOperation) mappingBody.getOperation());
-
-		MappingOperation currentMappingCalled = (MappingOperation) evalEnv.getOperation();
+                
+        if(!mappingBody.getInitSection().isEmpty()) {
+        	// setup a meaningful IP after init section to avoid pointing to the last expression of init 
+        	// section, so in case of error a proper error location can be computed        	
+        	setCurrentEnvInstructionPointer(currentMappingCalled);
+        }
+        
+		Object result = createOrGetResult(currentMappingCalled);
 		
 		// call inherited mappings
 		if(!currentMappingCalled.getInherited().isEmpty()) {
@@ -833,8 +838,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 		}
 		else {
-	        setCurrentEnvInstructionPointer(objectExp);
-	    	
 	        Object owner = createInstance(objectExp.getType(), (ModelParameter) objectExp.getExtent());
 
 			Adapter adapter = EcoreUtil.getAdapter(objectExp.eAdapters(), ConstructorOperationAdapter.class);
@@ -1224,8 +1227,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
 		
 		if(Boolean.FALSE.equals(assertionValue)) {	
-			setCurrentEnvInstructionPointer(assertExp);
-
 			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
 			Module currentModule = internEvalEnv.getCurrentModule().getModule();
 			IModuleSourceInfo moduleSource = ASTBindingHelper.getModuleSourceBinding(currentModule);
@@ -2104,14 +2105,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
     		
     		@Override
-    		protected void genericVisitAny(Object object) {
-    			if(monitor != null && monitor.isCanceled()) {
-    				if(object instanceof ASTNode) {
-    					throwQVTException(new QvtInterruptedExecutionException());
-    				} else {
-    					throwQVTException(new QvtInterruptedExecutionException());
-    				}
+    		protected Object genericVisitAny(Object object) {
+    			if(monitor != null && monitor.isCanceled()) {    				
+    				throwQVTException(new QvtInterruptedExecutionException());    				
     			}
+    			
+    			// set the current instruction pointer
+    			if(object instanceof EObject) {
+    				InternalEvaluationEnv evalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+    				evalEnv.setCurrentIP((EObject)object);
+    			}
+    			
+    			return null;
     		}    		
     	};
     	

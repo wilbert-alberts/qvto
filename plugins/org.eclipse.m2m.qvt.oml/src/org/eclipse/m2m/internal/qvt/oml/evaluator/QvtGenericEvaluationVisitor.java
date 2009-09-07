@@ -96,7 +96,7 @@ import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.ExpressionInOCL;
 import org.eclipse.ocl.utilities.Visitable;
 
-abstract class QvtGenericEvaluationVisitor 
+public abstract class QvtGenericEvaluationVisitor 
 	extends EvaluationVisitorDecorator<EPackage, EClassifier, EOperation, 
 				EStructuralFeature, EEnumLiteral, EParameter, EObject, 
 				CallOperationAction, SendSignalAction, Constraint, EClass, EObject> 
@@ -108,25 +108,25 @@ abstract class QvtGenericEvaluationVisitor
 			super(qvtExtVisitor);
 		}
 
-		protected abstract void genericVisitAny(Object object);
+		protected abstract Object genericVisitAny(Object object);
 
 		@Override
-		protected void genericVisitAST(ASTNode visited) {
-			genericVisitAny(visited);			
+		protected Object genericPreVisitAST(ASTNode visited) {
+			return genericVisitAny(visited);			
 		}
 		
 		@Override
-		protected void genericVisitVisitable(Visitable visited) {
-			genericVisitAny(visited);
+		protected Object genericPreVisitVisitable(Visitable visited) {
+			return genericVisitAny(visited);
 		}	
 			
 		@Override
-		protected void genericVisitEObject(EObject visited) {
+		protected void genericPreVisitEObject(EObject visited) {
 			genericVisitAny(visited);			
 		}
 	}
 	
-	protected QvtGenericEvaluationVisitor(QvtOperationalEvaluationVisitor qvtExtVisitor) {
+	public QvtGenericEvaluationVisitor(QvtOperationalEvaluationVisitor qvtExtVisitor) {
 		super(qvtExtVisitor);
 	}
 			
@@ -134,188 +134,201 @@ abstract class QvtGenericEvaluationVisitor
 		return (QvtOperationalEvaluationVisitor) getDelegate();
 	}	
 	
-	protected void genericVisitAST(ASTNode visited) {
+	protected Object genericPreVisitAST(ASTNode visited) {
+		return null;
 	}
 	
-	protected void genericVisitVisitable(Visitable visited) {
+	protected Object genericPostVisitAST(ASTNode visited, Object preVisitState, Object result) {
+		return result;
+	}
+	
+	protected Object genericPreVisitVisitable(Visitable visited) {
+		return null;
+	}
+	
+	protected Object genericPostVisitVisitable(Visitable visited, Object preVisitState, Object result) {
+		return result;
 	}	
 		
-	protected void genericVisitEObject(EObject visited) {
+	protected void genericPreVisitEObject(EObject visited) {
 	}
-		
+
+	protected Object genericPostVisitEObject(EObject visited, Object result) {
+		return result;
+	}
+	
 	@Override
 	public Object visitAssociationClassCallExp(AssociationClassCallExp<EClassifier, EStructuralFeature> callExp) {
-		genericVisitAST(callExp);
-		return super.visitAssociationClassCallExp(callExp);
+		Object preVisitState = genericPreVisitAST(callExp);
+		return genericPostVisitAST(callExp, preVisitState, super.visitAssociationClassCallExp(callExp));
 	}
 
 	@Override
 	public Object visitBooleanLiteralExp(BooleanLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitBooleanLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitBooleanLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitCollectionItem(CollectionItem<EClassifier> item) {
-		genericVisitVisitable(item);
-		return super.visitCollectionItem(item);
+		Object preVisitState = genericPreVisitVisitable(item);
+		return genericPostVisitVisitable(item, preVisitState, super.visitCollectionItem(item));
 	}
 
 	@Override
 	public Object visitCollectionLiteralExp(CollectionLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitCollectionLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitCollectionLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitCollectionRange(CollectionRange<EClassifier> range) {
-		genericVisitVisitable(range);
-		return super.visitCollectionRange(range);
+		Object preVisitState = genericPreVisitVisitable(range);
+		return genericPostVisitVisitable(range, preVisitState, super.visitCollectionRange(range));
 	}
 
 	@Override
 	public Object visitConstraint(Constraint constraint) {
-		genericVisitEObject(constraint);
-		return super.visitConstraint(constraint);
+		genericPreVisitEObject(constraint);
+		return genericPostVisitEObject(constraint, super.visitConstraint(constraint));
 	}
 
 	@Override
 	public Object visitEnumLiteralExp(EnumLiteralExp<EClassifier, EEnumLiteral> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitEnumLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitEnumLiteralExp(literalExp));
 	}
 
 	@Override
-	public Object visitExpression(OCLExpression<EClassifier> expression) {
-		genericVisitAST(expression);
+	public final Object visitExpression(OCLExpression<EClassifier> expression) {
+		// only element specific visits can perform pre/post interceptions
 		return super.visitExpression(expression);
 	}
 
 	@Override
 	public Object visitExpressionInOCL(ExpressionInOCL<EClassifier, EParameter> expression) {
-		genericVisitVisitable(expression);
-		return super.visitExpressionInOCL(expression);
+		Object preVisitState = genericPreVisitVisitable(expression);
+		return genericPostVisitVisitable(expression, preVisitState, super.visitExpressionInOCL(expression));
 	}
 
 	@Override
 	public Object visitIfExp(IfExp<EClassifier> ifExp) {
-		genericVisitAST(ifExp);
-		return super.visitIfExp(ifExp);
+		Object preVisitState = genericPreVisitAST(ifExp);
+		return genericPostVisitAST(ifExp, preVisitState, super.visitIfExp(ifExp));
 	}
 
 	@Override
 	public Object visitIntegerLiteralExp(IntegerLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitIntegerLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitIntegerLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitInvalidLiteralExp(InvalidLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitInvalidLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitInvalidLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitIterateExp(IterateExp<EClassifier, EParameter> callExp) {
-		genericVisitAST(callExp);
-		return super.visitIterateExp(callExp);
+		Object preVisitState = genericPreVisitAST(callExp);
+		return genericPostVisitAST(callExp, preVisitState, super.visitIterateExp(callExp));
 	}
 
 	@Override
 	public Object visitIteratorExp(IteratorExp<EClassifier, EParameter> callExp) {
-		genericVisitAST(callExp);
-		return super.visitIteratorExp(callExp);
+		Object preVisitState = genericPreVisitAST(callExp);
+		return genericPostVisitAST(callExp, preVisitState, super.visitIteratorExp(callExp));
 	}
 
 	@Override
 	public Object visitLetExp(LetExp<EClassifier, EParameter> letExp) {
-		genericVisitAST(letExp);
-		return super.visitLetExp(letExp);
+		Object preVisitState = genericPreVisitAST(letExp);
+		return genericPostVisitAST(letExp, preVisitState, super.visitLetExp(letExp));
 	}
 
 	@Override
 	public Object visitMessageExp(MessageExp<EClassifier, CallOperationAction, SendSignalAction> messageExp) {
-		genericVisitVisitable(messageExp);
-		return super.visitMessageExp(messageExp);
+		Object preVisitState = genericPreVisitVisitable(messageExp);
+		return genericPostVisitVisitable(messageExp, preVisitState, super.visitMessageExp(messageExp));
 	}
 
 	@Override
 	public Object visitNullLiteralExp(NullLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitNullLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitNullLiteralExp(literalExp));
 	}
 
 	@Override
-	public Object visitOperationCallExp(
-			OperationCallExp<EClassifier, EOperation> callExp) {
-		genericVisitAST(callExp);
-		return super.visitOperationCallExp(callExp);
+	public Object visitOperationCallExp(OperationCallExp<EClassifier, EOperation> callExp) {
+		Object preVisitState = genericPreVisitAST(callExp);
+		return genericPostVisitAST(callExp, preVisitState, super.visitOperationCallExp(callExp));
 	}
 
 	@Override
 	public Object visitPropertyCallExp(PropertyCallExp<EClassifier, EStructuralFeature> callExp) {
-		genericVisitAST(callExp);
-		return super.visitPropertyCallExp(callExp);
+		Object preVisitState = genericPreVisitAST(callExp);
+		return genericPostVisitAST(callExp, preVisitState, super.visitPropertyCallExp(callExp));
 	}
 
 	@Override
 	public Object visitRealLiteralExp(RealLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitRealLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitRealLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitStateExp(StateExp<EClassifier, EObject> stateExp) {
-		genericVisitAST(stateExp);
-		return super.visitStateExp(stateExp);
+		Object preVisitState = genericPreVisitAST(stateExp);
+		return genericPostVisitAST(stateExp, preVisitState, super.visitStateExp(stateExp));
 	}
 
 	@Override
 	public Object visitStringLiteralExp(StringLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitStringLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitStringLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitTupleLiteralExp(TupleLiteralExp<EClassifier, EStructuralFeature> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitTupleLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitTupleLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitTupleLiteralPart(TupleLiteralPart<EClassifier, EStructuralFeature> part) {
-		genericVisitAST(part);
-		return super.visitTupleLiteralPart(part);
+		Object preVisitState = genericPreVisitAST(part);
+		return genericPostVisitAST(part, preVisitState, super.visitTupleLiteralPart(part));
 	}
 
 	@Override
 	public Object visitTypeExp(TypeExp<EClassifier> typeExp) {
-		genericVisitAST(typeExp);
-		return super.visitTypeExp(typeExp);
+		Object preVisitState = genericPreVisitAST(typeExp);
+		return genericPostVisitAST(typeExp, preVisitState, super.visitTypeExp(typeExp));
 	}
 
 	@Override
 	public Object visitUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp<EClassifier> literalExp) {
-		genericVisitAST(literalExp);
-		return super.visitUnlimitedNaturalLiteralExp(literalExp);
+		Object preVisitState = genericPreVisitAST(literalExp);
+		return genericPostVisitAST(literalExp, preVisitState, super.visitUnlimitedNaturalLiteralExp(literalExp));
 	}
 
 	@Override
 	public Object visitUnspecifiedValueExp(UnspecifiedValueExp<EClassifier> unspecExp) {
-		genericVisitAST(unspecExp);
-		return super.visitUnspecifiedValueExp(unspecExp);
+		Object preVisitState = genericPreVisitAST(unspecExp);
+		return genericPostVisitAST(unspecExp, preVisitState, super.visitUnspecifiedValueExp(unspecExp));
 	}
 
 	@Override
 	public Object visitVariable(Variable<EClassifier, EParameter> variable) {
-		genericVisitAST(variable);
-		return super.visitVariable(variable);
+		Object preVisitState = genericPreVisitAST(variable);
+		return genericPostVisitAST(variable, preVisitState, super.visitVariable(variable));
 	}
 
 	@Override
 	public Object visitVariableExp(VariableExp<EClassifier, EParameter> variableExp) {
-		genericVisitAST(variableExp);
-		return super.visitVariableExp(variableExp);
+		Object preVisitState = genericPreVisitAST(variableExp);
+		return genericPostVisitAST(variableExp, preVisitState, super.visitVariableExp(variableExp));
 	}
 
 	
@@ -324,103 +337,128 @@ abstract class QvtGenericEvaluationVisitor
 	/////////////////////////////////////////////////////////////////////////	
 	
 	public Object visitAssignExp(AssignExp assignExp) {
-		return getQVTDelegate().visitAssignExp(assignExp);
+		Object preVisitState = genericPreVisitAST(assignExp);
+		return genericPostVisitAST(assignExp, preVisitState, getQVTDelegate().visitAssignExp(assignExp));
 	}
 
 	public Object visitBlockExp(BlockExp blockExp) {
-		return getQVTDelegate().visitBlockExp(blockExp);
+		Object preVisitState = genericPreVisitAST(blockExp);
+		return genericPostVisitAST(blockExp, preVisitState, getQVTDelegate().visitBlockExp(blockExp));
 	}
 	
 	public Object visitComputeExp(ComputeExp computeExp) {
-        return getQVTDelegate().visitComputeExp(computeExp);
+		Object preVisitState = genericPreVisitAST(computeExp);
+		return genericPostVisitAST(computeExp, preVisitState, getQVTDelegate().visitComputeExp(computeExp));
     }
 
 	public Object visitHelper(Helper helper) {
-		return getQVTDelegate().visitHelper(helper);
+		Object preVisitState = genericPreVisitAST(helper);
+		return genericPostVisitAST(helper, preVisitState, getQVTDelegate().visitHelper(helper));
 	}
 
 	public Object visitImperativeOperation(ImperativeOperation imperativeOperation) {
-		return getQVTDelegate().visitImperativeOperation(imperativeOperation);
+		Object preVisitState = genericPreVisitAST(imperativeOperation);
+		return genericPostVisitAST(imperativeOperation, preVisitState, getQVTDelegate().visitImperativeOperation(imperativeOperation));
 	}
 
 	public Object visitLibrary(Library library) {
-		return getQVTDelegate().visitLibrary(library);
+		Object preVisitState = genericPreVisitAST(library);
+		return genericPostVisitAST(library, preVisitState, getQVTDelegate().visitLibrary(library));
 	}
 
 	public Object visitContextualProperty(ContextualProperty contextualProperty) {
-		return getQVTDelegate().visitContextualProperty(contextualProperty);
+		Object preVisitState = genericPreVisitAST(contextualProperty);
+		return genericPostVisitAST(contextualProperty, preVisitState, getQVTDelegate().visitContextualProperty(contextualProperty));
 	}
 
 	public Object visitMappingBody(MappingBody mappingBody) {
-		return getQVTDelegate().visitMappingBody(mappingBody);
+		Object preVisitState = genericPreVisitAST(mappingBody);
+		return genericPostVisitAST(mappingBody, preVisitState, getQVTDelegate().visitMappingBody(mappingBody));
 	}
 
 	public Object visitMappingCallExp(MappingCallExp mappingCallExp) {		
-		return getQVTDelegate().visitMappingCallExp(mappingCallExp);
+		Object preVisitState = genericPreVisitAST(mappingCallExp);
+		return genericPostVisitAST(mappingCallExp, preVisitState, getQVTDelegate().visitMappingCallExp(mappingCallExp));
 	}
 
 	public Object visitMappingOperation(MappingOperation mappingOperation) {
-		return getQVTDelegate().visitMappingOperation(mappingOperation);
+		Object preVisitState = genericPreVisitAST(mappingOperation);
+		return genericPostVisitAST(mappingOperation, preVisitState, getQVTDelegate().visitMappingOperation(mappingOperation));
 	}
 
 	public Object visitModelType(ModelType modelType) {
-		return getQVTDelegate().visitModelType(modelType);
+		Object preVisitState = genericPreVisitAST(modelType);
+		return genericPostVisitAST(modelType, preVisitState, getQVTDelegate().visitModelType(modelType));
 	}
 
 	public Object visitModule(Module module) {
-		return getQVTDelegate().visitModule(module);
+		Object preVisitState = genericPreVisitAST(module);
+		return genericPostVisitAST(module, preVisitState, getQVTDelegate().visitModule(module));
 	}
 
 	public Object visitModuleImport(ModuleImport moduleImport) {
-		return getQVTDelegate().visitModuleImport(moduleImport);
+		Object preVisitState = genericPreVisitAST(moduleImport);
+		return genericPostVisitAST(moduleImport, preVisitState, getQVTDelegate().visitModuleImport(moduleImport));
 	}
 
 	public Object visitObjectExp(ObjectExp objectExp) {
-		return getQVTDelegate().visitObjectExp(objectExp);
+		Object preVisitState = genericPreVisitAST(objectExp);
+		return genericPostVisitAST(objectExp, preVisitState, getQVTDelegate().visitObjectExp(objectExp));
 	}
 		
 	public Object visitInstantiationExp(InstantiationExp instatiationExp) {
-		return getQVTDelegate().visitInstantiationExp(instatiationExp);
+		Object preVisitState = genericPreVisitAST(instatiationExp);
+		return genericPostVisitAST(instatiationExp, preVisitState, getQVTDelegate().visitInstantiationExp(instatiationExp));
 	}
 
 	public Object visitOperationBody(OperationBody operationBody) {
-		return getQVTDelegate().visitOperationBody(operationBody);
+		Object preVisitState = genericPreVisitAST(operationBody);
+		return genericPostVisitAST(operationBody, preVisitState, getQVTDelegate().visitOperationBody(operationBody));
 	}
 
 	public Object visitResolveExp(ResolveExp resolveExp) {
-		return getQVTDelegate().visitResolveExp(resolveExp);
+		Object preVisitState = genericPreVisitAST(resolveExp);
+		return genericPostVisitAST(resolveExp, preVisitState, getQVTDelegate().visitResolveExp(resolveExp));
 	}
 
 	public Object visitResolveInExp(ResolveInExp resolveInExp) {
-		return getQVTDelegate().visitResolveInExp(resolveInExp);
+		Object preVisitState = genericPreVisitAST(resolveInExp);
+		return genericPostVisitAST(resolveInExp, preVisitState, getQVTDelegate().visitResolveInExp(resolveInExp));
 	}
 
 	public Object visitAltExp(AltExp switchAltExp) {
-		return getQVTDelegate().visitAltExp(switchAltExp);
+		Object preVisitState = genericPreVisitAST(switchAltExp);
+		return genericPostVisitAST(switchAltExp, preVisitState, getQVTDelegate().visitAltExp(switchAltExp));
 	}
 
 	public Object visitSwitchExp(SwitchExp switchExp) {
-		return getQVTDelegate().visitSwitchExp(switchExp);
+		Object preVisitState = genericPreVisitAST(switchExp);
+		return genericPostVisitAST(switchExp, preVisitState, getQVTDelegate().visitSwitchExp(switchExp));
 	}
 
 	public Object visitVariableInitExp(VariableInitExp variableInitExp) {
-		return getQVTDelegate().visitVariableInitExp(variableInitExp);
+		Object preVisitState = genericPreVisitAST(variableInitExp);
+		return genericPostVisitAST(variableInitExp, preVisitState, getQVTDelegate().visitVariableInitExp(variableInitExp));
 	}
 
 	public Object visitVarParameter(VarParameter varParameter) {
-		return getQVTDelegate().visitVarParameter(varParameter);
+		Object preVisitState = genericPreVisitAST(varParameter);
+		return genericPostVisitAST(varParameter, preVisitState, getQVTDelegate().visitVarParameter(varParameter));
 	}
 
 	public Object visitWhileExp(WhileExp whileExp) {
-		return getQVTDelegate().visitWhileExp(whileExp);
+		Object preVisitState = genericPreVisitAST(whileExp);
+		return genericPostVisitAST(whileExp, preVisitState, getQVTDelegate().visitWhileExp(whileExp));
 	}			
 	
 	public Object visitAssertExp(AssertExp assertExp) {
-		return getQVTDelegate().visitAssertExp(assertExp);
+		Object preVisitState = genericPreVisitAST(assertExp);
+		return genericPostVisitAST(assertExp, preVisitState, getQVTDelegate().visitAssertExp(assertExp));
 	}
 	
 	public Object visitLogExp(LogExp logExp) {
-		return getQVTDelegate().visitLogExp(logExp);
+		Object preVisitState = genericPreVisitAST(logExp);
+		return genericPostVisitAST(logExp, preVisitState, getQVTDelegate().visitLogExp(logExp));
 	}
 	
 //    public Object visitImperativeLoopExp(ImperativeLoopExp imperativeLoopExp) {
@@ -428,70 +466,87 @@ abstract class QvtGenericEvaluationVisitor
 //    }
 
     public Object visitForExp(ForExp forExp) {
-        return getQVTDelegate().visitForExp(forExp);
+    	Object preVisitState = genericPreVisitAST(forExp);
+    	return genericPostVisitAST(forExp, preVisitState, getQVTDelegate().visitForExp(forExp));
     }
 
     public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
-        return getQVTDelegate().visitImperativeIterateExp(imperativeIterateExp);
+    	Object preVisitState = genericPreVisitAST(imperativeIterateExp);
+    	return genericPostVisitAST(imperativeIterateExp, preVisitState, getQVTDelegate().visitImperativeIterateExp(imperativeIterateExp));
     }
     
     public Object visitReturnExp(ReturnExp returnExp) {
-        return getQVTDelegate().visitReturnExp(returnExp);
+    	Object preVisitState = genericPreVisitAST(returnExp);
+    	return genericPostVisitAST(returnExp, preVisitState, getQVTDelegate().visitReturnExp(returnExp));
     }
     
     public Object visitEntryOperation(EntryOperation entryOperation) {    
-    	return getQVTDelegate().visitEntryOperation(entryOperation);
+    	Object preVisitState = genericPreVisitAST(entryOperation);
+    	return genericPostVisitAST(entryOperation, preVisitState, getQVTDelegate().visitEntryOperation(entryOperation));
     }
     
     public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
-    	return getQVTDelegate().visitDictLiteralExp(dictLiteralExp);
+    	Object preVisitState = genericPreVisitAST(dictLiteralExp);
+    	return genericPostVisitAST(dictLiteralExp, preVisitState, getQVTDelegate().visitDictLiteralExp(dictLiteralExp));
     }
     
 	public Object visitBreakExp(BreakExp astNode) {
-		return getQVTDelegate().visitBreakExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitBreakExp(astNode));
 	}
 
 	public Object visitCatchtExp(CatchExp astNode) {
-		return getQVTDelegate().visitCatchtExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitCatchtExp(astNode));
 	}
 
 	public Object visitContinueExp(ContinueExp astNode) {
-		return getQVTDelegate().visitContinueExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitContinueExp(astNode));
 	}
 
-	public Object visitDictLiteralPart(DictLiteralPart astNode) {
-		return getQVTDelegate().visitDictLiteralPart(astNode);
+	public Object visitDictLiteralPart(DictLiteralPart part) {
+		genericPreVisitEObject(part);
+		return genericPostVisitEObject(part, getQVTDelegate().visitDictLiteralPart(part));
 	}
 
 	public Object visitOrderedTupleLiteralExp(OrderedTupleLiteralExp astNode) {
-		return getQVTDelegate().visitOrderedTupleLiteralExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitOrderedTupleLiteralExp(astNode));
 	}
 
 	public Object visitOrderedTupleLiteralPart(OrderedTupleLiteralPart astNode) {
-		return getQVTDelegate().visitOrderedTupleLiteralPart(astNode);
+		genericPreVisitEObject(astNode);
+		return genericPostVisitEObject(astNode, getQVTDelegate().visitOrderedTupleLiteralPart(astNode));
 	}
 
 	public Object visitRaiseExp(RaiseExp astNode) {
-		return getQVTDelegate().visitRaiseExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitRaiseExp(astNode));
 	}
 
 	public Object visitTryExp(TryExp astNode) {
-		return getQVTDelegate().visitTryExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitTryExp(astNode));
 	}
 
 	public Object visitUnlinkExp(UnlinkExp astNode) {
-		return getQVTDelegate().visitUnlinkExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitUnlinkExp(astNode));
 	}
 
 	public Object visitUnpackExp(UnpackExp astNode) {
-		return getQVTDelegate().visitUnpackExp(astNode);
+		Object preVisitState = genericPreVisitAST(astNode);
+		return genericPostVisitAST(astNode, preVisitState, getQVTDelegate().visitUnpackExp(astNode));
 	}
 	
 	public Object visitConstructor(Constructor constructor) {
-		return getQVTDelegate().visitConstructor(constructor);
+		Object preVisitState = genericPreVisitAST(constructor);
+		return genericPostVisitAST(constructor, preVisitState, getQVTDelegate().visitConstructor(constructor));
 	}
 	
 	public Object visitConstructorBody(ConstructorBody constructorBody) {
-		return getQVTDelegate().visitConstructorBody(constructorBody);
+		Object preVisitState = genericPreVisitAST(constructorBody);
+		return genericPostVisitAST(constructorBody, preVisitState, getQVTDelegate().visitConstructorBody(constructorBody));
 	}
 }
