@@ -325,7 +325,7 @@ class QVTSemanticHighlighter {
 	
 	protected boolean visit(AssertExpCS assertExpCS) {
 		SimpleNameCS severity = assertExpCS.getSeverity();
-		if("fatal".equals(severity.getValue())) { //$NON-NLS-1$
+		if(severity != null && "fatal".equals(severity.getValue())) { //$NON-NLS-1$
 			return fCollector.visitToken(severity, INDEX_FATAL_ASSERT);
 		}
 		return false;
