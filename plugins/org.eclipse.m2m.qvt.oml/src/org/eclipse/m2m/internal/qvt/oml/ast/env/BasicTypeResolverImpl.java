@@ -135,7 +135,7 @@ class BasicTypeResolverImpl
 	@Override
 	protected CollectionType<EClassifier, EOperation> findCollectionType(CollectionKind kind, EClassifier elementType) {
 		for (EClassifier next : getEnvironment().getUMLReflection().getClassifiers(getCollectionPackage())) {
-	        if (next instanceof CollectionType) {
+	        if (next instanceof CollectionType<?, ?>) {
 	        	if(next.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType() ||
 	        		next.eClass() == ImperativeOCLPackage.eINSTANCE.getListType()) {
 	        		// Note: QVT have unknown CollectionKind
@@ -282,7 +282,7 @@ class BasicTypeResolverImpl
     				return next;
     			}
     			
-    			if(type instanceof TupleType) {
+    			if(type instanceof TupleType<?,?>) {
     				if(TypeUtil.exactTypeMatch(getEnvironment(), type, shadowedClassifier)) {
     					return next;
     				}
