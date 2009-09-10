@@ -207,14 +207,14 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		
 	protected void getLocalAdditionalOperations(EClassifier owner, Collection<EOperation> result) {
 		extractContextualOperations(owner, result);
-		final boolean isCollectionTypeOwner = owner instanceof CollectionType;
+		final boolean isCollectionTypeOwner = owner instanceof CollectionType<?,?>;
 		
-		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType == false)) {
+		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType<?, ?> == false)) {
 			extractContextualOperations(fOwner.getOCLStandardLibrary().getOclAny(), result);
 		}
 		
 		result.addAll(getDelegate().getAdditionalOperations(owner));
-		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType == false)) {
+		if(fdefinesOclAnyFeatures && (isCollectionTypeOwner == false) && (owner instanceof TupleType<?, ?> == false)) {
 			result.addAll(getDelegate().getAdditionalOperations(fOwner.getOCLStandardLibrary().getOclAny()));
 		}
 		
