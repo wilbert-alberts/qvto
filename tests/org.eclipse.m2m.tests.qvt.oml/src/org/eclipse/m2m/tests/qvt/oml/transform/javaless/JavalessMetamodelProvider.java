@@ -39,13 +39,13 @@ public class JavalessMetamodelProvider implements IMetamodelProvider {
 		EPackage pack = EPackage.Registry.INSTANCE.getEPackage(JAVALESS_METAMODEL_ID);
 		if(pack == null) {
 			pack = loadJavalessMetamodel();
-			EPackage.Registry.INSTANCE.put(pack.getNsURI(), pack);
+			//EPackage.Registry.INSTANCE.put(pack.getNsURI(), pack);
 		}
 		
 		return pack;
 	}
 	
-    private static EPackage loadJavalessMetamodel() {
+    public static EPackage loadJavalessMetamodel() {
 		Path javalessPath;
 		try {
 			javalessPath = TestProject.findFileInPlugin("org.eclipse.m2m.tests.qvt.oml", "models/javaless.ecore"); //$NON-NLS-1$//$NON-NLS-2$

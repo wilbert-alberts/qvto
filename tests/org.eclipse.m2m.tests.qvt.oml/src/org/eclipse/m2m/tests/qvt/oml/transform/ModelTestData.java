@@ -31,7 +31,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
@@ -112,12 +115,28 @@ public abstract class ModelTestData {
         return myContext; 
     }
     
+    public EPackage.Registry getMetamodelResolutionRegistry(IProject project, ResourceSet resSet) {
+    	if(!ecoreFileMetamodels.isEmpty()) {
+			myEcoreFilePackageRegistry = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
+			Registry reg = MetamodelURIMappingHelper.mappingsToEPackageRegistry(project.getProject(),resSet);
+			myEcoreFilePackageRegistry.putAll(reg);
+			
+    		TestCase.assertNotNull("EPackage registry for workspace ecore file must be ready", myEcoreFilePackageRegistry); //$NON-NLS-1$
+    	}
+    	return myEcoreFilePackageRegistry;
+    }
+    
+    public void setPackageRegistry(EPackage.Registry myEcoreFilePackageRegistry) {
+		this.myEcoreFilePackageRegistry = myEcoreFilePackageRegistry;
+	}
+    
     public void dispose() {     	
 //    	Trace trace = getContext().getTrace();
 //		trace.getTraceRecords().clear();
 //    	trace.getTraceRecordMap().clear();
 //    	trace.getSourceToTraceRecordMap().clear();
 //    	trace.getTargetToTraceRecordMap().clear();
+    	myEcoreFilePackageRegistry = null;
     }
     
     abstract public List<URI> getIn(IProject project); 
@@ -127,9 +146,12 @@ public abstract class ModelTestData {
     	Resource res = MetamodelURIMappingHelper.createMappingResource(project.getProject());
     	MappingContainer container = MetamodelURIMappingHelper.createNewMappings(res);
     	
-    	for (URI ecoreFileURI : ecoreFileMetamodels) {        	        	
-        	IPath ecoreFilePath = project.getProject().getFullPath().append("models").append(myName).append(ecoreFileURI.toString()); //$NON-NLS-1$
-        	URI absoluteURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), true);        	
+    	for (URI ecoreFileURI : ecoreFileMetamodels) { 
+    		URI absoluteURI = ecoreFileURI;
+    		if(ecoreFileURI.isRelative()) {
+        		 IPath ecoreFilePath = project.getProject().getFullPath().append("models").append(myName).append(ecoreFileURI.toString()); //$NON-NLS-1$
+        		 absoluteURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), true);  
+    		}
         	
         	EPackage metamodelPackage = null;
         	Resource ecoreResource = null;
@@ -158,7 +180,7 @@ public abstract class ModelTestData {
 		}
     	
 		res.save(Collections.emptyMap());
-		project.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
+		project.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);		
     }
     
     protected File getDestFolder(IProject project) {
@@ -225,7 +247,8 @@ public abstract class ModelTestData {
     
     private final String myName;
     private final IContext myContext;
-    private final List<URI> ecoreFileMetamodels = new ArrayList<URI>();
+    protected final List<URI> ecoreFileMetamodels = new ArrayList<URI>();
+    private EPackage.Registry myEcoreFilePackageRegistry;    
     
     public static final String ENCODING = "UTF-8"; //$NON-NLS-1$
 }

@@ -24,14 +24,17 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
@@ -41,7 +44,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
-import org.eclipse.m2m.internal.qvt.oml.project.builder.BinXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
@@ -69,7 +71,14 @@ public class TestQvtInterpreter extends TestTransformation {
     
     protected ITransformer getTransformer() {
     	// execute compiled XMI
-    	return new DefaultTransformer(true);
+    	final ResourceSetImpl resSet = new ResourceSetImpl();
+		Registry metamodelRegistry = getData().getMetamodelResolutionRegistry(getProject(), resSet);
+		resSet.setPackageRegistry(metamodelRegistry);
+		return new DefaultTransformer(true, metamodelRegistry) {
+			public ResourceSetImpl createInputResourceSet() {
+				return resSet;
+			}
+		};
     }
     
     @SuppressWarnings("unchecked")
@@ -108,13 +117,15 @@ public class TestQvtInterpreter extends TestTransformation {
 	public static class DefaultTransformer implements ITransformer {
 		
 		private final boolean fExecuteCompiledAST;
+		private final EPackage.Registry fRegistry;
 		
 		public DefaultTransformer() {
-			this(false);
+			this(false, null);
 		}
 		
-		public DefaultTransformer(boolean executeCompiledAST) {
+		public DefaultTransformer(boolean executeCompiledAST, EPackage.Registry registry) {
 			fExecuteCompiledAST = executeCompiledAST;
+			fRegistry = registry;
 		}
 		
 		protected QvtInterpretedTransformation getTransformation(IFile transformation) {
@@ -133,27 +144,38 @@ public class TestQvtInterpreter extends TestTransformation {
 					UnitResolverFactory factory = UnitResolverFactory.Registry.INSTANCE.getFactory(transformationFile);
 					URI resourceURI = URI.createPlatformResourceURI(transformationFile.getFullPath().toString(), true);
 					UnitResolver resolver = factory.getResolver(resourceURI);
-					myCompiler = new QVTOCompiler(resolver, new ResourceSetImpl());
-			        
-					// init stlib -> register package
-			        QvtOperationalStdLibrary.INSTANCE.getStdLibModule();
-			        URI binURI = BinXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$
+													        
+					
+			        URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
 			        assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
-			    	return new CompiledUnit(binURI);
+			    		
+			        ResourceSetImpl resSet = CompiledUnit.createResourceSet();     			
+			        if(fRegistry != null) {
+				        EPackageRegistryImpl root = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
+						root.putAll(fRegistry);
+				        resSet.setPackageRegistry(root);
+			        }
+			        
+					myCompiler = new QVTOCompiler(resolver, new ResourceSetImpl());
+        			return new CompiledUnit(binURI, resSet);
 				}
 			};
 
 			return new QvtInterpretedTransformation(qvtModule); 
 		}
 		
+		public ResourceSetImpl createInputResourceSet() {
+			return new ResourceSetImpl();
+		}
+				
 		public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
         	QvtInterpretedTransformation trans = getTransformation(transformation);
   
         	//TestUtil.assertAllPersistableAST(trans.getModule().getUnit());
-            
+        	ResourceSetImpl inputResourceSet = createInputResourceSet();
         	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
-        	for (URI uri : inUris) {
-        		ModelContent in = EmfUtil.loadModel(uri);
+        	for (URI uri : inUris) {        		
+				ModelContent in = EmfUtil.loadModel(uri, inputResourceSet);
         		inputs.add(in);
         	}
             TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new ModelContent[inputs.size()]), qvtContext);

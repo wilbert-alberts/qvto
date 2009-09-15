@@ -29,7 +29,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -123,7 +122,8 @@ public abstract class TestTransformation extends TestCase {
             LinkedHashMap<ModelExtentContents, URI> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
         	List<URI> expectedResultURIs = data.getExpected(project);
         	
-        	ResourceSet rs = new ResourceSetImpl();
+        	ResourceSetImpl rs = new ResourceSetImpl();
+        	rs.setPackageRegistry(data.getMetamodelResolutionRegistry(project, rs));
         	int i = 0;
         	for (ModelExtentContents nextExtent : transfResult.keySet()) {
         		URI uri = expectedResultURIs.get(i++);
