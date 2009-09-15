@@ -2064,7 +2064,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return newInstance;
 	}
    
-    private EObject setCurrentEnvInstructionPointer(EObject node) {
+    protected EObject setCurrentEnvInstructionPointer(EObject node) {
     	InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
     	if(node != null) {
     		return internEnv.setCurrentIP(node);

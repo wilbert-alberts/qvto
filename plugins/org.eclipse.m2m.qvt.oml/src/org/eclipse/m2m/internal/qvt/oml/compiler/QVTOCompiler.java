@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -70,12 +71,14 @@ public class QVTOCompiler {
 
 	private static final String NAMESPACE_SEP = String.valueOf(UnitProxy.NAMESPACE_SEP);
 	
-    private final Map<UnitProxy, CompiledUnit> fSource2Compiled = new HashMap<UnitProxy, CompiledUnit>();
+    private final Map<URI, CompiledUnit> fSource2Compiled = new HashMap<URI, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
     
     private final UnitResolver fUnitResolver;
     private final QvtCompilerKernel myKernel;
     private final ResourceSet resourceSet;
+    private ResourceSetImpl fExeXMIResourceSet;
+    private boolean fUseCompiledXMI = false;
 
     /**
 	 * Creates compiler that caches already compiled modules until
@@ -125,8 +128,19 @@ public class QVTOCompiler {
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
         			new ResourceSetImpl();
+        
+		fExeXMIResourceSet = CompiledUnit.createResourceSet();
+		if(getResourceSet() instanceof ResourceSetImpl) {
+			Map<URI, Resource> uriResourceMap = ((ResourceSetImpl) getResourceSet()).getURIResourceMap();
+			if(uriResourceMap != null) {
+				fExeXMIResourceSet.setURIResourceMap(new HashMap<URI, Resource>(uriResourceMap));	
+			}
+		}
+		
+		// FIXME - setup the package registry to be used for loading ecore files 
+		// referenced in QVTO xmi files			
     }
-	
+
 	public QVTOCompiler(UnitResolver importResolver) {
 		this(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
     }	
@@ -150,6 +164,10 @@ public class QVTOCompiler {
 					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
 						new WorkspaceMetamodelRegistryProvider());
     }	
+	
+	public void setUseCompiledXMI(boolean flag) {
+		fUseCompiledXMI = flag;
+	}
 				
 	public CompiledUnit[] compile(UnitProxy[] sources, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
 		if(options == null) {
@@ -315,7 +333,8 @@ public class QVTOCompiler {
 
     protected void afterCompileCleanup() {
     	this.fSource2Compiled.clear();
-    	this.fDependencyWalkPath.clear();    	
+    	this.fDependencyWalkPath.clear();
+    	this.fExeXMIResourceSet.getResources().clear();
     }
 	
 	/**
@@ -352,8 +371,8 @@ public class QVTOCompiler {
     }
 		
     private CompiledUnit doCompile(final UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws ParserException, IOException {
-    	if(fSource2Compiled.containsKey(source)) {
-    		return fSource2Compiled.get(source);
+    	if(fSource2Compiled.containsKey(source.getURI())) {
+    		return fSource2Compiled.get(source.getURI());
     	}
 
     	monitor = new SubProgressMonitor(monitor, 1);
@@ -363,10 +382,18 @@ public class QVTOCompiler {
 		DependencyPathElement dependencyElement = new DependencyPathElement(source);
     	try {
         	fDependencyWalkPath.push(dependencyElement);
+
+        	if(fUseCompiledXMI) {
+	        	CompiledUnit binXMIUnit = getCompiledExeXMIUnit(source);
+	        	if(binXMIUnit != null) {
+					fSource2Compiled.put(source.getURI(), binXMIUnit);
+					return binXMIUnit;
+	        	}
+        	}
         	
         	if(source.getContentType() != UnitProxy.TYPE_CST_STREAM) {
         		CompiledUnit loadBlackboxUnit = loadBlackboxUnit(source);        		
-        		fSource2Compiled.put(source, loadBlackboxUnit);
+        		fSource2Compiled.put(source.getURI(), loadBlackboxUnit);
 
         		monitor.worked(1);        		
 				return loadBlackboxUnit;
@@ -470,7 +497,7 @@ public class QVTOCompiler {
 	    
 	    	// put to central compilation result cache
 	    	// TODO - better to use this one as unit resolver 
-	    	fSource2Compiled.put(source, result);
+	    	fSource2Compiled.put(source.getURI(), result);
 
 	    	// FIXME - temp solution check for being a CST parsed
 	    	if(result.getURI().isPlatformResource()) {
@@ -486,9 +513,29 @@ public class QVTOCompiler {
 	    	monitor.done();    		
     	}
     }
+
+	private CompiledUnit getCompiledExeXMIUnit(final UnitProxy source) {		
+		URI xmiURI = ExeXMISerializer.toXMIUnitURI(source.getURI());
+		if(URIConverter.INSTANCE.exists(xmiURI, null)) {
+			// check if the bin XMI is up-to-date with the QVT source file
+	        Long srcTStamp = (Long)URIConverter.INSTANCE.getAttributes(source.getURI(), null).get(URIConverter.ATTRIBUTE_TIME_STAMP);
+			Long binTStamp = (Long)URIConverter.INSTANCE.getAttributes(xmiURI, null).get(URIConverter.ATTRIBUTE_TIME_STAMP);
+			if(binTStamp == null || (srcTStamp != null && binTStamp.equals(srcTStamp))) {
+				return new CompiledUnit(fExeXMIResourceSet.getResource(xmiURI, true), fSource2Compiled);        		
+			}
+		}
+		
+		return null;
+	}
     
-	private static CompiledUnit createCompiledUnit(UnitProxy unit, QvtOperationalFileEnv env) {
-		List<String> qualifiedName = getQualifiedNameSegments(unit);		
+
+	private CompiledUnit createCompiledUnit(UnitProxy unit, QvtOperationalFileEnv env) {
+		// adjust QVT environment resource to point to executable XMI
+		Resource resource = env.getTypeResolver().getResource();
+		resource.setURI(ExeXMISerializer.toXMIUnitURI(unit.getURI()));
+		fExeXMIResourceSet.getResources().add(resource);
+
+		List<String> qualifiedName = getQualifiedNameSegments(unit);
 		return new CompiledUnit(qualifiedName, unit.getURI(), Collections.singletonList(env));
 	}
 
