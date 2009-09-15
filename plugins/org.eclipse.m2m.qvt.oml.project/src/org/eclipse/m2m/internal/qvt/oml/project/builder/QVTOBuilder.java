@@ -36,12 +36,16 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
@@ -218,7 +222,9 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 						options, new SubProgressMonitor(monitor, 1));
 	        
 	        if(shouldSaveXMI()) {
-	        	BinXMISerializer.saveUnitXMI(units);
+	        	ResourceSet metamodelResourceSet = compiler.getResourceSet();
+	        	Registry registry = MetamodelURIMappingHelper.mappingsToEPackageRegistry(getProject(), metamodelResourceSet);
+	        	ExeXMISerializer.saveUnitXMI(units, registry != null ? registry : EPackage.Registry.INSTANCE);
 	        }
 		}
 		catch(OperationCanceledException e) {
@@ -342,4 +348,5 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 
 		return false;		
     }
+
 }
