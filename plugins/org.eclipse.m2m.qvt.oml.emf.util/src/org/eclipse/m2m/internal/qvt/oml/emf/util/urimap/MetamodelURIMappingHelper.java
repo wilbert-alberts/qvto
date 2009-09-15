@@ -23,6 +23,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -107,7 +110,7 @@ public class MetamodelURIMappingHelper {
     	MModelURIMapPackage.eINSTANCE.getNsURI();
 
 		IFile file = getMappingFileHandle(project);
-    	URI mapFileUri = URI.createFileURI(file.getLocation().toString());    
+    	URI mapFileUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);    
 
     	ResourceSet rs = new ResourceSetImpl();
 		Resource res = rs.getResource(mapFileUri, false);
@@ -146,5 +149,57 @@ public class MetamodelURIMappingHelper {
 		MappingContainer container = MModelURIMapFactory.eINSTANCE.createMappingContainer();
 		resource.getContents().add(container);		
 		return container;
+	}
+
+	public static EPackage.Registry mappingsToEPackageRegistry(IProject project, ResourceSet resourceSet) {
+		if(!hasMappingResource(project)) {
+			return null;
+		}
+		EPackage.Registry result = null;
+		try {
+			MappingContainer container = loadMappings(project);
+			if(container == null || container.getMapping().isEmpty()) {
+				return null;
+			}
+			
+			result = new EPackageRegistryImpl();
+			
+			for (URIMapping next : container.getMapping()) {
+				String nsURI = next.getSourceURI();
+				String locationURIStr = next.getTargetURI();
+				URI locationURI = null;
+				try {
+					locationURI = URI.createURI(locationURIStr);
+				} catch (IllegalArgumentException e) {
+					EmfUtilPlugin.log(e);
+				}
+				
+				if(nsURI != null && locationURI != null) {
+					EPackage metamodel = loadEPackage(locationURI, resourceSet);
+					if(metamodel != null) {
+						result.put(nsURI, metamodel);
+					}
+				}
+			}
+		} catch (IOException e) {
+			EmfUtilPlugin.log(e);
+		}
+		
+		return result;
+	}
+
+	private static EPackage loadEPackage(URI uri, ResourceSet rs) {
+		try {
+			if(uri.fragment() != null) {
+				EObject eObject = rs.getEObject(uri, true);
+				return (eObject instanceof EPackage) ? (EPackage)eObject : null;
+			} 
+			
+			Resource resource = rs.getResource(uri.trimFragment(), true);
+			return (EPackage) EcoreUtil.getObjectByType(resource.getContents(), EcorePackage.eINSTANCE.getEPackage());
+		} catch (Exception e) {
+			EmfUtilPlugin.log(e);
+		}
+		return null;
 	}
 }
