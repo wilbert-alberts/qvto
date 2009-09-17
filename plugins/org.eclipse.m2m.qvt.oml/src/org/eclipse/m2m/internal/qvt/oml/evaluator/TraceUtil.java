@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -65,6 +66,8 @@ class TraceUtil {
 	    	if(record != null && Boolean.TRUE.equals(checkResultMatch(record, evalEnv))) {
 	    		return record;
 	    	}
+	    	// nothing found, mapping executed for the first time on the given source
+	    	return null;
     	}
 
         EMap<MappingOperation, EList<TraceRecord>> allTraceRecordMap = trace.getTraceRecordMap();
@@ -126,8 +129,16 @@ class TraceUtil {
         
         InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
         Trace trace = internEnv.getTraces();
-        EList<TraceRecord> list = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
-        list.add(traceRecord);
+        EList<TraceRecord> recListBySource = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
+        
+        if(recListBySource instanceof AbstractEList<?>) {
+        	// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287589 
+        	AbstractEList<TraceRecord> basicRecList = (AbstractEList<TraceRecord>) recListBySource;
+        	basicRecList.addUnique(traceRecord);
+        } else {
+        	// TODO - spit a trace warning
+        	recListBySource.add(traceRecord);
+        }
 
         EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
         traceRecord.setMappingOperation(eMappingOperation);
@@ -152,7 +163,7 @@ class TraceUtil {
         	for (EParameter nextEParam : mappingOperation.getEParameters()) {
         		if(nextEParam instanceof VarParameter) {
         			VarParameter firstInVarParam = (VarParameter) nextEParam;
-        			if((firstInVarParam.getEType() instanceof PredefinedType == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
+        			if((firstInVarParam.getEType() instanceof PredefinedType<?> == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
         				Object val = createVarParameterValue(mappingOperation, firstInVarParam.getKind() ,
         							firstInVarParam.getEType(), firstInVarParam.getName(), evalEnv).getValue().getOclObject();        	
         				EList<TraceRecord> sourceMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), val);
@@ -212,7 +223,7 @@ class TraceUtil {
     		return traceResult.get(0).getValue().getOclObject();
     	}
 
-		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType;
+		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType<?, ?>;
     	@SuppressWarnings("unchecked")
     	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
     	
@@ -327,7 +338,7 @@ class TraceUtil {
         Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
         if (resultValue != null) {
             List<Object> resultValues = new ArrayList<Object>(1); 
-            if (resultValue instanceof Tuple) {
+            if (resultValue instanceof Tuple<?, ?>) {
             	@SuppressWarnings("unchecked")
             	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
             	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
