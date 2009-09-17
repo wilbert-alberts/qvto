@@ -123,22 +123,14 @@ class TraceUtil {
             }
         return null;
     }
-
+    
     static TraceRecord addTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
         TraceRecord traceRecord = TraceFactory.eINSTANCE.createTraceRecord();
         
         InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
         Trace trace = internEnv.getTraces();
-        EList<TraceRecord> recListBySource = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
-        
-        if(recListBySource instanceof AbstractEList<?>) {
-        	// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287589 
-        	AbstractEList<TraceRecord> basicRecList = (AbstractEList<TraceRecord>) recListBySource;
-        	basicRecList.addUnique(traceRecord);
-        } else {
-        	// TODO - spit a trace warning
-        	recListBySource.add(traceRecord);
-        }
+        EList<TraceRecord> allRecList = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);        
+        addUnique(traceRecord, allRecList);
 
         EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
         traceRecord.setMappingOperation(eMappingOperation);
@@ -156,7 +148,7 @@ class TraceUtil {
                     operContext.getKind(), operContext.getEType(), Environment.SELF_VARIABLE_NAME, evalEnv);
             eMappingContext.setContext(contextVPV);
             EList<TraceRecord> contextMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), contextVPV.getValue().getOclObject());
-            contextMappings.add(traceRecord);
+            addUnique(traceRecord, contextMappings);
         }
         else if(!mappingOperation.getEParameters().isEmpty()) {
         	// make the first in parameter as the mapping source object
@@ -167,7 +159,7 @@ class TraceUtil {
         				Object val = createVarParameterValue(mappingOperation, firstInVarParam.getKind() ,
         							firstInVarParam.getEType(), firstInVarParam.getName(), evalEnv).getValue().getOclObject();        	
         				EList<TraceRecord> sourceMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), val);
-        				sourceMappings.add(traceRecord);
+        				addUnique(traceRecord, sourceMappings);
         				break;
         				
         			}
@@ -196,12 +188,12 @@ class TraceUtil {
                 VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName, evalEnv);
                 eMappingResults.getResult().add(resultVPV);
                 EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
-                resultMappings.add(traceRecord);
+                addUnique(traceRecord, resultMappings);
             }
         }
 
 		// Note: add it here so we ensure the record is fully initialized
-        trace.getTraceRecords().add(traceRecord);
+        addUnique(traceRecord, trace.getTraceRecords());
         
         if(isParameterLessContextual(mappingOperation)) {
         	// parameter-less contextual operation can be cached efficiently
@@ -381,5 +373,16 @@ class TraceUtil {
 	private static boolean isParameterLessContextual(
 			MappingOperation mappingOperation) {
 		return QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty();
-	}	
+	}
+	
+    private static void addUnique(TraceRecord record, EList<TraceRecord> recordList) {
+        if(recordList instanceof AbstractEList<?>) {
+        	// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287589 
+        	AbstractEList<TraceRecord> basicRecList = (AbstractEList<TraceRecord>) recordList;
+        	basicRecList.addUnique(record);
+        } else {
+        	// TODO - spit a trace warning
+        	recordList.add(record);
+        }    	
+    }	
 }
