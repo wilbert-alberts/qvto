@@ -45,8 +45,6 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
-		suite.addTestSuite(ExecutionTimeGuardTest.class);
-
 		suite.addTestSuite(IntermediatePropertyCleanupTest.class);
 		suite.addTest(AllCompileTests.suite());
 		suite.addTest(AllCallAPITests.suite());
@@ -76,6 +74,9 @@ public class AllTests {
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
                 
         suite.addTest(QvtAntScriptTests.suite());
+        
+		suite.addTestSuite(ExecutionTimeGuardTest.class);
+
 		//$JUnit-END$
 		return suite;
 	}

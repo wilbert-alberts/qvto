@@ -25,27 +25,39 @@ import org.eclipse.m2m.qvt.oml.TransformationExecutor;
  */
 public class ExecutionTimeGuardTest extends TestCase {
 	
+	private static boolean IS_QVTO_INITIALIZED;
+	
 	public ExecutionTimeGuardTest(String name) {
 		super(name);
 	}
 	
+	@Override
+	protected void setUp() throws Exception {	
+		super.setUp();
+		
+		if(!IS_QVTO_INITIALIZED) {
+			assertSuccessExecutionTime("WarmUp.qvto", 8000);
+			IS_QVTO_INITIALIZED = true;
+		}
+	}
+	
 	public void testTraceLookup_287589() throws Exception {
-		assertSuccessExecutionTime(
-			"org.eclipse.m2m.tests.qvt.oml/deployed/perf/traceLookup_287589.qvto", //$NON-NLS-1$
-			2000);
+		assertSuccessExecutionTime("traceLookup_287589.qvto", 4000); //$NON-NLS-1$
 	}
 	
 	private static void assertSuccessExecutionTime(String transfPath, long limitInMs) {
-		URI uri = URI.createPlatformPluginURI(transfPath, false); //$NON-NLS-1$
+		URI uri = URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/deployed/perf/" + transfPath, false); //$NON-NLS-1$
 		TransformationExecutor executor = new TransformationExecutor(uri);
 		ExecutionContextImpl context = new ExecutionContextImpl();
 		
+		executor.loadTransformation();
 		long start = System.currentTimeMillis();		
 		ExecutionDiagnostic result = executor.execute(context, new BasicModelExtent());		
 		long end = System.currentTimeMillis();
 		
 		assertTrue(result.getSeverity() == Diagnostic.OK);
-		assertTrue(limitInMs > end - start);
+		long elapsedTime = end - start;
+		assertTrue("Expected time less then:" + limitInMs + " actual time: " + elapsedTime, //$NON-NLS-1$ //$NON-NLS-2$
+			limitInMs >= elapsedTime); 
 	}
-	
 }
