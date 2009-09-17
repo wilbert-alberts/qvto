@@ -40,9 +40,9 @@ public class ExecutionTimeGuardTest extends TestCase {
 		TransformationExecutor executor = new TransformationExecutor(uri);
 		ExecutionContextImpl context = new ExecutionContextImpl();
 		
-		long end = System.currentTimeMillis();		
+		long start = System.currentTimeMillis();		
 		ExecutionDiagnostic result = executor.execute(context, new BasicModelExtent());		
-		long start = System.currentTimeMillis();
+		long end = System.currentTimeMillis();
 		
 		assertTrue(result.getSeverity() == Diagnostic.OK);
 		assertTrue(limitInMs > end - start);
