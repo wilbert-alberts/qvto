@@ -782,6 +782,8 @@ public class QvtOperationalVisitorCS
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	AssertExp assertAST = ImperativeOCLFactory.eINSTANCE.createAssertExp();
+    	// make assert return null
+    	assertAST.setEType(getOCLEnvironment().getOCLStandardLibrary().getOclVoid());    	
     	assertAST.setStartPosition(assertExpCS.getStartOffset());
     	assertAST.setEndPosition(assertExpCS.getEndOffset());
     	    	

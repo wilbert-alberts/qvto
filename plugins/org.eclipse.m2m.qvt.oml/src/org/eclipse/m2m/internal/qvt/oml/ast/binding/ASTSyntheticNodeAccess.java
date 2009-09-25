@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.cst.CSTNode;
 
-public class ASTSyntheticNodeAccess {
-	
+public final class ASTSyntheticNodeAccess {
+		
 	public static ASTSyntheticNode createASTNode(EObject element) {
 		ASTSyntheticAdapter result = new ASTSyntheticAdapter();
 		element.eAdapters().add(result);
@@ -26,13 +26,13 @@ public class ASTSyntheticNodeAccess {
 	
 	public static void setCST(ASTSyntheticNode astNode, CSTNode cstNode) {
 		ASTSyntheticAdapter adapter = (ASTSyntheticAdapter) astNode;
-		adapter.cstNode = cstNode;
+		adapter.fCSTNode = cstNode;
 	}
 	
 	public static <T extends CSTNode> T getCST(ASTSyntheticNode astNode, Class<T> type) {	
 		ASTSyntheticAdapter adapter = (ASTSyntheticAdapter) astNode;
-		if(type.isInstance(adapter.cstNode)) {
-			return type.cast(adapter.cstNode);
+		if(type.isInstance(adapter.fCSTNode)) {
+			return type.cast(adapter.fCSTNode);
 		}
 		return null;
 	}
@@ -42,9 +42,9 @@ public class ASTSyntheticNodeAccess {
 	}
 	
 	private static class ASTSyntheticAdapter extends AdapterImpl implements ASTSyntheticNode {
-		private CSTNode cstNode;
+		private CSTNode fCSTNode;
 		private int fStartPos;		
-		private int fEndOffset;
+		private int fEndPos;
 		
 		@Override
 		public boolean isAdapterForType(Object type) {
@@ -66,14 +66,14 @@ public class ASTSyntheticNodeAccess {
 		 * @see org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode#getEndOffset()
 		 */
 		public int getEndPosition() {
-			return fEndOffset;
+			return fEndPos;
 		}
 		
 		/* (non-Javadoc)
 		 * @see org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode#setEndOffset(int)
 		 */
 		public void setEndPosition(int endOffset) {
-			this.fEndOffset = endOffset;
+			this.fEndPos = endOffset;
 		}
 		
 		/* (non-Javadoc)

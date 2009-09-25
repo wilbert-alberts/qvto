@@ -25,6 +25,10 @@ class BasicLineNumberProvider implements LineNumberProvider {
     
 	private int[] fLineEnds;
 	
+	BasicLineNumberProvider(int[] lineEnds) {
+		fLineEnds = lineEnds.clone();
+	}
+	
     BasicLineNumberProvider(QvtOpLexer lexer) {
     	
 		IntSegmentedTuple lineOffsets = lexer.getLineOffsets();
@@ -73,6 +77,10 @@ class BasicLineNumberProvider implements LineNumberProvider {
     	}
 		
         fLineEnds = lines;
+    }
+    
+    int[] lineBreakOffsets() {
+    	return fLineEnds.clone();
     }
     
     public int getLineEnd(int lineNumber) {

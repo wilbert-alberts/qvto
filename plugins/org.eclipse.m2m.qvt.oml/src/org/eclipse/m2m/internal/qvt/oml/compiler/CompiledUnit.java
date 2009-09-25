@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
@@ -28,8 +30,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOTypeResolver;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -41,6 +45,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.utilities.ASTNode;
 
 public class CompiledUnit {
 	
@@ -104,7 +110,7 @@ public class CompiledUnit {
 		this.fUri = unitXMIResource.getURI();
 		this.moduleEnvs = new LinkedList<QvtOperationalModuleEnv>();
 						
-		this.fAllProblems = Collections.emptyList();
+		this.fAllProblems = new ArrayList<QvtMessage>();
 		this.fImports = new UniqueEList<CompiledUnit>();		
 
 		unitMap.put(fUri, this);
@@ -134,23 +140,68 @@ public class CompiledUnit {
 					}
 				}
 				
-//				for (EClassifier nextClassifier : nextModule.getEClassifiers()) {
-//					if(nextClassifier instanceof Typedef) {
-//						Typedef typedef = (Typedef) nextClassifier;
-//						if(typedef.getBase() != null) {
-//							for (EOperation next : typedef.getEOperations()) {
-//								typeResolver.resolveAdditionalOperation(typedef.getBase(), next);
-//							}
-//						}
-//					}
-//				}
-
 				this.moduleEnvs.add(nextModuleEnv);
 			}
 		}
 
+		//validate(unitXMIResource, this.fAllProblems);
 	}
 
+	/*
+	 * TODO - EcoreValidator is quite strict concerning operation signatures etc, 
+	 * causing a lot of errors. Next, override those validateXXX operations, eventually
+	 * the OCLValidator if too strict for the QVTO purposes.
+	 * Move to a separate validation related class
+	 */
+	@SuppressWarnings("unused")
+	private void validate(Resource res, List<QvtMessage> problems) {
+		BasicDiagnostic diagnostics = new BasicDiagnostic();
+		IModuleSourceInfo sourceInfo = null;
+		if(res instanceof ExeXMIResource) {
+			sourceInfo = ((ExeXMIResource) res).getSourceInfo();
+		}
+		
+		Diagnostician diagnostician = new Diagnostician();
+		Map<Object, Object> context = new HashMap<Object, Object>();
+		context.put(Environment.class, new QvtOperationalEnvFactory().createEnvironment());
+		
+		for (EObject root : res.getContents()) {
+			diagnostician.validate(root, diagnostics, context);
+			
+			List<Diagnostic> children = diagnostics.getChildren();			
+			if(!children.isEmpty()) {				
+				for (Diagnostic diagnostic : children) {
+					int resourceSeverity = diagnostic.getSeverity();
+					// FIXME - support other severity levels in QVT, or use Diagnostic too?
+					int messageSeverity = (resourceSeverity == Diagnostic.ERROR) ? 
+							QvtMessage.SEVERITY_ERROR : QvtMessage.SEVERITY_WARNING;
+					
+					int offset = -1;
+					int len = 0;
+					List<?> data = diagnostic.getData();
+					if(!data.isEmpty()) {
+						Object obj = data.get(0);
+						if(obj instanceof ASTNode) {
+							ASTNode astNode = (ASTNode) obj;
+							offset = astNode.getStartPosition();
+							len = astNode.getEndPosition() - offset;
+						}
+					}
+					
+					int lineNum = -1;
+					if(offset >= 0 && sourceInfo != null) {
+						lineNum = sourceInfo.getLineNumberProvider().getLineNumber(offset);
+					}
+					
+					QvtMessage problem = new QvtMessage(
+							diagnostic.getMessage(), messageSeverity, offset,
+							len, lineNum);
+					addProblem(problem);
+ 				}
+			}
+		}
+	}
+	
 	private void computeImports(Resource unitResource, Map<URI, CompiledUnit> unitMap) {
 		for (EObject next : unitResource.getContents()) {
 			if(next instanceof Module) {
