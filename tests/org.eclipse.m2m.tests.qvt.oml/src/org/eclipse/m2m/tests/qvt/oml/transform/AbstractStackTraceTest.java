@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -41,7 +42,19 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 public abstract class AbstractStackTraceTest extends TestTransformation {
 
 	protected boolean fEnableLineNumbers = true;
+	protected boolean fUseCompiledXMI = true;
 	protected StringWriter fLogger = new StringWriter();
+
+	public AbstractStackTraceTest(ModelTestData data) {
+		super(data);
+	}
+	
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		
+		buildTestProject();
+	}	
 	
 	protected static void assertValidQVTRuntimeException(QvtRuntimeException exception) {
 		assertNotNull(exception);
@@ -110,14 +123,22 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	}
 
 	private ITransformer createTransformer() {
-		return new ITransformer() {
+		return new TestQvtInterpreter.DefaultTransformer(true, EPackage.Registry.INSTANCE) {
+			
 	        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
-	        	QvtInterpretedTransformation transf = new QvtInterpretedTransformation(transformation);
+	        	QvtInterpretedTransformation transf;
+	        	if(fUseCompiledXMI) {
+	        		transf = getTransformation(transformation);
+	        	} else {
+	        		transf = new QvtInterpretedTransformation(transformation);
+		        	QvtCompilerOptions options = new QvtCompilerOptions();
+		        	options.setGenerateCompletionData(false);
+		        	options.setSourceLineNumbersEnabled(fEnableLineNumbers);	        	
+		        	transf.setQvtCompilerOptions(options);
+	        		
+	        		TestUtil.assertAllPersistableAST(transf.getModule().getUnit());
+	        	}
 	        	
-	        	QvtCompilerOptions options = new QvtCompilerOptions();
-	        	options.setGenerateCompletionData(false);
-	        	options.setSourceLineNumbersEnabled(fEnableLineNumbers);	        	
-	        	transf.setQvtCompilerOptions(options);
 	        	
 	        	Context qvtContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 	        	qvtContext.setLog(new WriterLog(fLogger));
@@ -139,15 +160,10 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	            }
 	            
 	            saveTraceData(output.getTrace(), new EclipseFile(transformation));	            
-	        	TestUtil.assertAllPersistableAST(transf.getModule().getUnit());	        	
 	            
 	            return result;
 	        }
 		};
 	}	
-
-	public AbstractStackTraceTest(ModelTestData data) {
-		super(data);
-	}
 
 }

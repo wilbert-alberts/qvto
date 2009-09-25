@@ -25,6 +25,15 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		super(new FileToFileData("stacktrace"));
 	}
 
+	@Override
+	public void setUp() throws Exception {
+		if("testUknownSourceStackTrace".equals(getName())) {
+			// we need to compile concrete syntax which is instructed to skip line number info
+			fUseCompiledXMI = false;
+		}
+		
+		super.setUp();
+	}
 	
 	public void testMappingCallInProperty() throws Exception {
 		String testCase = "mappingCallInProperty"; //$NON-NLS-1$

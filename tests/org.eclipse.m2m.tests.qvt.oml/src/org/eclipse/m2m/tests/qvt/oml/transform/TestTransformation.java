@@ -15,15 +15,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -40,6 +46,10 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -85,6 +95,29 @@ public abstract class TestTransformation extends TestCase {
         copyModelData(); 
         
         myData.prepare(myProject);
+    }
+    
+	protected void buildTestProject() throws CoreException {
+    	//TestUtil.turnOnAutoBuilding();
+		NatureUtils.addNature(getProject(), QVTOProjectPlugin.NATURE_ID);
+		
+		IProjectDescription description = getProject().getDescription();
+		ICommand[] buildSpec = description.getBuildSpec();
+		ICommand buildCommand = NatureUtils.findCommand(buildSpec, QVTOProjectPlugin.BUILDER_ID);
+		
+		assertNotNull(buildCommand);		
+		@SuppressWarnings("unchecked")
+		Map<String, String> arguments = buildCommand.getArguments();
+		// Remark: internal option for saving xmi, used for testing at the moment		
+		arguments.put(QVTOBuilder.SAVE_AST_XMI, "true"); //$NON-NLS-1$
+		
+		buildCommand.setArguments(arguments);
+		description.setBuildSpec(buildSpec);
+		getProject().setDescription(description, null);				
+		
+		QVTOBuilderConfig.getConfig(getProject()).setSourceContainer(getProject());
+		getProject().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+		//TestUtil.turnOffAutoBuilding();    	
     }
     
     @Override
