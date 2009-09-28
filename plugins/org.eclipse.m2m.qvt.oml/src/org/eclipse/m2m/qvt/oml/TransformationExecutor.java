@@ -453,6 +453,10 @@ public final class TransformationExecutor {
 					// a protected method WorkspaceProvider::getDelegateRegistry();
 					// which by default returns MetamodelRegistry.getInstance()
 					result = new MetamodelRegistry(registry);
+				} else if(result != null) {
+					MetamodelRegistry customRegistry = new MetamodelRegistry(registry);					
+					customRegistry.merge(result);
+					result = customRegistry;
 				}
 				return result;
 			}
