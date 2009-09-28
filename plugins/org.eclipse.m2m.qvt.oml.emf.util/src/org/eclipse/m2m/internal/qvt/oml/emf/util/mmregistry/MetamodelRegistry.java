@@ -64,6 +64,14 @@ public class MetamodelRegistry {
         return ourInstance;
     }
     
+    public void merge(MetamodelRegistry mergedRegistry) {
+    	for(String id : mergedRegistry.myMetamodelDescs.keySet()) {
+    		if(!this.myMetamodelDescs.containsKey(id)) {
+    			this.myMetamodelDescs.put(id, mergedRegistry.myMetamodelDescs.get(id));
+    		}
+    	}
+    }
+    
 	public String[] getMetamodelIds() {
 		List<String> ids = new ArrayList<String>(myMetamodelDescs.size());
 		ids.addAll(myMetamodelDescs.keySet());
