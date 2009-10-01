@@ -30,7 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
 
 public class BlackboxResourceFactory implements Resource.Factory {
-
+	
 	/**
 	 * Creates an instance.
 	 */
@@ -44,20 +44,17 @@ public class BlackboxResourceFactory implements Resource.Factory {
 			@Override
 			public void load(Map<?, ?> options) throws IOException {
 			    if (!isLoaded) {
-			    	// FIXME - provide precise qvto blackbox scheme handling
-			    	// with a clean support in Java blackbox providers
-			    	if(uri.segmentCount() >= 1) {
-						String id = uri.segment(1);
-						UnitProxy unitProxy = BlackboxUnitResolver.DEFAULT.resolveUnit(id);
-						if(unitProxy != null) {
-						    getContents().addAll(loadBlackboxUnit(unitProxy, new ResourceSetImpl()));
-						}
-			    	}
-			    	setLoaded(true);
+					UnitProxy unitProxy = BlackboxUnitResolver.getUnit(uri);
+					if(unitProxy != null) {
+					    getContents().addAll(loadBlackboxUnit(unitProxy, new ResourceSetImpl()));
+					}
+
+					setLoaded(true);
 				}
 			}
 			@Override
 			protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
+				// do nothing we do no load from a stream
 			}
 		};
 	}

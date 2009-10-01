@@ -18,8 +18,8 @@ import org.eclipse.emf.common.util.URI;
 
 public abstract class AbstractCompilationUnitDescriptor {
 	
-	static final String URI_SCHEME = "qvto"; //$NON-NLS-1$
-	static final String URI_AUTHORITY = "blackbox"; //$NON-NLS-1$	
+	public static final String URI_SCHEME = "qvto"; //$NON-NLS-1$
+	public static final String URI_AUTHORITY = "blackbox"; //$NON-NLS-1$	
 	
 	private URI fURI;
 	private String fQualifiedName;

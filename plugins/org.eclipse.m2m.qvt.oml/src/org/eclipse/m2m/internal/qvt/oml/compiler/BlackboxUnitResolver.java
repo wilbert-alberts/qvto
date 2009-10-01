@@ -38,7 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.osgi.util.NLS;
 
 public class BlackboxUnitResolver implements UnitResolver {
-
+	
 	// the global scope black-box resolver
 	public static final BlackboxUnitResolver DEFAULT = new BlackboxUnitResolver(URI.createURI("/")); //$NON-NLS-1$
 	
@@ -46,6 +46,20 @@ public class BlackboxUnitResolver implements UnitResolver {
 	
 	public BlackboxUnitResolver(URI context) {
 		fContext = new ResolutionContextImpl(context);		
+	}
+	
+	public static boolean isBlackboxUnitURI(URI uri) {
+		return AbstractCompilationUnitDescriptor.URI_SCHEME.equals(uri.scheme()) && 
+			AbstractCompilationUnitDescriptor.URI_AUTHORITY.equals(uri.authority());
+	}
+	
+	public static UnitProxy getUnit(URI uri) {
+    	if(isBlackboxUnitURI(uri) && uri.segmentCount() > 0) {
+    		// TODO - use 1st segment as provider ID to be used in library ID clash resolution
+			String id = uri.lastSegment();											
+			return BlackboxUnitResolver.DEFAULT.resolveUnit(id);
+    	}
+    	return null;
 	}
 	
 	public UnitProxy resolveUnit(String qualifiedName) {

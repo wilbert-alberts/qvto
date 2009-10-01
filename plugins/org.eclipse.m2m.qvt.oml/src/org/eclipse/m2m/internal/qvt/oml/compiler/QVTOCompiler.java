@@ -21,18 +21,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -57,7 +61,10 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ParserException;
@@ -114,6 +121,75 @@ public class QVTOCompiler {
     	};
     }
     
+	public static QVTOCompiler createCompiler(UnitResolver unitResolver, EPackage.Registry registry) {		
+		ResourceSetImpl rs = new ResourceSetImpl();
+		if(registry != null) {
+			rs.setPackageRegistry(registry);
+			
+			Map<URI, Resource> uriResourceMap = new HashMap<URI, Resource>();			
+			for(Object nextEntry : registry.values()) {				
+				if(nextEntry instanceof EPackage) {
+					EPackage ePackage = (EPackage) nextEntry;
+					Resource resource = ePackage.eResource();
+					if(resource != null) {
+						uriResourceMap.put(resource.getURI(), resource);
+					}
+				}				
+			}
+			
+			if(!uriResourceMap.isEmpty()) {
+				rs.setURIResourceMap(uriResourceMap);
+			}
+		}
+		
+		final EPackageRegistryImpl packageRegistryImpl = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
+		packageRegistryImpl.putAll(registry);
+		
+		IMetamodelRegistryProvider metamodelRegistryProvider = new WorkspaceMetamodelRegistryProvider(rs) {
+			IMetamodelProvider registry = new EmfStandaloneMetamodelProvider(packageRegistryImpl);
+			@Override
+			public MetamodelRegistry getRegistry(IRepositoryContext context) {
+				MetamodelRegistry result = super.getRegistry(context);
+				if(result == MetamodelRegistry.getInstance()) {
+					// FIXME - get rid of this hack by providing
+					// a protected method WorkspaceProvider::getDelegateRegistry();
+					// which by default returns MetamodelRegistry.getInstance()
+					result = new MetamodelRegistry(registry);
+				} else if(result != null) {
+					MetamodelRegistry customRegistry = new MetamodelRegistry(registry);					
+					customRegistry.merge(result);
+					result = customRegistry;
+				}
+				return result;
+			}
+		};
+
+		return new QVTOCompiler(unitResolver, metamodelRegistryProvider);
+	}
+	
+	public static CompiledUnit[] compile(Set<URI> unitURIs, EPackage.Registry registry) throws MdaException {
+		EList<UnitProxy> unitProxies = new BasicEList<UnitProxy>();
+		for (URI importURI : unitURIs) {
+			UnitProxy unit = UnitResolverFactory.Registry.INSTANCE.getUnit(importURI);
+			if (unit != null) {
+				unitProxies.add(unit);
+			}
+		}
+
+		if(!unitProxies.isEmpty()) {
+			// TODO - take resolver that resolved any unit proxy, we need to refactor the resolver out of 
+			// the compiler constructor; the creator of unit proxies should decide which one to use and
+			// resolvers of importing units should be used to resolver imports in its scope
+			UnitResolver resolver = unitProxies.get(0).getResolver();
+			QVTOCompiler compiler = createCompiler(resolver, registry);
+			
+			QvtCompilerOptions options = new QvtCompilerOptions();
+			options.setGenerateCompletionData(true);
+			return compiler.compile(unitProxies.toArray(new UnitProxy[unitProxies.size()]), options, null);
+		}
+		
+		return new CompiledUnit[0];
+	}
     
     public static ResourceSet createResourceSet() {
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
