@@ -15,9 +15,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
@@ -36,7 +37,8 @@ public class EclipseUnitResolverFactory implements UnitResolverFactory {
 		
 		if(source instanceof URI) {
 			URI uri = (URI) source;
-			return uri.isPlatform() || isWorkspacePath(uri) || isDeployedByID(uri);
+			return uri.isPlatform() || isWorkspacePath(uri) || 
+				isDeployedByID(uri) || BlackboxUnitResolver.isBlackboxUnitURI(uri);
 		}
 		
 		return false;
@@ -50,6 +52,8 @@ public class EclipseUnitResolverFactory implements UnitResolverFactory {
 			}
 		} else if(unitURI.isPlatformPlugin()) {
 			return PlatformPluginUnitResolver.getUnit(unitURI);
+		} else if(BlackboxUnitResolver.isBlackboxUnitURI(unitURI)) {
+			return BlackboxUnitResolver.getUnit(unitURI);
 		} else {
 			if(isWorkspacePath(unitURI)) {
 				URI platformResourceURI = URI.createPlatformResourceURI(unitURI.path(), false);
