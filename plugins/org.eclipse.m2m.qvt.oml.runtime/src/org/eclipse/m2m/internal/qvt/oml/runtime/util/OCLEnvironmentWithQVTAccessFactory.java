@@ -13,12 +13,15 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -34,6 +37,9 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
@@ -71,6 +77,31 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 	private final Set<Module> fImportedModules;
 	private final QvtOperationalEnvFactory fQVTEnvFactory;
 
+	public OCLEnvironmentWithQVTAccessFactory(List<URI> imports, EPackage.Registry registry) {
+		super(registry);
+
+		if(registry == null || imports == null || imports.contains(null)) {
+			throw new IllegalArgumentException("null in constructor argments");
+		}
+
+		HashSet<Module> modules = new HashSet<Module>();		
+		CompiledUnit[] compiledUnits;
+		try {
+			compiledUnits = QVTOCompiler.compile(new HashSet<URI>(imports), registry);
+		} catch (MdaException e) {
+			throw new IllegalArgumentException(e);
+		}
+		
+		for (CompiledUnit unit : compiledUnits) {
+			if(unit.getErrors().isEmpty()) {
+				modules.addAll(unit.getModules());
+			}
+		}
+
+		this.fQVTEnvFactory = new QvtOperationalEnvFactory(registry);
+		this.fImportedModules = modules;
+	}
+	
 	/**
 	 * Constructs environment with QVT imports and metamodel registry.
 	 * @parameter imports  set of imported QVT libraries
@@ -85,6 +116,10 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 		
 		this.fQVTEnvFactory = new QvtOperationalEnvFactory(registry);
 		this.fImportedModules = imports;
+	}
+	
+	public Set<Module> getQVTModules() {
+		return Collections.unmodifiableSet(fImportedModules);
 	}
 	
 	public OCLEnvironmentWithQVTAccessFactory(Set<Module> importedModules) {
