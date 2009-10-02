@@ -41,6 +41,8 @@ import simpleuml.Model;
 
 public class AnnotatedJavaLibrary {
 	
+	private String myState;
+	
 	public AnnotatedJavaLibrary() {
 		 super();
 	}
@@ -344,5 +346,19 @@ public class AnnotatedJavaLibrary {
 	@Operation (kind=Kind.OPERATION, contextual = true)
 	public static <T> Set<T> echoAsSet(Collection<T> self) {
 		return new HashSet<T>(self);
+	}
+	
+	public void setLibState(String newState) {
+		myState = newState;
+	}
+	
+	public String getLibState() {
+		return myState;
+	}
+	
+	// test we have access to the library state 
+	@Operation (kind=Kind.HELPER, contextual = true)
+	public String appendToLibState(String aString) {
+		return myState = myState + aString; 
 	}
 }
