@@ -9,13 +9,14 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.tests.qvt.oml;
+package org.eclipse.m2m.tests.qvt.oml.ocl2qvt;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
@@ -47,14 +48,14 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 	private static final String SRC_CONTAINER = "parserTestData/externlib"; //$NON-NLS-1$
 	
 	protected OCL fOCL;
-	private LinkedHashSet<Module> fImportedModules;
+	protected OCLEnvironmentWithQVTAccessFactory fEnvFactory;
 
 	public OCLEnvironmentWithQVTAccessTest() {
 		super();
 	}
 	
 	protected LinkedHashSet<Module> getImportedModules() {
-		return fImportedModules;
+		return new LinkedHashSet<Module>(fEnvFactory.getQVTModules());
 	}
 	
 	protected EcoreEvaluationEnvironment getEvaluationEnv(Query query) {
@@ -75,16 +76,23 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 	
 	@Override
 	protected void setUp() {
-		final Set<CompiledUnit> compileModules = TestUtil.compileModules(SRC_CONTAINER,
-			new String[] {
-				"org.q1",
-				"org.q2"
-			}
-		);
+		fEnvFactory = createOCLEnvFactory();
+		assertTrue(fEnvFactory.getDiagnostic().getSeverity() == Diagnostic.OK);
+		fOCL = OCL.newInstance(fEnvFactory);
+	}
+
+	protected OCLEnvironmentWithQVTAccessFactory createOCLEnvFactory() {
+		return new OCLEnvironmentWithQVTAccessFactory(createImportedModules(), EPackage.Registry.INSTANCE);
+	}
+	
+	private LinkedHashSet<Module> createImportedModules() {
+		final Set<CompiledUnit> compileModules = TestUtil.compileModules(SRC_CONTAINER, new String[] {
+				"org.q1", "org.q2" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 		
-		fImportedModules = new LinkedHashSet<Module>();
+		LinkedHashSet<Module> modules = new LinkedHashSet<Module>();
 		for (CompiledUnit compiledUnits : compileModules) {
-			fImportedModules.addAll(compiledUnits.getModules());
+			modules.addAll(compiledUnits.getModules());
 		}
 		
 		try {
@@ -94,18 +102,18 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			assertNotNull("descriptor must be found", abstractCompilationUnitDescriptor); //$NON-NLS-1$
 			LoadContext loadContext = new LoadContext(EPackage.Registry.INSTANCE);
 			CompilationUnit loadCompilationUnit = BlackboxRegistry.INSTANCE.loadCompilationUnit(abstractCompilationUnitDescriptor, loadContext);
-			fImportedModules.add(loadCompilationUnit.getElements().get(0).getModuleContextType());
+			modules.add(loadCompilationUnit.getElements().get(0).getModuleContextType());
 
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to setup test", e);
 		}
-		
-		fOCL = OCL.newInstance(new OCLEnvironmentWithQVTAccessFactory(fImportedModules, EPackage.Registry.INSTANCE));
+
+		return modules;
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {	
-		this.fImportedModules = null;
+		this.fEnvFactory = null;
 		this.fOCL = null;
 	}
 			

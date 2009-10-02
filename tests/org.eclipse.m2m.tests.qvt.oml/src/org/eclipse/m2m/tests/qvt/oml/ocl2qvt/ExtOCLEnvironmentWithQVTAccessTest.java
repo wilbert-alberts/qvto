@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.tests.qvt.oml;
+package org.eclipse.m2m.tests.qvt.oml.ocl2qvt;
 
 import java.util.List;
 
