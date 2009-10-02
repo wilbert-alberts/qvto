@@ -17,10 +17,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -39,6 +42,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
@@ -73,31 +77,55 @@ import org.eclipse.ocl.utilities.TypedElement;
  */
 public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFactory {
 	
+	private static final String DIAGNOSTIC_SOURCE = "OCLEnvironmentWithQVTAccessFactory"; //$NON-NLS-1$
+	
 	private NonTransformationExecutionContext fExecCtx;
 	private final Set<Module> fImportedModules;
 	private final QvtOperationalEnvFactory fQVTEnvFactory;
+	private Diagnostic fDiagnostic = Diagnostic.OK_INSTANCE;
 
+	/**
+	 * Creates environment factory importing the given QVT unit via referencing
+	 * URIs. </p> The global package registry is used for meta-model resolution.
+	 * 
+	 * @param imports
+	 *            URI referencing QVTO library units to be imported to the scope
+	 *            of OCL expressions
+	 */
+	public OCLEnvironmentWithQVTAccessFactory(List<URI> imports) {
+		this(imports, EPackage.Registry.INSTANCE);
+	}
+	
+	/**
+	 * Creates environment factory importing the given QVT unit via referencing
+	 * URIs
+	 * 
+	 * @param imports
+	 *            URI referencing QVTO library units to be imported to the scope
+	 *            of OCL expressions
+	 * @param registry
+	 *            custom meta-model registry
+	 */
 	public OCLEnvironmentWithQVTAccessFactory(List<URI> imports, EPackage.Registry registry) {
 		super(registry);
 
 		if(registry == null || imports == null || imports.contains(null)) {
-			throw new IllegalArgumentException("null in constructor argments");
+			throw new IllegalArgumentException("null in constructor argments"); //$NON-NLS-1$
 		}
 
 		HashSet<Module> modules = new HashSet<Module>();		
-		CompiledUnit[] compiledUnits;
 		try {
-			compiledUnits = QVTOCompiler.compile(new HashSet<URI>(imports), registry);
+			CompiledUnit[] compiledUnits = QVTOCompiler.compile(new HashSet<URI>(imports), registry);
+			for (CompiledUnit unit : compiledUnits) {
+				// TODO perhaps we should skip units with errors?
+				modules.addAll(unit.getModules());
+			}			
+			
+			fDiagnostic = createDiagnostic(imports, compiledUnits);
 		} catch (MdaException e) {
-			throw new IllegalArgumentException(e);
+			fDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, e.getMessage(), new Object[] { e });
 		}
 		
-		for (CompiledUnit unit : compiledUnits) {
-			if(unit.getErrors().isEmpty()) {
-				modules.addAll(unit.getModules());
-			}
-		}
-
 		this.fQVTEnvFactory = new QvtOperationalEnvFactory(registry);
 		this.fImportedModules = modules;
 	}
@@ -116,6 +144,12 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 		
 		this.fQVTEnvFactory = new QvtOperationalEnvFactory(registry);
 		this.fImportedModules = imports;
+		// mark is OK, the caller is responsible for error analysis
+		this.fDiagnostic = Diagnostic.OK_INSTANCE;
+	}
+	
+	public Diagnostic getDiagnostic() {
+		return fDiagnostic;
 	}
 	
 	public Set<Module> getQVTModules() {
@@ -376,6 +410,48 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 				return fExecCtx.getEvaluator().getEvaluationEnvironment()
 							.navigateProperty(property, qualifiers, target);
 		}
+	}
+	
+	private static Diagnostic createDiagnostic(List<URI> imports, CompiledUnit[] compiledUnits) {
+		List<Diagnostic> children = new LinkedList<Diagnostic>();
+		
+		for (CompiledUnit unit : compiledUnits) {
+			Diagnostic unitDiagnostic = CompilerUtils.createUnitProblemDiagnostic(unit);
+			
+			if(unitDiagnostic.getSeverity() != Diagnostic.OK) {
+				children.add(unitDiagnostic);
+			}
+		}
+		
+		if(imports.size() != compiledUnits.length) {
+			List<URI> unresolved = new ArrayList<URI>();
+			for (URI uri : imports) {
+				boolean found = false;
+				for (CompiledUnit unit : compiledUnits) {
+					if(unit.getURI().equals(uri)) {
+						found = true;
+						break;
+					}
+				}
+				
+				if(!found) {
+					unresolved.add(uri);
+				}
+			}
+			
+			children.add(new BasicDiagnostic(Diagnostic.ERROR,
+					DIAGNOSTIC_SOURCE, 0,
+					"Unresolved compilation units", unresolved.toArray()));
+		}
+		
+		// TODO - move to the qvto core plugin => externalize String 
+		if(!children.isEmpty()) {
+			return new BasicDiagnostic(
+					DIAGNOSTIC_SOURCE, 0, children,
+					"QVT imports diagnostic", null);		
+		}
+		
+		return Diagnostic.OK_INSTANCE;
 	}
 	
 }

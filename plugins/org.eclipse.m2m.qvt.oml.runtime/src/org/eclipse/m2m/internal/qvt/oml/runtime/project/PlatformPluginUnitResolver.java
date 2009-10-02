@@ -111,14 +111,24 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 		if (bundle == null) {
 			return null;
 		}
+				
+		PlatformPluginUnitResolver resolver;
+		IPath qualifiedName;
 
-		IPath path = new Path(uri.toPlatformString(true));
-		IPath pluginRelativePath = path.removeFirstSegments(1).removeFileExtension();
+		IPath path = new Path(uri.toPlatformString(true));		
+		URI sourceFolderURI = ResolverUtils.getSourceFolderURI(uri);		
 		
-		PlatformPluginUnitResolver resolver = new PlatformPluginUnitResolver(bundle);
+		if(sourceFolderURI != null && sourceFolderURI.segmentCount() > 2) {
+			IPath plugingRelativePath = new Path(sourceFolderURI.toPlatformString(true)).removeFirstSegments(1);
+			resolver = new PlatformPluginUnitResolver(bundle, plugingRelativePath);			
+			qualifiedName = new Path(uri.deresolve(sourceFolderURI).trimFileExtension().trimQuery().toString());
+		} else {
+			resolver = new PlatformPluginUnitResolver(bundle);
+			qualifiedName = path.removeFirstSegments(1).removeFileExtension();			
+		}
+		
 		PlatformPluginUnitResolver.setupResolver(resolver, true, true);
-		
-		return resolver.resolveUnit(ResolverUtils.toQualifiedName(pluginRelativePath));
+		return resolver.resolveUnit(ResolverUtils.toQualifiedName(qualifiedName));
 	}
 
 	// FIXME - make shared unit class with BundleUnitResolver.BundleUnit
