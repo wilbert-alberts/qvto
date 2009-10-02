@@ -29,7 +29,7 @@ public abstract class AbstractCompilationUnitDescriptor {
 	/**
 	 * @throws IllegalArgumentException
 	 */
-	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName, String[] uriSegments) {
+	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName, String... uriSegments) {
 		if(provider == null || qualifiedName == null) {
 			throw new IllegalArgumentException("null 'qualified name' or 'provider'"); //$NON-NLS-1$
 		}

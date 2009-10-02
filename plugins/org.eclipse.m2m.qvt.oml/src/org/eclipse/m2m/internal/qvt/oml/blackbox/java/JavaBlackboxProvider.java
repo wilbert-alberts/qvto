@@ -241,15 +241,10 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		private List<ModuleHandle> fModules = Collections.emptyList();
 		private String fContributingBundleId; 
 
-//		Descriptor(IConfigurationElement moduleElement) {			
-//			super(JavaBlackboxProvider.this, deriveQualifiedNameFromSimpleDefinition(moduleElement));
-//			fContributingBundleId = moduleElement.getContributor().getName();
-//			addModuleHandle(moduleElement);			
-//		}
-				
 		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
 			super(JavaBlackboxProvider.this, unitQualifiedName, 
-					new String[] { configurationElement.getContributor().getName(), unitQualifiedName });
+					//configurationElement.getContributor().getName(), 
+					unitQualifiedName);
 			fContributingBundleId = configurationElement.getContributor().getName();
 			
 			if(configurationElement.getName().equals(LIBRARY_ELEM)) {

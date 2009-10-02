@@ -35,6 +35,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -381,22 +382,11 @@ public final class TransformationExecutor {
 						Messages.CompilationErrorsFoundInUnit, uri.toString()));
 
 		for (QvtMessage message : errors) {
-			mainDiagnostic.add(createQVTErrorMessageDiagnostic(message, uri));
+			// FIXME - we should include warnings as well
+			mainDiagnostic.add(CompilerUtils.createProblemDiagnostic(uri, message));
 		}
 
 		return mainDiagnostic;
-	}
-
-	private static Diagnostic createQVTErrorMessageDiagnostic(QvtMessage msg,
-			URI uri) {
-		String source = uri.toString();
-		String message = msg.getMessage();
-		// add the line number info if any
-		if (msg.getLineNum() >= 0) {
-			message = message + " (at:" + msg.getLineNum() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ 
-		}
-
-		return new BasicDiagnostic(Diagnostic.ERROR, source, 0, message, null);
 	}
 
 	private static boolean isSuccess(Diagnostic diagnostic) {
