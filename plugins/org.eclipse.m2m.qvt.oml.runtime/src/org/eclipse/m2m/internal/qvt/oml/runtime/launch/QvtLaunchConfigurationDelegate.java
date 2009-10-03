@@ -107,18 +107,18 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 								try {
 									statusHandler.handleStatus(actualStatus, configuration);
 								} catch (CoreException coreExc) {
-									QvtPlugin.log(coreExc);
+									QvtPlugin.getDefault().log(coreExc.getStatus());
 								}
 							}						
 							
-							QvtPlugin.log(e);							
+							QvtPlugin.error(e);							
 						}
 					}
 					
 					try {
 						launch.terminate();
 					} catch (DebugException e) {
-						QvtPlugin.log(e);
+						QvtPlugin.getDefault().log(e.getStatus());
 					}
             	}
             }, "QVT Run"); //$NON-NLS-1$
