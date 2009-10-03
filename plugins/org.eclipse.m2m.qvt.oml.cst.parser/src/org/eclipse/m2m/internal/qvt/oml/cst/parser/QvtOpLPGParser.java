@@ -15,7 +15,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.80 2009/10/03 21:38:36 radvorak Exp $
 */
 /**
 * <copyright>
@@ -31,7 +31,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.80 2009/10/03 21:38:36 radvorak Exp $
 */
 /**
 * <copyright>
@@ -47,7 +47,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.80 2009/10/03 21:38:36 radvorak Exp $
 */
 /**
 * <copyright>
@@ -63,7 +63,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLPGParser.java,v 1.80 2009/10/03 21:38:36 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -3966,7 +3966,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				
 		    	int startOffset = getIToken(dtParser.getToken(1)).getStartOffset();
 		    	int endOffset = getIToken(dtParser.getToken(4)).getEndOffset();
-				reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+				reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;
@@ -3979,7 +3979,7 @@ import org.eclipse.ocl.cst.LiteralExpCS;
 				
 		    	int startOffset = getIToken(dtParser.getToken(1)).getStartOffset();
 		    	int endOffset = getIToken(dtParser.getToken(3)).getEndOffset();
-				reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+				reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 				
 				dtParser.setSym1((CSTNode)dtParser.getSym(3));
 	  		  break;

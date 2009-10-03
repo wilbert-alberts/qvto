@@ -106,7 +106,6 @@ import org.eclipse.ocl.cst.VariableExpCS;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.lpg.ProblemHandler.Severity;
 import org.eclipse.ocl.parser.AbstractOCLParser;
-import org.eclipse.osgi.util.NLS;
 
 public abstract class AbstractQVTParser extends AbstractOCLParser {
 

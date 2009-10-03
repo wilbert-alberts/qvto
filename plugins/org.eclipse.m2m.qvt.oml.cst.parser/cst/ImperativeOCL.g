@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.26 2009/05/13 13:48:57 aigdalov Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.27 2009/10/03 21:38:37 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -98,7 +98,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.26 2009/05/13 13:48:57 aigdalov Exp $
+ * $Id: ImperativeOCL.g,v 1.27 2009/10/03 21:38:37 radvorak Exp $
  */
 	./
 $End
@@ -1130,7 +1130,7 @@ $Rules
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(4)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
@@ -1139,7 +1139,7 @@ $Rules
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(3)).getEndOffset();
-					reportWarning(org.eclipse.osgi.util.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava

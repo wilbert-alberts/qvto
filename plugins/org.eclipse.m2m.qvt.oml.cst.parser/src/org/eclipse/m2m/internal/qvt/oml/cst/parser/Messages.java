@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Aleksandr Igdalov
