@@ -38,7 +38,7 @@ public class QvtProjectUtil {
     	try {
 			return project.isAccessible() && project.hasNature(QVTOProjectPlugin.NATURE_ID);
 		} catch (CoreException e) {
-			QvtPlugin.log(e);
+			QvtPlugin.getDefault().log(e.getStatus());
 		}
 		
 		return false;

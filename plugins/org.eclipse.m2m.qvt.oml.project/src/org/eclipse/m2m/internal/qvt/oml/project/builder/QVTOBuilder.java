@@ -32,9 +32,10 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
@@ -159,7 +160,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
                 					config.setSourceContainer((IFolder)delta.getResource());
                 					config.save();
                 				} catch (CoreException e) {
-									QvtPlugin.log(e.getStatus());
+									QvtPlugin.getDefault().log(e.getStatus());
 								}
                 			}
                 		}
@@ -219,7 +220,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
 
 	        units = compiler.compile(allUnits.toArray(new UnitProxy[allUnits.size()]),
-						options, new SubProgressMonitor(monitor, 1));
+						options, new BasicMonitor.EclipseSubProgress(monitor, 1));
 	        
 	        if(shouldSaveXMI()) {
 	        	ResourceSet metamodelResourceSet = compiler.getResourceSet();
@@ -231,7 +232,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			throw e;
 		}
 		catch (Exception e) {
-			throw new CoreException(QvtPlugin.createErrorStatus(e));
+			throw new CoreException(QVTOProjectPlugin.createStatus(IStatus.ERROR, e.getMessage(), e));
 		}
 		
         for (int i = 0; i < units.length; i++) {                    
@@ -286,7 +287,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
         try {
         	srcContainer = QVTOBuilderConfig.getConfig(getProject()).getSourceContainer();
         } catch (CoreException e) {
-        	QvtPlugin.log(e.getStatus());
+        	QvtPlugin.getDefault().log(e.getStatus());
 		}
         
         if(srcContainer == null || !srcContainer.exists()) {

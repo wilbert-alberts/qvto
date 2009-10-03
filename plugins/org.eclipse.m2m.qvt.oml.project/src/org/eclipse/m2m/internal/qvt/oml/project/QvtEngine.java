@@ -16,14 +16,14 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 
 
@@ -49,12 +49,12 @@ public class QvtEngine {
 	}
 	
 
-    public CompiledUnit compileUnit(UnitProxy source,  QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+    public CompiledUnit compileUnit(UnitProxy source,  QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		return myCompiler.compile(source, options, monitor);
 	}
 	
 	
-    public CompiledUnit compileUnit(UnitProxy source, IProgressMonitor monitor) throws MdaException {
+    public CompiledUnit compileUnit(UnitProxy source, Monitor monitor) throws MdaException {
 		return myCompiler.compile(source, /*default*/null, monitor);
 	}
 

@@ -75,4 +75,7 @@ public class QVTOProjectPlugin extends Plugin {
 	    log(new Status(IStatus.ERROR, ID, 100001, "Unexpected error", t));//$NON-NLS-1$ 
 	}
 
+	public static IStatus createStatus(int severity, String message, Throwable throwable) {
+		return new Status(severity, ID, message != null ? message : "", throwable); //$NON-NLS-1$
+	} 
 }

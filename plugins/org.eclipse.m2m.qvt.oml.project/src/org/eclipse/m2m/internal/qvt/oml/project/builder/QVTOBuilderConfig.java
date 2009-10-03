@@ -129,7 +129,7 @@ public class QVTOBuilderConfig {
 	        }
 	        myProject.getProject().setDescription(pd, null);
 		} catch (CoreException e) {
-			QvtPlugin.log(e.getStatus());
+			QvtPlugin.getDefault().log(e.getStatus());
 		}
     }
     
@@ -137,7 +137,7 @@ public class QVTOBuilderConfig {
         try {
 			NatureUtils.addNature(myProject, QVTOProjectPlugin.NATURE_ID);
 		} catch (CoreException e) {
-			QvtPlugin.log(e.getStatus());
+			QvtPlugin.getDefault().log(e.getStatus());
 		}
     }
     
