@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -83,7 +82,7 @@ public class ExeXMISerializer {
 			if(!next.getErrors().isEmpty()) {
 				// FIXME -
 				Diagnostic diagnostic = EcoreUtil.computeDiagnostic(next, false);
-				QvtPlugin.log(BasicDiagnostic.toIStatus(diagnostic));
+				QvtPlugin.logDiagnostic(diagnostic);
 			}
 		}
 	}

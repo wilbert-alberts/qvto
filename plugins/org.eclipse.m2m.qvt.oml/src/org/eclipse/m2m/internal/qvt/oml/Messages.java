@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml;
 
-import org.eclipse.osgi.util.NLS;
 
 /**
  * @since 2.0

@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
@@ -83,7 +84,6 @@ import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalParserUtil {

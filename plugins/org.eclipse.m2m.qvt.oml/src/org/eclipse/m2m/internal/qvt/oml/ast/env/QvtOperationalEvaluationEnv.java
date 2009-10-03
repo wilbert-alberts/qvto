@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -48,7 +49,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -59,7 +59,6 @@ import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
@@ -928,7 +927,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				saveThrownException(exception);
 				exception.setStackQvtTrace(getStackTraceElements());
 			} catch (Exception e) {
-				QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to build QVT stack trace", e)); //$NON-NLS-1$
+				QvtPlugin.error("Failed to build QVT stack trace", e); //$NON-NLS-1$
 			}
 			
 			throw exception;

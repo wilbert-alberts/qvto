@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.MappingsMapKey;
@@ -68,7 +69,6 @@ import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {

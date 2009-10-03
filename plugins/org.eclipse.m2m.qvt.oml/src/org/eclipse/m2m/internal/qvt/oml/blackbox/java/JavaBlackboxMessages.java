@@ -1,6 +1,6 @@
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 
 public class JavaBlackboxMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.blackbox.java.JavaBlackboxMessages"; //$NON-NLS-1$

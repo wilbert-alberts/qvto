@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.osgi.framework.Bundle;
 
@@ -35,7 +36,8 @@ public class ResolutionContextImpl implements ResolutionContext {
 	
 
 	public <T> T getAdapter(Class<T> adapterType) {
-		
+	// FIXME - revisit this class, we do not need this dependency in this plugin
+	if(EMFPlugin.IS_ECLIPSE_RUNNING) {
 		if (adapterType == IProject.class) {
 			if (fURI.isPlatformResource()) {
 				String wsFullPath = fURI.toPlatformString(true);
@@ -53,6 +55,7 @@ public class ResolutionContextImpl implements ResolutionContext {
 				}
 			}
 		}
+	}
 			
 		return null;
 	}

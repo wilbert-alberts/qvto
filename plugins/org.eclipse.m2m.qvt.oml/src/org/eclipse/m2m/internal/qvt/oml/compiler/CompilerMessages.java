@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 
 public class CompilerMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages"; //$NON-NLS-1$

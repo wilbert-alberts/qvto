@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml;
 
-import org.eclipse.core.resources.IMarker;
 
 
 /**
@@ -19,9 +18,9 @@ import org.eclipse.core.resources.IMarker;
  */
 public class QvtMessage {
 	
-	public static final int SEVERITY_ERROR = IMarker.SEVERITY_ERROR;
+	public static final int SEVERITY_ERROR = 2; //IMarker.SEVERITY_ERROR;
 	
-	public static final int SEVERITY_WARNING = IMarker.SEVERITY_WARNING;
+	public static final int SEVERITY_WARNING = 1; //IMarker.SEVERITY_WARNING;
 	
 	public QvtMessage(final String message, final int severity, final int offset, final int length, int lineNum) {
 		myMessage = message;

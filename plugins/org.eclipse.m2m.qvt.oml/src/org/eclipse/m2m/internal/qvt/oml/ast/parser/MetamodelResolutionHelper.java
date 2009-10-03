@@ -14,7 +14,6 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -28,14 +27,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
-import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.resourcesetprovider.ResourceSetProviderRegistry.ResourceSetResourceSetProviderPair;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.ocl.Environment.Internal;
@@ -71,7 +65,8 @@ class MetamodelResolutionHelper {
 		            if (resourceSet == null) {
 	                    URI uri = fileEnv.getFile();
 	                    // FIXME - refactore CFile out of here
-						IFile iFileURI = URIUtils.getFile(uri);
+						/* comment Eclipse dependency out
+	                    IFile iFileURI = URIUtils.getFile(uri);
 						if(iFileURI != null) {
 							CFile cFile = new EclipseFile(iFileURI);
 		                    pair = ResourceSetProviderRegistry.getResourceSetResourceSetProviderPair(cFile);
@@ -82,7 +77,7 @@ class MetamodelResolutionHelper {
 	                                resourceSet = providedResourceSet;
 		                        }
 		                    }
-						}
+						}*/
 		            }
 		            if (resourceSet != null) {
 		                IMetamodelDesc metamodelDesc = MetamodelRegistry.createUndeclaredMetamodel(metamodelUri, resourceSet);

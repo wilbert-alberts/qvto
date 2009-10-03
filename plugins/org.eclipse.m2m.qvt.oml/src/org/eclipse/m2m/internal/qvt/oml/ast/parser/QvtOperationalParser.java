@@ -17,6 +17,7 @@ import lpg.lpgjavaruntime.BadParseException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
@@ -33,7 +34,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
-import org.eclipse.osgi.util.NLS;
 
 import com.ibm.icu.lang.UCharacter;
 

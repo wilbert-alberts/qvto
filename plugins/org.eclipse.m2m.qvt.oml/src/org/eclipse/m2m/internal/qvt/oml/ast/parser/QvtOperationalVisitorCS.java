@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
@@ -226,7 +227,6 @@ import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalVisitorCS
@@ -728,7 +728,7 @@ public class QvtOperationalVisitorCS
 	        }
 	    }
 	    catch (NullPointerException ex) {
-	        QvtPlugin.log(ex);
+	        QvtPlugin.error(ex);
 	        QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
 	    catch (RuntimeException ex) {
@@ -2832,7 +2832,7 @@ public class QvtOperationalVisitorCS
 						new Object[] { metamodelName, uriList }), cstNode);
 			}
 		} catch (RuntimeException e) {
-			QvtPlugin.log(e);
+			QvtPlugin.error(e);
 			env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 					new Object[] { metamodelName }), cstNode);
 		}

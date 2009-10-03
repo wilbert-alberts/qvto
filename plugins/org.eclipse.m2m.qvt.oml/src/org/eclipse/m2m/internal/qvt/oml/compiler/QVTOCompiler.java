@@ -24,13 +24,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
@@ -41,6 +38,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
@@ -71,7 +69,6 @@ import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QVTOCompiler {
@@ -245,13 +242,13 @@ public class QVTOCompiler {
 		fUseCompiledXMI = flag;
 	}
 				
-	public CompiledUnit[] compile(UnitProxy[] sources, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit[] compile(UnitProxy[] sources, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		if(options == null) {
 			options = getDefaultOptions();			
 		}
 		
 		if(monitor == null) {
-			monitor = new NullProgressMonitor();
+			monitor = CompilerUtils.createNullMonitor();
 		}
 		
 		CompiledUnit[] result = new CompiledUnit[sources.length];
@@ -262,7 +259,7 @@ public class QVTOCompiler {
 			int i = 0;
 			for (UnitProxy nextSource : sources) {
 	            if(monitor.isCanceled()) {
-	            	throw new OperationCanceledException();
+	            	CompilerUtils.throwOperationCanceled();
 	            }
 				
 				monitor.setTaskName(nextSource.getURI().toString());
@@ -289,7 +286,7 @@ public class QVTOCompiler {
 	 * @return compiled unit
 	 * @throws MdaException
 	 */
-	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		UnitProxy unit = getImportResolver().resolveUnit(qualifiedName);
 		if(unit == null) {
 			throw new MdaException("Unresolved unit: " + qualifiedName); //$NON-NLS-1$
@@ -298,9 +295,9 @@ public class QVTOCompiler {
 		return compile(unit, options, monitor);
 	}
 	
-	public CompiledUnit compile(UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit compile(UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		if(monitor == null) {
-			monitor = new NullProgressMonitor();
+			monitor = CompilerUtils.createNullMonitor();
 		}
 		
 		if(options == null) {
@@ -429,7 +426,7 @@ public class QVTOCompiler {
     /**
      * The main compilation method - the common entry point to the compilation 
      */
-	private CompiledUnit compileSingleFile(UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	private CompiledUnit compileSingleFile(UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws MdaException {
         		
         CompiledUnit nextResult = null;
         try {        	
@@ -446,12 +443,12 @@ public class QVTOCompiler {
         return nextResult;        
     }
 		
-    private CompiledUnit doCompile(final UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws ParserException, IOException {
+    private CompiledUnit doCompile(final UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws ParserException, IOException {
     	if(fSource2Compiled.containsKey(source.getURI())) {
     		return fSource2Compiled.get(source.getURI());
     	}
 
-    	monitor = new SubProgressMonitor(monitor, 1);
+    	monitor = CompilerUtils.createMonitor(monitor, 1); //new SubProgressMonitor(monitor, 1);
     	monitor.beginTask(source.getURI().toString(), 3);
     	
 		List<CompiledUnit> compiledImports = null;

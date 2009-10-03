@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
@@ -31,7 +32,6 @@ import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
 import org.eclipse.ocl.Environment;
-import org.eclipse.osgi.util.NLS;
 
 class OperationBuilder {
 	

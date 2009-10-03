@@ -42,7 +42,7 @@ public class BlackboxRegistry {
 			fProviders = readProviders();
 		} catch (RuntimeException e) {
 			fProviders = Collections.emptyList();
-			QvtPlugin.log(e);
+			QvtPlugin.error(e);
 		}
 	}
 	
@@ -91,14 +91,13 @@ public class BlackboxRegistry {
                 try {
                 	Object extension = element.createExecutableExtension(CLASS_ATTR);
                 	if(extension instanceof AbstractBlackboxProvider == false) {
-                		QvtPlugin.log(QvtPlugin.createErrorStatus(
-                				"Provider must implement AbstractBlackboxProvider interace:" + extension, null)); //$NON-NLS-1$
+                		QvtPlugin.error("Provider must implement AbstractBlackboxProvider interace: " + extension); //$NON-NLS-1$
                 		continue;
                 	}
 
                 	providers.add((AbstractBlackboxProvider)extension);
                 } catch (CoreException e) {
-                    QvtPlugin.log(e.getStatus());
+                    QvtPlugin.getDefault().log(e.getStatus());
                 }
             }
         }

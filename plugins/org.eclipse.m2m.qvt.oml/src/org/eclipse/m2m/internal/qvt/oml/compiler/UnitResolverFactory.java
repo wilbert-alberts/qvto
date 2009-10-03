@@ -75,7 +75,7 @@ public interface UnitResolverFactory {
 								factoryEntries.add((UnitResolverFactory)factoryObj);
 							}
 						} catch (CoreException e) {
-							QvtPlugin.log(e);
+							QvtPlugin.getDefault().log(e.getStatus());
 						}
 					}						
 				}

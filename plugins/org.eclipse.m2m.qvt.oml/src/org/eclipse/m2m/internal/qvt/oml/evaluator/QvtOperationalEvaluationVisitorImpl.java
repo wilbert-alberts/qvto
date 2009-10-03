@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
@@ -159,10 +160,8 @@ import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
-import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
@@ -1629,7 +1628,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	if(canBePropagated(e)) {
         		throw e;
         	} else {
-        		QvtPlugin.log(e);
+        		QvtPlugin.error(e);
         	}
         	if (e.getLocalizedMessage() != null) {
         		throwQVTException(new QvtRuntimeException(e.getLocalizedMessage()));
@@ -1835,8 +1834,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				org.eclipse.ocl.ecore.OCLExpression invalidBodyExpr = EcoreFactory.eINSTANCE.createInvalidLiteralExp();
 				
 				public org.eclipse.ocl.ecore.OCLExpression handleError(ParserException parserException, EModelElement contextElement) {
-					QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to parse OCL annotation :" +  //$NON-NLS-1$
-							getUMLReflection().getQualifiedName(contextElement) , parserException));
+					QvtPlugin.error("Failed to parse OCL annotation :" +  //$NON-NLS-1$
+							getUMLReflection().getQualifiedName(contextElement) , parserException);
 
 					return invalidBodyExpr;
 				}

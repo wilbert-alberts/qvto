@@ -19,13 +19,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -37,7 +37,6 @@ import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.osgi.util.NLS;
 
 
 public class JavaBlackboxProvider extends AbstractBlackboxProvider {
@@ -104,7 +103,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				loadedModules.add(nextModuleEnv);
 				
 				if(diagnostic.getSeverity() != Diagnostic.OK) {
-					QvtPlugin.log(BasicDiagnostic.toIStatus(diagnostic));
+					QvtPlugin.logDiagnostic(diagnostic);
 				}
 			} else {
 				if(errors == null) {
@@ -172,17 +171,17 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 					providers.put(id, descriptor);
             	} else {
             		String message = NLS.bind(JavaBlackboxMessages.UnitAlreadyRegisteredContributionIgnored, id, descriptor.getContributorId());
-					QvtPlugin.logError(message, null);
+					QvtPlugin.error(message);
             	}
-            } catch (CoreException e) {
-            	reportReadError(element, e);                    
+            } catch (IllegalArgumentException e) {
+            	reportReadError(element, e.getMessage());                    
             }
         }
 
         return providers;
     }
         
-	private Descriptor createDescriptor(IConfigurationElement configurationElement) throws CoreException {
+	private Descriptor createDescriptor(IConfigurationElement configurationElement) throws IllegalArgumentException {
 		if(UNIT_ELEM.equals(configurationElement.getName())) {
 			String name = configurationElement.getAttribute(NAME_ATTR);
 			String namespace = configurationElement.getAttribute(NAMESPACE_ATTR);		
@@ -197,12 +196,11 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			return new Descriptor(configurationElement, deriveQualifiedNameFromSimpleDefinition(configurationElement), null);
 		}
 		
-		throw new CoreException(QvtPlugin.createErrorStatus(
-				"Unsupported configuration element " + configurationElement, null)); //$NON-NLS-1$		
+		throw new IllegalArgumentException("Unsupported configuration element " + configurationElement); //$NON-NLS-1$		
 	}
     
-	private static void reportReadError(IConfigurationElement problemElement, CoreException e) {
-		QvtPlugin.logError("Failed to read java black-box definition: " + problemElement, e); //$NON-NLS-1$
+	private static void reportReadError(IConfigurationElement problemElement, String message) {
+		QvtPlugin.error("Failed to read java black-box definition: " + message); //$NON-NLS-1$
 	}
 	
 	private String getSimpleNameFromJavaClass(String className) {

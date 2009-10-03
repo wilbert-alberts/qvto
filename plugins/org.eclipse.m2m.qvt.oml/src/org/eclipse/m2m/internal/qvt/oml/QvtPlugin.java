@@ -11,75 +11,207 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.osgi.framework.BundleContext;
+import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.ResourceLocator;
 
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class QvtPlugin extends Plugin {
+public class QvtPlugin extends EMFPlugin {
 	
 	public static final String ID = "org.eclipse.m2m.qvt.oml"; //$NON-NLS-1$
-    
-	//The shared instance.
-	private static QvtPlugin plugin;
-    
+	
+	/**
+	 * The singleton instance of the plugin.
+	 */
+	public static final QvtPlugin INSTANCE = new QvtPlugin();
+
+	private static Implementation plugin;
+	    
 	/**
 	 * The constructor.
 	 */
 	public QvtPlugin() {
-		super();
-		plugin = this;
+		super(new ResourceLocator[] {});
 	}
 
-	/**
-	 * This method is called upon plug-in activation
-	 */
 	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
+	public ResourceLocator getPluginResourceLocator() {
+		return plugin;
 	}
 
-	/**
-	 * This method is called when the plug-in is stopped
-	 */
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
-	}
+	static public class Implementation extends EclipsePlugin {
 
+		public Implementation()	{
+			super();
+			plugin = this;
+		}
+	}
 	/**
 	 * Returns the shared instance.
 	 */
 	public static QvtPlugin getDefault() {
+		return INSTANCE;
+	}
+	
+	public static Implementation getPlugin() {
 		return plugin;
 	}
 
-	public static void log(IStatus status) {
-        getDefault().getLog().log(status);
-    }
-    
-    public static void log(Throwable e) {
-    	String message = QVT_PREFIX + (e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Exception"); //$NON-NLS-1$
-        log(new Status(IStatus.ERROR, ID, 100001, message, e));
-    }
-    
-    public static void logError(String message, Throwable e) {
-        log(new Status(IStatus.ERROR, ID, 100001, message, e)); //$NON-NLS-1$
-    }    
-    
-	public static IStatus createErrorStatus(String message, Exception e) {
-		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, message, e);
+	/**
+	 * Generates an error log for the specified plug-in, with the specified
+	 * status code, message.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 *  
+	 */
+	public static void error(int code, String message) {
+		error(code, message, null);
+	}
+
+	/**
+	 * Generates an error log for the specified plug-in, with the specified
+	 * status code, message, and throwable.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 * @param throwable
+	 *            The throwable for the log.
+	 *  
+	 */
+	public static void error(int code, String message, Throwable throwable) {
+		log(Diagnostic.ERROR, code, message, throwable);
+	}
+
+	public static void error(String message, Throwable throwable) {
+		error(0, message, throwable);
+	}	
+
+	public static void error(Throwable throwable) {
+		error("", throwable); //$NON-NLS-1$
 	}
 	
-	public static IStatus createErrorStatus(Exception e) {
-    	String message = QVT_PREFIX + (e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Error"); //$NON-NLS-1$
-		return new Status(IStatus.ERROR, QvtPlugin.ID, IStatus.ERROR, message, e);
+	public static void error(String message) {
+		error(0, message, null);
+	}	
+	
+	/**
+	 * Generates an information log for the specified plug-in, with the
+	 * specified status code, message.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 *  
+	 */
+	public static void info(int code, String message) {
+		info(code, message, null);
+	}
+
+	/**
+	 * Generates an information log for the specified plug-in, with the
+	 * specified status code, message, and throwable.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 * @param throwable
+	 *            The throwable for the log.
+	 *  
+	 */
+	public static void info(int code, String message, Throwable throwable) {
+		log(Diagnostic.INFO, code, message, throwable);
+	}
+
+	/**
+	 * Generates a warning log for the specified plug-in, with the specified
+	 * status code, message.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 *  
+	 */
+	public static void warning(int code, String message) {
+		warning(code, message, null);
+	}
+
+	/**
+	 * Generates a warning log for the specified plug-in, with the specified
+	 * status code, message, and throwable.
+	 * 
+	 * @param code
+	 *            The status code for the log.
+	 * @param message
+	 *            The message for the log.
+	 * @param throwable
+	 *            The throwable for the log.
+	 *  
+	 */
+	public static void warning(int code, String message, Throwable throwable) {
+		log(Diagnostic.WARNING, code, message, throwable);
+	}
+
+	public static void logDiagnostic(Diagnostic diagnostic) {
+		if(getPlugin() != null) {
+			getPlugin().log(BasicDiagnostic.toIStatus(diagnostic));
+		} else {
+			getDefault().log(diagnostic);
+		}
 	}
 	
-	private static final String QVT_PREFIX = "Operational QVT: "; //$NON-NLS-1$
+	public static void log(int severity, int code, String message, Throwable throwable) {
+		//
+		// Status ctor requires a non-null message
+		String msg = message == null
+			? "" //$NON-NLS-1$
+			: message;
+
+		try {
+			if (getPlugin() != null) {
+				// Eclipse environment
+				getPlugin().log(
+					new Status(severity, ID, code, msg, throwable));
+			} else {
+				// not in the Eclipse environment
+				//if (shouldTrace()) {
+					switch (code) {
+						case Diagnostic.WARNING :
+							System.err.print("WARNING "); //$NON-NLS-1$
+							break;
+						case Diagnostic.ERROR :
+						case Diagnostic.CANCEL :
+							System.err.print("ERROR "); //$NON-NLS-1$
+							break;
+						default :
+							// don't output INFO or OK messages
+							return;
+					}
+
+					System.err.print(code);
+					System.err.print(": "); //$NON-NLS-1$
+					System.err.println(message);
+
+					if (throwable != null) {
+						throwable.printStackTrace(System.err);
+					}
+				//}
+			}
+		} catch (IllegalArgumentException iae) {
+			iae.printStackTrace();
+		}
+	}
 	
 }

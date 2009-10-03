@@ -67,7 +67,7 @@ class EPackageRegistryBasedURIResourceMap extends HashMap<URI, Resource> {
 		} catch (IOException e) {
 			/* Skipping */
 		} catch (ParserConfigurationException e) {
-			QvtPlugin.log(e);
+			QvtPlugin.error(e);
 		}
 	}
 

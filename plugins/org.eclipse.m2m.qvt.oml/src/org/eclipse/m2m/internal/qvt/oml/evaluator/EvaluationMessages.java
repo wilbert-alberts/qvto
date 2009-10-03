@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 
 public class EvaluationMessages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.evaluator.messages";//$NON-NLS-1$

@@ -14,11 +14,16 @@ package org.eclipse.m2m.internal.qvt.oml.compiler;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
-import org.eclipse.osgi.util.NLS;
 
 public class CompilerUtils {
 
@@ -63,4 +68,28 @@ public class CompilerUtils {
 		return unitDiagnostic;
 	}
 	
+	static Monitor createMonitor(Monitor monitor, int ticks) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			if (monitor instanceof IProgressMonitor) {
+				return new BasicMonitor.EclipseSubProgress((IProgressMonitor) monitor, ticks);
+			} else {
+				return new BasicMonitor.EclipseSubProgress(BasicMonitor.toIProgressMonitor(monitor), ticks);
+			}
+
+		}
+		
+		return monitor;
+	}
+	
+	static void throwOperationCanceled() throws RuntimeException {
+		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+			throw new OperationCanceledException();
+		} else {
+			throw new RuntimeException("Operation canceled"); //$NON-NLS-1$
+		}
+	}
+	
+	static Monitor createNullMonitor() {
+		return new BasicMonitor();
+	}
 }

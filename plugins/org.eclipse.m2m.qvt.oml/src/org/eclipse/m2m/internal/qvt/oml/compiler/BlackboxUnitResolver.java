@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -35,7 +36,6 @@ import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContextImpl;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.osgi.util.NLS;
 
 public class BlackboxUnitResolver implements UnitResolver {
 	
@@ -139,9 +139,10 @@ public class BlackboxUnitResolver implements UnitResolver {
 			} catch (BlackboxException e) {
 				Diagnostic diagnostic = e.getDiagnostic();
 				if(diagnostic != null) {
-					QvtPlugin.log(BasicDiagnostic.toIStatus(diagnostic));					
+					QvtPlugin.logDiagnostic(diagnostic);					
 				} else {
-					QvtPlugin.logError(NLS.bind(ValidationMessages.FailedToLoadUnit, new Object[] { fDescriptor.getQualifiedName() }), e);
+					QvtPlugin.error(NLS.bind(ValidationMessages.FailedToLoadUnit, 
+							new Object[] { fDescriptor.getQualifiedName() }), e);
 				}
 
 				String errMessage = NLS.bind(ValidationMessages.FailedToLoadUnit, fDescriptor.getQualifiedName());

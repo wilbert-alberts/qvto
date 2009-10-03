@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -30,7 +31,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 class MappingExtensionHelper {
 

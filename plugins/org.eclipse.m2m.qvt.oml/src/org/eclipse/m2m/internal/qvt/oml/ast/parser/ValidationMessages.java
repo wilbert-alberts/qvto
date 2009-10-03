@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 
 public final class ValidationMessages extends NLS {
 

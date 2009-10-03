@@ -80,7 +80,7 @@ public class WriterLog implements Log {
 			fWriter.write(fRecordSeparator);			
 		} catch (IOException e) {
 			if(!fErrorLogged) {
-				QvtPlugin.log(e);
+				QvtPlugin.error(e);
 				fErrorLogged = true;
 			}
 		}
