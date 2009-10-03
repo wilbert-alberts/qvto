@@ -23,7 +23,7 @@ public class JavalessQvtTest extends TestQvtInterpreter {
 		try {			
 			ePackageRegistered = JavalessMetamodelProvider.registerMetamodel() != null; 
 		} catch (RuntimeException e) {
-			QvtPlugin.createErrorStatus("Failed to init " + JavalessMetamodelProvider.class.getName(), e); //$NON-NLS-1$
+			QvtPlugin.error("Failed to init " + JavalessMetamodelProvider.class.getName(), e); //$NON-NLS-1$
 		} finally {
 			METAMODEL_REGISTEREED = ePackageRegistered;	
 		}

@@ -31,9 +31,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
@@ -226,7 +226,7 @@ public class TestQvtParser extends TestCase {
         options.setGenerateCompletionData(false);
         
         UnitProxy unit = resolver.resolveUnit(folder.getName());
-		return new CompiledUnit[] { compiler.compile(unit, options, new NullProgressMonitor()) };
+		return new CompiledUnit[] { compiler.compile(unit, options, new BasicMonitor()) };
 	}
 	
 	private static File getFile(File folder, final String expectedName) {
