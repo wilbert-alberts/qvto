@@ -119,4 +119,8 @@ public class Activator extends AbstractUIPlugin {
     public static void log(Throwable e) {
         log(new Status(IStatus.ERROR, PLUGIN_ID, 0, "internal_error", e)); //$NON-NLS-1$
     }	
+    
+	public static IStatus createStatus(int severity, String message, Throwable throwable) {
+		return new Status(severity, PLUGIN_ID, message != null ? message : "", throwable); //$NON-NLS-1$
+	}    
 }

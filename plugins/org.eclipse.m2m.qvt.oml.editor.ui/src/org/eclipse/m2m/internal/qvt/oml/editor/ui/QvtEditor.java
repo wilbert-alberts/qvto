@@ -559,7 +559,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
 					return srcPath.isPrefixOf(editedPath);
 				}
 			} catch (CoreException e) {
-				QvtPlugin.log(e);
+				QvtPlugin.getDefault().log(e.getStatus());
 			}
 		}
 		return false;

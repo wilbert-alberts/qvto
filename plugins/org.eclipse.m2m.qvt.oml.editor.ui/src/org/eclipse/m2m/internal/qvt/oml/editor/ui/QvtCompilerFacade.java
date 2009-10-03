@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
@@ -76,7 +76,7 @@ public class QvtCompilerFacade {
 					}
 				};								
 				
-                result = compiler.compile(unit, options, new SubProgressMonitor(monitor, 2));
+                result = compiler.compile(unit, options, new BasicMonitor.EclipseSubProgress(monitor, 2));
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result);
@@ -124,7 +124,7 @@ public class QvtCompilerFacade {
 					return srcPath.isPrefixOf(editedPath);
 				}
 			} catch (CoreException e) {
-				QvtPlugin.log(e);
+				QvtPlugin.getDefault().log(e.getStatus());
 			}
 		}
 		return false;
