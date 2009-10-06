@@ -24,18 +24,13 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtPartitionScanner;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.ColorManager;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.colorer.QVTColorManager;
-import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 
 
 public class QVTContentViewer extends TextMergeViewer {
-
-	private ColorManager fColorManager = new ColorManager();
-	
 	
 	public QVTContentViewer(Composite parent, int style, CompareConfiguration configuration) {
 		super(parent, style, configuration);		
@@ -49,7 +44,7 @@ public class QVTContentViewer extends TextMergeViewer {
 							Activator.getDefault().getPreferenceStore(),
 							EditorsUI.getPreferenceStore() });
 			
-			SourceViewerConfiguration configuration = new QvtConfiguration(new QVTColorManager(store, fColorManager), store);
+			SourceViewerConfiguration configuration = new QvtConfiguration(new QVTColorManager(store, Activator.getDefault().getColorManager()), store);
 			((ISourceViewer)textViewer).configure(configuration);
 		}
 	}
@@ -60,14 +55,7 @@ public class QVTContentViewer extends TextMergeViewer {
 
 		doSetupDocument(document);
 	}
-	
-	@Override
-	protected void handleDispose(DisposeEvent event) {	
-		super.handleDispose(event);
 		
-		fColorManager.dispose();
-	}
-	
 	static IDocument doSetupDocument(IDocument document) {
 		 IDocumentPartitioner partitioner = new FastPartitioner(
 				new QvtPartitionScanner(), new String[] {
