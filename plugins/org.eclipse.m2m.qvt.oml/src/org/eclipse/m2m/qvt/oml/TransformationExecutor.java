@@ -68,11 +68,6 @@ import org.eclipse.ocl.ecore.SendSignalAction;
  */
 public final class TransformationExecutor {
 
-	/*
-	 * TODO - Support execution with workspace located meta-model.ecore files
-	 * via additional settings to this class
-	 */
-
 	private URI fURI;
 	private EPackage.Registry fPackageRegistry;
 	private CompiledUnit fCompiledUnit;
