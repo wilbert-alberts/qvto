@@ -115,7 +115,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			public boolean visit(IResourceProxy proxy) throws CoreException {
 				if (proxy.getType() == IResource.FILE) {
 					if (MDAConstants.QVTO_FILE_EXTENSION.equals(proxy.requestFullPath().getFileExtension())) {
-						proxy.requestResource().deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+						proxy.requestResource().deleteMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
 					}
 					return false;
 				}
