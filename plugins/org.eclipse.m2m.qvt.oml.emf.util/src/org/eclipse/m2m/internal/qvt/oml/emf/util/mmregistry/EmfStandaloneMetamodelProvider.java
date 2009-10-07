@@ -12,15 +12,10 @@
 package org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 
 
 public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
@@ -40,40 +35,20 @@ public class EmfStandaloneMetamodelProvider implements IMetamodelProvider {
     }    
     
 	public IMetamodelDesc[] getMetamodels() {
+		
         List<IMetamodelDesc> descs = new ArrayList<IMetamodelDesc>();
-
 		List<String> uris = new ArrayList<String>(fRegistry.keySet());
         
-        Map<String,String> uri2ns = getUriToNamespaceMap();
-        
         for (String uri : uris) {
-            String namespace = uri2ns.get(uri);
-
-            try {
-                Object pack = fRegistry.get(uri);
-                if (pack instanceof EPackage.Descriptor) {
-                	descs.add(new EmfMetamodelDesc((EPackage.Descriptor) pack, uri, namespace));
-                } else if (pack instanceof EPackage) {
-                	descs.add(new EmfMetamodelDesc((EPackage) pack, uri, namespace));
-                }
-            }
-            catch(Exception e) {
-                Logger.getLogger().log(Logger.SEVERE, "Failed to get EPackage for URI " + uri, e); //$NON-NLS-1$
+            Object pack = fRegistry.get(uri);
+            if (pack instanceof EPackage.Descriptor) {
+            	descs.add(new EmfMetamodelDesc((EPackage.Descriptor) pack, uri));
+            } else if (pack instanceof EPackage) {
+            	descs.add(new EmfMetamodelDesc((EPackage) pack, uri));
             }
         }
         
         return descs.toArray(new IMetamodelDesc[descs.size()]);
     }
-    
-    private static final Map<String, String> getUriToNamespaceMap() {
-        Map<String, String> map = new HashMap<String, String>();
-        
-        IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfPluginRegistryMetamodelProvider.POINT);
-        for(int i = 0; i < configurationElements.length; i++) {
-            IConfigurationElement configurationElement = configurationElements[i]; 
-            map.put(configurationElement.getAttribute("uri"), configurationElement.getNamespaceIdentifier()); //$NON-NLS-1$
-        }
-        
-        return map;
-    }
+
 }

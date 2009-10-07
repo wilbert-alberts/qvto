@@ -44,7 +44,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 		this.metamodels = new ArrayList<IMetamodelDesc>();
 	}
 		
-	public IMetamodelDesc addMetamodel(String metamodelID, URI metamodelResourceURI, String namespace) {
+	public IMetamodelDesc addMetamodel(String metamodelID, URI metamodelResourceURI) {
 		if(metamodelID == null) {
 			throw new IllegalArgumentException("Null metamodel ID"); //$NON-NLS-1$			
 		}
@@ -54,7 +54,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 		}
 				
 		EPackage.Descriptor ePackageDesc = new DescImpl(metamodelResourceURI, resSet);
-		IMetamodelDesc desc = new EmfMetamodelDesc(ePackageDesc, metamodelID, namespace);
+		IMetamodelDesc desc = new EmfMetamodelDesc(ePackageDesc, metamodelID);
 		metamodels.add(desc);
 		return desc;
 	}
@@ -70,7 +70,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
         List<IResource> wsModels = collectWorkspaceMetamodels();        
         for (IResource res : wsModels) {
 			URI resURI = URI.createPlatformResourceURI(res.getFullPath().toString(), false);
-			ws.addMetamodel(resURI.toString(), resURI, res.getProject().getName());					
+			ws.addMetamodel(resURI.toString(), resURI);					
 		}
         
 		return ws;

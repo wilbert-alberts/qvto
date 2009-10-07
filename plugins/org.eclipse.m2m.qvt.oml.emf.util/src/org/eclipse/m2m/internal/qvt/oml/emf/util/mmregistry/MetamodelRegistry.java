@@ -21,13 +21,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.UniqueEList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
@@ -41,16 +37,16 @@ public class MetamodelRegistry {
     
     private static final MetamodelRegistry ourInstance = new MetamodelRegistry();
 	
-    private List<IMetamodelProvider> myMetamodelProviders;	
+    private List<? extends IMetamodelProvider> myMetamodelProviders;	
 	private final Map<String, IMetamodelDesc> myMetamodelDescs;
 	
 	private MetamodelRegistry() {
 		myMetamodelProviders = getMetamodelProviders();
-		if(myMetamodelProviders.isEmpty()) {
-    		Logger.getLogger().log(Logger.SEVERE, "No metamodel provider extensions, point=" + EmfUtilPlugin.ID + "." + MM_POINT_ID); //$NON-NLS-1$ //$NON-NLS-2$			
-		}
+		if(!myMetamodelProviders.isEmpty()) {
+			myMetamodelProviders = Collections.singletonList(new EmfStandaloneMetamodelProvider(EPackage.Registry.INSTANCE));    				
+		} 
 		
-		myMetamodelDescs = getMetamodelDescs(myMetamodelProviders);
+		myMetamodelDescs = getMetamodelDescs(myMetamodelProviders);		
     }
 	
 	public MetamodelRegistry(IMetamodelProvider metamodelProvider) {
@@ -79,13 +75,9 @@ public class MetamodelRegistry {
 	}
 
 	public IMetamodelDesc getMetamodelDesc(String id) throws EmfException {
-		return getMetamodelDesc(id, null);
-	}
-	
-	public IMetamodelDesc getMetamodelDesc(String id, ResourceSet resolutionRS) throws EmfException {
 		IMetamodelDesc desc = myMetamodelDescs.get(id);
 
-		// hack for #35157 
+		// FIXME - hack for #35157 
 		if(desc == null && id != null) {
             for(IMetamodelDesc d: myMetamodelDescs.values()) {
             	EPackage pack = d.getModel();
@@ -100,20 +92,20 @@ public class MetamodelRegistry {
         			pack = pack.getESuperPackage();
         		}
             	if (id.equals(pack.getNsURI())) {
-            		desc = new EmfMetamodelDesc(pack, pack.getNsURI(), d.getNamespace());
+            		desc = new EmfMetamodelDesc(pack, pack.getNsURI());
             		myMetamodelDescs.put(id, desc);
             		break;
             	}
             }
         }
-        
-        if (desc == null && id != null) {
-            // Unregistered platform metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
-            URI uri = URI.createURI(id);
-            if (uri.isPlatform()) {
-                desc = MetamodelRegistry.createUndeclaredMetamodel(uri, id, resolutionRS != null ? resolutionRS : new ResourceSetImpl());
-            }
-        }
+        				
+//        if (desc == null && id != null) {
+//            // Unregistered platform metamodels, e.g. available via "platform:/resource" or "platform:/plugin"
+//            URI uri = URI.createURI(id);
+//            if (uri.isPlatform()) {
+//                desc = MetamodelRegistry.createUndeclaredMetamodel(uri, id, resolutionRS != null ? resolutionRS : new ResourceSetImpl());
+//            }
+//        }
         
         if (desc == null) {
         	throw new EmfException(NLS.bind(Messages.MetamodelRegistry_0, id, myMetamodelDescs.values()));
@@ -122,34 +114,34 @@ public class MetamodelRegistry {
         return desc;
 	}
 
-    public static final IMetamodelDesc createUndeclaredMetamodel(String id, ResourceSet rs) throws EmfException {
-        URI uri = URI.createURI(id);  
-        return createUndeclaredMetamodel(uri, id, rs);
-    }
+//    public static final IMetamodelDesc createUndeclaredMetamodel(String id, ResourceSet rs) throws EmfException {
+//        URI uri = URI.createURI(id);  
+//        return createUndeclaredMetamodel(uri, id, rs);
+//    }
 	
-    public static final IMetamodelDesc createUndeclaredMetamodel(URI uri, String id, ResourceSet rs) throws EmfException {
-        try {
-        	int initialResourceCount = rs.getResources().size();
-            Resource resource = rs.getResource(uri, true);
-            if (resource != null) {
-                EObject metamodel = resource.getContents().get(0);
-                if (metamodel instanceof EPackage) {
-                    return new EmfMetamodelDesc((EPackage) metamodel, id, null);
-//                      TODO: registration in the map must be done
-//                      in case the changes of resource are listened out for  
-//                        myMetamodelDescs.put(id, desc);
-                }
-                for (int i = rs.getResources().size()-1; i >= initialResourceCount; --i) {
-                	Resource loadedResource = rs.getResources().get(i);
-                	loadedResource.unload();
-                	//rs.getResources().remove(i);
-                }
-            }
-        } catch (Exception e) {
-            throw new EmfException(e);
-        }
-        return null;
-    }
+//    public static final IMetamodelDesc createUndeclaredMetamodel(URI uri, String id, ResourceSet rs) throws EmfException {
+//        try {
+//        	int initialResourceCount = rs.getResources().size();
+//            Resource resource = rs.getResource(uri, true);
+//            if (resource != null) {
+//                EObject metamodel = resource.getContents().get(0);
+//                if (metamodel instanceof EPackage) {
+//                    return new EmfMetamodelDesc((EPackage) metamodel, id);
+////                      TODO: registration in the map must be done
+////                      in case the changes of resource are listened out for  
+////                        myMetamodelDescs.put(id, desc);
+//                }
+//                for (int i = rs.getResources().size()-1; i >= initialResourceCount; --i) {
+//                	Resource loadedResource = rs.getResources().get(i);
+//                	loadedResource.unload();
+//                	//rs.getResources().remove(i);
+//                }
+//            }
+//        } catch (Exception e) {
+//            throw new EmfException(e);
+//        }
+//        return null;
+//    }
 
     public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
 		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
@@ -187,10 +179,6 @@ public class MetamodelRegistry {
 				return nextMetamodel;
 			}
 
-			public String getNamespace() {
-				return null;
-			}
-
 			public boolean isLoaded() {
 				return true;
 			}
@@ -203,26 +191,28 @@ public class MetamodelRegistry {
 	
 	private static List<IMetamodelProvider> getMetamodelProviders() {
 		List<IMetamodelProvider> metamodelProviders = new ArrayList<IMetamodelProvider>();
-		IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfUtilPlugin.getDefault().getBundle().getSymbolicName(), MM_POINT_ID);
-		
-		for (int i = 0; i < extensions.length; i++) {
-			IConfigurationElement extension = extensions[i];
-			try {
-				Object provider = extension.createExecutableExtension("class"); //$NON-NLS-1$
-				if(provider instanceof IMetamodelProvider) {
-					metamodelProviders.add((IMetamodelProvider)provider);
+		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+			IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfUtilPlugin.getDefault().getBundle().getSymbolicName(), MM_POINT_ID);
+			
+			for (int i = 0; i < extensions.length; i++) {
+				IConfigurationElement extension = extensions[i];
+				try {
+					Object provider = extension.createExecutableExtension("class"); //$NON-NLS-1$
+					if(provider instanceof IMetamodelProvider) {
+						metamodelProviders.add((IMetamodelProvider)provider);
+					}
 				}
-			}
-			catch(Exception e) {
-				Logger.getLogger().log(Logger.WARNING, "Failed to instantiate " + extension.getAttribute("class") +  //$NON-NLS-1$ //$NON-NLS-2$
-						" from " + extension.getNamespaceIdentifier(), e); //$NON-NLS-1$
+				catch(Exception e) {
+					Logger.getLogger().log(Logger.WARNING, "Failed to instantiate " + extension.getAttribute("class") +  //$NON-NLS-1$ //$NON-NLS-2$
+							" from " + extension.getNamespaceIdentifier(), e); //$NON-NLS-1$
+				}
 			}
 		}
 		
 		return metamodelProviders;
 	}
 	
-	private static Map<String, IMetamodelDesc> getMetamodelDescs(List<IMetamodelProvider> providers) {
+	private static Map<String, IMetamodelDesc> getMetamodelDescs(List<? extends IMetamodelProvider> providers) {
 		Map<String, IMetamodelDesc> metamodelDescs = new HashMap<String, IMetamodelDesc>();		
 		
         for(IMetamodelProvider provider: providers) {

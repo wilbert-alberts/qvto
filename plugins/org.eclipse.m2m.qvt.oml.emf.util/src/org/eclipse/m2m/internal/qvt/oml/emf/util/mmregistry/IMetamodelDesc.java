@@ -21,9 +21,6 @@ public interface IMetamodelDesc {
 	/** @return nsUri for EMF */
 	String getId();
 	
-	/** @return null for runtime metamodels */
-    String getNamespace();
-
     /**
      * Returns metamodel package represented by this descriptor.
      * <p>

@@ -28,8 +28,6 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
 	
     private final String myNsURI;
     
-    private final String myNamespace;
-	
     private final EPackage.Descriptor myPackageDescriptor;
     
     private EPackage myPackage;
@@ -37,34 +35,27 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
     private IStatus status = Status.OK_STATUS;
 	
 	
-	public EmfMetamodelDesc(EPackage.Descriptor packageDescriptor, String nsURI, String namespace) {
+	public EmfMetamodelDesc(EPackage.Descriptor packageDescriptor, String nsURI) {
 		if (packageDescriptor == null) {
 			throw new IllegalArgumentException();
 		}
 		myPackageDescriptor = packageDescriptor;
 		myNsURI = nsURI;
-		myNamespace = namespace;
-		
 	}
 	
-	public EmfMetamodelDesc(EPackage pack, String nsURI, String namespace) {
+	public EmfMetamodelDesc(EPackage pack, String nsURI) {
 		if (pack == null) {
 			throw new IllegalArgumentException();
 		}
 		myPackageDescriptor = null;
 		myPackage = pack;
 		myNsURI = nsURI;
-        myNamespace = namespace;
 	}
 	
 	public String getId() {
 		return myNsURI;
 	}
 	
-    public String getNamespace(){
-        return myNamespace;
-    }
-    
     public EPackage getModel() {
     	if (myPackage == null) {
     		try {
