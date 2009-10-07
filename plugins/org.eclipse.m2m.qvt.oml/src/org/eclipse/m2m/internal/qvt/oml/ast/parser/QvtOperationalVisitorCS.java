@@ -1089,7 +1089,8 @@ public class QvtOperationalVisitorCS
 			result = oclFactory.createOperationCallExp();
 		}
 		
-		initASTMapping(env, result, operationCallExpCS);
+		initStartEndPositions(result, operationCallExpCS);
+		initASTMapping(env, result, operationCallExpCS);		
 		result.setSource(source);
 		
 
