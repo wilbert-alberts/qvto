@@ -251,4 +251,12 @@
       </page>
    </extension>
    
+	<extension point="org.eclipse.compare.contentMergeViewers">
+	      <viewer extensions="qvto"
+	            class="org.eclipse.m2m.internal.qvt.oml.editor.ui.viewers.QVTContentViewerCreator"
+	            id="org.eclipse.m2m.qvt.oml.editor.ui.viewers.QVTContentViewerCreator">
+	      </viewer>
+	</extension>
+   
+   
 </plugin>
