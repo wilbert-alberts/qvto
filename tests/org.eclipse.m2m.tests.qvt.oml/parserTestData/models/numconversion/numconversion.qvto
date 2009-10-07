@@ -1,4 +1,4 @@
-modeltype MM uses "platform:/resource/TransformationTest/models/numconversion/mm.ecore";
+modeltype MM uses "http:///pack";
 
 transformation numconversion(in m1 : MM, out MM);
 

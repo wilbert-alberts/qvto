@@ -80,7 +80,7 @@ public class TransformTests {
         return new ModelTestData[] {        		
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
         		new FileToFileData("virtual_contextVsOverride"), //$NON-NLS-1$
-                new FileToFileData("numconversion", "in.xmi", "expected.pack"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                new FileToFileData("numconversion", "in.xmi", "expected.pack").includeMetamodelFile("mm.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FileToFileData("overload_205062"), //$NON-NLS-1$
         		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
         		new FileToFileData("overload_multipleParams"), //$NON-NLS-1$        		        		
@@ -158,7 +158,7 @@ public class TransformTests {
                 new FileToFileData("bug216317"), //$NON-NLS-1$                
                 new FileToFileData("oclAllInstances"), //$NON-NLS-1$                
                 new FileToFileData("_while"), //$NON-NLS-1$
-                new FileToFileData("bug214718"), //$NON-NLS-1$        
+        
                 new FileToFileData("oclannotation", "in.ecore", "expected.xmi").includeMetamodelFile("metamodel.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$    			
                 new FileToFileData("importedvirtuals"), //$NON-NLS-1$    	
                 new FileToFileData("ocl_test"), //$NON-NLS-1$    			
@@ -290,8 +290,10 @@ public class TransformTests {
                 new FileToFileData("bug219075_1"), //$NON-NLS-1$        
         		new FilesToFilesData("continue_break", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("continue_perf"), //$NON-NLS-1$
-        		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")), //$NON-NLS-1$ //$NON-NLS-2$
-        		new FilesToFilesData("nullableEnum", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")), //$NON-NLS-1$ //$NON-NLS-2$
+        		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
+        			.includeMetamodelFile("MyUnbound.ecore"), //$NON-NLS-1$
+        		new FilesToFilesData("nullableEnum", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
+        			.includeMetamodelFile("NullableEnumTest.ecore")
         };
     }
 
@@ -307,7 +309,7 @@ public class TransformTests {
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
             "egetcodegen", // java method can't be called//$NON-NLS-1$
-            "bug214718", // platform protocol URI metamodel reference //$NON-NLS-1$
+            
             "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models  //$NON-NLS-1$

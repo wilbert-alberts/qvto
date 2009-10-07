@@ -1,7 +1,0 @@
-transformation bug214718;
-
-modeltype ecore uses 'platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore';
-
-mapping main(in model: ecore::EPackage): ecore::EPackage {
-    name := 'a';
-}

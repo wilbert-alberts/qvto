@@ -30,7 +30,7 @@ public class JavalessMetamodelProvider implements IMetamodelProvider {
 	public IMetamodelDesc[] getMetamodels() {
 		EPackage metamodel = registerMetamodel();
 		return new IMetamodelDesc[] {
-			new EmfMetamodelDesc(metamodel, metamodel.getNsURI(), null),
+			new EmfMetamodelDesc(metamodel, metamodel.getNsURI()),
 		};
 	}
 	

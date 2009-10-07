@@ -1,4 +1,4 @@
-modeltype Model "strict" uses "platform:/resource/TransformationTest/models/nullableEnum/NullableEnumTest.ecore";
+modeltype Model "strict" uses "http://p";
 
 transformation nullableEnum(out Model);
 

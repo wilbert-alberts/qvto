@@ -1,4 +1,4 @@
-modeltype localunboud uses 'platform:/resource/TransformationTest/models/unspecified_multiplicity/MyUnbound.ecore';
+modeltype localunboud uses "http://local.unbound";
 
 transformation unspecified_multiplicity(out localunboud);
 
