@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -57,10 +58,14 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 	private static final String METAMODEL_ELEM = "metamodel"; //$NON-NLS-1$
 	private static final String NSURI_ATTR = "nsURI"; //$NON-NLS-1$	
 		
-	private final Map<String, Descriptor> fDescriptorMap; //$NON-NLS-1$
+	private final Map<String, Descriptor> fDescriptorMap;
 	
 	public JavaBlackboxProvider() {
-		fDescriptorMap = readDescriptors();
+		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+			fDescriptorMap = readDescriptors();
+		} else {
+			fDescriptorMap = Collections.emptyMap();
+		}
 	}
 
 	@Override
@@ -174,7 +179,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 					QvtPlugin.error(message);
             	}
             } catch (IllegalArgumentException e) {
-            	reportReadError(element, e.getMessage());                    
+            	QvtPlugin.error("Failed to read java black-box definition: " + e.getMessage()); //$NON-NLS-1$
             }
         }
 
@@ -198,21 +203,8 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		
 		throw new IllegalArgumentException("Unsupported configuration element " + configurationElement); //$NON-NLS-1$		
 	}
-    
-	private static void reportReadError(IConfigurationElement problemElement, String message) {
-		QvtPlugin.error("Failed to read java black-box definition: " + message); //$NON-NLS-1$
-	}
-	
-	private String getSimpleNameFromJavaClass(String className) {
-		int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
-		if(lastSeparatorPos < 0) {
-			return className;
-		}
-
-		return className.substring(lastSeparatorPos + 1);
-	}
-	
-	private String getPackageNameFromJavaClass(String className) {
+    		
+	private static String getPackageNameFromJavaClass(String className) {
 		int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
 		if(lastSeparatorPos < 0) {
 			return null;
@@ -221,13 +213,13 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		return className.substring(0, lastSeparatorPos);
 	}
 	
-	private String deriveQualifiedNameFromSimpleDefinition(IConfigurationElement moduleElement) {
+	private static String deriveQualifiedNameFromSimpleDefinition(IConfigurationElement moduleElement) {
 		String className = moduleElement.getAttribute(CLASS_ATTR);		
 		String name = moduleElement.getAttribute(NAME_ATTR);				
 		if(name == null) {
 			return className;
 		}
-		// name overriden in descriptor
+		// name overridden in descriptor
 		String packageName = getPackageNameFromJavaClass(className);
 		if(packageName == null) {
 			return name; // default package
@@ -274,18 +266,28 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			
 			ModuleHandle moduleHandle = new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
 			fModules.add(moduleHandle);
-		}		
-	}
-	
-	private List<String> readUsedPackagesNsURIs(IConfigurationElement moduleConfigElement) {
-		ArrayList<String> uris = new ArrayList<String>(3);
-		for (IConfigurationElement nextElement : moduleConfigElement.getChildren(METAMODEL_ELEM)) {
-			String nsURI = nextElement.getAttribute(NSURI_ATTR);
-			if(nsURI != null) {
-				uris.add(nsURI);
-			}
 		}
 		
-		return uris;
+		private List<String> readUsedPackagesNsURIs(IConfigurationElement moduleConfigElement) {
+			ArrayList<String> uris = new ArrayList<String>(3);
+			for (IConfigurationElement nextElement : moduleConfigElement.getChildren(METAMODEL_ELEM)) {
+				String nsURI = nextElement.getAttribute(NSURI_ATTR);
+				if(nsURI != null) {
+					uris.add(nsURI);
+				}
+			}
+			
+			return uris;
+		}
+		
+		private String getSimpleNameFromJavaClass(String className) {
+			int lastSeparatorPos = className.lastIndexOf(CLASS_NAME_SEPARATOR);
+			if(lastSeparatorPos < 0) {
+				return className;
+			}
+
+			return className.substring(lastSeparatorPos + 1);
+		}		
 	}
+
 }

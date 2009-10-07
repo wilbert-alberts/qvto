@@ -35,10 +35,6 @@ class ModuleHandle {
 		this.simpleName = moduleName;
 		this.usedPackages = Collections.unmodifiableList(new ArrayList<String>(usedPackages));
 	}
-
-	public String getBundleId() {
-		return bundleId;
-	}
 	
 	public String getSimpleName() {
 		return simpleName;

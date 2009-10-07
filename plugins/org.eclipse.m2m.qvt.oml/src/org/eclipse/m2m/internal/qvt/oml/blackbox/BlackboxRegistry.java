@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 
 /*
@@ -39,7 +40,11 @@ public class BlackboxRegistry {
 		
 	private BlackboxRegistry() {
 		try {
-			fProviders = readProviders();
+			if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+				fProviders = readProviders();
+			} else {
+				fProviders = Collections.emptyList();
+			}
 		} catch (RuntimeException e) {
 			fProviders = Collections.emptyList();
 			QvtPlugin.error(e);
