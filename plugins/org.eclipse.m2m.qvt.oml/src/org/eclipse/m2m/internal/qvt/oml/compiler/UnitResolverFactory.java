@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 
@@ -62,22 +63,24 @@ public interface UnitResolverFactory {
 			
 			private List<UnitResolverFactory> readFactories() {
 				ArrayList<UnitResolverFactory> factoryEntries = new ArrayList<UnitResolverFactory>();
-				IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
-				IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(POINT_ID);
-				if(extensionPoint != null) {
-					IExtension[] allExtensions = extensionPoint.getExtensions();
-					for (IExtension nextExtension : allExtensions) {
-						IConfigurationElement[] elements = nextExtension.getConfigurationElements();
-						Object factoryObj = null;
-						try {
-							factoryObj = elements[0].createExecutableExtension(CLASS_ATTR);
-							if(factoryObj instanceof UnitResolverFactory) {
-								factoryEntries.add((UnitResolverFactory)factoryObj);
+				if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+					IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
+					IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(POINT_ID);
+					if(extensionPoint != null) {
+						IExtension[] allExtensions = extensionPoint.getExtensions();
+						for (IExtension nextExtension : allExtensions) {
+							IConfigurationElement[] elements = nextExtension.getConfigurationElements();
+							Object factoryObj = null;
+							try {
+								factoryObj = elements[0].createExecutableExtension(CLASS_ATTR);
+								if(factoryObj instanceof UnitResolverFactory) {
+									factoryEntries.add((UnitResolverFactory)factoryObj);
+								}
+							} catch (CoreException e) {
+								QvtPlugin.getDefault().log(e.getStatus());
 							}
-						} catch (CoreException e) {
-							QvtPlugin.getDefault().log(e.getStatus());
-						}
-					}						
+						}						
+					}
 				}
 				return factoryEntries;
 		    }
