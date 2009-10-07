@@ -531,7 +531,7 @@ public class MetamodelBrowser  implements IAdaptable {
                 
         for (IResource res : wsModels) {
 			URI resURI = URI.createPlatformResourceURI(res.getFullPath().toString(), false);
-			IMetamodelDesc wsMModelDesc = ws.addMetamodel(resURI.toString(), resURI, res.getProject().getName());
+			IMetamodelDesc wsMModelDesc = ws.addMetamodel(resURI.toString(), resURI);
 			workspaceModels.addChild(new ResourceModelNode(resURI, wsMModelDesc, workspaceModels));			
 		}
    
@@ -824,7 +824,7 @@ public class MetamodelBrowser  implements IAdaptable {
     	}
     	
     	public String getId() {
-    		return (ePackage.getNsURI() != null) ? ePackage.getNsURI() : getNamespace();
+    		return ePackage.getNsURI();
 		}
 
 		public IStatus getLoadStatus() {
@@ -833,10 +833,6 @@ public class MetamodelBrowser  implements IAdaptable {
 
 		public EPackage getModel() {
 			return ePackage;
-		}
-
-		public String getNamespace() {
-			return ePackage.getClass().getName();
 		}
 
 		public boolean isLoaded() {
@@ -851,7 +847,7 @@ public class MetamodelBrowser  implements IAdaptable {
     	
 		URI resURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), false);
 		WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());
-		IMetamodelDesc modelFileDesc = ws.addMetamodel(resURI.toString(), resURI, ecoreFilePath.lastSegment());
+		IMetamodelDesc modelFileDesc = ws.addMetamodel(resURI.toString(), resURI);
 		
 		this.workspaceModels.addChild(new ResourceModelNode(resURI, modelFileDesc, workspaceModels));
     }
@@ -869,7 +865,7 @@ public class MetamodelBrowser  implements IAdaptable {
 			URI resourceURI = resourceModelNode.uri;
 			
 			WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());			
-			IMetamodelDesc modelFileDesc = ws.addMetamodel(resourceURI.toString(), resourceURI, ecoreFilePath.lastSegment());
+			IMetamodelDesc modelFileDesc = ws.addMetamodel(resourceURI.toString(), resourceURI);
 			
 			ResourceModelNode newNode = new ResourceModelNode(resourceURI, modelFileDesc, workspaceModels);
 			
