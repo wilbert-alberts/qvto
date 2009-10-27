@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.7 2009/03/16 17:41:12 aigdalov Exp $
+-- * $Id: QvtOpLexer.g,v 1.7.4.1 2009/10/27 09:18:34 sboyko Exp $
 -- */
 --
 -- The QVT Lexer
@@ -89,7 +89,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.7 2009/03/16 17:41:12 aigdalov Exp $
+ * $Id: QvtOpLexer.g,v 1.7.4.1 2009/10/27 09:18:34 sboyko Exp $
  */
 	./
 $End
@@ -98,7 +98,6 @@ $Export
 
 	ADD_ASSIGN
 	RESET_ASSIGN
-	AT_SIGN
 	EXCLAMATION_MARK
 	NOT_EQUAL_EXEQ
 	STEREOTYPE_QUALIFIER_OPEN
@@ -120,12 +119,6 @@ $Rules
 	Token ::= '+' '='
 		/.$BeginAction
 					makeToken($_ADD_ASSIGN);
-		  $EndAction
-		./
-
-	Token ::= '@'
-		/.$BeginAction
-					makeToken($_AT_SIGN);
 		  $EndAction
 		./
 
