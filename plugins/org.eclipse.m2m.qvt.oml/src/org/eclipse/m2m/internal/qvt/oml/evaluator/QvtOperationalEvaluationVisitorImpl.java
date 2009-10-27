@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -37,6 +39,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
@@ -64,6 +67,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
@@ -102,6 +106,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
@@ -122,6 +127,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
+import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -154,10 +160,8 @@ import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
-import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
@@ -168,7 +172,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	
     private QvtOperationalEvaluationEnv myEvalEnv;
     // FIXME - move me to the root environment?
-    private OCLAnnotationSupport oclAnnotationSupport;	
+    private OCLAnnotationSupport oclAnnotationSupport;
 
     public QvtOperationalEvaluationVisitorImpl(QvtOperationalEnv env, QvtOperationalEvaluationEnv evalEnv) {
         super(env, evalEnv, evalEnv.createExtentMap(null));
@@ -191,7 +195,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		for (DictLiteralPart part : dictLiteralExp.getPart()) {
 			Object key = part.getKey().accept(getVisitor());
 			Object value = part.getValue().accept(getVisitor());
-			if(key != getOclInvalid() && value != getOclInvalid())
+			if(key != getInvalid() && value != getInvalid())
 			result.put(key, value);
 		}
 		
@@ -305,7 +309,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 		// evaluate condition`
 		Object condRawVal = condition.accept(getVisitor());
-		Boolean condVal = (condRawVal != getOclInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
+		Boolean condVal = (condRawVal != getInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
 
 		if (condVal != null && condVal.booleanValue()) {
             return ie.getThenExpression().accept(getVisitor());
@@ -442,7 +446,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			value = createFromString(propertyType, (String) rawValue);
         }
 
-        if(value == getOclInvalid()) {
+        if(value == getInvalid()) {
         	// we failed to parse the value
         	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), rawValue)));
         }
@@ -544,16 +548,21 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
     public Object visitMappingBody(MappingBody mappingBody) {
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+        MappingOperation currentMappingCalled = (MappingOperation) mappingBody.getOperation();
 		
 		setupInitialResultVariables(mappingBody);
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
             initExp.accept(getVisitor());
         }
-
-        Object result = createOrGetResult((MappingOperation) mappingBody.getOperation());
-
-		MappingOperation currentMappingCalled = (MappingOperation) evalEnv.getOperation();
+                
+        if(!mappingBody.getInitSection().isEmpty()) {
+        	// setup a meaningful IP after init section to avoid pointing to the last expression of init 
+        	// section, so in case of error a proper error location can be computed        	
+        	setCurrentEnvInstructionPointer(currentMappingCalled);
+        }
+        
+		Object result = createOrGetResult(currentMappingCalled);
 		
 		// call inherited mappings
 		if(!currentMappingCalled.getInherited().isEmpty()) {
@@ -604,7 +613,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             List<Object> args = makeArgs(operationCallExp);
             // does not make sense continue at all, call on null or invalid results in invalid 
         	if(isUndefined(source)) {
-        		return getOclInvalid();
+        		return getInvalid();
         	}
 
             ImperativeOperation method = null;
@@ -620,7 +629,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     			method = (ImperativeOperation)referredOperation;
     		}
 
-            if(method != null) {
+            if(method != null) {          
+            	if(operationCallExp instanceof ImperativeCallExp) {
+            		ImperativeCallExp imperativeCall = (ImperativeCallExp) operationCallExp;
+            		if(imperativeCall.isIsVirtual()) {
+            			ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), method);
+            			if(overridingOper != null) {
+            				method = overridingOper;
+            			}
+            		}
+            	}
+
             	return executeImperativeOperation(method, source, args, false).myResult;
             }
         }
@@ -637,13 +656,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         		throw ex;
         	}
             Logger.getLogger().log(Logger.WARNING, "QvtEvaluator: failed to evaluate oclOperationCall", ex);//$NON-NLS-1$
-        	result = getOclInvalid();
+        	result = getInvalid();
         }
         
         // Note: we have to check for QVT exception caught by MDT OCL, those turned into invalid result, resolved
         // as failed operation calls, but QVT need some exceptions to propagate to the main running transformation,
         // for instance QVTInterruptedExecutionException        
-    	if(result == getOclInvalid()) {
+    	if(result == getInvalid()) {
     		// check whether we have got exception from explicit call to 'Transformation::transform()'
     		QvtRuntimeException e = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class).getException();
     		if(e != null) {
@@ -673,7 +692,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(vTable != null) {
 			EClassifier sourceEClass = getEvaluationEnvironment().getType(source);
 			if(sourceEClass != null) {
-				actualOperation = vTable.lookupActualOperation(sourceEClass, getEnvironment());
+				InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+				EOperation oper = vTable.lookupActualOperation(sourceEClass, getEnvironment(), internEnv);
+				if(oper != null) {
+					actualOperation = oper;
+				}
 			}
 		}
 		return actualOperation;
@@ -716,7 +739,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
-    	return doVisitTransformation(transformation);
+    	try {
+    		return doVisitTransformation(transformation);
+    	} finally {
+    		IntermediatePropertyModelAdapter.cleanup(transformation);
+		}    		
     }
     
     public Object visitModule(Module module) {
@@ -733,9 +760,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			e.printQvtStackTrace(printWriter);
 			getContext().getLog().log(strWriter.getBuffer().toString());
 			throw e;
+		} finally {
+			IntermediatePropertyModelAdapter.cleanup(module);
 		}
     }        
-    
+        
     /**
 	 * Executes the given helper operation with actual arguments passed.
 	 * 
@@ -776,7 +805,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			for (OCLExpression<EClassifier> nextArg : formalArguments) {
 				Object argVal = nextArg.accept(getVisitor());
 				if(argVal instanceof ModelInstance == false) {
-					throwQVTException(new QvtRuntimeException("Undefined model passed to transformation"));
+					throwQVTException(new QvtRuntimeException(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_UndefModelParamInTransf));
 				}
 				ModelInstance modelInstance = (ModelInstance) argVal;
 				actualArguments.add(modelInstance); 
@@ -808,8 +837,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 		}
 		else {
-	        setCurrentEnvInstructionPointer(objectExp);
-	    	
 	        Object owner = createInstance(objectExp.getType(), (ModelParameter) objectExp.getExtent());
 
 			Adapter adapter = EcoreUtil.getAdapter(objectExp.eAdapters(), ConstructorOperationAdapter.class);
@@ -831,7 +858,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					// it's OK since default constructor is called
 				}
 				else {
-					throwQVTException(new QvtRuntimeException("Undefined constructor is called"));
+					throwQVTException(new QvtRuntimeException("Undefined constructor is called")); //$NON-NLS-1$
 				}
 			}
 			
@@ -881,7 +908,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (evalResult.getModelExtents().isEmpty()) {
             if (callResult.myResult instanceof EObject) {
                 // compatibility reason, make the main() operation return value available in an extent
-            	ModelParameterExtent modelParameter = new ModelParameterExtent((EObject) callResult.myResult, null);
+            	ModelParameterExtent modelParameter = new ModelParameterExtent(
+            			Collections.singletonList((EObject) callResult.myResult), null, null);
                 evalResult.getModelExtents().add(modelParameter.getContents());
             } else {
                 return callResult.myResult;
@@ -989,6 +1017,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				value = Integer.valueOf(0);
 			} else if(varDeclType == oclstdlib.getReal()) {
 				value = Double.valueOf(0);
+			} else if(varDeclType == oclstdlib.getUnlimitedNatural()) {
+				value = Integer.valueOf(0);
+			} else if(varDeclType instanceof ListType) {
+				value = Utils.createList();
+			} else if(varDeclType instanceof DictionaryType) {
+				value = Utils.createDictionary();
+			} else if(varDeclType instanceof CollectionType) {
+				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) varDeclType;
+				CollectionKind kind = collectionType.getKind();
+				if(kind != null && kind != CollectionKind.COLLECTION_LITERAL) {
+					value = CollectionUtil.createNewCollection(kind);
+				}
 			}
 		}
 		
@@ -1151,7 +1191,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		
 		if(messagePrefix != null) {
-			message = messagePrefix + " : " + message;
+			message = messagePrefix + " : " + message; //$NON-NLS-1$
 		}
 
 		Object element = null;
@@ -1186,8 +1226,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
 		
 		if(Boolean.FALSE.equals(assertionValue)) {	
-			setCurrentEnvInstructionPointer(assertExp);
-
 			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
 			Module currentModule = internEvalEnv.getCurrentModule().getModule();
 			IModuleSourceInfo moduleSource = ASTBindingHelper.getModuleSourceBinding(currentModule);
@@ -1262,13 +1300,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
         EClassifier sourceType = imperativeIterateExp.getSource().getType();
         
-        if (sourceType instanceof PredefinedType) {
+        if (sourceType instanceof PredefinedType<?>) {
             Object sourceValue = imperativeIterateExp.getSource().accept(getVisitor());
             
             // value of iteration expression is undefined if the source is
             //   null or OclInvalid
             if (isUndefined(sourceValue)) {
-                return getOclInvalid();
+                return getInvalid();
             }
             
             // get initial result value based on the source type
@@ -1280,7 +1318,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 initResultVal = CollectionUtil.createNewCollection(collType.getKind());
             } else if (imperativeIterateExp.getName().equals("xcollect")  //$NON-NLS-1$
                     || imperativeIterateExp.getName().equals("collectselect")) { //$NON-NLS-1$
-                initResultVal = ((collType instanceof SetType) || (collType instanceof BagType)) ?
+                initResultVal = ((collType instanceof SetType<?,?>) || (collType instanceof BagType<?,?>)) ?
                         CollectionUtil.createNewBag() : CollectionUtil.createNewSequence();
             }
 
@@ -1423,11 +1461,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	    	for (ModuleImport moduleImport : type.getModuleImport()) {
 	    		Module importedModule = moduleImport.getImportedModule();	    		
 				ModuleInstance importedInstance = moduleInstance.getThisInstanceOf(importedModule);
-		    	
-				ModuleInstance.Internal importedInternal = importedInstance.getAdapter(ModuleInstance.Internal.class);
-				if(!importedInternal.isInitialized()) {
-					initModule(importedInstance, modelParameters);
-				}
+		    	if(importedInstance != null) { 
+					ModuleInstance.Internal importedInternal = importedInstance.getAdapter(ModuleInstance.Internal.class);
+					if(!importedInternal.isInitialized()) {
+						initModule(importedInstance, modelParameters);
+					}
+	    		}
 			}
 
 	    	doInitModule(moduleInstance, modelParameters);	    	
@@ -1531,13 +1570,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	boolean isNoDisjunctSelected() { return (myStatus & NO_DISJUCT_SELECTED) != 0; };    	
     }
     
-    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {
-    	if(method.isIsBlackbox()) {
-    		//getEvaluationEnvironment().callOperation(method, -1, source, args);
-    	}    	
-    	
-    	boolean isMapping = method instanceof MappingOperation;    	
+    private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {    	
+
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
+        
+    	boolean isMapping = method instanceof MappingOperation;    	
         // eventually cause STO exception
         EvaluationUtil.checkCurrentStackDepth(oldEvalEnv);
         
@@ -1591,7 +1628,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	if(canBePropagated(e)) {
         		throw e;
         	} else {
-        		QvtPlugin.log(e);
+        		QvtPlugin.error(e);
         	}
         	if (e.getLocalizedMessage() != null) {
         		throwQVTException(new QvtRuntimeException(e.getLocalizedMessage()));
@@ -1676,7 +1713,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     		EObject eTarget = (EObject) target;
     		if(OCLAnnotationSupport.isDynamicInstance(eTarget)) {
     			if(operation.eClass() != eTarget.eClass()) {
-    				// check if not overriden for a sub-class 
+    				// check if not overridden for a sub-class 
 	    			EOperation actualOperation = getOCLAnnotationSupport().resolveDynamic(operation, eTarget);
 	    			if(actualOperation != null && actualOperation != operation) {
 	    				OCLExpression<EClassifier> actualOperBody = getOperationBody(actualOperation);
@@ -1797,8 +1834,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				org.eclipse.ocl.ecore.OCLExpression invalidBodyExpr = EcoreFactory.eINSTANCE.createInvalidLiteralExp();
 				
 				public org.eclipse.ocl.ecore.OCLExpression handleError(ParserException parserException, EModelElement contextElement) {
-					QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to parse OCL annotation :" +  //$NON-NLS-1$
-							getUMLReflection().getQualifiedName(contextElement) , parserException));
+					QvtPlugin.error("Failed to parse OCL annotation :" +  //$NON-NLS-1$
+							getUMLReflection().getQualifiedName(contextElement) , parserException);
 
 					return invalidBodyExpr;
 				}
@@ -2011,11 +2048,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				}
 			} else {
 				newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
-				if (IntermediateClassFactory.isIntermediateClass(type)) {
-					EPackage superPackage = type.getEPackage().getESuperPackage();
-					assert superPackage instanceof Module;
-					Module intermPackage = (Module) superPackage;					
-					IntermediateClassFactory.getFactory(intermPackage).doInstancePropertyInit(newInstance, getQVTVisitor());
+
+				EFactory eFactory = type.getEPackage().getEFactoryInstance();
+				if(eFactory instanceof IntermediateClassFactory) {
+					IntermediateClassFactory intermFactory = (IntermediateClassFactory) eFactory;
+					intermFactory.doInstancePropertyInit(newInstance, getQVTVisitor());
 				}
 			}
 
@@ -2026,7 +2063,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return newInstance;
 	}
    
-    private EObject setCurrentEnvInstructionPointer(EObject node) {
+    protected EObject setCurrentEnvInstructionPointer(EObject node) {
     	InternalEvaluationEnv internEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
     	if(node != null) {
     		return internEnv.setCurrentIP(node);
@@ -2067,14 +2104,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
     		
     		@Override
-    		protected void genericVisitAny(Object object) {
-    			if(monitor != null && monitor.isCanceled()) {
-    				if(object instanceof ASTNode) {
-    					throwQVTException(new QvtInterruptedExecutionException());
-    				} else {
-    					throwQVTException(new QvtInterruptedExecutionException());
-    				}
+    		protected Object genericVisitAny(Object object) {
+    			if(monitor != null && monitor.isCanceled()) {    				
+    				throwQVTException(new QvtInterruptedExecutionException());    				
     			}
+    			
+    			// set the current instruction pointer
+    			if(object instanceof EObject) {
+    				InternalEvaluationEnv evalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
+    				evalEnv.setCurrentIP((EObject)object);
+    			}
+    			
+    			return null;
     		}    		
     	};
     	
@@ -2083,6 +2124,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 	public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
 		ImperativeOperation entryOperation = QvtOperationalParserUtil.getMainOperation(transformation);				
+		
 		OperationCallResult result = executeImperativeOperation(entryOperation, null, args, false);        	        					
 		processDeferredTasks();
 		return result;
@@ -2102,7 +2144,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		
         if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
-            return getOclInvalid();
+            return getInvalid();
         }
         
         // QVT primitive type
@@ -2115,7 +2157,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	            return new Double(stringValue);
 	        }
         } catch (NumberFormatException e) {
-        	return getOclInvalid();
+        	return getInvalid();
 		}
         
         if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.STRING_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
@@ -2135,7 +2177,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
         }
         
-        return getOclInvalid();
+        return getInvalid();
 	}
     
 	/**

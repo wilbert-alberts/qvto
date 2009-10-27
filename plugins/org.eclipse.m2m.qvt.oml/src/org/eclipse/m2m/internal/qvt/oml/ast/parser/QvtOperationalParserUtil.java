@@ -23,6 +23,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -31,8 +33,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -49,6 +54,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
@@ -60,6 +66,7 @@ import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.PrimitiveTypeCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TupleTypeCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
@@ -78,14 +85,13 @@ import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalParserUtil {
 	
 	private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
 	
-	private static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
+	public static final String QVT_NAMESPACE_URI = "http://www.eclipse.org/m2m/1.0.0/QVT"; //$NON-NLS-1$
 	private static final String QVT_IS_ABSTACT = "abstract"; //$NON-NLS-1$
 	private static final String QVT_IS_STATIC = "static"; //$NON-NLS-1$	
 	
@@ -124,24 +130,23 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
-		return getStringRepresentation(pathName.getSequenceOfNames(), pathSeparator);
+		return getStringRepresentation(pathName.getSimpleNames(), pathSeparator);
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName) {
-		return getStringRepresentation(pathName.getSequenceOfNames(), "::"); //$NON-NLS-1$
+		return getStringRepresentation(pathName.getSimpleNames(), "::"); //$NON-NLS-1$
 	}
 	
 	
-	public static String getStringRepresentation(List<String> pathName, String pathSeparator) {
+	public static String getStringRepresentation(List<SimpleNameCS> pathName, String pathSeparator) {
 		StringBuffer buffer = null;
-		for (Iterator<String> it = pathName.iterator(); it.hasNext();) {
-			String element = it.next();
+		for (SimpleNameCS element : pathName) {
 			if (buffer != null) {
 				buffer.append(pathSeparator);
 			} else {
 				buffer = new StringBuffer();
 			}
-			buffer.append(element);
+			buffer.append(element.getValue());
 		}
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
 	}
@@ -184,6 +189,10 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static void setInitExpression(EStructuralFeature moduleFeature, OCLExpression<EClassifier> expression) {
+		if(expression == null) {
+			// possible NPE caused by parsing errors => no AST expression produce			
+			return; 
+		}
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		annotation.setSource(QVT_INIT_EXPRESSION_URI);
 		annotation.getContents().add(expression);
@@ -269,15 +278,25 @@ public class QvtOperationalParserUtil {
 	}	
 
 	public static void collectAllImports(Module module, Set<Module> result) {
+		collectAllImportsByKind(module, result, null);
+	}
+
+	public static Set<Module> collectAllImportsByKind(Module module, Set<Module> result, ImportKind importKind) {
+		if (result == null) {
+			result = new HashSet<Module>();
+		}
 		for (ModuleImport imp : module.getModuleImport()) {
 			if (imp == null || imp.getImportedModule() == null) {
 				continue;
 			}
-			if (!result.contains(imp.getImportedModule())) {
-				collectAllImports(imp.getImportedModule(), result);
+			if ((importKind == null) || (imp.getKind() == importKind)) {
+				if (!result.contains(imp.getImportedModule())) {
+					collectAllImportsByKind(imp.getImportedModule(), result, importKind);
+				}
+				result.add(imp.getImportedModule());
 			}
-			result.add(imp.getImportedModule());
 		}
+		return result;
 	}
 
 	/**
@@ -298,6 +317,18 @@ public class QvtOperationalParserUtil {
 			// FIXME - we should not have any special handling of OCL types
 			// See related, https://bugs.eclipse.org/bugs/show_bug.cgi?id=260403		
 			if (initialiserType == env.getOCLStandardLibrary().getInteger()) {
+				return true;
+			}
+		}
+		
+		// FIXME - better be handled in OCL itself
+		// check was added due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=275824
+		if (variableType instanceof EDataType && initialiserType instanceof EDataType && variableType instanceof PredefinedType<?> == false) {
+			if (((EDataType) variableType).getInstanceClass() == ((EDataType) initialiserType).getInstanceClass()) {
+				return true;
+			}
+			if (initialiserType instanceof EEnum &&
+					initialiserType == ExtendedMetaData.INSTANCE.getBaseType((EDataType) variableType )) {
 				return true;
 			}
 		}
@@ -326,16 +357,16 @@ public class QvtOperationalParserUtil {
 	 *         empty
 	 */
 	public static String getMappingModuleSimpleName(TransformationHeaderCS headerCS) {
-		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
+		EList<SimpleNameCS> moduleName = headerCS.getPathNameCS().getSimpleNames();
 		if (moduleName.isEmpty()) {
 			return ""; //$NON-NLS-1$
 		}
-		return moduleName.get(moduleName.size() - 1);
+		return moduleName.get(moduleName.size()-1).getValue();
 	}
 	
 	public static boolean hasSimpleName(TransformationHeaderCS headerCS) {
 		if(headerCS.getPathNameCS() != null) {
-			return headerCS.getPathNameCS().getSequenceOfNames().size() <= 1;
+			return headerCS.getPathNameCS().getSimpleNames().size() <= 1;
 		}
 		return false;
 	}	
@@ -353,7 +384,7 @@ public class QvtOperationalParserUtil {
 	 */
 	public static String getMappingModuleNamespace(TransformationHeaderCS headerCS) {
 		StringBuilder unitNamespace = new StringBuilder();
-		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
+		EList<SimpleNameCS> moduleName = headerCS.getPathNameCS().getSimpleNames();
 		if (moduleName.size() > 1) {
 			for (int i = 0, sz = moduleName.size(); i < sz - 1; i++) {
 				if (i > 0) {
@@ -712,12 +743,12 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static Module createModule(MappingModuleCS moduleCS) {
-        String name = null; //$NON-NLS-1$
+        String name = null;
         TransformationHeaderCS headerCS = moduleCS.getHeaderCS();
 		if(headerCS != null && headerCS.getPathNameCS() != null) {
-        	EList<String> sequenceOfNames = headerCS.getPathNameCS().getSequenceOfNames();
+        	EList<SimpleNameCS> sequenceOfNames = headerCS.getPathNameCS().getSimpleNames();
         	if(!sequenceOfNames.isEmpty()) {
-        		name = sequenceOfNames.get(0);
+        		name = sequenceOfNames.get(0).getValue();
         	}
         }
 		
@@ -764,4 +795,36 @@ public class QvtOperationalParserUtil {
 	public static String wrappInSeeErrorLogMessage(String message) {
 		return NLS.bind(ValidationMessages.QvtOperationalVisitorCS_SeeErrorLogForDetails, message);
 	}
+	
+	public static Variable<EClassifier, EParameter> getThisVariable(Module module) {
+		for (Variable<EClassifier, EParameter> var : module.getOwnedVariable()) {
+			if(QvtOperationalEnv.THIS.equals(var.getName())) {
+				return var;
+			}
+		}
+		return null;
+	}
+
+    public static boolean isExtendingEnv(QvtEnvironmentBase env, Module extended) {
+    	if(extended == null) {
+    		throw new IllegalArgumentException();
+    	}
+    	
+    	for (QvtEnvironmentBase extEnv : env.getAllExtendedModules()) {
+			if(extended ==  extEnv.getModuleContextType()) {
+				return true; 
+			}
+		}
+    	
+    	return false;
+    }
+
+	public static List<String> getSequenceOfNames(List<SimpleNameCS> names) {
+		List<String> result = new ArrayList<String>(names.size());
+		for (SimpleNameCS nameCS : names) {
+			result.add(nameCS.getValue());
+		}
+		return result;
+	}
+
 }

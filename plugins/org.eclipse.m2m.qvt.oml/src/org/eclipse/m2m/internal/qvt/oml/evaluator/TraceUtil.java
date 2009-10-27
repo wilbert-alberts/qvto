@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -65,6 +66,8 @@ class TraceUtil {
 	    	if(record != null && Boolean.TRUE.equals(checkResultMatch(record, evalEnv))) {
 	    		return record;
 	    	}
+	    	// nothing found, mapping executed for the first time on the given source
+	    	return null;
     	}
 
         EMap<MappingOperation, EList<TraceRecord>> allTraceRecordMap = trace.getTraceRecordMap();
@@ -120,14 +123,14 @@ class TraceUtil {
             }
         return null;
     }
-
+    
     static TraceRecord addTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
         TraceRecord traceRecord = TraceFactory.eINSTANCE.createTraceRecord();
         
         InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
         Trace trace = internEnv.getTraces();
-        EList<TraceRecord> list = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);
-        list.add(traceRecord);
+        EList<TraceRecord> allRecList = createOrGetListElementFromMap(trace.getTraceRecordMap(), mappingOperation);        
+        addUnique(traceRecord, allRecList);
 
         EMappingOperation eMappingOperation = TraceFactory.eINSTANCE.createEMappingOperation();
         traceRecord.setMappingOperation(eMappingOperation);
@@ -145,18 +148,18 @@ class TraceUtil {
                     operContext.getKind(), operContext.getEType(), Environment.SELF_VARIABLE_NAME, evalEnv);
             eMappingContext.setContext(contextVPV);
             EList<TraceRecord> contextMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), contextVPV.getValue().getOclObject());
-            contextMappings.add(traceRecord);
+            addUnique(traceRecord, contextMappings);
         }
         else if(!mappingOperation.getEParameters().isEmpty()) {
         	// make the first in parameter as the mapping source object
         	for (EParameter nextEParam : mappingOperation.getEParameters()) {
         		if(nextEParam instanceof VarParameter) {
         			VarParameter firstInVarParam = (VarParameter) nextEParam;
-        			if((firstInVarParam.getEType() instanceof PredefinedType == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
+        			if((firstInVarParam.getEType() instanceof PredefinedType<?> == false) && (firstInVarParam.getKind() == DirectionKind.IN || firstInVarParam.getKind() == DirectionKind.INOUT)) {
         				Object val = createVarParameterValue(mappingOperation, firstInVarParam.getKind() ,
         							firstInVarParam.getEType(), firstInVarParam.getName(), evalEnv).getValue().getOclObject();        	
         				EList<TraceRecord> sourceMappings = createOrGetListElementFromMap(trace.getSourceToTraceRecordMap(), val);
-        				sourceMappings.add(traceRecord);
+        				addUnique(traceRecord, sourceMappings);
         				break;
         				
         			}
@@ -185,12 +188,12 @@ class TraceUtil {
                 VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName, evalEnv);
                 eMappingResults.getResult().add(resultVPV);
                 EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
-                resultMappings.add(traceRecord);
+                addUnique(traceRecord, resultMappings);
             }
         }
 
 		// Note: add it here so we ensure the record is fully initialized
-        trace.getTraceRecords().add(traceRecord);
+        addUnique(traceRecord, trace.getTraceRecords());
         
         if(isParameterLessContextual(mappingOperation)) {
         	// parameter-less contextual operation can be cached efficiently
@@ -212,7 +215,7 @@ class TraceUtil {
     		return traceResult.get(0).getValue().getOclObject();
     	}
 
-		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType;
+		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType<?, ?>;
     	@SuppressWarnings("unchecked")
     	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
     	
@@ -247,7 +250,7 @@ class TraceUtil {
         return varParameterValue;
     }
 
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")
     private static EValue createEValue(Object oclObject) {
         EValue value = TraceFactory.eINSTANCE.createEValue();
         value.setOclObject(oclObject);
@@ -327,7 +330,7 @@ class TraceUtil {
         Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
         if (resultValue != null) {
             List<Object> resultValues = new ArrayList<Object>(1); 
-            if (resultValue instanceof Tuple) {
+            if (resultValue instanceof Tuple<?, ?>) {
             	@SuppressWarnings("unchecked")
             	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
             	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
@@ -370,5 +373,16 @@ class TraceUtil {
 	private static boolean isParameterLessContextual(
 			MappingOperation mappingOperation) {
 		return QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty();
-	}	
+	}
+	
+    private static void addUnique(TraceRecord record, EList<TraceRecord> recordList) {
+        if(recordList instanceof AbstractEList<?>) {
+        	// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=287589 
+        	AbstractEList<TraceRecord> basicRecList = (AbstractEList<TraceRecord>) recordList;
+        	basicRecList.addUnique(record);
+        } else {
+        	// TODO - spit a trace warning
+        	recordList.add(record);
+        }    	
+    }	
 }

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.HiddenElementAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.MappingsMapKey;
@@ -48,6 +49,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
+import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.TypeChecker;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.cst.CSTNode;
@@ -62,11 +64,11 @@ import org.eclipse.ocl.lpg.AbstractProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler.Phase;
 import org.eclipse.ocl.lpg.ProblemHandler.Severity;
+import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
@@ -207,42 +209,34 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		return null;
 	}	
-		
+			
 	@Override
-	public EOperation lookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
+	public EOperation tryLookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+        EOperation result = doLookupOperation(owner, name, args);
+        
+        if ((result == null) && AbstractOCLAnalyzer.isEscaped(name)) {
+            result = doLookupOperation(owner, AbstractOCLAnalyzer.unescape(name), args);
+        }
+        
+        return result;
+	}
+	
+	private EOperation doLookupOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+		if (owner == null) {
+			Variable<EClassifier, EParameter> vdcl = lookupImplicitSourceForOperation(name, args);
+			if (vdcl == null) {
+				return null;
+			}
+			
+			owner = vdcl.getType();
+		}
 
-		// first try to lookup imperative operation with param's exact matching  
-		for (EOperation op : lookupMappingOperations(owner, name)) {
-	        List<EParameter> params = op.getEParameters();
-	        if (params.size() != args.size()) {
-	            continue;
-	        }
-	        
-	        boolean isMatched = true;
-	        for (int i = 0, n = params.size(); i < n; ++i) {
-	        	TypedElement<EClassifier> argVal = args.get(i);
-	        	if(argVal == null) {
-	        		// may have not been parsed successfully
-	        		continue;
-	        	}
-	            
-				if (TypeUtil.getRelationship(
-								this,
-								getUMLReflection().getOCLType(argVal),
-								getUMLReflection().getOCLType(params.get(i)))
-							!= UMLReflection.SAME_TYPE) {
-					
-					isMatched = false;
-					break;
-				}
-	        }
-	        if (isMatched) {
-	        	return op;
-	        }
+		TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+		if(typeChecker instanceof TypeCheckerImpl) {
+			return ((TypeCheckerImpl)typeChecker).findMostSpecificOperationMatching(owner, name, args);
 		}
 		
-		// pass to super in case exact imperative operation wasn't found
-		return super.lookupOperation(owner, name, args);
+		return TypeUtil.findOperationMatching(this, owner, name, args);
 	}
 	
     public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {
@@ -265,9 +259,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         return result;
     }
 
-    public EOperation lookupConstructorOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
-    	List<EOperation> operations = lookupConstructorOperations(owner, name, args.size());
+    public EOperation tryLookupConstructorOperation(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) throws LookupException {
+    	List<EOperation> operations = lookupConstructorOperations(owner, name, args);
+    	if(operations == null || operations.isEmpty()) {
+    		return null;
+    	}
+
+    	TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+    	if(typeChecker instanceof TypeCheckerImpl) {
+			TypeCheckerImpl specificChecker = (TypeCheckerImpl) typeChecker;
+			return specificChecker.getMostSpecificOperation(operations, args);
+    	}
     	
+    	// fall back implementation in case some overrides #createTypeChecker() 
     	// first pass with strict matching (like in doFindCollidingOperation() and QvtOperationalEnv::lookupOperation() for mappings)
     	for (EOperation op : operations) {
 	        List<EParameter> params = op.getEParameters();
@@ -299,7 +303,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
     	return null;
     }
     
-    private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, int paramSize) {
+    private List<EOperation> lookupConstructorOperations(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
         if (owner == null) {
             owner = getModuleContextType();
             if(owner == null) {
@@ -308,13 +312,21 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
         }
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
-        List<EOperation> operations = TypeUtil.getOperations(this, owner);
+        TypeChecker<EClassifier, EOperation, EStructuralFeature> typeChecker = getTypeChecker();
+		
+        List<EOperation> operations = typeChecker.getOperations(owner);
         List<EOperation> result = new ArrayList<EOperation>(2);
-		for (EOperation operation : operations) {
-		    if (uml.getName(operation).equals(name) 
+
+        for (EOperation operation : operations) {
+		    if (uml.getName(operation).equals(name)		    		
 		    		&& QvtOperationalUtil.isConstructorOperation(operation)
-		    		&& operation.getEParameters().size() == paramSize) {
-		        result.add(operation);
+		    		&& typeChecker.matchArgs(owner, uml.getParameters(operation), args)) {
+		    	
+		    	EClassifier nextOwner = uml.getOwningClassifier(operation);
+		    	// for constructors consider only identical types  
+		    	if(owner == nextOwner) {
+		    		result.add(operation);
+		    	}
 		    }
 		}
 
@@ -419,11 +431,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return myModelTypeRegistry.put(modelType.getName(), modelType);
 	}
 
-	public ModelType getModelType(List<String> path) {
-		if (path.isEmpty()) {
-			return null;
-		}
-		return myModelTypeRegistry.get(path.get(0));
+	public ModelType getModelType(String name) {
+		return myModelTypeRegistry.get(name);
 	}
 	
 	@Override
@@ -620,17 +629,48 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			ownerType = getModuleContextType();
 		}
 		
+		boolean isError = false;
 		ImperativeOperation newOperation = operation;
-		
 		CollisionStatus collidingOperStatus = findCollidingOperation(ownerType, newOperation);
+		
 		if(collidingOperStatus != null) {
+			EOperation collidingOper = collidingOperStatus.getOperation();
+			
 			if(collidingOperStatus.getCollisionKind() == CollisionStatus.ALREADY_DEFINED) {
+				isError = true;
 				HiddenElementAdapter.markAsHidden(operation);
 				reportError(NLS.bind(ValidationMessages.SemanticUtil_0, new Object[] {
 								operation.getName(), ownerType.getName() }),
 								operation.getStartPosition(), operation.getEndPosition());
 			} 
+			else if(collidingOperStatus.getCollisionKind() == CollisionStatus.OVERRIDES) {
+				if(collidingOper instanceof ImperativeOperation) {
+					// only imperative operations can be overridden
+					EClassifier overriddenReturnType = collidingOper.getEType(); 
+					EClassifier newReturnType = newOperation.getEType();
+					if(newReturnType != null &&  overriddenReturnType != null) {
+						if(TypeUtil.compatibleTypeMatch(this, newReturnType, overriddenReturnType)) {
+							newOperation.setOverridden((ImperativeOperation)collidingOper);
+						} else {
+							isError = true;
+							reportError(NLS.bind(ValidationMessages.OperationOverrideWithInvalidReturnType, new Object[] {
+									getUMLReflection().getName(operation),
+									getUMLReflection().getName(collidingOper.getEContainingClass()) }),
+									operation.getStartPosition(), operation.getEndPosition());								
+						}
+					}
+				}
+				
+				if(!isError) {
+					Module owningModule = QvtOperationalParserUtil.getOwningModule(collidingOper);
+					if(owningModule == null || owningModule == getQVTStandardLibrary().getStdLibModule()) {
+						reportWarning(NLS.bind(ValidationMessages.HidingStdlibOperationDiscouraged, operation.getName()),
+								operation.getStartPosition(), operation.getEndPosition());
+					}
+				}
+			}
 			else if(collidingOperStatus.getCollisionKind() == CollisionStatus.VIRTUAL_METHOD_RETURNTYPE) {
+				isError = true;
 				HiddenElementAdapter.markAsHidden(operation);				
 				reportError(NLS.bind(ValidationMessages.ReturnTypeMismatch,  
 						operation.getName(), QvtOperationalTypesUtil.getTypeFullName(collidingOperStatus.getOperation().getEType())), 
@@ -638,10 +678,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 			} else {
 				assert false;
 			}
-		} else {
-			if(isContextual) {
-				getTypeResolver().resolveAdditionalOperation(ownerType, newOperation);
-			}			
+		} 
+		
+		if(isContextual && !isError) {
+			getTypeResolver().resolveAdditionalOperation(ownerType, newOperation);
 		}
 		
 		getModuleContextType().getEOperations().add(newOperation);
@@ -808,7 +848,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public void close() {
     	setParser(null);
     	setProblemHandler(null);
-    	setASTNodeToCSTNodeMap(Collections.<Object, CSTNode>emptyMap());    	
+    	setASTNodeToCSTNodeMap(null);    	
 	}
 	
 	private static int getLineNum(QvtOperationalEnv env, int startOffset) {

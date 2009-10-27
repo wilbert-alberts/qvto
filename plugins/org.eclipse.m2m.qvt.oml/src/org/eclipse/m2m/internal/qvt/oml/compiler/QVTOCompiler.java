@@ -21,21 +21,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
@@ -56,26 +59,30 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QVTOCompiler {
 
 	private static final String NAMESPACE_SEP = String.valueOf(UnitProxy.NAMESPACE_SEP);
 	
-    private final Map<UnitProxy, CompiledUnit> fSource2Compiled = new HashMap<UnitProxy, CompiledUnit>();
+    private final Map<URI, CompiledUnit> fSource2Compiled = new HashMap<URI, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
     
     private final UnitResolver fUnitResolver;
     private final QvtCompilerKernel myKernel;
     private final ResourceSet resourceSet;
+    private ResourceSetImpl fExeXMIResourceSet;
+    private boolean fUseCompiledXMI = false;
 
     /**
 	 * Creates compiler that caches already compiled modules until
@@ -111,6 +118,75 @@ public class QVTOCompiler {
     	};
     }
     
+	public static QVTOCompiler createCompiler(UnitResolver unitResolver, EPackage.Registry registry) {		
+		ResourceSetImpl rs = new ResourceSetImpl();
+		if(registry != null) {
+			rs.setPackageRegistry(registry);
+			
+			Map<URI, Resource> uriResourceMap = new HashMap<URI, Resource>();			
+			for(Object nextEntry : registry.values()) {				
+				if(nextEntry instanceof EPackage) {
+					EPackage ePackage = (EPackage) nextEntry;
+					Resource resource = ePackage.eResource();
+					if(resource != null) {
+						uriResourceMap.put(resource.getURI(), resource);
+					}
+				}				
+			}
+			
+			if(!uriResourceMap.isEmpty()) {
+				rs.setURIResourceMap(uriResourceMap);
+			}
+		}
+		
+		final EPackageRegistryImpl packageRegistryImpl = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
+		packageRegistryImpl.putAll(registry);
+		
+		IMetamodelRegistryProvider metamodelRegistryProvider = new WorkspaceMetamodelRegistryProvider(rs) {
+			IMetamodelProvider registry = new EmfStandaloneMetamodelProvider(packageRegistryImpl);
+			@Override
+			public MetamodelRegistry getRegistry(IRepositoryContext context) {
+				MetamodelRegistry result = super.getRegistry(context);
+				if(result == MetamodelRegistry.getInstance()) {
+					// FIXME - get rid of this hack by providing
+					// a protected method WorkspaceProvider::getDelegateRegistry();
+					// which by default returns MetamodelRegistry.getInstance()
+					result = new MetamodelRegistry(registry);
+				} else if(result != null) {
+					MetamodelRegistry customRegistry = new MetamodelRegistry(registry);					
+					customRegistry.merge(result);
+					result = customRegistry;
+				}
+				return result;
+			}
+		};
+
+		return new QVTOCompiler(unitResolver, metamodelRegistryProvider);
+	}
+	
+	public static CompiledUnit[] compile(Set<URI> unitURIs, EPackage.Registry registry) throws MdaException {
+		EList<UnitProxy> unitProxies = new BasicEList<UnitProxy>();
+		for (URI importURI : unitURIs) {
+			UnitProxy unit = UnitResolverFactory.Registry.INSTANCE.getUnit(importURI);
+			if (unit != null) {
+				unitProxies.add(unit);
+			}
+		}
+
+		if(!unitProxies.isEmpty()) {
+			// TODO - take resolver that resolved any unit proxy, we need to refactor the resolver out of 
+			// the compiler constructor; the creator of unit proxies should decide which one to use and
+			// resolvers of importing units should be used to resolver imports in its scope
+			UnitResolver resolver = unitProxies.get(0).getResolver();
+			QVTOCompiler compiler = createCompiler(resolver, registry);
+			
+			QvtCompilerOptions options = new QvtCompilerOptions();
+			options.setGenerateCompletionData(true);
+			return compiler.compile(unitProxies.toArray(new UnitProxy[unitProxies.size()]), options, null);
+		}
+		
+		return new CompiledUnit[0];
+	}
     
     public static ResourceSet createResourceSet() {
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
@@ -125,8 +201,19 @@ public class QVTOCompiler {
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
         			new ResourceSetImpl();
+        
+		fExeXMIResourceSet = CompiledUnit.createResourceSet();
+		if(getResourceSet() instanceof ResourceSetImpl) {
+			Map<URI, Resource> uriResourceMap = ((ResourceSetImpl) getResourceSet()).getURIResourceMap();
+			if(uriResourceMap != null) {
+				fExeXMIResourceSet.setURIResourceMap(new HashMap<URI, Resource>(uriResourceMap));	
+			}
+		}
+		
+		// FIXME - setup the package registry to be used for loading ecore files 
+		// referenced in QVTO xmi files			
     }
-	
+
 	public QVTOCompiler(UnitResolver importResolver) {
 		this(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
     }	
@@ -150,14 +237,18 @@ public class QVTOCompiler {
 					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
 						new WorkspaceMetamodelRegistryProvider());
     }	
+	
+	public void setUseCompiledXMI(boolean flag) {
+		fUseCompiledXMI = flag;
+	}
 				
-	public CompiledUnit[] compile(UnitProxy[] sources, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit[] compile(UnitProxy[] sources, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		if(options == null) {
 			options = getDefaultOptions();			
 		}
 		
 		if(monitor == null) {
-			monitor = new NullProgressMonitor();
+			monitor = CompilerUtils.createNullMonitor();
 		}
 		
 		CompiledUnit[] result = new CompiledUnit[sources.length];
@@ -168,7 +259,7 @@ public class QVTOCompiler {
 			int i = 0;
 			for (UnitProxy nextSource : sources) {
 	            if(monitor.isCanceled()) {
-	            	throw new OperationCanceledException();
+	            	CompilerUtils.throwOperationCanceled();
 	            }
 				
 				monitor.setTaskName(nextSource.getURI().toString());
@@ -195,18 +286,18 @@ public class QVTOCompiler {
 	 * @return compiled unit
 	 * @throws MdaException
 	 */
-	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		UnitProxy unit = getImportResolver().resolveUnit(qualifiedName);
 		if(unit == null) {
-			throw new MdaException("Unresolved unit: " + qualifiedName);
+			throw new MdaException("Unresolved unit: " + qualifiedName); //$NON-NLS-1$
 		}
 		
 		return compile(unit, options, monitor);
 	}
 	
-	public CompiledUnit compile(UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	public CompiledUnit compile(UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws MdaException {
 		if(monitor == null) {
-			monitor = new NullProgressMonitor();
+			monitor = CompilerUtils.createNullMonitor();
 		}
 		
 		if(options == null) {
@@ -315,7 +406,8 @@ public class QVTOCompiler {
 
     protected void afterCompileCleanup() {
     	this.fSource2Compiled.clear();
-    	this.fDependencyWalkPath.clear();    	
+    	this.fDependencyWalkPath.clear();
+    	this.fExeXMIResourceSet.getResources().clear();
     }
 	
 	/**
@@ -334,7 +426,7 @@ public class QVTOCompiler {
     /**
      * The main compilation method - the common entry point to the compilation 
      */
-	private CompiledUnit compileSingleFile(UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws MdaException {
+	private CompiledUnit compileSingleFile(UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws MdaException {
         		
         CompiledUnit nextResult = null;
         try {        	
@@ -351,22 +443,30 @@ public class QVTOCompiler {
         return nextResult;        
     }
 		
-    private CompiledUnit doCompile(final UnitProxy source, QvtCompilerOptions options, IProgressMonitor monitor) throws ParserException, IOException {
-    	if(fSource2Compiled.containsKey(source)) {
-    		return fSource2Compiled.get(source);
+    private CompiledUnit doCompile(final UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws ParserException, IOException {
+    	if(fSource2Compiled.containsKey(source.getURI())) {
+    		return fSource2Compiled.get(source.getURI());
     	}
 
-    	monitor = new SubProgressMonitor(monitor, 1);
+    	monitor = CompilerUtils.createMonitor(monitor, 1); //new SubProgressMonitor(monitor, 1);
     	monitor.beginTask(source.getURI().toString(), 3);
     	
 		List<CompiledUnit> compiledImports = null;
 		DependencyPathElement dependencyElement = new DependencyPathElement(source);
     	try {
         	fDependencyWalkPath.push(dependencyElement);
+
+        	if(fUseCompiledXMI) {
+	        	CompiledUnit binXMIUnit = getCompiledExeXMIUnit(source);
+	        	if(binXMIUnit != null) {
+					fSource2Compiled.put(source.getURI(), binXMIUnit);
+					return binXMIUnit;
+	        	}
+        	}
         	
         	if(source.getContentType() != UnitProxy.TYPE_CST_STREAM) {
         		CompiledUnit loadBlackboxUnit = loadBlackboxUnit(source);        		
-        		fSource2Compiled.put(source, loadBlackboxUnit);
+        		fSource2Compiled.put(source.getURI(), loadBlackboxUnit);
 
         		monitor.worked(1);        		
 				return loadBlackboxUnit;
@@ -390,7 +490,7 @@ public class QVTOCompiler {
 	            	continue;
 	            }
 
-            	List<String> importedUnitQName = nextImportCS.getPathNameCS().getSequenceOfNames();		            	            	
+            	List<String> importedUnitQName = QvtOperationalParserUtil.getSequenceOfNames(nextImportCS.getPathNameCS().getSimpleNames());
             	UnitProxy importedUnit = resolveImportedUnit(source, importQNameStr);
             	CompiledUnit compiledImport = null;	            	
 
@@ -470,7 +570,7 @@ public class QVTOCompiler {
 	    
 	    	// put to central compilation result cache
 	    	// TODO - better to use this one as unit resolver 
-	    	fSource2Compiled.put(source, result);
+	    	fSource2Compiled.put(source.getURI(), result);
 
 	    	// FIXME - temp solution check for being a CST parsed
 	    	if(result.getURI().isPlatformResource()) {
@@ -486,9 +586,29 @@ public class QVTOCompiler {
 	    	monitor.done();    		
     	}
     }
+
+	private CompiledUnit getCompiledExeXMIUnit(final UnitProxy source) {		
+		URI xmiURI = ExeXMISerializer.toXMIUnitURI(source.getURI());
+		if(URIConverter.INSTANCE.exists(xmiURI, null)) {
+			// check if the bin XMI is up-to-date with the QVT source file
+	        Long srcTStamp = (Long)URIConverter.INSTANCE.getAttributes(source.getURI(), null).get(URIConverter.ATTRIBUTE_TIME_STAMP);
+			Long binTStamp = (Long)URIConverter.INSTANCE.getAttributes(xmiURI, null).get(URIConverter.ATTRIBUTE_TIME_STAMP);
+			if(binTStamp == null || (srcTStamp != null && binTStamp.equals(srcTStamp))) {
+				return new CompiledUnit(fExeXMIResourceSet.getResource(xmiURI, true), fSource2Compiled);        		
+			}
+		}
+		
+		return null;
+	}
     
-	private static CompiledUnit createCompiledUnit(UnitProxy unit, QvtOperationalFileEnv env) {
-		List<String> qualifiedName = getQualifiedNameSegments(unit);		
+
+	private CompiledUnit createCompiledUnit(UnitProxy unit, QvtOperationalFileEnv env) {
+		// adjust QVT environment resource to point to executable XMI
+		Resource resource = env.getTypeResolver().getResource();
+		resource.setURI(ExeXMISerializer.toXMIUnitURI(unit.getURI()));
+		fExeXMIResourceSet.getResources().add(resource);
+
+		List<String> qualifiedName = getQualifiedNameSegments(unit);
 		return new CompiledUnit(qualifiedName, unit.getURI(), Collections.singletonList(env));
 	}
 
@@ -535,8 +655,7 @@ public class QVTOCompiler {
     
     private static String getQualifiedName(ImportCS importCS) {
     	if(importCS.getPathNameCS() != null) {
-    		EList	<String> sequenceOfNames = importCS.getPathNameCS().getSequenceOfNames();
-    		 return QvtOperationalParserUtil.getStringRepresentation(sequenceOfNames, NAMESPACE_SEP); //$NON-NLS-1$
+			return QvtOperationalParserUtil.getStringRepresentation(importCS.getPathNameCS(), NAMESPACE_SEP);
     	}
     	return null;
     }
@@ -609,8 +728,8 @@ public class QVTOCompiler {
     
     private List<String> getImportQName(ImportCS importCS) {
 		PathNameCS pathNameCS = importCS.getPathNameCS();
-		if(pathNameCS != null && !pathNameCS.getSequenceOfNames().isEmpty()) {
-			return pathNameCS.getSequenceOfNames();
+		if(pathNameCS != null && !pathNameCS.getSimpleNames().isEmpty()) {
+			return QvtOperationalParserUtil.getSequenceOfNames(pathNameCS.getSimpleNames());
 		}
 		return null;
     }

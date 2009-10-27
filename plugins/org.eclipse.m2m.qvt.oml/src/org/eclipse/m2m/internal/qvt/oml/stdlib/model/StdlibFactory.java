@@ -128,7 +128,7 @@ public class StdlibFactory {
 		@Override
 		public String toString() {
 			StringBuilder buf = new StringBuilder(); 
-			buf.append(fIsSuccess ? "SUCCESS" : "FAILED"); //$NON-NLS-1$ //$NON-NLS-1$
+			buf.append(fIsSuccess ? "SUCCESS" : "FAILED"); //$NON-NLS-1$ //$NON-NLS-2$
 			if(fException != null) {
 				buf.append(" raised: (").append(fException).append(')'); //$NON-NLS-1$
 			}

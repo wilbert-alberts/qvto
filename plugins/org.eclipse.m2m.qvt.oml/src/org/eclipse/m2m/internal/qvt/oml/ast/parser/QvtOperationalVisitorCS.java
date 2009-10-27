@@ -41,11 +41,13 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNode;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTSyntheticNodeAccess;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
@@ -69,6 +71,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
@@ -114,7 +117,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
@@ -123,6 +125,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.EntryOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -164,6 +167,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.Environment.Internal;
 import org.eclipse.ocl.cst.CSTFactory;
@@ -192,23 +196,18 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
-import org.eclipse.ocl.expressions.BooleanLiteralExp;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.CollectionLiteralPart;
 import org.eclipse.ocl.expressions.FeatureCallExp;
 import org.eclipse.ocl.expressions.IfExp;
-import org.eclipse.ocl.expressions.IntegerLiteralExp;
 import org.eclipse.ocl.expressions.InvalidLiteralExp;
 import org.eclipse.ocl.expressions.IteratorExp;
-import org.eclipse.ocl.expressions.NullLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
-import org.eclipse.ocl.expressions.RealLiteralExp;
 import org.eclipse.ocl.expressions.StringLiteralExp;
 import org.eclipse.ocl.expressions.TypeExp;
-import org.eclipse.ocl.expressions.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
@@ -225,8 +224,8 @@ import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalVisitorCS
@@ -234,6 +233,8 @@ public class QvtOperationalVisitorCS
 							CallOperationAction, SendSignalAction, Constraint, EClass, EObject> { 	// FIXME - changed in M3.4 migration
 
     private final QvtCompilerOptions myCompilerOptions;    
+    private Set<TypedElement<?>> myErrorNodes;
+    
 	/* TODO - 
 	 * Groups all late resolve expression encountered during CST analysis for later validation.
 	 * At the moment when resolve expression is visited it has not its container connect yet, which
@@ -282,9 +283,10 @@ public class QvtOperationalVisitorCS
 		}
 
 		boolean isTransformationInstantiation = false;
-		if (instantiationExp.getType() instanceof EClass) {			
-			instantiationExp.setInstantiatedClass((EClass) instantiationExp.getType());
-			instantiationExp.setName(instantiationExp.getType().getName());
+		EClassifier type = instantiationExp.getType();
+		if (type instanceof EClass) {			
+			instantiationExp.setInstantiatedClass((EClass) type);
+			instantiationExp.setName(type.getName());
 			isTransformationInstantiation = QvtOperationalStdLibrary.INSTANCE.getTransformationClass()
 					.isSuperTypeOf(instantiationExp.getInstantiatedClass());
 		}
@@ -296,10 +298,25 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		if (!isTransformationInstantiation && env instanceof QvtOperationalEnv) {
-			EOperation lookupOperation = ((QvtOperationalEnv) env).lookupConstructorOperation(instantiationExp.getType(), instantiationExp.getName(), instantiationExp.getArgument());
+		if (!isTransformationInstantiation && env instanceof QvtOperationalEnv && type != null) {
+			QvtOperationalEnv qvtEnv = (QvtOperationalEnv) env;
+			EOperation lookupOperation;
+			try {
+				lookupOperation = qvtEnv.tryLookupConstructorOperation(type, instantiationExp.getName(), instantiationExp.getArgument());
+			} catch (LookupException e) {
+				lookupOperation = (EOperation) handleOperationLookupException(env, newCallExp, e.getAmbiguousMatches());
+			}
+			
 			if (lookupOperation instanceof Constructor) {
 				instantiationExp.eAdapters().add(new ConstructorOperationAdapter((Constructor) lookupOperation));
+			} else if(lookupOperation == null && QvtOperationalUtil.isInstantiable(type)) {
+				if(newCallExp.getArguments().isEmpty()) {
+					// we try to call a default constructor defined explicitly
+					QvtOperationalUtil.reportWarning(env, ValidationMessages.DefaultConstructorNotDefinedImplicitUsed, newCallExp);
+				} else {
+					String errMessage = NLS.bind(ValidationMessages.UnresolvedConstructor, getFormatter().formatQualifiedName(type)); 
+					QvtOperationalUtil.reportError(env, errMessage, newCallExp);					
+				}
 			}
 		}
 		
@@ -334,7 +351,7 @@ public class QvtOperationalVisitorCS
 			if(typeCS instanceof PathNameCS) {
 				// check whether Void synonym was used
 				PathNameCS pathNameCS = (PathNameCS) typeCS;
-				if(QvtOperationalStdLibrary.INSTANCE.lookupClassifier(pathNameCS.getSequenceOfNames()) == getOclVoid()) {
+				if(QvtOperationalStdLibrary.INSTANCE.lookupClassifier(QvtOperationalParserUtil.getSequenceOfNames(pathNameCS.getSimpleNames())) == getOclVoid()) {
 					return type;
 				}
 			}
@@ -345,7 +362,7 @@ public class QvtOperationalVisitorCS
 		
 		// MDT OCL does not check for nested type whether they are resolved
 		// do it here if element type is null
-		if(type instanceof CollectionType && typeCS instanceof CollectionTypeCS) {
+		if(type instanceof CollectionType<?,?> && typeCS instanceof CollectionTypeCS) {
 			CollectionType<?, ?> collectionType = (CollectionType<?, ?>)type;			
 			
 			if(collectionType.getElementType() == null) {
@@ -381,8 +398,137 @@ public class QvtOperationalVisitorCS
 		return type;
 	}
 	
+	@Override
+	protected EOperation lookupOperation(CSTNode cstNode,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {
+		
+		if ((cstNode instanceof SimpleNameCS) && (cstNode.eContainer() instanceof ImperativeOperationCallExpCS)) {
+			ImperativeOperationCallExpCS imperativeOperationCallExpCS = (ImperativeOperationCallExpCS) cstNode.eContainer();
+			if(imperativeOperationCallExpCS.getModule() != null && env instanceof QvtEnvironmentBase) {
+				return qualifiedOperationLookup(imperativeOperationCallExpCS, (QvtEnvironmentBase)env, owner, name, args);
+			}
+		}
+		
+		// overrides super implementation by handling ambiguities at WARN level
+		try {
+			Environment.Lookup<EPackage, EClassifier, EOperation, EStructuralFeature> lookup = OCLUtil.getAdapter(env, Environment.Lookup.class);
+			EOperation operation = lookup.tryLookupOperation(owner, name, args);
+			if (cstNode != null) {
+				cstNode.setAst(operation);
+			}
 
+			return operation;
+		} catch (LookupException e) {
+			return (EOperation)handleOperationLookupException(env, cstNode, e.getAmbiguousMatches());
+		}
+	}
+
+	private EOperation qualifiedOperationLookup(ImperativeOperationCallExpCS imperativeOperationCallExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args) {		
+
+		SimpleNameCS moduleQualifier = imperativeOperationCallExpCS.getModule();
+		CSTNode cstNode = imperativeOperationCallExpCS.getSimpleNameCS();
+		
+		QvtEnvironmentBase qvtEnvironmentBase = (QvtEnvironmentBase) env;
+		EOperation resolvedOper = null;		
+		String targetModuleName = (moduleQualifier == null) ? null : moduleQualifier.getValue();
+
+		if(targetModuleName != null) {
+			List<QvtEnvironmentBase> allExtendedEnvs;
 	
+			Module currentModule = qvtEnvironmentBase.getModuleContextType();
+			if(currentModule != null && targetModuleName.equals(currentModule.getName())) {
+				// the call is qualified by the calling module					
+				allExtendedEnvs = Collections.singletonList(qvtEnvironmentBase);
+			} else {
+				// lookup in all modules within the extends hierarchy  
+				allExtendedEnvs = new ArrayList<QvtEnvironmentBase>(qvtEnvironmentBase.getAllExtendedModules());
+				
+				for (QvtEnvironmentBase accessedEnv: qvtEnvironmentBase.getImportsByAccess()) {
+					if(accessedEnv.getModuleContextType() instanceof Library) {
+						allExtendedEnvs.add(accessedEnv);
+					}
+				}
+			}
+	
+			for (QvtEnvironmentBase nextExtenedModuleEnv : allExtendedEnvs) { 
+				Module extendedModule = nextExtenedModuleEnv.getModuleContextType();
+				if(extendedModule != null && targetModuleName.equals(extendedModule.getName())) {
+					moduleQualifier.setAst(extendedModule);
+					
+					EClassifier actualOwner = (owner instanceof Module) ? extendedModule : owner;
+					EOperation operation = null;
+					try { 
+						operation = nextExtenedModuleEnv.tryLookupOperation(actualOwner, name, args);
+						if(operation != null) {
+							Module owningModule = QvtOperationalParserUtil.getOwningModule(operation);
+							if(extendedModule == owningModule) {
+								resolvedOper = operation;
+							}
+						}
+					} catch (LookupException e) { 							
+						for(Object nextMatch : e.getAmbiguousMatches()) {
+							EOperation operMatch = (EOperation) nextMatch;
+							// search for matches that are ambiguous only in the target module 
+							if(extendedModule == QvtOperationalParserUtil.getOwningModule(operMatch)) {
+								if(operation != null) {
+									// report ambiguous matches in the target module type									
+									ArrayList<EOperation> ambiguous = new ArrayList<EOperation>(2);
+									Collections.addAll(ambiguous, operation, operMatch);
+									resolvedOper = (EOperation)handleOperationLookupException(env, cstNode, ambiguous);
+									break;
+								}
+								
+								operation = operMatch;
+							}
+						}
+						
+						resolvedOper = operation;
+					}
+					
+					if(resolvedOper != null) {
+						// we have found what we needed
+						break;
+					}
+				}
+			}
+		}
+
+		cstNode.setAst(resolvedOper);
+		return resolvedOper;
+	}
+	
+	private Object handleOperationLookupException(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, 
+			CSTNode problemNode, List<?> matches) {
+		
+		StringBuffer buf = new StringBuffer();		
+		try {
+			int i = 0;			
+			for (Object nextMatchObj : matches) {
+				if(i++ > 0) {
+					buf.append(", "); //$NON-NLS-1$
+				}
+				buf.append('\'');
+				if(nextMatchObj instanceof EOperation) {
+					buf.append(FormattingHelperImpl.INSTANCE.formatOperationSignature((EOperation) nextMatchObj, env.getUMLReflection()));
+				} else {
+					buf.append(FormattingHelperImpl.INSTANCE.formatQualifiedName(nextMatchObj));
+				}
+				buf.append('\'');			
+			}
+		} catch (RuntimeException e) {
+			// Remark : safety measure, added in 2.0 RC1
+			buf.append("<null>"); //$NON-NLS-1$
+		}
+		
+		String message = NLS.bind(ValidationMessages.AmbiguousOperationReference, buf.toString());
+		getEnvironment().analyzerWarning(message, "lookupOperation", problemNode); //$NON-NLS-1$" 
+		return (matches != null && !matches.isEmpty()) ? matches.get(0) : null;
+	}
+
 	@Override
 	protected Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
 			CSTNode cstNode,
@@ -465,6 +611,7 @@ public class QvtOperationalVisitorCS
 	protected IfExp<EClassifier> ifExpCS(
 			IfExpCS ifExpCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		// FIXME -
 		IfExp<EClassifier> ifExp = super.ifExpCS(ifExpCS, env);
 		return ifExp;
 	}
@@ -580,14 +727,14 @@ public class QvtOperationalVisitorCS
 	        }
 	    }
 	    catch (NullPointerException ex) {
-	        QvtPlugin.log(ex);
+	        QvtPlugin.error(ex);
 	        QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
 	    catch (RuntimeException ex) {
 	        //QvtPlugin.log(ex);
 	    	QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
-	    return null;
+	    return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp(env, oclExpressionCS);
 	}
 	
     private org.eclipse.ocl.ecore.OCLExpression visitContinueExpCS(
@@ -634,6 +781,8 @@ public class QvtOperationalVisitorCS
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
     	AssertExp assertAST = ImperativeOCLFactory.eINSTANCE.createAssertExp();
+    	// make assert return null
+    	assertAST.setEType(getOCLEnvironment().getOCLStandardLibrary().getOclVoid());    	
     	assertAST.setStartPosition(assertExpCS.getStartOffset());
     	assertAST.setEndPosition(assertExpCS.getEndOffset());
     	    	
@@ -801,13 +950,72 @@ public class QvtOperationalVisitorCS
     	return result;
     }
     
+	private OperationCallExp<EClassifier, EOperation> genNonContextualQualifiedOperationCall(
+			OperationCallExpCS operationCallExpCS, PathNameCS sourceCS, QvtEnvironmentBase env) {
+
+		EClassifier sourceType = lookupClassifier(sourceCS, env, QvtOperationalParserUtil.getSequenceOfNames(sourceCS.getSimpleNames()));
+		sourceCS.setAst(sourceType);
+		
+		if (sourceType instanceof Module) {
+			Module sourceModule = (Module) sourceType;			
+			Variable<EClassifier, EParameter> sourceVar = QvtOperationalParserUtil.getThisVariable(sourceModule);
+			if(sourceVar == null) {
+				return null;
+			}
+
+			OCLExpression<EClassifier> sourceExpr = createVariableExp(env, sourceCS, sourceVar);
+			EList<OCLExpressionCS> argsCS = operationCallExpCS.getArguments();
+			List<OCLExpression<EClassifier>> args = new java.util.ArrayList<OCLExpression<EClassifier>>(argsCS.size());
+			for (OCLExpressionCS arg : argsCS) {
+				OCLExpression<EClassifier> argExpr = oclExpressionCS(arg, env);
+				if (argExpr == null) {
+					argExpr = createDummyInvalidLiteralExp(env, arg);
+					initASTMapping(env, argExpr, arg);
+				}
+				args.add(argExpr);	
+			}
+			
+			String rule = "genNonContextualQualifiedOperationCall"; //$NON-NLS-1$
+			String name = operationCallExpCS.getSimpleNameCS().getValue();
+			OperationCallExp<EClassifier, EOperation> result = genOperationCallExp(env, operationCallExpCS, rule, name, sourceExpr, sourceModule, args);
+			
+			if(result.getReferredOperation() != null) {
+				boolean isValidModule = sourceModule instanceof Library ||
+						env.getModuleContextType() == sourceModule ||
+						QvtOperationalParserUtil.isExtendingEnv(env, sourceModule);
+				if(!isValidModule) {
+					String errMessage = NLS.bind(ValidationMessages.NoImplicitSourceForQualifiedCall, name);
+					ERROR(operationCallExpCS.getSimpleNameCS(), rule, errMessage);
+				}
+			}
+			
+			if(result instanceof ImperativeCallExp) {
+				((ImperativeCallExp) result).setIsVirtual(false);
+			}
+			return result;
+		}
+		
+		return null;
+	}
+	
     @Override
     protected OCLExpression<EClassifier> operationCallExpCS(
     		OperationCallExpCS operationCallExpCS,
     		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+    	
+		if (operationCallExpCS.getSource() instanceof PathNameCS) {
+			OCLExpressionCS sourceCS = operationCallExpCS.getSource();
+			if (sourceCS instanceof PathNameCS && env instanceof QvtEnvironmentBase) {
+				OperationCallExp<EClassifier, EOperation> result = genNonContextualQualifiedOperationCall(operationCallExpCS, (PathNameCS)sourceCS,(QvtEnvironmentBase) env);
+				 if(result != null) {
+					 return result;
+				 }
+			}
+		}    	
+    	
     	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
     	
-    	if(result instanceof OperationCallExp) {
+    	if(result instanceof OperationCallExp<?,?>) {
     	    OperationCallExp<EClassifier, EOperation> opCallExp = (org.eclipse.ocl.ecore.OperationCallExp) result;
     	    if(opCallExp.getReferredOperation() != null) {
     	    	EOperation referredOperation = opCallExp.getReferredOperation();
@@ -861,20 +1069,29 @@ public class QvtOperationalVisitorCS
     	EClassifier operationSourceType = ownerType;
         if (isArrowAccessToCollection(operationCallExpCS, source)
                 && (lookupOperation(operationCallExpCS, env, ownerType, operName, args) == null)) {
-            @SuppressWarnings("unchecked") //$NON-NLS-1$
+            @SuppressWarnings("unchecked")
             CollectionType<EClassifier, EOperation> sourceType = (CollectionType<EClassifier, EOperation>) ownerType;
             operationSourceType = sourceType.getElementType();
         }
 
 		OperationCallExp<EClassifier, EOperation> result;
 
-		result = oclFactory.createOperationCallExp();
-		initASTMapping(env, result, operationCallExpCS);
-		result.setSource(source);
-
 		// Performs method signature checking
 		EOperation oper = lookupOperation(operationCallExpCS.getSimpleNameCS(), env,
 				operationSourceType, operName, args);
+
+		if(oper instanceof MappingOperation) {
+			result = ExpressionsFactory.eINSTANCE.createMappingCallExp();
+		} else if(oper instanceof ImperativeOperation) {
+			result = ExpressionsFactory.eINSTANCE.createImperativeCallExp();	
+		} else {
+			result = oclFactory.createOperationCallExp();
+		}
+		
+		initStartEndPositions(result, operationCallExpCS);
+		initASTMapping(env, result, operationCallExpCS);		
+		result.setSource(source);
+		
 
 		// sometimes we use the resolved name in case the environment's look-up
 		// supports aliasing
@@ -945,6 +1162,22 @@ public class QvtOperationalVisitorCS
 			result.setType(resultType);
 		}
 
+		// setup the virtual call flag
+		if(result instanceof ImperativeCallExp) {
+			ImperativeCallExp imperativeCall = (ImperativeCallExp) result;				
+			imperativeCall.setIsVirtual(true);
+			// qualified call on a source object
+			if(operationCallExpCS instanceof ImperativeOperationCallExpCS ) {
+				ImperativeOperationCallExpCS imperativeCallCS = (ImperativeOperationCallExpCS) operationCallExpCS;
+				if(imperativeCallCS.getModule() != null) {
+					imperativeCall.setIsVirtual(false);
+				}
+			} else if(operationCallExpCS.getSource() instanceof PathNameCS) {
+				// qualified call on by a module type (aka static call)				
+				imperativeCall.setIsVirtual(false);
+			}
+		}
+		
 		return result;
 	}
 
@@ -990,7 +1223,7 @@ public class QvtOperationalVisitorCS
            newly generated implicit iterator variable */
         propertyCall.setSource(vexp);
         
-        if (!(propertyCall instanceof OperationCallExp)) {
+        if (!(propertyCall instanceof OperationCallExp<?,?>)) {
             // the overall start and end positions are the property positions
             propertyCall.setStartPosition(propertyCall.getPropertyStartPosition());
             propertyCall.setEndPosition(propertyCall.getPropertyEndPosition());
@@ -1053,6 +1286,11 @@ public class QvtOperationalVisitorCS
     	org.eclipse.ocl.ecore.OCLExpression result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof MappingCallExpCS) {
 		    if (result instanceof OperationCallExp) {
+		    	// FIXME - review this, seems to be useless as we create callexp according to referred operation		    	
+		    	if(result instanceof MappingCallExp) {
+		    		// keep 'virtual' attribute value
+		    		return result;	
+		    	}
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, result);
 		        if (mappingCallExp != null) {
 		            return mappingCallExp;
@@ -1072,6 +1310,9 @@ public class QvtOperationalVisitorCS
 		            return imperativeIterateExp;
 		        }
 		    }
+		    // FIXME why this?
+		    // should be processed more specifically, also unresolved operation error for a mapping call
+		    // is sufficient, so we do not need yet another complaint 
 		    QvtOperationalUtil.reportError(env, ValidationMessages.mappingOperationExpected, expressionCS);
 			return null;
 		}
@@ -1304,7 +1545,13 @@ public class QvtOperationalVisitorCS
 				// skip DataTypes as the instantiatedClass property expects Class
 				// let's make AST validation to complain on missing class.
 				// Note: Still can be derived from the referred object if specified explicitly
-				objectExp.setInstantiatedClass((EClass)objectTypeSpec.myType);
+				EClass derivedInstantiatedClass = (EClass) objectTypeSpec.myType;
+				objectExp.setInstantiatedClass(derivedInstantiatedClass);
+				if (outExpCS.getSimpleNameCS() == null && (derivedInstantiatedClass.isAbstract() || derivedInstantiatedClass.isInterface())) {			
+					// always creates a new instance, ensure non-abstract type. 
+					String typeName = QvtOperationalParserUtil.safeGetQualifiedName(env, derivedInstantiatedClass);
+					env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_canNotInstantiateAbstractType, typeName), outExpCS);
+				}
 			}
 			objectExp.setExtent(objectTypeSpec.myExtent);
 			
@@ -1399,6 +1646,8 @@ public class QvtOperationalVisitorCS
             elem = EcoreFactory.eINSTANCE.createVariable();
             elem.setType(objectExp.getType());
             objectExp.setReferredObject(elem);
+            
+            body.getVariable().add(elem);
 			}
         String varName = (objectExp.getName() == null) ? env.generateTemporaryName() : objectExp.getName();
         objectExp.setName(varName);
@@ -1425,7 +1674,8 @@ public class QvtOperationalVisitorCS
     
     
 	public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {        
-        Module module = QvtOperationalParserUtil.createModule(moduleCS);        
+        Module module = QvtOperationalParserUtil.createModule(moduleCS);
+        moduleCS.setAst(module);
 		module.setStartPosition(moduleCS.getStartOffset());
 		module.setEndPosition(moduleCS.getEndOffset());
         // AST binding
@@ -1442,7 +1692,7 @@ public class QvtOperationalVisitorCS
 			module.getEClassifiers().add(modelType);
 			module.getUsedModelType().add(modelType);
 			if (modelType.getName().length() > 0) {
-				ModelType existingModelType = env.getModelType(Collections.singletonList(modelType.getName()));
+				ModelType existingModelType = env.getModelType(modelType.getName());
 				if(existingModelType == null) {
 					env.registerModelType(modelType);
 				} else {
@@ -1493,6 +1743,11 @@ public class QvtOperationalVisitorCS
 				operation = ExpressionsFactory.eINSTANCE.createConstructor();
 			}
 			else if (methodCS instanceof MappingRuleCS) {
+				if (QvtOperationalEnv.MAIN.equals(name)) {
+					env.reportWarning(NLS.bind(ValidationMessages.EntryOp_DisallowedDeclAsMapping, null), 
+							methodCS.getStartOffset(), 
+							methodCS.getMappingDeclarationCS() != null ? methodCS.getMappingDeclarationCS().getEndOffset() : methodCS.getEndOffset());
+				}
 				operation = ExpressionsFactory.eINSTANCE.createMappingOperation();
 			}
 			else if (QvtOperationalEnv.MAIN.equals(name)) {
@@ -1501,6 +1756,8 @@ public class QvtOperationalVisitorCS
 			else {
 				operation = ExpressionsFactory.eINSTANCE.createHelper();
 			}
+			
+			methodCS.setAst(operation);
 			
 			if (visitMappingDeclarationCS(methodCS, env, operation)) {
 				ImperativeOperation imperativeOp = env.defineImperativeOperation(operation, methodCS instanceof MappingRuleCS, true);
@@ -1561,6 +1818,15 @@ public class QvtOperationalVisitorCS
 
 		return module;
 	}
+	
+	/**
+	 * Clears the state of this QVT analyzer.  
+	 */
+	public void clear() {
+		if(myErrorNodes != null) {
+			myErrorNodes.clear();
+		}
+	}
 
 	private void visitTagCS(QvtOperationalEnv env, TagCS ownedTagCS, Module module, EClassifier tagContextType) throws SemanticException {
 		String tagId = visitLiteralExpCS(ownedTagCS.getName(), env);
@@ -1599,11 +1865,13 @@ public class QvtOperationalVisitorCS
 			astNode.setEndPosition(ownedTagCS.getEndOffset());
 			
 			module.getOwnedTag().add(ownedTag);
+			
+			scopedNameCS.setAst(element);
 		}
 	}
 
 	private void visitIntermediateClassesCS(QvtOperationalFileEnv env, MappingModuleCS moduleCS, Module module) throws SemanticException {
-		
+		IntermediateClassFactory intermediateClassFactory = null;
 		Map<String, EClass> createdIntermClasses = new LinkedHashMap<String, EClass>(moduleCS.getClassifierDefCS().size());
 		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
@@ -1617,7 +1885,11 @@ public class QvtOperationalVisitorCS
 				continue;
 			}
 
-			EClass eClassifier = IntermediateClassFactory.getFactory(module).createIntermediateClassifier();
+			if(intermediateClassFactory == null) {
+				intermediateClassFactory = new IntermediateClassFactory(module);
+			}
+			EClass eClassifier = intermediateClassFactory.createIntermediateClassifier();
+			
 			ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eClassifier);
 			astNode.setStartPosition(classifierDefCS.getStartOffset());
 			astNode.setEndPosition(classifierDefCS.getEndOffset());
@@ -1632,7 +1904,8 @@ public class QvtOperationalVisitorCS
 		}
 
 		if (!createdIntermClasses.isEmpty()) {
-			IntermediateClassFactory.getFactory(module).registerModelType(env);
+			assert intermediateClassFactory != null;
+			env.registerModelType(intermediateClassFactory.getIntermediateModelType());
 		}
 
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
@@ -1640,8 +1913,8 @@ public class QvtOperationalVisitorCS
 			EClass rootClass = createdIntermClasses.get(className);			
 			for (TypeCS typeCS : classifierDefCS.getExtends()) {
 				
-				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
-					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
+				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSimpleNames().size() == 1) {
+					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSimpleNames().get(0));
 					if (extClass != null) {
 						typeCS.setAst(extClass);
 						rootClass.getESuperTypes().add(extClass);
@@ -1802,11 +2075,6 @@ public class QvtOperationalVisitorCS
 			}
 			
 			initClassifierPropertyCS(propCS, eFeature, env);
-
-			OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(eFeature);
-			if (initExp != null) {
-				IntermediateClassFactory.getFactory(module).addClassifierPropertyInit(eClassifier, eFeature, initExp);
-			}
 		}
 	}
 
@@ -1888,6 +2156,10 @@ public class QvtOperationalVisitorCS
 		ASTSyntheticNode astNode = ASTSyntheticNodeAccess.createASTNode(eFeature);
 		astNode.setStartPosition(propCS.getStartOffset());
 		astNode.setEndPosition(propCS.getEndOffset());
+		
+        if(myCompilerOptions.isGenerateCompletionData()) {
+    		ASTSyntheticNodeAccess.setCST(astNode, propCS);
+        }
 		
 		// handle stereotype qualifiers
 		Set<String> handledStereotypes = new HashSet<String>(2);
@@ -2025,11 +2297,15 @@ public class QvtOperationalVisitorCS
 			}
 
 			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
-			EList<String> importedUnitQName = nextImportedCS.getPathNameCS().getSequenceOfNames();
-			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(importedUnitQName);
+			EList<SimpleNameCS> importedUnitQName = nextImportedCS.getPathNameCS().getSimpleNames();
+			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(QvtOperationalParserUtil.getSequenceOfNames(importedUnitQName));
 			
 			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
 				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
+					URI sourceURI = getSourceURI(nextImportedEnv);
+					nextImportedCS.setAst(sourceURI);
+					nextImportedCS.getPathNameCS().setAst(sourceURI);
+					
 					Module importedModule = nextImportedEnv.getModuleContextType();
 					if(importedModule == null) {
 						// nothing to import in, no module was successfully parsed
@@ -2046,9 +2322,10 @@ public class QvtOperationalVisitorCS
 																					
 						ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
 						moduleImport.setImportedModule(importedModule);
+						moduleImport.setKind(ImportKind.EXTENSION);
 						moduleImport.setStartPosition(nextImportedCS.getStartOffset());
 						moduleImport.setEndPosition(nextImportedCS.getEndOffset());
-						
+												
 						module.getModuleImport().add(moduleImport);
 						
 						if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
@@ -2087,9 +2364,9 @@ public class QvtOperationalVisitorCS
     			continue;
     		}
     		
-    		EList<String> qname = modulePathNameCS.getSequenceOfNames();    		
+    		EList<SimpleNameCS> qname = modulePathNameCS.getSimpleNames();    		
     		if(qname.size() == 1) {
-    			String moduleName = qname.get(0);
+    			String moduleName = qname.get(0).getValue();
     			for (String unitQName : importMap.keySet()) {
     				List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(unitQName);
     				
@@ -2109,7 +2386,7 @@ public class QvtOperationalVisitorCS
 								TypeSpecCS nextTypeCS = nextParamCS.getTypeSpecCS();
 								if(nextTypeCS != null && nextTypeCS.getTypeCS() instanceof PathNameCS) {
 									PathNameCS modelTypeCS = (PathNameCS) nextTypeCS.getTypeCS();
- 									EClassifier modelType = env.getModelType(modelTypeCS.getSequenceOfNames());
+ 									EClassifier modelType = modelTypeCS.getSimpleNames().isEmpty() ? null : env.getModelType(modelTypeCS.getSimpleNames().get(0).getValue());
  									if(modelType instanceof ModelType) {
  										refereceSignatureModelTypes.add((ModelType) modelType);
  									}
@@ -2273,6 +2550,11 @@ public class QvtOperationalVisitorCS
 		module.setName(unitSimpleName);
 		module.setNsPrefix(unitSimpleName);
 		
+		headerCS.setAst(module);
+		if(headerCS.getPathNameCS() != null) {
+			headerCS.getPathNameCS().setAst(module);
+		}
+		
 		if (module instanceof OperationalTransformation) {
 		    visitOperationalTransformationSignature(headerCS, env, (OperationalTransformation) module);
 		} else if (module instanceof Library) {
@@ -2303,8 +2585,8 @@ public class QvtOperationalVisitorCS
             boolean isSimpleName = false;
             if (paramTypeCS instanceof PathNameCS) {
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
-                isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
-                type = env.getModelType(typePathNameCS.getSequenceOfNames());
+                isSimpleName = typePathNameCS.getSimpleNames().size() == 1;
+                type = typePathNameCS.getSimpleNames().isEmpty() ? null : env.getModelType(typePathNameCS.getSimpleNames().get(0).getValue());
                 paramTypeCS.setAst(type);
             }
             if (type == null || !isSimpleName) {
@@ -2324,7 +2606,8 @@ public class QvtOperationalVisitorCS
                 varParam.setName(paramNameCS.getValue());
                 paramNameCS.setAst(varParam);
             } else {
-                varParam.setName(""); //$NON-NLS-1$
+            	// just set the parameter position, to reduce nulls AST and avoid serialization issues 
+                varParam.setName(QvtEnvironmentBase.GENERATED_NAME_SPECIAL_PREFIX + String.valueOf(headerCS.getParameters().indexOf(paramCS)));
             }
             varParam.setEType(type);
             DirectionKindEnum directionKind = paramCS.getDirectionKind();
@@ -2365,11 +2648,11 @@ public class QvtOperationalVisitorCS
             ModelType modelType = null;
             if (paramTypeCS instanceof PathNameCS) {
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
-                if (typePathNameCS.getSequenceOfNames().size() == 1) {
-                    modelType = env.getModelType(typePathNameCS.getSequenceOfNames());
+                if (typePathNameCS.getSimpleNames().size() == 1) {
+                    modelType = env.getModelType(typePathNameCS.getSimpleNames().get(0).getValue());
                     if (modelType != null && !usedModelTypes.add(modelType)) {
                         env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType, 
-                                new Object[] { typePathNameCS.getSequenceOfNames().get(0) }), paramCS);
+                                new Object[] { typePathNameCS.getSimpleNames().get(0) }), paramCS);
                     }
                 }
             }
@@ -2418,17 +2701,17 @@ public class QvtOperationalVisitorCS
 			StringLiteralExpCS uriCS = packageRefCS.getUriCS();
 			if (uriCS != null) {
 				String metamodelUri = visitLiteralExpCS(uriCS, env);
-				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<String>emptyList(), uriCS, resolutionRS);
+				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<SimpleNameCS>emptyList(), uriCS, resolutionRS);
 				uriCS.setAst(resolvedMetamodel);
 			}
 			
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
-			if (pathNameCS != null && !pathNameCS.getSequenceOfNames().isEmpty()) {
+			if (pathNameCS != null && !pathNameCS.getSimpleNames().isEmpty()) {
 				String metamodelName = QvtOperationalParserUtil.getStringRepresentation(
 						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
 
 				if (resolvedMetamodel == null) {
-					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSequenceOfNames(), pathNameCS, resolutionRS);
+					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSimpleNames(), pathNameCS, resolutionRS);
 				}
 				else {
 					resolvedMetamodel = checkMetamodelPath(env, resolvedMetamodel, pathNameCS, metamodelName);
@@ -2466,9 +2749,9 @@ public class QvtOperationalVisitorCS
 	private EPackage checkMetamodelPath(QvtOperationalFileEnv env, EPackage resolvedMetamodel,
 			PathNameCS pathNameCS, String metamodelName) {
 
-		EList<String> path = pathNameCS.getSequenceOfNames();
+		EList<SimpleNameCS> path = pathNameCS.getSimpleNames();
 		// lookup nested package started from package specified by URI
-		EPackage localPackage = EmfMmUtil.lookupPackage(resolvedMetamodel, path);
+		EPackage localPackage = MetamodelRegistry.lookupPackage(resolvedMetamodel, QvtOperationalParserUtil.getSequenceOfNames(path));
 		if (localPackage != null) {
 			return localPackage;			
 		}
@@ -2483,7 +2766,7 @@ public class QvtOperationalVisitorCS
 		}
 		
 		if (rootMetamodel != resolvedMetamodel) {
-			localPackage = EmfMmUtil.lookupPackage(rootMetamodel, path);
+			localPackage = MetamodelRegistry.lookupPackage(rootMetamodel, QvtOperationalParserUtil.getSequenceOfNames(path));
 			
 			boolean isContainedBy = false;
 			EPackage curPkg = localPackage;
@@ -2521,7 +2804,7 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 	
-	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<String> packagePath,
+	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<SimpleNameCS> packagePath,
 			CSTNode cstNode, ResourceSet resolutionRS) throws SemanticException {
 		EPackage resolvedMetamodel = null;
 		String metamodelName = (packagePath.isEmpty() ? metamodelUri : packagePath.toString());
@@ -2529,7 +2812,7 @@ public class QvtOperationalVisitorCS
 			MetamodelRegistry metamodelRegistry = env.getKernel().getMetamodelRegistry(env.getFile());
 			
 			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(
-					env, metamodelUri, packagePath, resolutionRS, 
+					env, metamodelUri, QvtOperationalParserUtil.getSequenceOfNames(packagePath), resolutionRS, 
 					metamodelRegistry, myCompilerOptions);
 			
 			if (registerMetamodels.isEmpty()) {
@@ -2549,7 +2832,7 @@ public class QvtOperationalVisitorCS
 						new Object[] { metamodelName, uriList }), cstNode);
 			}
 		} catch (RuntimeException e) {
-			QvtPlugin.log(e);
+			QvtPlugin.error(e);
 			env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 					new Object[] { metamodelName }), cstNode);
 		}
@@ -2623,6 +2906,8 @@ public class QvtOperationalVisitorCS
 
 	protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
 			throws SemanticException {
+		methodCS.setAst(declaredOperation);
+		
 		if (methodCS instanceof ConstructorCS) {
 			visitConstructorCS((ConstructorCS) methodCS, env, declaredOperation);
 		}
@@ -2974,7 +3259,7 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
-		
+		mappingDeclarationCS.setAst(operation);
 		operation.setIsBlackbox(mappingMethodCS.isBlackBox());
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
@@ -3053,12 +3338,6 @@ public class QvtOperationalVisitorCS
 				}
 			}
 			operation.getResult().add(varResult);
-			
-			if (isEntryPoint) {
-				env.reportWarning(ValidationMessages.QvtOperationalVisitorCS_entryPointReturnDeprecated,
-						nextResultParamCS.getTypeSpecCS());
-			}
-	
 		}
 		
 		// set operation return type
@@ -3240,7 +3519,18 @@ public class QvtOperationalVisitorCS
 		if(mappingParam != null) {
 			mappingParam.setExtent(typeSpec.myExtent);
 			if (mappingParam.getExtent() == null) {
-				mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+				
+				boolean isEntryPoint = false;
+				if (paramCS.eContainer() instanceof MappingDeclarationCS) {
+					isEntryPoint = QvtOperationalEnv.MAIN.equals(((MappingDeclarationCS) paramCS.eContainer()).getSimpleNameCS().getValue());
+				}
+				
+				if (isEntryPoint) {
+					mappingParam.setExtent(env.resolveModelParameterDeprecated(typeSpec.myType, directionKind));
+				}
+				else {
+					mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
+				}
 				if (mappingParam.getExtent() == null && directionKind == DirectionKind.OUT) {
 					env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
 				}
@@ -3302,13 +3592,7 @@ public class QvtOperationalVisitorCS
 		
 		if (!hasExplicitInitExpression && declaredType != null) {
 			// FIXME - should not be initialized at AST level but at evaluation level			
-	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);
-	        if (defaultInitializationValue == null) {
-	            NullLiteralExp<EClassifier> nullLiteralExp = oclFactory.createNullLiteralExp();
-	            nullLiteralExp.setType(getOclVoid());
-	            defaultInitializationValue = (org.eclipse.ocl.ecore.NullLiteralExp)nullLiteralExp;
-	        }
-	        
+	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);	        
 	        referredVar.setInitExpression(defaultInitializationValue);
 		}
 				
@@ -3450,7 +3734,7 @@ public class QvtOperationalVisitorCS
 			int startOffs = getStartOffset(objectExp, problemCS);
 			int endOffs = getEndOffset(objectExp, problemCS);
 			if(referredObject != null)	{ 
-				if(referredObject.getType() != null && (referredObject.getType() instanceof CollectionType == false)) { 
+				if(referredObject.getType() != null && (referredObject.getType() instanceof CollectionType<?,?> == false)) { 
 					// we failed to figure out the class but type is available, let's report it's classifier only 
 					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
 							QvtOperationalParserUtil.safeGetQualifiedName(env, referredObject.getType())), startOffs, endOffs);
@@ -3834,7 +4118,7 @@ public class QvtOperationalVisitorCS
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(forExpCS.getSource(), env);
-        if (!(source.getType() instanceof CollectionType)) {
+        if (!(source.getType() instanceof CollectionType<?,?>)) {
             return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = forExpCS.getSimpleNameCS().getValue();
@@ -3891,7 +4175,7 @@ public class QvtOperationalVisitorCS
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
-        if (!(source.getType() instanceof CollectionType)) {
+        if (!(source.getType() instanceof CollectionType<?,?>)) {
             return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = imperativeIterateExpCS.getSimpleNameCS().getValue();
@@ -3978,6 +4262,9 @@ public class QvtOperationalVisitorCS
                     astNode.getTarget().setType(resultElementType);
                 }
             }
+            if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
+                astNode.getTarget().setType(sourceCollectionType.getElementType());
+            }
         }
         
         if (imperativeIterateExpCS.getCondition() != null) { 
@@ -3986,7 +4273,7 @@ public class QvtOperationalVisitorCS
             if (conditionExp instanceof TypeExp<?>) {
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
                 EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
-                if (rawTypeType instanceof TypeType) {
+                if (rawTypeType instanceof TypeType<?,?>) {
                     @SuppressWarnings("unchecked")
                     TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
                     resultElementType = typeType.getReferredType();
@@ -4021,13 +4308,15 @@ public class QvtOperationalVisitorCS
         }
 		// ensure AST containment tree
         astNode.getIterator().addAll(iterators);
+        
+        initStartEndPositions(astNode, imperativeIterateExpCS);
         return astNode;
     }
     
     private boolean isInnermostIteratorRelated(Variable<EClassifier, EParameter> vdcl, OCLExpression<EClassifier> bodyExp) {
         if (bodyExp instanceof CallExp) {
             CallExp bodyCallExp = (CallExp) bodyExp;
-            if (bodyCallExp.getSource() instanceof VariableExp) {
+            if (bodyCallExp.getSource() instanceof VariableExp<?,?>) {
                 VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) bodyCallExp.getSource();
                 return sourceExp.getReferredVariable() == vdcl;
             }
@@ -4037,7 +4326,7 @@ public class QvtOperationalVisitorCS
     }
 
 	private MappingCallExp createMappingCallExp(MappingCallExpCS expressionCS, OCLExpression<EClassifier> result) {
-		if (result instanceof OperationCallExp) {
+		if (result instanceof OperationCallExp<?,?>) {
 			OperationCallExp<EClassifier, EOperation> operationCallExp = (OperationCallExp<EClassifier, EOperation>) result;
 			EOperation operation = operationCallExp.getReferredOperation();
 			if (QvtOperationalUtil.isMappingOperation(operation)) {
@@ -4068,7 +4357,7 @@ public class QvtOperationalVisitorCS
 				EClassifier sourceType = operationCallExp.getSource().getType();
 				EClassifier argumentType = ((OCLExpression<EClassifier>) operationCallExp.getArgument().get(0))
 						.getType();
-				if (argumentType instanceof TypeType
+				if (argumentType instanceof TypeType<?,?>
 						&& QvtOperationalParserUtil.isIncorrectCast(sourceType,
 								((TypeType<EClassifier, EOperation>) argumentType).getReferredType())) {
 					QvtOperationalUtil.reportWarning(env, ValidationMessages.incorrectCastWarning, opCallCS);
@@ -4234,51 +4523,14 @@ public class QvtOperationalVisitorCS
         // zero for any numeric type, the empty string for a string and null for all other elements.
         // A. Igdalov: Spec says nothing about Booleans and OclInvalid. Abstract collections (Collection, opposed to Bags, OrderedSets, etc.) are also neglected.
         // Thus, this implementation assigns false to Booleans, Invalid to OclInvalids and nulls to abstract collections.
-	    if (type instanceof org.eclipse.ocl.ecore.CollectionType) {
-            org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) type;
-            CollectionKind kind = collectionType.getKind();
-            if (CollectionKind.COLLECTION_LITERAL == kind) {
-                return null;
-            }
-            CollectionLiteralExp<EClassifier> collectionLiteralExp = oclFactory.createCollectionLiteralExp();
-            collectionLiteralExp.setKind(kind);
-            EClassifier resultType = getCollectionType(env, kind, collectionType.getElementType());
-            collectionLiteralExp.setType(resultType);
-            return (org.eclipse.ocl.ecore.CollectionLiteralExp)collectionLiteralExp;
-        } else {
-            EClassifier resolvedType = env.getTypeResolver().resolve(type);
-            OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
-            if (resolvedType == oclStdLib.getBoolean()) {
-                BooleanLiteralExp<EClassifier> booleanLiteralExp = oclFactory.createBooleanLiteralExp();
-                booleanLiteralExp.setBooleanSymbol(Boolean.FALSE);
-                booleanLiteralExp.setType(oclStdLib.getBoolean());
-                return (org.eclipse.ocl.ecore.BooleanLiteralExp)booleanLiteralExp;
-            } else if (resolvedType == oclStdLib.getInteger()) {
-                IntegerLiteralExp<EClassifier> integerLiteralExp = oclFactory.createIntegerLiteralExp();
-                integerLiteralExp.setIntegerSymbol(0);
-                integerLiteralExp.setType(oclStdLib.getInteger());
-                return (org.eclipse.ocl.ecore.IntegerLiteralExp)integerLiteralExp;
-            } else if (resolvedType == oclStdLib.getReal()) {
-                RealLiteralExp<EClassifier> realLiteralExp = oclFactory.createRealLiteralExp();
-                realLiteralExp.setRealSymbol(0.0);
-                realLiteralExp.setType(oclStdLib.getReal());
-                return (org.eclipse.ocl.ecore.RealLiteralExp) realLiteralExp;
-            } else if (resolvedType == oclStdLib.getUnlimitedNatural()) {
-                UnlimitedNaturalLiteralExp<EClassifier> unlimitedNaturalLiteralExp = oclFactory.createUnlimitedNaturalLiteralExp();
-                unlimitedNaturalLiteralExp.setIntegerSymbol(0);
-                unlimitedNaturalLiteralExp.setType(oclStdLib.getUnlimitedNatural());
-                return (org.eclipse.ocl.ecore.UnlimitedNaturalLiteralExp)unlimitedNaturalLiteralExp;
-            } else if (resolvedType == oclStdLib.getInvalid()) {
-                InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
-                invalidLiteralExp.setType(oclStdLib.getInvalid());
-                return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
-            } else if (resolvedType == oclStdLib.getString()) {
-                org.eclipse.ocl.expressions.StringLiteralExp<EClassifier> stringLiteralExp = oclFactory.createStringLiteralExp();
-                stringLiteralExp.setStringSymbol(""); //$NON-NLS-1$
-                stringLiteralExp.setType(oclStdLib.getString());
-                return (org.eclipse.ocl.ecore.StringLiteralExp) stringLiteralExp;
-            }
-        }
+        EClassifier resolvedType = env.getTypeResolver().resolve(type);
+        OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
+        if (resolvedType == oclStdLib.getInvalid()) {
+            InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
+            invalidLiteralExp.setType(oclStdLib.getOclInvalid());
+            return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
+        } 
+
 	    return null;
 	}
 		
@@ -4341,7 +4593,7 @@ public class QvtOperationalVisitorCS
 			case SimpleTypeEnum.BOOLEAN:
 			case SimpleTypeEnum.OCL_ANY:
 			case SimpleTypeEnum.OCL_VOID:
-			case SimpleTypeEnum.INVALID:
+			case SimpleTypeEnum.OCL_INVALID:
 			case SimpleTypeEnum.OCL_MESSAGE:
 				// if we have a source, then this is a feature call
 				if (source == null) {
@@ -4363,7 +4615,7 @@ public class QvtOperationalVisitorCS
 		EClassifier sourceElementType = null;
 		if (source != null) {
 			sourceElementType = source.getType();
-			if (sourceElementType instanceof CollectionType) {
+			if (sourceElementType instanceof CollectionType<?,?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceElementType;
 				
@@ -4394,8 +4646,8 @@ public class QvtOperationalVisitorCS
 		 * If the source type is a collection, then need there is an implicit COLLECT 
 		 * or imperative COLLECT operator.
 		 */
-		if ((source != null) && (source.getType() instanceof CollectionType)
-				&& (astNode instanceof FeatureCallExp)) {
+		if ((source != null) && (source.getType() instanceof CollectionType<?,?>)
+				&& (astNode instanceof FeatureCallExp<?>)) {
 		    CallExpCS callExpCS = (CallExpCS) simpleNameCS.eContainer();
 		    FeatureCallExp<EClassifier> featureCallExp = (FeatureCallExp<EClassifier>) astNode;
 		    astNode = isArrowAccessToCollection(callExpCS, source) ?
@@ -4589,15 +4841,31 @@ public class QvtOperationalVisitorCS
 		dictLiteralPartCS.setAst(result);		
 		return result;
 	}
-	
 
+	@Override
+	protected boolean isErrorNode(TypedElement<EClassifier> expr) {
+		if(myErrorNodes == null) {
+			return false;
+		}
+
+		return myErrorNodes.contains(expr);
+	}
+
+	@Override
+	protected void markAsErrorNode(TypedElement<EClassifier> expr) {
+		if(myErrorNodes == null) {
+			myErrorNodes = new java.util.HashSet<TypedElement<?>>();			
+		}
+		myErrorNodes.add(expr);
+	}
+	
 	private static void createPropertyCallASTBinding(
 			CallExpCS propertyCallExpCS,
 			OCLExpression<EClassifier> result,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		ASTNode boundAST = result;
 		CSTNode boundCST = propertyCallExpCS;            	
-		if(result instanceof IteratorExp) {
+		if(result instanceof IteratorExp<?,?>) {
 			@SuppressWarnings("unchecked")			
 			IteratorExp<EClassifier, EParameter> itExpAST = (IteratorExp<EClassifier, EParameter>) result;
 			if(propertyCallExpCS instanceof IteratorExpCS) {
@@ -4606,7 +4874,7 @@ public class QvtOperationalVisitorCS
 					boundCST = itExpCST.getBody();
 				}
 			}            		
-			if(itExpAST.getBody() instanceof FeatureCallExp) {
+			if(itExpAST.getBody() instanceof FeatureCallExp<?>) {
 				boundAST = (FeatureCallExp<EClassifier>) itExpAST.getBody();
 			}
 		} else if(result instanceof ImperativeIterateExp) {
@@ -4617,7 +4885,7 @@ public class QvtOperationalVisitorCS
 					boundCST = itExpCST.getBody();
 				}
 			}
-			if(impIterExpAST.getBody() instanceof FeatureCallExp) {
+			if(impIterExpAST.getBody() instanceof FeatureCallExp<?>) {
 				boundAST = (FeatureCallExp<EClassifier>) impIterExpAST.getBody();
 			}			
 		}
@@ -4663,4 +4931,13 @@ public class QvtOperationalVisitorCS
 		annotation.getReferences().add(element);
 		return annotation;
 	}
+	
+	private static URI getSourceURI(QvtOperationalModuleEnv env) {
+		if(env instanceof QvtOperationalFileEnv) {
+			QvtOperationalFileEnv fileEnv = (QvtOperationalFileEnv) env;
+			return fileEnv.getFile();
+		}
+		return null;
+	}
+	
 }
