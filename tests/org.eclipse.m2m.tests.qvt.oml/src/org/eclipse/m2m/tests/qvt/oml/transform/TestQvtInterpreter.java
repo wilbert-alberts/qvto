@@ -118,7 +118,7 @@ public class TestQvtInterpreter extends TestTransformation {
 					URI resourceURI = URI.createPlatformResourceURI(transformationFile.getFullPath().toString(), true);
 					UnitResolver resolver = factory.getResolver(resourceURI);
 													        
-					
+					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
 			        //URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
 			        //assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
 			    		
@@ -130,6 +130,7 @@ public class TestQvtInterpreter extends TestTransformation {
 			        }
 			        
 					myCompiler = new QVTOCompiler(resolver, new ResourceSetImpl());
+					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
         			//return new CompiledUnit(binURI, resSet);
 					return myCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];
 				}
