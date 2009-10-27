@@ -60,7 +60,7 @@ public class ColonColonCollector extends AbstractCollector {
         
         // Is it a modeltype?
 		if (pathName.size() == 1) {
-		    ModelType modelType = env.getModelType(pathName);
+		    ModelType modelType = env.getModelType(pathName.get(0));
 		    if (modelType != null) {
 		        List<EPackage> metamodels = modelType.getMetamodel();
                 for (EPackage pack : metamodels) {

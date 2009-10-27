@@ -53,6 +53,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.TypeExp;
@@ -92,7 +93,7 @@ public class CompletionProposalUtil {
     
     private static final int[] PREDEFINED_INSTANCES = {
         QvtOpLPGParsersym.TK_null,
-        QvtOpLPGParsersym.TK_Invalid,
+        QvtOpLPGParsersym.TK_OclInvalid,
         QvtOpLPGParsersym.TK_true,
         QvtOpLPGParsersym.TK_false
     };
@@ -120,7 +121,8 @@ public class CompletionProposalUtil {
         CompletionProposalUtil.addKeywords(proposals, RVALUE_TERMINALS, data);
     }
     
-    public static final void addContextProposals(Collection<ICompletionProposal> proposals, EClassifier owner, boolean addResolveFamily, QvtCompletionData data) {
+    public static final void addContextProposals(Collection<ICompletionProposal> proposals, EClassifier owner, 
+    		boolean addResolveFamily, boolean isImplicitSource, QvtCompletionData data) {
         CompletionProposalUtil.addStructuralFeatures(proposals, owner, data);
         CompletionProposalUtil.addOperations(proposals, owner, data);
         CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.MAPPING_CALL_TERMINALS, data);
@@ -130,7 +132,8 @@ public class CompletionProposalUtil {
         }
         if (addResolveFamily) {
             CompletionProposalUtil.addKeyword(proposals, QvtOpLPGParsersym.TK_late, data);
-            CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS, data);
+            int[] resolveTerminals = isImplicitSource ? LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS : LightweightParserUtil.RESOLVE_FAMILY_TERMINALS; 
+            CompletionProposalUtil.addKeywords(proposals, resolveTerminals, data);
         }
     }
     
@@ -220,7 +223,8 @@ public class CompletionProposalUtil {
             addProposalIfNecessary(proposals, info, data);
         }
         for (Variable<EClassifier, EParameter> variable : env.getVariables()) {
-            if ((variable.getName() != null) && (variable.getName().trim().length() > 0)) {
+            String name = variable.getName();            
+			if ((name != null) && (name.trim().length() > 0) && !name.startsWith(QvtEnvironmentBase.GENERATED_NAME_SPECIAL_PREFIX)) {
             	QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(variable, data);
                 addProposalIfNecessary(proposals, info, data);
             }
@@ -420,7 +424,7 @@ public class CompletionProposalUtil {
         MappingModuleCS mappingModuleCS = (MappingModuleCS) mappingMethodCS.eContainer();
         CFileData cFileData = data.getQvtCompiler().getCFileData(mappingModuleCS);
         String lightweightScript = cFileData.getLightweightScript();
-        String displayString = lightweightScript.substring(mappingDeclarationCS.getStartOffset(), mappingDeclarationCS.getEndOffset() + 1);
+        String displayString = lightweightScript.substring(mappingDeclarationCS.getSimpleNameCS().getStartOffset(), mappingDeclarationCS.getEndOffset() + 1);
 
         Image image = null;
         if (mappingMethodCS instanceof MappingRuleCS) {
@@ -595,8 +599,8 @@ public class CompletionProposalUtil {
                 if (contextTypeCS instanceof PathNameCS) {
                     if (longForm) {
                         PathNameCS pathNameCS = (PathNameCS) contextTypeCS;
-                        for (String name : pathNameCS.getSequenceOfNames()) {
-                            sb.append(name);
+                        for (SimpleNameCS name : pathNameCS.getSimpleNames()) {
+                            sb.append(name.getValue());
                             sb.append("::"); //$NON-NLS-1$
                         }
                     }

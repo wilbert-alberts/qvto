@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.hyperlinks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -41,10 +41,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.ocl.cst.EnumLiteralExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
-import org.eclipse.ocl.ecore.EnumLiteralExp;
 
 
 /**
@@ -84,7 +82,10 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					} else if(cstNode instanceof MappingModuleCS) {
 						MappingModuleCS moduleCS = (MappingModuleCS) cstNode;
 						if(moduleCS.getHeaderCS() != null) {
-							cstNode = moduleCS.getHeaderCS(); 
+							cstNode = moduleCS.getHeaderCS();
+							if(moduleCS.getHeaderCS().getPathNameCS() != null) {
+								cstNode = moduleCS.getHeaderCS().getPathNameCS(); 
+							}
 						}
 					} else if(cstNode instanceof ClassifierDefCS) {
 						cstNode = ((ClassifierDefCS) cstNode).getSimpleNameCS();
@@ -123,16 +124,20 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					if(resultRegion != null) {
 						ENamedElement ast = (ENamedElement) pathNameCS.getAst();
 						int pos = selectedNamePos[0];
-						final EList<String> csNames = pathNameCS.getSequenceOfNames();
+						final EList<SimpleNameCS> csNames = pathNameCS.getSimpleNames();
 						
 						if(pos >= 0 && pos < csNames.size() - 1) {
 							QvtOperationalEnv env = getEnv(pathNameCS);
 
-							final List<String> selectedNames = csNames.subList(0, pos + 1);
+							List<SimpleNameCS> selectedNames = csNames.subList(0, pos + 1);
+							List<String> stringNames = new ArrayList<String>(selectedNames.size());
+							for (SimpleNameCS nameCS : selectedNames) {
+								stringNames.add(nameCS.getValue());
+							}
 							
-							ast = env.lookupClassifier(selectedNames);
+							ast = env.lookupClassifier(stringNames);
 							if(ast == null) {
-								ast = env.lookupPackage(selectedNames);
+								ast = env.lookupPackage(stringNames);
 							}
 						}
 						
@@ -142,7 +147,9 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 					}
 				}
 			}
-		} else if(syntaxElement instanceof EnumLiteralExpCS) {
+		}
+		/*
+		else if(syntaxElement instanceof EnumLiteralExpCS) {
 			if(astObj instanceof EnumLiteralExp == false) {
 				return null;
 			}
@@ -159,6 +166,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				return new EModelElementRef(enumLit, HyperlinkUtil.createRegion(linkCS));
 			}
 		}
+		*/
 		
 		return null;
 	}	
@@ -185,11 +193,11 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 			
 		int nameOffset = pathNameCS.getStartOffset();
 		int i = 0;
-		for (String name : pathNameCS.getSequenceOfNames()) {
+		for (SimpleNameCS name : pathNameCS.getSimpleNames()) {
 			int offset = selection.getOffset();
-			if(nameOffset <= offset && offset <= nameOffset + name.length()) {
+			if(nameOffset <= offset && offset <= nameOffset + name.getValue().length()) {
 				selectedPos[0] = i;				
-				return new Region(nameOffset, name.length());
+				return new Region(nameOffset, name.getValue().length());
 			}
 
 			if(i == positions.length) {
@@ -203,7 +211,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 	}
 	
 	private static int[] getPathPos(PathNameCS pathNameCS) {		
-		EList<String> sequenceOfNames = pathNameCS.getSequenceOfNames();
+		EList<SimpleNameCS> sequenceOfNames = pathNameCS.getSimpleNames();
 		if(sequenceOfNames.size() == 1) {
 			return null;
 		}
