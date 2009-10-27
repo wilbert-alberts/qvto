@@ -15,21 +15,26 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -41,6 +46,10 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
+import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -81,12 +90,70 @@ public abstract class TestTransformation extends TestCase {
         if(myProject == null) {
             myProject = new TestProject(name, new String[] {}, 0); 
             myProject.getProject().setDefaultCharset(ModelTestData.ENCODING, null);
+            
+    		NatureUtils.addNature(getProject(), QVTOProjectPlugin.NATURE_ID);
+    		
+    		IProjectDescription description = getProject().getDescription();
+    		ICommand[] buildSpec = description.getBuildSpec();
+    		ICommand buildCommand = NatureUtils.findCommand(buildSpec, QVTOProjectPlugin.BUILDER_ID);
+    		
+    		assertNotNull(buildCommand);		
+    		@SuppressWarnings("unchecked")
+    		Map<String, String> arguments = buildCommand.getArguments();
+    		// Remark: internal option for saving xmi, used for testing at the moment		
+    		//arguments.put(QVTOBuilder.SAVE_AST_XMI, "true"); //$NON-NLS-1$
+    		
+    		buildCommand.setArguments(arguments);
+    		description.setBuildSpec(buildSpec);
+    		getProject().setDescription(description, null);
+    		
+    		QVTOBuilderConfig.getConfig(getProject()).setSourceContainer(getProject());    		
         }
         
-        copyModelData(); 
-        
+        copyModelData(); 		       
         myData.prepare(myProject);
     }
+    
+	protected void buildTestProject() throws Exception { 
+		getProject().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+		assertBuildOK(getProject());
+    }
+	
+	protected void assertBuildOK(IProject project) throws Exception {
+		IMarker[] problems = project.findMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
+		StringBuilder buf = new StringBuilder();
+		IMarker firstError = null;
+		try {			
+			for (IMarker next : problems) {
+				if(Integer.valueOf(IMarker.SEVERITY_ERROR).equals(next.getAttribute(IMarker.SEVERITY))) {
+					firstError = next;
+					break;
+				}
+			}
+			
+			if(firstError == null) {
+				return;
+			}
+			
+			IMarker marker = firstError;
+			buf.append(marker.getAttribute(IMarker.MESSAGE));
+			buf.append(", line:").append(marker.getAttribute(IMarker.LINE_NUMBER)); //$NON-NLS-1$
+			buf.append(", path:").append(marker.getResource().getProjectRelativePath()); //$NON-NLS-1$
+						
+		} finally {
+			try {
+				// do clean even if we have failed
+				if(firstError != null) {
+					tearDown();
+					getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+		}					
+		
+		fail(buf.toString());
+	}
     
     @Override
 	public void tearDown() throws Exception {
@@ -94,6 +161,7 @@ public abstract class TestTransformation extends TestCase {
         if (myDestFolder.exists()) {
             delete(myDestFolder);
         }
+        getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
     	myData = null;
     }
     
@@ -123,7 +191,8 @@ public abstract class TestTransformation extends TestCase {
             LinkedHashMap<ModelExtentContents, URI> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
         	List<URI> expectedResultURIs = data.getExpected(project);
         	
-        	ResourceSet rs = new ResourceSetImpl();
+        	ResourceSetImpl rs = new ResourceSetImpl();
+        	rs.setPackageRegistry(data.getMetamodelResolutionRegistry(project, rs));
         	int i = 0;
         	for (ModelExtentContents nextExtent : transfResult.keySet()) {
         		URI uri = expectedResultURIs.get(i++);

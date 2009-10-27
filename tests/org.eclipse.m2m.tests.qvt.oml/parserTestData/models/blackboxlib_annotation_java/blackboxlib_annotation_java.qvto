@@ -48,10 +48,10 @@ main() {
 		_self.primitiveTypeArgumentsOperationContextual('String', 10, 1.5, true));
 		
 		
-	-- test arguments of OclInvalid and java operation binary compatibility
+	-- test arguments of invalid and java operation binary compatibility
 	assert fatal (testEchoArgument('aStr') = 'aStr');
 	assert fatal (testEchoArgument(null) = null);
-	assert fatal (testEchoArgument(OclInvalid) = null);
+	assert fatal (testEchoArgument(invalid) = null);
 	
 	-- test a static java operation in java module class
 
@@ -173,6 +173,17 @@ main() {
 	
 	var shrinkedCollection : Collection(String) := Set { 1 }->shrinkAnotherCollectionToMySize(Sequence { 'a', 'b' });
 	assert fatal (shrinkedCollection->size() = 1 and shrinkedCollection->includes('a'));	
+
+	////////////////////////////////////////////
+	// test library instance state management
+	assert fatal (getLibState().oclIsUndefined());	
+	setLibState("1");
+	assert fatal (getLibState() = "1");
+	setLibState("2");	
+	assert fatal (getLibState() = "2");
+	// test contextual operation with access to the library instance
+	assert fatal ("_End".appendToLibState() = "2_End");
+	assert fatal (getLibState() = "2_End");
 }
 
 helper checkPrimitiveTypeArgResult(r : Sequence(OclAny)) : OclVoid {

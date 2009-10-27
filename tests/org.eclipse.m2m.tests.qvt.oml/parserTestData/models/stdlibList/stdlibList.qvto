@@ -30,7 +30,7 @@ main() {
 	assert fatal ('n' = list->genericListElementAt(size));
 	
 
-	-- OclInvalid not allowed in List 
+	-- invalid not allowed in List 
 	var invalidValue := null.oclAsType(String).toUpper();	
 	assert fatal (invalidValue.oclIsInvalid());
 	

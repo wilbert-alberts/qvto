@@ -32,7 +32,7 @@ main() {
 	
 	var localOrderedSet : OrderedSet(String) := OrderedSet { 'a', 'b' }; 
 	this.propStrOrderedSet += localOrderedSet;
-	this.propStrOrderedSet += OclInvalid;
+	this.propStrOrderedSet += invalid;
 	this.propStrOrderedSet += null;	
 	
 	assert fatal (localOrderedSet->includesAll(this.propStrOrderedSet));
