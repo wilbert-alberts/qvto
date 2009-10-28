@@ -63,9 +63,9 @@ import org.eclipse.ocl.ecore.SendSignalAction;
  * A utility class that enables to execute existing transformation in the
  * specified execution context.
  * 
- * @since 2.0
+ * @since 3.0
  */
-public final class TransformationExecutor {
+public class InternalTransformationExecutor {
 
 	private URI fURI;
 	private EPackage.Registry fPackageRegistry;
@@ -81,7 +81,7 @@ public final class TransformationExecutor {
 	 * @param uri
 	 *            the URI of an existing transformation
 	 */
-	public TransformationExecutor(URI uri) {
+	public InternalTransformationExecutor(URI uri) {
 		if (uri == null) {
 			throw new IllegalArgumentException("null transformation URI"); //$NON-NLS-1$
 		}
@@ -89,7 +89,11 @@ public final class TransformationExecutor {
 		fURI = uri;
 	}
 	
-	public TransformationExecutor(URI uri, EPackage.Registry registry) {
+	public CompiledUnit getUnit() {
+		return fCompiledUnit;
+	}
+	
+	public InternalTransformationExecutor(URI uri, EPackage.Registry registry) {
 		this(uri);
 		
 		if (registry == null) {
@@ -311,7 +315,7 @@ public final class TransformationExecutor {
 		return null;
 	}
 
-	private QvtOperationalEnvFactory getEnvironmentFactory() {
+	protected QvtOperationalEnvFactory getEnvironmentFactory() {
 		return new QvtOperationalEnvFactory();
 	}
 

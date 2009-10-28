@@ -28,7 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
  * 
  * @noextend This class is not intended to be subclassed by clients.
  */
-public final class ExecutionDiagnostic extends BasicDiagnostic {
+public class ExecutionDiagnostic extends BasicDiagnostic {
 
 	/**
 	 * The execution was terminated by failed QVT assertion.

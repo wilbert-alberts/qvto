@@ -33,6 +33,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -77,9 +78,8 @@ public class QVTOCompiler {
 	
     private final Map<URI, CompiledUnit> fSource2Compiled = new HashMap<URI, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
-    
+    private final IMetamodelRegistryProvider fMetamodelRegistryProvider;
     private final UnitResolver fUnitResolver;
-    private final QvtCompilerKernel myKernel;
     private final ResourceSet resourceSet;
     private ResourceSetImpl fExeXMIResourceSet;
     private boolean fUseCompiledXMI = false;
@@ -103,7 +103,9 @@ public class QVTOCompiler {
 	 * @return the compiler instance
 	 */
     public static QVTOCompiler createCompilerWithHistory(UnitResolver importResolver, ResourceSet metamodelResourceSet) { 
-    	return new QVTOCompiler(importResolver, metamodelResourceSet) {
+    	return new QVTOCompiler(importResolver, metamodelResourceSet != null ?
+					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
+					new WorkspaceMetamodelRegistryProvider()) {
     		@Override
     		protected void afterCompileCleanup() {
     			// do nothing as we need to cross-reference cached modules on 
@@ -187,17 +189,11 @@ public class QVTOCompiler {
 		
 		return new CompiledUnit[0];
 	}
-    
-    public static ResourceSet createResourceSet() {
-		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
-		return resourceSet;
-    }
-    
+        
     public QVTOCompiler(UnitResolver unitResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
-	    fUnitResolver = unitResolver;
-	    
-        myKernel = new QvtCompilerKernel(metamodelRegistryProvider);
+	    fUnitResolver = unitResolver;	    
+        fMetamodelRegistryProvider = metamodelRegistryProvider;
+        
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
         		((WorkspaceMetamodelRegistryProvider) metamodelRegistryProvider).getResolutionResourceSet() : 
         			new ResourceSetImpl();
@@ -208,36 +204,9 @@ public class QVTOCompiler {
 			if(uriResourceMap != null) {
 				fExeXMIResourceSet.setURIResourceMap(new HashMap<URI, Resource>(uriResourceMap));	
 			}
-		}
-		
-		// FIXME - setup the package registry to be used for loading ecore files 
-		// referenced in QVTO xmi files			
+		}			
     }
 
-	public QVTOCompiler(UnitResolver importResolver) {
-		this(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
-    }	
-
-	/**
-	 * Constructs QVT compiler using the given resolver and meta-model resource set.
-	 * 
-	 * @param importResolver
-	 *            resolver of compilation unit imports
-	 * @param metamodelResourceSet
-	 *            the resource set into which meta-model nsURI mapped to a resource location
-	 *            are to be loaded. If it is <code>null</code>, a default resource set is created
-	 *            automatically.
-	 *            <p>
-	 *            Note: The meta-models already loaded in the resource set are
-	 *            reused
-	 */
-	public QVTOCompiler(UnitResolver importResolver, ResourceSet metamodelResourceSet) {		
-		this(importResolver, 
-			metamodelResourceSet != null ?
-					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
-						new WorkspaceMetamodelRegistryProvider());
-    }	
-	
 	public void setUseCompiledXMI(boolean flag) {
 		fUseCompiledXMI = flag;
 	}
@@ -318,7 +287,9 @@ public class QVTOCompiler {
     	try {
     		reader = createReader(source);
 	    	
-    		QvtOperationalFileEnv env = new QvtOperationalEnvFactory().createEnvironment(source.getURI(), myKernel);
+    		Registry ePackageRegistry = getEPackageRegistry(source.getURI());
+			QvtOperationalFileEnv env = new QvtOperationalEnvFactory(ePackageRegistry).createEnvironment(source.getURI());
+    		
         	if(options.isEnableCSTModelToken()) {
         		env.setOption(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS, true);
         	}
@@ -626,9 +597,9 @@ public class QVTOCompiler {
 		}
 		return qualifiedName;
 	}
-	
-	public QvtCompilerKernel getKernel() {
-		return myKernel;
+		
+	protected final EPackage.Registry getEPackageRegistry(URI context) {
+		return CompilerUtils.getEPackageRegistry(context, fMetamodelRegistryProvider);
 	}
 	
 	public ResourceSet getResourceSet() {

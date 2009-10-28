@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author aigdalov
@@ -25,7 +24,6 @@ public class QvtCompilerOptions {
     private boolean isSourceLineNumbersEnabled = true;    
     private boolean isModuleWithErrorAllowed = false;
 
-    private ResourceSet myMetamodelResourceSet = null;
     
     public QvtCompilerOptions() {
     	super();
@@ -69,13 +67,13 @@ public class QvtCompilerOptions {
 		return isSourceLineNumbersEnabled;
 	}
 
-    public ResourceSet getMetamodelResourceSet() {
-        return myMetamodelResourceSet;
-    }
+//    public ResourceSet getMetamodelResourceSet() {
+//        return myMetamodelResourceSet;
+//    }
 
-    public void setMetamodelResourceSet(ResourceSet metamodelResourceSet) {
-        myMetamodelResourceSet = metamodelResourceSet;
-    }
+//    public void setMetamodelResourceSet(ResourceSet metamodelResourceSet) {
+//        myMetamodelResourceSet = metamodelResourceSet;
+//    }
     
     public boolean isEnableCSTModelToken() {
 		return isEnableCSTModelToken;

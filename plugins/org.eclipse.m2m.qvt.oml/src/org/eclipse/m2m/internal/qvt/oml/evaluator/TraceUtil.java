@@ -89,7 +89,7 @@ class TraceUtil {
 					if (nextContext == null) {
                         continue;
                     }
-                    if (!isOclEqual(selfObj, nextContext.getValue().getOclObject(), mappingOperation.getContext().getKind())) {
+                    if (!isOclEqual(selfObj, nextContext.getValue().getOclObject(), mappingOperation.getContext().getKind(), evalEnv)) {
                         continue;
                     }
                 }
@@ -106,7 +106,7 @@ class TraceUtil {
                     if (param instanceof VarParameter) {
                     	paramKind = ((VarParameter) param).getKind();
                     }
-                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), paramKind)) {
+                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), paramKind, evalEnv)) {
                         continue traceCheckCycle;
                     }
                 }
@@ -306,7 +306,7 @@ class TraceUtil {
         return list;
     }
 
-    private static boolean isOclEqual(Object candidateObject, Object traceObject, DirectionKind directionKind) {
+    private static boolean isOclEqual(Object candidateObject, Object traceObject, DirectionKind directionKind, QvtOperationalEvaluationEnv evalEnv) {
     	if (directionKind == DirectionKind.OUT) {
     		if (candidateObject == null) {
     			// yet not bound 'out' parameter, suit for any
@@ -316,8 +316,8 @@ class TraceUtil {
         if (candidateObject == traceObject) {
             return true;
         }
-        if (QvtOperationalUtil.isUndefined(candidateObject)) {
-            return QvtOperationalUtil.isUndefined(traceObject);
+        if (QvtOperationalUtil.isUndefined(candidateObject, evalEnv)) {
+            return QvtOperationalUtil.isUndefined(traceObject, evalEnv);
         }
         if ((candidateObject == null) || (traceObject == null)) {
             return false;
@@ -346,7 +346,7 @@ class TraceUtil {
             for (int i = 0, n = resultValues.size(); i < n; i++) {
                 Object paramValue = resultValues.get(i);
                 VarParameterValue traceParamVal = (VarParameterValue) nextRecord.getResult().getResult().get(i);
-                if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), DirectionKind.OUT)) {
+                if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), DirectionKind.OUT, evalEnv)) {
                     return Boolean.FALSE;
                 }
             }

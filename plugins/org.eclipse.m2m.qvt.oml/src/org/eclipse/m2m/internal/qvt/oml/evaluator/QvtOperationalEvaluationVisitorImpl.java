@@ -1542,7 +1542,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return result;
     }
 
-    static class OperationCallResult {
+    protected static class OperationCallResult {
     	public Object myResult;
     	public QvtOperationalEvaluationEnv myEvalEnv;
     	

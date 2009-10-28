@@ -18,9 +18,12 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.types.InvalidType;
+import org.eclipse.ocl.types.VoidType;
 
 /**
  * @author aigdalov
@@ -59,7 +62,7 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
             return (Boolean) conditionVal;
         } else if (conditionVal instanceof EClassifier){
             QvtOperationalEvaluationEnv env = (QvtOperationalEvaluationEnv) getEvalEnvironment();
-            return QvtOperationalUtil.oclIsKindOf(bodyVal, (EClassifier) conditionVal, env);
+            return oclIsKindOf(bodyVal, (EClassifier) conditionVal, env);
         } else {
             setDone(true);
             return null;
@@ -83,4 +86,52 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
         resultingCollection.add(addedElement);
         return resultingCollection;
     }
+    
+    
+    /* TODO Moved these bits from QvtOperationalUtil
+     * Why OCL iskindof, istypeof is not sufficient?
+    */ 
+    private Boolean oclIsKindOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {
+        // regardless of the source value, if the type is undefined, then so
+        //    is oclIsTypeOf
+        if (type == null) {
+            return null;
+        }
+        
+        // OclVoid and Invalid conform to all classifiers but their instances
+        // aren't actually useful as any type but their own.  So, check for
+        // exact type match in these cases
+        if (isUndefined(value)) {
+            return oclIsTypeOf(value, type);
+        }
+
+        return Boolean.valueOf(env.isKindOf(value, type));
+    }
+    
+    private boolean isUndefined(Object value) {
+    	return QvtOperationalUtil.isUndefined(value, getEvalEnvironment());
+    }
+
+    private Boolean oclIsTypeOf(Object value, EClassifier type) {
+        // regardless of the source value, if the type is undefined, then so
+        //    is oclIsTypeOf
+        if (type == null) {
+            return null;
+        }
+        
+        // the type of null is OclVoid
+        // FIXME - may change in OCL 3.0
+        if (value == null) {
+            return Boolean.valueOf(type instanceof VoidType<?>);
+        }
+        
+        // the type of OclInvalid is Invalid
+        if (QvtOperationalUtil.isInvalid(value, getEvalEnvironment())) {
+            return Boolean.valueOf(type instanceof InvalidType<?>);
+        }
+
+        // FIXME
+        EvaluationEnvironment<EClassifier, ?, ?, ?, ?> evalEnv = (EvaluationEnvironment<EClassifier, ?, ?, ?, ?>) getEvalEnvironment();        
+        return Boolean.valueOf(evalEnv.isTypeOf(value, type));
+	}        
 }

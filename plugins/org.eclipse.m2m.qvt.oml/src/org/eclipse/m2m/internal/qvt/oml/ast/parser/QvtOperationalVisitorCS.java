@@ -2701,7 +2701,7 @@ public class QvtOperationalVisitorCS
 			StringLiteralExpCS uriCS = packageRefCS.getUriCS();
 			if (uriCS != null) {
 				String metamodelUri = visitLiteralExpCS(uriCS, env);
-				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<SimpleNameCS>emptyList(), uriCS, resolutionRS);
+				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<SimpleNameCS>emptyList(), uriCS);
 				uriCS.setAst(resolvedMetamodel);
 			}
 			
@@ -2711,7 +2711,7 @@ public class QvtOperationalVisitorCS
 						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
 
 				if (resolvedMetamodel == null) {
-					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSimpleNames(), pathNameCS, resolutionRS);
+					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSimpleNames(), pathNameCS);
 				}
 				else {
 					resolvedMetamodel = checkMetamodelPath(env, resolvedMetamodel, pathNameCS, metamodelName);
@@ -2804,16 +2804,11 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 	
-	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<SimpleNameCS> packagePath,
-			CSTNode cstNode, ResourceSet resolutionRS) throws SemanticException {
+	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<SimpleNameCS> packagePath, CSTNode cstNode) {
 		EPackage resolvedMetamodel = null;
 		String metamodelName = (packagePath.isEmpty() ? metamodelUri : packagePath.toString());
 		try {
-			MetamodelRegistry metamodelRegistry = env.getKernel().getMetamodelRegistry(env.getFile());
-			
-			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(
-					env, metamodelUri, QvtOperationalParserUtil.getSequenceOfNames(packagePath), resolutionRS, 
-					metamodelRegistry, myCompilerOptions);
+			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(env, metamodelUri, QvtOperationalParserUtil.getSequenceOfNames(packagePath));
 			
 			if (registerMetamodels.isEmpty()) {
 				env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
@@ -2831,10 +2826,10 @@ public class QvtOperationalVisitorCS
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_metamodelNameAmbiguous,
 						new Object[] { metamodelName, uriList }), cstNode);
 			}
-		} catch (RuntimeException e) {
-			QvtPlugin.error(e);
+		} catch (RuntimeException e) {			
 			env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 					new Object[] { metamodelName }), cstNode);
+			QvtPlugin.error(e);			
 		}
 		
 		return resolvedMetamodel;

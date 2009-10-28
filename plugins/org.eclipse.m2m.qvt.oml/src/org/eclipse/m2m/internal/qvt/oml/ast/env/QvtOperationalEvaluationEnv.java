@@ -22,8 +22,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -32,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapt
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackTraceBuilder;
@@ -56,7 +59,6 @@ import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
-import org.eclipse.osgi.util.NLS;
 
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
@@ -133,7 +135,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if (CallHandler.Access.hasHandler(operation)) {
 			return true;
 		} 
-		return super.overrides(operation, opcode);
+		// Remark: Prone to cause SOE if running in a deep stack as 
+		// the super implementation calls recursively upto the root
+		// evaluation environment
+		return false;//super.overrides(operation, opcode);
 	}
 
 	@Override
@@ -305,7 +310,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 
         if (myBindings.containsKey(name)) {
-        	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name)); 
+        	String message = NLS.bind("The name: ({0})  already has a binding: ({1})", name, myBindings.get(name));  //$NON-NLS-1$
             throw new IllegalArgumentException(message);
         }
         myBindings.put(name, value);
@@ -429,8 +434,13 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			assert model != null;
 			targetExtent = model.getExtent();			
 		}
-				
-		targetExtent.addObject(newObject);
+		
+		if (isReadonlyGuardEnabled()) {
+			targetExtent.guardAddObject(newObject);
+		}
+		else {
+			targetExtent.addObject(newObject);
+		}
 		return newObject;
 	}
 
@@ -468,13 +478,17 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if(target instanceof ModuleInstance) {
 			ModuleInstance moduleTarget = (ModuleInstance) target;
 			owner = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
-		}		
+		}
 		
 		if (eStructuralFeature instanceof ContextualProperty) {
 			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
 										eStructuralFeature.getEContainingClass(), (ContextualProperty)eStructuralFeature, owner);
 			owner = shadow.getPropertyRuntimeOwner(owner);
 			eStructuralFeature = shadow.getProperty();
+		}
+
+		if (isReadonlyGuardEnabled()) {
+			checkReadonlyGuard(eStructuralFeature, exprValue, owner);
 		}
 		
         if(eStructuralFeature.getEType() instanceof CollectionType) {
@@ -513,27 +527,63 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			if (exprValue instanceof Collection) {
                 for (Object element : (Collection<Object>) exprValue) {
                     if (element != null) {
-                        featureValues.add(ensureTypeCompatibility(element, expectedType));
+                        featureValues.add(ensureTypeCompatibility(element, expectedType, this));
                     }
                 }
 			} else if (!valueIsUndefined) {
-				featureValues.add(ensureTypeCompatibility(exprValue, expectedType));
+				featureValues.add(ensureTypeCompatibility(exprValue, expectedType, this));
 			}
         } else if (!valueIsUndefined || acceptsNullValue(expectedType)) {
 			if (exprValue instanceof Collection) {
                 for (Object element : (Collection<Object>) exprValue) {
                     if (element != null) {
-                    	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType));
+                    	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType, this));
         				break;
                     }
                 }
 			}
 			else {
-				owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType));
+				owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType, this));
 			}
         } else {
         	owner.eUnset(eStructuralFeature);
         }
+	}
+
+	private boolean isReadonlyGuardEnabled() {
+		return getContext().getSessionData() != null
+				&& getContext().getSessionData().getValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED) == Boolean.TRUE;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void checkReadonlyGuard(EStructuralFeature eStructuralFeature, Object exprValue, EObject owner) {
+		EObject auxParent = owner;
+		while (auxParent != null) {
+			ModelParameterExtent.throwIfReadonlyExtent(auxParent);
+			auxParent = auxParent.eContainer();
+		}
+
+		if (eStructuralFeature instanceof EReference && ((EReference) eStructuralFeature).isContainment()) {
+			Collection<EObject> assignedObjects = new ArrayList<EObject>();
+			if (exprValue instanceof EObject) {
+				assignedObjects.add((EObject) exprValue);
+			}
+			else if (exprValue instanceof Collection<?>) {
+				for (Object element : (Collection<Object>) exprValue) {
+					if (element instanceof EObject) {
+						assignedObjects.add((EObject) element);
+					}
+				}
+			}
+			
+			for (EObject eObj : assignedObjects) {
+				auxParent = eObj;
+				while (auxParent != null) {
+					ModelParameterExtent.throwIfReadonlyExtent(auxParent);
+					auxParent = auxParent.eContainer();
+				}
+			}
+		}
 	}
 
 
@@ -557,12 +607,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *            the expected type (may be <code>null</code>)
 	 * @return the converted value
 	 */
-	private Object ensureTypeCompatibility(Object value, Class<?> expectedType) {
+	private Object ensureTypeCompatibility(Object value, Class<?> expectedType, QvtOperationalEvaluationEnv evalEnv) {
 		if ((expectedType == Double.class || expectedType == double.class) && value instanceof Integer) {
 			// In OCL Integer conforms to Real, in Java Integer doesn't conform to Double.
 			return Double.valueOf(((Integer) value).doubleValue());
 		}
-		if (value == QvtOperationalUtil.getOclInvalid()) {
+		if (value == evalEnv.getInvalidResult()) {
 			return null;
 		}
 		
@@ -732,7 +782,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    @Override
 	    public ModelParameterExtent getUnboundExtent() {
 	    	if(myUnboundExtent == null) {
-	    		myUnboundExtent = new ModelParameterExtent(null);
+	    		myUnboundExtent = new ModelParameterExtent();
 	    	}
 	    	return myUnboundExtent;
 	    }
@@ -877,7 +927,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				saveThrownException(exception);
 				exception.setStackQvtTrace(getStackTraceElements());
 			} catch (Exception e) {
-				QvtPlugin.log(QvtPlugin.createErrorStatus("Failed to build QVT stack trace", e)); //$NON-NLS-1$
+				QvtPlugin.error("Failed to build QVT stack trace", e); //$NON-NLS-1$
 			}
 			
 			throw exception;
