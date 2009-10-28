@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -144,7 +143,7 @@ public class LegacyNativeLibSupport {
 
         Object result = libOp.run(source, callArgs, new Object[0], returnClass);
         if (result == null) {
-            return QvtOperationalUtil.getOclInvalid();
+            return QvtOperationalUtil.getInvalid(evalEnv);
         }
         return result;
 	}
