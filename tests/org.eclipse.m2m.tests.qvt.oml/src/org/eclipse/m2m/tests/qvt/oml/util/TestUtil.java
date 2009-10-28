@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -140,7 +141,7 @@ public class TestUtil extends Assert {
 	public static Set<CompiledUnit> compileModules(String srcContainer, String[] modulePaths)  {
 		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		
-		QVTOCompiler compiler = new QVTOCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QVTOCompiler compiler = CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
 		QvtCompilerOptions options = new QvtCompilerOptions();
 		options.setGenerateCompletionData(true);
 		
@@ -172,7 +173,7 @@ public class TestUtil extends Assert {
 	}
 		
 	public static QVTOCompiler createTestPluginQvtCompiler(String sourceContainerPath) {
-		return new QVTOCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
+		return CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
 	}
 	
 	public static void turnOffAutoBuilding() throws CoreException {
@@ -180,6 +181,12 @@ public class TestUtil extends Assert {
         workspaceDescription.setAutoBuilding(false);
         ResourcesPlugin.getWorkspace().setDescription(workspaceDescription);
 	}
+	
+	public static void turnOnAutoBuilding() throws CoreException {
+		IWorkspaceDescription workspaceDescription = ResourcesPlugin.getWorkspace().getDescription();
+        workspaceDescription.setAutoBuilding(true);
+        ResourcesPlugin.getWorkspace().setDescription(workspaceDescription);
+	}	
 	
 	public static void copyFolder(final IProject project, final String folderName) throws Exception {
 		File sourceFolder = getPluginRelativeFolder(folderName);

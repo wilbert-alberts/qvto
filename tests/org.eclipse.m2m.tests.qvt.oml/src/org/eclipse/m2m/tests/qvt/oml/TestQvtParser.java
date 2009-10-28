@@ -31,13 +31,14 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -220,13 +221,13 @@ public class TestQvtParser extends TestCase {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 		getFile(folder, topName);
 		WorkspaceUnitResolver resolver = new WorkspaceUnitResolver(Collections.singletonList(getIFolder(folder)));
-		QVTOCompiler compiler = new QVTOCompiler(resolver);
+		QVTOCompiler compiler = CompilerUtils.createCompiler(resolver);
 		
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setGenerateCompletionData(false);
         
         UnitProxy unit = resolver.resolveUnit(folder.getName());
-		return new CompiledUnit[] { compiler.compile(unit, options, new NullProgressMonitor()) };
+		return new CompiledUnit[] { compiler.compile(unit, options, new BasicMonitor()) };
 	}
 	
 	private static File getFile(File folder, final String expectedName) {

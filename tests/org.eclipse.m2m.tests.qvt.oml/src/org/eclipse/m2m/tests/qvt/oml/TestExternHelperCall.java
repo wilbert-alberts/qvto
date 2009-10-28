@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -57,7 +58,7 @@ public class TestExternHelperCall extends TestCase {
 	protected void setupLibrary(String libraryName) throws MdaException {
 		TestModuleResolver importResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 
-		QVTOCompiler compiler = new QVTOCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QVTOCompiler compiler = CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
 		UnitProxy srcUnit = importResolver.resolveUnit(libraryName);
 		
 		CompiledUnit result = compiler.compile(srcUnit, new QvtCompilerOptions(), null);

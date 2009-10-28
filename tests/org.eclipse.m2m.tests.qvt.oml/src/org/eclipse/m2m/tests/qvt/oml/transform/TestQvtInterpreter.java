@@ -13,9 +13,9 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.HashSet;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
@@ -23,14 +23,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
@@ -129,10 +127,13 @@ public class TestQvtInterpreter extends TestTransformation {
 				        resSet.setPackageRegistry(root);
 			        }
 			        
-					myCompiler = new QVTOCompiler(resolver, new ResourceSetImpl());
-					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
+			        //temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
+					//myCompiler = CompilerUtils.createCompiler(resolver);
         			//return new CompiledUnit(binURI, resSet);
-					return myCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];
+        			
+					myCompiler = QVTOCompiler.createCompiler(resolver, resSet.getPackageRegistry());     
+					// TODO - why not calling the compiler instance directly here?
+					return QVTOCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];        			
 				}
 			};
 
