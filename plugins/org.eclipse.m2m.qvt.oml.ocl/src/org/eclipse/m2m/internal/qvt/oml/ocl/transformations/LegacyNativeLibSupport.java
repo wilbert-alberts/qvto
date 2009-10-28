@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -56,7 +58,7 @@ public class LegacyNativeLibSupport {
         //libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
 		
         QvtOperationalModuleEnv libEnv = initLibEnvironment(lib, libModule);
-		libModule.eResource().setURI(URI.createURI("qvto:/blackboxlib/" + lib.getId()));		
+		libModule.eResource().setURI(URI.createURI("qvto://blackbox/" + lib.getId()));		 //$NON-NLS-1$
         		
 		for (LibraryOperation libOp : lib.getLibraryOperations()) {
 	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);
@@ -75,11 +77,14 @@ public class LegacyNativeLibSupport {
 	}
 		
 	private static QvtOperationalModuleEnv initLibEnvironment(Library lib, Module libModule) {
-		QvtOperationalModuleEnv libEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(libModule);
+		EPackage.Registry registry = new EPackageRegistryImpl();
+		QvtOperationalModuleEnv libEnv = new QvtOperationalEnvFactory(registry).createModuleEnvironment(libModule);
+		
 		EPackage.Registry libEnvRegistry = libEnv.getEPackageRegistry();
-
+		// set our desired stdlib version to be resolved by oclstdlib package name
 		EPackage oclStdlibPackage = libEnv.getOCLStandardLibrary().getOclAny().getEPackage();
 		libEnv.getEPackageRegistry().put(oclStdlibPackage.getNsURI(), oclStdlibPackage);
+		
 		if (lib.getInMetamodels() != null) {
 			for (String mm : lib.getInMetamodels()) {
 				EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(mm);
