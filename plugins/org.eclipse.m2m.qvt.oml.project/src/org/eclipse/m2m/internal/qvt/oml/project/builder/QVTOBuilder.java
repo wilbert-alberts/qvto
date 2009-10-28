@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -31,16 +32,22 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
@@ -49,12 +56,15 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 
 
 
 public class QVTOBuilder extends IncrementalProjectBuilder {
 	
-    public interface BuildListener {
+    public static final String SAVE_AST_XMI = "internal.save.xmi";
+
+	public interface BuildListener {
         void buildPerformed();
     }
 	
@@ -106,7 +116,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			public boolean visit(IResourceProxy proxy) throws CoreException {
 				if (proxy.getType() == IResource.FILE) {
 					if (MDAConstants.QVTO_FILE_EXTENSION.equals(proxy.requestFullPath().getFileExtension())) {
-						proxy.requestResource().deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+						proxy.requestResource().deleteMarkers(QVTOProjectPlugin.PROBLEM_MARKER, true, IResource.DEPTH_INFINITE);
 					}
 					return false;
 				}
@@ -151,7 +161,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
                 					config.setSourceContainer((IFolder)delta.getResource());
                 					config.save();
                 				} catch (CoreException e) {
-									QvtPlugin.log(e.getStatus());
+									QvtPlugin.getDefault().log(e.getStatus());
 								}
                 			}
                 		}
@@ -206,18 +216,24 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			}
 			
 	        WorkspaceUnitResolver resolver = WorkspaceUnitResolver.getResolver(getProject());	        
-	        QVTOCompiler compiler = new QVTOCompiler(resolver);
+	        QVTOCompiler compiler = CompilerUtils.createCompiler(resolver);
 	        
 	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
 
 	        units = compiler.compile(allUnits.toArray(new UnitProxy[allUnits.size()]),
-						options, new SubProgressMonitor(monitor, 1));
+						options, new BasicMonitor.EclipseSubProgress(monitor, 1));
+	        
+	        if(shouldSaveXMI()) {
+	        	ResourceSet metamodelResourceSet = compiler.getResourceSet();
+	        	Registry registry = MetamodelURIMappingHelper.mappingsToEPackageRegistry(getProject(), metamodelResourceSet);
+	        	ExeXMISerializer.saveUnitXMI(units, registry != null ? registry : EPackage.Registry.INSTANCE);
+	        }
 		}
 		catch(OperationCanceledException e) {
 			throw e;
 		}
 		catch (Exception e) {
-			throw new CoreException(QvtPlugin.createErrorStatus(e));
+			throw new CoreException(QVTOProjectPlugin.createStatus(IStatus.ERROR, e.getMessage(), e));
 		}
 		
         for (int i = 0; i < units.length; i++) {                    
@@ -272,7 +288,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
         try {
         	srcContainer = QVTOBuilderConfig.getConfig(getProject()).getSourceContainer();
         } catch (CoreException e) {
-        	QvtPlugin.log(e.getStatus());
+        	QvtPlugin.getDefault().log(e.getStatus());
 		}
         
         if(srcContainer == null || !srcContainer.exists()) {
@@ -312,12 +328,27 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     public static void removeBuildListener(final BuildListener l) {
         ourListeners.remove(l);
     }
-    
-    
+        
     private static void fireBuildEvent() {
         for (BuildListener l : ourListeners) {
             l.buildPerformed();
         }
+    }
+
+    private boolean shouldSaveXMI() {
+		try {
+			ICommand buildCommand = NatureUtils.findCommand(getProject(), QVTOProjectPlugin.BUILDER_ID);
+			if(buildCommand != null) {
+				Map<?, ?> arguments = buildCommand.getArguments();
+				// Remark: internal option for saving xmi, used for testing at the moment
+				Object strValue = arguments.get(SAVE_AST_XMI); //$NON-NLS-1$
+				return Boolean.valueOf(String.valueOf(strValue));
+			}
+		} catch (CoreException e) {
+			QVTOProjectPlugin.log(e);
+		}
+
+		return false;		
     }
 
 }
