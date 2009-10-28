@@ -12,6 +12,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -83,7 +84,10 @@ public class RegisteredMetamodelCollector extends AbstractMetamodelCollector {
 			monitor = new NullProgressMonitor();
 		}
 		monitor.beginTask(Messages.RegisteredMetamodelCollector_RetrievingMetamodelsTaskName, metamodelIds.length);
+		
 		List<String> rootPackages = new ArrayList<String>();
+		Collection<Object> activeMetamodelURIs = Arrays.asList(data.getEnvironment().getEPackageRegistry().keySet().toArray());		
+		
 		for (String id : metamodelIds) {
 			try {
 				IMetamodelDesc metamodelDesc = metamodelRegistry.getMetamodelDesc(id);
@@ -93,8 +97,9 @@ public class RegisteredMetamodelCollector extends AbstractMetamodelCollector {
 				while (pack.getESuperPackage() != null) {
                     pack = pack.getESuperPackage(); 
                 }
+				
 				if (!rootPackages.contains(pack) 
-				        && (data.getEnvironment().getEPackageRegistry().getEPackage(pack.getNsURI()) == null)) {
+				        && (!activeMetamodelURIs.contains(pack.getNsURI()))) {
 		            String proposalString = getProposalString(data, pack);
 				    rootPackages.add(proposalString);
 				}

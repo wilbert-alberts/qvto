@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.IKeywordHandler;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.KeywordHandlerRegistry;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
@@ -53,8 +54,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     private final Map<URI, CFileData> myCFileDataMap = new LinkedHashMap<URI, CFileData>();
     private QvtOperationalEnv myEnvironment;
 
-    public QvtCompletionCompiler(UnitResolver importResolver, QvtCompletionData data) {
-        super(importResolver);
+    public QvtCompletionCompiler(UnitResolver importResolver, IMetamodelRegistryProvider metamodelProvider, QvtCompletionData data) {
+        super(importResolver, metamodelProvider);
         myData = data;
     }
     
@@ -69,7 +70,9 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         }
         Reader reader = createReader(unit);
         
-        QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory().createEnvironment(unit.getURI(), getKernel()));
+		QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory(
+				getEPackageRegistry(unit.getURI())).createEnvironment(unit.getURI()));
+        
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
@@ -90,17 +93,10 @@ public class QvtCompletionCompiler extends QVTOCompiler {
       return super.createReader(source);
     }
     
-//    private Reader getCFileReader(URI unitURI) throws IOException, BadLocationException {
-//        if (unitURI == myData.getCFile()) {
-//            String documentText = myData.getDocument().get();
-//            return new StringReader(documentText);
-//        }
-//        return CFileUtil.getReader(unitURI);
-//    }
-    
     public QvtOperationalEnv compileAll() {
         if (myEnvironment == null) {
-            myEnvironment = new QvtOperationalEnvFactory().createEnvironment(myData.getCFile().getURI(), getKernel());
+            URI uri = this.myData.getCFile().getURI();
+			myEnvironment = new QvtOperationalEnvFactory(getEPackageRegistry(uri)).createEnvironment(uri);
 
             QvtCompilerOptions options = new QvtCompilerOptions();
             options.setReportErrors(false);
