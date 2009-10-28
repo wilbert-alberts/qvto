@@ -4520,7 +4520,7 @@ public class QvtOperationalVisitorCS
         // Thus, this implementation assigns false to Booleans, Invalid to OclInvalids and nulls to abstract collections.
         EClassifier resolvedType = env.getTypeResolver().resolve(type);
         OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
-        if (resolvedType == oclStdLib.getInvalid()) {
+        if (resolvedType == oclStdLib.getOclInvalid()) {
             InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
             invalidLiteralExp.setType(oclStdLib.getOclInvalid());
             return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;

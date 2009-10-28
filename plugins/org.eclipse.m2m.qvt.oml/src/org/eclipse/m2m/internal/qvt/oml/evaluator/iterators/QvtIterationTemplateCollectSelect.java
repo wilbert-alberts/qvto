@@ -41,7 +41,7 @@ extends QvtImperativeIteratorTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS,
         }
         Boolean conditionOk = isConditionOk(condition, bodyVal);
         if (conditionOk == null) {
-            return getOclInvalid();
+            return getInvalid();
         }
         if (!conditionOk) {
             return getEvalEnvironment().getValueOf(resultName);

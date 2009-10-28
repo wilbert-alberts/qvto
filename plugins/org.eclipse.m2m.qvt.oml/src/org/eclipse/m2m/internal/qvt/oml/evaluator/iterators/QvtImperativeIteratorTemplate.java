@@ -73,9 +73,9 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
     protected Object returnCheckedEvaluationResult(Object addedElement, boolean isOne, String resultName) {
         // If the body result is invalid then the entire expression's value
         // is invalid, because OCL does not permit OclInvalid in a collection
-        if (addedElement == getOclInvalid()) {
+        if (addedElement == getInvalid()) {
             setDone(true);
-            return getOclInvalid();
+            return getInvalid();
         }
         if (isOne) {
             setDone(true);

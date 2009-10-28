@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -66,6 +65,11 @@ public class QvtOperationalUtil {
 		return internEnv != null && (value == internEnv.getInvalid());
 	}
 	
+	public static Object getInvalid(EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv) {
+		InternalEvaluationEnv internEnv = OCLUtil.getAdapter(evalEnv, InternalEvaluationEnv.class);
+		return internEnv != null ? internEnv.getInvalid() : null;
+	}	
+	
 	public static boolean isUndefined(Object value, EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv) {
 		return value == null || isInvalid(value, evalEnv);
 	}
@@ -74,10 +78,6 @@ public class QvtOperationalUtil {
 		return isPrimitiveType(type) || type instanceof EDataType;
 	}
 
-	public static Object getOclInvalid() {
-		return ourOclInvalid;
-	}
-		
 	public static boolean isPrimitiveType(Object type) {
 		return type instanceof PrimitiveType<?>;
 	}
@@ -165,10 +165,6 @@ public class QvtOperationalUtil {
     	return false;
     }
     
-    /**
-     * FIXME - eliminate this hack, there is no guarantee of StdLib singleton in MDT OCL !!! 
-     */    
-	private static final Object ourOclInvalid = QvtOperationalEnvFactory.INSTANCE.createEnvironment().getOCLStandardLibrary().getOclInvalid();
 
 	public static void reportError(Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
 			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,

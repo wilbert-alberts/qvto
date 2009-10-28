@@ -17,6 +17,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -25,16 +26,15 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.ocl.types.OCLStandardLibrary;
-import org.eclipse.osgi.util.NLS;
 
 class JavaMethodHandlerFactory {
 	
 	private static int FAILURE_COUNT_TOLERANCE = 5;
 	
-	final private Object fOclInvalid;
+	final private Object fInvalid;
 	
 	JavaMethodHandlerFactory(OCLStandardLibrary<EClassifier> oclStdLib) {
-		fOclInvalid = oclStdLib.getOclInvalid();
+		fInvalid = oclStdLib.getInvalid();
 	}
 	
 	CallHandler createHandler(Method method) {
@@ -47,7 +47,7 @@ class JavaMethodHandlerFactory {
 	}
 	
 	private Object getInvalidResult() {
-		return fOclInvalid;
+		return fInvalid;
 	}
 		
 	private class Handler implements CallHandler {
@@ -89,17 +89,17 @@ class JavaMethodHandlerFactory {
 			}
 			catch (IllegalArgumentException e) {
 				fFatalErrorCount++;
-				QvtPlugin.logError(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);
+				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);
 				return CallHandlerAdapter.getInvalidResult(evalEnv);			
 			} 
 			catch (IllegalAccessException e) {
 				fFatalErrorCount++;				
-				QvtPlugin.logError(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
+				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			} 
 			catch (InvocationTargetException e) {
 				fFatalErrorCount++;
-				QvtPlugin.logError(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
+				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
 				// should not happen at all, as we do not support QVT exception in signature yet
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			} finally {
