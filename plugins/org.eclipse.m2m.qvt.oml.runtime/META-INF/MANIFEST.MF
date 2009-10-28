@@ -2,12 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.runtime; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime;x-internal:=true,
- org.eclipse.m2m.internal.qvt.oml.runtime.ant;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.runtime.generator;x-friends:="org.eclipse.m2m.tests.qvt.oml",
  org.eclipse.m2m.internal.qvt.oml.runtime.launch;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,org.eclipse.m2m.tests.qvt.oml",
  org.eclipse.m2m.internal.qvt.oml.runtime.project;
@@ -20,11 +19,10 @@ Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime;x-internal:=true,
  org.eclipse.m2m.qvt.oml.runtime.util
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.variables;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.ui.externaltools;bundle-version="[3.2.0,4.0.0)",
  org.eclipse.debug.core;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)",
  org.apache.ant;bundle-version="[1.7.1,2.0.0)",
- org.eclipse.m2m.qvt.oml;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.m2m.qvt.oml.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy

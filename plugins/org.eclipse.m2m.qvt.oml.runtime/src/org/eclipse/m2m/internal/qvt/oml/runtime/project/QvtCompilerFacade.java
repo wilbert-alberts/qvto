@@ -14,14 +14,15 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 
@@ -76,8 +77,9 @@ public class QvtCompilerFacade {
 				throw new MdaException("Failed to resolve compilation unit: " + ifile); //$NON-NLS-1$
 			}			
 
-			final QVTOCompiler compiler = new QVTOCompiler(sourceUnit.getResolver());
-			final CompiledUnit module = compiler.compile(sourceUnit, compilerOptions, new SubProgressMonitor(monitor, 0));
+			final QVTOCompiler compiler = CompilerUtils.createCompiler(sourceUnit.getResolver());
+			final CompiledUnit module = compiler.compile(sourceUnit, compilerOptions, 
+					new BasicMonitor.EclipseSubProgress(monitor, 0));
 			
 			return new CompilationResult() {
 				public CompiledUnit getCompiledModule() {

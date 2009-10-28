@@ -128,7 +128,7 @@ public class QvtoTransformationHelper {
         	
         	QvtCompilerOptions options = new QvtCompilerOptions();
         	options.setGenerateCompletionData(false);
-        	options.setMetamodelResourceSet(wrappedMetamodelResourceSet);
+        	//options.setMetamodelResourceSet(wrappedMetamodelResourceSet);
         	transf.setQvtCompilerOptions(options);
         	
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
