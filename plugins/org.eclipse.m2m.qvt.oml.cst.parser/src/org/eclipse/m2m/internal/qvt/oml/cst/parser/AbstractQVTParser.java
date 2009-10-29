@@ -504,20 +504,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return simpleNameCS;
 	}
 	
-	private PathNameCS createParentPath(PathNameCS pathNameCS) {
-		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-		result.getSimpleNames().addAll(pathNameCS.getSimpleNames());
-		result.setStartOffset(pathNameCS.getStartOffset());
-		if (result.getSimpleNames().size() > 0) {
-			String lastSegment = result.getSimpleNames().remove(result.getSimpleNames().size()-1).getValue();
-			result.setEndOffset(pathNameCS.getEndOffset()-lastSegment.length());
-		}
-		else {
-			result.setEndOffset(pathNameCS.getEndOffset());
-		}
-		return result;
-	}
-
 	protected final CSTNode createAssignStatementCS(OCLExpressionCS sym, OCLExpressionCS sym2,
 			boolean b) {
 				AssignStatementCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createAssignStatementCS();
@@ -580,40 +566,35 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createMappingCallExpCS(PathNameCS sym, EList<OCLExpressionCS> arguments,
-			boolean b) {
-				MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
-				if (sym.getSimpleNames().size() > 1) {
-					result.setSource(createParentPath(sym));
-				}
-				if (sym.getSimpleNames().size() > 0) {
-					String lastSegment = sym.getSimpleNames().get(sym.getSimpleNames().size()-1).getValue();
-					SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-					nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length() + 1);
-					nameCS.setEndOffset(sym.getEndOffset());
-					result.setSimpleNameCS(nameCS);
-				}		
-				result.getArguments().addAll(arguments);
-				result.setStrict(b);
-				result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
-				return result;
-			}
+	protected final CSTNode createMappingCallExpCS(PathNameCS pathNameCS, EList<OCLExpressionCS> arguments, boolean b) {
+		MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
+		if (pathNameCS.getSimpleNames().size() > 0) {
+			SimpleNameCS simpleNameCS = pathNameCS.getSimpleNames().get(pathNameCS.getSimpleNames().size()-1);
+			result.setSimpleNameCS(simpleNameCS);
+		}		
+		if (pathNameCS.getSimpleNames().size() > 0) {
+			result.setSource(pathNameCS);
+		}
+		result.getArguments().addAll(arguments);
+		result.setStrict(b);
+		result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
+		return result;
+	}
 
-	protected final CSTNode createResolveOpArgsExpCS(IToken target, TypeCS typeCS,
-			OCLExpressionCS condition) {
-			    ResolveOpArgsExpCS resolveOpArgsExpCS = TempFactory.eINSTANCE.createResolveOpArgsExpCS();
-			    VariableCS variableCS = CSTFactory.eINSTANCE.createVariableCS();
-			    variableCS.setTypeCS(typeCS);
-			    if (target == null) {
-					setOffsets(variableCS, typeCS);
-			    } else {
-			        variableCS.setName(target.toString());
-					setOffsets(variableCS, target, typeCS);
-			    }
-			    resolveOpArgsExpCS.setTarget(variableCS);
-			    resolveOpArgsExpCS.setCondition(condition);
-			    return resolveOpArgsExpCS;
-			}
+	protected final CSTNode createResolveOpArgsExpCS(IToken target, TypeCS typeCS, OCLExpressionCS condition) {
+	    ResolveOpArgsExpCS resolveOpArgsExpCS = TempFactory.eINSTANCE.createResolveOpArgsExpCS();
+	    VariableCS variableCS = CSTFactory.eINSTANCE.createVariableCS();
+	    variableCS.setTypeCS(typeCS);
+	    if (target == null) {
+			setOffsets(variableCS, typeCS);
+	    } else {
+	        variableCS.setName(target.toString());
+			setOffsets(variableCS, target, typeCS);
+	    }
+	    resolveOpArgsExpCS.setTarget(variableCS);
+	    resolveOpArgsExpCS.setCondition(condition);
+	    return resolveOpArgsExpCS;
+	}
 
 	protected final CSTNode createResolveExpCS(IToken lateToken, IToken opCode, ResolveOpArgsExpCS resolveOpArgsExpCS) {
 	    return populateResolveExpCS(org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveExpCS(), 
