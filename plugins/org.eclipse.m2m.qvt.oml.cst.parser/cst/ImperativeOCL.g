@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.27.2.1 2009/10/27 09:18:34 sboyko Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.27.2.2 2009/10/29 08:50:31 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -99,7 +99,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.27.2.1 2009/10/27 09:18:34 sboyko Exp $
+ * $Id: ImperativeOCL.g,v 1.27.2.2 2009/10/29 08:50:31 sboyko Exp $
  */
 	./
 $End
@@ -438,8 +438,6 @@ $Rules
 	
 	-- ForExp begin
 
-	--LoopExpCS -> forExpCS
-
 	IteratorExpCS ::= primaryExpCS '->' forExpCS
 		/.$BeginJava
 					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
@@ -618,13 +616,11 @@ $Rules
 		  $EndJava
 		./
 
-	--primaryExpCS -> IfExpCS
 	----- ifExp (end) -----
 
 	----- switch -----
 
 	primaryExpCS -> switchExpCS
-	LoopExpCS -> iterateSwitchExpCS
 
 	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginJava
@@ -669,32 +665,35 @@ $Rules
 		  $EndJava
 		./
 
-	iterateSwitchExpCS ::= switch '(' switchDeclaratorCS ')' switchBodyExpCS
+	-- 'collect' shorthand for switch keyword 
+	IterateExpCS ::= primaryExpCS '->' switch '(' switchDeclaratorCS ')' switchBodyExpCS
 		/.$BeginJava
-					Object[] switchBody = (Object[]) $getSym(5);
+					Object[] switchBody = (Object[]) $getSym(7);
 
 					OCLExpressionCS switchExpCS = (OCLExpressionCS) createSwitchExpCS(
 							(EList<SwitchAltExpCS>) switchBody[0],
 							(OCLExpressionCS) switchBody[1]							
 						);
 					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
-						setOffsets(switchExpCS, getIToken($getToken(1)), (IToken) switchBody[2]);
+						setOffsets(switchExpCS, getIToken($getToken(3)), (IToken) switchBody[2]);
 					} else if (switchBody[2] instanceof CSTNode) { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+						setOffsets(switchExpCS, getIToken($getToken(3)), (CSTNode) switchBody[2]);
 					} else { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(1)), getIToken($getToken(4)));
+						setOffsets(switchExpCS, getIToken($getToken(3)), getIToken($getToken(6)));
 					}
 
 					EList<VariableCS> iterators = new BasicEList<VariableCS>();
-					iterators.add((VariableCS) $getSym(3));
-					CSTNode result = createImperativeIterateExpCS(
+					iterators.add((VariableCS) $getSym(5));
+					CallExpCS result = createImperativeIterateExpCS(
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"), //$NON-NLS-1$
 							iterators,
 							null,
 							switchExpCS,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+						
+					result.setSource((OCLExpressionCS) $getSym(1));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
 					
 					$setResult(result);
 		  $EndJava

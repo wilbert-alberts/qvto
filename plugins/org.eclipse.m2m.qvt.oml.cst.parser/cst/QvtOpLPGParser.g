@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.52.4.1 2009/10/27 09:18:34 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.52.4.2 2009/10/29 08:50:31 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -154,7 +154,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.52.4.1 2009/10/27 09:18:34 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.52.4.2 2009/10/29 08:50:31 sboyko Exp $
  */
 	./
 $End
@@ -1682,18 +1682,6 @@ $Rules
 		  $EndJava
 		./
 
-	--FeatureCallExpCS ::= simpleNameCS '::' simpleNameCS '(' argumentsCSopt ')'
-	--	/.$BeginJava
-	--				CSTNode result = createFeatureFQNOperationCallExpCS(
-	--						(SimpleNameCS)$getSym(1),
-	--						(SimpleNameCS)$getSym(3),
-	--						(EList)$getSym(5)
-	--					);
-	--				setOffsets(result, (SimpleNameCS)$getSym(1), getIToken($getToken(6)));
-	--				$setResult(result);
-	--	  $EndJava
-	--	./
-
 	-- Resolve family starts here
 
 	resolveConditionOpt ::= $empty
@@ -1914,7 +1902,6 @@ $Rules
 		  $EndJava
 		./
 
-	--FeatureCallExpCS -> featureMappingCallExpCS
 	primaryExpCS -> mappingCallExpCS
     
 	primaryExpCS -> outExpCS 

@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.2 2009/10/29 07:17:23 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.2 2009/10/29 07:17:23 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.2 2009/10/29 07:17:23 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.2 2009/10/29 07:17:23 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -187,9 +187,9 @@ public interface QvtOpLPGParsersym {
       TK_static = 93,
       TK_OclMessage = 181,
       TK_end = 100,
-      TK_while = 53,
+      TK_while = 54,
       TK_out = 109,
-      TK_object = 54,
+      TK_object = 55,
       TK_transformation = 112,
       TK_import = 142,
       TK_library = 113,
@@ -206,10 +206,10 @@ public interface QvtOpLPGParsersym {
       TK_opposites = 143,
       TK_population = 125,
       TK_map = 50,
-      TK_new = 55,
+      TK_new = 56,
       TK_xmap = 51,
       TK_late = 52,
-      TK_log = 56,
+      TK_log = 57,
       TK_assert = 62,
       TK_with = 144,
       TK_resolve = 65,
@@ -231,7 +231,7 @@ public interface QvtOpLPGParsersym {
       TK_result = 35,
       TK_main = 89,
       TK_this = 36,
-      TK_switch = 57,
+      TK_switch = 53,
       TK_case = 126,
       TK_xselect = 149,
       TK_xcollect = 150,
@@ -313,11 +313,11 @@ public interface QvtOpLPGParsersym {
                  "map", //$NON-NLS-1$
                  "xmap", //$NON-NLS-1$
                  "late", //$NON-NLS-1$
+                 "switch", //$NON-NLS-1$
                  "while", //$NON-NLS-1$
                  "object", //$NON-NLS-1$
                  "new", //$NON-NLS-1$
                  "log", //$NON-NLS-1$
-                 "switch", //$NON-NLS-1$
                  "compute", //$NON-NLS-1$
                  "break", //$NON-NLS-1$
                  "continue", //$NON-NLS-1$

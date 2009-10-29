@@ -93,8 +93,10 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+import org.eclipse.ocl.cst.IsMarkedPreCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.OperationCallExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -545,12 +547,21 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 	
-	protected final CSTNode createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
+	protected final ImperativeOperationCallExpCS createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
 		ImperativeOperationCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createImperativeOperationCallExpCS();
 		return setupImperativeOperationCallExpCS(moduleName, operationName,	arguments, result);
 	}
+	
+	@Override
+	protected OperationCallExpCS createDotOperationCallExpCS(OCLExpressionCS oclExpressionCs, PathNameCS pathNameCs,
+			SimpleNameCS simpleNameCS, IsMarkedPreCS isMarkedPreCs,	EList<OCLExpressionCS> arguments) {
+		if (oclExpressionCs == null && pathNameCs != null && pathNameCs.getSimpleNames().size() == 1) {
+			return createFeatureFQNOperationCallExpCS(pathNameCs.getSimpleNames().get(0), simpleNameCS, arguments);
+		}
+		return super.createDotOperationCallExpCS(oclExpressionCs, pathNameCs, simpleNameCS, isMarkedPreCs, arguments);
+	}
 
-	private CSTNode setupImperativeOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments,
+	private ImperativeOperationCallExpCS setupImperativeOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments,
 			ImperativeOperationCallExpCS result) {
 		result.setModule(moduleName);
 		result.setSimpleNameCS(operationName);

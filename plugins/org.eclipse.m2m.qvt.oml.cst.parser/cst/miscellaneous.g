@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.31.4.1 2009/10/27 09:18:34 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.31.4.2 2009/10/29 08:50:31 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -248,7 +248,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.31.4.1 2009/10/27 09:18:34 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.31.4.2 2009/10/29 08:50:31 sboyko Exp $
  */
 	./
 $End
@@ -810,33 +810,6 @@ $Rules
 	--=== OCL grammar error recovery extensions (end) ===--
 
 		
-	--=== OCL grammar workarounds (start) ===--
-	----- error in OCLLPGParser.g in definition of type-argued calls (start) -----
-	--OperationCallExpCS ::= oclAsType isMarkedPreCS '(' typeCS ')'
-	--	/.$NewCase./
-	--OperationCallExpCS ::= oclIsKindOf isMarkedPreCS '(' typeCS ')'
-	--	/.$NewCase./
-	--OperationCallExpCS ::= oclIsTypeOf isMarkedPreCS '(' typeCS ')'
-	--	/.$BeginJava
-	--				SimpleNameCS simpleNameCS = createSimpleNameCS(
-	--							SimpleTypeEnum.IDENTIFIER_LITERAL,
-	--							getTokenText($getToken(1))
-	--						);
-	--				setOffsets(simpleNameCS, getIToken($getToken(1)));
-	--				EList params = new BasicEList();
-	--				params.add($getSym(4));
-	--				CSTNode result = createOperationCallExpCS(
-	--						simpleNameCS,
-	--						(IsMarkedPreCS)$getSym(2),
-	--						params
-	--					);
-	--				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-	--				$setResult(result);
-	--	  $EndJava
-	--	./
-	----- error in OCLLPGParser.g in definition of type-argued calls (end) -----
-	--=== OCL grammar workarounds (end) ===--
-
 	--=== Miscellaneous QVTO grammar rules (start) ===--
 	qvtIdentifierCS -> simpleNameCS
 	--qvtIdentifierCS -> CollectionTypeIdentifierCS
