@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -86,7 +86,7 @@ public interface LightweightTypeParsersym {
       TK_LESS_EQUAL = 85,
       TK_NOT_EQUAL = 94,
       TK_LPAREN = 1,
-      TK_RPAREN = 2,
+      TK_RPAREN = 3,
       TK_LBRACE = 77,
       TK_RBRACE = 78,
       TK_LBRACKET = 95,
@@ -240,7 +240,7 @@ public interface LightweightTypeParsersym {
       TK_inherits = 169,
       TK_merges = 170,
       TK_disjuncts = 171,
-      TK_IDENTIFIER = 3,
+      TK_IDENTIFIER = 2,
       TK_init = 172,
       TK_ERROR_TOKEN = 4,
       TK_EOF_TOKEN = 117;
@@ -248,8 +248,8 @@ public interface LightweightTypeParsersym {
       public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
                  "LPAREN", //$NON-NLS-1$
-                 "RPAREN", //$NON-NLS-1$
                  "IDENTIFIER", //$NON-NLS-1$
+                 "RPAREN", //$NON-NLS-1$
                  "ERROR_TOKEN", //$NON-NLS-1$
                  "false", //$NON-NLS-1$
                  "null", //$NON-NLS-1$
