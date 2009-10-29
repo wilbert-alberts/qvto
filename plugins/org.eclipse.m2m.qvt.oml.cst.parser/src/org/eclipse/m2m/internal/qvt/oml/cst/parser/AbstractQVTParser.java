@@ -566,6 +566,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			if (isAtPre(isMarkedPreCS)) {
 				result.setIsMarkedPreCS(isMarkedPreCS);
 			}
+			return result;
 		}
 		return super.createDotOperationCallExpCS(oclExpressionCS, pathNameCs, simpleNameCS, isMarkedPreCS, arguments);
 	}
