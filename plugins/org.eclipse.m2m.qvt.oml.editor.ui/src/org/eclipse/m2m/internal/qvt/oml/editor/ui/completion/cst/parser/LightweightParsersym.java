@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.2 2009/10/29 07:16:48 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.2 2009/10/29 07:16:48 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.2 2009/10/29 07:16:48 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.2 2009/10/29 07:16:48 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.3 2009/10/29 08:50:10 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -175,13 +175,13 @@ public interface LightweightParsersym {
       TK_sortedBy = 33,
       TK_closure = 34,
       TK_end = 100,
-      TK_while = 53,
+      TK_while = 54,
       TK_when = 112,
       TK_var = 61,
-      TK_log = 54,
+      TK_log = 55,
       TK_assert = 62,
       TK_with = 141,
-      TK_switch = 55,
+      TK_switch = 53,
       TK_case = 125,
       TK_xselect = 142,
       TK_xcollect = 143,
@@ -300,9 +300,9 @@ public interface LightweightParsersym {
                  "map", //$NON-NLS-1$
                  "xmap", //$NON-NLS-1$
                  "late", //$NON-NLS-1$
+                 "switch", //$NON-NLS-1$
                  "while", //$NON-NLS-1$
                  "log", //$NON-NLS-1$
-                 "switch", //$NON-NLS-1$
                  "compute", //$NON-NLS-1$
                  "new", //$NON-NLS-1$
                  "break", //$NON-NLS-1$
