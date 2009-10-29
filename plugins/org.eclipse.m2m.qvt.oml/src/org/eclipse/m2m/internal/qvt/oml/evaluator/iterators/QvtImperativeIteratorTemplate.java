@@ -45,7 +45,13 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
             String resultName, OCLExpression<C> condition,
             OCLExpression<C> body, boolean isOne) {
         // evaluate the body of the expression in this environment
-        Object bodyVal = (body == null) ? null : getEvaluationVisitor().visitExpression(body);
+        Object bodyVal = null;
+        if (body != null) {
+        	bodyVal = getEvaluationVisitor().visitExpression(body);
+        }
+        else if (iterators.size() == 1) {
+        	bodyVal = getEvalEnvironment().getValueOf(iterators.get(0).getName());
+        }
 
         advanceTarget(target, bodyVal);
 

@@ -4257,8 +4257,11 @@ public class QvtOperationalVisitorCS
                     astNode.getTarget().setType(resultElementType);
                 }
             }
-            if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
-                astNode.getTarget().setType(sourceCollectionType.getElementType());
+            if (resultElementType == null) {
+            	resultElementType = sourceCollectionType.getElementType();
+                if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
+                	astNode.getTarget().setType(resultElementType);
+                }
             }
         }
         
