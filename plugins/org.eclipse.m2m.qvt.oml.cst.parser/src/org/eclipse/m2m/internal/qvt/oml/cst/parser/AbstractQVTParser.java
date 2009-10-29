@@ -93,6 +93,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+import org.eclipse.ocl.cst.DotOrArrowEnum;
 import org.eclipse.ocl.cst.IsMarkedPreCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
@@ -553,12 +554,20 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 	@Override
-	protected OperationCallExpCS createDotOperationCallExpCS(OCLExpressionCS oclExpressionCs, PathNameCS pathNameCs,
-			SimpleNameCS simpleNameCS, IsMarkedPreCS isMarkedPreCs,	EList<OCLExpressionCS> arguments) {
-		if (oclExpressionCs == null && pathNameCs != null && pathNameCs.getSimpleNames().size() == 1) {
-			return createFeatureFQNOperationCallExpCS(pathNameCs.getSimpleNames().get(0), simpleNameCS, arguments);
+	protected OperationCallExpCS createDotOperationCallExpCS(OCLExpressionCS oclExpressionCS, PathNameCS pathNameCs,
+			SimpleNameCS simpleNameCS, IsMarkedPreCS isMarkedPreCS,	EList<OCLExpressionCS> arguments) {
+		if (pathNameCs != null && pathNameCs.getSimpleNames().size() == 1) {
+			ImperativeOperationCallExpCS result = createFeatureFQNOperationCallExpCS(pathNameCs.getSimpleNames().get(0), simpleNameCS, arguments);
+			if (oclExpressionCS != null) {
+				result.setSource(oclExpressionCS);
+				result.setIsAtomic(true);
+			}
+			result.setAccessor(oclExpressionCS != null ? DotOrArrowEnum.DOT_LITERAL : DotOrArrowEnum.NONE_LITERAL);
+			if (isAtPre(isMarkedPreCS)) {
+				result.setIsMarkedPreCS(isMarkedPreCS);
+			}
 		}
-		return super.createDotOperationCallExpCS(oclExpressionCs, pathNameCs, simpleNameCS, isMarkedPreCs, arguments);
+		return super.createDotOperationCallExpCS(oclExpressionCS, pathNameCs, simpleNameCS, isMarkedPreCS, arguments);
 	}
 
 	private ImperativeOperationCallExpCS setupImperativeOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments,

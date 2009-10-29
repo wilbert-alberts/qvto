@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.31.4.2 2009/10/29 08:50:31 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.31.4.3 2009/10/29 21:38:31 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -248,7 +248,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.31.4.2 2009/10/29 08:50:31 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.31.4.3 2009/10/29 21:38:31 sboyko Exp $
  */
 	./
 $End
@@ -731,32 +731,21 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	--LetExpCS ::= let letExpSubCS3 in qvtErrorToken
-	--	/.$BeginJava
-	--				EList variables = (EList)$getSym(2);
-	--				CSTNode result = createLetExpCS(
-	--						variables,
-	--						createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "") //$NON-NLS-1$
-	--					);
-	--				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
-	--				$setResult(result);
-	--	  $EndJava
-	--	./
+	LetExpCS ::= let letExpSubCS3 in qvtErrorToken
+		/.$BeginJava
+					EList variables = (EList)$getSym(2);
+					CSTNode result = createLetExpCS(
+							variables,
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "") //$NON-NLS-1$
+						);
+					setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+					$setResult(result);
+		  $EndJava
+		./
 
 	--=== // Expressions (end) ===--
 		
 	--=== OCL grammar error recovery extensions (start) ===--
-	--iterContents ::= VariableDeclarationCS '|' qvtErrorToken
-	--	/.$BeginJava
-	--				CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
-	--				setOffsets(fakeCS, getIToken($getToken(3)));
-	--				$setResult(new Object[] {
-	--						$getSym(1),
-	--						null,
-	--						fakeCS
-	--					});
-	--	  $EndJava
-	--	./
 	CallExpCS ::= '.' qvtErrorToken
 		/.$BeginJava
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
@@ -778,35 +767,21 @@ $Rules
 	argumentsCS -> argumentsCS ',' qvtErrorToken
 
 
-	iteratorExpCSToken -> forAll
-	iteratorExpCSToken -> exists
-	iteratorExpCSToken -> isUnique
-	iteratorExpCSToken -> one
-	iteratorExpCSToken -> any
-	iteratorExpCSToken -> collect
-	iteratorExpCSToken -> select
-	iteratorExpCSToken -> reject
-	iteratorExpCSToken -> collectNested
-	iteratorExpCSToken -> sortedBy
-	iteratorExpCSToken -> closure
-
-	--IteratorExpCS ::= iteratorExpCSToken '(' qvtErrorToken
-	--	/.$BeginJava
-	--				SimpleNameCS simpleNameCS = createSimpleNameCS(
-	--							SimpleTypeEnum.KEYWORD_LITERAL,
-	--							getTokenText($getToken(1))
-	--						);
-	--				setOffsets(simpleNameCS, getIToken($getToken(1)));
-	--				CSTNode result = createIteratorExpCS(
-	--						simpleNameCS,
-	--						null,
-	--						null,
-	--						null
-	--					);
-	--				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-	--				$setResult(result);
-	--	  $EndJava
-	--	./
+	IteratorExpCS ::= primaryExpCS '->' iteratorNameCS '(' qvtErrorToken
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					SimpleNameCS simpleNameCS = (SimpleNameCS)$getSym(3);
+					CSTNode result = createIteratorExpCS(
+							source,
+							simpleNameCS,
+							null,
+							null,
+							null
+						);
+					setOffsets(result, source, getIToken($getToken(4)));
+					$setResult(result);
+		  $EndJava
+		./
 	--=== OCL grammar error recovery extensions (end) ===--
 
 		

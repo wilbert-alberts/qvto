@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLPGParsersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -96,7 +96,7 @@ public interface QvtOpLPGParsersym {
       TK_COMMA = 73,
       TK_COLON = 75,
       TK_COLONCOLON = 76,
-      TK_SEMICOLON = 64,
+      TK_SEMICOLON = 72,
       TK_DOT = 43,
       TK_DOTDOT = 118,
       TK_ADD_ASSIGN = 131,
@@ -212,14 +212,14 @@ public interface QvtOpLPGParsersym {
       TK_log = 57,
       TK_assert = 62,
       TK_with = 144,
-      TK_resolve = 65,
-      TK_resolveone = 66,
-      TK_resolveIn = 67,
-      TK_resolveoneIn = 68,
-      TK_invresolve = 69,
-      TK_invresolveone = 70,
-      TK_invresolveIn = 71,
-      TK_invresolveoneIn = 72,
+      TK_resolve = 64,
+      TK_resolveone = 65,
+      TK_resolveIn = 66,
+      TK_resolveoneIn = 67,
+      TK_invresolve = 68,
+      TK_invresolveone = 69,
+      TK_invresolveIn = 70,
+      TK_invresolveoneIn = 71,
       TK_modeltype = 145,
       TK_uses = 146,
       TK_where = 147,
@@ -324,7 +324,6 @@ public interface QvtOpLPGParsersym {
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$
                  "return", //$NON-NLS-1$
-                 "SEMICOLON", //$NON-NLS-1$
                  "resolve", //$NON-NLS-1$
                  "resolveone", //$NON-NLS-1$
                  "resolveIn", //$NON-NLS-1$
@@ -333,6 +332,7 @@ public interface QvtOpLPGParsersym {
                  "invresolveone", //$NON-NLS-1$
                  "invresolveIn", //$NON-NLS-1$
                  "invresolveoneIn", //$NON-NLS-1$
+                 "SEMICOLON", //$NON-NLS-1$
                  "COMMA", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
                  "COLON", //$NON-NLS-1$

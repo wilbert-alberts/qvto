@@ -15,7 +15,7 @@
 *   E.D.Willink - Bug 292112
 * </copyright>
 *
-* $Id: QvtOpLexerprs.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLexerprs.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 /**
 * Complete OCL Lexer
@@ -46,7 +46,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexerprs.java,v 1.79.4.3 2009/10/29 08:50:31 sboyko Exp $
+* $Id: QvtOpLexerprs.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
