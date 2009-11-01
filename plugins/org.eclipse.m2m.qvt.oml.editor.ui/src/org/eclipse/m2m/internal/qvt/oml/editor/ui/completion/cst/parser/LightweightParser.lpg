@@ -31,6 +31,6 @@ $End
 
 
 $Rules
-	QvtLwGoal -> oclExpressionCS
+	QvtLwGoal -> OclExpressionCS
 	QvtLwGoal -> topLevel
 $End

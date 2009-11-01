@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.4 2009/10/29 21:37:16 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -107,25 +107,25 @@ public interface LightweightParsersym {
       TK_class = 132,
       TK_composes = 133,
       TK_constructor = 98,
-      TK_datatype = 159,
-      TK_default = 160,
+      TK_datatype = 158,
+      TK_default = 159,
       TK_derived = 134,
-      TK_do = 161,
-      TK_elif = 162,
-      TK_enum = 163,
-      TK_except = 164,
-      TK_exception = 165,
-      TK_from = 166,
-      TK_literal = 167,
+      TK_do = 160,
+      TK_elif = 161,
+      TK_enum = 162,
+      TK_except = 163,
+      TK_exception = 164,
+      TK_from = 165,
+      TK_literal = 166,
       TK_ordered = 135,
-      TK_primitive = 168,
-      TK_raise = 169,
+      TK_primitive = 167,
+      TK_raise = 168,
       TK_readonly = 136,
       TK_references = 137,
       TK_tag = 99,
-      TK_try = 170,
-      TK_typedef = 171,
-      TK_unlimited = 172,
+      TK_try = 169,
+      TK_typedef = 170,
+      TK_unlimited = 171,
       TK_invalid = 21,
       TK_COLONCOLONEQUAL = 122,
       TK_QUESTIONMARK = 123,
@@ -203,7 +203,7 @@ public interface LightweightParsersym {
       TK_transformation = 113,
       TK_import = 150,
       TK_library = 114,
-      TK_metamodel = 173,
+      TK_metamodel = 172,
       TK_mapping = 101,
       TK_query = 102,
       TK_helper = 103,
@@ -240,9 +240,8 @@ public interface LightweightParsersym {
       TK_inherits = 127,
       TK_merges = 128,
       TK_disjuncts = 129,
-      TK_oclExpressionCS = 157,
       TK_IDENTIFIER = 3,
-      TK_init = 158,
+      TK_init = 157,
       TK_ERROR_TOKEN = 2,
       TK_EOF_TOKEN = 130;
 
@@ -404,7 +403,6 @@ public interface LightweightParsersym {
                  "where", //$NON-NLS-1$
                  "refines", //$NON-NLS-1$
                  "rename", //$NON-NLS-1$
-                 "oclExpressionCS", //$NON-NLS-1$
                  "init", //$NON-NLS-1$
                  "datatype", //$NON-NLS-1$
                  "default", //$NON-NLS-1$

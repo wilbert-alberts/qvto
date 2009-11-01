@@ -93,7 +93,7 @@ public class CompletionProposalUtil {
     
     private static final int[] PREDEFINED_INSTANCES = {
         QvtOpLPGParsersym.TK_null,
-        QvtOpLPGParsersym.TK_OclInvalid,
+        QvtOpLPGParsersym.TK_invalid,
         QvtOpLPGParsersym.TK_true,
         QvtOpLPGParsersym.TK_false
     };
