@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -148,25 +149,9 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 				}
 			}
 		}
-		/*
-		else if(syntaxElement instanceof EnumLiteralExpCS) {
-			if(astObj instanceof EnumLiteralExp == false) {
-				return null;
-			}
-
-			EnumLiteralExpCS enumExpCS = (EnumLiteralExpCS) syntaxElement;
-			EnumLiteralExp enumExpAST = (EnumLiteralExp) enumExpCS.getAst();
-			EEnumLiteral enumLit = enumExpAST.getReferredEnumLiteral();			
-			if(enumLit != null) {
-				CSTNode linkCS = enumExpCS.getSimpleNameCS();
-				if(linkCS == null) {
-					linkCS = enumExpCS;
-				}
-
-				return new EModelElementRef(enumLit, HyperlinkUtil.createRegion(linkCS));
-			}
+		else if(astObj instanceof EEnumLiteral) {
+			return new EModelElementRef((EEnumLiteral) astObj, HyperlinkUtil.createRegion(syntaxElement));
 		}
-		*/
 		
 		return null;
 	}	
