@@ -89,6 +89,9 @@ public final class TransformationExecutor {
 		fURI = uri;
 	}
 	
+	/**
+	 * @since 3.0
+	 */
 	public TransformationExecutor(URI uri, EPackage.Registry registry) {
 		this(uri);
 		
