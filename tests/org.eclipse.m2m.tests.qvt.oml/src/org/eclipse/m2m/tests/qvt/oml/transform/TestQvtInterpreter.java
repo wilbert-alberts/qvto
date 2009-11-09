@@ -13,7 +13,6 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -23,13 +22,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
+import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
@@ -91,7 +92,7 @@ public class TestQvtInterpreter extends TestTransformation {
 		private final EPackage.Registry fRegistry;
 		
 		public DefaultTransformer() {
-			this(false, null);
+			this(true, null);
 		}
 		
 		public DefaultTransformer(boolean executeCompiledAST, EPackage.Registry registry) {
@@ -117,8 +118,8 @@ public class TestQvtInterpreter extends TestTransformation {
 					UnitResolver resolver = factory.getResolver(resourceURI);
 													        
 					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
-			        //URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
-			        //assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
+			        URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
+			        assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
 			    		
 			        ResourceSetImpl resSet = CompiledUnit.createResourceSet();     			
 			        if(fRegistry != null) {
@@ -128,12 +129,12 @@ public class TestQvtInterpreter extends TestTransformation {
 			        }
 			        
 			        //temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
-					//myCompiler = CompilerUtils.createCompiler(resolver);
-        			//return new CompiledUnit(binURI, resSet);
+					myCompiler = CompilerUtils.createCompiler(resolver);
+        			return new CompiledUnit(binURI, resSet);
         			
-					myCompiler = QVTOCompiler.createCompiler(resolver, resSet.getPackageRegistry());     
-					// TODO - why not calling the compiler instance directly here?
-					return QVTOCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];        			
+//					myCompiler = QVTOCompiler.createCompiler(resolver, resSet.getPackageRegistry());     
+//					// TODO - why not calling the compiler instance directly here?
+//					return QVTOCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];        			
 				}
 			};
 

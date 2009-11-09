@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
@@ -22,6 +23,12 @@ public class TestFailedTransformation extends TestTransformation {
 	public TestFailedTransformation(String testName) {
 		this(new FileToFileData(TestDataMapper.getActualTestName(TestQvtInterpreter.PREFIX, testName)));
 	}    
+	
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		buildTestProject();
+	}
     
     @Override
 	public void runTest() throws Exception {
@@ -35,6 +42,7 @@ public class TestFailedTransformation extends TestTransformation {
 			IContext context = getData().getContext();
 			Context newContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 			newContext.setLog(new WriterLog(myLogger));
+			newContext.getSessionData().setValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED, Boolean.TRUE);
 			
 			transformer.transform(
 					getIFile(getData().getTransformation(getProject())),
