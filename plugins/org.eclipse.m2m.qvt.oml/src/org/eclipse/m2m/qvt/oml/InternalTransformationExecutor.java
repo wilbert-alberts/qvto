@@ -304,7 +304,7 @@ public class InternalTransformationExecutor {
 						transformation.getName()));
 	}
 
-	private OperationalTransformation getTransformation() {
+	public OperationalTransformation getTransformation() {
 		List<Module> allModules = fCompiledUnit.getModules();
 		for (Module module : allModules) {
 			if (module instanceof OperationalTransformation) {
