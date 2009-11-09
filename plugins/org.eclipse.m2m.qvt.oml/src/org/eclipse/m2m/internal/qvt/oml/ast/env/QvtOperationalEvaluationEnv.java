@@ -248,6 +248,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *         <code>OclInvalid</code> from this environment;
 	 *         <code>false</code> otherwise
 	 */
+    // FIXME - rename to is isInvalid
     public boolean isOclInvalid(Object value) {
     	return getInvalidResult() == value;
     }
