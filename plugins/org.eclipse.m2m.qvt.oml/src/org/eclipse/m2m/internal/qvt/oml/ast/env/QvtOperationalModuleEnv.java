@@ -21,8 +21,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
@@ -39,13 +40,16 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 
 	private Module myContextModule;	
 	
-	QvtOperationalModuleEnv(EPackage.Registry registry) {
-		super(registry,  new XMIResourceImpl(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
+	QvtOperationalModuleEnv(EPackage.Registry registry, Resource resource) {
+		super(registry, resource != null ?
+				resource : new EcoreResourceFactoryImpl().createResource(URI.createURI("qvto:/module.env"))); //$NON-NLS-1$
 
         // Eliminate parsing warning on "" occurrences, used in model types URIs, etc.
         // TODO - solve in QVT grammar
         setOption(ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
-        setOption(ProblemOption.STRING_CASE_CONVERSION, ProblemHandler.Severity.OK);        
+        setOption(ProblemOption.STRING_CASE_CONVERSION, ProblemHandler.Severity.OK);
+        setOption(ProblemOption.STRING_SINGLE_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
+        setOption(ProblemOption.CONCEPTUAL_OPERATION_NAME, ProblemHandler.Severity.OK);
 	}
 	
 	@Override
@@ -86,7 +90,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		
 		List<ModelParameter> myModelParameters = getModelParameters();
 		for (ModelParameter modelParam : myModelParameters) {
-			if (directionKind == DirectionKind.OUT) {
+			if (directionKind != DirectionKind.IN) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
 				}
@@ -116,7 +120,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		List<ModelParameter> modelParameters = getModelParameters();
 		List<String> result = new ArrayList<String>(modelParameters.size());
 		for (ModelParameter modelParam : modelParameters) {
-			if (directionKind == DirectionKind.OUT) {
+			if (directionKind != DirectionKind.IN) {
 				if (modelParam.getKind() == DirectionKind.IN) {
 					continue;
 				}
@@ -138,7 +142,48 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		return findModelParameter(type, directionKind, getModelParameters());
 	}
 	
+	public ModelParameter resolveModelParameterDeprecated(EClassifier type, DirectionKind directionKind) {
+		if (!isMayBelongToExtent(type)) {
+			return null;
+		}
+		return findModelParameterDeprecated(type, directionKind, getModelParameters());
+	}
+	
 	static ModelParameter findModelParameter(EClassifier type, DirectionKind directionKind, 
+			Collection<ModelParameter> modelParameters) {
+		EObject rootContainer = EcoreUtil.getRootContainer(type);
+		
+		// lookup explicit extent 
+		for (ModelParameter modelParam : modelParameters) {
+			if (directionKind != DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			
+			ModelType modelType = QvtOperationalUtil.getModelType(modelParam);
+			if(modelType != null) {
+				List<EPackage> metamodels = modelType.getMetamodel();
+				if (!metamodels.isEmpty() && rootContainer == metamodels.get(0)) {
+					return modelParam;
+				}
+			}
+		}
+		
+		// lookup implicit extent 
+		for (ModelParameter modelParam : modelParameters) {
+			if (directionKind != DirectionKind.IN) {
+				if (modelParam.getKind() == DirectionKind.IN) {
+					continue;
+				}
+			}
+			return modelParam;
+		}
+		
+		return null;
+	}    
+    
+	static ModelParameter findModelParameterDeprecated(EClassifier type, DirectionKind directionKind, 
 			Collection<ModelParameter> modelParameters) {
 		EObject rootContainer = EcoreUtil.getRootContainer(type);
 		
