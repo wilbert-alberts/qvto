@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.52.4.2 2009/10/29 08:50:31 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.52.4.3 2009/11/11 22:09:50 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -154,7 +154,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.52.4.2 2009/10/29 08:50:31 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.52.4.3 2009/11/11 22:09:50 sboyko Exp $
  */
 	./
 $End
@@ -789,7 +789,7 @@ $Rules
 		/.$NewCase./
 	feature_key ::= static
 		/.$BeginJava
-					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText($getToken(1)));
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -1572,7 +1572,7 @@ $Rules
 	
 	objectDeclCS ::= objectIdentifierCS ':' typespecOpt
 		/.$BeginJava
-				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText($getToken(1)));
+				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getIToken($getToken(1)));
 				setOffsets(varName, getIToken($getToken(1)));
 				CSTNode result = createOutExpCS(varName,(TypeSpecCS)$getSym(3));					
 				$setResult(result);
@@ -1877,7 +1877,7 @@ $Rules
 		./
 	        
 	-- case with no source of resolveIn
-	primaryExpCS -> resolveResolveInExpCS
+	primaryNotNameCS -> resolveResolveInExpCS
     
 	-- Resolve family ends here
 
@@ -1902,17 +1902,17 @@ $Rules
 		  $EndJava
 		./
 
-	primaryExpCS -> mappingCallExpCS
+	primaryNotNameCS -> mappingCallExpCS
     
-	primaryExpCS -> outExpCS 
+	primaryNotNameCS -> outExpCS 
 			
-	simpleIdentifierCS ::= this
+	simpleNameCS ::= this
 		/.$NewCase./
-	simpleIdentifierCS ::= result
+	simpleNameCS ::= result
 		/.$BeginJava
 					CSTNode result = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,
-							getTokenText($getToken(1))
+							getIToken($getToken(1))
 						);
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);

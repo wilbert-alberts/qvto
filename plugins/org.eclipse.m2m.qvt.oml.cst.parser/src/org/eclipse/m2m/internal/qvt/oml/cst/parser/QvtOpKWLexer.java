@@ -14,7 +14,7 @@
 *   E.D.Willink - Bug 285633, 292112
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpKWLexer.java,v 1.79.4.5 2009/11/11 22:09:56 sboyko Exp $
 */
 /**
 * Complete OCL Keyword Lexer
@@ -45,7 +45,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpKWLexer.java,v 1.79.4.5 2009/11/11 22:09:56 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -56,7 +56,7 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 {
     private char[] inputChars;
-    private final int keywordKind[] = new int[133 + 1];
+    private final int keywordKind[] = new int[121 + 1];
 
     public int[] getKeywordKinds() { return keywordKind; }
 
@@ -273,681 +273,609 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
 	  
 	
         //
-        // Rule 20:  KeyWord ::= i t e r a t e
+        // Rule 20:  KeyWord ::= S t r i n g
         //
-		keywordKind[20] = (TK_iterate);
+		keywordKind[20] = (TK_String);
 	  
 	
         //
-        // Rule 21:  KeyWord ::= f o r A l l
+        // Rule 21:  KeyWord ::= I n t e g e r
         //
-		keywordKind[21] = (TK_forAll);
+		keywordKind[21] = (TK_Integer);
 	  
 	
         //
-        // Rule 22:  KeyWord ::= e x i s t s
+        // Rule 22:  KeyWord ::= U n l i m i t e d N a t u r a l
         //
-		keywordKind[22] = (TK_exists);
+		keywordKind[22] = (TK_UnlimitedNatural);
 	  
 	
         //
-        // Rule 23:  KeyWord ::= i s U n i q u e
+        // Rule 23:  KeyWord ::= R e a l
         //
-		keywordKind[23] = (TK_isUnique);
+		keywordKind[23] = (TK_Real);
 	  
 	
         //
-        // Rule 24:  KeyWord ::= a n y
+        // Rule 24:  KeyWord ::= B o o l e a n
         //
-		keywordKind[24] = (TK_any);
+		keywordKind[24] = (TK_Boolean);
 	  
 	
         //
-        // Rule 25:  KeyWord ::= o n e
+        // Rule 25:  KeyWord ::= T u p l e
         //
-		keywordKind[25] = (TK_one);
+		keywordKind[25] = (TK_Tuple);
 	  
 	
         //
-        // Rule 26:  KeyWord ::= c o l l e c t
+        // Rule 26:  KeyWord ::= O c l A n y
         //
-		keywordKind[26] = (TK_collect);
+		keywordKind[26] = (TK_OclAny);
 	  
 	
         //
-        // Rule 27:  KeyWord ::= s e l e c t
+        // Rule 27:  KeyWord ::= O c l V o i d
         //
-		keywordKind[27] = (TK_select);
+		keywordKind[27] = (TK_OclVoid);
 	  
 	
         //
-        // Rule 28:  KeyWord ::= r e j e c t
+        // Rule 28:  KeyWord ::= O c l I n v a l i d
         //
-		keywordKind[28] = (TK_reject);
+		keywordKind[28] = (TK_OclInvalid);
 	  
 	
         //
-        // Rule 29:  KeyWord ::= c o l l e c t N e s t e d
+        // Rule 29:  KeyWord ::= n u l l
         //
-		keywordKind[29] = (TK_collectNested);
+		keywordKind[29] = (TK_null);
 	  
 	
         //
-        // Rule 30:  KeyWord ::= s o r t e d B y
+        // Rule 30:  KeyWord ::= i n v a l i d
         //
-		keywordKind[30] = (TK_sortedBy);
+		keywordKind[30] = (TK_invalid);
 	  
 	
         //
-        // Rule 31:  KeyWord ::= c l o s u r e
+        // Rule 31:  KeyWord ::= i n i t
         //
-		keywordKind[31] = (TK_closure);
+		keywordKind[31] = (TK_init);
 	  
 	
         //
-        // Rule 32:  KeyWord ::= S t r i n g
+        // Rule 32:  KeyWord ::= O c l M e s s a g e
         //
-		keywordKind[32] = (TK_String);
+		keywordKind[32] = (TK_OclMessage);
 	  
 	
         //
-        // Rule 33:  KeyWord ::= I n t e g e r
+        // Rule 33:  KeyWord ::= s t a t i c
         //
-		keywordKind[33] = (TK_Integer);
+		keywordKind[33] = (TK_static);
 	  
 	
         //
-        // Rule 34:  KeyWord ::= U n l i m i t e d N a t u r a l
+        // Rule 35:  QVTKeyWord ::= e n d
         //
-		keywordKind[34] = (TK_UnlimitedNatural);
+		keywordKind[35] = (TK_end);
 	  
 	
         //
-        // Rule 35:  KeyWord ::= R e a l
+        // Rule 36:  QVTKeyWord ::= w h i l e
         //
-		keywordKind[35] = (TK_Real);
+		keywordKind[36] = (TK_while);
 	  
 	
         //
-        // Rule 36:  KeyWord ::= B o o l e a n
+        // Rule 37:  QVTKeyWord ::= o u t
         //
-		keywordKind[36] = (TK_Boolean);
+		keywordKind[37] = (TK_out);
 	  
 	
         //
-        // Rule 37:  KeyWord ::= T u p l e
+        // Rule 38:  QVTKeyWord ::= o b j e c t
         //
-		keywordKind[37] = (TK_Tuple);
+		keywordKind[38] = (TK_object);
 	  
 	
         //
-        // Rule 38:  KeyWord ::= O c l A n y
+        // Rule 39:  QVTKeyWord ::= t r a n s f o r m a t i o n
         //
-		keywordKind[38] = (TK_OclAny);
+		keywordKind[39] = (TK_transformation);
 	  
 	
         //
-        // Rule 39:  KeyWord ::= O c l V o i d
+        // Rule 40:  QVTKeyWord ::= i m p o r t
         //
-		keywordKind[39] = (TK_OclVoid);
+		keywordKind[40] = (TK_import);
 	  
 	
         //
-        // Rule 40:  KeyWord ::= O c l I n v a l i d
+        // Rule 41:  QVTKeyWord ::= l i b r a r y
         //
-		keywordKind[40] = (TK_OclInvalid);
+		keywordKind[41] = (TK_library);
 	  
 	
         //
-        // Rule 41:  KeyWord ::= n u l l
+        // Rule 42:  QVTKeyWord ::= m e t a m o d e l
         //
-		keywordKind[41] = (TK_null);
+		keywordKind[42] = (TK_metamodel);
 	  
 	
         //
-        // Rule 42:  KeyWord ::= i n v a l i d
+        // Rule 43:  QVTKeyWord ::= d i s j u n c t s
         //
-		keywordKind[42] = (TK_invalid);
+		keywordKind[43] = (TK_disjuncts);
 	  
 	
         //
-        // Rule 43:  KeyWord ::= i n i t
+        // Rule 44:  QVTKeyWord ::= m e r g e s
         //
-		keywordKind[43] = (TK_init);
+		keywordKind[44] = (TK_merges);
 	  
 	
         //
-        // Rule 44:  KeyWord ::= O c l M e s s a g e
+        // Rule 45:  QVTKeyWord ::= i n h e r i t s
         //
-		keywordKind[44] = (TK_OclMessage);
+		keywordKind[45] = (TK_inherits);
 	  
 	
         //
-        // Rule 45:  KeyWord ::= s t a t i c
+        // Rule 46:  QVTKeyWord ::= r e t u r n
         //
-		keywordKind[45] = (TK_static);
+		keywordKind[46] = (TK_return);
 	  
 	
         //
-        // Rule 47:  QVTKeyWord ::= e n d
+        // Rule 47:  QVTKeyWord ::= r e n a m e
         //
-		keywordKind[47] = (TK_end);
+		keywordKind[47] = (TK_rename);
 	  
 	
         //
-        // Rule 48:  QVTKeyWord ::= w h i l e
+        // Rule 48:  QVTKeyWord ::= m a p p i n g
         //
-		keywordKind[48] = (TK_while);
+		keywordKind[48] = (TK_mapping);
 	  
 	
         //
-        // Rule 49:  QVTKeyWord ::= o u t
+        // Rule 49:  QVTKeyWord ::= q u e r y
         //
-		keywordKind[49] = (TK_out);
+		keywordKind[49] = (TK_query);
 	  
 	
         //
-        // Rule 50:  QVTKeyWord ::= o b j e c t
+        // Rule 50:  QVTKeyWord ::= h e l p e r
         //
-		keywordKind[50] = (TK_object);
+		keywordKind[50] = (TK_helper);
 	  
 	
         //
-        // Rule 51:  QVTKeyWord ::= t r a n s f o r m a t i o n
+        // Rule 51:  QVTKeyWord ::= i n o u t
         //
-		keywordKind[51] = (TK_transformation);
+		keywordKind[51] = (TK_inout);
 	  
 	
         //
-        // Rule 52:  QVTKeyWord ::= i m p o r t
+        // Rule 52:  QVTKeyWord ::= w h e n
         //
-		keywordKind[52] = (TK_import);
+		keywordKind[52] = (TK_when);
 	  
 	
         //
-        // Rule 53:  QVTKeyWord ::= l i b r a r y
+        // Rule 53:  QVTKeyWord ::= v a r
         //
-		keywordKind[53] = (TK_library);
+		keywordKind[53] = (TK_var);
 	  
 	
         //
-        // Rule 54:  QVTKeyWord ::= m e t a m o d e l
+        // Rule 54:  QVTKeyWord ::= c o n f i g u r a t i o n
         //
-		keywordKind[54] = (TK_metamodel);
+		keywordKind[54] = (TK_configuration);
 	  
 	
         //
-        // Rule 55:  QVTKeyWord ::= d i s j u n c t s
+        // Rule 55:  QVTKeyWord ::= p o p u l a t i o n
         //
-		keywordKind[55] = (TK_disjuncts);
+		keywordKind[55] = (TK_population);
 	  
 	
         //
-        // Rule 56:  QVTKeyWord ::= m e r g e s
+        // Rule 56:  QVTKeyWord ::= i n t e r m e d i a t e
         //
-		keywordKind[56] = (TK_merges);
+		keywordKind[56] = (TK_intermediate);
 	  
 	
         //
-        // Rule 57:  QVTKeyWord ::= i n h e r i t s
+        // Rule 57:  QVTKeyWord ::= p r o p e r t y
         //
-		keywordKind[57] = (TK_inherits);
+		keywordKind[57] = (TK_property);
 	  
 	
         //
-        // Rule 58:  QVTKeyWord ::= r e t u r n
+        // Rule 58:  QVTKeyWord ::= o p p o s i t e s
         //
-		keywordKind[58] = (TK_return);
+		keywordKind[58] = (TK_opposites);
 	  
 	
         //
-        // Rule 59:  QVTKeyWord ::= r e n a m e
+        // Rule 59:  QVTKeyWord ::= c l a s s
         //
-		keywordKind[59] = (TK_rename);
+		keywordKind[59] = (TK_class);
 	  
 	
         //
-        // Rule 60:  QVTKeyWord ::= m a p p i n g
+        // Rule 60:  QVTKeyWord ::= m a p
         //
-		keywordKind[60] = (TK_mapping);
+		keywordKind[60] = (TK_map);
 	  
 	
         //
-        // Rule 61:  QVTKeyWord ::= q u e r y
+        // Rule 61:  QVTKeyWord ::= x m a p
         //
-		keywordKind[61] = (TK_query);
+		keywordKind[61] = (TK_xmap);
 	  
 	
         //
-        // Rule 62:  QVTKeyWord ::= h e l p e r
+        // Rule 62:  QVTKeyWord ::= n e w
         //
-		keywordKind[62] = (TK_helper);
+		keywordKind[62] = (TK_new);
 	  
 	
         //
-        // Rule 63:  QVTKeyWord ::= i n o u t
+        // Rule 63:  QVTKeyWord ::= l a t e
         //
-		keywordKind[63] = (TK_inout);
+		keywordKind[63] = (TK_late);
 	  
 	
         //
-        // Rule 64:  QVTKeyWord ::= w h e n
+        // Rule 64:  QVTKeyWord ::= l o g
         //
-		keywordKind[64] = (TK_when);
+		keywordKind[64] = (TK_log);
 	  
 	
         //
-        // Rule 65:  QVTKeyWord ::= v a r
+        // Rule 65:  QVTKeyWord ::= a s s e r t
         //
-		keywordKind[65] = (TK_var);
+		keywordKind[65] = (TK_assert);
 	  
 	
         //
-        // Rule 66:  QVTKeyWord ::= c o n f i g u r a t i o n
+        // Rule 66:  QVTKeyWord ::= w i t h
         //
-		keywordKind[66] = (TK_configuration);
+		keywordKind[66] = (TK_with);
 	  
 	
         //
-        // Rule 67:  QVTKeyWord ::= p o p u l a t i o n
+        // Rule 67:  QVTKeyWord ::= r e s o l v e
         //
-		keywordKind[67] = (TK_population);
+		keywordKind[67] = (TK_resolve);
 	  
 	
         //
-        // Rule 68:  QVTKeyWord ::= i n t e r m e d i a t e
+        // Rule 68:  QVTKeyWord ::= r e s o l v e o n e
         //
-		keywordKind[68] = (TK_intermediate);
+		keywordKind[68] = (TK_resolveone);
 	  
 	
         //
-        // Rule 69:  QVTKeyWord ::= p r o p e r t y
+        // Rule 69:  QVTKeyWord ::= r e s o l v e I n
         //
-		keywordKind[69] = (TK_property);
+		keywordKind[69] = (TK_resolveIn);
 	  
 	
         //
-        // Rule 70:  QVTKeyWord ::= o p p o s i t e s
+        // Rule 70:  QVTKeyWord ::= r e s o l v e o n e I n
         //
-		keywordKind[70] = (TK_opposites);
+		keywordKind[70] = (TK_resolveoneIn);
 	  
 	
         //
-        // Rule 71:  QVTKeyWord ::= c l a s s
+        // Rule 71:  QVTKeyWord ::= i n v r e s o l v e
         //
-		keywordKind[71] = (TK_class);
+		keywordKind[71] = (TK_invresolve);
 	  
 	
         //
-        // Rule 72:  QVTKeyWord ::= m a p
+        // Rule 72:  QVTKeyWord ::= i n v r e s o l v e o n e
         //
-		keywordKind[72] = (TK_map);
+		keywordKind[72] = (TK_invresolveone);
 	  
 	
         //
-        // Rule 73:  QVTKeyWord ::= x m a p
+        // Rule 73:  QVTKeyWord ::= i n v r e s o l v e I n
         //
-		keywordKind[73] = (TK_xmap);
+		keywordKind[73] = (TK_invresolveIn);
 	  
 	
         //
-        // Rule 74:  QVTKeyWord ::= n e w
+        // Rule 74:  QVTKeyWord ::= i n v r e s o l v e o n e I n
         //
-		keywordKind[74] = (TK_new);
+		keywordKind[74] = (TK_invresolveoneIn);
 	  
 	
         //
-        // Rule 75:  QVTKeyWord ::= l a t e
+        // Rule 75:  QVTKeyWord ::= m o d e l t y p e
         //
-		keywordKind[75] = (TK_late);
+		keywordKind[75] = (TK_modeltype);
 	  
 	
         //
-        // Rule 76:  QVTKeyWord ::= l o g
+        // Rule 76:  QVTKeyWord ::= u s e s
         //
-		keywordKind[76] = (TK_log);
+		keywordKind[76] = (TK_uses);
 	  
 	
         //
-        // Rule 77:  QVTKeyWord ::= a s s e r t
+        // Rule 77:  QVTKeyWord ::= w h e r e
         //
-		keywordKind[77] = (TK_assert);
+		keywordKind[77] = (TK_where);
 	  
 	
         //
-        // Rule 78:  QVTKeyWord ::= w i t h
+        // Rule 78:  QVTKeyWord ::= r e f i n e s
         //
-		keywordKind[78] = (TK_with);
+		keywordKind[78] = (TK_refines);
 	  
 	
         //
-        // Rule 79:  QVTKeyWord ::= r e s o l v e
+        // Rule 79:  QVTKeyWord ::= a c c e s s
         //
-		keywordKind[79] = (TK_resolve);
+		keywordKind[79] = (TK_access);
 	  
 	
         //
-        // Rule 80:  QVTKeyWord ::= r e s o l v e o n e
+        // Rule 80:  QVTKeyWord ::= e x t e n d s
         //
-		keywordKind[80] = (TK_resolveone);
+		keywordKind[80] = (TK_extends);
 	  
 	
         //
-        // Rule 81:  QVTKeyWord ::= r e s o l v e I n
+        // Rule 81:  QVTKeyWord ::= b l a c k b o x
         //
-		keywordKind[81] = (TK_resolveIn);
+		keywordKind[81] = (TK_blackbox);
 	  
 	
         //
-        // Rule 82:  QVTKeyWord ::= r e s o l v e o n e I n
+        // Rule 82:  QVTKeyWord ::= a b s t r a c t
         //
-		keywordKind[82] = (TK_resolveoneIn);
+		keywordKind[82] = (TK_abstract);
 	  
 	
         //
-        // Rule 83:  QVTKeyWord ::= i n v r e s o l v e
+        // Rule 83:  QVTKeyWord ::= r e s u l t
         //
-		keywordKind[83] = (TK_invresolve);
+		keywordKind[83] = (TK_result);
 	  
 	
         //
-        // Rule 84:  QVTKeyWord ::= i n v r e s o l v e o n e
+        // Rule 84:  QVTKeyWord ::= m a i n
         //
-		keywordKind[84] = (TK_invresolveone);
+		keywordKind[84] = (TK_main);
 	  
 	
         //
-        // Rule 85:  QVTKeyWord ::= i n v r e s o l v e I n
+        // Rule 85:  QVTKeyWord ::= t h i s
         //
-		keywordKind[85] = (TK_invresolveIn);
+		keywordKind[85] = (TK_this);
 	  
 	
         //
-        // Rule 86:  QVTKeyWord ::= i n v r e s o l v e o n e I n
+        // Rule 86:  QVTKeyWord ::= s w i t c h
         //
-		keywordKind[86] = (TK_invresolveoneIn);
+		keywordKind[86] = (TK_switch);
 	  
 	
         //
-        // Rule 87:  QVTKeyWord ::= m o d e l t y p e
+        // Rule 87:  QVTKeyWord ::= c a s e
         //
-		keywordKind[87] = (TK_modeltype);
+		keywordKind[87] = (TK_case);
 	  
 	
         //
-        // Rule 88:  QVTKeyWord ::= u s e s
+        // Rule 88:  QVTKeyWord ::= x s e l e c t
         //
-		keywordKind[88] = (TK_uses);
+		keywordKind[88] = (TK_xselect);
 	  
 	
         //
-        // Rule 89:  QVTKeyWord ::= w h e r e
+        // Rule 89:  QVTKeyWord ::= x c o l l e c t
         //
-		keywordKind[89] = (TK_where);
+		keywordKind[89] = (TK_xcollect);
 	  
 	
         //
-        // Rule 90:  QVTKeyWord ::= r e f i n e s
+        // Rule 90:  QVTKeyWord ::= s e l e c t O n e
         //
-		keywordKind[90] = (TK_refines);
+		keywordKind[90] = (TK_selectOne);
 	  
 	
         //
-        // Rule 91:  QVTKeyWord ::= a c c e s s
+        // Rule 91:  QVTKeyWord ::= c o l l e c t O n e
         //
-		keywordKind[91] = (TK_access);
+		keywordKind[91] = (TK_collectOne);
 	  
 	
         //
-        // Rule 92:  QVTKeyWord ::= e x t e n d s
+        // Rule 92:  QVTKeyWord ::= c o l l e c t s e l e c t
         //
-		keywordKind[92] = (TK_extends);
+		keywordKind[92] = (TK_collectselect);
 	  
 	
         //
-        // Rule 93:  QVTKeyWord ::= b l a c k b o x
+        // Rule 93:  QVTKeyWord ::= c o l l e c t s e l e c t O n e
         //
-		keywordKind[93] = (TK_blackbox);
+		keywordKind[93] = (TK_collectselectOne);
 	  
 	
         //
-        // Rule 94:  QVTKeyWord ::= a b s t r a c t
+        // Rule 94:  QVTKeyWord ::= f o r E a c h
         //
-		keywordKind[94] = (TK_abstract);
+		keywordKind[94] = (TK_forEach);
 	  
 	
         //
-        // Rule 95:  QVTKeyWord ::= r e s u l t
+        // Rule 95:  QVTKeyWord ::= f o r O n e
         //
-		keywordKind[95] = (TK_result);
+		keywordKind[95] = (TK_forOne);
 	  
 	
         //
-        // Rule 96:  QVTKeyWord ::= m a i n
+        // Rule 96:  QVTKeyWord ::= c o m p u t e
         //
-		keywordKind[96] = (TK_main);
+		keywordKind[96] = (TK_compute);
 	  
 	
         //
-        // Rule 97:  QVTKeyWord ::= t h i s
+        // Rule 97:  QVTKeyWord ::= D i c t
         //
-		keywordKind[97] = (TK_this);
+		keywordKind[97] = (TK_Dict);
 	  
 	
         //
-        // Rule 98:  QVTKeyWord ::= s w i t c h
+        // Rule 98:  QVTKeyWord ::= L i s t
         //
-		keywordKind[98] = (TK_switch);
+		keywordKind[98] = (TK_List);
 	  
 	
         //
-        // Rule 99:  QVTKeyWord ::= c a s e
+        // Rule 99:  QVTKeyWord ::= b r e a k
         //
-		keywordKind[99] = (TK_case);
+		keywordKind[99] = (TK_break);
 	  
 	
         //
-        // Rule 100:  QVTKeyWord ::= x s e l e c t
+        // Rule 100:  QVTKeyWord ::= c o m p o s e s
         //
-		keywordKind[100] = (TK_xselect);
+		keywordKind[100] = (TK_composes);
 	  
 	
         //
-        // Rule 101:  QVTKeyWord ::= x c o l l e c t
+        // Rule 101:  QVTKeyWord ::= c o n s t r u c t o r
         //
-		keywordKind[101] = (TK_xcollect);
+		keywordKind[101] = (TK_constructor);
 	  
 	
         //
-        // Rule 102:  QVTKeyWord ::= s e l e c t O n e
+        // Rule 102:  QVTKeyWord ::= c o n t i n u e
         //
-		keywordKind[102] = (TK_selectOne);
+		keywordKind[102] = (TK_continue);
 	  
 	
         //
-        // Rule 103:  QVTKeyWord ::= c o l l e c t O n e
+        // Rule 103:  QVTKeyWord ::= d a t a t y p e
         //
-		keywordKind[103] = (TK_collectOne);
+		keywordKind[103] = (TK_datatype);
 	  
 	
         //
-        // Rule 104:  QVTKeyWord ::= c o l l e c t s e l e c t
+        // Rule 104:  QVTKeyWord ::= d e f a u l t
         //
-		keywordKind[104] = (TK_collectselect);
+		keywordKind[104] = (TK_default);
 	  
 	
         //
-        // Rule 105:  QVTKeyWord ::= c o l l e c t s e l e c t O n e
+        // Rule 105:  QVTKeyWord ::= d e r i v e d
         //
-		keywordKind[105] = (TK_collectselectOne);
+		keywordKind[105] = (TK_derived);
 	  
 	
         //
-        // Rule 106:  QVTKeyWord ::= f o r E a c h
+        // Rule 106:  QVTKeyWord ::= d o
         //
-		keywordKind[106] = (TK_forEach);
+		keywordKind[106] = (TK_do);
 	  
 	
         //
-        // Rule 107:  QVTKeyWord ::= f o r O n e
+        // Rule 107:  QVTKeyWord ::= e l i f
         //
-		keywordKind[107] = (TK_forOne);
+		keywordKind[107] = (TK_elif);
 	  
 	
         //
-        // Rule 108:  QVTKeyWord ::= c o m p u t e
+        // Rule 108:  QVTKeyWord ::= e n u m
         //
-		keywordKind[108] = (TK_compute);
+		keywordKind[108] = (TK_enum);
 	  
 	
         //
-        // Rule 109:  QVTKeyWord ::= D i c t
+        // Rule 109:  QVTKeyWord ::= e x c e p t
         //
-		keywordKind[109] = (TK_Dict);
+		keywordKind[109] = (TK_except);
 	  
 	
         //
-        // Rule 110:  QVTKeyWord ::= L i s t
+        // Rule 110:  QVTKeyWord ::= e x c e p t i o n
         //
-		keywordKind[110] = (TK_List);
+		keywordKind[110] = (TK_exception);
 	  
 	
         //
-        // Rule 111:  QVTKeyWord ::= b r e a k
+        // Rule 111:  QVTKeyWord ::= f r o m
         //
-		keywordKind[111] = (TK_break);
+		keywordKind[111] = (TK_from);
 	  
 	
         //
-        // Rule 112:  QVTKeyWord ::= c o m p o s e s
+        // Rule 112:  QVTKeyWord ::= l i t e r a l
         //
-		keywordKind[112] = (TK_composes);
+		keywordKind[112] = (TK_literal);
 	  
 	
         //
-        // Rule 113:  QVTKeyWord ::= c o n s t r u c t o r
+        // Rule 113:  QVTKeyWord ::= o r d e r e d
         //
-		keywordKind[113] = (TK_constructor);
+		keywordKind[113] = (TK_ordered);
 	  
 	
         //
-        // Rule 114:  QVTKeyWord ::= c o n t i n u e
+        // Rule 114:  QVTKeyWord ::= p r i m i t i v e
         //
-		keywordKind[114] = (TK_continue);
+		keywordKind[114] = (TK_primitive);
 	  
 	
         //
-        // Rule 115:  QVTKeyWord ::= d a t a t y p e
+        // Rule 115:  QVTKeyWord ::= r a i s e
         //
-		keywordKind[115] = (TK_datatype);
+		keywordKind[115] = (TK_raise);
 	  
 	
         //
-        // Rule 116:  QVTKeyWord ::= d e f a u l t
+        // Rule 116:  QVTKeyWord ::= r e a d o n l y
         //
-		keywordKind[116] = (TK_default);
+		keywordKind[116] = (TK_readonly);
 	  
 	
         //
-        // Rule 117:  QVTKeyWord ::= d e r i v e d
+        // Rule 117:  QVTKeyWord ::= r e f e r e n c e s
         //
-		keywordKind[117] = (TK_derived);
+		keywordKind[117] = (TK_references);
 	  
 	
         //
-        // Rule 118:  QVTKeyWord ::= d o
+        // Rule 118:  QVTKeyWord ::= t a g
         //
-		keywordKind[118] = (TK_do);
+		keywordKind[118] = (TK_tag);
 	  
 	
         //
-        // Rule 119:  QVTKeyWord ::= e l i f
+        // Rule 119:  QVTKeyWord ::= t r y
         //
-		keywordKind[119] = (TK_elif);
+		keywordKind[119] = (TK_try);
 	  
 	
         //
-        // Rule 120:  QVTKeyWord ::= e n u m
+        // Rule 120:  QVTKeyWord ::= t y p e d e f
         //
-		keywordKind[120] = (TK_enum);
+		keywordKind[120] = (TK_typedef);
 	  
 	
         //
-        // Rule 121:  QVTKeyWord ::= e x c e p t
+        // Rule 121:  QVTKeyWord ::= u n l i m i t e d
         //
-		keywordKind[121] = (TK_except);
-	  
-	
-        //
-        // Rule 122:  QVTKeyWord ::= e x c e p t i o n
-        //
-		keywordKind[122] = (TK_exception);
-	  
-	
-        //
-        // Rule 123:  QVTKeyWord ::= f r o m
-        //
-		keywordKind[123] = (TK_from);
-	  
-	
-        //
-        // Rule 124:  QVTKeyWord ::= l i t e r a l
-        //
-		keywordKind[124] = (TK_literal);
-	  
-	
-        //
-        // Rule 125:  QVTKeyWord ::= o r d e r e d
-        //
-		keywordKind[125] = (TK_ordered);
-	  
-	
-        //
-        // Rule 126:  QVTKeyWord ::= p r i m i t i v e
-        //
-		keywordKind[126] = (TK_primitive);
-	  
-	
-        //
-        // Rule 127:  QVTKeyWord ::= r a i s e
-        //
-		keywordKind[127] = (TK_raise);
-	  
-	
-        //
-        // Rule 128:  QVTKeyWord ::= r e a d o n l y
-        //
-		keywordKind[128] = (TK_readonly);
-	  
-	
-        //
-        // Rule 129:  QVTKeyWord ::= r e f e r e n c e s
-        //
-		keywordKind[129] = (TK_references);
-	  
-	
-        //
-        // Rule 130:  QVTKeyWord ::= t a g
-        //
-		keywordKind[130] = (TK_tag);
-	  
-	
-        //
-        // Rule 131:  QVTKeyWord ::= t r y
-        //
-		keywordKind[131] = (TK_try);
-	  
-	
-        //
-        // Rule 132:  QVTKeyWord ::= t y p e d e f
-        //
-		keywordKind[132] = (TK_typedef);
-	  
-	
-        //
-        // Rule 133:  QVTKeyWord ::= u n l i m i t e d
-        //
-		keywordKind[133] = (TK_unlimited);
+		keywordKind[121] = (TK_unlimited);
 	  
 	
 

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.11.4.1 2009/10/27 09:18:34 sboyko Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.11.4.2 2009/11/11 22:09:48 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.11.4.1 2009/10/27 09:18:34 sboyko Exp $
+ * $Id: QvtOpKWLexer.g,v 1.11.4.2 2009/11/11 22:09:48 sboyko Exp $
  */
 	./
 $End
@@ -170,6 +170,7 @@ $Export
         try
         typedef
         unlimited
+
 $End
 
 $Rules

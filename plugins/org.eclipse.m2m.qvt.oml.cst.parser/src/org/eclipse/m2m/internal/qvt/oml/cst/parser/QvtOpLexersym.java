@@ -15,7 +15,7 @@
 *   E.D.Willink - Bug 292112
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpLexersym.java,v 1.79.4.5 2009/11/11 22:09:52 sboyko Exp $
 */
 /**
 * Complete OCL Lexer
@@ -46,7 +46,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpLexersym.java,v 1.79.4.5 2009/11/11 22:09:52 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -54,8 +54,8 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public interface QvtOpLexersym {
     public final static int
       Char_CtlCharNotWS = 103,
-      Char_LF = 93,
-      Char_CR = 94,
+      Char_LF = 94,
+      Char_CR = 95,
       Char_HT = 76,
       Char_FF = 100,
       Char_a = 17,
@@ -124,27 +124,27 @@ public interface QvtOpLexersym {
       Char_AfterASCIINotAcute = 68,
       Char_Space = 69,
       Char_DoubleQuote = 77,
-      Char_SingleQuote = 99,
-      Char_Percent = 95,
-      Char_VerticalBar = 78,
-      Char_Exclamation = 79,
-      Char_AtSign = 80,
-      Char_BackQuote = 81,
+      Char_SingleQuote = 78,
+      Char_Percent = 96,
+      Char_VerticalBar = 79,
+      Char_Exclamation = 80,
+      Char_AtSign = 81,
+      Char_BackQuote = 82,
       Char_Acute = 101,
-      Char_Tilde = 82,
-      Char_Sharp = 96,
-      Char_DollarSign = 83,
-      Char_Ampersand = 97,
+      Char_Tilde = 83,
+      Char_Sharp = 97,
+      Char_DollarSign = 84,
+      Char_Ampersand = 98,
       Char_Caret = 70,
       Char_Colon = 71,
-      Char_SemiColon = 84,
-      Char_BackSlash = 98,
-      Char_LeftBrace = 85,
-      Char_RightBrace = 86,
-      Char_LeftBracket = 87,
-      Char_RightBracket = 88,
-      Char_QuestionMark = 89,
-      Char_Comma = 90,
+      Char_SemiColon = 85,
+      Char_BackSlash = 99,
+      Char_LeftBrace = 86,
+      Char_RightBrace = 87,
+      Char_LeftBracket = 88,
+      Char_RightBracket = 89,
+      Char_QuestionMark = 90,
+      Char_Comma = 91,
       Char_Dot = 12,
       Char_LessThan = 72,
       Char_GreaterThan = 15,
@@ -152,8 +152,8 @@ public interface QvtOpLexersym {
       Char_Minus = 16,
       Char_Slash = 74,
       Char_Star = 75,
-      Char_LeftParen = 91,
-      Char_RightParen = 92,
+      Char_LeftParen = 92,
+      Char_RightParen = 93,
       Char_Equal = 11,
       Char_EOF = 102;
 
@@ -236,6 +236,7 @@ public interface QvtOpLexersym {
                  "Star", //$NON-NLS-1$
                  "HT", //$NON-NLS-1$
                  "DoubleQuote", //$NON-NLS-1$
+                 "SingleQuote", //$NON-NLS-1$
                  "VerticalBar", //$NON-NLS-1$
                  "Exclamation", //$NON-NLS-1$
                  "AtSign", //$NON-NLS-1$
@@ -257,7 +258,6 @@ public interface QvtOpLexersym {
                  "Sharp", //$NON-NLS-1$
                  "Ampersand", //$NON-NLS-1$
                  "BackSlash", //$NON-NLS-1$
-                 "SingleQuote", //$NON-NLS-1$
                  "FF", //$NON-NLS-1$
                  "Acute", //$NON-NLS-1$
                  "EOF", //$NON-NLS-1$

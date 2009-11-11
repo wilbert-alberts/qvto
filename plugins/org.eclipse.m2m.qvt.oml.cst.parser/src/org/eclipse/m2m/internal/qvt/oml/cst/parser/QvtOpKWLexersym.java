@@ -14,7 +14,7 @@
 *   E.D.Willink - Bug 285633, 292112
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpKWLexersym.java,v 1.79.4.5 2009/11/11 22:09:52 sboyko Exp $
 */
 /**
 * Complete OCL Keyword Lexer
@@ -45,7 +45,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexersym.java,v 1.79.4.4 2009/10/29 21:38:32 sboyko Exp $
+* $Id: QvtOpKWLexersym.java,v 1.79.4.5 2009/11/11 22:09:52 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -53,53 +53,53 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public interface QvtOpKWLexersym {
     public final static int
       Char_DollarSign = 42,
-      Char_a = 8,
+      Char_a = 6,
       Char_b = 21,
       Char_c = 10,
       Char_d = 11,
       Char_e = 1,
-      Char_f = 16,
-      Char_g = 17,
+      Char_f = 15,
+      Char_g = 16,
       Char_h = 18,
       Char_i = 4,
-      Char_j = 23,
-      Char_k = 27,
-      Char_l = 6,
+      Char_j = 25,
+      Char_k = 26,
+      Char_l = 5,
       Char_m = 14,
       Char_n = 3,
       Char_o = 9,
       Char_p = 13,
-      Char_q = 24,
+      Char_q = 27,
       Char_r = 7,
-      Char_s = 5,
+      Char_s = 8,
       Char_t = 2,
       Char_u = 12,
       Char_v = 19,
-      Char_w = 25,
-      Char_x = 26,
-      Char_y = 15,
+      Char_w = 23,
+      Char_x = 24,
+      Char_y = 17,
       Char_z = 43,
-      Char_A = 28,
-      Char_B = 29,
-      Char_C = 33,
-      Char_D = 34,
-      Char_E = 35,
+      Char_A = 29,
+      Char_B = 30,
+      Char_C = 31,
+      Char_D = 32,
+      Char_E = 33,
       Char_F = 44,
       Char_G = 45,
       Char_H = 46,
       Char_I = 20,
       Char_J = 47,
       Char_K = 48,
-      Char_L = 36,
-      Char_M = 37,
-      Char_N = 30,
+      Char_L = 34,
+      Char_M = 35,
+      Char_N = 36,
       Char_O = 22,
       Char_P = 49,
       Char_Q = 50,
-      Char_R = 38,
-      Char_S = 31,
-      Char_T = 39,
-      Char_U = 32,
+      Char_R = 37,
+      Char_S = 28,
+      Char_T = 38,
+      Char_U = 39,
       Char_V = 40,
       Char_W = 51,
       Char_X = 52,
@@ -113,41 +113,41 @@ public interface QvtOpKWLexersym {
                  "t", //$NON-NLS-1$
                  "n", //$NON-NLS-1$
                  "i", //$NON-NLS-1$
-                 "s", //$NON-NLS-1$
                  "l", //$NON-NLS-1$
-                 "r", //$NON-NLS-1$
                  "a", //$NON-NLS-1$
+                 "r", //$NON-NLS-1$
+                 "s", //$NON-NLS-1$
                  "o", //$NON-NLS-1$
                  "c", //$NON-NLS-1$
                  "d", //$NON-NLS-1$
                  "u", //$NON-NLS-1$
                  "p", //$NON-NLS-1$
                  "m", //$NON-NLS-1$
-                 "y", //$NON-NLS-1$
                  "f", //$NON-NLS-1$
                  "g", //$NON-NLS-1$
+                 "y", //$NON-NLS-1$
                  "h", //$NON-NLS-1$
                  "v", //$NON-NLS-1$
                  "I", //$NON-NLS-1$
                  "b", //$NON-NLS-1$
                  "O", //$NON-NLS-1$
-                 "j", //$NON-NLS-1$
-                 "q", //$NON-NLS-1$
                  "w", //$NON-NLS-1$
                  "x", //$NON-NLS-1$
+                 "j", //$NON-NLS-1$
                  "k", //$NON-NLS-1$
+                 "q", //$NON-NLS-1$
+                 "S", //$NON-NLS-1$
                  "A", //$NON-NLS-1$
                  "B", //$NON-NLS-1$
-                 "N", //$NON-NLS-1$
-                 "S", //$NON-NLS-1$
-                 "U", //$NON-NLS-1$
                  "C", //$NON-NLS-1$
                  "D", //$NON-NLS-1$
                  "E", //$NON-NLS-1$
                  "L", //$NON-NLS-1$
                  "M", //$NON-NLS-1$
+                 "N", //$NON-NLS-1$
                  "R", //$NON-NLS-1$
                  "T", //$NON-NLS-1$
+                 "U", //$NON-NLS-1$
                  "V", //$NON-NLS-1$
                  "EOF", //$NON-NLS-1$
                  "DollarSign", //$NON-NLS-1$
