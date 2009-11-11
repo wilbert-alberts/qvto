@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,241 +65,217 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.5 2009/11/01 20:19:42 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
 
 public interface LightweightParsersym {
     public final static int
-      TK_STRING_LITERAL = 38,
-      TK_INTEGER_LITERAL = 47,
-      TK_REAL_LITERAL = 48,
-      TK_PLUS = 90,
-      TK_MINUS = 42,
-      TK_MULTIPLY = 41,
-      TK_DIVIDE = 107,
-      TK_GREATER = 94,
-      TK_LESS = 95,
-      TK_EQUAL = 78,
-      TK_GREATER_EQUAL = 96,
-      TK_LESS_EQUAL = 97,
-      TK_NOT_EQUAL = 111,
-      TK_LPAREN = 1,
+      TK_INTEGER_LITERAL = 28,
+      TK_REAL_LITERAL = 29,
+      TK_STRING_LITERAL = 25,
+      TK_PLUS = 68,
+      TK_MINUS = 9,
+      TK_MULTIPLY = 8,
+      TK_DIVIDE = 69,
+      TK_GREATER = 72,
+      TK_LESS = 73,
+      TK_EQUAL = 63,
+      TK_GREATER_EQUAL = 74,
+      TK_LESS_EQUAL = 75,
+      TK_NOT_EQUAL = 76,
+      TK_LPAREN = 2,
       TK_RPAREN = 4,
-      TK_LBRACE = 74,
-      TK_RBRACE = 77,
-      TK_LBRACKET = 108,
-      TK_RBRACKET = 117,
-      TK_ARROW = 49,
-      TK_BAR = 79,
-      TK_COMMA = 73,
-      TK_COLON = 75,
-      TK_COLONCOLON = 76,
-      TK_SEMICOLON = 72,
-      TK_DOT = 43,
-      TK_DOTDOT = 118,
-      TK_ADD_ASSIGN = 131,
-      TK_RESET_ASSIGN = 91,
-      TK_AT = 119,
-      TK_EXCLAMATION_MARK = 120,
-      TK_NOT_EQUAL_EXEQ = 121,
-      TK_class = 132,
-      TK_composes = 133,
-      TK_constructor = 98,
-      TK_datatype = 158,
-      TK_default = 159,
-      TK_derived = 134,
-      TK_do = 160,
-      TK_elif = 161,
-      TK_enum = 162,
-      TK_except = 163,
-      TK_exception = 164,
-      TK_from = 165,
-      TK_literal = 166,
-      TK_ordered = 135,
-      TK_primitive = 167,
-      TK_raise = 168,
-      TK_readonly = 136,
-      TK_references = 137,
-      TK_tag = 99,
-      TK_try = 169,
-      TK_typedef = 170,
-      TK_unlimited = 171,
-      TK_invalid = 21,
-      TK_COLONCOLONEQUAL = 122,
-      TK_QUESTIONMARK = 123,
-      TK_STEREOTYPE_QUALIFIER_OPEN = 124,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 138,
-      TK_MULTIPLICITY_RANGE = 139,
-      TK_TILDE_SIGN = 140,
-      TK_and = 81,
-      TK_else = 85,
-      TK_endif = 86,
-      TK_if = 45,
-      TK_implies = 87,
-      TK_in = 80,
-      TK_let = 46,
-      TK_not = 44,
-      TK_or = 82,
-      TK_then = 92,
-      TK_xor = 83,
-      TK_false = 18,
-      TK_null = 19,
-      TK_self = 22,
-      TK_true = 20,
-      TK_Set = 5,
-      TK_Bag = 6,
-      TK_Sequence = 7,
-      TK_Collection = 8,
-      TK_OrderedSet = 9,
-      TK_String = 10,
-      TK_Integer = 11,
-      TK_UnlimitedNatural = 12,
-      TK_Real = 13,
-      TK_Boolean = 14,
-      TK_Tuple = 37,
-      TK_OclAny = 15,
-      TK_OclVoid = 16,
-      TK_OclInvalid = 17,
-      TK_iterate = 23,
-      TK_forAll = 24,
-      TK_exists = 25,
-      TK_isUnique = 26,
-      TK_any = 27,
-      TK_one = 28,
-      TK_collect = 29,
-      TK_select = 30,
-      TK_reject = 31,
-      TK_collectNested = 32,
-      TK_sortedBy = 33,
-      TK_closure = 34,
-      TK_end = 100,
-      TK_while = 54,
-      TK_when = 112,
-      TK_var = 61,
-      TK_log = 55,
-      TK_assert = 62,
-      TK_with = 141,
-      TK_switch = 53,
-      TK_case = 125,
-      TK_xselect = 142,
-      TK_xcollect = 143,
-      TK_selectOne = 144,
-      TK_collectOne = 145,
-      TK_collectselect = 146,
-      TK_collectselectOne = 147,
-      TK_return = 63,
-      TK_forEach = 148,
-      TK_forOne = 149,
-      TK_compute = 56,
-      TK_new = 57,
-      TK_List = 39,
-      TK_Dict = 40,
-      TK_break = 58,
-      TK_continue = 59,
-      TK_out = 109,
-      TK_object = 60,
-      TK_transformation = 113,
-      TK_import = 150,
-      TK_library = 114,
-      TK_metamodel = 172,
-      TK_mapping = 101,
-      TK_query = 102,
-      TK_helper = 103,
-      TK_inout = 110,
-      TK_configuration = 115,
-      TK_intermediate = 116,
-      TK_property = 104,
-      TK_opposites = 151,
-      TK_population = 126,
-      TK_map = 50,
-      TK_xmap = 51,
-      TK_late = 52,
-      TK_resolve = 64,
-      TK_resolveone = 65,
-      TK_resolveIn = 66,
-      TK_resolveoneIn = 67,
-      TK_invresolve = 68,
-      TK_invresolveone = 69,
-      TK_invresolveIn = 70,
-      TK_invresolveoneIn = 71,
-      TK_modeltype = 152,
-      TK_uses = 153,
-      TK_where = 154,
-      TK_refines = 155,
-      TK_access = 88,
-      TK_extends = 84,
-      TK_blackbox = 105,
-      TK_abstract = 106,
-      TK_static = 93,
-      TK_result = 35,
-      TK_main = 89,
-      TK_this = 36,
-      TK_rename = 156,
-      TK_inherits = 127,
-      TK_merges = 128,
-      TK_disjuncts = 129,
+      TK_LBRACE = 62,
+      TK_RBRACE = 64,
+      TK_LBRACKET = 70,
+      TK_RBRACKET = 105,
+      TK_ARROW = 24,
+      TK_BAR = 67,
+      TK_COMMA = 61,
+      TK_COLON = 65,
+      TK_COLONCOLON = 66,
+      TK_SEMICOLON = 52,
+      TK_DOT = 7,
+      TK_DOTDOT = 106,
+      TK_ADD_ASSIGN = 99,
+      TK_RESET_ASSIGN = 77,
+      TK_AT = 107,
+      TK_EXCLAMATION_MARK = 71,
+      TK_NOT_EQUAL_EXEQ = 79,
+      TK_class = 119,
+      TK_composes = 120,
+      TK_constructor = 86,
+      TK_datatype = 146,
+      TK_default = 147,
+      TK_derived = 121,
+      TK_do = 148,
+      TK_elif = 149,
+      TK_enum = 150,
+      TK_except = 151,
+      TK_exception = 152,
+      TK_from = 153,
+      TK_literal = 154,
+      TK_ordered = 122,
+      TK_primitive = 155,
+      TK_raise = 156,
+      TK_readonly = 123,
+      TK_references = 124,
+      TK_tag = 87,
+      TK_try = 157,
+      TK_typedef = 158,
+      TK_unlimited = 159,
+      TK_invalid = 30,
+      TK_COLONCOLONEQUAL = 108,
+      TK_QUESTIONMARK = 109,
+      TK_STEREOTYPE_QUALIFIER_OPEN = 110,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 125,
+      TK_MULTIPLICITY_RANGE = 126,
+      TK_TILDE_SIGN = 127,
+      TK_and = 80,
+      TK_implies = 96,
+      TK_not = 37,
+      TK_or = 83,
+      TK_xor = 88,
+      TK_if = 40,
+      TK_then = 128,
+      TK_else = 111,
+      TK_endif = 112,
+      TK_let = 41,
+      TK_in = 84,
+      TK_false = 31,
+      TK_true = 32,
+      TK_null = 33,
+      TK_self = 38,
+      TK_Bag = 10,
+      TK_Collection = 11,
+      TK_OrderedSet = 12,
+      TK_Sequence = 13,
+      TK_Set = 14,
+      TK_Tuple = 15,
+      TK_Boolean = 16,
+      TK_Integer = 17,
+      TK_Real = 18,
+      TK_String = 19,
+      TK_UnlimitedNatural = 20,
+      TK_OclAny = 21,
+      TK_OclInvalid = 22,
+      TK_OclVoid = 23,
+      TK_end = 89,
+      TK_while = 42,
+      TK_when = 100,
+      TK_var = 49,
+      TK_log = 43,
+      TK_assert = 50,
+      TK_with = 129,
+      TK_switch = 39,
+      TK_case = 113,
+      TK_xselect = 130,
+      TK_xcollect = 131,
+      TK_selectOne = 132,
+      TK_collectOne = 133,
+      TK_collectselect = 134,
+      TK_collectselectOne = 135,
+      TK_return = 51,
+      TK_forEach = 136,
+      TK_forOne = 137,
+      TK_compute = 44,
+      TK_new = 45,
+      TK_List = 26,
+      TK_Dict = 27,
+      TK_break = 46,
+      TK_continue = 47,
+      TK_out = 97,
+      TK_object = 48,
+      TK_transformation = 101,
+      TK_import = 138,
+      TK_library = 102,
+      TK_metamodel = 160,
+      TK_mapping = 90,
+      TK_query = 91,
+      TK_helper = 92,
+      TK_inout = 98,
+      TK_configuration = 103,
+      TK_intermediate = 104,
+      TK_property = 93,
+      TK_opposites = 139,
+      TK_population = 114,
+      TK_map = 34,
+      TK_xmap = 35,
+      TK_late = 36,
+      TK_resolve = 53,
+      TK_resolveone = 54,
+      TK_resolveIn = 55,
+      TK_resolveoneIn = 56,
+      TK_invresolve = 57,
+      TK_invresolveone = 58,
+      TK_invresolveIn = 59,
+      TK_invresolveoneIn = 60,
+      TK_modeltype = 140,
+      TK_uses = 141,
+      TK_where = 142,
+      TK_refines = 143,
+      TK_access = 81,
+      TK_extends = 78,
+      TK_blackbox = 94,
+      TK_abstract = 95,
+      TK_static = 85,
+      TK_result = 5,
+      TK_main = 82,
+      TK_this = 6,
+      TK_rename = 144,
+      TK_inherits = 115,
+      TK_merges = 116,
+      TK_disjuncts = 117,
       TK_IDENTIFIER = 3,
-      TK_init = 157,
-      TK_ERROR_TOKEN = 2,
-      TK_EOF_TOKEN = 130;
+      TK_init = 145,
+      TK_ERROR_TOKEN = 1,
+      TK_EOF_TOKEN = 118;
 
       public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
-                 "LPAREN", //$NON-NLS-1$
                  "ERROR_TOKEN", //$NON-NLS-1$
+                 "LPAREN", //$NON-NLS-1$
                  "IDENTIFIER", //$NON-NLS-1$
                  "RPAREN", //$NON-NLS-1$
-                 "Set", //$NON-NLS-1$
-                 "Bag", //$NON-NLS-1$
-                 "Sequence", //$NON-NLS-1$
-                 "Collection", //$NON-NLS-1$
-                 "OrderedSet", //$NON-NLS-1$
-                 "String", //$NON-NLS-1$
-                 "Integer", //$NON-NLS-1$
-                 "UnlimitedNatural", //$NON-NLS-1$
-                 "Real", //$NON-NLS-1$
-                 "Boolean", //$NON-NLS-1$
-                 "OclAny", //$NON-NLS-1$
-                 "OclVoid", //$NON-NLS-1$
-                 "OclInvalid", //$NON-NLS-1$
-                 "false", //$NON-NLS-1$
-                 "null", //$NON-NLS-1$
-                 "true", //$NON-NLS-1$
-                 "invalid", //$NON-NLS-1$
-                 "self", //$NON-NLS-1$
-                 "iterate", //$NON-NLS-1$
-                 "forAll", //$NON-NLS-1$
-                 "exists", //$NON-NLS-1$
-                 "isUnique", //$NON-NLS-1$
-                 "any", //$NON-NLS-1$
-                 "one", //$NON-NLS-1$
-                 "collect", //$NON-NLS-1$
-                 "select", //$NON-NLS-1$
-                 "reject", //$NON-NLS-1$
-                 "collectNested", //$NON-NLS-1$
-                 "sortedBy", //$NON-NLS-1$
-                 "closure", //$NON-NLS-1$
                  "result", //$NON-NLS-1$
                  "this", //$NON-NLS-1$
+                 "DOT", //$NON-NLS-1$
+                 "MULTIPLY", //$NON-NLS-1$
+                 "MINUS", //$NON-NLS-1$
+                 "Bag", //$NON-NLS-1$
+                 "Collection", //$NON-NLS-1$
+                 "OrderedSet", //$NON-NLS-1$
+                 "Sequence", //$NON-NLS-1$
+                 "Set", //$NON-NLS-1$
                  "Tuple", //$NON-NLS-1$
+                 "Boolean", //$NON-NLS-1$
+                 "Integer", //$NON-NLS-1$
+                 "Real", //$NON-NLS-1$
+                 "String", //$NON-NLS-1$
+                 "UnlimitedNatural", //$NON-NLS-1$
+                 "OclAny", //$NON-NLS-1$
+                 "OclInvalid", //$NON-NLS-1$
+                 "OclVoid", //$NON-NLS-1$
+                 "ARROW", //$NON-NLS-1$
                  "STRING_LITERAL", //$NON-NLS-1$
                  "List", //$NON-NLS-1$
                  "Dict", //$NON-NLS-1$
-                 "MULTIPLY", //$NON-NLS-1$
-                 "MINUS", //$NON-NLS-1$
-                 "DOT", //$NON-NLS-1$
-                 "not", //$NON-NLS-1$
-                 "if", //$NON-NLS-1$
-                 "let", //$NON-NLS-1$
                  "INTEGER_LITERAL", //$NON-NLS-1$
                  "REAL_LITERAL", //$NON-NLS-1$
-                 "ARROW", //$NON-NLS-1$
+                 "invalid", //$NON-NLS-1$
+                 "false", //$NON-NLS-1$
+                 "true", //$NON-NLS-1$
+                 "null", //$NON-NLS-1$
                  "map", //$NON-NLS-1$
                  "xmap", //$NON-NLS-1$
                  "late", //$NON-NLS-1$
+                 "not", //$NON-NLS-1$
+                 "self", //$NON-NLS-1$
                  "switch", //$NON-NLS-1$
+                 "if", //$NON-NLS-1$
+                 "let", //$NON-NLS-1$
                  "while", //$NON-NLS-1$
                  "log", //$NON-NLS-1$
                  "compute", //$NON-NLS-1$
@@ -310,6 +286,7 @@ public interface LightweightParsersym {
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$
                  "return", //$NON-NLS-1$
+                 "SEMICOLON", //$NON-NLS-1$
                  "resolve", //$NON-NLS-1$
                  "resolveone", //$NON-NLS-1$
                  "resolveIn", //$NON-NLS-1$
@@ -318,34 +295,34 @@ public interface LightweightParsersym {
                  "invresolveone", //$NON-NLS-1$
                  "invresolveIn", //$NON-NLS-1$
                  "invresolveoneIn", //$NON-NLS-1$
-                 "SEMICOLON", //$NON-NLS-1$
                  "COMMA", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
+                 "EQUAL", //$NON-NLS-1$
+                 "RBRACE", //$NON-NLS-1$
                  "COLON", //$NON-NLS-1$
                  "COLONCOLON", //$NON-NLS-1$
-                 "RBRACE", //$NON-NLS-1$
-                 "EQUAL", //$NON-NLS-1$
                  "BAR", //$NON-NLS-1$
-                 "in", //$NON-NLS-1$
-                 "and", //$NON-NLS-1$
-                 "or", //$NON-NLS-1$
-                 "xor", //$NON-NLS-1$
-                 "extends", //$NON-NLS-1$
-                 "else", //$NON-NLS-1$
-                 "endif", //$NON-NLS-1$
-                 "implies", //$NON-NLS-1$
-                 "access", //$NON-NLS-1$
-                 "main", //$NON-NLS-1$
                  "PLUS", //$NON-NLS-1$
-                 "RESET_ASSIGN", //$NON-NLS-1$
-                 "then", //$NON-NLS-1$
-                 "static", //$NON-NLS-1$
+                 "DIVIDE", //$NON-NLS-1$
+                 "LBRACKET", //$NON-NLS-1$
+                 "EXCLAMATION_MARK", //$NON-NLS-1$
                  "GREATER", //$NON-NLS-1$
                  "LESS", //$NON-NLS-1$
                  "GREATER_EQUAL", //$NON-NLS-1$
                  "LESS_EQUAL", //$NON-NLS-1$
+                 "NOT_EQUAL", //$NON-NLS-1$
+                 "RESET_ASSIGN", //$NON-NLS-1$
+                 "extends", //$NON-NLS-1$
+                 "NOT_EQUAL_EXEQ", //$NON-NLS-1$
+                 "and", //$NON-NLS-1$
+                 "access", //$NON-NLS-1$
+                 "main", //$NON-NLS-1$
+                 "or", //$NON-NLS-1$
+                 "in", //$NON-NLS-1$
+                 "static", //$NON-NLS-1$
                  "constructor", //$NON-NLS-1$
                  "tag", //$NON-NLS-1$
+                 "xor", //$NON-NLS-1$
                  "end", //$NON-NLS-1$
                  "mapping", //$NON-NLS-1$
                  "query", //$NON-NLS-1$
@@ -353,11 +330,10 @@ public interface LightweightParsersym {
                  "property", //$NON-NLS-1$
                  "blackbox", //$NON-NLS-1$
                  "abstract", //$NON-NLS-1$
-                 "DIVIDE", //$NON-NLS-1$
-                 "LBRACKET", //$NON-NLS-1$
+                 "implies", //$NON-NLS-1$
                  "out", //$NON-NLS-1$
                  "inout", //$NON-NLS-1$
-                 "NOT_EQUAL", //$NON-NLS-1$
+                 "ADD_ASSIGN", //$NON-NLS-1$
                  "when", //$NON-NLS-1$
                  "transformation", //$NON-NLS-1$
                  "library", //$NON-NLS-1$
@@ -366,18 +342,17 @@ public interface LightweightParsersym {
                  "RBRACKET", //$NON-NLS-1$
                  "DOTDOT", //$NON-NLS-1$
                  "AT", //$NON-NLS-1$
-                 "EXCLAMATION_MARK", //$NON-NLS-1$
-                 "NOT_EQUAL_EXEQ", //$NON-NLS-1$
                  "COLONCOLONEQUAL", //$NON-NLS-1$
                  "QUESTIONMARK", //$NON-NLS-1$
                  "STEREOTYPE_QUALIFIER_OPEN", //$NON-NLS-1$
+                 "else", //$NON-NLS-1$
+                 "endif", //$NON-NLS-1$
                  "case", //$NON-NLS-1$
                  "population", //$NON-NLS-1$
                  "inherits", //$NON-NLS-1$
                  "merges", //$NON-NLS-1$
                  "disjuncts", //$NON-NLS-1$
                  "EOF_TOKEN", //$NON-NLS-1$
-                 "ADD_ASSIGN", //$NON-NLS-1$
                  "class", //$NON-NLS-1$
                  "composes", //$NON-NLS-1$
                  "derived", //$NON-NLS-1$
@@ -387,6 +362,7 @@ public interface LightweightParsersym {
                  "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
                  "MULTIPLICITY_RANGE", //$NON-NLS-1$
                  "TILDE_SIGN", //$NON-NLS-1$
+                 "then", //$NON-NLS-1$
                  "with", //$NON-NLS-1$
                  "xselect", //$NON-NLS-1$
                  "xcollect", //$NON-NLS-1$

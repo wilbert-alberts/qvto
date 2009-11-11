@@ -309,6 +309,17 @@ public class QvtCompletionData {
         return false;
     }    
     
+    public static final boolean isKindOf(IToken token, String... tokenKinds) {
+        if (tokenKinds != null) {
+            for (String tokenText : tokenKinds) {
+                if (tokenText.equals(token.toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }    
+    
     public static final IToken[] extractTokens(IToken startToken, int... endTokenKinds) {
         List<IToken> tokens = new ArrayList<IToken>();
         IToken currentToken = startToken;
