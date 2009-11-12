@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.31.4.4 2009/11/11 22:09:47 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.31.4.5 2009/11/12 08:59:17 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -26,6 +26,9 @@ $DropRules
 	AssociationClassCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
 	AssociationClassCallExpCS ::= primaryExpCS '.' simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
 	PropertyCallExpCS ::= primaryExpCS '.' pathNameCS '[' argumentsCS ']' isMarkedPreCSopt
+
+	-- Error in OCL grammar
+	CollectionLiteralExpCS ::= collectionTypeCS '{' CollectionLiteralPartsCSopt '}'
 
 $DropSymbols
 	
@@ -249,7 +252,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.31.4.4 2009/11/11 22:09:47 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.31.4.5 2009/11/12 08:59:17 sboyko Exp $
  */
 	./
 $End
