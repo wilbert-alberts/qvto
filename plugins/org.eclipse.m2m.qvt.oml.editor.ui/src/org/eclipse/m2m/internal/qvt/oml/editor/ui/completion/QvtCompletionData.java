@@ -51,6 +51,11 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 
 public class QvtCompletionData {
+
+	public interface ITokenQualificator {
+		boolean isSuited(IToken token);
+	}
+	
     public static final int[] MAPPING_DECLARATION_TRAILING_TOKEN_KINDS = new int[] {
         QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_SEMICOLON,
         QvtOpLPGParsersym.TK_when, QvtOpLPGParsersym.TK_where,
@@ -244,7 +249,7 @@ public class QvtCompletionData {
         return false;
     }
 
-    public IToken getParentBracingExpression(int[] keywordTokenKinds, int leftBraceKind, int rightBraceKind,
+    public IToken getParentBracingExpression(ITokenQualificator tokenQualif, int leftBraceKind, int rightBraceKind,
             int maxDepth, int[] zeroDepthTerminatorKinds, int[] unexpectedTokenKinds, int[] ignoredClauses) {
         int depth = 0;
         Stack<Integer> maxCurrentDepthStack = new Stack<Integer>();
@@ -254,7 +259,7 @@ public class QvtCompletionData {
         }
         for (int i = myLeftToken.getTokenIndex(); i >= 0; i--) {
             IToken token = myPrsStream.getTokenAt(i);
-            if (QvtCompletionData.isKindOf(token, keywordTokenKinds)) {
+            if (tokenQualif.isSuited(token)) {
                 if ((depth >= 1) && (depth > maxCurrentDepthStack.peek())) {
                     return token;
                 }
@@ -341,7 +346,11 @@ public class QvtCompletionData {
     
     public IToken getParentImperativeOperation() {
         if (myParentImperativeOperation == null) {
-            myParentImperativeOperation = getParentBracingExpression(LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS,
+            myParentImperativeOperation = getParentBracingExpression(new ITokenQualificator() {
+		            	public boolean isSuited(IToken token) {
+		            		return QvtCompletionData.isKindOf(token, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);        		
+		            	}
+		            },
                     QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if (myParentImperativeOperation != null) {
                 if (QvtCompletionData.isKindOf(myParentImperativeOperation, QvtOpLPGParsersym.TK_main)) {

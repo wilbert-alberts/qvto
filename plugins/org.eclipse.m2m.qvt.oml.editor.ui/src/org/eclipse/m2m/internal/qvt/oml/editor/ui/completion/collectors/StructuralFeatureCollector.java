@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 import java.util.Collection;
 
 import lpg.lpgjavaruntime.IToken;
+import lpg.lpgjavaruntime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -48,8 +49,12 @@ public class StructuralFeatureCollector extends AbstractCollector {
                 || (leftToken.getKind() == QvtOpLPGParsersym.TK_LBRACE)
                 || (leftToken.getKind() == QvtOpLPGParsersym.TK_RBRACE)
                 ) {
-            IToken structuralFeatureContainerToken = data.getParentBracingExpression(SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES, 
-                    QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
+            IToken structuralFeatureContainerToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+			        	public boolean isSuited(IToken token) {
+			        		return QvtCompletionData.isKindOf(token, SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES);        		
+			        	}
+			        },
+            		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
                     1, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if ((structuralFeatureContainerToken != null)
                     && QvtCompletionData.isKindOf(structuralFeatureContainerToken, SCTRUCTURALFEATURE_CONTAINER_TERMINALS)) {
@@ -71,7 +76,11 @@ public class StructuralFeatureCollector extends AbstractCollector {
             if (firstTypeToken != null) {
                 if (QvtCompletionData.isKindOf(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE)) { // type not specified
                     // use type in mapping declaration
-                    IToken mappingToken = data.getParentBracingExpression(new int[] {QvtOpLPGParsersym.TK_mapping}, 
+                    IToken mappingToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+					        	public boolean isSuited(IToken token) {
+					        		return QvtCompletionData.isKindOf(token, new int[] {QvtOpLPGParsersym.TK_mapping});        		
+					        	}
+					        },
                             QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
                             2, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);          
                     if (mappingToken != null) {
@@ -125,6 +134,27 @@ public class StructuralFeatureCollector extends AbstractCollector {
                         return QvtCompletionData.extractTokens(firstTypeToken, 
                                 QvtCompletionData.MAPPING_DECLARATION_TRAILING_TOKEN_KINDS);
                     }
+                } else {
+                	IToken token = lParen;
+                	IToken lastColoncolon = null;
+                	for (;;) {
+                		IToken prevToken = LightweightParserUtil.getPreviousToken(token);
+                		if ((prevToken == null) || QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_mapping)) {
+                			break;
+                		}
+                		if (QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                			lastColoncolon = prevToken;
+                		}
+                		if ((QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_inout)) && (lastColoncolon != null)) {
+                			PrsStream prsStream = token.getPrsStream();
+                			IToken[] tokenArray = new IToken[lastColoncolon.getTokenIndex() - token.getTokenIndex()];
+                			for (int i = token.getTokenIndex(); i < lastColoncolon.getTokenIndex(); i++) {
+                				tokenArray[i - token.getTokenIndex()] = prsStream.getTokenAt(i);
+                			}
+                			return tokenArray;
+                		}
+                		token = prevToken;
+                	}
                 }
             }
         }

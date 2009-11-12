@@ -38,6 +38,7 @@ import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.parser.OCLLexer;
+import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
  * @author aigdalov
@@ -118,17 +119,17 @@ public class LightweightParserUtil {
     };
     
     public static final String[] OCL_ITERATOR_TERMINALS = {
-        "select", //$NON-NLS-1$
-        "reject", //$NON-NLS-1$
-        "collect", //$NON-NLS-1$
-        "forAll", //$NON-NLS-1$
-        "exists", //$NON-NLS-1$
-        "isUnique", //$NON-NLS-1$
-        "one", //$NON-NLS-1$
-        "any", //$NON-NLS-1$
-        "collectNested", //$NON-NLS-1$
-        "sortedBy", //$NON-NLS-1$
-        "closure" //$NON-NLS-1$
+        PredefinedType.SELECT_NAME,
+        PredefinedType.REJECT_NAME,
+        PredefinedType.COLLECT_NAME,
+        PredefinedType.FOR_ALL_NAME,
+        PredefinedType.EXISTS_NAME,
+        PredefinedType.IS_UNIQUE_NAME,
+        PredefinedType.ONE_NAME,
+        PredefinedType.ANY_NAME,
+        PredefinedType.COLLECT_NESTED_NAME,
+        PredefinedType.SORTED_BY_NAME,
+        PredefinedType.CLOSURE_NAME,
     };
     
     public static final int[] QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
@@ -137,11 +138,6 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_selectOne,
         QvtOpLPGParsersym.TK_collectOne
     };
-    
-    public static final int[] ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = 
-    	// TODO fixme
-        //uniteIntArrays(OCL_ITERATOR_TERMINALS, QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR);
-    	QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR;
     
     public static final int[] QVTO_ITERATOR_TERMINALS = 
         uniteIntArrays(QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {

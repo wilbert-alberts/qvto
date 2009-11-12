@@ -37,7 +37,23 @@ public class IteratorShorthandCollector extends AbstractCollector {
     
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
-        IToken iteratorToken = data.getParentBracingExpression(LightweightParserUtil.ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR, QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
+        IToken iteratorToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+		        	public boolean isSuited(IToken token) {
+		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR);        		
+		        	}
+		        },
+		        QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
+                1, ZERO_DEPTH_TERMINATORS, LightweightParserUtil.OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS, null);            
+        if (iteratorToken != null) {
+            data.getUserData().put(ITERATOR_TOKEN_FLAG, iteratorToken);
+            return true;
+        }
+        iteratorToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+		        	public boolean isSuited(IToken token) {
+		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.OCL_ITERATOR_TERMINALS);        		
+		        	}
+		        },
+        		QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
                 1, ZERO_DEPTH_TERMINATORS, LightweightParserUtil.OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS, null);            
         if (iteratorToken != null) {
             data.getUserData().put(ITERATOR_TOKEN_FLAG, iteratorToken);
@@ -66,6 +82,6 @@ public class IteratorShorthandCollector extends AbstractCollector {
         } else {
             elementType = sourceType;
         }
-        CompletionProposalUtil.addContextProposals(proposals, elementType, true, data);
+        CompletionProposalUtil.addContextProposals(proposals, elementType, true, true, data);
     }
 }
