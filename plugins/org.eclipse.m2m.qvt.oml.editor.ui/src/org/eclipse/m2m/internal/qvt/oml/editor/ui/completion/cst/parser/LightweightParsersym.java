@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.7 2009/11/12 08:59:01 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.7 2009/11/12 08:59:01 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.7 2009/11/12 08:59:01 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,7 +65,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.63.4.6 2009/11/11 22:09:31 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.63.4.7 2009/11/12 08:59:01 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser;
@@ -88,13 +88,13 @@ public interface LightweightParsersym {
       TK_LPAREN = 2,
       TK_RPAREN = 4,
       TK_LBRACE = 62,
-      TK_RBRACE = 64,
+      TK_RBRACE = 65,
       TK_LBRACKET = 70,
       TK_RBRACKET = 105,
       TK_ARROW = 24,
       TK_BAR = 67,
       TK_COMMA = 61,
-      TK_COLON = 65,
+      TK_COLON = 64,
       TK_COLONCOLON = 66,
       TK_SEMICOLON = 52,
       TK_DOT = 7,
@@ -298,8 +298,8 @@ public interface LightweightParsersym {
                  "COMMA", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
                  "EQUAL", //$NON-NLS-1$
-                 "RBRACE", //$NON-NLS-1$
                  "COLON", //$NON-NLS-1$
+                 "RBRACE", //$NON-NLS-1$
                  "COLONCOLON", //$NON-NLS-1$
                  "BAR", //$NON-NLS-1$
                  "PLUS", //$NON-NLS-1$
