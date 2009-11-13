@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.CSTContents;
 
 
@@ -183,10 +183,9 @@ public class ResolverUtils {
 		};
 	}
 	
-	public static IPath toNamespaceRelativePath(String qualifiedName) {
-		String path = qualifiedName.replace('.', '/');
-		return new Path(path);
-	}
+	public static String toNamespaceRelativeUnitFilePath(String qualifiedName) {
+		return qualifiedName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
+	}	
 	
 	public static CSTContents createCSTContents(final String input) {
 		if(input == null) {
