@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.11 2009/01/13 10:48:16 aigdalov Exp $ 
+-- * $Id: QvtOpKWLexer.g,v 1.12 2009/11/13 13:51:06 radvorak Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.11 2009/01/13 10:48:16 aigdalov Exp $
+ * $Id: QvtOpKWLexer.g,v 1.12 2009/11/13 13:51:06 radvorak Exp $
  */
 	./
 $End
@@ -125,7 +125,6 @@ $Export
 	extends
 	blackbox
 	abstract
-	static
 	result
 	main
 	this
@@ -171,7 +170,7 @@ $Export
         try
         typedef
         unlimited
-        invalid
+
 $End
 
 $Rules
@@ -469,12 +468,6 @@ $Rules
 		  $EndAction
 		./
 		
-		| s t a t i c
-		/.$BeginAction
-			$setResult($_static);
-		  $EndAction
-		./
-		
 		| r e s u l t
 		/.$BeginAction
 			$setResult($_result);
@@ -708,12 +701,6 @@ $Rules
 			$setResult($_unlimited);
 		  $EndAction
 		./
-		
-		| i n v a l i d 
-		/.$BeginAction
-			$setResult($_invalid);
-		  $EndAction
-		./
-		
+
 $End
 

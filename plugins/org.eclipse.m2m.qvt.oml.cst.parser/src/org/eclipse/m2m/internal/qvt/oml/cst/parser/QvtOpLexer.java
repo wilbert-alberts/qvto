@@ -1,7 +1,8 @@
 /**
+* Essential OCL Lexer
 * <copyright>
 *
-* Copyright (c) 2005, 2007 IBM Corporation and others.
+* Copyright (c) 2005, 2009 IBM Corporation and others.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -10,10 +11,26 @@
 * Contributors:
 *   IBM - Initial API and implementation
 *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
-*
+*   Borland - Bug 242880
+*   E.D.Willink - Bug 292112
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+*/
+/**
+* Complete OCL Lexer
+* <copyright>
+*
+* Copyright (c) 2005, 2009 IBM Corporation and others.
+* All rights reserved.   This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   IBM - Initial API and implementation
+*   E.D.Willink - Bug 292112, 292594
+* </copyright>
 */
 /**
 * <copyright>
@@ -29,7 +46,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.79 2009/05/16 12:50:27 sboyko Exp $
+* $Id: QvtOpLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -515,7 +532,7 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 2:  Token ::= EscapedSQ
+            // Rule 2:  Token ::= SingleQuote SLNotSQOpt SingleQuote
             //
             case 2: { 
 				makeToken(TK_STRING_LITERAL);
@@ -523,7 +540,7 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 3:  Token ::= SingleQuote SLNotSQ SingleQuote
+            // Rule 3:  Token ::= Acute SLNotSQOpt Acute
             //
             case 3: { 
 				makeToken(TK_STRING_LITERAL);
@@ -531,7 +548,7 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 4:  Token ::= Acute SLNotSQOpt Acute
+            // Rule 4:  Token ::= BackQuote SLNotSQOpt Acute
             //
             case 4: { 
 				makeToken(TK_STRING_LITERAL);
@@ -539,247 +556,239 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 5:  Token ::= BackQuote SLNotSQOpt Acute
+            // Rule 5:  Token ::= IntegerLiteral
             //
-            case 5: { 
-				makeToken(TK_STRING_LITERAL);
-	            break;
-            }
+            case 5:
+                break; 
 	 
             //
-            // Rule 6:  Token ::= IntegerLiteral
+            // Rule 6:  Token ::= IntegerLiteral DotToken
             //
-            case 6: { 
-				makeToken(TK_INTEGER_LITERAL);
-	            break;
-            }
+            case 6:
+                break; 
 	 
             //
-            // Rule 7:  Token ::= RealLiteral
+            // Rule 7:  Token ::= IntegerLiteral DotDotToken
             //
-            case 7: { 
+            case 7:
+                break; 
+	 
+            //
+            // Rule 8:  Token ::= RealLiteral
+            //
+            case 8: { 
 				makeToken(TK_REAL_LITERAL);
 	            break;
             }
 	 
             //
-            // Rule 8:  Token ::= NumericOperation
-            //
-            case 8: { 
-				makeToken(TK_NUMERIC_OPERATION);
-	            break;
-            }
-	 
-            //
-            // Rule 9:  Token ::= IntegerRangeStart
+            // Rule 9:  Token ::= SLC
             //
             case 9: { 
-				makeToken(TK_INTEGER_RANGE_START);
+				makeComment(TK_SINGLE_LINE_COMMENT);
 	            break;
             }
 	 
             //
-            // Rule 10:  Token ::= SLC
+            // Rule 10:  Token ::= / * Inside Stars /
             //
             case 10: { 
-				skipToken();
-	            break;
-            }
-	 
-            //
-            // Rule 11:  Token ::= / * Inside Stars /
-            //
-            case 11: { 
-                skipToken();
+                makeComment(TK_MULTI_LINE_COMMENT);
                 break;
             }
      
             //
-            // Rule 12:  Token ::= WS
+            // Rule 11:  Token ::= WS
             //
-            case 12: { 
+            case 11: { 
 				skipToken();
 	            break;
             }
 	 
             //
-            // Rule 13:  Token ::= +
+            // Rule 12:  Token ::= +
             //
-            case 13: { 
+            case 12: { 
 				makeToken(TK_PLUS);
 	            break;
             }
 	 
             //
-            // Rule 14:  Token ::= -
+            // Rule 13:  Token ::= -
             //
-            case 14: { 
+            case 13: { 
 				makeToken(TK_MINUS);
 	            break;
             }
 	 
             //
-            // Rule 15:  Token ::= *
+            // Rule 14:  Token ::= *
             //
-            case 15: { 
+            case 14: { 
 				makeToken(TK_MULTIPLY);
 	            break;
             }
 	 
             //
-            // Rule 16:  Token ::= /
+            // Rule 15:  Token ::= /
             //
-            case 16: { 
+            case 15: { 
 				makeToken(TK_DIVIDE);
 	            break;
             }
 	 
             //
-            // Rule 17:  Token ::= (
+            // Rule 16:  Token ::= (
             //
-            case 17: { 
+            case 16: { 
 				makeToken(TK_LPAREN);
 	            break;
             }
 	 
             //
-            // Rule 18:  Token ::= )
+            // Rule 17:  Token ::= )
             //
-            case 18: { 
+            case 17: { 
 				makeToken(TK_RPAREN);
 	            break;
             }
 	 
             //
-            // Rule 19:  Token ::= >
+            // Rule 18:  Token ::= >
             //
-            case 19: { 
+            case 18: { 
 				makeToken(TK_GREATER);
 	            break;
             }
 	 
             //
-            // Rule 20:  Token ::= <
+            // Rule 19:  Token ::= <
             //
-            case 20: { 
+            case 19: { 
 				makeToken(TK_LESS);
 	            break;
             }
 	 
             //
-            // Rule 21:  Token ::= =
+            // Rule 20:  Token ::= =
             //
-            case 21: { 
+            case 20: { 
 				makeToken(TK_EQUAL);
 	            break;
             }
 	 
             //
-            // Rule 22:  Token ::= > =
+            // Rule 21:  Token ::= > =
             //
-            case 22: { 
+            case 21: { 
 				makeToken(TK_GREATER_EQUAL);
 	            break;
             }
 	 
             //
-            // Rule 23:  Token ::= < =
+            // Rule 22:  Token ::= < =
             //
-            case 23: { 
+            case 22: { 
 				makeToken(TK_LESS_EQUAL);
 	            break;
             }
 	 
             //
-            // Rule 24:  Token ::= < >
+            // Rule 23:  Token ::= < >
             //
-            case 24: { 
+            case 23: { 
 				makeToken(TK_NOT_EQUAL);
 	            break;
             }
 	 
             //
-            // Rule 25:  Token ::= [
+            // Rule 24:  Token ::= [
             //
-            case 25: { 
+            case 24: { 
 				makeToken(TK_LBRACKET);
 	            break;
             }
 	 
             //
-            // Rule 26:  Token ::= ]
+            // Rule 25:  Token ::= ]
             //
-            case 26: { 
+            case 25: { 
 				makeToken(TK_RBRACKET);
 	            break;
             }
 	 
             //
-            // Rule 27:  Token ::= {
+            // Rule 26:  Token ::= {
             //
-            case 27: { 
+            case 26: { 
 				makeToken(TK_LBRACE);
 	            break;
             }
 	 
             //
-            // Rule 28:  Token ::= }
+            // Rule 27:  Token ::= }
             //
-            case 28: { 
+            case 27: { 
 				makeToken(TK_RBRACE);
 	            break;
             }
 	 
             //
-            // Rule 29:  Token ::= - >
+            // Rule 28:  Token ::= - >
             //
-            case 29: { 
+            case 28: { 
 				makeToken(TK_ARROW);
 	            break;
             }
 	 
             //
-            // Rule 30:  Token ::= |
+            // Rule 29:  Token ::= |
             //
-            case 30: { 
+            case 29: { 
 				makeToken(TK_BAR);
 	            break;
             }
 	 
             //
-            // Rule 31:  Token ::= ,
+            // Rule 30:  Token ::= ,
             //
-            case 31: { 
+            case 30: { 
 				makeToken(TK_COMMA);
 	            break;
             }
 	 
             //
-            // Rule 32:  Token ::= :
+            // Rule 31:  Token ::= :
             //
-            case 32: { 
+            case 31: { 
 				makeToken(TK_COLON);
 	            break;
             }
 	 
             //
-            // Rule 33:  Token ::= : :
+            // Rule 32:  Token ::= : :
             //
-            case 33: { 
+            case 32: { 
 				makeToken(TK_COLONCOLON);
 	            break;
             }
 	 
             //
-            // Rule 34:  Token ::= ;
+            // Rule 33:  Token ::= ;
             //
-            case 34: { 
+            case 33: { 
 				makeToken(TK_SEMICOLON);
 	            break;
             }
 	 
             //
-            // Rule 35:  Token ::= .
+            // Rule 34:  Token ::= DotToken
+            //
+            case 34:
+                break; 
+	 
+            //
+            // Rule 35:  DotToken ::= .
             //
             case 35: { 
 				makeToken(TK_DOT);
@@ -787,129 +796,135 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
             }
 	 
             //
-            // Rule 36:  Token ::= . .
+            // Rule 36:  Token ::= DotDotToken
             //
-            case 36: { 
+            case 36:
+                break; 
+	 
+            //
+            // Rule 37:  DotDotToken ::= . .
+            //
+            case 37: { 
 				makeToken(TK_DOTDOT);
 	            break;
             }
 	 
             //
-            // Rule 37:  Token ::= @ p r e
+            // Rule 38:  IntegerLiteral ::= Integer
             //
-            case 37: { 
-				makeToken(TK_ATPRE);
+            case 38: { 
+				makeToken(TK_INTEGER_LITERAL);
 	            break;
             }
 	 
             //
-            // Rule 38:  Token ::= ^
+            // Rule 263:  Token ::= @
             //
-            case 38: { 
+            case 263: { 
+				makeToken(TK_AT);
+	            break;
+            }
+	 
+            //
+            // Rule 264:  Token ::= ^
+            //
+            case 264: { 
 				makeToken(TK_CARET);
 	            break;
             }
 	 
             //
-            // Rule 39:  Token ::= ^ ^
+            // Rule 265:  Token ::= ^ ^
             //
-            case 39: { 
+            case 265: { 
 				makeToken(TK_CARETCARET);
 	            break;
             }
 	 
             //
-            // Rule 40:  Token ::= ?
+            // Rule 266:  Token ::= ?
             //
-            case 40: { 
+            case 266: { 
 				makeToken(TK_QUESTIONMARK);
 	            break;
             }
 	 
             //
-            // Rule 305:  Token ::= : =
+            // Rule 267:  Token ::= : =
             //
-            case 305: { 
+            case 267: { 
 				makeToken(TK_RESET_ASSIGN);
 	            break;
             }
 	 
             //
-            // Rule 306:  Token ::= + =
+            // Rule 268:  Token ::= + =
             //
-            case 306: { 
+            case 268: { 
 				makeToken(TK_ADD_ASSIGN);
 	            break;
             }
 	 
             //
-            // Rule 307:  Token ::= @
+            // Rule 269:  Token ::= !
             //
-            case 307: { 
-				makeToken(TK_AT_SIGN);
-	            break;
-            }
-	 
-            //
-            // Rule 308:  Token ::= !
-            //
-            case 308: { 
+            case 269: { 
 				makeToken(TK_EXCLAMATION_MARK);
 	            break;
             }
 	 
             //
-            // Rule 309:  Token ::= ! =
+            // Rule 270:  Token ::= ! =
             //
-            case 309: { 
+            case 270: { 
 				makeToken(TK_NOT_EQUAL_EXEQ);
 	            break;
             }
 	 
             //
-            // Rule 310:  Token ::= < <
+            // Rule 271:  Token ::= < <
             //
-            case 310: { 
+            case 271: { 
 				makeToken(TK_STEREOTYPE_QUALIFIER_OPEN);
 	            break;
             }
 	 
             //
-            // Rule 311:  Token ::= > >
+            // Rule 272:  Token ::= > >
             //
-            case 311: { 
+            case 272: { 
 				makeToken(TK_STEREOTYPE_QUALIFIER_CLOSE);
 	            break;
             }
 	 
             //
-            // Rule 312:  Token ::= . . .
+            // Rule 273:  Token ::= . . .
             //
-            case 312: { 
+            case 273: { 
 				makeToken(TK_MULTIPLICITY_RANGE);
 	            break;
             }
 	 
             //
-            // Rule 313:  Token ::= ~
+            // Rule 274:  Token ::= ~
             //
-            case 313: { 
+            case 274: { 
 				makeToken(TK_TILDE_SIGN);
 	            break;
             }
 	 
             //
-            // Rule 314:  Token ::= : : =
+            // Rule 275:  Token ::= : : =
             //
-            case 314: { 
+            case 275: { 
 				makeToken(TK_COLONCOLONEQUAL);
 	            break;
             }
 	 
             //
-            // Rule 322:  Token ::= DoubleQuote SLNotDQOpt DoubleQuote
+            // Rule 282:  Token ::= DoubleQuote SLNotDQOpt DoubleQuote
             //
-            case 322: { 
+            case 282: { 
 				makeToken(TK_STRING_LITERAL);
 	            break;
             }

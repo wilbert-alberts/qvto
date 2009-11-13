@@ -16,6 +16,7 @@ import java.util.List;
 
 import lpg.lpgjavaruntime.IToken;
 import lpg.lpgjavaruntime.ParseErrorCodes;
+import lpg.lpgjavaruntime.Token;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -93,8 +94,11 @@ import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionLiteralPartCS;
+import org.eclipse.ocl.cst.DotOrArrowEnum;
+import org.eclipse.ocl.cst.IsMarkedPreCS;
 import org.eclipse.ocl.cst.LiteralExpCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.cst.OperationCallExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
@@ -242,7 +246,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	
 	protected final CSTNode createLocalPropertyCS(IToken tokenText, TypeCS sym, OCLExpressionCS sym2) {
 		LocalPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLocalPropertyCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText);
 		setOffsets(nameCS, tokenText);
 		prop.setSimpleNameCS(nameCS);
 		prop.setTypeCS(sym);
@@ -252,7 +256,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode createConfigPropertyCS(IToken tokenText, TypeCS sym) {
 		ConfigPropertyCS prop = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createConfigPropertyCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText);
 		setOffsets(nameCS, tokenText);
 		prop.setSimpleNameCS(nameCS);
 		prop.setTypeCS(sym);
@@ -270,7 +274,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode createRenameCS(TypeCS sym, IToken tokenText, StringLiteralExpCS sym2) {
 		RenameCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createRenameCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText);
 		setOffsets(nameCS, tokenText);
 		result.setSimpleNameCS(nameCS);
 		result.setTypeCS(sym);
@@ -361,7 +365,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode createVariableInitializationCS(IToken identifier, TypeCS typeCS, OCLExpressionCS initExpressionCS, boolean withResult) {
 		VariableInitializationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createVariableInitializationCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, identifier.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, identifier);
 		setOffsets(nameCS, identifier);
 		result.setSimpleNameCS(nameCS);
 		result.setTypeCS(typeCS);
@@ -433,7 +437,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 				ParameterDeclarationCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createParameterDeclarationCS();
 				SimpleNameCS nameCS = null;
 				if (tokenText != null) {
-					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText.toString());
+					nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, tokenText);
 					setOffsets(nameCS, tokenText);
 				}
 				else {
@@ -452,7 +456,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setTypeCS(typeCS);
 		setOffsets(result, typeCS);
 		if (extentLocation != null) {
-			SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, extentLocation.toString());
+			SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, extentLocation);
 			setOffsets(nameCS, extentLocation);
 			result.setSimpleNameCS(nameCS);
 			result.setEndOffset(extentLocation.getEndOffset());
@@ -504,20 +508,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return simpleNameCS;
 	}
 	
-	private PathNameCS createParentPath(PathNameCS pathNameCS) {
-		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-		result.getSequenceOfNames().addAll(pathNameCS.getSequenceOfNames());
-		result.setStartOffset(pathNameCS.getStartOffset());
-		if (result.getSequenceOfNames().size() > 0) {
-			String lastSegment = result.getSequenceOfNames().remove(result.getSequenceOfNames().size()-1);
-			result.setEndOffset(pathNameCS.getEndOffset()-lastSegment.length());
-		}
-		else {
-			result.setEndOffset(pathNameCS.getEndOffset());
-		}
-		return result;
-	}
-
 	protected final CSTNode createAssignStatementCS(OCLExpressionCS sym, OCLExpressionCS sym2,
 			boolean b) {
 				AssignStatementCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createAssignStatementCS();
@@ -559,12 +549,30 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 	
-	protected final CSTNode createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
+	protected final ImperativeOperationCallExpCS createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
 		ImperativeOperationCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createImperativeOperationCallExpCS();
 		return setupImperativeOperationCallExpCS(moduleName, operationName,	arguments, result);
 	}
+	
+	@Override
+	protected OperationCallExpCS createDotOperationCallExpCS(OCLExpressionCS oclExpressionCS, PathNameCS pathNameCs,
+			SimpleNameCS simpleNameCS, IsMarkedPreCS isMarkedPreCS,	EList<OCLExpressionCS> arguments) {
+		if (pathNameCs != null && pathNameCs.getSimpleNames().size() == 1) {
+			ImperativeOperationCallExpCS result = createFeatureFQNOperationCallExpCS(pathNameCs.getSimpleNames().get(0), simpleNameCS, arguments);
+			if (oclExpressionCS != null) {
+				result.setSource(oclExpressionCS);
+				result.setIsAtomic(true);
+			}
+			result.setAccessor(oclExpressionCS != null ? DotOrArrowEnum.DOT_LITERAL : DotOrArrowEnum.NONE_LITERAL);
+			if (isAtPre(isMarkedPreCS)) {
+				result.setIsMarkedPreCS(isMarkedPreCS);
+			}
+			return result;
+		}
+		return super.createDotOperationCallExpCS(oclExpressionCS, pathNameCs, simpleNameCS, isMarkedPreCS, arguments);
+	}
 
-	private CSTNode setupImperativeOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments,
+	private ImperativeOperationCallExpCS setupImperativeOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments,
 			ImperativeOperationCallExpCS result) {
 		result.setModule(moduleName);
 		result.setSimpleNameCS(operationName);
@@ -580,40 +588,35 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final CSTNode createMappingCallExpCS(PathNameCS sym, EList<OCLExpressionCS> arguments,
-			boolean b) {
-				MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
-				if (sym.getSequenceOfNames().size() > 1) {
-					result.setSource(createParentPath(sym));
-				}
-				if (sym.getSequenceOfNames().size() > 0) {
-					String lastSegment = sym.getSequenceOfNames().get(sym.getSequenceOfNames().size()-1);
-					SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, lastSegment);
-					nameCS.setStartOffset(sym.getEndOffset()-lastSegment.length() + 1);
-					nameCS.setEndOffset(sym.getEndOffset());
-					result.setSimpleNameCS(nameCS);
-				}		
-				result.getArguments().addAll(arguments);
-				result.setStrict(b);
-				result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
-				return result;
-			}
+	protected final CSTNode createMappingCallExpCS(PathNameCS pathNameCS, EList<OCLExpressionCS> arguments, boolean b) {
+		MappingCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingCallExpCS();
+		if (pathNameCS.getSimpleNames().size() > 0) {
+			SimpleNameCS simpleNameCS = pathNameCS.getSimpleNames().get(pathNameCS.getSimpleNames().size()-1);
+			result.setSimpleNameCS(simpleNameCS);
+		}		
+		if (pathNameCS.getSimpleNames().size() > 0) {
+			result.setSource(pathNameCS);
+		}
+		result.getArguments().addAll(arguments);
+		result.setStrict(b);
+		result.setIsMarkedPreCS(CSTFactory.eINSTANCE.createIsMarkedPreCS());
+		return result;
+	}
 
-	protected final CSTNode createResolveOpArgsExpCS(IToken target, TypeCS typeCS,
-			OCLExpressionCS condition) {
-			    ResolveOpArgsExpCS resolveOpArgsExpCS = TempFactory.eINSTANCE.createResolveOpArgsExpCS();
-			    VariableCS variableCS = CSTFactory.eINSTANCE.createVariableCS();
-			    variableCS.setTypeCS(typeCS);
-			    if (target == null) {
-					setOffsets(variableCS, typeCS);
-			    } else {
-			        variableCS.setName(target.toString());
-					setOffsets(variableCS, target, typeCS);
-			    }
-			    resolveOpArgsExpCS.setTarget(variableCS);
-			    resolveOpArgsExpCS.setCondition(condition);
-			    return resolveOpArgsExpCS;
-			}
+	protected final CSTNode createResolveOpArgsExpCS(IToken target, TypeCS typeCS, OCLExpressionCS condition) {
+	    ResolveOpArgsExpCS resolveOpArgsExpCS = TempFactory.eINSTANCE.createResolveOpArgsExpCS();
+	    VariableCS variableCS = CSTFactory.eINSTANCE.createVariableCS();
+	    variableCS.setTypeCS(typeCS);
+	    if (target == null) {
+			setOffsets(variableCS, typeCS);
+	    } else {
+	        variableCS.setName(target.toString());
+			setOffsets(variableCS, target, typeCS);
+	    }
+	    resolveOpArgsExpCS.setTarget(variableCS);
+	    resolveOpArgsExpCS.setCondition(condition);
+	    return resolveOpArgsExpCS;
+	}
 
 	protected final CSTNode createResolveExpCS(IToken lateToken, IToken opCode, ResolveOpArgsExpCS resolveOpArgsExpCS) {
 	    return populateResolveExpCS(org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveExpCS(), 
@@ -622,40 +625,40 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode createResolveInExpCS(IToken lateToken, IToken opCode,
 			ScopedNameCS mapping, ResolveOpArgsExpCS resolveOpArgsExpCS) {
-				ResolveInExpCS resolveInExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveInExpCS();
-				resolveInExpCS.setInMappingType(mapping.getTypeCS());
-				
-				SimpleNameCS mappingNameCS = CSTFactory.eINSTANCE.createSimpleNameCS();
-				mappingNameCS.setValue(mapping.getName());
-				
-				mappingNameCS.setStartOffset(mapping.getStartOffset());
-				if(mapping.getName() != null) {
-					mappingNameCS.setStartOffset(mapping.getEndOffset() - mapping.getName().length() + 1);
-				}
-				mappingNameCS.setEndOffset(mapping.getEndOffset());
-				
-				resolveInExpCS.setInMappingName(mappingNameCS);
-				return populateResolveExpCS(resolveInExpCS, lateToken, opCode, resolveOpArgsExpCS);
-			}
+		ResolveInExpCS resolveInExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveInExpCS();
+		resolveInExpCS.setInMappingType(mapping.getTypeCS());
+		
+		SimpleNameCS mappingNameCS = CSTFactory.eINSTANCE.createSimpleNameCS();
+		mappingNameCS.setValue(mapping.getName());
+		
+		mappingNameCS.setStartOffset(mapping.getStartOffset());
+		if(mapping.getName() != null) {
+			mappingNameCS.setStartOffset(mapping.getEndOffset() - mapping.getName().length() + 1);
+		}
+		mappingNameCS.setEndOffset(mapping.getEndOffset());
+		
+		resolveInExpCS.setInMappingName(mappingNameCS);
+		return populateResolveExpCS(resolveInExpCS, lateToken, opCode, resolveOpArgsExpCS);
+	}
 
 	protected final CSTNode populateResolveExpCS(ResolveExpCS resolveExpCS, IToken lateToken,
 			IToken opCode, ResolveOpArgsExpCS resolveOpArgsExpCS) {
-			    resolveExpCS.setIsDeferred((lateToken != null) && getTokenKindName(QvtOpLPGParsersym.TK_late).equals(lateToken.toString()));
-			    String opCodeText = opCode.toString();
-			    resolveExpCS.setOne(opCodeText.indexOf("one") > 0); //$NON-NLS-1$
-			    resolveExpCS.setIsInverse(opCodeText.indexOf("inv") == 0); //$NON-NLS-1$
-			    if (resolveOpArgsExpCS != null) {
-			        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
-			        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
-			    }
-			    
-			    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCodeText);
-			    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
-			    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
-			    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
-			    
-			    return resolveExpCS;
-			}
+	    resolveExpCS.setIsDeferred((lateToken != null) && getTokenKindName(QvtOpLPGParsersym.TK_late).equals(lateToken.toString()));
+	    String opCodeText = opCode.toString();
+	    resolveExpCS.setOne(opCodeText.indexOf("one") > 0); //$NON-NLS-1$
+	    resolveExpCS.setIsInverse(opCodeText.indexOf("inv") == 0); //$NON-NLS-1$
+	    if (resolveOpArgsExpCS != null) {
+	        resolveExpCS.setTarget(resolveOpArgsExpCS.getTarget());
+	        resolveExpCS.setCondition(resolveOpArgsExpCS.getCondition());
+	    }
+	    
+	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCode);
+	    operCodeSimpleName.setStartOffset(opCode.getStartOffset());
+	    operCodeSimpleName.setEndOffset(opCode.getEndOffset());
+	    resolveExpCS.setSimpleNameCS(operCodeSimpleName);		    
+	    
+	    return resolveExpCS;
+	}
 
 	protected final ScopedNameCS createScopedNameCS(TypeCS typeCS, String name) {
 		ScopedNameCS result = TempFactory.eINSTANCE.createScopedNameCS();
@@ -701,7 +704,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected final CSTNode createForExpCS(IToken opCode, EList<IToken> iterators, OCLExpressionCS condition, BlockExpCS body) {
 	    ForExpCS forExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createForExpCS();
 
-	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCode.toString());
+	    SimpleNameCS operCodeSimpleName = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, opCode);
         operCodeSimpleName.setStartOffset(opCode.getStartOffset());
         operCodeSimpleName.setEndOffset(opCode.getEndOffset());
         forExpCS.setSimpleNameCS(operCodeSimpleName);
@@ -709,7 +712,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         if ((iterators != null) && !iterators.isEmpty()) {
             VariableCS[] iterVars = new VariableCS[iterators.size()];
             for (int i = 0, n = iterVars.length; i < n; i++) {
-                iterVars[i] = createVariableCS(iterators.get(i).toString(), null, null);
+                iterVars[i] = createVariableCS(iterators.get(i), null, null);
             }
             forExpCS.setVariable1(iterVars[0]);
             if (iterVars.length > 1) {
@@ -766,7 +769,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			EList<PackageRefCS> packageRefList, EList<StatementCS> whereList) {
 				ModelTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModelTypeCS();
 				SimpleNameCS identifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL,
-							(identifier.getPrsStream() == null ? "" : identifier.toString())); //$NON-NLS-1$
+							(identifier.getPrsStream() == null ? null : identifier));
 				identifierCS.setStartOffset(identifier.getStartOffset());
 				identifierCS.setEndOffset(identifier.getEndOffset());
 				result.setIdentifierCS(identifierCS);
@@ -913,7 +916,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected CSTNode createClassifierDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<CSTNode> featureList) {
 		ClassifierDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
 		setOffsets(nameCS, nameToken);
 		result.setSimpleNameCS(nameCS);
 		result.getExtends().addAll(extentionList);
@@ -934,7 +937,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			IToken nameToken, TypeCS typeSpecCS, boolean isOrdered, OCLExpressionCS initPartCS, MultiplicityDefCS multiplicityDefCS,
 			OppositePropertyCS oppositePropertyCS) {
 		ClassifierPropertyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierPropertyCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
 		setOffsets(nameCS, nameToken);
 		result.setSimpleNameCS(nameCS);
 		result.setTypeCS(typeSpecCS);
@@ -944,7 +947,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		result.setOpposite(oppositePropertyCS);
 		result.getFeatureKeys().addAll(featureKeys);
 		for (IToken token : stereotypeQualifieres) {
-			SimpleNameCS stereotypeQualifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token.toString());
+			SimpleNameCS stereotypeQualifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token);
 			setOffsets(stereotypeQualifierCS, token);
 			result.getStereotypeQualifiers().add(stereotypeQualifierCS);
 		}
@@ -960,7 +963,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected CSTNode createOppositePropertyCS(IToken nameToken, boolean isNavigable, MultiplicityDefCS multiplicityCS) {
 		OppositePropertyCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createOppositePropertyCS();
-		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken.toString());
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
 		setOffsets(nameCS, nameToken);
 		result.setSimpleNameCS(nameCS);
 		result.setIsNavigable(isNavigable);
@@ -1010,8 +1013,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			VariableExpCS variableExpCS = (VariableExpCS) lValueCS;
 			SimpleNameCS simpleNameCS = variableExpCS.getSimpleNameCS();
 			if (simpleNameCS.getType() == SimpleTypeEnum.IDENTIFIER_LITERAL) { 
-				String varName = simpleNameCS.getValue();
-				VariableCS variableCS = createVariableCS(varName, null, assignStatementCS.getOclExpressionCS());
+				VariableCS variableCS = createVariableCS(simpleNameCS, null, assignStatementCS.getOclExpressionCS());
 				variableCS.setStartOffset(lValueCS.getStartOffset());
 				variableCS.setEndOffset(lValueCS.getEndOffset());				
 				return variableCS;
@@ -1020,7 +1022,13 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 		reportError(Messages.IdentifierExpectedOnLeftSide, lValueCS.getStartOffset(), lValueCS.getEndOffset());
 
-		return createVariableCS("error_var", null, assignStatementCS.getOclExpressionCS()); //$NON-NLS-1$
+		return createVariableCS(new Token() {
+					@Override
+					public String toString() {
+						return "error_var"; //$NON-NLS-1$
+					}
+				},
+				null, assignStatementCS.getOclExpressionCS());
 	}
 	
 	protected CSTNode createTagCS(StringLiteralExpCS tagId, ScopedNameCS scopedIdentifier, OCLExpressionCS tagValue) {
@@ -1049,6 +1057,57 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
+	protected PathNameCS createPathNameCS(IToken token) {
+		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
+		result.getSimpleNames().add(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token));
+		return result;
+	}
+
+	protected PathNameCS extendPathNameCS(PathNameCS path, IToken token) {
+		path.getSimpleNames().add(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token));
+		return path;
+	}
+	
+	protected VariableCS createVariableCS(IToken token, TypeCS typeCS, OCLExpressionCS oclExpressionCS) {
+		VariableCS result = CSTFactory.eINSTANCE.createVariableCS();
+		result.setName(unSingleQuote(token));
+		result.setTypeCS(typeCS);
+		result.setInitExpression(oclExpressionCS);
+		return result;
+	}
+
+	protected SimpleNameCS createSimpleNameCS(SimpleTypeEnum type, final String name) {
+		return super.createSimpleNameCS(type, new Token() {
+			@Override
+			public String toString() {
+				return name;
+			}
+		});
+	}
+	
+	@Override
+	protected StringLiteralExpCS extendStringLiteralExpCS(StringLiteralExpCS string, IToken token) {
+
+		int tokenLine = token.getLine();
+		IToken prevToken = getTokenAt(token.getTokenIndex() - 1);
+		int prevTokenLine = prevToken.getLine();
+		if (prevTokenLine == tokenLine) {
+			reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+
+		return super.extendStringLiteralExpCS(string, token);
+	}
+	
+	@Override
+	protected String unSingleQuote(IToken token) {
+		if (token == null) {
+			return ""; //$NON-NLS-1$
+		}
+		if (token.toString().startsWith("\"")) { //$NON-NLS-1$
+			return unDoubleQuote(token);
+		}
+		return super.unSingleQuote(token);
+	}
 	
 	@Override
 	protected void setOffsets(CSTNode cstNode, IToken startEnd) {

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.31 2009/05/16 12:50:26 sboyko Exp $ 
+-- * $Id: miscellaneous.g,v 1.32 2009/11/13 13:51:06 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -22,37 +22,16 @@ $Import
 
 $DropRules
 		
-	operationCS -> operationCS1
-	operationCS -> operationCS2
-	operationCS1 ::= IDENTIFIER '(' parametersCSopt ')' ':' typeCSopt
-	operationCS2 ::= pathNameCS '::' simpleNameCS '(' parametersCSopt ')' ':' typeCSopt
-
-	parametersCSopt ::= $empty
-	parametersCSopt -> parametersCS
-	parametersCS ::= variableCS
-	parametersCS ::= parametersCS ',' variableCS
-
-	-- error in OCLLPGParser.g in definition of type-argued calls
-	operationCallExpCS ::= oclAsType isMarkedPreCS '(' argumentsCSopt ')'
-	operationCallExpCS ::= oclIsKindOf isMarkedPreCS '(' argumentsCSopt ')'
-	operationCallExpCS ::= oclIsTypeOf isMarkedPreCS '(' argumentsCSopt ')'
-
 	-- Dropped due to 13.2 (OCL spec) and 6.4 (QVT spec). These rules conflict with imperative iterator shorthands
-	attrOrNavCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
-	variableExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCS
-	variableExpCS ::= keywordAsIdentifier1 '[' argumentsCS ']' isMarkedPreCS
+	AssociationClassCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
+	AssociationClassCallExpCS ::= primaryExpCS '.' simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
+	PropertyCallExpCS ::= primaryExpCS '.' pathNameCS '[' argumentsCS ']' isMarkedPreCSopt
 
-	keywordAsIdentifier1 -> init
+	-- Error in OCL grammar
+	CollectionLiteralExpCS ::= collectionTypeCS '{' CollectionLiteralPartsCSopt '}'
 
 $DropSymbols
 	
-	operationCS
-	operationCS1
-	operationCS2
-	
-	parametersCS
-	simpleNameCSopt
-	typeCSopt
 $End
 
 $Define
@@ -229,10 +208,9 @@ $Terminals
 
 	ADD_ASSIGN    ::= '+='
 	RESET_ASSIGN  ::= ':='
-	AT_SIGN       ::= '@'
+	AT            ::= '@'
 	EXCLAMATION_MARK ::= '!'
 	NOT_EQUAL_EXEQ   ::= '!='
-	INTEGER_RANGE_START
 
         class
         composes
@@ -274,7 +252,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.31 2009/05/16 12:50:26 sboyko Exp $
+ * $Id: miscellaneous.g,v 1.32 2009/11/13 13:51:06 radvorak Exp $
  */
 	./
 $End
@@ -310,6 +288,7 @@ $End
 
 $Rules
 	--=== // general purpose grammar rules (start) ===--
+
 	qualifierList ::= $empty
 		/.$EmptyListAction./
 	qualifierList ::= qualifierList qualifier
@@ -326,7 +305,7 @@ $Rules
 		/.$NewCase./
 	qualifier ::= static
 		/.$BeginJava
-					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText(dtParser.getToken(1)));
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -467,7 +446,7 @@ $Rules
 	declarator1 ::= IDENTIFIER ':' typeCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							(TypeCS)$getSym(3),
 							null
 						);
@@ -476,10 +455,10 @@ $Rules
 		  $EndJava
 		./
 	
-	declarator1 ::= IDENTIFIER ':' typeCS '=' oclExpressionCS
+	declarator1 ::= IDENTIFIER ':' typeCS '=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							(TypeCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5)
 						);
@@ -488,10 +467,10 @@ $Rules
 		  $EndJava
 		./
 
-	declarator1 ::= IDENTIFIER ':' typeCS ':=' oclExpressionCS
+	declarator1 ::= IDENTIFIER ':' typeCS ':=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							(TypeCS)$getSym(3),
 							(OCLExpressionCS)$getSym(5)
 						);
@@ -500,10 +479,10 @@ $Rules
 		  $EndJava
 		./
 		
-	declarator2 ::= IDENTIFIER ':=' oclExpressionCS
+	declarator2 ::= IDENTIFIER ':=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							null,
 							(OCLExpressionCS)$getSym(3)
 						);
@@ -553,8 +532,8 @@ $Rules
 	scoped_identifier ::= scoped_identifier2
 		/.$BeginJava
 					PathNameCS pathNameCS = (PathNameCS)$getSym(1);
-                                        String name = pathNameCS.getSequenceOfNames().remove(pathNameCS.getSequenceOfNames().size() - 1);
-					TypeCS typeCS = pathNameCS.getSequenceOfNames().isEmpty() ? null : pathNameCS;
+					String name = pathNameCS.getSimpleNames().remove(pathNameCS.getSimpleNames().size() - 1).getValue();
+					TypeCS typeCS = pathNameCS.getSimpleNames().isEmpty() ? null : pathNameCS;
 
 					ScopedNameCS result = createScopedNameCS(typeCS, name);		
 
@@ -568,14 +547,14 @@ $Rules
 		./
 	scoped_identifier2 ::= IDENTIFIER
 		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
+					CSTNode result = createPathNameCS(getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
 		./
 	scoped_identifier2 ::= main
 		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
+					CSTNode result = createPathNameCS(getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -583,7 +562,7 @@ $Rules
 	scoped_identifier2 ::= scoped_identifier2 '::' IDENTIFIER
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getTokenText($getToken(3)));
+					result = extendPathNameCS(result, getIToken($getToken(3)));
 					setOffsets(result, result, getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
@@ -591,7 +570,7 @@ $Rules
 	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, ""); //$NON-NLS-1$
+					result = extendPathNameCS(result, (IToken) null);
 					setOffsets(result, result, getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
@@ -626,7 +605,7 @@ $Rules
 
 	expression_list -> expression_semi_list semicolonOpt
 
-	expression_semi_list_element -> oclExpressionCS
+	expression_semi_list_element -> OclExpressionCS
 	expression_semi_list ::= expression_semi_list_element
 		/.$BeginJava
 					EList result = new BasicEList();
@@ -660,12 +639,12 @@ $Rules
 
 	expression_block ::= '{' expression_listOpt '}'
 		/.$BeginJava
-				EList bodyList = (EList) dtParser.getSym(2);
+				EList bodyList = (EList) $getSym(2);
 				CSTNode result = createBlockExpCS(
 					bodyList
 				);
 				
-				setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
 				$setResult(result);
 	          $EndJava
 		./
@@ -676,17 +655,17 @@ $Rules
 					$EMPTY_ELIST
 				);
 				
-				setOffsets(result, getIToken(dtParser.getToken(1)));
+				setOffsets(result, getIToken($getToken(1)));
 				$setResult(result);
 	          $EndJava
 		./
 
-	expression_statement -> oclExpressionCS ';'
+	expression_statement -> OclExpressionCS ';'
 	expression_statement -> expression_block semicolonOpt
 	
 	qualifiedNameCS ::= qvtIdentifierCS
 		/.$BeginJava
-					CSTNode result = createPathNameCS(getTokenText($getToken(1)));
+					CSTNode result = createPathNameCS(getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -694,7 +673,7 @@ $Rules
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtIdentifierCS
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getTokenText($getToken(3)));
+					result = extendPathNameCS(result, getIToken($getToken(3)));
 					setOffsets(result, result, getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
@@ -702,7 +681,7 @@ $Rules
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
 		/.$BeginJava
 					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, ""); //$NON-NLS-1$
+					result = extendPathNameCS(result, (IToken) null);
 					setOffsets(result, result, getIToken($getToken(2)));
 					$setResult(result);
 		  $EndJava
@@ -716,13 +695,13 @@ $Rules
 	--=== // general purpose grammar rules (end) ===--
 	
 	--=== // Expressions (start) ===--
-	oclExpressionCSOpt -> oclExpressionCS 
+	oclExpressionCSOpt -> OclExpressionCS 
 	oclExpressionCSOpt ::= $empty
 		/.$NullAction./
 
 	-- 'let' extension in QVT
 	-- in OCL variable has to define type
-	letExpSubCS3 ::= variableCS2
+	letExpSubCS3 ::= untypedInitializedVariableCS
 		/.$BeginJava
 					EList result = new BasicEList();
 					result.add($getSym(1));
@@ -730,7 +709,7 @@ $Rules
 		  $EndJava
 		./
 
-	letExpSubCS3 ::= letExpSubCS3 ',' variableCS2 
+	letExpSubCS3 ::= letExpSubCS3 ',' untypedInitializedVariableCS 
 		/.$BeginJava
 					EList result = (EList)$getSym(1);
 					result.add($getSym(3));
@@ -738,7 +717,7 @@ $Rules
 		  $EndJava
 		./
 			
-	letExpCS ::= let letExpSubCS3 in oclExpressionCS
+	LetExpCS ::= let letExpSubCS3 in OclExpressionCS
 		/.$BeginJava
 					EList variables = (EList)$getSym(2);
 					CSTNode result = createLetExpCS(
@@ -749,14 +728,14 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	letExpCS ::= let letExpSubCS3 in qvtErrorToken
+	LetExpCS ::= let letExpSubCS3 in qvtErrorToken
 		/.$BeginJava
 					EList variables = (EList)$getSym(2);
 					CSTNode result = createLetExpCS(
 							variables,
-							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "") //$NON-NLS-1$
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null)
 						);
-					setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(3)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
 					$setResult(result);
 		  $EndJava
 		./
@@ -764,18 +743,7 @@ $Rules
 	--=== // Expressions (end) ===--
 		
 	--=== OCL grammar error recovery extensions (start) ===--
-	iterContents ::= variableCS '|' qvtErrorToken
-		/.$BeginJava
-					CSTNode fakeCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""); //$NON-NLS-1$
-					setOffsets(fakeCS, getIToken($getToken(3)));
-					$setResult(new Object[] {
-							$getSym(1),
-							null,
-							fakeCS
-						});
-		  $EndJava
-		./
-	callExpCS ::= '.' qvtErrorToken
+	CallExpCS ::= '.' qvtErrorToken
 		/.$BeginJava
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
@@ -783,7 +751,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	callExpCS ::= '->' qvtErrorToken
+	CallExpCS ::= '->' qvtErrorToken
 		/.$BeginJava
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
@@ -796,68 +764,27 @@ $Rules
 	argumentsCS -> argumentsCS ',' qvtErrorToken
 
 
-	iteratorExpCSToken -> forAll
-	iteratorExpCSToken -> exists
-	iteratorExpCSToken -> isUnique
-	iteratorExpCSToken -> one
-	iteratorExpCSToken -> any
-	iteratorExpCSToken -> collect
-	iteratorExpCSToken -> select
-	iteratorExpCSToken -> reject
-	iteratorExpCSToken -> collectNested
-	iteratorExpCSToken -> sortedBy
-	iteratorExpCSToken -> closure
-
-	iteratorExpCS ::= iteratorExpCSToken '(' qvtErrorToken
+	IteratorExpCS ::= primaryExpCS '->' simpleNameCS '(' qvtErrorToken
 		/.$BeginJava
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								getTokenText($getToken(1))
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					SimpleNameCS simpleNameCS = (SimpleNameCS)$getSym(3);
 					CSTNode result = createIteratorExpCS(
+							source,
 							simpleNameCS,
 							null,
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
+					setOffsets(result, source, getIToken($getToken(4)));
 					$setResult(result);
 		  $EndJava
 		./
 	--=== OCL grammar error recovery extensions (end) ===--
 
 		
-	--=== OCL grammar workarounds (start) ===--
-	----- error in OCLLPGParser.g in definition of type-argued calls (start) -----
-	operationCallExpCS ::= oclAsType isMarkedPreCS '(' typeCS ')'
-		/.$NewCase./
-	operationCallExpCS ::= oclIsKindOf isMarkedPreCS '(' typeCS ')'
-		/.$NewCase./
-	operationCallExpCS ::= oclIsTypeOf isMarkedPreCS '(' typeCS ')'
-		/.$BeginJava
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.IDENTIFIER_LITERAL,
-								getTokenText($getToken(1))
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
-					EList params = new BasicEList();
-					params.add($getSym(4));
-					CSTNode result = createOperationCallExpCS(
-							simpleNameCS,
-							(IsMarkedPreCS)$getSym(2),
-							params
-						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
-	----- error in OCLLPGParser.g in definition of type-argued calls (end) -----
-	--=== OCL grammar workarounds (end) ===--
-
 	--=== Miscellaneous QVTO grammar rules (start) ===--
-	qvtIdentifierCS -> IDENTIFIER
-	qvtIdentifierCS -> keywordAsIdentifier1
+	qvtIdentifierCS -> simpleNameCS
+	--qvtIdentifierCS -> CollectionTypeIdentifierCS
 	
 	qvtErrorToken ::= ERROR_TOKEN
 		/.$BeginJava
@@ -866,10 +793,10 @@ $Rules
 		./
 
 
-        ----- '!=' - a synonym of '<>' (start) -----
-	equalityExpCS ::= equalityExpCS '!=' relationalExpCS
+        ----- '!=' - a synonym of '<>' -----
+	equalityNotNameNotLetCS ::= equalityNotLetCS '!=' relationalNotLetCS
 		/.$NewCase./
-	equalityWithLet ::= equalityExpCS '!=' relationalWithLet
+	equalityWithLetCS ::= equalityNotLetCS '!=' relationalWithLetCS
 		/.$BeginJava
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.STRING_LITERAL,
@@ -888,24 +815,5 @@ $Rules
 		  $EndJava
 		./
 
-	stringLiteralExpCS ::= stringLiteralExpCS STRING_LITERAL
-		/.$BeginJava
-					IToken literalToken = getIToken($getToken(2));
-					StringLiteralExpCS result = (StringLiteralExpCS) $getSym(1);
-					result.setSymbol(result.getSymbol() +  literalToken.toString());
-					result.setStringSymbol(result.getStringSymbol() + literalToken.toString());
-					result.setUnescapedStringSymbol(result.getUnescapedStringSymbol() +  unescape(literalToken));
-					int tokenLine = literalToken.getLine();
-					setOffsets(result, result, literalToken);
-					IToken prevToken = getParseStream().getTokenAt(literalToken.getTokenIndex() - 1);
-					int prevTokenLine = prevToken.getLine();
-					if (prevTokenLine == tokenLine) {
-						reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), literalToken.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-					$setResult(result);
-		  $EndJava
-		./
-        
-        ----- '!=' - a synonym of '<>' (end) -----
 	--=== Miscellaneous QVTO grammar rules (end) ===--	
 $End

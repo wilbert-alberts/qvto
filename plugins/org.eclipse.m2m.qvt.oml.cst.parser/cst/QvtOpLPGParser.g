@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.52 2009/05/14 09:15:14 sboyko Exp $ 
+-- * $Id: QvtOpLPGParser.g,v 1.53 2009/11/13 13:51:06 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -75,6 +75,9 @@ $Globals
 	import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
 	import org.eclipse.ocl.cst.BooleanLiteralExpCS;
 	import org.eclipse.ocl.cst.LiteralExpCS;	
+	import org.eclipse.ocl.cst.DotOrArrowEnum;
+	import org.eclipse.ocl.util.OCLStandardLibraryUtil;
+	import org.eclipse.ocl.utilities.PredefinedType;
 	./
 $End
 
@@ -151,7 +154,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.52 2009/05/14 09:15:14 sboyko Exp $
+ * $Id: QvtOpLPGParser.g,v 1.53 2009/11/13 13:51:06 radvorak Exp $
  */
 	./
 $End
@@ -601,11 +604,11 @@ $Rules
 
 	compliance_kindOpt ::= $empty
 		/.$NullAction./
-	compliance_kindOpt -> stringLiteralExpCS
+	compliance_kindOpt -> StringLiteralExpCS
 	--=== // model types compliance and metamodel declarations (end) ===--
 
 	--=== // like: "strict" and "effective" (start) ===--
-	uri -> stringLiteralExpCS
+	uri -> StringLiteralExpCS
 	--=== // like: "strict" and "effective" (end) ===--
 
 	--=== // Syntax for defining explicitly metamodel contents (start) ===--
@@ -723,7 +726,7 @@ $Rules
 
 	init_partOpt ::= $empty
 		/.$NullAction./
-	init_partOpt ::= '=' oclExpressionCS
+	init_partOpt ::= '=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = (CSTNode) $getSym(2);
 					$setResult(result);
@@ -786,7 +789,7 @@ $Rules
 		/.$NewCase./
 	feature_key ::= static
 		/.$BeginJava
-					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getTokenText($getToken(1)));
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getIToken($getToken(1)));
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
 		  $EndJava
@@ -801,7 +804,7 @@ $Rules
 		  $EndJava
 		./
 		
-	multiplicity_range ::= integerLiteralExpCS
+	multiplicity_range ::= IntegerLiteralExpCS
 		/.$BeginJava
 					CSTNode result = createMultiplicityDefCS(
 							(PrimitiveLiteralExpCS) $getSym(1),
@@ -811,7 +814,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	multiplicity_range ::= unlimitedNaturalLiteralExpCS
+	multiplicity_range ::= UnlimitedNaturalLiteralExpCS
 		/.$BeginJava
 					PrimitiveLiteralExpCS lowerBound = createIntegerLiteralExpCS(Integer.toString(0));
 					setOffsets(lowerBound, getIToken($getToken(1)));
@@ -823,13 +826,13 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE integerLiteralExpCS
+	multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE IntegerLiteralExpCS
 		/.$NewCase./
-	multiplicity_range ::= integerLiteralExpCS DOTDOT integerLiteralExpCS
+	multiplicity_range ::= IntegerLiteralExpCS DOTDOT IntegerLiteralExpCS
 		/.$NewCase./
-	multiplicity_range ::= integerLiteralExpCS MULTIPLICITY_RANGE unlimitedNaturalLiteralExpCS
+	multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE UnlimitedNaturalLiteralExpCS
 		/.$NewCase./
-	multiplicity_range ::= integerLiteralExpCS DOTDOT unlimitedNaturalLiteralExpCS
+	multiplicity_range ::= IntegerLiteralExpCS DOTDOT UnlimitedNaturalLiteralExpCS
 		/.$BeginJava
 					CSTNode result = createMultiplicityDefCS(
 							(PrimitiveLiteralExpCS) $getSym(1),
@@ -908,7 +911,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	_property ::= property qvtIdentifierCS ':' typeCS '=' oclExpressionCS ';' 
+	_property ::= property qvtIdentifierCS ':' typeCS '=' OclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createLocalPropertyCS(
 							getIToken($getToken(2)),
@@ -919,7 +922,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	_property ::= property qvtIdentifierCS '=' oclExpressionCS ';' 
+	_property ::= property qvtIdentifierCS '=' OclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createLocalPropertyCS(
 							getIToken($getToken(2)),
@@ -941,7 +944,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	_property ::= intermediate property scoped_identifier : typeCS '=' oclExpressionCS ';' 
+	_property ::= intermediate property scoped_identifier : typeCS '=' OclExpressionCS ';' 
 		/.$BeginJava
 					CSTNode result = createContextualPropertyCS(
 							(ScopedNameCS)$getSym(3),
@@ -1045,7 +1048,7 @@ $Rules
 		  $EndJava
 		./
 
-	helper_simple_def ::= helper_header '=' oclExpressionCS ';' 
+	helper_simple_def ::= helper_header '=' OclExpressionCS ';' 
 		/.$BeginJava
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)$getSym(1);
 					OCLExpressionCS expression = (OCLExpressionCS)$getSym(3);
@@ -1210,7 +1213,7 @@ $Rules
 
 	--=== // syntax for tag definition (start) ===--
 	
-	_tag ::= tag stringLiteralExpCS scoped_identifier tag_valueOpt
+	_tag ::= tag StringLiteralExpCS scoped_identifier tag_valueOpt
 		/.$BeginJava
 					OCLExpressionCS valueExpression = (OCLExpressionCS) $getSym(4);
 					CSTNode result = createTagCS(
@@ -1225,7 +1228,7 @@ $Rules
 
 	tag_valueOpt ::= $empty
 		/.$NullAction./
-	tag_valueOpt ::= '=' oclExpressionCS
+	tag_valueOpt ::= '=' OclExpressionCS
 		/.$BeginJava
 					$setResult($getSym(2));
 		  $EndJava
@@ -1398,7 +1401,7 @@ $Rules
 	_whenOpt ::= $empty	 
 		/.$NullAction./
 
-	_when ::= when '{' oclExpressionCS semicolonOpt '}'
+	_when ::= when '{' OclExpressionCS semicolonOpt '}'
 		/.$BeginJava
 					OCLExpressionCS result = (OCLExpressionCS)$getSym(3);
 					$setResult(result);
@@ -1569,7 +1572,7 @@ $Rules
 	
 	objectDeclCS ::= objectIdentifierCS ':' typespecOpt
 		/.$BeginJava
-				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getTokenText($getToken(1)));
+				SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getIToken($getToken(1)));
 				setOffsets(varName, getIToken($getToken(1)));
 				CSTNode result = createOutExpCS(varName,(TypeSpecCS)$getSym(3));					
 				$setResult(result);
@@ -1679,24 +1682,12 @@ $Rules
 		  $EndJava
 		./
 
-	featureCallExpCS ::= simpleNameCS '::' simpleNameCS '(' argumentsCSopt ')'
-		/.$BeginJava
-					CSTNode result = createFeatureFQNOperationCallExpCS(
-							(SimpleNameCS)$getSym(1),
-							(SimpleNameCS)$getSym(3),
-							(EList)$getSym(5)
-						);
-					setOffsets(result, (SimpleNameCS)$getSym(1), getIToken($getToken(6)));
-					$setResult(result);
-		  $EndJava
-		./
-
 	-- Resolve family starts here
 
 	resolveConditionOpt ::= $empty
 	    /.$NullAction./
 	    
-	resolveConditionOpt ::= '|' oclExpressionCS
+	resolveConditionOpt ::= '|' OclExpressionCS
 	    /.$BeginJava
 	                $setResult((OCLExpressionCS)$getSym(2));
 	      $EndJava
@@ -1866,31 +1857,54 @@ $Rules
 	resolveResolveInExpCS -> resolveInExpCS
             
 	-- commented out since the spec is not clear about the return type of this expression       
-	-- callExpCS ::= '->' resolveResolveInExpCS
-	--	/.$BeginJava
-	--				CallExpCS result = (CallExpCS)$getSym(2);
-	--				result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
-	--				$setResult(result);
-	--	  $EndJava
-	--	./
-	callExpCS ::= '.' resolveResolveInExpCS
+	OperationCallExpCS ::= primaryExpCS '->' resolveResolveInExpCS
 		/.$BeginJava
-					CallExpCS result = (CallExpCS)$getSym(2);
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					CallExpCS result = (CallExpCS)$getSym(3);
+					result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
+					result.setSource(source);
+					$setResult(result);
+		  $EndJava
+		./
+	OperationCallExpCS ::= primaryExpCS '.' resolveResolveInExpCS
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					CallExpCS result = (CallExpCS)$getSym(3);
 					result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
+					result.setSource(source);
 					$setResult(result);
 		  $EndJava
 		./
 	        
 	-- case with no source of resolveIn
-	oclExpCS -> resolveResolveInExpCS
+	primaryNotNameCS -> resolveResolveInExpCS
     
 	-- Resolve family ends here
 
 	-- operation call and expression extension in QVT
-	featureCallExpCS -> featureMappingCallExpCS
-	oclExpCS -> mappingCallExpCS
+
+	OperationCallExpCS ::= primaryExpCS '->' featureMappingCallExpCS
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					CallExpCS result = (CallExpCS)$getSym(3);
+					result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
+					result.setSource(source);
+					$setResult(result);
+		  $EndJava
+		./
+	OperationCallExpCS ::= primaryExpCS '.' featureMappingCallExpCS
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					CallExpCS result = (CallExpCS)$getSym(3);
+					result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
+					result.setSource(source);
+					$setResult(result);
+		  $EndJava
+		./
+
+	primaryNotNameCS -> mappingCallExpCS
     
-	oclExpCS -> outExpCS 
+	primaryNotNameCS -> outExpCS 
 			
 	simpleNameCS ::= this
 		/.$NewCase./
@@ -1898,12 +1912,13 @@ $Rules
 		/.$BeginJava
 					CSTNode result = createSimpleNameCS(
 							SimpleTypeEnum.IDENTIFIER_LITERAL,
-       							getTokenText($getToken(1))
+							getIToken($getToken(1))
 						);
 					setOffsets(result, getIToken($getToken(1)));
 					$setResult(result);
-       		  $EndJava
+		  $EndJava
 		./
+
 	--=== // Expressions (end) ===--
 
 
@@ -1938,7 +1953,7 @@ $Rules
 		./
 
 	unit_element -> renaming
-	renaming ::= rename typeCS '.' qvtIdentifierCS '=' stringLiteralExpCS ';' 
+	renaming ::= rename typeCS '.' qvtIdentifierCS '=' StringLiteralExpCS ';' 
 		/.$BeginJava
 					CSTNode result = createRenameCS(
 							(TypeCS)$getSym(2),

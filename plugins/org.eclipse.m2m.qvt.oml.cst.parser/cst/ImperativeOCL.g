@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.27 2009/10/03 21:38:37 radvorak Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.28 2009/11/13 13:51:06 radvorak Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -23,13 +23,11 @@ $Import
 
 $DropRules
 	-- 'if' extension in QVT
-	ifExpCSPrec -> ifExpCS
-	ifExpCS ::= if oclExpressionCS then oclExpressionCS else oclExpressionCS endif
+	IfExpCS ::= if OclExpressionCS then OclExpressionCS else OclExpressionCS endif
 $End
 
 $Globals
 	/.	
-	import org.eclipse.ocl.cst.StringLiteralExpCS;
 	import org.eclipse.ocl.ParserException;		
 	import lpg.lpgjavaruntime.Token;
 	import lpg.lpgjavaruntime.BacktrackingParser;
@@ -47,12 +45,15 @@ $Globals
 	import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 	./
 $End
 
 $Terminals
 
 	COLONCOLONEQUAL    ::= '::='
+	QUESTIONMARK       ::= '?'
 
 $End
 
@@ -98,7 +99,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.27 2009/10/03 21:38:37 radvorak Exp $
+ * $Id: ImperativeOCL.g,v 1.28 2009/11/13 13:51:06 radvorak Exp $
  */
 	./
 $End
@@ -119,7 +120,7 @@ $Rules
 		  $EndJava
 		./
 
-	listLiteralCS ::= List '{' collectionLiteralPartsCSopt '}'
+	listLiteralCS ::= List '{' CollectionLiteralPartsCSopt '}'
 		/.$BeginJava
 					CSTNode result = createListLiteralExpCS((EList)$getSym(3));
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
@@ -144,12 +145,11 @@ $Rules
 		  $EndJava
 		./ 
 	
-	literalSimpleCS -> primitiveLiteralExpCS
-	literalSimpleCS -> nullLiteralExpCS	
-	literalExpCS -> listLiteralCS
-	literalExpCS -> dictLiteralCS
+	literalSimpleCS -> PrimitiveLiteralExpCS
+	LiteralExpCS -> listLiteralCS
+	LiteralExpCS -> dictLiteralCS
 	
-	dictLiteralPartCS ::= literalSimpleCS '=' oclExpressionCS
+	dictLiteralPartCS ::= literalSimpleCS '=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createDictLiteralPartCS((LiteralExpCS)$getSym(1), (OCLExpressionCS)$getSym(3));
 					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
@@ -182,18 +182,18 @@ $Rules
 		  $EndJava
 		./
 
-	oclExpressionCS -> returnExpCS 	
+	OclExpressionCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt
 		/.$BeginJava
-				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)dtParser.getSym(2));
+				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)$getSym(2));
 				CSTNode result = createExpressionStatementCS(returnExpCS);
 				if(returnExpCS.getValue() != null) {
-					setOffsets(result, getIToken(dtParser.getToken(1)), (CSTNode)dtParser.getSym(2));			
+					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(2));			
 				} else {
-					setOffsets(result, getIToken(dtParser.getToken(1)));
+					setOffsets(result, getIToken($getToken(1)));
 				}
 				setOffsets(returnExpCS, result);
-				dtParser.setSym1(result);
+				$setSym1(result);
 		  $EndJava
 		./
 	 
@@ -217,7 +217,7 @@ $Rules
 		  $EndJava
 		./
 
-	oclExpressionCS -> var_init_exp
+	OclExpressionCS -> var_init_exp
 
 	var_init_exp ::= var var_init_declarator
 		/.$BeginJava
@@ -260,7 +260,7 @@ $Rules
 		./
 
 
-	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op oclExpressionCS
+	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(1)),
@@ -284,7 +284,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	var_init_declarator ::= IDENTIFIER var_init_op oclExpressionCS
+	var_init_declarator ::= IDENTIFIER var_init_op OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableInitializationCS(
 							getIToken($getToken(1)),
@@ -346,9 +346,9 @@ $Rules
 		  $EndJava
 		./
 
-	oclExpressionCS -> assignStatementCS
+	OclExpressionCS -> assignStatementCS
 
-	assignStatementCS ::= dotArrowExpCS ':=' oclExpressionCS
+	assignStatementCS ::= primaryExpCS ':=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -359,11 +359,11 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	assignStatementCS ::= dotArrowExpCS ':=' qvtErrorToken
+	assignStatementCS ::= primaryExpCS ':=' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
-							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null),
 							false
 						);
 					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
@@ -371,7 +371,7 @@ $Rules
 		  $EndJava
 		./
 
-	assignStatementCS ::= dotArrowExpCS '+=' oclExpressionCS
+	assignStatementCS ::= primaryExpCS '+=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
@@ -382,11 +382,11 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	assignStatementCS ::= dotArrowExpCS '+=' qvtErrorToken
+	assignStatementCS ::= primaryExpCS '+=' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createAssignStatementCS(
 							(OCLExpressionCS)$getSym(1),
-							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, ""), //$NON-NLS-1$
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null),
 							true
 						);
 					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
@@ -398,7 +398,7 @@ $Rules
 	whileBodyCS -> expression_block
 
 
-	whileExpCS ::= while '(' declarator1 ';' oclExpressionCS ')' whileBodyCS
+	whileExpCS ::= while '(' declarator1 ';' OclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							(VariableCS)$getSym(3),
@@ -410,7 +410,7 @@ $Rules
 		  $EndJava
 		./
 
-	whileExpCS ::= while '(' assignStatementCS ';' oclExpressionCS ')' whileBodyCS
+	whileExpCS ::= while '(' assignStatementCS ';' OclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					AssignStatementCS assignment = (AssignStatementCS)$getSym(3);
 					CSTNode result = createWhileExpCS(
@@ -423,7 +423,7 @@ $Rules
 		  $EndJava
 		./
 
-	whileExpCS ::= while '(' oclExpressionCS ')' whileBodyCS
+	whileExpCS ::= while '(' OclExpressionCS ')' whileBodyCS
 		/.$BeginJava
 					CSTNode result = createWhileExpCS(
 							null,
@@ -437,7 +437,15 @@ $Rules
 	
 	-- ForExp begin
 
-	loopExpCS -> forExpCS
+	IteratorExpCS ::= primaryExpCS '->' forExpCS
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					ForExpCS forExpCS = (ForExpCS)$getSym(3);
+					forExpCS.setSource(source);
+					setOffsets(forExpCS, source, forExpCS);
+					$setResult(forExpCS);
+		  $EndJava
+		./
 
 	forOpCode -> forEach
 	forOpCode -> forOne
@@ -461,7 +469,7 @@ $Rules
 	forExpConditionOpt ::= $empty
         	/.$NullAction./
         
-	forExpConditionOpt ::= '|' oclExpressionCS
+	forExpConditionOpt ::= '|' OclExpressionCS
         	/.$BeginJava
                 	    $setResult((OCLExpressionCS)$getSym(2));
 	          $EndJava
@@ -500,14 +508,14 @@ $Rules
 
 	-- operation call and expression extension in QVT
 
-	oclExpCS -> whileExpCS
+	primaryNotNameCS -> whileExpCS
 	
 
 	----- ifExp (start) -----
-	ifExpBodyCS -> oclExpressionCS
+	ifExpBodyCS -> OclExpressionCS
 	ifExpBodyCS -> expression_block
 
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -519,7 +527,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS endif
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS endif
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -531,7 +539,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -543,7 +551,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS else qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -555,7 +563,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then ifExpBodyCS qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -567,7 +575,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS then qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -579,7 +587,7 @@ $Rules
 		  $EndJava
 		./
 
-	ifExpCS ::= if oclExpressionCS qvtErrorToken
+	IfExpCS ::= if OclExpressionCS qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)$getSym(2),
@@ -592,7 +600,7 @@ $Rules
 		./
 
 
-	ifExpCS ::= if qvtErrorToken
+	IfExpCS ::= if qvtErrorToken
 		/.$BeginJava
 					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(""); //$NON-NLS-1$
 					invalidCondition.setStartOffset(getIToken($getToken(1)).getEndOffset());
@@ -607,13 +615,11 @@ $Rules
 		  $EndJava
 		./
 
-	oclExpCS -> ifExpCS
 	----- ifExp (end) -----
 
 	----- switch -----
 
-	oclExpCS -> switchExpCS
-	loopExpCS -> iterateSwitchExpCS
+	primaryNotNameCS -> switchExpCS
 
 	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginJava
@@ -637,7 +643,7 @@ $Rules
 	switchDeclaratorCS ::= IDENTIFIER
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							null,
 							null
 						);
@@ -646,10 +652,10 @@ $Rules
 		  $EndJava
 		./
 
-	switchDeclaratorCS ::= IDENTIFIER '=' oclExpressionCS
+	switchDeclaratorCS ::= IDENTIFIER '=' OclExpressionCS
 		/.$BeginJava
 					CSTNode result = createVariableCS(
-							getTokenText($getToken(1)),
+							getIToken($getToken(1)),
 							null,
 							(OCLExpressionCS)$getSym(3)
 						);
@@ -658,32 +664,35 @@ $Rules
 		  $EndJava
 		./
 
-	iterateSwitchExpCS ::= switch '(' switchDeclaratorCS ')' switchBodyExpCS
+	-- 'collect' shorthand for switch keyword 
+	IterateExpCS ::= primaryExpCS '->' switch '(' switchDeclaratorCS ')' switchBodyExpCS
 		/.$BeginJava
-					Object[] switchBody = (Object[]) $getSym(5);
+					Object[] switchBody = (Object[]) $getSym(7);
 
 					OCLExpressionCS switchExpCS = (OCLExpressionCS) createSwitchExpCS(
 							(EList<SwitchAltExpCS>) switchBody[0],
 							(OCLExpressionCS) switchBody[1]							
 						);
 					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
-						setOffsets(switchExpCS, getIToken($getToken(1)), (IToken) switchBody[2]);
+						setOffsets(switchExpCS, getIToken($getToken(3)), (IToken) switchBody[2]);
 					} else if (switchBody[2] instanceof CSTNode) { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+						setOffsets(switchExpCS, getIToken($getToken(3)), (CSTNode) switchBody[2]);
 					} else { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(1)), getIToken($getToken(4)));
+						setOffsets(switchExpCS, getIToken($getToken(3)), getIToken($getToken(6)));
 					}
 
 					EList<VariableCS> iterators = new BasicEList<VariableCS>();
-					iterators.add((VariableCS) $getSym(3));
-					CSTNode result = createImperativeIterateExpCS(
+					iterators.add((VariableCS) $getSym(5));
+					CallExpCS result = createImperativeIterateExpCS(
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"), //$NON-NLS-1$
 							iterators,
 							null,
 							switchExpCS,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
+						
+					result.setSource((OCLExpressionCS) $getSym(1));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
 					
 					$setResult(result);
 		  $EndJava
@@ -736,7 +745,7 @@ $Rules
 		  $EndJava
 		./
 
-	switchAltExpCS ::= case '(' oclExpressionCS ')' expression_statement
+	switchAltExpCS ::= case '(' OclExpressionCS ')' expression_statement
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
 							(OCLExpressionCS) $getSym(3),
@@ -746,7 +755,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	switchAltExpCS ::= case '(' oclExpressionCS ')' qvtErrorToken
+	switchAltExpCS ::= case '(' OclExpressionCS ')' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCS(
 							(OCLExpressionCS) $getSym(3),
@@ -774,7 +783,7 @@ $Rules
 
 	----- switch -----
 
-	oclExpressionCS ::= primaryOCLExpressionCS 
+	OclExpressionCS ::= primaryOCLExpressionCS 
 		/.$BeginJava
 					CSTNode result = createExpressionStatementCS(
 							(OCLExpressionCS)$getSym(1)
@@ -788,9 +797,9 @@ $Rules
 	primaryOCLExpressionCS -> logExpCS
 	
 		
-	logWhenExp ::= when oclExpressionCS
+	logWhenExp ::= when OclExpressionCS
         /.$BeginJava
-				OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(2);
+				OCLExpressionCS condition = (OCLExpressionCS) $getSym(2);
 				$setResult(condition);
           $EndJava
         ./	
@@ -801,12 +810,12 @@ $Rules
 		
 	logExpCS ::= log '(' argumentsCSopt ')' logWhenExpOpt
         /.$BeginJava
-				OCLExpressionCS condition = (OCLExpressionCS) dtParser.getSym(5);
-				LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)dtParser.getSym(3), condition);
+				OCLExpressionCS condition = (OCLExpressionCS) $getSym(5);
+				LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)$getSym(3), condition);
 				if(condition != null) {
-					setOffsets(result, getIToken(dtParser.getToken(1)), condition);
+					setOffsets(result, getIToken($getToken(1)), condition);
 				} else {
-					setOffsets(result, getIToken(dtParser.getToken(1)), getIToken(dtParser.getToken(4)));
+					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
 				}
 				$setResult(result);
           $EndJava
@@ -817,7 +826,7 @@ $Rules
 
 	severityKindCS ::= simpleNameCS
 		/.$BeginJava
-				$setResult(dtParser.getSym(1));
+				$setResult($getSym(1));
 		  $EndJava
 		./
 		
@@ -829,8 +838,8 @@ $Rules
 	
 	assertWithLogExp ::= with logExpCS
         /.$BeginJava
-				LogExpCS logExp = (LogExpCS) dtParser.getSym(2);
-				setOffsets(logExp, getIToken(dtParser.getToken(2)), logExp);
+				LogExpCS logExp = (LogExpCS) $getSym(2);
+				setOffsets(logExp, getIToken($getToken(2)), logExp);
 				$setResult(logExp);
           $EndJava
         ./	
@@ -839,14 +848,14 @@ $Rules
 	assertWithLogExpOpt ::= $empty
 	/.$NullAction./
 		        
-	assertExpCS ::= assert severityKindCSOpt '(' oclExpressionCS ')' assertWithLogExpOpt
+	assertExpCS ::= assert severityKindCSOpt '(' OclExpressionCS ')' assertWithLogExpOpt
         /.$BeginJava
-				LogExpCS logExpCS = (LogExpCS)dtParser.getSym(6);
-				OCLExpressionCS condition = (OCLExpressionCS)dtParser.getSym(4);
-				AssertExpCS result = (AssertExpCS)createAssertExpCS(condition, (SimpleNameCS)dtParser.getSym(2), logExpCS);
+				LogExpCS logExpCS = (LogExpCS)$getSym(6);
+				OCLExpressionCS condition = (OCLExpressionCS)$getSym(4);
+				AssertExpCS result = (AssertExpCS)createAssertExpCS(condition, (SimpleNameCS)$getSym(2), logExpCS);
 		
 				CSTNode end = logExpCS != null ? logExpCS : condition; 
-				setOffsets(result, getIToken(dtParser.getToken(1)), end);
+				setOffsets(result, getIToken($getToken(1)), end);
 				$setResult(result);
           $EndJava
         ./
@@ -866,13 +875,22 @@ $Rules
 		./
 
 
-	oclExpCS -> computeExpCS
+	primaryNotNameCS -> computeExpCS
 
 	-- ComputeExp end --
 
 	-- imperative iterators
 
-	loopExpCS -> imperativeIterateExpCS
+	IterateExpCS ::= primaryExpCS '->' imperativeIterateExpCS
+		/.$BeginJava
+					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+					ImperativeIterateExpCS iterateExpCS = (ImperativeIterateExpCS) $getSym(3);
+					iterateExpCS.setSource(source);
+					setOffsets(iterateExpCS, source, iterateExpCS);
+					$setResult(iterateExpCS);
+		  $EndJava
+		./
+	--LoopExpCS -> imperativeIterateExpCS
 
         -- here x12 means full notation in the 1 and 2 forms, x3 - in the 3 form
 	-- <source> -> <collector-name> (<body_or_condition>) ;                              (1)
@@ -898,7 +916,7 @@ $Rules
 					String opCode = getTokenText($getToken(1));
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								opCode
+								getIToken($getToken(1))
 							);
 					setOffsets(simpleNameCS, getIToken($getToken(1)));
 					Object[] iterContents = (Object[]) $getSym(3);
@@ -925,7 +943,7 @@ $Rules
 		/.$BeginJava
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								getTokenText($getToken(1))
+								getIToken($getToken(1))
 							);
 					setOffsets(simpleNameCS, getIToken($getToken(1)));
 					CSTNode result = createImperativeIterateExpCS(
@@ -941,7 +959,7 @@ $Rules
 		./
 		
 
-	imperativeIterContents12 ::= oclExpressionCS
+	imperativeIterContents12 ::= OclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
 							$EMPTY_ELIST,
@@ -951,24 +969,58 @@ $Rules
 		  $EndJava
 		./
 	
-	imperativeIterContents12 ::= variableListCS '|' oclExpressionCS
+	imperativeIterContents12 ::= uninitializedVariableCS '|' OclExpressionCS
 		/.$BeginJava
+					EList iters = new BasicEList();
+					iters.add($getSym(1));
+					
 					$setResult(new Object[] {
-							$getSym(1),
+							iters,
 							null,
 							$getSym(3)
 						});
 		  $EndJava
 		./
 
+	imperativeIterContents12 ::= simpleNameCS ',' variableDeclarationListCS '|' OclExpressionCS
+		/.$BeginJava
+                    SimpleNameCS name = (SimpleNameCS)$getSym(1);
+                    CSTNode variableCS = createVariableCS(name, null, null);
+                    setOffsets(variableCS, name);
 
-	imperativeIterContents3 ::= variableListCS ';' variableCS2 '|' oclExpressionCS
+					EList iters = (EList) $getSym(3);
+					iters.add(0, variableCS);
+					
+					$setResult(new Object[] {
+							iters,
+							null,
+							$getSym(5)
+						});
+		  $EndJava
+		./
+
+	imperativeIterContents3 ::= variableDeclarationListCS ';' initializedVariableCS '|' OclExpressionCS
 		/.$BeginJava
 					$setResult(new Object[] {
 							$getSym(1),
 							$getSym(3),
 							$getSym(5)
 						});
+		  $EndJava
+		./
+
+	variableDeclarationListCS ::= uninitializedVariableCS
+		/.$BeginJava
+					EList result = new BasicEList();
+					result.add($getSym(1));
+					$setResult(result);
+		  $EndJava
+		./
+	variableDeclarationListCS ::= variableDeclarationListCS ',' uninitializedVariableCS
+		/.$BeginJava
+					EList result = (EList)$getSym(1);
+					result.add($getSym(3));
+					$setResult(result);
 		  $EndJava
 		./
 
@@ -983,7 +1035,7 @@ $Rules
 	declarator_vsep ::= IDENTIFIER '|'
         	/.$BeginJava
 			CSTNode result = createVariableCS(
-						getTokenText($getToken(1)),
+						getIToken($getToken(1)),
                                                 null,
 						null
 						);
@@ -996,78 +1048,114 @@ $Rules
 	        /.$NullAction./
 	declarator_vsepOpt -> declarator_vsep
 
-	callExpCS ::= '->' featureCallExpCS exclamationOpt '[' declarator_vsepOpt oclExpressionCS ']'
+	-- xselect/collectselect shorthand
+	IterateExpCS ::= primaryExpCS exclamationOpt '[' declarator_vsepOpt OclExpressionCS ']'
 		/.$BeginJava
-		        String opCode = isTokenOfType(getIToken($getToken(3)), $sym_type.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+			OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+			if (source instanceof ImperativeIterateExpCS) {
+				String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+						SimpleTypeEnum.KEYWORD_LITERAL,
+						opCode
+						);
+				setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(6)));
+
+				ImperativeIterateExpCS result = (ImperativeIterateExpCS) source;
+				result.setSimpleNameCS(simpleNameCS);
+				
+				VariableCS variableCS = (VariableCS) $getSym(4);
+		        if (variableCS != null) {
+		            result.setTarget(variableCS);
+		        }
+		        result.setCondition((OCLExpressionCS) $getSym(5));
+				
+				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+				$setResult(result);
+			}
+			else {
+				String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+						SimpleTypeEnum.KEYWORD_LITERAL,
+						opCode
+						);
+				setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(6)));
+				
+				CallExpCS result = createImperativeIterateExpCS(
+						simpleNameCS,
+						$EMPTY_ELIST,
+						(VariableCS) $getSym(4),
+						null,
+						(OCLExpressionCS) $getSym(5)
+						);
+				result.setSource(source);
+				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
+				$setResult(result);
+			}
+		  $EndJava
+		./
+
+	-- xcollect shorthand
+	IterateExpCS ::= primaryExpCS '->' simpleNameCS
+		/.$BeginJava
+			String opCode = "xcollect"; //$NON-NLS-1$
 			SimpleNameCS simpleNameCS = createSimpleNameCS(
 					SimpleTypeEnum.KEYWORD_LITERAL,
 					opCode
 					);
-			setOffsets(simpleNameCS, getIToken($getToken(4)), getIToken($getToken(7)));
-			VariableCS variableCS = (VariableCS) $getSym(5);
-			CSTNode result = createImperativeIterateExpCS(
-						simpleNameCS,
-						$EMPTY_ELIST,
-						variableCS,
-						(OCLExpressionCS) $getSym(2),
-						(OCLExpressionCS) $getSym(6)
+
+			OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+			SimpleNameCS featureNameCS = (SimpleNameCS)$getSym(3);
+			OCLExpressionCS featureCallExpCS = createFeatureCallExpCS(
+					source,
+					null,
+					featureNameCS,
+					new BasicEList(),
+					null
 					);
-			setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+			setOffsets(featureCallExpCS, source, featureNameCS);
+
+			ImperativeIterateExpCS result = createImperativeIterateExpCS(
+					simpleNameCS,
+					$EMPTY_ELIST,
+					null,
+					null,
+					null
+					);
+			result.setSource(featureCallExpCS);
+			setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
 			$setResult(result);
 		  $EndJava
 		./
 
-	-- xselect shorthand
-	oclExpCS ::= oclExpCS exclamationOpt '[' oclExpressionCS ']'
-		/.$BeginJava
-				        String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								opCode
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(5)));
-					CallExpCS result = createImperativeIterateExpCS(
-							simpleNameCS,
-							$EMPTY_ELIST,
-							null,
-							null,
-							(OCLExpressionCS) $getSym(4)
-						);
-					result.setSource((OCLExpressionCS)$getSym(1));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
-		  $EndJava
-		./
+	--primaryExpCS ::= primaryExpCS '.' FeatureCallExpCS exclamationOpt '[' OclExpressionCS ']'
+	--	/.$BeginJava
+	--				CallExpCS callExpCS = (CallExpCS)$getSym(3);
+	--				callExpCS.setSource((OCLExpressionCS)$getSym(1));
+	--				callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
+	--				setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
+	--  
+	--
+	--			        String opCode = isTokenOfType(getIToken($getToken(4)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+	--				SimpleNameCS simpleNameCS = createSimpleNameCS(
+	--							SimpleTypeEnum.KEYWORD_LITERAL,
+	--							opCode
+	--						);
+	--				setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
+	--				CallExpCS result = createImperativeIterateExpCS(
+	--						simpleNameCS,
+	--						$EMPTY_ELIST,
+	--						null,
+	--						null,
+	--						(OCLExpressionCS) $getSym(6)
+	--					);
+	--				result.setSource(callExpCS);
+	--				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+	--				$setResult(result);
+	--	  $EndJava
+	--	./
 
-	dotArrowExpCS ::= dotArrowExpCS '.' featureCallExpCS exclamationOpt '[' oclExpressionCS ']'
-		/.$BeginJava
-					CallExpCS callExpCS = (CallExpCS)$getSym(3);
-					callExpCS.setSource((OCLExpressionCS)$getSym(1));
-					callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-					setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
-
-
-				        String opCode = isTokenOfType(getIToken($getToken(4)), $sym_type.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
-					SimpleNameCS simpleNameCS = createSimpleNameCS(
-								SimpleTypeEnum.KEYWORD_LITERAL,
-								opCode
-							);
-					setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
-					CallExpCS result = createImperativeIterateExpCS(
-							simpleNameCS,
-							$EMPTY_ELIST,
-							null,
-							null,
-							(OCLExpressionCS) $getSym(6)
-						);
-					result.setSource(callExpCS);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
-		  $EndJava
-		./
-
-	oclExpCS -> newExpCS
-	newExpCS ::= new typespec '(' argumentsCSopt ')' 
+	primaryNotNameCS -> newExpCS
+	newExpCS ::= new newTypespecCS '(' argumentsCSopt ')' 
 		/.$BeginJava
 				OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) $getSym(2), (EList) $getSym(4));
 				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
@@ -1075,10 +1163,30 @@ $Rules
 		  $EndJava
 		./	
 
+	newTypespecCS ::= pathNameCS
+		/.$BeginJava
+					CSTNode result = createTypeSpecCS(
+						(TypeCS)$getSym(1),
+						null
+						);
+					$setResult(result);
+		  $EndJava
+		./
+	
+	newTypespecCS ::= pathNameCS '@' IDENTIFIER
+		/.$BeginJava
+					CSTNode result = createTypeSpecCS(
+						(TypeCS)$getSym(1),
+						getIToken($getToken(3))
+						);
+					$setResult(result);
+		  $EndJava
+		./
+
 		
 	-- imperative BreakExp and ContinueExp registration
 		
-	oclExpCS ::= break
+	primaryNotNameCS ::= break
 		/.$BeginJava
 				OCLExpressionCS result = createBreakCS();
 				setOffsets(result, getIToken($getToken(1)));
@@ -1086,7 +1194,7 @@ $Rules
 		  $EndJava
 		./	
 	
-	oclExpCS ::= continue
+	primaryNotNameCS ::= continue
 		/.$BeginJava
 				OCLExpressionCS result = createContinueCS();
 				setOffsets(result, getIToken($getToken(1)));
@@ -1095,7 +1203,7 @@ $Rules
 		./	
 
 	--=== Non-standard extensions and legacy support (start) ===--
-	switchAltExpCS ::= '(' oclExpressionCS ')' '?' oclExpressionCS ';'
+	switchAltExpCS ::= '(' OclExpressionCS ')' '?' OclExpressionCS ';'
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCSDeprecated(
 							(OCLExpressionCS) $getSym(2),
@@ -1105,7 +1213,7 @@ $Rules
 					$setResult(result);
 		  $EndJava
 		./
-	switchAltExpCS ::= '(' oclExpressionCS ')' qvtErrorToken
+	switchAltExpCS ::= '(' OclExpressionCS ')' qvtErrorToken
 		/.$BeginJava
 					CSTNode result = createSwitchAltExpCSDeprecated(
 							(OCLExpressionCS) $getSym(2),
@@ -1126,20 +1234,20 @@ $Rules
 		  $EndJava
 		./
 
-	switchElseExpCS ::= else '?' oclExpressionCS ';'
+	switchElseExpCS ::= else '?' OclExpressionCS ';'
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(4)).getEndOffset();
-					reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(org.eclipse.m2m.internal.qvt.oml.cst.parser.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
 		./
-	switchElseExpCS ::= else '?' oclExpressionCS qvtErrorToken
+	switchElseExpCS ::= else '?' OclExpressionCS qvtErrorToken
 		/.$BeginJava
 			    	int startOffset = getIToken($getToken(1)).getStartOffset();
 			    	int endOffset = getIToken($getToken(3)).getEndOffset();
-					reportWarning(NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
+					reportWarning(org.eclipse.m2m.internal.qvt.oml.cst.parser.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
 					$setResult((CSTNode)$getSym(3));
 		  $EndJava
