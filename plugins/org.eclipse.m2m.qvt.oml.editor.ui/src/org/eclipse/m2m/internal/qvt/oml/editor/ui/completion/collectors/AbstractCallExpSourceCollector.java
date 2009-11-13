@@ -14,7 +14,7 @@ import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.ocl.ecore.CollectionType;
@@ -27,13 +27,13 @@ import org.eclipse.ocl.utilities.TypedElement;
 
 public abstract class AbstractCallExpSourceCollector extends AbstractCollector {
     private static final int[] MODULE_KEYWORDS = {
-        QvtOpLPGParsersym.TK_transformation,
-        QvtOpLPGParsersym.TK_library
+        QVTOParsersym.TK_transformation,
+        QVTOParsersym.TK_library
     };
     
     private static final int[] UNEXPECTED_TRANSFORMATION_NAME_TOKENS = {
-        QvtOpLPGParsersym.TK_SEMICOLON, 
-        QvtOpLPGParsersym.TK_LBRACE
+        QVTOParsersym.TK_SEMICOLON, 
+        QVTOParsersym.TK_LBRACE
     };
     
     private static final String CALLEXP_SOURCE_FLAG = AccessorCollector.class.toString() + "CALLEXP_SOURCE_FLAG"; //$NON-NLS-1$
@@ -55,10 +55,10 @@ public abstract class AbstractCallExpSourceCollector extends AbstractCollector {
             return null;
         }
         EClassifier classifier = callExpSource.getType();
-        if ((accessorToken.getKind() == QvtOpLPGParsersym.TK_ARROW)
+        if ((accessorToken.getKind() == QVTOParsersym.TK_ARROW)
                 && !(classifier instanceof CollectionType)) {
             classifier = (EClassifier) env.getOCLFactory().createSetType(classifier); 
-        } else if ((accessorToken.getKind() == QvtOpLPGParsersym.TK_DOT)
+        } else if ((accessorToken.getKind() == QVTOParsersym.TK_DOT)
                 && (classifier instanceof CollectionType)){
             classifier = ((CollectionType) classifier).getElementType();
         }
@@ -66,8 +66,8 @@ public abstract class AbstractCallExpSourceCollector extends AbstractCollector {
     }
     
     protected TypedElement<EClassifier> getCallExpSource(IToken accessorToken, QvtCompletionData data) {
-        if ((accessorToken.getKind() == QvtOpLPGParsersym.TK_DOT) 
-                || (accessorToken.getKind() == QvtOpLPGParsersym.TK_ARROW)) {
+        if ((accessorToken.getKind() == QVTOParsersym.TK_DOT) 
+                || (accessorToken.getKind() == QVTOParsersym.TK_ARROW)) {
             if (!data.isWithin(MODULE_KEYWORDS, UNEXPECTED_TRANSFORMATION_NAME_TOKENS)) {
                 return LightweightParserUtil.getOclExpression(accessorToken, data, LightweightParserUtil.ParserTypeEnum.LIGHTWEIGHT_PARSER);
             }

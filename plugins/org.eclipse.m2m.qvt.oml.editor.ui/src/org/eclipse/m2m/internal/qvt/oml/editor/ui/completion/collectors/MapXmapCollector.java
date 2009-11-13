@@ -16,7 +16,7 @@ import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -44,7 +44,7 @@ public class MapXmapCollector extends AbstractCallExpSourceCollector {
             CompletionProposalUtil.addAllContextlessMappings(proposals, data);
         } else {
             CompletionProposalUtil.addMappingOperations(proposals, classifier, data);
-            if (QvtCompletionData.isKindOf(accessorToken, QvtOpLPGParsersym.TK_ARROW)) {
+            if (QvtCompletionData.isKindOf(accessorToken, QVTOParsersym.TK_ARROW)) {
                 CollectionType collection = (CollectionType) classifier;
                 EClassifier elementType = collection.getElementType();
                 CompletionProposalUtil.addMappingOperations(proposals, elementType, data);

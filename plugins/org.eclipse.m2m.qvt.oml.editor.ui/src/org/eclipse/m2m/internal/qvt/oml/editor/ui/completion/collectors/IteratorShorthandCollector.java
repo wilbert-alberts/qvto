@@ -16,7 +16,7 @@ import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -32,7 +32,7 @@ public class IteratorShorthandCollector extends AbstractCollector {
     private static final String ITERATOR_TOKEN_FLAG = IteratorShorthandCollector.class.toString() + "ITERATOR_TOKEN_FLAG"; //$NON-NLS-1$
     
     private static final int[] ZERO_DEPTH_TERMINATORS = {
-        QvtOpLPGParsersym.TK_BAR
+        QVTOParsersym.TK_BAR
     };
     
     @Override
@@ -42,7 +42,7 @@ public class IteratorShorthandCollector extends AbstractCollector {
 		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR);        		
 		        	}
 		        },
-		        QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
+		        QVTOParsersym.TK_LPAREN, QVTOParsersym.TK_RPAREN,
                 1, ZERO_DEPTH_TERMINATORS, LightweightParserUtil.OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS, null);            
         if (iteratorToken != null) {
             data.getUserData().put(ITERATOR_TOKEN_FLAG, iteratorToken);
@@ -53,7 +53,7 @@ public class IteratorShorthandCollector extends AbstractCollector {
 		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.OCL_ITERATOR_TERMINALS);        		
 		        	}
 		        },
-        		QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN,
+        		QVTOParsersym.TK_LPAREN, QVTOParsersym.TK_RPAREN,
                 1, ZERO_DEPTH_TERMINATORS, LightweightParserUtil.OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS, null);            
         if (iteratorToken != null) {
             data.getUserData().put(ITERATOR_TOKEN_FLAG, iteratorToken);

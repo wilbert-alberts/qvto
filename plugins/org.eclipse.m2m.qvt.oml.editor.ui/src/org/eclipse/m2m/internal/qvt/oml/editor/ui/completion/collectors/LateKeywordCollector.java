@@ -15,7 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -28,7 +28,7 @@ public class LateKeywordCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-        return leftToken.getKind() == QvtOpLPGParsersym.TK_late;
+        return leftToken.getKind() == QVTOParsersym.TK_late;
 	}
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {

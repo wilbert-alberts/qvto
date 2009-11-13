@@ -35,8 +35,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParser;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.IKeywordHandler;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.KeywordHandlerRegistry;
@@ -63,20 +63,20 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         return myCFileDataMap;
     }
 
-    public QvtOpLexer createLexer(UnitProxy unit) throws IOException, ParserException, BadLocationException {
+    public QVTOLexer createLexer(UnitProxy unit) throws IOException, ParserException, BadLocationException {
         CFileData cFileData = getCFileData(unit.getURI());
         if (cFileData.getLexer() != null) {
             return cFileData.getLexer();
         }
         Reader reader = createReader(unit);
         
-		QvtOpLexer lexer = new QvtOpLexer(new QvtOperationalEnvFactory(
+		QVTOLexer lexer = new QVTOLexer(new QvtOperationalEnvFactory(
 				getEPackageRegistry(unit.getURI())).createEnvironment(unit.getURI()));
         
         cFileData.setLexer(lexer);
         try {
             lexer.initialize(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
-            lexer.lexToTokens(new QvtOpLPGParser(lexer));
+            lexer.lexToTokens(new QVTOParser(lexer));
         } finally {
             reader.close();
         }
@@ -148,7 +148,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     private CFileData compile(UnitProxy cFile) {
         CFileData cFileData = getCFileData(cFile.getURI());
         try {
-            QvtOpLexer lexer = createLexer(cFile);
+            QVTOLexer lexer = createLexer(cFile);
             PrsStream prsStream = lexer.getPrsStream();
             IKeywordHandler[] keywordHandlers = KeywordHandlerRegistry.getInstance().getKeywordHandlers();
             StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getStreamLength());

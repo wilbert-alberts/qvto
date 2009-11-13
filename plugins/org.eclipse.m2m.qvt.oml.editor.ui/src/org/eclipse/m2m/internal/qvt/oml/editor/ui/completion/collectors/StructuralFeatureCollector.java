@@ -18,7 +18,7 @@ import lpg.lpgjavaruntime.PrsStream;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -34,8 +34,8 @@ public class StructuralFeatureCollector extends AbstractCollector {
 	private static final String SCTRUCTURALFEATURE_CONTAINER_FLAG = StructuralFeatureCollector.class + "SCTRUCTURALFEATURE_CONTAINER_FLAG"; //$NON-NLS-1$
 
     private static final int[] SCTRUCTURALFEATURE_CONTAINER_TERMINALS = {
-        QvtOpLPGParsersym.TK_object,
-        QvtOpLPGParsersym.TK_mapping
+        QVTOParsersym.TK_object,
+        QVTOParsersym.TK_mapping
     };
     
     private static final int[] SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES = 
@@ -45,16 +45,16 @@ public class StructuralFeatureCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-        if ((leftToken.getKind() == QvtOpLPGParsersym.TK_SEMICOLON) 
-                || (leftToken.getKind() == QvtOpLPGParsersym.TK_LBRACE)
-                || (leftToken.getKind() == QvtOpLPGParsersym.TK_RBRACE)
+        if ((leftToken.getKind() == QVTOParsersym.TK_SEMICOLON) 
+                || (leftToken.getKind() == QVTOParsersym.TK_LBRACE)
+                || (leftToken.getKind() == QVTOParsersym.TK_RBRACE)
                 ) {
             IToken structuralFeatureContainerToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
 			        	public boolean isSuited(IToken token) {
 			        		return QvtCompletionData.isKindOf(token, SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES);        		
 			        	}
 			        },
-            		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
+            		QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, 
                     1, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if ((structuralFeatureContainerToken != null)
                     && QvtCompletionData.isKindOf(structuralFeatureContainerToken, SCTRUCTURALFEATURE_CONTAINER_TERMINALS)) {
@@ -69,27 +69,27 @@ public class StructuralFeatureCollector extends AbstractCollector {
         IToken structuralFeatureContainerToken = (IToken) data.getUserData().get(SCTRUCTURALFEATURE_CONTAINER_FLAG);
         IToken[] typeTokens = null;
         EClassifier objectExpType = null;
-    	if (structuralFeatureContainerToken.getKind() == QvtOpLPGParsersym.TK_mapping) {
+    	if (structuralFeatureContainerToken.getKind() == QVTOParsersym.TK_mapping) {
     	    typeTokens = extractMappingType(structuralFeatureContainerToken);
     	} else {
             IToken firstTypeToken = LightweightParserUtil.getNextToken(structuralFeatureContainerToken);
             if (firstTypeToken != null) {
-                if (QvtCompletionData.isKindOf(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE)) { // type not specified
+                if (QvtCompletionData.isKindOf(firstTypeToken, QVTOParsersym.TK_LBRACE)) { // type not specified
                     // use type in mapping declaration
                     IToken mappingToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
 					        	public boolean isSuited(IToken token) {
-					        		return QvtCompletionData.isKindOf(token, new int[] {QvtOpLPGParsersym.TK_mapping});        		
+					        		return QvtCompletionData.isKindOf(token, new int[] {QVTOParsersym.TK_mapping});        		
 					        	}
 					        },
-                            QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
+                            QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, 
                             2, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);          
                     if (mappingToken != null) {
                         typeTokens = extractMappingType(mappingToken);
                     }
                 } else {
-                    IToken[] tokens = QvtCompletionData.extractTokens(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE);
+                    IToken[] tokens = QvtCompletionData.extractTokens(firstTypeToken, QVTOParsersym.TK_LBRACE);
                     if ((tokens != null) && (tokens.length >= 2)
-                            && QvtCompletionData.isKindOf(tokens[1], QvtOpLPGParsersym.TK_COLON)) {
+                            && QvtCompletionData.isKindOf(tokens[1], QVTOParsersym.TK_COLON)) {
                         if (tokens.length == 2) { // varName ':'
                             Variable<EClassifier, EParameter> variable = data.getEnvironment().lookup(tokens[0].toString());
                             objectExpType = variable.getType();
@@ -113,22 +113,22 @@ public class StructuralFeatureCollector extends AbstractCollector {
     	if (objectExpType != null) {
             CompletionProposalUtil.addStructuralFeatures(proposals, objectExpType, data);
     	}
-        if (QvtCompletionData.isKindOf(structuralFeatureContainerToken,QvtOpLPGParsersym.TK_mapping)) {
+        if (QvtCompletionData.isKindOf(structuralFeatureContainerToken,QVTOParsersym.TK_mapping)) {
             CompletionProposalUtil.addKeywords(proposals, new int[] {
-                    QvtOpLPGParsersym.TK_init, 
-                    QvtOpLPGParsersym.TK_object, 
-                    QvtOpLPGParsersym.TK_end
+                    QVTOParsersym.TK_init, 
+                    QVTOParsersym.TK_object, 
+                    QVTOParsersym.TK_end
                     }, data);
         }
     }
     
     private static IToken[] extractMappingType(IToken mappingToken) {
-        IToken lParen = LightweightParserUtil.getNextTokenByKind(mappingToken, QvtOpLPGParsersym.TK_LPAREN);
+        IToken lParen = LightweightParserUtil.getNextTokenByKind(mappingToken, QVTOParsersym.TK_LPAREN);
         if (lParen != null) {
             IToken rParen = LightweightParserUtil.getPairingBrace(lParen, true);
             if (rParen != null) {
                 IToken colon = LightweightParserUtil.getNextToken(rParen);
-                if ((colon != null) && (colon.getKind() == QvtOpLPGParsersym.TK_COLON)) {
+                if ((colon != null) && (colon.getKind() == QVTOParsersym.TK_COLON)) {
                     IToken firstTypeToken = LightweightParserUtil.getNextToken(colon);
                     if (firstTypeToken != null) {
                         return QvtCompletionData.extractTokens(firstTypeToken, 
@@ -139,13 +139,13 @@ public class StructuralFeatureCollector extends AbstractCollector {
                 	IToken lastColoncolon = null;
                 	for (;;) {
                 		IToken prevToken = LightweightParserUtil.getPreviousToken(token);
-                		if ((prevToken == null) || QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_mapping)) {
+                		if ((prevToken == null) || QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_mapping)) {
                 			break;
                 		}
-                		if (QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                		if (QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_COLONCOLON)) {
                 			lastColoncolon = prevToken;
                 		}
-                		if ((QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_inout)) && (lastColoncolon != null)) {
+                		if ((QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_inout)) && (lastColoncolon != null)) {
                 			PrsStream prsStream = token.getPrsStream();
                 			IToken[] tokenArray = new IToken[lastColoncolon.getTokenIndex() - token.getTokenIndex()];
                 			for (int i = token.getTokenIndex(); i < lastColoncolon.getTokenIndex(); i++) {

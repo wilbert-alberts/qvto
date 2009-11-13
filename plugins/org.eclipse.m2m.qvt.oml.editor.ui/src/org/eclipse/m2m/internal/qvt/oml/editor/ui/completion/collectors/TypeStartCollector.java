@@ -15,7 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -32,18 +32,18 @@ public class TypeStartCollector extends AbstractCollector {
 
     public static final boolean isCollectorApplicable(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-        if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_COLON)
+        if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_COLON)
                 || QvtCompletionData.isKindOf(leftToken, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS)) {
             return true;
         }
-        if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_LPAREN)) {
             IToken collectionTerminal = LightweightParserUtil.getPreviousToken(leftToken);
             if ((collectionTerminal != null) && QvtCompletionData.isKindOf(collectionTerminal, 
-                    QvtOpLPGParsersym.TK_Collection, 
-                    QvtOpLPGParsersym.TK_Bag,
-                    QvtOpLPGParsersym.TK_Sequence, 
-                    QvtOpLPGParsersym.TK_Set,
-                    QvtOpLPGParsersym.TK_OrderedSet)) {
+                    QVTOParsersym.TK_Collection, 
+                    QVTOParsersym.TK_Bag,
+                    QVTOParsersym.TK_Sequence, 
+                    QVTOParsersym.TK_Set,
+                    QVTOParsersym.TK_OrderedSet)) {
                 return true;
             }
         }

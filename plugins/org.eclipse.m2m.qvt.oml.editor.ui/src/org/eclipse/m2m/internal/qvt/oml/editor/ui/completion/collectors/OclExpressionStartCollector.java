@@ -15,7 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -26,14 +26,14 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 
 public class OclExpressionStartCollector extends AbstractCollector {
     private static final int[] INAPPLICABLE_BRACING_EXPRESSIONS = {
-        QvtOpLPGParsersym.TK_switch,
-        QvtOpLPGParsersym.TK_Tuple
+        QVTOParsersym.TK_switch,
+        QVTOParsersym.TK_Tuple
     };
         
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_LPAREN)) {
+		if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_LPAREN)) {
 		    if (TypeStartCollector.isCollectorApplicable(data)) {
 		        return false;
 		    }
@@ -43,13 +43,13 @@ public class OclExpressionStartCollector extends AbstractCollector {
                 return false; 
 		    }
 		}
-		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_LBRACE)) {
+		if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_SEMICOLON, QVTOParsersym.TK_LBRACE)) {
 		    IToken parentBracingExpression = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
 		            	public boolean isSuited(IToken token) {
 		            		return QvtCompletionData.isKindOf(token, INAPPLICABLE_BRACING_EXPRESSIONS);        		
 		            	}
 		            },
-		    		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
+		    		QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, 1, null, null, null);
 		    if ((parentBracingExpression != null) 
 		            && QvtCompletionData.isKindOf(parentBracingExpression, INAPPLICABLE_BRACING_EXPRESSIONS)) {
 		        return false;
@@ -60,20 +60,20 @@ public class OclExpressionStartCollector extends AbstractCollector {
 		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);        		
 		        	}
 		        },
-				QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS) != null) {
+				QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS) != null) {
 		    if (ResolveTypeCollector.isCollectorApplicable(data)) {
 		        return false;
 		    }
-		    if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_RPAREN)) {
+		    if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_RPAREN)) {
 		        // check for switch ... { case(...) /*@*/
 	            IToken bracingSwitch = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
 			            	public boolean isSuited(IToken token) {
-			            		return QvtCompletionData.isKindOf(token, new int[] {QvtOpLPGParsersym.TK_switch});        		
+			            		return QvtCompletionData.isKindOf(token, new int[] {QVTOParsersym.TK_switch});        		
 			            	}
 			            },
-	            		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
+	            		QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, 1, null, null, null);
 	            if (bracingSwitch != null) {
-	                IToken caseToken = LightweightParserUtil.getPreviousTokenByKind(leftToken, QvtOpLPGParsersym.TK_case);
+	                IToken caseToken = LightweightParserUtil.getPreviousTokenByKind(leftToken, QVTOParsersym.TK_case);
 	                return (caseToken != null) && (bracingSwitch.getEndOffset() < caseToken.getStartOffset());
 	            }
 		    }

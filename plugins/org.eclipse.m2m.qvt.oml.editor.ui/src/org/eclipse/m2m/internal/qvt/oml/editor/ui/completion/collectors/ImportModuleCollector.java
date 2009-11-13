@@ -29,7 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -46,7 +46,7 @@ public class ImportModuleCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-        return leftToken.getKind() == QvtOpLPGParsersym.TK_import;
+        return leftToken.getKind() == QVTOParsersym.TK_import;
     }
 
 

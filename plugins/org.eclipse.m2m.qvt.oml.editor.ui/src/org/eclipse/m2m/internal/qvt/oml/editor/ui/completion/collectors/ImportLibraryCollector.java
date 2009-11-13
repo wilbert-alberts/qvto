@@ -18,7 +18,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContextImpl;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -33,9 +33,9 @@ public class ImportLibraryCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-        if (leftToken.getKind() == QvtOpLPGParsersym.TK_library) {
+        if (leftToken.getKind() == QVTOParsersym.TK_library) {
             IToken importToken = data.getLeftToken(1);
-            if ((importToken != null) && (importToken.getKind() == QvtOpLPGParsersym.TK_import)) {
+            if ((importToken != null) && (importToken.getKind() == QVTOParsersym.TK_import)) {
                 return true;
             }
         }

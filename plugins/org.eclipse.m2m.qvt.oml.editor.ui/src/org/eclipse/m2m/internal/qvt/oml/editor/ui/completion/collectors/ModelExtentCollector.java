@@ -20,7 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -36,7 +36,7 @@ public class ModelExtentCollector extends AbstractCollector {
 	@Override
 	protected boolean isApplicableInternal(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-		return QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_AT);
+		return QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_AT);
 	}
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals,

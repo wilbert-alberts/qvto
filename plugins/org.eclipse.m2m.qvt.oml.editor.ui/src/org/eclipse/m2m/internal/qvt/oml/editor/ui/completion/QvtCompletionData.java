@@ -36,8 +36,8 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
@@ -57,9 +57,9 @@ public class QvtCompletionData {
 	}
 	
     public static final int[] MAPPING_DECLARATION_TRAILING_TOKEN_KINDS = new int[] {
-        QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_SEMICOLON,
-        QvtOpLPGParsersym.TK_when, QvtOpLPGParsersym.TK_where,
-        QvtOpLPGParsersym.TK_inherits, QvtOpLPGParsersym.TK_merges, QvtOpLPGParsersym.TK_disjuncts
+        QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_SEMICOLON,
+        QVTOParsersym.TK_when, QVTOParsersym.TK_where,
+        QVTOParsersym.TK_inherits, QVTOParsersym.TK_merges, QVTOParsersym.TK_disjuncts
     };
 
     private final ITextEditor myEditor;
@@ -70,7 +70,7 @@ public class QvtCompletionData {
     private final Map<String, Object> myUserData = new HashMap<String, Object>();
     private IToken myLeftToken;
     private IToken myCurrentToken;
-    private QvtOpLexer myLexer;
+    private QVTOLexer myLexer;
     private PrsStream myPrsStream;
     private Exception myException;
     private IFile myIFile;
@@ -131,7 +131,7 @@ public class QvtCompletionData {
         return myCurrentToken;
     }
 
-    public QvtOpLexer getLexer() {
+    public QVTOLexer getLexer() {
         return myLexer;
     }
 
@@ -351,13 +351,13 @@ public class QvtCompletionData {
 		            		return QvtCompletionData.isKindOf(token, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);        		
 		            	}
 		            },
-                    QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
+                    QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if (myParentImperativeOperation != null) {
-                if (QvtCompletionData.isKindOf(myParentImperativeOperation, QvtOpLPGParsersym.TK_main)) {
+                if (QvtCompletionData.isKindOf(myParentImperativeOperation, QVTOParsersym.TK_main)) {
                     IToken previousToken = LightweightParserUtil.getPreviousToken(myParentImperativeOperation);
                     if ((previousToken != null)
                             && QvtCompletionData.isKindOf(previousToken, 
-                                    QvtOpLPGParsersym.TK_mapping, QvtOpLPGParsersym.TK_query)) {
+                                    QVTOParsersym.TK_mapping, QVTOParsersym.TK_query)) {
                         // The "mapping main" or "query main" cases - backward compatibility
                         myParentImperativeOperation = previousToken;
                     }

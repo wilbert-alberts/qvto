@@ -15,7 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -36,15 +36,15 @@ public class ResolveTypeCollector extends AbstractCollector {
 	            && !isResolveStart(leftToken, LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS)) {
 	        return true;
 	    }
-        if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_COMMA)) {
+        if (QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_COMMA)) {
             IToken prevToken = leftToken;
             boolean isColonColonExpected = false;
             while ((prevToken = LightweightParserUtil.getPreviousToken(prevToken)) != null) {
                 if (isColonColonExpected) {
-                    if (!QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                    if (!QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_COLONCOLON)) {
                         return isResolveStart(prevToken, LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS);
                     }
-                } else if (!QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_IDENTIFIER)) {
+                } else if (!QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_IDENTIFIER)) {
                     return false;
                 }
                 isColonColonExpected = !isColonColonExpected;
@@ -58,7 +58,7 @@ public class ResolveTypeCollector extends AbstractCollector {
     }
     
     private static boolean isResolveStart(IToken lParen, int... resolveFamilyType) {
-        if (QvtCompletionData.isKindOf(lParen, QvtOpLPGParsersym.TK_LPAREN)) {
+        if (QvtCompletionData.isKindOf(lParen, QVTOParsersym.TK_LPAREN)) {
             IToken resolveToken = LightweightParserUtil.getPreviousToken(lParen);
             if ((resolveToken != null) 
                     && QvtCompletionData.isKindOf(resolveToken, resolveFamilyType)) {

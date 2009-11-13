@@ -38,7 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.CSTHelper;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.cst.CSTNode;
@@ -215,7 +215,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		int i = 0;		
 		while(nextToken != endToken) {
 			nextToken = prsStream.getIToken(startToken.getTokenIndex() + tokenIndex++);
-			if(nextToken.getKind() == QvtOpLPGParsersym.TK_IDENTIFIER) {
+			if(nextToken.getKind() == QVTOParsersym.TK_IDENTIFIER) {
 				positions[i++] = nextToken.getStartOffset();
 				if(i == positions.length) {
 					// safety exit in case we have inconsistent start end token

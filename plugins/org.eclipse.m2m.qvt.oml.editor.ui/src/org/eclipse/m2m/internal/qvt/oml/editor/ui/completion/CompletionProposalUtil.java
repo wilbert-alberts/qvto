@@ -47,8 +47,8 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtKeywords;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -76,39 +76,39 @@ import org.eclipse.swt.graphics.Image;
 
 public class CompletionProposalUtil {
     private static final int[] PREDEFINED_TYPES = {
-        QvtOpLPGParsersym.TK_OclAny,
-        QvtOpLPGParsersym.TK_OclVoid,
-        QvtOpLPGParsersym.TK_OclInvalid,
-        QvtOpLPGParsersym.TK_Boolean,
-        QvtOpLPGParsersym.TK_Integer,
-        QvtOpLPGParsersym.TK_UnlimitedNatural,
-        QvtOpLPGParsersym.TK_Real,
-        QvtOpLPGParsersym.TK_String,
-        QvtOpLPGParsersym.TK_Collection,
-        QvtOpLPGParsersym.TK_Set,
-        QvtOpLPGParsersym.TK_OrderedSet,
-        QvtOpLPGParsersym.TK_Bag,
-        QvtOpLPGParsersym.TK_Sequence
+        QVTOParsersym.TK_OclAny,
+        QVTOParsersym.TK_OclVoid,
+        QVTOParsersym.TK_OclInvalid,
+        QVTOParsersym.TK_Boolean,
+        QVTOParsersym.TK_Integer,
+        QVTOParsersym.TK_UnlimitedNatural,
+        QVTOParsersym.TK_Real,
+        QVTOParsersym.TK_String,
+        QVTOParsersym.TK_Collection,
+        QVTOParsersym.TK_Set,
+        QVTOParsersym.TK_OrderedSet,
+        QVTOParsersym.TK_Bag,
+        QVTOParsersym.TK_Sequence
     };
     
     private static final int[] PREDEFINED_INSTANCES = {
-        QvtOpLPGParsersym.TK_null,
-        QvtOpLPGParsersym.TK_invalid,
-        QvtOpLPGParsersym.TK_true,
-        QvtOpLPGParsersym.TK_false
+        QVTOParsersym.TK_null,
+        QVTOParsersym.TK_invalid,
+        QVTOParsersym.TK_true,
+        QVTOParsersym.TK_false
     };
     
     private static final int[] RVALUE_TERMINALS = {
-        QvtOpLPGParsersym.TK_if,
-        QvtOpLPGParsersym.TK_let,
-        QvtOpLPGParsersym.TK_not,
-        QvtOpLPGParsersym.TK_object,
-        QvtOpLPGParsersym.TK_while,
-        QvtOpLPGParsersym.TK_late,
-        QvtOpLPGParsersym.TK_resolveIn,
-        QvtOpLPGParsersym.TK_resolveoneIn,
-        QvtOpLPGParsersym.TK_invresolveIn,
-        QvtOpLPGParsersym.TK_invresolveoneIn
+        QVTOParsersym.TK_if,
+        QVTOParsersym.TK_let,
+        QVTOParsersym.TK_not,
+        QVTOParsersym.TK_object,
+        QVTOParsersym.TK_while,
+        QVTOParsersym.TK_late,
+        QVTOParsersym.TK_resolveIn,
+        QVTOParsersym.TK_resolveoneIn,
+        QVTOParsersym.TK_invresolveIn,
+        QVTOParsersym.TK_invresolveoneIn
     };
     
     public static final void addRValues(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
@@ -131,7 +131,7 @@ public class CompletionProposalUtil {
             CompletionProposalUtil.addKeywords(proposals, LightweightParserUtil.QVTO_ITERATOR_TERMINALS, data);
         }
         if (addResolveFamily) {
-            CompletionProposalUtil.addKeyword(proposals, QvtOpLPGParsersym.TK_late, data);
+            CompletionProposalUtil.addKeyword(proposals, QVTOParsersym.TK_late, data);
             int[] resolveTerminals = isImplicitSource ? LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS : LightweightParserUtil.RESOLVE_FAMILY_TERMINALS; 
             CompletionProposalUtil.addKeywords(proposals, resolveTerminals, data);
         }
@@ -165,7 +165,7 @@ public class CompletionProposalUtil {
     public static final void addAllTypes(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
         addModelTypes(proposals, data);
         for (int predefinedType : PREDEFINED_TYPES) {
-            QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(QvtOpLPGParsersym.orderedTerminalSymbols[predefinedType], CategoryImageConstants.TYPE, data);
+            QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(QVTOParsersym.orderedTerminalSymbols[predefinedType], CategoryImageConstants.TYPE, data);
             CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
         }
     }

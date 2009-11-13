@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
@@ -39,7 +39,7 @@ public class ColonColonCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-		return leftToken.getKind() == QvtOpLPGParsersym.TK_COLONCOLON;
+		return leftToken.getKind() == QVTOParsersym.TK_COLONCOLON;
 	}
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
@@ -49,7 +49,7 @@ public class ColonColonCollector extends AbstractCollector {
 		IToken pathNameFirstToken = leftToken;
 		for (int i = leftToken.getTokenIndex(); i >= 1; i -= 2) {
 			IToken colonColon = prsStream.getTokenAt(i);
-			if (colonColon.getKind() != QvtOpLPGParsersym.TK_COLONCOLON) {
+			if (colonColon.getKind() != QVTOParsersym.TK_COLONCOLON) {
 				break;
 			}
 			IToken name = prsStream.getTokenAt(i - 1);
@@ -93,7 +93,7 @@ public class ColonColonCollector extends AbstractCollector {
 		if (classifier != null) {
 		    IToken prevToken = LightweightParserUtil.getPreviousToken(pathNameFirstToken);
 		    if (prevToken != null) {
-	            if (QvtCompletionData.isKindOf(prevToken, QvtOpLPGParsersym.TK_LPAREN)) {
+	            if (QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_LPAREN)) {
 	                IToken resolveToken = LightweightParserUtil.getPreviousToken(prevToken);
 	                if ((resolveToken != null) && (QvtCompletionData.isKindOf(resolveToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS))) {
 	                    CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, true);

@@ -26,12 +26,12 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.completion.parser.LightweightParser;
+import org.eclipse.m2m.internal.qvt.oml.cst.completion.parser.LightweightTypeParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser.LightweightParser;
-import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.cst.parser.LightweightTypeParser;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
@@ -50,72 +50,72 @@ public class LightweightParserUtil {
     }
     
     public static final int[] IMPERATIVE_OPERATION_TOKENS = {
-        QvtOpLPGParsersym.TK_mapping, 
-        QvtOpLPGParsersym.TK_helper,
-        QvtOpLPGParsersym.TK_query,
-        QvtOpLPGParsersym.TK_main
+        QVTOParsersym.TK_mapping, 
+        QVTOParsersym.TK_helper,
+        QVTOParsersym.TK_query,
+        QVTOParsersym.TK_main
     };
     
     public static final int[] OCLEXPRESSION_START_TOKENS = {
-        QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_ADD_ASSIGN,
-        QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL, QvtOpLPGParsersym.TK_NOT_EQUAL_EXEQ,
-        QvtOpLPGParsersym.TK_GREATER, QvtOpLPGParsersym.TK_LESS,
-        QvtOpLPGParsersym.TK_GREATER_EQUAL, QvtOpLPGParsersym.TK_LESS_EQUAL,
-        QvtOpLPGParsersym.TK_and, QvtOpLPGParsersym.TK_or,
-        QvtOpLPGParsersym.TK_xor, QvtOpLPGParsersym.TK_implies,
-        QvtOpLPGParsersym.TK_not,
-        QvtOpLPGParsersym.TK_PLUS, QvtOpLPGParsersym.TK_MINUS,
-        QvtOpLPGParsersym.TK_MULTIPLY, QvtOpLPGParsersym.TK_DIVIDE,
-        QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_QUESTIONMARK,
-        QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_SEMICOLON,
-        QvtOpLPGParsersym.TK_DOTDOT,
-        QvtOpLPGParsersym.TK_if, QvtOpLPGParsersym.TK_then, QvtOpLPGParsersym.TK_else,
-        QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_LBRACKET, QvtOpLPGParsersym.TK_LPAREN,
-        QvtOpLPGParsersym.TK_in,
-        QvtOpLPGParsersym.TK_when,
-        QvtOpLPGParsersym.TK_return
+        QVTOParsersym.TK_RESET_ASSIGN, QVTOParsersym.TK_ADD_ASSIGN,
+        QVTOParsersym.TK_EQUAL, QVTOParsersym.TK_NOT_EQUAL, QVTOParsersym.TK_NOT_EQUAL_EXEQ,
+        QVTOParsersym.TK_GREATER, QVTOParsersym.TK_LESS,
+        QVTOParsersym.TK_GREATER_EQUAL, QVTOParsersym.TK_LESS_EQUAL,
+        QVTOParsersym.TK_and, QVTOParsersym.TK_or,
+        QVTOParsersym.TK_xor, QVTOParsersym.TK_implies,
+        QVTOParsersym.TK_not,
+        QVTOParsersym.TK_PLUS, QVTOParsersym.TK_MINUS,
+        QVTOParsersym.TK_MULTIPLY, QVTOParsersym.TK_DIVIDE,
+        QVTOParsersym.TK_BAR, QVTOParsersym.TK_QUESTIONMARK,
+        QVTOParsersym.TK_COMMA, QVTOParsersym.TK_SEMICOLON,
+        QVTOParsersym.TK_DOTDOT,
+        QVTOParsersym.TK_if, QVTOParsersym.TK_then, QVTOParsersym.TK_else,
+        QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_LBRACKET, QVTOParsersym.TK_LPAREN,
+        QVTOParsersym.TK_in,
+        QVTOParsersym.TK_when,
+        QVTOParsersym.TK_return
     };
     
     public static final int[] OCLEXPRESSION_END_TOKENS = {
-        QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_QUESTIONMARK,
-        QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_SEMICOLON,
-        QvtOpLPGParsersym.TK_DOTDOT,
-        QvtOpLPGParsersym.TK_then, QvtOpLPGParsersym.TK_else, QvtOpLPGParsersym.TK_endif,
-        QvtOpLPGParsersym.TK_RBRACE, QvtOpLPGParsersym.TK_RBRACKET, QvtOpLPGParsersym.TK_RPAREN,
-        QvtOpLPGParsersym.TK_in,
+        QVTOParsersym.TK_BAR, QVTOParsersym.TK_QUESTIONMARK,
+        QVTOParsersym.TK_COMMA, QVTOParsersym.TK_SEMICOLON,
+        QVTOParsersym.TK_DOTDOT,
+        QVTOParsersym.TK_then, QVTOParsersym.TK_else, QVTOParsersym.TK_endif,
+        QVTOParsersym.TK_RBRACE, QVTOParsersym.TK_RBRACKET, QVTOParsersym.TK_RPAREN,
+        QVTOParsersym.TK_in,
     };
     
     public static final int[] OCLEXPRESSION_MANDATORY_TERMINATION_TOKENS = 
         uniteIntArrays(IMPERATIVE_OPERATION_TOKENS, new int[] {
-                QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end,
-                QvtOpLPGParsersym.TK_transformation, QvtOpLPGParsersym.TK_modeltype,
-                QvtOpLPGParsersym.TK_uses,
-                QvtOpLPGParsersym.TK_import, QvtOpLPGParsersym.TK_library
+                QVTOParsersym.TK_init, QVTOParsersym.TK_end,
+                QVTOParsersym.TK_transformation, QVTOParsersym.TK_modeltype,
+                QVTOParsersym.TK_uses,
+                QVTOParsersym.TK_import, QVTOParsersym.TK_library
         });
 
     public static final int[][] BRACING_PAIRS = {
-        {QvtOpLPGParsersym.TK_if, QvtOpLPGParsersym.TK_endif},
-        {QvtOpLPGParsersym.TK_LPAREN, QvtOpLPGParsersym.TK_RPAREN},
-        {QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE},
-        {QvtOpLPGParsersym.TK_LBRACKET, QvtOpLPGParsersym.TK_RBRACKET},
+        {QVTOParsersym.TK_if, QVTOParsersym.TK_endif},
+        {QVTOParsersym.TK_LPAREN, QVTOParsersym.TK_RPAREN},
+        {QVTOParsersym.TK_LBRACE, QVTOParsersym.TK_RBRACE},
+        {QVTOParsersym.TK_LBRACKET, QVTOParsersym.TK_RBRACKET},
     };
     
     public static final int[] RESOLVE_FAMILY_TERMINALS = {
-        QvtOpLPGParsersym.TK_resolve,
-        QvtOpLPGParsersym.TK_resolveone,
-        QvtOpLPGParsersym.TK_resolveIn,
-        QvtOpLPGParsersym.TK_resolveoneIn,
-        QvtOpLPGParsersym.TK_invresolve,
-        QvtOpLPGParsersym.TK_invresolveone,
-        QvtOpLPGParsersym.TK_invresolveIn,
-        QvtOpLPGParsersym.TK_invresolveoneIn
+        QVTOParsersym.TK_resolve,
+        QVTOParsersym.TK_resolveone,
+        QVTOParsersym.TK_resolveIn,
+        QVTOParsersym.TK_resolveoneIn,
+        QVTOParsersym.TK_invresolve,
+        QVTOParsersym.TK_invresolveone,
+        QVTOParsersym.TK_invresolveIn,
+        QVTOParsersym.TK_invresolveoneIn
     };
     
     public static final int[] RESOLVEIN_FAMILY_TERMINALS = {
-        QvtOpLPGParsersym.TK_resolveIn,
-        QvtOpLPGParsersym.TK_resolveoneIn,
-        QvtOpLPGParsersym.TK_invresolveIn,
-        QvtOpLPGParsersym.TK_invresolveoneIn
+        QVTOParsersym.TK_resolveIn,
+        QVTOParsersym.TK_resolveoneIn,
+        QVTOParsersym.TK_invresolveIn,
+        QVTOParsersym.TK_invresolveoneIn
     };
     
     public static final String[] OCL_ITERATOR_TERMINALS = {
@@ -133,31 +133,31 @@ public class LightweightParserUtil {
     };
     
     public static final int[] QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
-        QvtOpLPGParsersym.TK_xselect,
-        QvtOpLPGParsersym.TK_xcollect,
-        QvtOpLPGParsersym.TK_selectOne,
-        QvtOpLPGParsersym.TK_collectOne
+        QVTOParsersym.TK_xselect,
+        QVTOParsersym.TK_xcollect,
+        QVTOParsersym.TK_selectOne,
+        QVTOParsersym.TK_collectOne
     };
     
     public static final int[] QVTO_ITERATOR_TERMINALS = 
         uniteIntArrays(QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {
-                QvtOpLPGParsersym.TK_collectselect,
-                QvtOpLPGParsersym.TK_collectselectOne
+                QVTOParsersym.TK_collectselect,
+                QVTOParsersym.TK_collectselectOne
         });
     
     public static final int[] MAPPING_CLAUSE_TOKENS = {
-        QvtOpLPGParsersym.TK_when, 
-        QvtOpLPGParsersym.TK_where
+        QVTOParsersym.TK_when, 
+        QVTOParsersym.TK_where
     };
     
     public static final int[] MAPPING_CALL_TERMINALS = {
-        QvtOpLPGParsersym.TK_map,
-        QvtOpLPGParsersym.TK_xmap
+        QVTOParsersym.TK_map,
+        QVTOParsersym.TK_xmap
     };
     
     public static final int[] FOR_EXP_TERMINALS = {
-        QvtOpLPGParsersym.TK_forEach,
-        QvtOpLPGParsersym.TK_forOne
+        QVTOParsersym.TK_forEach,
+        QVTOParsersym.TK_forOne
     };
     
     public static int[] uniteIntArrays(int[] array1, int[] array2) {
@@ -215,7 +215,7 @@ public class LightweightParserUtil {
     }
     
     public static final String getTokenText(int tokenKind) {
-        return QvtOpLPGParsersym.orderedTerminalSymbols[tokenKind];        
+        return QVTOParsersym.orderedTerminalSymbols[tokenKind];        
     }
 
     public static final OCLExpression<EClassifier> getOclExpression(IToken trailingToken, QvtCompletionData data, ParserTypeEnum parserType) {
@@ -295,7 +295,7 @@ public class LightweightParserUtil {
     public static final CSTNode parse(String script, UnitProxy unit, ParserTypeEnum parserType) {
         try {
         	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment();
-            QvtOpLexer lexer = new QvtOpLexer(env);
+            QVTOLexer lexer = new QVTOLexer(env);
             lexer.initialize(new OCLInput(script).getContent(), unit.getName());
             AbstractQVTParser parser = null;
             switch (parserType) {
@@ -330,12 +330,12 @@ public class LightweightParserUtil {
             if (depth == 0) {
                 if (QvtCompletionData.isKindOf(token, OCLEXPRESSION_START_TOKENS)) {
                     return tokens.toArray(new IToken[tokens.size()]);
-                } else if (QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_RPAREN)) {
+                } else if (QvtCompletionData.isKindOf(token, QVTOParsersym.TK_RPAREN)) {
                     // Considering switch in 07-07-07 spec: switch { case (expr) /@*@/ expr ...
                     IToken lParen = getPairingBrace(token, false);
                     if (lParen != null) {
                         IToken caseToken = LightweightParserUtil.getPreviousToken(lParen);
-                        if ((caseToken != null) && QvtCompletionData.isKindOf(caseToken, QvtOpLPGParsersym.TK_case)) {
+                        if ((caseToken != null) && QvtCompletionData.isKindOf(caseToken, QVTOParsersym.TK_case)) {
                             return tokens.toArray(new IToken[tokens.size()]);
                         }
                     }
@@ -390,17 +390,17 @@ public class LightweightParserUtil {
     }
     
     public static final IToken[] getScopedIdentifier(IToken trailingToken) {
-        boolean isColonColonExpected = QvtCompletionData.isKindOf(trailingToken, QvtOpLPGParsersym.TK_COLONCOLON);
+        boolean isColonColonExpected = QvtCompletionData.isKindOf(trailingToken, QVTOParsersym.TK_COLONCOLON);
         List<IToken> tokens = new LinkedList<IToken>();
         IToken currentToken = trailingToken;
         do {
             if (isColonColonExpected) {
-                if (!QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_COLONCOLON)) {
+                if (!QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_COLONCOLON)) {
                     return tokens.toArray(new IToken[tokens.size()]);
                 }
             } else {
-                if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_IDENTIFIER,
-                        QvtOpLPGParsersym.TK_main)) {
+                if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_IDENTIFIER,
+                        QVTOParsersym.TK_main)) {
                     tokens.add(0, currentToken);
                 } else {
                     return null; // IDENTIFIER expected but smth else found!
@@ -417,7 +417,7 @@ public class LightweightParserUtil {
     
     
     private static class RunnableLightweightParser extends LightweightParser implements ILightweightParser {
-        public RunnableLightweightParser(QvtOpLexer lexStream) {
+        public RunnableLightweightParser(QVTOLexer lexStream) {
             super(lexStream);
         }
         
@@ -427,7 +427,7 @@ public class LightweightParserUtil {
     }
 
     private static class RunnableLightweightTypeParser extends LightweightTypeParser implements ILightweightParser {
-        public RunnableLightweightTypeParser(QvtOpLexer lexStream) {
+        public RunnableLightweightTypeParser(QVTOLexer lexStream) {
             super(lexStream);
         }
         

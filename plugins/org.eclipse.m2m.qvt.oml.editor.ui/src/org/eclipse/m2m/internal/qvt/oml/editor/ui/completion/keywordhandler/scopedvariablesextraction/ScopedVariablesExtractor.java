@@ -12,7 +12,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.sco
 
 import lpg.lpgjavaruntime.IToken;
 
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 
@@ -27,9 +27,9 @@ public class ScopedVariablesExtractor {
     public String extractVariables(IToken startToken, QvtCompletionData data) {
         Scope scope = new Scope(null);
         IToken currentToken = startToken;
-        if (QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QvtOpLPGParsersym.TK_mapping)) {
+        if (QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QVTOParsersym.TK_mapping)) {
             while ((currentToken = getNextToken(currentToken, data)) != null) {
-                if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
+                if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_LBRACE)) {
                     break;
                 }
             }
@@ -37,12 +37,12 @@ public class ScopedVariablesExtractor {
         if (currentToken != null) {
             while ((currentToken = getNextToken(currentToken, data)) != null) {
                 Result innerScopeResult = null;
-                if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_init, QvtOpLPGParsersym.TK_end)) {
+                if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_init, QVTOParsersym.TK_end)) {
                     currentToken = LightweightParserUtil.getNextToken(currentToken);
                     if (currentToken == null) {
                         break;
                     }
-                    if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
+                    if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_LBRACE)) {
                         innerScopeResult = analyseScopedVarVariables(currentToken, data, scope, true);
                     }
                 } else {
@@ -63,19 +63,19 @@ public class ScopedVariablesExtractor {
         Scope varScope = new Scope(scope);
         IToken nextToken;
         while ((nextToken = getNextToken(currentToken, data)) != null) {
-            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RBRACE)) {
+            if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RBRACE)) {
                 if (isMandatoryScope) {
                     return new Result(startToken, nextToken, null, varScope);
                 }
                 return new Result(startToken, nextToken, null, scope);
             }
-            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_var)) {
+            if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_var)) {
                 nextToken = getNextToken(nextToken, data);
                 if (nextToken == null) {
                     break;
                 }
                 Result extractVarVariableResult = extractVariable(nextToken, null, data, varScope, 
-                        new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_RBRACE);
+                        new int[] {QVTOParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QVTOParsersym.TK_SEMICOLON, QVTOParsersym.TK_RBRACE);
                 if (extractVarVariableResult.getScope() != varScope) {
                     return extractVarVariableResult;
                 }
@@ -96,7 +96,7 @@ public class ScopedVariablesExtractor {
     }
     
     private Result analyseVariableDeclaringExpressions(IToken currentToken, QvtCompletionData data, Scope scope) {
-        if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_let)) {
+        if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_let)) {
             return analyseLetExpression(currentToken, data, scope);
         } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.QVTO_ITERATOR_TERMINALS)
         		|| QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.OCL_ITERATOR_TERMINALS)
@@ -104,15 +104,15 @@ public class ScopedVariablesExtractor {
             return analyseIteratorExpression(currentToken, data, scope);
         } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS)) {
             return analyseResolveExpression(currentToken, data, scope);
-        } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_while)) {
+        } else if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_while)) {
             return analyseWhileExpression(currentToken, data, scope);
-        } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_switch)) {
+        } else if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_switch)) {
             return analyseSwitchExpression(currentToken, data, scope);
         } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.FOR_EXP_TERMINALS)) {
             return analyseForExpression(currentToken, data, scope);
-        } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_LBRACE)) {
+        } else if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_LBRACE)) {
             return analyseScopedVarVariables(currentToken, data, scope, false);
-        } else if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_compute)) {
+        } else if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_compute)) {
             return analyseComputeExpression(currentToken, data, scope);
         }
         return null;
@@ -124,7 +124,7 @@ public class ScopedVariablesExtractor {
         IToken nextToken = getNextToken(preParenToken, data); // ')' expected
         if (nextToken != null) {
             lastKnownGoodToken = nextToken;
-            if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+            if (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN)) {
                 return new Result(startToken, nextToken, null, whileLikeScope.getParent());
             }
             
@@ -132,7 +132,7 @@ public class ScopedVariablesExtractor {
             
             if (nextToken != null) {
                 lastKnownGoodToken = nextToken;
-                if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LBRACE)) {
+                if (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LBRACE)) {
                     return new Result(startToken, nextToken, null, whileLikeScope.getParent());
                 }
                 
@@ -153,7 +153,7 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         IToken currentToken = nextToken;
@@ -164,7 +164,7 @@ public class ScopedVariablesExtractor {
 
         Scope computeExpScope = new Scope(scope);
         Result extractVarVariableResult = extractVariable(nextToken, null, data, computeExpScope, 
-                new int[] {QvtOpLPGParsersym.TK_RESET_ASSIGN, QvtOpLPGParsersym.TK_EQUAL}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_RBRACE);
+                new int[] {QVTOParsersym.TK_RESET_ASSIGN, QVTOParsersym.TK_EQUAL}, NOT_A_TOKEN, QVTOParsersym.TK_RBRACE);
         if (extractVarVariableResult.getScope() != computeExpScope) {
             return extractVarVariableResult;
         }
@@ -181,13 +181,13 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         Scope forExpScope = new Scope(scope);
         Result addVariableListResult = addVariableList(nextToken, startToken, data, forExpScope, 
-                new int[] {QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN},
-                NOT_A_TOKEN, QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN);
+                new int[] {QVTOParsersym.TK_BAR, QVTOParsersym.TK_RPAREN},
+                NOT_A_TOKEN, QVTOParsersym.TK_COMMA, QVTOParsersym.TK_BAR, QVTOParsersym.TK_RPAREN);
         if (addVariableListResult.getScope() != forExpScope) {
             return addVariableListResult;
         }
@@ -195,7 +195,7 @@ public class ScopedVariablesExtractor {
         nextToken = addVariableListResult.getEndToken(); // Either '|' or ')' expected - optional condition
         
         // extracting condition if available 
-        if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_BAR)) {
+        if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_BAR)) {
             IToken currentToken = nextToken;
             nextToken = getNextToken(nextToken, data);
             if (nextToken == null) {
@@ -220,7 +220,7 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         nextToken = getNextToken(nextToken, data);
@@ -228,11 +228,11 @@ public class ScopedVariablesExtractor {
             return null;
         }
 
-        if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_IDENTIFIER)) {
+        if (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_IDENTIFIER)) {
             return null;
         }
         Result variableResult = extractVariable(nextToken, null,
-                data, whileScope, new int[] {QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_SEMICOLON);
+                data, whileScope, new int[] {QVTOParsersym.TK_EQUAL, QVTOParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QVTOParsersym.TK_SEMICOLON);
         if (variableResult == null) {
             return null;
         }
@@ -245,7 +245,7 @@ public class ScopedVariablesExtractor {
         
         nextToken = getNextToken(nextToken, data);
         
-        assert QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_SEMICOLON);
+        assert QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_SEMICOLON);
         
         IToken lastKnownGoodToken = nextToken;
         
@@ -272,7 +272,7 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         nextToken = getNextToken(nextToken, data);
@@ -280,11 +280,11 @@ public class ScopedVariablesExtractor {
             return null;
         }
 
-        if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_IDENTIFIER)) {
+        if (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_IDENTIFIER)) {
             return null;
         }
         Result variableResult = extractVariable(nextToken, startToken,
-                data, switchScope, new int[] {QvtOpLPGParsersym.TK_EQUAL, QvtOpLPGParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_RPAREN);
+                data, switchScope, new int[] {QVTOParsersym.TK_EQUAL, QVTOParsersym.TK_RESET_ASSIGN}, NOT_A_TOKEN, QVTOParsersym.TK_RPAREN);
         if (variableResult == null) {
             return null;
         }
@@ -297,14 +297,14 @@ public class ScopedVariablesExtractor {
         
         nextToken = getNextToken(nextToken, data);
         
-        assert QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN);
+        assert QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN);
         
         IToken lastKnownGoodToken = nextToken;
         
         nextToken = getNextToken(nextToken, data); // '{' expected
         if (nextToken != null) {
             lastKnownGoodToken = nextToken;
-            if (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LBRACE)) {
+            if (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LBRACE)) {
                 return new Result(startToken, nextToken, null, scope);
             }
 
@@ -320,8 +320,8 @@ public class ScopedVariablesExtractor {
     
     // starting from 'let'
     private Result analyseLetExpression(IToken startToken, QvtCompletionData data, Scope scope) {
-        return analyseLetLikeExpression(startToken, null, data, scope, new int[] {QvtOpLPGParsersym.TK_in}, NOT_A_TOKEN,
-                QvtOpLPGParsersym.TK_COMMA, QvtOpLPGParsersym.TK_in);
+        return analyseLetLikeExpression(startToken, null, data, scope, new int[] {QVTOParsersym.TK_in}, NOT_A_TOKEN,
+                QVTOParsersym.TK_COMMA, QVTOParsersym.TK_in);
     }
     
     // starting from 'iteratorExpCSToken' or 'iterate'
@@ -330,12 +330,12 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, startToken, data, scope,
-        		new int[] {QvtOpLPGParsersym.TK_BAR, QvtOpLPGParsersym.TK_RPAREN}, NOT_A_TOKEN, QvtOpLPGParsersym.TK_COMMA,
-                QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_BAR);
+        		new int[] {QVTOParsersym.TK_BAR, QVTOParsersym.TK_RPAREN}, NOT_A_TOKEN, QVTOParsersym.TK_COMMA,
+                QVTOParsersym.TK_SEMICOLON, QVTOParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
         }
@@ -343,7 +343,7 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, letLikeExpressionResult.getEndToken(), null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN)) {
             return new Result(startToken, letLikeExpressionResult.getEndToken(), null, scope);
         }        
         return new Result(startToken, nextToken, null, scope);
@@ -355,15 +355,15 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, startToken, null, new Scope(null));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             return null;
         }
         if (QvtCompletionData.isKindOf(startToken, LightweightParserUtil.RESOLVEIN_FAMILY_TERMINALS)) {
             while ((nextToken = getNextToken(nextToken, data)) != null) {
-                if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_COMMA)) {
+                if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_COMMA)) {
                     break;
                 }
-                if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+                if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN)) {
                     return new Result(startToken, nextToken, null, scope);
                 }
             }
@@ -372,7 +372,7 @@ public class ScopedVariablesExtractor {
             return null;
         }
         Result letLikeExpressionResult = analyseLetLikeExpression(nextToken, null, data, scope,
-        		new int[] {QvtOpLPGParsersym.TK_BAR}, QvtOpLPGParsersym.TK_RPAREN, QvtOpLPGParsersym.TK_BAR);
+        		new int[] {QVTOParsersym.TK_BAR}, QVTOParsersym.TK_RPAREN, QVTOParsersym.TK_BAR);
         if (letLikeExpressionResult.getScope() != scope) {
             return letLikeExpressionResult;
         }
@@ -380,7 +380,7 @@ public class ScopedVariablesExtractor {
         if (nextToken == null) {
             return new Result(startToken, letLikeExpressionResult.getEndToken(), null, new Scope(scope));
         }
-        if  (!QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+        if  (!QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN)) {
             return new Result(startToken, letLikeExpressionResult.getEndToken(), null, scope);
         }        
         return new Result(startToken, nextToken, null, scope);
@@ -394,7 +394,7 @@ public class ScopedVariablesExtractor {
             nextToken = getNextToken(nextToken, data);
             if (nextToken != null) {
                 Result variableResult = extractVariable(nextToken, iteratorExpressionStart,
-                        data, updatedScope, new int[] {QvtOpLPGParsersym.TK_EQUAL}, unexpectedTerminator, delimiters);
+                        data, updatedScope, new int[] {QVTOParsersym.TK_EQUAL}, unexpectedTerminator, delimiters);
                 if (variableResult == null) {
                     return new Result(startToken, lastKnownGoodToken, null, updatedScope.getParent());
                 }
@@ -447,7 +447,7 @@ public class ScopedVariablesExtractor {
             if (QvtCompletionData.isKindOf(nextToken, unexpectedTerminator)) {
                 return null;
             }
-            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_COLON)) {
+            if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_COLON)) {
                 isTypeDefined = true;
             }
             if (QvtCompletionData.isKindOf(nextToken, delimiters)) {
@@ -477,10 +477,10 @@ public class ScopedVariablesExtractor {
                         "var " + identifierAndOrType //$NON-NLS-1$ 
                         + " := " + oclExpressionResult.getString() + ';', scope); //$NON-NLS-1$
             }
-            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_LPAREN)) {
+            if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LPAREN)) {
             	parenCount++;
             }
-            if (QvtCompletionData.isKindOf(nextToken, QvtOpLPGParsersym.TK_RPAREN)) {
+            if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_RPAREN)) {
             	parenCount--;
             	if (parenCount < 0) {
             		return new Result(startToken, startToken, "", scope);  //$NON-NLS-1$
@@ -497,7 +497,7 @@ public class ScopedVariablesExtractor {
         }
         IToken accessorToken = LightweightParserUtil.getPreviousToken(iteratorExpressionStart);
         if ((accessorToken != null) && QvtCompletionData.isKindOf(accessorToken, 
-                QvtOpLPGParsersym.TK_DOT, QvtOpLPGParsersym.TK_ARROW)) {
+                QVTOParsersym.TK_DOT, QVTOParsersym.TK_ARROW)) {
             IToken[] oclExpressionCSTokens = LightweightParserUtil.extractOclExpressionCSTokens(accessorToken, data);
             if (oclExpressionCSTokens != null) {
                 String collectionType = LightweightParserUtil.getText(oclExpressionCSTokens);

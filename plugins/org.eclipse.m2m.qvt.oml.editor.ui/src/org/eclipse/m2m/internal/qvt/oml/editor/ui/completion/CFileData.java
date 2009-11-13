@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 
 /**
  * @author Aleksandr Igdalov
@@ -24,7 +24,7 @@ public class CFileData {
     private final URI myCFile;
     private final QvtCompletionData myData;
 
-    private QvtOpLexer myLexer;
+    private QVTOLexer myLexer;
     private UnitCS myUnitCS;
     private CompiledUnit myCompiledUnit;    
     private String myLightweightScript;
@@ -39,11 +39,11 @@ public class CFileData {
     }
     
     
-    public QvtOpLexer getLexer() {
+    public QVTOLexer getLexer() {
         return myLexer;
     }
 
-    public void setLexer(QvtOpLexer lexer) {
+    public void setLexer(QVTOLexer lexer) {
         myLexer = lexer;
     }
     

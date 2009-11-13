@@ -15,7 +15,7 @@ import java.util.Collection;
 import lpg.lpgjavaruntime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 
@@ -27,7 +27,7 @@ public class ObjectKeywordCollector extends AbstractCollector {
     @Override
     protected boolean isApplicableInternal(QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-		return leftToken.getKind() == QvtOpLPGParsersym.TK_object;
+		return leftToken.getKind() == QVTOParsersym.TK_object;
 	}
 
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {

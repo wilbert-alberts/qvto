@@ -20,7 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConstants;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
@@ -61,7 +61,7 @@ public class MappingExtrasMappingNameCollector extends AbstractCollector {
     }
     
     public static final boolean isCollectorApplicable(IToken token) {
-        while ((token != null) && QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_COMMA)) {
+        while ((token != null) && QvtCompletionData.isKindOf(token, QVTOParsersym.TK_COMMA)) {
             IToken previousToken = LightweightParserUtil.getPreviousToken(token);
             if (previousToken != null) {
                 IToken[] scopedIdentifier = LightweightParserUtil.getScopedIdentifier(previousToken);
@@ -71,7 +71,7 @@ public class MappingExtrasMappingNameCollector extends AbstractCollector {
                 token = LightweightParserUtil.getPreviousToken(scopedIdentifier[0]);
             }
         }
-        if ((token != null) && QvtCompletionData.isKindOf(token, QvtOpLPGParsersym.TK_inherits, QvtOpLPGParsersym.TK_merges, QvtOpLPGParsersym.TK_disjuncts)) {
+        if ((token != null) && QvtCompletionData.isKindOf(token, QVTOParsersym.TK_inherits, QVTOParsersym.TK_merges, QVTOParsersym.TK_disjuncts)) {
             return true;
         }
         return false;
