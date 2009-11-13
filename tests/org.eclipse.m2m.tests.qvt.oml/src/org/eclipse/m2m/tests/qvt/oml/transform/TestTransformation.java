@@ -100,7 +100,8 @@ public abstract class TestTransformation extends TestCase {
     		assertNotNull(buildCommand);		
     		@SuppressWarnings("unchecked")
     		Map<String, String> arguments = buildCommand.getArguments();
-    		// Remark: internal option for saving xmi, used for testing at the moment		
+    		// Remark: internal option for saving xmi, used for testing at the moment
+    		//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
     		arguments.put(QVTOBuilder.SAVE_AST_XMI, "true"); //$NON-NLS-1$
     		
     		buildCommand.setArguments(arguments);

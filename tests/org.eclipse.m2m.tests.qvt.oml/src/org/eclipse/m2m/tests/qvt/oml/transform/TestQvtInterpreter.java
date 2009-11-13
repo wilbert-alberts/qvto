@@ -29,8 +29,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
@@ -92,7 +92,7 @@ public class TestQvtInterpreter extends TestTransformation {
 		private final EPackage.Registry fRegistry;
 		
 		public DefaultTransformer() {
-			this(false, null);
+			this(true, null);
 		}
 		
 		public DefaultTransformer(boolean executeCompiledAST, EPackage.Registry registry) {
@@ -117,7 +117,7 @@ public class TestQvtInterpreter extends TestTransformation {
 					URI resourceURI = URI.createPlatformResourceURI(transformationFile.getFullPath().toString(), true);
 					UnitResolver resolver = factory.getResolver(resourceURI);
 													        
-					
+					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
 			        URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
 			        assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
 			    		
@@ -128,8 +128,13 @@ public class TestQvtInterpreter extends TestTransformation {
 				        resSet.setPackageRegistry(root);
 			        }
 			        
-					myCompiler = new QVTOCompiler(resolver, new ResourceSetImpl());
+			        //temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
+					myCompiler = CompilerUtils.createCompiler(resolver);
         			return new CompiledUnit(binURI, resSet);
+        			
+//					myCompiler = QVTOCompiler.createCompiler(resolver, resSet.getPackageRegistry());     
+//					// TODO - why not calling the compiler instance directly here?
+//					return QVTOCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];        			
 				}
 			};
 

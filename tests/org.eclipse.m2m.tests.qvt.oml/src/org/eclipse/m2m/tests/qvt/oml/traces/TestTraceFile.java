@@ -30,6 +30,12 @@ public class TestTraceFile extends TestTransformation {
 	public void runTest() throws Exception {
 		check(TestQvtInterpreter.TRANSFORMER);
     }
+    
+    @Override
+    public void setUp() throws Exception {   
+    	super.setUp();
+    	buildTestProject();
+    }
 
     private void check(ITransformer transformer) throws Exception {
         Trace trace = TraceUtil.transform(getData(), getProject(), transformer);

@@ -23,6 +23,12 @@ public class TestFailedTransformation extends TestTransformation {
 	public TestFailedTransformation(String testName) {
 		this(new FileToFileData(TestDataMapper.getActualTestName(TestQvtInterpreter.PREFIX, testName)));
 	}    
+	
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		buildTestProject();
+	}
     
     @Override
 	public void runTest() throws Exception {

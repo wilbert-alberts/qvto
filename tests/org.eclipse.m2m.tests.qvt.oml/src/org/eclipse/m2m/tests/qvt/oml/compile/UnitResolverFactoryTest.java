@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
@@ -135,7 +136,7 @@ public class UnitResolverFactoryTest extends TestCase {
 	
 	private void assertResolvedCompiledUnit(UnitProxy unitProxy, boolean errorsOnly) {
 		assertNotNull("Unit must be resolved", unitProxy); //$NON-NLS-1$
-		QVTOCompiler compiler = new QVTOCompiler(unitProxy.getResolver());
+		QVTOCompiler compiler = CompilerUtils.createCompiler(unitProxy.getResolver());
 		try {
 			CompiledUnit compiledUnit = compiler.compile(unitProxy, null, null);
 			assertEquals(compiledUnit.getName(), unitProxy.getName());

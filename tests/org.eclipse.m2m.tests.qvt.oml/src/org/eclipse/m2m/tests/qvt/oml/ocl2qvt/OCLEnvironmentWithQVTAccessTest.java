@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.ocl2qvt;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -191,6 +192,30 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 		}
 	}
 	
+
+	public void testQVTStdlibOperationAccess() throws ParserException {
+		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
+		helper.setContext(EcorePackage.eINSTANCE.getENamedElement());
+		
+		try {
+			helper.setValidating(true);
+			org.eclipse.ocl.expressions.OCLExpression<EClassifier> q = 
+				helper.createQuery("let e : Stdlib::Element = self in e.subobjects()"); //$NON-NLS-1$
+								
+			assertNull(helper.getProblems());
+						
+			Query query = fOCL.createQuery(q);
+			Object result = evaluate(getEvaluationEnv(query), 
+					query, EcorePackage.eINSTANCE);
+			
+			assertEquals(new HashSet<EClassifier>(EcorePackage.eINSTANCE.getEClassifiers()), result);
+			
+		} catch (ParserException e) {
+			e.printStackTrace();			
+			fail(e.getMessage());
+		}
+	}
+		
 	
 	public void testImportedModulePropertyAccess() throws ParserException {
 		OCLHelper<EClassifier, EOperation, EStructuralFeature, Constraint> helper = fOCL.createOCLHelper();		
