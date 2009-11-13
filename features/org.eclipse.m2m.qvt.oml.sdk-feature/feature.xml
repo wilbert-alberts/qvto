@@ -69,12 +69,12 @@
       <import plugin="org.eclipse.pde.ui" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.ui" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.common.ui" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.emf.util" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml.project" version="2.0.0" match="compatible"/>
       <import plugin="com.ibm.icu"/>
+      <import plugin="org.eclipse.m2m.qvt.oml" version="3.0.0" match="compatible"/>
    </requires>
 
    <plugin
