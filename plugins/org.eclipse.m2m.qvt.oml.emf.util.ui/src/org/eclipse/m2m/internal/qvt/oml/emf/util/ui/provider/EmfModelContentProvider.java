@@ -122,7 +122,7 @@ public class EmfModelContentProvider implements ITreeContentProvider {
 			Object value = obj.eGet(myRef);
 
 			List<Object> children = new ArrayList<Object>();
-			if(value instanceof List) {
+			if(value instanceof List<?>) {
 				for(Iterator<?> it = ((List<?>) value).iterator(); it.hasNext(); ) {
 					EObject child = (EObject)it.next();
 					children.add(new EObjectNode(child, this));
