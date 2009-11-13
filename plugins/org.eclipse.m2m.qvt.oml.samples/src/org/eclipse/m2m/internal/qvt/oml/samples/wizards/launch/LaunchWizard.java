@@ -82,10 +82,6 @@ public class LaunchWizard extends SamplesWizard {
 			super(projects);
 		}
 
-		public String getLaunchName() {
-			return myLaunchText.getText();
-		}
-
 		@Override
 		protected boolean validatePage() {
 		    boolean result = super.validatePage();
