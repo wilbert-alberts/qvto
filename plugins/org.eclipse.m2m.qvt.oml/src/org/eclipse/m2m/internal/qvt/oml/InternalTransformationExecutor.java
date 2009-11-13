@@ -1,15 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation
- * 
+ * Copyright (c) 2009 Eclipse Modeling Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *   
+ *
  * Contributors:
- *     Borland Software Corporation - initial API and implementation
+ *     Radek Dvorak - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.qvt.oml;
+package org.eclipse.m2m.internal.qvt.oml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +25,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.m2m.internal.qvt.oml.Messages;
-import org.eclipse.m2m.internal.qvt.oml.NLS;
-import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -54,14 +50,16 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.qvt.oml.ExecutionContext;
+import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
+import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.SendSignalAction;
 
 /**
- * A utility class that enables to execute existing transformation in the
- * specified execution context.
+ * Internal transformation executor
  * 
  * @since 3.0
  */
@@ -70,7 +68,7 @@ public class InternalTransformationExecutor {
 	private URI fURI;
 	private EPackage.Registry fPackageRegistry;
 	private CompiledUnit fCompiledUnit;
-	private ExecutionDiagnostic fLoadDiagnostic;
+	private ExecutionDiagnosticImpl fLoadDiagnostic;
 	private OperationalTransformation fTransformation;
 
 	/**
@@ -88,11 +86,7 @@ public class InternalTransformationExecutor {
 
 		fURI = uri;
 	}
-	
-	public CompiledUnit getUnit() {
-		return fCompiledUnit;
-	}
-	
+		
 	public InternalTransformationExecutor(URI uri, EPackage.Registry registry) {
 		this(uri);
 		
@@ -119,6 +113,21 @@ public class InternalTransformationExecutor {
 		}
 		return fLoadDiagnostic;
 	}
+	
+	/**
+	 * Retrieves compiled unit if the referencing URI gets successfully resolved
+	 * <p>
+	 * <b>Remark</b>: This method invocation causes the referenced transformation to
+	 * load if not already done before by direct call to
+	 * {@linkplain #loadTransformation()} or
+	 * {@linkplain #execute(ExecutionContext, ModelExtent...)}
+	 * 
+	 * @return compiled unit or <code>null</code> if it failed to be obtained
+	 */
+	public CompiledUnit getUnit() {
+		loadTransformation();
+		return fCompiledUnit;
+	}	
 
 	/**
 	 * Executes the transformation referred by this executor using the given
@@ -197,7 +206,7 @@ public class InternalTransformationExecutor {
 			try {
 				args[i++].setContents(allRootElements);
 			} catch (UnsupportedOperationException e) {
-				return new ExecutionDiagnostic(Diagnostic.ERROR,
+				return new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 						ExecutionDiagnostic.MODEL_PARAMETER_MISMATCH, NLS
 								.bind(Messages.ReadOnlyExtentModificationError,
 										i - 1));
@@ -208,11 +217,11 @@ public class InternalTransformationExecutor {
 	}
 
 	private void doLoad() {
-		fLoadDiagnostic = ExecutionDiagnostic.OK_INSTANCE;
+		fLoadDiagnostic = ExecutionDiagnosticImpl.OK_INSTANCE;
 
 		UnitProxy unit = UnitResolverFactory.Registry.INSTANCE.getUnit(fURI);
 		if (unit == null) {
-			fLoadDiagnostic = new ExecutionDiagnostic(Diagnostic.ERROR,
+			fLoadDiagnostic = new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 					ExecutionDiagnostic.TRANSFORMATION_LOAD_FAILED, NLS.bind(
 							Messages.UnitNotFoundError, fURI));
 			return;
@@ -226,7 +235,7 @@ public class InternalTransformationExecutor {
 			fLoadDiagnostic = createCompilationDiagnostic(fCompiledUnit);
 
 		} catch (MdaException e) {
-			fLoadDiagnostic = new ExecutionDiagnostic(Diagnostic.ERROR,
+			fLoadDiagnostic = new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 					ExecutionDiagnostic.TRANSFORMATION_LOAD_FAILED, NLS.bind(
 							Messages.FailedToCompileUnitError, fURI));
 
@@ -237,13 +246,13 @@ public class InternalTransformationExecutor {
 				&& fLoadDiagnostic.getSeverity() == Diagnostic.OK) {
 			fTransformation = getTransformation();
 			if (fTransformation == null) {
-				fLoadDiagnostic = new ExecutionDiagnostic(Diagnostic.ERROR,
+				fLoadDiagnostic = new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 						ExecutionDiagnostic.TRANSFORMATION_LOAD_FAILED, NLS
 								.bind(Messages.NotTransformationInUnitError,
 										fURI));
 			}
 
-			ExecutionDiagnostic validForExecution = checkIsExecutable(fTransformation);
+			ExecutionDiagnosticImpl validForExecution = checkIsExecutable(fTransformation);
 			if (validForExecution.getSeverity() != Diagnostic.OK) {
 				fLoadDiagnostic = validForExecution;
 			}
@@ -257,7 +266,7 @@ public class InternalTransformationExecutor {
 		EList<ModelParameter> modelParameters = transformationModel
 				.getModelParameter();
 		if (modelParameters.size() != args.length) {
-			return new ExecutionDiagnostic(Diagnostic.ERROR,
+			return new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 					ExecutionDiagnostic.MODEL_PARAMETER_MISMATCH, NLS.bind(
 							Messages.InvalidModelParameterCountError,
 							args.length, modelParameters.size()));
@@ -288,17 +297,17 @@ public class InternalTransformationExecutor {
 		return result;
 	}
 
-	private static ExecutionDiagnostic checkIsExecutable(
+	private static ExecutionDiagnosticImpl checkIsExecutable(
 			OperationalTransformation transformation) {
 		EList<EOperation> operations = transformation.getEOperations();
 		for (EOperation oper : operations) {
 			if (oper instanceof ImperativeOperation
 					&& QvtOperationalEnv.MAIN.equals(oper.getName())) {
-				return ExecutionDiagnostic.OK_INSTANCE;
+				return ExecutionDiagnosticImpl.OK_INSTANCE;
 			}
 		}
 
-		return new ExecutionDiagnostic(Diagnostic.ERROR,
+		return new ExecutionDiagnosticImpl(Diagnostic.ERROR,
 				ExecutionDiagnostic.VALIDATION, NLS.bind(
 						Messages.NoTransformationEntryPointError,
 						transformation.getName()));
@@ -344,7 +353,7 @@ public class InternalTransformationExecutor {
 			message = NLS.bind(Messages.QVTRuntimeExceptionCaught,
 					qvtRuntimeException.getClass().getName());
 		}
-		ExecutionDiagnostic diagnostic = new ExecutionDiagnostic(severity,
+		ExecutionDiagnosticImpl diagnostic = new ExecutionDiagnosticImpl(severity,
 				code, message, data);
 		diagnostic.setStackTrace(qvtRuntimeException.getQvtStackTrace());
 		return diagnostic;
@@ -364,15 +373,15 @@ public class InternalTransformationExecutor {
 		}
 	}
 
-	private static ExecutionDiagnostic createCompilationDiagnostic(
+	private static ExecutionDiagnosticImpl createCompilationDiagnostic(
 			CompiledUnit compiledUnit) {
 		List<QvtMessage> errors = compiledUnit.getErrors();
 		if (errors.isEmpty()) {
-			return ExecutionDiagnostic.OK_INSTANCE;
+			return ExecutionDiagnosticImpl.OK_INSTANCE;
 		}
 
 		URI uri = compiledUnit.getURI();
-		ExecutionDiagnostic mainDiagnostic = new ExecutionDiagnostic(
+		ExecutionDiagnosticImpl mainDiagnostic = new ExecutionDiagnosticImpl(
 				Diagnostic.ERROR, ExecutionDiagnostic.VALIDATION, NLS.bind(
 						Messages.CompilationErrorsFoundInUnit, uri.toString()));
 

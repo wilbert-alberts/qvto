@@ -12,23 +12,20 @@
 package org.eclipse.m2m.qvt.oml;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.ExecutionDiagnosticImpl;
 
 /**
- * A diagnostic class representing the result status of a transformation
+ * A diagnostic interface representing the result status of a transformation
  * execution.
  * 
  * @since 2.0
  * 
- * @noextend This class is not intended to be subclassed by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
-public class ExecutionDiagnostic extends BasicDiagnostic {
+public interface ExecutionDiagnostic extends Diagnostic {
 
 	/**
 	 * The execution was terminated by failed QVT assertion.
@@ -50,35 +47,16 @@ public class ExecutionDiagnostic extends BasicDiagnostic {
 
 	public static final String SOURCE = "org.eclipse.m2m.qvt.oml.execution"; //$NON-NLS-1$
 
-	static final ExecutionDiagnostic OK_INSTANCE = new ExecutionDiagnostic(
-			Diagnostic.OK, 0, "OK", null); //$NON-NLS-1$
-
-	// instance fields
-
-	private List<ExecutionStackTraceElement> fStackTrace;
-
-	ExecutionDiagnostic(int severity, int code, String message, Object[] data) {
-		super(severity, SOURCE, code, message, data);
-	}
-
-	ExecutionDiagnostic(int severity, int code, String message) {
-		super(severity, SOURCE, code, message, null);
-	}
-
-	void setStackTrace(List<? extends ExecutionStackTraceElement> stackElements) {
-		fStackTrace = new ArrayList<ExecutionStackTraceElement>(stackElements);
-	}
-
+	
+	public static final ExecutionDiagnostic OK_INSTANCE = ExecutionDiagnosticImpl.OK_INSTANCE;
+	
 	/**
 	 * Gets the stack trace that resulted from interrupted execution either by
 	 * user termination request or exception thrown
 	 * 
 	 * @return list of trace elements or an empty list
 	 */
-	public List<ExecutionStackTraceElement> getStackTrace() {
-		return fStackTrace != null ? Collections.unmodifiableList(fStackTrace)
-				: Collections.<ExecutionStackTraceElement> emptyList();
-	}
+	public List<ExecutionStackTraceElement> getStackTrace();
 
 	/**
 	 * Prints the execution stack-trace (if available) of this diagnostic to the
@@ -87,9 +65,5 @@ public class ExecutionDiagnostic extends BasicDiagnostic {
 	 * @param writer
 	 *            <code>PrintWriter</code> to use for output
 	 */
-	public void printStackTrace(PrintWriter writer) {
-		if (fStackTrace != null) {
-			QvtRuntimeException.printQvtStackTrace(writer, fStackTrace);
-		}
-	}
+	public void printStackTrace(PrintWriter writer);
 }
