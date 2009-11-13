@@ -247,7 +247,7 @@ public class CompositeTransformationContentPage extends WizardPage {
 				TaskModel value = (TaskModel) element;
 				return columnIndex == 0 ? value.getTaskName() : " < " + value.getName() + " >"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
-			if (element instanceof Map.Entry) {
+			if (element instanceof Map.Entry<?, ?>) {
 				@SuppressWarnings("unchecked")
 				Map.Entry<String, Object> value = (Entry<String, Object>) element;
 				return columnIndex == 0 ? value.getKey() : String.valueOf(value.getValue());
