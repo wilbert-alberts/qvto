@@ -117,7 +117,7 @@ helper testTypesConformancy() : Boolean {
 	assert fatal(element = getDictValueForAKey('key6', string2AllAnyDict));	
 	assert fatal(Tuple { name = 'aName' } = getDictValueForAKey('key7', string2AllAnyDict));
 	
-	-- no OclInvalid allowed to be stored
+	-- no invalid allowed to be stored
 	var invalidValue := null.oclAsType(String).length();
 	assert fatal (invalidValue.oclIsInvalid());
 		

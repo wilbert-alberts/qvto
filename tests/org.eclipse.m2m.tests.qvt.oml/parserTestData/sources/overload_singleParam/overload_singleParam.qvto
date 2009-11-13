@@ -7,7 +7,7 @@ main() {
 	var results := Sequence {	
 		singleParam(c),
 		singleParam(null), // choose more specific by param type;
-		singleParam(OclInvalid), // choose more specific by param type
+		singleParam(invalid), // choose more specific by param type
 		singleParam(c.oclAsType(EClassifier)),
 		singleParam(c.oclAsType(ENamedElement))
 	};

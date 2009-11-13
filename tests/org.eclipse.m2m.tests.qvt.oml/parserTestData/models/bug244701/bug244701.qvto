@@ -9,7 +9,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		var c : Real;
 		var d : UnlimitedNatural;
 		var e : Boolean;
-		var f : Invalid;        
+		var f : OclInvalid;        
 		var g : OclVoid;
 		var h : Collection(EObject);
 		var i : Set(EObject);
@@ -23,8 +23,8 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 		if (a = '') and (b = 0)
 			and (c = 0.0) and (d = 0)
 			and not e
-			and (g = null) and (f = OclInvalid)
-			and (h->isEmpty() = OclInvalid)
+			and (g = null) and (f = invalid)
+			and (h->isEmpty() = invalid)
 			and (i <> null) and (i->isEmpty()) and (i->asSet()= i)
 			and (j <> null) and (j->isEmpty()) and (j->asOrderedSet()= j)
 			and (k <> null) and (k->isEmpty()) and (k->asSequence()= k)

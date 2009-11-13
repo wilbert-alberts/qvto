@@ -48,10 +48,10 @@ main() {
 		_self.primitiveTypeArgumentsOperationContextual('String', 10, 1.5, true));
 		
 		
-	-- test arguments of OclInvalid and java operation binary compatibility
+	-- test arguments of invalid and java operation binary compatibility
 	assert fatal (testEchoArgument('aStr') = 'aStr');
 	assert fatal (testEchoArgument(null) = null);
-	assert fatal (testEchoArgument(OclInvalid) = null);
+	assert fatal (testEchoArgument(invalid) = null);
 	
 	-- test a static java operation in java module class
 
