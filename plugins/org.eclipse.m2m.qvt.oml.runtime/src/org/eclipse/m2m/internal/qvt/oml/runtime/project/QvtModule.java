@@ -98,7 +98,7 @@ public abstract class QvtModule {
                 transfParams.add(createTransfParam((MappingParameter) mainParam));
             }
             for (VarParameter mainParam : mainMethod.getResult()) {
-                if (mainParam.getEType() instanceof VoidType) {
+                if (mainParam.getEType() instanceof VoidType<?>) {
                     continue;
                 }
                 transfParams.add(createTransfParam((MappingParameter) mainParam));

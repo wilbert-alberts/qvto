@@ -23,7 +23,7 @@ public class QvtPrimitiveType extends PrimitiveType {
         if (!QvtOperationalUtil.isPrimitiveType(classifier)) {
             throw new IllegalArgumentException("Non-primitive type passed"); //$NON-NLS-1$
         }
-        if (false == classifier.getInstanceClass() instanceof Class) {
+        if (false == classifier.getInstanceClass() instanceof Class<?>) {
             throw new IllegalArgumentException("Invalid delegate"); //$NON-NLS-1$
         }
         myClassifier = classifier;
