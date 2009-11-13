@@ -304,7 +304,7 @@ public class UniSelectTransformationControl extends Composite {
 		}
 
 		public Object[] getElements(Object inputElement) {
-            if (inputElement instanceof List) {
+            if (inputElement instanceof List<?>) {
                 return ((List<?>)inputElement).toArray();
             }
 			for (ITreeContentProviderEx provider : myProviders) {
