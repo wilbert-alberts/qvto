@@ -293,10 +293,6 @@ public class SourceDestinationChooser extends ElementTreeSelectionDialog {
 			return adaptObject(resource, adapter);
 		}
 		
-		public IResource getAdaptedResource(IAdaptable adaptable) {	
-			return (adaptable == this) ? resource : null;
-		}
-
 		@Override
 		public boolean equals(Object o) {
 			if(o instanceof SourceContainer) {
