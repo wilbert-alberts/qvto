@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompositeUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.DelegatingUnitResolver;
@@ -66,7 +65,7 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 
 	@Override
 	public UnitProxy doResolveUnit(String qualifiedName) {
-		IPath unitNsRelativePath = ResolverUtils.toNamespaceRelativePath(qualifiedName).addFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
+		IPath unitNsRelativePath = new Path(ResolverUtils.toNamespaceRelativeUnitFilePath(qualifiedName));
 		
 		for (IPath nextContainer : fSrcContainers) {
 			IPath unitBundleRelativePath = nextContainer.append(unitNsRelativePath);

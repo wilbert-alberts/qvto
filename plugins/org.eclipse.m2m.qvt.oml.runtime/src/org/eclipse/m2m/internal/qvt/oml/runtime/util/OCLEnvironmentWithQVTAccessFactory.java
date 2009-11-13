@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -48,6 +49,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.ocl.Environment;
@@ -65,6 +67,7 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.lpg.AbstractParser;
 import org.eclipse.ocl.lpg.ProblemHandler;
+import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.parser.OCLProblemHandler;
 import org.eclipse.ocl.utilities.TypedElement;
 
@@ -84,6 +87,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 	private final QvtOperationalEnvFactory fQVTEnvFactory;
 	private Diagnostic fDiagnostic = Diagnostic.OK_INSTANCE;
 
+	
 	/**
 	 * Creates environment factory importing the given QVT unit via referencing
 	 * URIs. </p> The global package registry is used for meta-model resolution.
@@ -107,7 +111,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 	 *            custom meta-model registry
 	 */
 	public OCLEnvironmentWithQVTAccessFactory(List<URI> imports, EPackage.Registry registry) {
-		super(registry);
+		super(setupRegistry(registry));
 
 		if(registry == null || imports == null || imports.contains(null)) {
 			throw new IllegalArgumentException("null in constructor argments"); //$NON-NLS-1$
@@ -341,6 +345,8 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 		private void initiliazeImports() {
 			assert fQVTdelegate != null;
 			
+			setOption(ParsingOptions.implicitRootClass(this), QvtOperationalStdLibrary.INSTANCE.getElementType());
+			
 			QvtOperationalStdLibrary.INSTANCE.importTo(fQVTdelegate);			
 			for (Module nextImport : OCLEnvironmentWithQVTAccessFactory.this.fImportedModules) {
 				fQVTdelegate.addImport(ImportKind.ACCESS, (QvtOperationalEnv)ASTBindingHelper.resolveEnvironment(nextImport));
@@ -411,6 +417,16 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 							.navigateProperty(property, qualifiers, target);
 		}
 	}
+	
+	private static EPackage.Registry setupRegistry(EPackage.Registry registry) {
+		EPackageRegistryImpl result = new EPackageRegistryImpl();
+		result.putAll(registry);
+		
+		Library stdLibPackage = QvtOperationalStdLibrary.INSTANCE.getStdLibModule();		
+		result.put(stdLibPackage.getNsURI(), stdLibPackage);
+		
+		return result;
+	}	
 	
 	private static Diagnostic createDiagnostic(List<URI> imports, CompiledUnit[] compiledUnits) {
 		List<Diagnostic> children = new LinkedList<Diagnostic>();

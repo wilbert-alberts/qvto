@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
@@ -143,8 +144,15 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	}
 
 	protected QvtOperationalEnvFactory getEnvironmentFactory() {
-    	return new QvtOperationalEnvFactory();
+		if(myEnvFactory == null) {
+			myEnvFactory = new QvtOperationalEnvFactory();
+		}
+    	return myEnvFactory;
     }
+	
+	protected void setEnvironmentFactory(QvtOperationalEnvFactory factory) {
+		myEnvFactory = factory;
+	}
     
 	private Out evaluate(QVTOCompiler compiler, Module module, List<ModelContent> args, IContext context) {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
@@ -161,7 +169,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=264335 is done 
 			throw new IllegalStateException("unit must be available"); //$NON-NLS-1$
 		}
-		QvtOperationalFileEnv rootEnv = factory.createEnvironment(unit.getURI(), compiler.getKernel());
+		QvtOperationalFileEnv rootEnv = factory.createEnvironment(unit.getURI());
 
 		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>		
 			evaluator = factory.createEvaluationVisitor(rootEnv, evaluationEnv, null);
@@ -219,5 +227,6 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	}
     
     private final QvtModule myModule;
+    private QvtOperationalEnvFactory myEnvFactory;
 
 }
