@@ -22,10 +22,10 @@ public class CompositeEdit implements TreeEdit {
 		this(new ArrayList<TreeEdit>(Arrays.asList(edits)));
 	}
 	
-	public CompositeEdit(List edits) {
+	public CompositeEdit(List<?> edits) {
 		myEdits = new ArrayList<TreeEdit>();
 		
-		for(Iterator editIt = edits.iterator(); editIt.hasNext(); ) {
+		for(Iterator<?> editIt = edits.iterator(); editIt.hasNext(); ) {
 			TreeEdit edit = (TreeEdit)editIt.next();
 			if(edit.getCost() > 0) {
 				if(edit instanceof CompositeEdit) {
@@ -44,7 +44,7 @@ public class CompositeEdit implements TreeEdit {
 	public int getCost() {
 		if(myCumulativeCost == -1) {
 			myCumulativeCost = 0;
-			for(Iterator editIt = myEdits.iterator(); editIt.hasNext(); ) {
+			for(Iterator<?> editIt = myEdits.iterator(); editIt.hasNext(); ) {
 				TreeEdit edit = (TreeEdit)editIt.next();
 				myCumulativeCost += edit.getCost();
 			}
@@ -70,7 +70,7 @@ public class CompositeEdit implements TreeEdit {
 	public String toString() {
 		StringBuffer s = new StringBuffer();
 		
-		for(Iterator editIt = myEdits.iterator(); editIt.hasNext(); ) {
+		for(Iterator<?> editIt = myEdits.iterator(); editIt.hasNext(); ) {
 			TreeEdit edit = (TreeEdit)editIt.next();
 			if(s.length() > 0) {
 				s.append("\n"); //$NON-NLS-1$

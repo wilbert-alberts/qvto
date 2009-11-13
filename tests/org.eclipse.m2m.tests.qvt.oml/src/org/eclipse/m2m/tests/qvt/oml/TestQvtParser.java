@@ -239,7 +239,7 @@ public class TestQvtParser extends TestCase {
 	private IContainer getIFolder(File folderUnderWorkspace) throws MalformedURLException, URISyntaxException {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath location = new Path(folderUnderWorkspace.getAbsolutePath());
-		IContainer[] containers = workspace.getRoot().findContainersForLocationURI(URIUtil.toURI(location.makeAbsolute().toFile().toURL()));
+		IContainer[] containers = workspace.getRoot().findContainersForLocationURI(URIUtil.toURI(location.makeAbsolute().toFile().toURI().toURL()));
 		if(containers == null || containers.length != 1 || containers[0] instanceof IFolder == false) {
 			throw new RuntimeException("Folder not found: " + folderUnderWorkspace); //$NON-NLS-1$
 		}

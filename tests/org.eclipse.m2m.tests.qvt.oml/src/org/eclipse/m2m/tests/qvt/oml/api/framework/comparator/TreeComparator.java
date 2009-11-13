@@ -93,8 +93,8 @@ public class TreeComparator {
 	private TreeEdit compareReferences(ComparatorTreeNode left, ComparatorTreeNode right) {
 		class RefTraverser {
 			TreeEdit compareReferences(ComparatorTreeNode left, ComparatorTreeNode right) {
-				List leftRefs = left.getNoncontainmentReferences();
-				List rightRefs = right.getNoncontainmentReferences();
+				List<?> leftRefs = left.getNoncontainmentReferences();
+				List<?> rightRefs = right.getNoncontainmentReferences();
 				if(leftRefs.size() != rightRefs.size()) {
 					ContentChangeEdit edit = new ContentChangeEdit(left, right, new RefSizeContentChange(left, leftRefs, rightRefs, leftRefs.size() - rightRefs.size()));
 					return edit;

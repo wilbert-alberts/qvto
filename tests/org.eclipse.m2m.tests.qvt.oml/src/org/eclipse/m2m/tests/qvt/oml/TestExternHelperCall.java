@@ -153,12 +153,13 @@ public class TestExternHelperCall extends TestCase {
 	
 	/*
 	 * Tests the Collection type as the context type
-	 */
+	 */	
 	public void testToUpperStrings() throws Exception {
 		ArrayList<String> self = new ArrayList<String>();
 		self.add("aaa");
 		Object result = fCall.invoke(self, new Object[0]);
-		assertTrue(result instanceof Collection);
+		assertTrue(result instanceof Collection<?>);
+		@SuppressWarnings("unchecked")
 		Collection<String> collection = (Collection<String>)result;
 		assertEquals(1, collection.size());
 		assertEquals("AAA", collection.toArray()[0]);

@@ -31,12 +31,12 @@ public class EmfContainmentComparatorTreeNode extends ComparatorTreeNode {
 	}
 
 	@Override
-	public List getChildrenImpl() {
+	public List<?> getChildrenImpl() {
 		return myRef.isContainment() ? getValues() : Collections.EMPTY_LIST;
 	}
 	
 	@Override
-	public List getNoncontainmentRefsImpl() {
+	public List<?> getNoncontainmentRefsImpl() {
 		return !myRef.isContainment() ? getValues() : Collections.EMPTY_LIST;
 	}
 	

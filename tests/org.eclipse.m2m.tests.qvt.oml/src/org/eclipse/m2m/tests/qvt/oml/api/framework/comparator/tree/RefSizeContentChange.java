@@ -18,7 +18,7 @@ import java.util.List;
  * @author pkobiakov
  */
 public class RefSizeContentChange extends ContentChange.Adapter {
-	public RefSizeContentChange(ComparatorTreeNode obj, List left, List right, int cmp) {
+	public RefSizeContentChange(ComparatorTreeNode obj, List<?> left, List<?> right, int cmp) {
 		myObj = obj;
 		myLeft = left;
 		myRight = right;
@@ -35,7 +35,7 @@ public class RefSizeContentChange extends ContentChange.Adapter {
 	}
 	
 	private final ComparatorTreeNode  myObj;
-	private final List  myLeft;
-	private final List  myRight;
+	private final List<?>  myLeft;
+	private final List<?>  myRight;
 	private final int   myCmp;
 }

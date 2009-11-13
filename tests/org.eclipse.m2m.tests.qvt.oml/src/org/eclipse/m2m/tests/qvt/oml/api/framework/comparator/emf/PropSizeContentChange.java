@@ -22,7 +22,7 @@ import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.tree.ContentChange
  * @author pkobiakov
  */
 public class PropSizeContentChange extends ContentChange.Adapter {
-	public PropSizeContentChange(EObject obj, EReference ref, List left, List right, int cmp) {
+	public PropSizeContentChange(EObject obj, EReference ref, List<?> left, List<?> right, int cmp) {
 		myObj = obj;
 		myRef = ref;
 		myLeft = left;

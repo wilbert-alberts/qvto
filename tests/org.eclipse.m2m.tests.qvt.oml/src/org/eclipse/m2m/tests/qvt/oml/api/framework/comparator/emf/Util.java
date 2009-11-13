@@ -28,7 +28,7 @@ public class Util {
 	
 	public static String toString(EObject obj, boolean skipRefs) {
 		StringBuffer s = new StringBuffer();
-		for(Iterator featureIt = obj.eClass().getEAllStructuralFeatures().iterator(); featureIt.hasNext(); ) {
+		for(Iterator<?> featureIt = obj.eClass().getEAllStructuralFeatures().iterator(); featureIt.hasNext(); ) {
 			EStructuralFeature feature = (EStructuralFeature)featureIt.next();
 			if(feature.isDerived()) {
 				continue;
@@ -52,7 +52,7 @@ public class Util {
 					continue;
 				}
 				
-				if(value instanceof List && ((List)value).isEmpty()) {
+				if(value instanceof List<?> && ((List<?>)value).isEmpty()) {
 					continue;
 				}
 			}
@@ -82,9 +82,9 @@ public class Util {
 		else if(value instanceof EObject) {
 			valueString = value.toString(); // Util.toString((EObject)value, true);
 		}
-		else if(value instanceof List) {
+		else if(value instanceof List<?>) {
 			valueString = ""; //$NON-NLS-1$
-			for(Iterator compIt = ((List)value).iterator(); compIt.hasNext(); ) {
+			for(Iterator<?> compIt = ((List<?>)value).iterator(); compIt.hasNext(); ) {
 				Object comp = compIt.next();
 				if(valueString.length() > 0) {
 					valueString += ","; //$NON-NLS-1$
@@ -99,9 +99,9 @@ public class Util {
 		return valueString;
 	}
 	
-	public static String toStringList(List objs) {
+	public static String toStringList(List<?> objs) {
 		StringBuffer s = new StringBuffer();
-		for(Iterator objIt = objs.iterator(); objIt.hasNext(); ) {
+		for(Iterator<?> objIt = objs.iterator(); objIt.hasNext(); ) {
 			EObject obj = (EObject)objIt.next();
 			s.append(obj.eClass().getName()).append(","); //$NON-NLS-1$
 		}

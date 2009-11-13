@@ -42,7 +42,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 	public EObject getNode() { return myNode; }
 
 	@Override
-	public List getChildrenImpl() {
+	public List<?> getChildrenImpl() {
 		List<ComparatorTreeNode> children = getRefs(true);
 		children.addAll(getRefs(false));
         children.addAll(getFeatureMapRefs());
@@ -50,13 +50,13 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 	}
 	
 	@Override
-	public List getNoncontainmentRefsImpl() {
+	public List<?> getNoncontainmentRefsImpl() {
 		return Collections.EMPTY_LIST;
 	}
 	
 	private List<ComparatorTreeNode> getRefs(boolean containment) {
 		List<ComparatorTreeNode> children = new ArrayList<ComparatorTreeNode>();
-		for(Iterator refIt = myNode.eClass().getEAllReferences().iterator(); refIt.hasNext(); ) {
+		for(Iterator<?> refIt = myNode.eClass().getEAllReferences().iterator(); refIt.hasNext(); ) {
 			EReference ref = (EReference)refIt.next();
 			if(ref.isDerived()) {
 				continue;
@@ -71,7 +71,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 				continue;
 			}
 			
-			if(value instanceof List && ((List)value).isEmpty()) {
+			if(value instanceof List<?> && ((List<?>)value).isEmpty()) {
 				continue;
 			}
 			
@@ -82,7 +82,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
     
     private List<EmfFeatureMapReferenceComparatorTreeNode> getFeatureMapRefs() {
         List<EmfFeatureMapReferenceComparatorTreeNode> children = new ArrayList<EmfFeatureMapReferenceComparatorTreeNode>();
-        for(Iterator attrIt = myNode.eClass().getEAllAttributes().iterator(); attrIt.hasNext(); ) {
+        for(Iterator<?> attrIt = myNode.eClass().getEAllAttributes().iterator(); attrIt.hasNext(); ) {
             EAttribute attr = (EAttribute)attrIt.next();
             if(attr.isDerived()) {
                 continue;
@@ -113,7 +113,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 		EmfObjectComparatorTreeNode emfTo = (EmfObjectComparatorTreeNode)to;
 		EClass metaclass = myNode.eClass();
 		
-		for(Iterator attrIt = metaclass.getEAllAttributes().iterator(); attrIt.hasNext(); ) {
+		for(Iterator<?> attrIt = metaclass.getEAllAttributes().iterator(); attrIt.hasNext(); ) {
 			EAttribute attr = (EAttribute)attrIt.next();
             Object leftValue = myNode.eGet(attr);
             Object rightValue = emfTo.myNode.eGet(attr);
@@ -185,7 +185,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
             return new AttrContentChange(myNode, attr, leftMap, rightMap, leftMap.size()-rightMap.size());
         }
         
-        for(Iterator leftIt = leftMap.iterator(), rightIt = rightMap.iterator(); leftIt.hasNext(); ) {
+        for(Iterator<?> leftIt = leftMap.iterator(), rightIt = rightMap.iterator(); leftIt.hasNext(); ) {
             FeatureMap.Entry leftEntry = (Entry) leftIt.next();
             FeatureMap.Entry rightEntry = (Entry) rightIt.next();
             
