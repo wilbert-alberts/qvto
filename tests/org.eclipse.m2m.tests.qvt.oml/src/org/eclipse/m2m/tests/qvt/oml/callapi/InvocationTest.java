@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.callapi;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -33,6 +36,8 @@ import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
+import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
+import org.osgi.framework.Bundle;
 
 /**
  * @author dvorak
@@ -264,5 +269,18 @@ public class InvocationTest extends TestCase {
 		}
 		
 		fail("Must have thrown exception"); //$NON-NLS-1$
+	}
+	
+	public void testInvokeOnGenericURIs() throws Exception {
+		Bundle testBundle = Platform.getBundle(TestUtil.BUNDLE);
+		File bundleFile = FileLocator.getBundleFile(testBundle);
+		assertNotNull(bundleFile);
+
+		URI fileURI = URI.createURI(new File(bundleFile, "deployed/callapi/Ecore2Ecore.qvto").toURI().toString(), true);
+		fExecutor = new TransformationExecutor(fileURI);
+		
+		final ExecutionDiagnostic  diagnostic = fExecutor.execute(fContext, fInput, fOutput);		
+		assertEquals(Diagnostic.OK, diagnostic.getSeverity());
+		assertEquals(0, diagnostic.getCode());
 	}	
 }
