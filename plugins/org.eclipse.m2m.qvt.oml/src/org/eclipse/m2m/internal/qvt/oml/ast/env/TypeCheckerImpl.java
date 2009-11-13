@@ -111,7 +111,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		// special handling for null and invalid values, whose types conform
 		// to all others
 		OCLStandardLibrary<EClassifier> lib = getEnvironment().getOCLStandardLibrary();
-		if ((owner == lib.getOclVoid()) || (owner == lib.getInvalid())) {
+		if ((owner == lib.getOclVoid()) || (owner == lib.getOclInvalid())) {
 			return findOperationForVoidOrInvalid(owner, name, args);
 		}
 
@@ -336,10 +336,10 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			return type1;
 		}
 
-		if ((type1 == fOCLStdlib.getOclVoid()) || (type1 == fOCLStdlib.getInvalid())) {
+		if ((type1 == fOCLStdlib.getOclVoid()) || (type1 == fOCLStdlib.getOclInvalid())) {
 			return type2;
 		}
-		if ((type2 == fOCLStdlib.getOclVoid()) || (type2 == fOCLStdlib.getInvalid())) {
+		if ((type2 == fOCLStdlib.getOclVoid()) || (type2 == fOCLStdlib.getOclInvalid())) {
 			return type1;
 		}
 
@@ -610,7 +610,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				TypedElement<EClassifier> actualArg = args.get(i);
 				OCLStandardLibrary<EClassifier> oclStdLibrary = getEnvironment().getOCLStandardLibrary(); 						
 				if(oclStdLibrary.getOclVoid() == actualArg.getType() || 
-					oclStdLibrary.getInvalid() == actualArg.getType()) {
+					oclStdLibrary.getOclInvalid() == actualArg.getType()) {
 					// unrelated parameter types but both matching the given argument (void, invalid)
 					// => we can't make a more specific decision
 					return Relation.AMBIGUOUS;
@@ -687,7 +687,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	}
 	
 	private boolean isVoidOrInvalid(EClassifier type1) {
-		return type1 == fOCLStdlib.getOclVoid() || type1 == fOCLStdlib.getInvalid();
+		return type1 == fOCLStdlib.getOclVoid() || type1 == fOCLStdlib.getOclInvalid();
 	}
 	
 	private QVTOEnvironment getQVTEnvironment() {

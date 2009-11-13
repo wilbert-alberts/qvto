@@ -400,4 +400,16 @@ public class QVTUMLReflection
 		
 		return false;
 	}
+
+	public boolean isConstraint(Object metaElement) {
+		return fUmlReflection.isConstraint(metaElement);
+	}
+
+	public boolean isPackage(Object metaElement) {
+		return fUmlReflection.isPackage(metaElement);
+	}
+
+	public boolean setIsStatic(Object feature, boolean isStatic) {
+		return fUmlReflection.setIsStatic(feature, isStatic);
+	}
 }

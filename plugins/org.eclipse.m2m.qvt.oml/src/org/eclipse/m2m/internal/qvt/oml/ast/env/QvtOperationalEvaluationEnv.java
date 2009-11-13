@@ -248,6 +248,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *         <code>OclInvalid</code> from this environment;
 	 *         <code>false</code> otherwise
 	 */
+    // FIXME - rename to is isInvalid
     public boolean isOclInvalid(Object value) {
     	return getInvalidResult() == value;
     }
@@ -527,23 +528,23 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			if (exprValue instanceof Collection) {
                 for (Object element : (Collection<Object>) exprValue) {
                     if (element != null) {
-                        featureValues.add(ensureTypeCompatibility(element, expectedType));
+                        featureValues.add(ensureTypeCompatibility(element, expectedType, this));
                     }
                 }
 			} else if (!valueIsUndefined) {
-				featureValues.add(ensureTypeCompatibility(exprValue, expectedType));
+				featureValues.add(ensureTypeCompatibility(exprValue, expectedType, this));
 			}
         } else if (!valueIsUndefined || acceptsNullValue(expectedType)) {
 			if (exprValue instanceof Collection) {
                 for (Object element : (Collection<Object>) exprValue) {
                     if (element != null) {
-                    	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType));
+                    	owner.eSet(eStructuralFeature, ensureTypeCompatibility(element, expectedType, this));
         				break;
                     }
                 }
 			}
 			else {
-				owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType));
+				owner.eSet(eStructuralFeature, ensureTypeCompatibility(exprValue, expectedType, this));
 			}
         } else {
         	owner.eUnset(eStructuralFeature);
@@ -607,12 +608,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	 *            the expected type (may be <code>null</code>)
 	 * @return the converted value
 	 */
-	private Object ensureTypeCompatibility(Object value, Class<?> expectedType) {
+	private Object ensureTypeCompatibility(Object value, Class<?> expectedType, QvtOperationalEvaluationEnv evalEnv) {
 		if ((expectedType == Double.class || expectedType == double.class) && value instanceof Integer) {
 			// In OCL Integer conforms to Real, in Java Integer doesn't conform to Double.
 			return Double.valueOf(((Integer) value).doubleValue());
 		}
-		if (value == QvtOperationalUtil.getOclInvalid()) {
+		if (value == evalEnv.getInvalidResult()) {
 			return null;
 		}
 		

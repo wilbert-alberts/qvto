@@ -195,7 +195,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		for (DictLiteralPart part : dictLiteralExp.getPart()) {
 			Object key = part.getKey().accept(getVisitor());
 			Object value = part.getValue().accept(getVisitor());
-			if(key != getOclInvalid() && value != getOclInvalid())
+			if(key != getInvalid() && value != getInvalid())
 			result.put(key, value);
 		}
 		
@@ -309,7 +309,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 		// evaluate condition`
 		Object condRawVal = condition.accept(getVisitor());
-		Boolean condVal = (condRawVal != getOclInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
+		Boolean condVal = (condRawVal != getInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
 
 		if (condVal != null && condVal.booleanValue()) {
             return ie.getThenExpression().accept(getVisitor());
@@ -446,7 +446,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			value = createFromString(propertyType, (String) rawValue);
         }
 
-        if(value == getOclInvalid()) {
+        if(value == getInvalid()) {
         	// we failed to parse the value
         	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue, configProperty.getName(), rawValue)));
         }
@@ -613,7 +613,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             List<Object> args = makeArgs(operationCallExp);
             // does not make sense continue at all, call on null or invalid results in invalid 
         	if(isUndefined(source)) {
-        		return getOclInvalid();
+        		return getInvalid();
         	}
 
             ImperativeOperation method = null;
@@ -656,13 +656,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         		throw ex;
         	}
             Logger.getLogger().log(Logger.WARNING, "QvtEvaluator: failed to evaluate oclOperationCall", ex);//$NON-NLS-1$
-        	result = getOclInvalid();
+        	result = getInvalid();
         }
         
         // Note: we have to check for QVT exception caught by MDT OCL, those turned into invalid result, resolved
         // as failed operation calls, but QVT need some exceptions to propagate to the main running transformation,
         // for instance QVTInterruptedExecutionException        
-    	if(result == getOclInvalid()) {
+    	if(result == getInvalid()) {
     		// check whether we have got exception from explicit call to 'Transformation::transform()'
     		QvtRuntimeException e = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class).getException();
     		if(e != null) {
@@ -1300,13 +1300,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     public Object visitImperativeIterateExp(ImperativeIterateExp imperativeIterateExp) {
         EClassifier sourceType = imperativeIterateExp.getSource().getType();
         
-        if (sourceType instanceof PredefinedType) {
+        if (sourceType instanceof PredefinedType<?>) {
             Object sourceValue = imperativeIterateExp.getSource().accept(getVisitor());
             
             // value of iteration expression is undefined if the source is
             //   null or OclInvalid
             if (isUndefined(sourceValue)) {
-                return getOclInvalid();
+                return getInvalid();
             }
             
             // get initial result value based on the source type
@@ -1318,7 +1318,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 initResultVal = CollectionUtil.createNewCollection(collType.getKind());
             } else if (imperativeIterateExp.getName().equals("xcollect")  //$NON-NLS-1$
                     || imperativeIterateExp.getName().equals("collectselect")) { //$NON-NLS-1$
-                initResultVal = ((collType instanceof SetType) || (collType instanceof BagType)) ?
+                initResultVal = ((collType instanceof SetType<?,?>) || (collType instanceof BagType<?,?>)) ?
                         CollectionUtil.createNewBag() : CollectionUtil.createNewSequence();
             }
 
@@ -1542,7 +1542,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return result;
     }
 
-    static class OperationCallResult {
+    protected static class OperationCallResult {
     	public Object myResult;
     	public QvtOperationalEvaluationEnv myEvalEnv;
     	
@@ -2144,7 +2144,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		
         if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
-            return getOclInvalid();
+            return getInvalid();
         }
         
         // QVT primitive type
@@ -2157,7 +2157,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	            return new Double(stringValue);
 	        }
         } catch (NumberFormatException e) {
-        	return getOclInvalid();
+        	return getInvalid();
 		}
         
         if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.STRING_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
@@ -2177,7 +2177,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
         }
         
-        return getOclInvalid();
+        return getInvalid();
 	}
     
 	/**

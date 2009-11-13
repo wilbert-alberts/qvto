@@ -117,7 +117,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfMmUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
@@ -352,7 +351,7 @@ public class QvtOperationalVisitorCS
 			if(typeCS instanceof PathNameCS) {
 				// check whether Void synonym was used
 				PathNameCS pathNameCS = (PathNameCS) typeCS;
-				if(QvtOperationalStdLibrary.INSTANCE.lookupClassifier(pathNameCS.getSequenceOfNames()) == getOclVoid()) {
+				if(QvtOperationalStdLibrary.INSTANCE.lookupClassifier(QvtOperationalParserUtil.getSequenceOfNames(pathNameCS.getSimpleNames())) == getOclVoid()) {
 					return type;
 				}
 			}
@@ -363,7 +362,7 @@ public class QvtOperationalVisitorCS
 		
 		// MDT OCL does not check for nested type whether they are resolved
 		// do it here if element type is null
-		if(type instanceof CollectionType && typeCS instanceof CollectionTypeCS) {
+		if(type instanceof CollectionType<?,?> && typeCS instanceof CollectionTypeCS) {
 			CollectionType<?, ?> collectionType = (CollectionType<?, ?>)type;			
 			
 			if(collectionType.getElementType() == null) {
@@ -954,7 +953,7 @@ public class QvtOperationalVisitorCS
 	private OperationCallExp<EClassifier, EOperation> genNonContextualQualifiedOperationCall(
 			OperationCallExpCS operationCallExpCS, PathNameCS sourceCS, QvtEnvironmentBase env) {
 
-		EClassifier sourceType = lookupClassifier(sourceCS, env, sourceCS.getSequenceOfNames());
+		EClassifier sourceType = lookupClassifier(sourceCS, env, QvtOperationalParserUtil.getSequenceOfNames(sourceCS.getSimpleNames()));
 		sourceCS.setAst(sourceType);
 		
 		if (sourceType instanceof Module) {
@@ -993,7 +992,7 @@ public class QvtOperationalVisitorCS
 			if(result instanceof ImperativeCallExp) {
 				((ImperativeCallExp) result).setIsVirtual(false);
 			}
-			return result; //$NON-NLS-1$
+			return result;
 		}
 		
 		return null;
@@ -1016,7 +1015,7 @@ public class QvtOperationalVisitorCS
     	
     	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
     	
-    	if(result instanceof OperationCallExp) {
+    	if(result instanceof OperationCallExp<?,?>) {
     	    OperationCallExp<EClassifier, EOperation> opCallExp = (org.eclipse.ocl.ecore.OperationCallExp) result;
     	    if(opCallExp.getReferredOperation() != null) {
     	    	EOperation referredOperation = opCallExp.getReferredOperation();
@@ -1070,7 +1069,7 @@ public class QvtOperationalVisitorCS
     	EClassifier operationSourceType = ownerType;
         if (isArrowAccessToCollection(operationCallExpCS, source)
                 && (lookupOperation(operationCallExpCS, env, ownerType, operName, args) == null)) {
-            @SuppressWarnings("unchecked") //$NON-NLS-1$
+            @SuppressWarnings("unchecked")
             CollectionType<EClassifier, EOperation> sourceType = (CollectionType<EClassifier, EOperation>) ownerType;
             operationSourceType = sourceType.getElementType();
         }
@@ -1224,7 +1223,7 @@ public class QvtOperationalVisitorCS
            newly generated implicit iterator variable */
         propertyCall.setSource(vexp);
         
-        if (!(propertyCall instanceof OperationCallExp)) {
+        if (!(propertyCall instanceof OperationCallExp<?,?>)) {
             // the overall start and end positions are the property positions
             propertyCall.setStartPosition(propertyCall.getPropertyStartPosition());
             propertyCall.setEndPosition(propertyCall.getPropertyEndPosition());
@@ -1693,7 +1692,7 @@ public class QvtOperationalVisitorCS
 			module.getEClassifiers().add(modelType);
 			module.getUsedModelType().add(modelType);
 			if (modelType.getName().length() > 0) {
-				ModelType existingModelType = env.getModelType(Collections.singletonList(modelType.getName()));
+				ModelType existingModelType = env.getModelType(modelType.getName());
 				if(existingModelType == null) {
 					env.registerModelType(modelType);
 				} else {
@@ -1914,8 +1913,8 @@ public class QvtOperationalVisitorCS
 			EClass rootClass = createdIntermClasses.get(className);			
 			for (TypeCS typeCS : classifierDefCS.getExtends()) {
 				
-				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSequenceOfNames().size() == 1) {
-					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSequenceOfNames().get(0));
+				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSimpleNames().size() == 1) {
+					EClass extClass = createdIntermClasses.get(((PathNameCS) typeCS).getSimpleNames().get(0));
 					if (extClass != null) {
 						typeCS.setAst(extClass);
 						rootClass.getESuperTypes().add(extClass);
@@ -2298,8 +2297,8 @@ public class QvtOperationalVisitorCS
 			}
 
 			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
-			EList<String> importedUnitQName = nextImportedCS.getPathNameCS().getSequenceOfNames();
-			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(importedUnitQName);
+			EList<SimpleNameCS> importedUnitQName = nextImportedCS.getPathNameCS().getSimpleNames();
+			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(QvtOperationalParserUtil.getSequenceOfNames(importedUnitQName));
 			
 			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
 				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
@@ -2365,9 +2364,9 @@ public class QvtOperationalVisitorCS
     			continue;
     		}
     		
-    		EList<String> qname = modulePathNameCS.getSequenceOfNames();    		
+    		EList<SimpleNameCS> qname = modulePathNameCS.getSimpleNames();    		
     		if(qname.size() == 1) {
-    			String moduleName = qname.get(0);
+    			String moduleName = qname.get(0).getValue();
     			for (String unitQName : importMap.keySet()) {
     				List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(unitQName);
     				
@@ -2387,7 +2386,7 @@ public class QvtOperationalVisitorCS
 								TypeSpecCS nextTypeCS = nextParamCS.getTypeSpecCS();
 								if(nextTypeCS != null && nextTypeCS.getTypeCS() instanceof PathNameCS) {
 									PathNameCS modelTypeCS = (PathNameCS) nextTypeCS.getTypeCS();
- 									EClassifier modelType = env.getModelType(modelTypeCS.getSequenceOfNames());
+ 									EClassifier modelType = modelTypeCS.getSimpleNames().isEmpty() ? null : env.getModelType(modelTypeCS.getSimpleNames().get(0).getValue());
  									if(modelType instanceof ModelType) {
  										refereceSignatureModelTypes.add((ModelType) modelType);
  									}
@@ -2586,8 +2585,8 @@ public class QvtOperationalVisitorCS
             boolean isSimpleName = false;
             if (paramTypeCS instanceof PathNameCS) {
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
-                isSimpleName = typePathNameCS.getSequenceOfNames().size() == 1;
-                type = env.getModelType(typePathNameCS.getSequenceOfNames());
+                isSimpleName = typePathNameCS.getSimpleNames().size() == 1;
+                type = typePathNameCS.getSimpleNames().isEmpty() ? null : env.getModelType(typePathNameCS.getSimpleNames().get(0).getValue());
                 paramTypeCS.setAst(type);
             }
             if (type == null || !isSimpleName) {
@@ -2649,11 +2648,11 @@ public class QvtOperationalVisitorCS
             ModelType modelType = null;
             if (paramTypeCS instanceof PathNameCS) {
                 PathNameCS typePathNameCS = (PathNameCS) paramTypeCS;
-                if (typePathNameCS.getSequenceOfNames().size() == 1) {
-                    modelType = env.getModelType(typePathNameCS.getSequenceOfNames());
+                if (typePathNameCS.getSimpleNames().size() == 1) {
+                    modelType = env.getModelType(typePathNameCS.getSimpleNames().get(0).getValue());
                     if (modelType != null && !usedModelTypes.add(modelType)) {
                         env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_LibrarySignatureErrorDuplicateModelType, 
-                                new Object[] { typePathNameCS.getSequenceOfNames().get(0) }), paramCS);
+                                new Object[] { typePathNameCS.getSimpleNames().get(0) }), paramCS);
                     }
                 }
             }
@@ -2702,17 +2701,17 @@ public class QvtOperationalVisitorCS
 			StringLiteralExpCS uriCS = packageRefCS.getUriCS();
 			if (uriCS != null) {
 				String metamodelUri = visitLiteralExpCS(uriCS, env);
-				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<String>emptyList(), uriCS, resolutionRS);
+				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<SimpleNameCS>emptyList(), uriCS);
 				uriCS.setAst(resolvedMetamodel);
 			}
 			
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
-			if (pathNameCS != null && !pathNameCS.getSequenceOfNames().isEmpty()) {
+			if (pathNameCS != null && !pathNameCS.getSimpleNames().isEmpty()) {
 				String metamodelName = QvtOperationalParserUtil.getStringRepresentation(
 						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
 
 				if (resolvedMetamodel == null) {
-					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSequenceOfNames(), pathNameCS, resolutionRS);
+					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSimpleNames(), pathNameCS);
 				}
 				else {
 					resolvedMetamodel = checkMetamodelPath(env, resolvedMetamodel, pathNameCS, metamodelName);
@@ -2750,9 +2749,9 @@ public class QvtOperationalVisitorCS
 	private EPackage checkMetamodelPath(QvtOperationalFileEnv env, EPackage resolvedMetamodel,
 			PathNameCS pathNameCS, String metamodelName) {
 
-		EList<String> path = pathNameCS.getSequenceOfNames();
+		EList<SimpleNameCS> path = pathNameCS.getSimpleNames();
 		// lookup nested package started from package specified by URI
-		EPackage localPackage = EmfMmUtil.lookupPackage(resolvedMetamodel, path);
+		EPackage localPackage = MetamodelRegistry.lookupPackage(resolvedMetamodel, QvtOperationalParserUtil.getSequenceOfNames(path));
 		if (localPackage != null) {
 			return localPackage;			
 		}
@@ -2767,7 +2766,7 @@ public class QvtOperationalVisitorCS
 		}
 		
 		if (rootMetamodel != resolvedMetamodel) {
-			localPackage = EmfMmUtil.lookupPackage(rootMetamodel, path);
+			localPackage = MetamodelRegistry.lookupPackage(rootMetamodel, QvtOperationalParserUtil.getSequenceOfNames(path));
 			
 			boolean isContainedBy = false;
 			EPackage curPkg = localPackage;
@@ -2805,16 +2804,11 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 	
-	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<String> packagePath,
-			CSTNode cstNode, ResourceSet resolutionRS) throws SemanticException {
+	private EPackage resolveMetamodel(QvtOperationalFileEnv env, String metamodelUri, List<SimpleNameCS> packagePath, CSTNode cstNode) {
 		EPackage resolvedMetamodel = null;
 		String metamodelName = (packagePath.isEmpty() ? metamodelUri : packagePath.toString());
 		try {
-			MetamodelRegistry metamodelRegistry = env.getKernel().getMetamodelRegistry(env.getFile());
-			
-			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(
-					env, metamodelUri, packagePath, resolutionRS, 
-					metamodelRegistry, myCompilerOptions);
+			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(env, metamodelUri, QvtOperationalParserUtil.getSequenceOfNames(packagePath));
 			
 			if (registerMetamodels.isEmpty()) {
 				env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
@@ -2832,10 +2826,10 @@ public class QvtOperationalVisitorCS
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_metamodelNameAmbiguous,
 						new Object[] { metamodelName, uriList }), cstNode);
 			}
-		} catch (RuntimeException e) {
-			QvtPlugin.error(e);
+		} catch (RuntimeException e) {			
 			env.reportError(NLS.bind(ValidationMessages.failedToResolveMetamodelError,
 					new Object[] { metamodelName }), cstNode);
+			QvtPlugin.error(e);			
 		}
 		
 		return resolvedMetamodel;
@@ -3735,7 +3729,7 @@ public class QvtOperationalVisitorCS
 			int startOffs = getStartOffset(objectExp, problemCS);
 			int endOffs = getEndOffset(objectExp, problemCS);
 			if(referredObject != null)	{ 
-				if(referredObject.getType() != null && (referredObject.getType() instanceof CollectionType == false)) { 
+				if(referredObject.getType() != null && (referredObject.getType() instanceof CollectionType<?,?> == false)) { 
 					// we failed to figure out the class but type is available, let's report it's classifier only 
 					env.reportError(NLS.bind(ValidationMessages.nonModelTypeError,
 							QvtOperationalParserUtil.safeGetQualifiedName(env, referredObject.getType())), startOffs, endOffs);
@@ -4119,7 +4113,7 @@ public class QvtOperationalVisitorCS
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(forExpCS.getSource(), env);
-        if (!(source.getType() instanceof CollectionType)) {
+        if (!(source.getType() instanceof CollectionType<?,?>)) {
             return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = forExpCS.getSimpleNameCS().getValue();
@@ -4176,7 +4170,7 @@ public class QvtOperationalVisitorCS
     	
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
-        if (!(source.getType() instanceof CollectionType)) {
+        if (!(source.getType() instanceof CollectionType<?,?>)) {
             return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
         }
         String name = imperativeIterateExpCS.getSimpleNameCS().getValue();
@@ -4263,6 +4257,12 @@ public class QvtOperationalVisitorCS
                     astNode.getTarget().setType(resultElementType);
                 }
             }
+            if (resultElementType == null) {
+            	resultElementType = sourceCollectionType.getElementType();
+                if ((astNode.getTarget() != null) && (astNode.getTarget().getType() == null)) {
+                	astNode.getTarget().setType(resultElementType);
+                }
+            }
         }
         
         if (imperativeIterateExpCS.getCondition() != null) { 
@@ -4271,7 +4271,7 @@ public class QvtOperationalVisitorCS
             if (conditionExp instanceof TypeExp<?>) {
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
                 EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
-                if (rawTypeType instanceof TypeType) {
+                if (rawTypeType instanceof TypeType<?,?>) {
                     @SuppressWarnings("unchecked")
                     TypeType<EClassifier, EOperation> typeType = (TypeType<EClassifier, EOperation>) rawTypeType;
                     resultElementType = typeType.getReferredType();
@@ -4314,7 +4314,7 @@ public class QvtOperationalVisitorCS
     private boolean isInnermostIteratorRelated(Variable<EClassifier, EParameter> vdcl, OCLExpression<EClassifier> bodyExp) {
         if (bodyExp instanceof CallExp) {
             CallExp bodyCallExp = (CallExp) bodyExp;
-            if (bodyCallExp.getSource() instanceof VariableExp) {
+            if (bodyCallExp.getSource() instanceof VariableExp<?,?>) {
                 VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) bodyCallExp.getSource();
                 return sourceExp.getReferredVariable() == vdcl;
             }
@@ -4324,7 +4324,7 @@ public class QvtOperationalVisitorCS
     }
 
 	private MappingCallExp createMappingCallExp(MappingCallExpCS expressionCS, OCLExpression<EClassifier> result) {
-		if (result instanceof OperationCallExp) {
+		if (result instanceof OperationCallExp<?,?>) {
 			OperationCallExp<EClassifier, EOperation> operationCallExp = (OperationCallExp<EClassifier, EOperation>) result;
 			EOperation operation = operationCallExp.getReferredOperation();
 			if (QvtOperationalUtil.isMappingOperation(operation)) {
@@ -4355,7 +4355,7 @@ public class QvtOperationalVisitorCS
 				EClassifier sourceType = operationCallExp.getSource().getType();
 				EClassifier argumentType = ((OCLExpression<EClassifier>) operationCallExp.getArgument().get(0))
 						.getType();
-				if (argumentType instanceof TypeType
+				if (argumentType instanceof TypeType<?,?>
 						&& QvtOperationalParserUtil.isIncorrectCast(sourceType,
 								((TypeType<EClassifier, EOperation>) argumentType).getReferredType())) {
 					QvtOperationalUtil.reportWarning(env, ValidationMessages.incorrectCastWarning, opCallCS);
@@ -4523,9 +4523,9 @@ public class QvtOperationalVisitorCS
         // Thus, this implementation assigns false to Booleans, Invalid to OclInvalids and nulls to abstract collections.
         EClassifier resolvedType = env.getTypeResolver().resolve(type);
         OCLStandardLibrary<EClassifier> oclStdLib = getStandardLibrary();
-        if (resolvedType == oclStdLib.getInvalid()) {
+        if (resolvedType == oclStdLib.getOclInvalid()) {
             InvalidLiteralExp<EClassifier> invalidLiteralExp = oclFactory.createInvalidLiteralExp();
-            invalidLiteralExp.setType(oclStdLib.getInvalid());
+            invalidLiteralExp.setType(oclStdLib.getOclInvalid());
             return (org.eclipse.ocl.ecore.InvalidLiteralExp)invalidLiteralExp;
         } 
 
@@ -4591,7 +4591,7 @@ public class QvtOperationalVisitorCS
 			case SimpleTypeEnum.BOOLEAN:
 			case SimpleTypeEnum.OCL_ANY:
 			case SimpleTypeEnum.OCL_VOID:
-			case SimpleTypeEnum.INVALID:
+			case SimpleTypeEnum.OCL_INVALID:
 			case SimpleTypeEnum.OCL_MESSAGE:
 				// if we have a source, then this is a feature call
 				if (source == null) {
@@ -4613,7 +4613,7 @@ public class QvtOperationalVisitorCS
 		EClassifier sourceElementType = null;
 		if (source != null) {
 			sourceElementType = source.getType();
-			if (sourceElementType instanceof CollectionType) {
+			if (sourceElementType instanceof CollectionType<?,?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) sourceElementType;
 				
@@ -4644,8 +4644,8 @@ public class QvtOperationalVisitorCS
 		 * If the source type is a collection, then need there is an implicit COLLECT 
 		 * or imperative COLLECT operator.
 		 */
-		if ((source != null) && (source.getType() instanceof CollectionType)
-				&& (astNode instanceof FeatureCallExp)) {
+		if ((source != null) && (source.getType() instanceof CollectionType<?,?>)
+				&& (astNode instanceof FeatureCallExp<?>)) {
 		    CallExpCS callExpCS = (CallExpCS) simpleNameCS.eContainer();
 		    FeatureCallExp<EClassifier> featureCallExp = (FeatureCallExp<EClassifier>) astNode;
 		    astNode = isArrowAccessToCollection(callExpCS, source) ?
@@ -4863,7 +4863,7 @@ public class QvtOperationalVisitorCS
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		ASTNode boundAST = result;
 		CSTNode boundCST = propertyCallExpCS;            	
-		if(result instanceof IteratorExp) {
+		if(result instanceof IteratorExp<?,?>) {
 			@SuppressWarnings("unchecked")			
 			IteratorExp<EClassifier, EParameter> itExpAST = (IteratorExp<EClassifier, EParameter>) result;
 			if(propertyCallExpCS instanceof IteratorExpCS) {
@@ -4872,7 +4872,7 @@ public class QvtOperationalVisitorCS
 					boundCST = itExpCST.getBody();
 				}
 			}            		
-			if(itExpAST.getBody() instanceof FeatureCallExp) {
+			if(itExpAST.getBody() instanceof FeatureCallExp<?>) {
 				boundAST = (FeatureCallExp<EClassifier>) itExpAST.getBody();
 			}
 		} else if(result instanceof ImperativeIterateExp) {
@@ -4883,7 +4883,7 @@ public class QvtOperationalVisitorCS
 					boundCST = itExpCST.getBody();
 				}
 			}
-			if(impIterExpAST.getBody() instanceof FeatureCallExp) {
+			if(impIterExpAST.getBody() instanceof FeatureCallExp<?>) {
 				boundAST = (FeatureCallExp<EClassifier>) impIterExpAST.getBody();
 			}			
 		}
@@ -4937,4 +4937,5 @@ public class QvtOperationalVisitorCS
 		}
 		return null;
 	}
+	
 }

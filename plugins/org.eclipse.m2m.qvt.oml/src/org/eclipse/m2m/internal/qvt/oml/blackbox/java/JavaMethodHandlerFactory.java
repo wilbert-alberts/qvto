@@ -31,10 +31,10 @@ class JavaMethodHandlerFactory {
 	
 	private static int FAILURE_COUNT_TOLERANCE = 5;
 	
-	final private Object fOclInvalid;
+	final private Object fInvalid;
 	
 	JavaMethodHandlerFactory(OCLStandardLibrary<EClassifier> oclStdLib) {
-		fOclInvalid = oclStdLib.getOclInvalid();
+		fInvalid = oclStdLib.getInvalid();
 	}
 	
 	CallHandler createHandler(Method method) {
@@ -47,7 +47,7 @@ class JavaMethodHandlerFactory {
 	}
 	
 	private Object getInvalidResult() {
-		return fOclInvalid;
+		return fInvalid;
 	}
 		
 	private class Handler implements CallHandler {

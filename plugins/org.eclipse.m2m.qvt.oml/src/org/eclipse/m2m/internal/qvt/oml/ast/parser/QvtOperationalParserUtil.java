@@ -66,6 +66,7 @@ import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionTypeCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.PrimitiveTypeCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TupleTypeCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.cst.VariableCS;
@@ -129,24 +130,23 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName, String pathSeparator) {
-		return getStringRepresentation(pathName.getSequenceOfNames(), pathSeparator);
+		return getStringRepresentation(pathName.getSimpleNames(), pathSeparator);
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName) {
-		return getStringRepresentation(pathName.getSequenceOfNames(), "::"); //$NON-NLS-1$
+		return getStringRepresentation(pathName.getSimpleNames(), "::"); //$NON-NLS-1$
 	}
 	
 	
-	public static String getStringRepresentation(List<String> pathName, String pathSeparator) {
+	public static String getStringRepresentation(List<SimpleNameCS> pathName, String pathSeparator) {
 		StringBuffer buffer = null;
-		for (Iterator<String> it = pathName.iterator(); it.hasNext();) {
-			String element = it.next();
+		for (SimpleNameCS element : pathName) {
 			if (buffer != null) {
 				buffer.append(pathSeparator);
 			} else {
 				buffer = new StringBuffer();
 			}
-			buffer.append(element);
+			buffer.append(element.getValue());
 		}
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
 	}
@@ -357,16 +357,16 @@ public class QvtOperationalParserUtil {
 	 *         empty
 	 */
 	public static String getMappingModuleSimpleName(TransformationHeaderCS headerCS) {
-		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
+		EList<SimpleNameCS> moduleName = headerCS.getPathNameCS().getSimpleNames();
 		if (moduleName.isEmpty()) {
 			return ""; //$NON-NLS-1$
 		}
-		return moduleName.get(moduleName.size() - 1);
+		return moduleName.get(moduleName.size()-1).getValue();
 	}
 	
 	public static boolean hasSimpleName(TransformationHeaderCS headerCS) {
 		if(headerCS.getPathNameCS() != null) {
-			return headerCS.getPathNameCS().getSequenceOfNames().size() <= 1;
+			return headerCS.getPathNameCS().getSimpleNames().size() <= 1;
 		}
 		return false;
 	}	
@@ -384,7 +384,7 @@ public class QvtOperationalParserUtil {
 	 */
 	public static String getMappingModuleNamespace(TransformationHeaderCS headerCS) {
 		StringBuilder unitNamespace = new StringBuilder();
-		EList<String> moduleName = headerCS.getPathNameCS().getSequenceOfNames();
+		EList<SimpleNameCS> moduleName = headerCS.getPathNameCS().getSimpleNames();
 		if (moduleName.size() > 1) {
 			for (int i = 0, sz = moduleName.size(); i < sz - 1; i++) {
 				if (i > 0) {
@@ -743,12 +743,12 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static Module createModule(MappingModuleCS moduleCS) {
-        String name = null; //$NON-NLS-1$
+        String name = null;
         TransformationHeaderCS headerCS = moduleCS.getHeaderCS();
 		if(headerCS != null && headerCS.getPathNameCS() != null) {
-        	EList<String> sequenceOfNames = headerCS.getPathNameCS().getSequenceOfNames();
+        	EList<SimpleNameCS> sequenceOfNames = headerCS.getPathNameCS().getSimpleNames();
         	if(!sequenceOfNames.isEmpty()) {
-        		name = sequenceOfNames.get(0);
+        		name = sequenceOfNames.get(0).getValue();
         	}
         }
 		
@@ -818,4 +818,13 @@ public class QvtOperationalParserUtil {
     	
     	return false;
     }
+
+	public static List<String> getSequenceOfNames(List<SimpleNameCS> names) {
+		List<String> result = new ArrayList<String>(names.size());
+		for (SimpleNameCS nameCS : names) {
+			result.add(nameCS.getValue());
+		}
+		return result;
+	}
+
 }

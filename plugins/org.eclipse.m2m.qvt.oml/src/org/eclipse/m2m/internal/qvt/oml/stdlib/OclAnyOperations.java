@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -55,8 +56,13 @@ public class OclAnyOperations extends AbstractContextualOperations {
 	}
 	
 	private static final CallHandler REPR = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {			
-		    return String.valueOf(source);
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			try {
+				return String.valueOf(source);
+			} catch(RuntimeException e) {
+				QvtPlugin.error("Object::repr()", e); //$NON-NLS-1$
+				return CallHandlerAdapter.getInvalidResult(evalEnv);
+			}
 		}
 	};
 

@@ -23,8 +23,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -34,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.TypeCS;
@@ -43,9 +43,7 @@ import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler.Severity;
-import org.eclipse.ocl.types.InvalidType;
 import org.eclipse.ocl.types.PrimitiveType;
-import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.OCLUtil;
 
 public class QvtOperationalUtil {
@@ -60,21 +58,28 @@ public class QvtOperationalUtil {
 	public static String getStringRepresentation(TypeCS typeCS) {
 		return QvtOperationalParserUtil.getStringRepresentation(typeCS);
 	}
-	        
-	public static boolean isUndefined(Object value) {
-		return value == null || value == getOclInvalid();
+	
+	// FIXME - refactor out, we need to accept QVT specific environment 
+	public static boolean isInvalid(Object value, EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv) {
+		InternalEvaluationEnv internEnv = OCLUtil.getAdapter(evalEnv, InternalEvaluationEnv.class);
+		return internEnv != null && (value == internEnv.getInvalid());
 	}
-
+	
+	public static Object getInvalid(EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv) {
+		InternalEvaluationEnv internEnv = OCLUtil.getAdapter(evalEnv, InternalEvaluationEnv.class);
+		return internEnv != null ? internEnv.getInvalid() : null;
+	}	
+	
+	public static boolean isUndefined(Object value, EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv) {
+		return value == null || isInvalid(value, evalEnv);
+	}
+	
 	public static boolean isCreateFromStringSupported(EClassifier type) {
 		return isPrimitiveType(type) || type instanceof EDataType;
 	}
 
-	public static Object getOclInvalid() {
-		return ourOclInvalid;
-	}
-		
 	public static boolean isPrimitiveType(Object type) {
-		return type instanceof PrimitiveType;
+		return type instanceof PrimitiveType<?>;
 	}
 
 	public static boolean isInstantiable(EClass cls) {
@@ -133,43 +138,6 @@ public class QvtOperationalUtil {
 		EClassifier eType = modelParameter.getEType();
 		return (eType instanceof ModelType) ? (ModelType) eType : null;
 	}
-	
-    public static final Boolean oclIsKindOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {
-        // regardless of the source value, if the type is undefined, then so
-        //    is oclIsTypeOf
-        if (type == null) {
-            return null;
-        }
-        
-        // OclVoid and Invalid conform to all classifiers but their instances
-        // aren't actually useful as any type but their own.  So, check for
-        // exact type match in these cases
-        if (isUndefined(value)) {
-            return oclIsTypeOf(value, type, env);
-        }
-
-        return Boolean.valueOf(env.isKindOf(value, type));
-    }
-
-    public static final Boolean oclIsTypeOf(Object value, EClassifier type, QvtOperationalEvaluationEnv env) {
-        // regardless of the source value, if the type is undefined, then so
-        //    is oclIsTypeOf
-        if (type == null) {
-            return null;
-        }
-        
-        // the type of null is OclVoid
-        if (value == null) {
-            return Boolean.valueOf(type instanceof VoidType);
-        }
-        
-        // the type of OclInvalid is Invalid
-        if (value == getOclInvalid()) {
-            return Boolean.valueOf(type instanceof InvalidType);
-        }
-
-        return Boolean.valueOf(env.isTypeOf(value, type));
-	}
     
     public static boolean isAbstract(EClassifier eClassifier) {
 		if(eClassifier instanceof EClass) {    	
@@ -197,10 +165,6 @@ public class QvtOperationalUtil {
     	return false;
     }
     
-    /**
-     * FIXME - eliminate this hack, there is no guarantee of StdLib singleton in MDT OCL !!! 
-     */    
-	private static final Object ourOclInvalid = QvtOperationalEnvFactory.INSTANCE.createEnvironment().getOCLStandardLibrary().getOclInvalid();
 
 	public static void reportError(Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
 			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,

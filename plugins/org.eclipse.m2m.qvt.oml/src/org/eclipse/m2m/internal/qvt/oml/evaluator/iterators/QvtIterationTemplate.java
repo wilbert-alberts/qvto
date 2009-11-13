@@ -194,7 +194,7 @@ public abstract class QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT,
         return myEvalVisitor.getEnvironment().getOCLStandardLibrary();
     }
 
-    protected Object getOclInvalid() {
-        return getOCLStandardLibrary().getOclInvalid();
+    protected Object getInvalid() {
+        return getOCLStandardLibrary().getInvalid();
     }
 }
