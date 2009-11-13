@@ -79,7 +79,7 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
     private static Object getInitialValue(EStructuralFeature feature) {
 		//Object inittialValue = myInitExpression.accept(evalVisitor);
 
-		if (feature.getEType() instanceof CollectionType) {
+		if (feature.getEType() instanceof CollectionType<?,?>) {
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) feature.getEType();
 			return CollectionUtil.createNewCollection(collectionType.getKind());

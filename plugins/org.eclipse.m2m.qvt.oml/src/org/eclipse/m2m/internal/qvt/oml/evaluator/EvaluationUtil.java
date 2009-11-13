@@ -200,7 +200,7 @@ public class EvaluationUtil {
 	}
 		
 	public static QvtOperationalEvaluationEnv getAggregatingContext(QvtOperationalEvaluationEnv evalEnv) {
-		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV); //$NON-NLS-1$
+		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV);
 	}
 
 	static ImperativeOperation getOverridingOperation(QvtOperationalEvaluationEnv evalEnv, ImperativeOperation operation) {

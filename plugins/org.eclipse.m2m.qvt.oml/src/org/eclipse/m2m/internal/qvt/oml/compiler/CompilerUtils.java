@@ -22,8 +22,16 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 
 public class CompilerUtils {
 
@@ -92,4 +100,28 @@ public class CompilerUtils {
 	static Monitor createNullMonitor() {
 		return new BasicMonitor();
 	}
+	
+    static EPackage.Registry getEPackageRegistry(URI context, IMetamodelRegistryProvider metamodelRegistryProvider) {
+    	MetamodelRegistry metamodelRegistry = metamodelRegistryProvider.getRegistry(new CResourceRepositoryContext(context));
+    	EPackage.Registry packageRegistry;
+
+    	if(metamodelRegistry != null) {
+    		packageRegistry = metamodelRegistry.toEPackageRegistry();
+    	} else {
+    		packageRegistry = new EPackageRegistryImpl();
+    	}
+
+    	return packageRegistry;
+    }
+	
+    static ResourceSet createResourceSet() {
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.setURIResourceMap(new EPackageRegistryBasedURIResourceMap(resourceSet.getURIConverter()));
+		return resourceSet;
+    }
+    
+    public static QVTOCompiler createCompiler(UnitResolver importResolver) {
+    	return new QVTOCompiler(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
+    }
+    
 }

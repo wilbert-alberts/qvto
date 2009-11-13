@@ -12,27 +12,26 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerKernel;
 
 public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 
-    private final QvtCompilerKernel myKernel;
 	private final URI myFile;    
 	
-	protected QvtOperationalFileEnv(final URI file, final QvtCompilerKernel kernel) {
-		super(new EPackageRegistryImpl(), null);
+	protected QvtOperationalFileEnv(final URI uri, EPackage.Registry registry) {
+		// TODO - revisit the null resource passed
+		super(new EPackageRegistryImpl(registry), null);
 
-		myFile = file;
-        myKernel = kernel;
-        
+		if(uri == null) {
+			throw new IllegalArgumentException("Non-null uri required"); //$NON-NLS-1$
+		}
+		
+		myFile = uri;
+		
     	QvtOperationalStdLibrary.INSTANCE.importTo(this);        
 	}
-		
-    public QvtCompilerKernel getKernel() {
-        return myKernel;
-    }
-	
+
 	public URI getFile() {
         return myFile;
     }
@@ -41,5 +40,4 @@ public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
     public String toString() {    
     	return  "QVTOEnv:" + myFile.toString(); //$NON-NLS-1$
     }
-    
 }

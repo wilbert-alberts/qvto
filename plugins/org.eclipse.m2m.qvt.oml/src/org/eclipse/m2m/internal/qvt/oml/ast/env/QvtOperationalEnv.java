@@ -431,11 +431,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return myModelTypeRegistry.put(modelType.getName(), modelType);
 	}
 
-	public ModelType getModelType(List<String> path) {
-		if (path.isEmpty()) {
-			return null;
-		}
-		return myModelTypeRegistry.get(path.get(0));
+	public ModelType getModelType(String name) {
+		return myModelTypeRegistry.get(name);
 	}
 	
 	@Override

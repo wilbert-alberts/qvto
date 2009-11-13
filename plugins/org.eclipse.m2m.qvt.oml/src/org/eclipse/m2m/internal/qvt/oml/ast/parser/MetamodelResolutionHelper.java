@@ -12,15 +12,12 @@
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 
 /**
@@ -36,29 +33,29 @@ class MetamodelResolutionHelper {
 	 * @return the metamodel package denoted by the given <code>URI</code> or
 	 *         <code>null</code> if no package was resolved
 	 */
-	static List<EPackage> registerMetamodel(QvtOperationalEnv qvtEnv, 
-			String metamodelUri, List<String> path, ResourceSet resolutionRS, 
-			MetamodelRegistry metamodelRegistry, QvtCompilerOptions options) {
+	static List<EPackage> registerMetamodel(QvtOperationalEnv qvtEnv, String metamodelUri, List<String> path) {
+		EPackage.Registry registry = qvtEnv.getFactory().getEPackageRegistry();
         List<EPackage> metamodels = new ArrayList<EPackage>(1);
+        
 		try {
-		    IMetamodelDesc[] desc;
-            MetamodelRegistry registry = metamodelRegistry;
-            
-            if (path.isEmpty()) {
-                desc = new IMetamodelDesc[] { registry.getMetamodelDesc(metamodelUri) };
-            }
-            else {
-                desc = registry.getMetamodelDesc(path);
+		    List<EPackage> desc = null;            
+            if (metamodelUri != null && path.isEmpty()) {
+                EPackage ePackage = registry.getEPackage(metamodelUri);
+                if(ePackage != null) {                	
+                	desc = Collections.singletonList(ePackage);
+                } else {
+                	ePackage = MetamodelRegistry.tryLookupEmptyRootPackage(metamodelUri, registry);
+                	if(ePackage != null) {                	
+                    	desc = Collections.singletonList(ePackage);
+                    }
+               }
+            } else {
+                desc = MetamodelRegistry.resolveMetamodels(registry, path);
             }
                         
             if(desc != null) {
-				for(IMetamodelDesc nextDesc : desc) {
-					if(nextDesc.getModel() == null) {
-						continue;
-					}
-					
-		        	EPackage model = nextDesc.getModel();
-		            // register metamodel for EClassifier lookup
+				for(EPackage model : desc) {							        	
+		            // register meta-model for EClassifier lookup
 		        	if (model.getNsURI() == null) {
 						while (true) {
 							if (model.getESuperPackage() == null) {
@@ -68,10 +65,11 @@ class MetamodelResolutionHelper {
 						}
 		        	}
 		        	
-		        	if(nextDesc.getLoadStatus().getSeverity() < IStatus.ERROR) {
-		        		metamodels.add(model);	        	
-		        		qvtEnv.getEPackageRegistry().put(model.getNsURI(), model);
+		        	metamodels.add(model);
+		        	if(metamodelUri != null) {
+		        		qvtEnv.getEPackageRegistry().put(metamodelUri, model);
 		        	}
+		        	
 		            break;
 		        }
             }
