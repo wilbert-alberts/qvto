@@ -25,7 +25,7 @@ public class InMemoryLaunchUtils {
     
     public static Object getAttribute(ILaunchConfiguration config, String name) throws CoreException {
         Object value = config.getAttributes().get(name);
-        if(value instanceof Collection == false) {
+        if(value instanceof Collection<?> == false) {
         	return value;
         }
         
