@@ -46,6 +46,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -215,7 +216,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			}
 			
 	        WorkspaceUnitResolver resolver = WorkspaceUnitResolver.getResolver(getProject());	        
-	        QVTOCompiler compiler = new QVTOCompiler(resolver);
+	        QVTOCompiler compiler = CompilerUtils.createCompiler(resolver);
 	        
 	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
 
