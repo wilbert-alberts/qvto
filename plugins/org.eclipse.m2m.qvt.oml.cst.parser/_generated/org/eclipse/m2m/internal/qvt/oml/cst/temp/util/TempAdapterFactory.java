@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TempAdapterFactory.java,v 1.8 2009/04/21 13:39:42 aigdalov Exp $
+ * $Id: TempAdapterFactory.java,v 1.9 2009/11/13 21:35:07 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.temp.util;
 
@@ -19,7 +19,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.*;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;

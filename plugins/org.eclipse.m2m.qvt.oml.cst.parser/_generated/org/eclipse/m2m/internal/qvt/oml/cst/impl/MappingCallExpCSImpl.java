@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingCallExpCSImpl.java,v 1.4 2009/04/21 13:39:40 aigdalov Exp $
+ * $Id: MappingCallExpCSImpl.java,v 1.5 2009/11/13 21:35:09 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
-import org.eclipse.ocl.cst.impl.OperationCallExpCSImpl;
 
 /**
  * <!-- begin-user-doc -->

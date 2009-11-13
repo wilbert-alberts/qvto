@@ -11,11 +11,10 @@
  * 
  * 
  *
- * $Id: MappingCallExpCS.java,v 1.2 2009/04/21 13:39:42 aigdalov Exp $
+ * $Id: MappingCallExpCS.java,v 1.3 2009/11/13 21:35:09 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
-import org.eclipse.ocl.cst.OperationCallExpCS;
 
 /**
  * <!-- begin-user-doc -->
