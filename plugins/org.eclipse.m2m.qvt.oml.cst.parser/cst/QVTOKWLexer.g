@@ -12,14 +12,14 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpKWLexer.g,v 1.12 2009/11/13 13:51:06 radvorak Exp $ 
+-- * $Id: QVTOKWLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $ 
 -- */
 --
 -- The QVT KeyWord Lexer
 --
 
 %Options slr
-%Options fp=QvtOpKWLexer,prefix=Char_
+%Options fp=QVTOKWLexer,prefix=Char_
 %options noserialize
 %options template=../lpg/KeywordTemplateD.g
 %options export_terminals=("QVTParsersym.java", "TK_")
@@ -76,7 +76,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpKWLexer.g,v 1.12 2009/11/13 13:51:06 radvorak Exp $
+ * $Id: QVTOKWLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
 $End

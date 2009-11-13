@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOParsersym.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOParsersym.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOParsersym.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,12 +65,12 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParsersym.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOParsersym.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-public interface QvtOpLPGParsersym {
+public interface QVTOParsersym {
     public final static int
       TK_INTEGER_LITERAL = 28,
       TK_REAL_LITERAL = 29,

@@ -12,11 +12,12 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.g,v 1.32 2009/11/13 13:51:06 radvorak Exp $ 
+-- * $Id: miscellaneous.g,v 1.33 2009/11/13 22:09:02 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
 --
+
 $Import
 	EssentialOCL.g
 
@@ -38,7 +39,7 @@ $Define
 	-- Definition of macros used in the parser template
 	--
 	$prs_stream_class /.AbstractQVTParser./
-	$lex_stream_class /.QvtOpLexer./
+	$lex_stream_class /.QVTOLexer./
 
 	$EMPTY_ELIST /.ourEmptyEList./
 
@@ -158,7 +159,7 @@ $Define
 	--				ruleTexts = Collections.synchronizedMap(new HashMap<Integer, String>());
 	--				try {
 	--					InputStream inputStream = FileLocator.openStream(QvtPlugin.getDefault().getBundle(),
-	--									new Path("cst/QvtOpLPGParser.l"), false); //$NON-NLS-1$
+	--									new Path("cst/QVTOParser.l"), false); //$NON-NLS-1$
 	--					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 	--					String line;
 	--					while ((line = reader.readLine()) != null) {
@@ -252,7 +253,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: miscellaneous.g,v 1.32 2009/11/13 13:51:06 radvorak Exp $
+ * $Id: miscellaneous.g,v 1.33 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
 $End

@@ -15,7 +15,7 @@
 *   E.D.Willink - Bug 292112
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOLexer.java,v 1.1 2009/11/13 22:09:04 sboyko Exp $
 */
 /**
 * Complete OCL Lexer
@@ -46,7 +46,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOLexer.java,v 1.1 2009/11/13 22:09:04 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -59,9 +59,9 @@ import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.parser.OCLKWLexer;
 
-public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtOpLexersym, RuleAction
+public class QVTOLexer extends AbstractLexer implements QVTOParsersym, QVTOLexersym, RuleAction
 {
-    private static ParseTable prs = new QvtOpLexerprs();
+    private static ParseTable prs = new QVTOLexerprs();
     //
     // The Lexer contains an array of characters as the input stream to be parsed.
     // There are methods to retrieve and classify characters.
@@ -70,24 +70,24 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
     // method getKind.  The template defines the Lexer class and the lexer() method.
     // A driver creates the action class, "Lexer", passing an Option object to the constructor.
     //
-    protected QvtOpKWLexer kwLexer;
+    protected QVTOKWLexer kwLexer;
     protected boolean printTokens;
     private AbstractParser parser;
     private LexParser lexParser = new LexParser(this, prs, this);
     
     private final Environment<?,?,?,?,?,?,?,?,?,?,?,?> oclEnvironment;
 
-    public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment) {
+    public QVTOLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment) {
         super(OCLUtil.getAdapter(environment, BasicEnvironment.class));
         oclEnvironment = environment;
     }
     
-	public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] chars) {
+	public QVTOLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] chars) {
 		this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE); //$NON-NLS-1$
-		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+		kwLexer = new QVTOKWLexer(getInputChars(), TK_IDENTIFIER);
 	}
 
-    public QvtOpLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] input_chars, String filename, int tab)  {
+    public QVTOLexer(Environment<?,?,?,?,?,?,?,?,?,?,?,?> environment, char[] input_chars, String filename, int tab)  {
         super(OCLUtil.getAdapter(environment, BasicEnvironment.class), input_chars, filename, tab);
         oclEnvironment = environment;
     }
@@ -109,18 +109,18 @@ public class QvtOpLexer extends AbstractLexer implements QvtOpLPGParsersym, QvtO
     {
         super.initialize(content, filename);
         if (kwLexer == null)
-             kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+             kwLexer = new QVTOKWLexer(getInputChars(), TK_IDENTIFIER);
         else
              kwLexer.setInputChars(getInputChars());
     }
 
     @Override
-    public String[] orderedExportedSymbols() { return QvtOpLPGParsersym.orderedTerminalSymbols; }
+    public String[] orderedExportedSymbols() { return QVTOParsersym.orderedTerminalSymbols; }
     
     @Override
     public void setInputChars(char[] inputChars) {
 		super.setInputChars(inputChars);
-		kwLexer = new QvtOpKWLexer(getInputChars(), TK_IDENTIFIER);
+		kwLexer = new QVTOKWLexer(getInputChars(), TK_IDENTIFIER);
 	}
     
     @Override

@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.81 2009/11/13 13:51:07 radvorak Exp $
+* $Id: LightweightParser.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.81 2009/11/13 13:51:07 radvorak Exp $
+* $Id: LightweightParser.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.81 2009/11/13 13:51:07 radvorak Exp $
+* $Id: LightweightParser.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,10 +65,10 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParser.java,v 1.81 2009/11/13 13:51:07 radvorak Exp $
+* $Id: LightweightParser.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 
-package org.eclipse.m2m.internal.qvt.oml.cst.parser;
+package org.eclipse.m2m.internal.qvt.oml.cst.completion.parser;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -153,17 +153,22 @@ import org.eclipse.ocl.cst.DotOrArrowEnum;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
 
-	public class QvtOpLPGParser extends AbstractQVTParser implements RuleAction {
-	protected static ParseTable prs = new QvtOpLPGParserprs();
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParserprs;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;	
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;	
+
+	public class LightweightParser extends AbstractQVTParser implements RuleAction {
+	protected static ParseTable prs = new LightweightParserprs();
 	private BacktrackingParser dtParser;
 	// (to be uncommented for use in DEBUG mode)
 	//private static Map<Integer, String> ruleTexts;
 
-	public QvtOpLPGParser(QvtOpLexer lexer) {
+	public LightweightParser(QVTOLexer lexer) {
 		super(lexer);
 
 		try {
-			super.remapTerminalSymbols(orderedTerminalSymbols(), QvtOpLPGParserprs.EOFT_SYMBOL);
+			super.remapTerminalSymbols(orderedTerminalSymbols(), LightweightParserprs.EOFT_SYMBOL);
 		}
 		catch(NullExportedSymbolsException e) {
 			throw new RuntimeException(e.getLocalizedMessage());
@@ -176,21 +181,21 @@ import org.eclipse.ocl.utilities.PredefinedType;
 			String error = "The Lexer will not scan the following token(s):"; //$NON-NLS-1$
 			for (int i = 0; i < unimplemented_symbols.size(); i++) {
 				Integer id = (Integer) unimplemented_symbols.get(i);
-				error += "\t" + QvtOpLPGParsersym.orderedTerminalSymbols[id.intValue()]; //$NON-NLS-1$			   
+				error += "\t" + LightweightParsersym.orderedTerminalSymbols[id.intValue()]; //$NON-NLS-1$			   
 			}
 			throw new RuntimeException(error + "\n"); //$NON-NLS-1$
 		}
 		catch(UndefinedEofSymbolException e) {
 			throw new RuntimeException("The Lexer does not implement the Eof symbol " + //$NON-NLS-1$
-				 QvtOpLPGParsersym.orderedTerminalSymbols[QvtOpLPGParserprs.EOFT_SYMBOL]);
+				 LightweightParsersym.orderedTerminalSymbols[LightweightParserprs.EOFT_SYMBOL]);
 		} 
 	}
 	 
 	@Override
-	public String[] orderedTerminalSymbols() { return QvtOpLPGParsersym.orderedTerminalSymbols; }
+	public String[] orderedTerminalSymbols() { return LightweightParsersym.orderedTerminalSymbols; }
 	@Override		
-	public String getTokenKindName(int kind) { return QvtOpLPGParsersym.orderedTerminalSymbols[kind]; }			
-	public int getEOFTokenKind() { return QvtOpLPGParserprs.EOFT_SYMBOL; }
+	public String getTokenKindName(int kind) { return LightweightParsersym.orderedTerminalSymbols[kind]; }			
+	public int getEOFTokenKind() { return LightweightParserprs.EOFT_SYMBOL; }
 	public PrsStream getParseStream() { return this; }
 
 	protected CSTNode parser() throws ParserException {
@@ -207,16 +212,16 @@ import org.eclipse.ocl.utilities.PredefinedType;
 		
 	@Override
 	public CSTNode parseTokensToCST(Monitor monitor, int error_repair_count) {
-		ParseTable prsTable = new QvtOpLPGParserprs();
+		ParseTable prsTable = new LightweightParserprs();
 
 		try {
 			dtParser = new BacktrackingParser(monitor, this, prsTable, this);
 		}
 		catch (NotBacktrackParseTableException e) {
-			throw new RuntimeException("****Error: Regenerate QvtOpLPGParserprs.java with -NOBACKTRACK option"); //$NON-NLS-1$
+			throw new RuntimeException("****Error: Regenerate LightweightParserprs.java with -NOBACKTRACK option"); //$NON-NLS-1$
 		}
 		catch (BadParseSymFileException e) {
-			throw new RuntimeException("****Error: Bad Parser Symbol File -- QvtOpLPGParsersym.java. Regenerate QvtOpLPGParserprs.java"); //$NON-NLS-1$
+			throw new RuntimeException("****Error: Bad Parser Symbol File -- LightweightParsersym.java. Regenerate LightweightParserprs.java"); //$NON-NLS-1$
 		}
 
 		try {
@@ -239,7 +244,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
     	int trailingEOFsAmount = 100;
     	int someHugeOffset = 100000;
     	for (int i  = 0; i < trailingEOFsAmount; i++) {
-            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, QvtOpLPGParsersym.TK_EOF_TOKEN);
+            makeToken(lastT.getEndOffset() + i + someHugeOffset, lastT.getEndOffset() + i + someHugeOffset + 1, LightweightParsersym.TK_EOF_TOKEN);
     	}
 	}
 
@@ -3391,7 +3396,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
                 
 		OCLExpressionCS source = (OCLExpressionCS)dtParser.getSym(1);
 		if (source instanceof ImperativeIterateExpCS) {
-			String opCode = isTokenOfType(getIToken(dtParser.getToken(2)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+			String opCode = isTokenOfType(getIToken(dtParser.getToken(2)), LightweightParsersym.TK_EXCLAMATION_MARK) ?  "collectselectOne" : "collectselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 			SimpleNameCS simpleNameCS = createSimpleNameCS(
 					SimpleTypeEnum.KEYWORD_LITERAL,
 					opCode
@@ -3411,7 +3416,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
 			dtParser.setSym1(result);
 		}
 		else {
-			String opCode = isTokenOfType(getIToken(dtParser.getToken(2)), QvtOpLPGParsersym.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
+			String opCode = isTokenOfType(getIToken(dtParser.getToken(2)), LightweightParsersym.TK_EXCLAMATION_MARK) ?  "selectOne" : "xselect"; //$NON-NLS-1$ //$NON-NLS-2$ 
 			SimpleNameCS simpleNameCS = createSimpleNameCS(
 					SimpleTypeEnum.KEYWORD_LITERAL,
 					opCode
@@ -4648,7 +4653,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
 				}
 
 				IToken helperKind = (IToken) helperInfo[1];
-				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == LightweightParsersym.TK_query);
 				mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 
 				dtParser.setSym1(mappingDeclarationCS);
@@ -4675,7 +4680,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
 				}
 
 				IToken helperKind = (IToken) helperInfo[1];
-				mappingDeclarationCS.setIsQuery(helperKind.getKind() == QvtOpLPGParsersym.TK_query);
+				mappingDeclarationCS.setIsQuery(helperKind.getKind() == LightweightParsersym.TK_query);
 				mappingDeclarationCS.setStartOffset(helperKind.getStartOffset());
 
 				dtParser.setSym1(mappingDeclarationCS);
@@ -5592,7 +5597,7 @@ import org.eclipse.ocl.utilities.PredefinedType;
     			IToken lateToken = getIToken(dtParser.getToken(1));
                 CSTNode result = createResolveExpCS(
                         lateToken,
-                        new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), QvtOpLPGParsersym.TK_resolve),
+                        new Token(lateToken.getEndOffset(), lateToken.getEndOffset(), LightweightParsersym.TK_resolve),
                         null);
                             setOffsets(result, getIToken(dtParser.getToken(1)));
                 dtParser.setSym1(result);

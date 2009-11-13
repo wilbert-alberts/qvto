@@ -30,7 +30,7 @@ public class QvtKeywords {
 	
 	private static final Set<String> tempKeywords = new HashSet<String>(); 
 	static {
-    	for (String string : QvtOpLPGParsersym.orderedTerminalSymbols) {
+    	for (String string : QVTOParsersym.orderedTerminalSymbols) {
     		if (!string.equals(string.toUpperCase())) { // filter out primitive literals, operators and empty-string tokens
                 tempKeywords.add(string);
     		}

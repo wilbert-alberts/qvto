@@ -12,20 +12,20 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLexer.g,v 1.8 2009/11/13 13:51:06 radvorak Exp $
+-- * $Id: QVTOLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 -- */
 --
--- The QVT Lexer
+-- The QVT Operational Lexer
 --
 
 %options scopes
 %options escape=$
 %options la=2
-%options fp=QvtOpLexer,prefix=Char_
+%options fp=QVTOLexer,prefix=Char_
 %options single-productions
 %options noserialize
 %options template=../lpg/LexerTemplateD.g
-%options filter=QvtOpKWLexer.g
+%options filter=QVTOKWLexer.g
 %options export_terminals=("QVTParsersym.java", "TK_")
 %options include_directory=".;../lpg"
 
@@ -35,7 +35,7 @@ $Define
 	--
 	-- Definition of macro used in the included file OCLLexer.g
 	--
-	$OCLKWLexer /.QvtOpKWLexer./
+	$OCLKWLexer /.QVTOKWLexer./
 
 $End
 
@@ -85,7 +85,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLexer.g,v 1.8 2009/11/13 13:51:06 radvorak Exp $
+ * $Id: QVTOLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
 $End

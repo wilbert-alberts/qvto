@@ -15,7 +15,7 @@
 *   E.D.Willink - Bug 292112
 * </copyright>
 *
-* $Id: QvtOpLexerprs.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOLexerprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 /**
 * Complete OCL Lexer
@@ -46,12 +46,12 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLexerprs.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOLexerprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-public class QvtOpLexerprs implements lpg.lpgjavaruntime.ParseTable, QvtOpLexersym {
+public class QVTOLexerprs implements lpg.lpgjavaruntime.ParseTable, QVTOLexersym {
 
     public interface IsKeyword {
         public final static byte isKeyword[] = {0,

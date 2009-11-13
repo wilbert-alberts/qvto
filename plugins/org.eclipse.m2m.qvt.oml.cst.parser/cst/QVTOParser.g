@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QvtOpLPGParser.g,v 1.53 2009/11/13 13:51:06 radvorak Exp $ 
+-- * $Id: QVTOParser.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -21,13 +21,13 @@
 %options escape=$
 %options la=2
 %options table=java
-%options fp=QvtOpLPGParser,prefix=TK_
+%options fp=QVTOParser,prefix=TK_
 %options error-maps
 %options scopes
 %options margin=4
 %options noserialize
 --%options template=dtParserTemplateD.g
-%options import_terminals=QvtOpLexer.g
+%options import_terminals=QVTOLexer.g
 %options ast_type=CSTNode
 %options programming_language=java
 %options action=("*.java", "/.", "./")
@@ -35,7 +35,7 @@
 %options include_directory=".;../lpg"
 
 $Start
-    topLevel
+	topLevel
 $End
 
 $Import
@@ -154,7 +154,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QvtOpLPGParser.g,v 1.53 2009/11/13 13:51:06 radvorak Exp $
+ * $Id: QVTOParser.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
 $End

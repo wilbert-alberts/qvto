@@ -14,7 +14,7 @@
 *   E.D.Willink - Bug 285633, 292112
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOKWLexer.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 /**
 * Complete OCL Keyword Lexer
@@ -45,7 +45,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpKWLexer.java,v 1.80 2009/11/13 13:51:07 radvorak Exp $
+* $Id: QVTOKWLexer.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -53,7 +53,7 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
 
 
-public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
+public class QVTOKWLexer extends QVTOKWLexerprs implements QVTOParsersym
 {
     private char[] inputChars;
     private final int keywordKind[] = new int[121 + 1];
@@ -153,7 +153,7 @@ public class QvtOpKWLexer extends QvtOpKWLexerprs implements QvtOpLPGParsersym
     }
 
 
-    public QvtOpKWLexer(char[] inputChars, int identifierKind)
+    public QVTOKWLexer(char[] inputChars, int identifierKind)
     {
         this.inputChars = inputChars;
         keywordKind[0] = identifierKind;

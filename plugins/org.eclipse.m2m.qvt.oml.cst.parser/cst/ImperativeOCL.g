@@ -12,11 +12,12 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.g,v 1.28 2009/11/13 13:51:06 radvorak Exp $ 
+-- * $Id: ImperativeOCL.g,v 1.29 2009/11/13 22:09:02 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
 --
+
 $Import
 	miscellaneous.g
 
@@ -24,6 +25,7 @@ $Import
 $DropRules
 	-- 'if' extension in QVT
 	IfExpCS ::= if OclExpressionCS then OclExpressionCS else OclExpressionCS endif
+
 $End
 
 $Globals
@@ -99,7 +101,7 @@ $Notice
  *
  * </copyright>
  *
- * $Id: ImperativeOCL.g,v 1.28 2009/11/13 13:51:06 radvorak Exp $
+ * $Id: ImperativeOCL.g,v 1.29 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
 $End

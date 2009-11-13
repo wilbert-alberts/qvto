@@ -128,7 +128,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		super(environment);
 	}
 
-	protected AbstractQVTParser(QvtOpLexer lexStream) {
+	protected AbstractQVTParser(QVTOLexer lexStream) {
 		super(lexStream);
 	}
 	
@@ -137,8 +137,8 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 	@Override
-	public QvtOpLexer getLexer() {
-		return (QvtOpLexer) super.getLexStream();
+	public QVTOLexer getLexer() {
+		return (QVTOLexer) super.getLexStream();
 	} 
 
 	protected void reportWarning(String message, int startOffset, int endOffset) {
@@ -339,7 +339,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final MappingQueryCS createMappingQueryCS(boolean isEntryOp, MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
 		if (sym != null && sym.getSimpleNameCS() != null 
-				&& !isEntryOp && QvtOpLPGParsersym.orderedTerminalSymbols[QvtOpLPGParsersym.TK_main].equals(sym.getSimpleNameCS().getValue())) {
+				&& !isEntryOp && QVTOParsersym.orderedTerminalSymbols[QVTOParsersym.TK_main].equals(sym.getSimpleNameCS().getValue())) {
 			reportWarning(NLS.bind(Messages.EntryOp_DisallowedDeclAsHelper, null), sym.getStartOffset(), sym.getEndOffset());
 		}
 		MappingQueryCS query = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
@@ -643,7 +643,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected final CSTNode populateResolveExpCS(ResolveExpCS resolveExpCS, IToken lateToken,
 			IToken opCode, ResolveOpArgsExpCS resolveOpArgsExpCS) {
-	    resolveExpCS.setIsDeferred((lateToken != null) && getTokenKindName(QvtOpLPGParsersym.TK_late).equals(lateToken.toString()));
+	    resolveExpCS.setIsDeferred((lateToken != null) && getTokenKindName(QVTOParsersym.TK_late).equals(lateToken.toString()));
 	    String opCodeText = opCode.toString();
 	    resolveExpCS.setOne(opCodeText.indexOf("one") > 0); //$NON-NLS-1$
 	    resolveExpCS.setIsInverse(opCodeText.indexOf("inv") == 0); //$NON-NLS-1$
@@ -684,7 +684,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	
 	protected final CSTNode createLogExpCS(EList<OCLExpressionCS> args, OCLExpressionCS condition) {
 		LogExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createLogExpCS();
-		String name = getTokenKindName(QvtOpLPGParsersym.TK_log);
+		String name = getTokenKindName(QVTOParsersym.TK_log);
 		result.setSimpleNameCS(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, name));
 
 		result.getArguments().addAll(args);		

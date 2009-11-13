@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParserprs.java,v 1.80 2009/11/13 13:51:06 radvorak Exp $
+* $Id: QVTOParserprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -33,7 +33,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParserprs.java,v 1.80 2009/11/13 13:51:06 radvorak Exp $
+* $Id: QVTOParserprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -49,7 +49,7 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParserprs.java,v 1.80 2009/11/13 13:51:06 radvorak Exp $
+* $Id: QVTOParserprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -65,12 +65,12 @@
 *
 * </copyright>
 *
-* $Id: QvtOpLPGParserprs.java,v 1.80 2009/11/13 13:51:06 radvorak Exp $
+* $Id: QVTOParserprs.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-public class QvtOpLPGParserprs implements lpg.lpgjavaruntime.ParseTable, QvtOpLPGParsersym {
+public class QVTOParserprs implements lpg.lpgjavaruntime.ParseTable, QVTOParsersym {
 
     public interface IsKeyword {
         public final static byte isKeyword[] = {0,
