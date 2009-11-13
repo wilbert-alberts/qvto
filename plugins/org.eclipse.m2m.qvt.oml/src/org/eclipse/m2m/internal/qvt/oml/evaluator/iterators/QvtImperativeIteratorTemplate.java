@@ -137,6 +137,7 @@ extends QvtIterationTemplate<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> {
         }
 
         // FIXME
+        @SuppressWarnings("unchecked")
         EvaluationEnvironment<EClassifier, ?, ?, ?, ?> evalEnv = (EvaluationEnvironment<EClassifier, ?, ?, ?, ?>) getEvalEnvironment();        
         return Boolean.valueOf(evalEnv.isTypeOf(value, type));
 	}        

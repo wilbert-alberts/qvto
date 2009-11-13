@@ -571,7 +571,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 		}
 
-        Object bodyResult = visitOperationBody(mappingBody);
+        visitOperationBody(mappingBody);
 
         // TODO investigate possibility to modify result
         for (OCLExpression<EClassifier> endExp : mappingBody.getEndSection()) {
@@ -1023,7 +1023,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				value = Utils.createList();
 			} else if(varDeclType instanceof DictionaryType) {
 				value = Utils.createDictionary();
-			} else if(varDeclType instanceof CollectionType) {
+			} else if(varDeclType instanceof CollectionType<?, ?>) {
+				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) varDeclType;
 				CollectionKind kind = collectionType.getKind();
 				if(kind != null && kind != CollectionKind.COLLECTION_LITERAL) {
@@ -1529,7 +1530,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 } 
                 else {
         			VarParameter type = (resultParams.isEmpty() ? null : resultParams.get(0));
-                    if (type != null && false == type.getEType() instanceof VoidType) {
+                    if (type != null && false == type.getEType() instanceof VoidType<?>) {
                         result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
                     }    			
                 }
@@ -1755,7 +1756,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if (cl.getType() instanceof ListType) {
 			Collection<Object> result = new MutableListImpl<Object>();
 			for (CollectionLiteralPart<EClassifier> part : cl.getPart()) {
-				if (part instanceof CollectionItem) {
+				if (part instanceof CollectionItem<?>) {
 					// CollectionItem part
 					CollectionItem<EClassifier> item = (CollectionItem<EClassifier>) part;
 					OCLExpression<EClassifier> itemExp = item.getItem();
@@ -1888,7 +1889,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     private Object getOutOwner(final ObjectExp objectExp) {
         Object owner = getRuntimeValue(objectExp.getName()); 
         if (owner != null) {
-        	if (objectExp.getType() instanceof CollectionType == false) {
+        	if (objectExp.getType() instanceof CollectionType<?, ?> == false) {
 	            if (!oclIsKindOf(owner, objectExp.getType())) {
 	                throw new RuntimeException(MessageFormat.format(
 	                        EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_InvalidObjectExpType, new Object[] {
@@ -1946,17 +1947,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private static CollectionKind getCollectionKind(Collection<?> collection) {
-        if (collection instanceof ArrayList) {
+        if (collection instanceof ArrayList<?>) {
             return CollectionKind.SEQUENCE_LITERAL;
         }
-        if (collection instanceof LinkedHashSet) {
+        if (collection instanceof LinkedHashSet<?>) {
             return CollectionKind.ORDERED_SET_LITERAL;
         }
         // Remark: check Set after Ordered set
-        if (collection instanceof HashSet) {
+        if (collection instanceof HashSet<?>) {
             return CollectionKind.SET_LITERAL;
         }        
-        if (collection instanceof Bag) {
+        if (collection instanceof Bag<?>) {
             return CollectionKind.BAG_LITERAL;
         }
         return null;
@@ -2038,7 +2039,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	protected Object createInstance(EClassifier type, ModelParameter extent) throws QvtRuntimeException {
 		Object newInstance = null;
 		try {			
-			if(type instanceof CollectionType) {
+			if(type instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>)type;
 				if(collectionType.getKind() == CollectionKind.COLLECTION_LITERAL) {

@@ -135,7 +135,7 @@ public class TupleFactory extends EFactoryImpl {
 		private String toString(Object o) {
 			if (o instanceof String) {
 				return "'" + (String) o + "'"; //$NON-NLS-1$ //$NON-NLS-2$
-			} else if (o instanceof Collection) {
+			} else if (o instanceof Collection<?>) {
 				return CollectionUtil.toString((Collection<?>) o);
 			} else if (o == null) {
 				return "null"; //$NON-NLS-1$

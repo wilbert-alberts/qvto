@@ -73,6 +73,7 @@ public class ASTBindingHelper {
 		createCST2ASTBinding(cstNode, astNode, true, null);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode, Environment env) {
 		createCST2ASTBinding(cstNode, astNode, true, env);
 	}
@@ -291,7 +292,7 @@ public class ASTBindingHelper {
 
 		@Override
 		public boolean isAdapterForType(Object type) {
-			if(type instanceof Class) {
+			if(type instanceof Class<?>) {
 				Class<?> clazz = (Class<?>) type;
 				return clazz.isInstance(fEnv);
 			}

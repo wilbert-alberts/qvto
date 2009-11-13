@@ -565,8 +565,8 @@ public class StringOperations extends AbstractContextualOperations {
 	}
 		
 	private static class CounterValue {
+		
 		int value;
-		Integer cachedIntObj;
 
 		CounterValue() {
 			reset();

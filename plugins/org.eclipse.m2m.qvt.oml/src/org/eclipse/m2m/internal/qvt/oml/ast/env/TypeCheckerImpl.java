@@ -222,7 +222,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				ListType list1 = (ListType) type1;
 				ListType list2 = (ListType) type2;
 				return getRelationship(list1.getElementType(), list2.getElementType());
-			} else if(!isList1 && type1 instanceof CollectionType) {
+			} else if(!isList1 && type1 instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> col1 = (CollectionType<EClassifier, EOperation>) type1;
 
@@ -231,7 +231,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 						((ListType)type2).getElementType(), col1.getElementType())) {
 					return UMLReflection.STRICT_SUPERTYPE;
 				}				
-			} else if(!isList2 && type2 instanceof CollectionType) {
+			} else if(!isList2 && type2 instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> col2 = (CollectionType<EClassifier, EOperation>) type2;
 
@@ -343,10 +343,10 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			return type1;
 		}
 
-		if (type1 == fOCLStdlib.getOclAny() && !(type2 instanceof CollectionType)) {
+		if (type1 == fOCLStdlib.getOclAny() && !(type2 instanceof CollectionType<?, ?>)) {
 			return type1;
 		}
-		if (type2 == fOCLStdlib.getOclAny() && !(type1 instanceof CollectionType)) {
+		if (type2 == fOCLStdlib.getOclAny() && !(type1 instanceof CollectionType<?, ?>)) {
 			return type2;
 		}
 
@@ -361,7 +361,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			return type1;
 		}
 
-		if (type1 instanceof CollectionType && type2 instanceof CollectionType) {
+		if (type1 instanceof CollectionType<?, ?> && type2 instanceof CollectionType<?, ?>) {
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier, EOperation> ct1 = (CollectionType<EClassifier, EOperation>) type1;
 			@SuppressWarnings("unchecked")
@@ -374,7 +374,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			return (EClassifier) resolveCollectionType(commonKind, resultElementType);
 		}
 
-		if (type1 instanceof MessageType && type2 instanceof MessageType) {
+		if (type1 instanceof MessageType<?, ?, ?> && type2 instanceof MessageType<?, ?, ?>) {
 			return fOCLStdlib.getOclMessage();
 		}
 
@@ -382,8 +382,8 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			return fOCLStdlib.getOclType();
 		}
 
-		if (type1 instanceof TupleType || type2 instanceof TupleType) {
-			if (!((type1 instanceof TupleType) && (type2 instanceof TupleType))) {
+		if (type1 instanceof TupleType<?, ?> || type2 instanceof TupleType<?, ?>) {
+			if (!((type1 instanceof TupleType<?, ?>) && (type2 instanceof TupleType<?, ?>))) {
 				String message = NLS.bind(
 						ValidationMessages.TupleTypeMismatch, getName(type1),
 					getName(type2));
@@ -436,8 +436,8 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		}
 
 		// exhausted the possibilities for pre-defined types
-		if (type1 instanceof PredefinedType || type2 instanceof PredefinedType) {
-			if(type1 instanceof CollectionType == false && type2 instanceof CollectionType == false) {
+		if (type1 instanceof PredefinedType<?> || type2 instanceof PredefinedType<?>) {
+			if(type1 instanceof CollectionType<?, ?> == false && type2 instanceof CollectionType<?, ?> == false) {
 				return getEnvironment().getOCLStandardLibrary().getOclAny();
 			}
 			

@@ -93,6 +93,6 @@ public class FormattingHelperImpl extends AbstractFormattingHelper {
 	}
 
 	static boolean isStdLibType(EClassifier type) {
-		return type instanceof PredefinedType;
+		return type instanceof PredefinedType<?>;
 	}
 }

@@ -26,8 +26,8 @@ public class CollectionOperations extends AbstractContextualOperations {
 	private static final CallHandler AS_LIST = new CallHandler() {
 		
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			if(source instanceof Collection) {
-				if(source instanceof Collection) {
+			if(source instanceof Collection<?>) {
+				if(source instanceof Collection<?>) {
 					@SuppressWarnings("unchecked")					
 					Collection<Object> collection = (Collection<Object>) source;
 					return new MutableListImpl<Object>(collection);

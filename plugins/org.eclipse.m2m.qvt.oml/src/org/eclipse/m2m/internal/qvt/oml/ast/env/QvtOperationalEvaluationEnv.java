@@ -177,14 +177,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		// FIXME - workaround for a issue of multiple typle type instances, possibly coming from 
 		// imported modules. The super impl. looks for the property by feature instance, do it
 		// by name here to avoid lookup failure, IllegalArgExc...
-		if(target instanceof Tuple && target instanceof EObject) {
+		if(target instanceof Tuple<?, ?> && target instanceof EObject) {
             EObject etarget = (EObject) target;
             resolvedProperty = etarget.eClass().getEStructuralFeature(property.getName());
             if(resolvedProperty == null) { 
             	return null;
             }
 		}
-		else if(property.getEType() instanceof CollectionType && target instanceof EObject) {
+		else if(property.getEType() instanceof CollectionType<?, ?> && target instanceof EObject) {
 			// module property of direct OCL collection type => override the super impl which coerce the result value 
 			// and takes only the first element and returns from navigate call
             EObject eTarget = (EObject) target;
@@ -375,12 +375,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	@Override
 	public boolean isKindOf(Object object, EClassifier classifier) {
-		if (classifier instanceof AnyType) {
+		if (classifier instanceof AnyType<?>) {
 			// [Spec 11.2.1] All types in the UML model and the primitive types in the OCL standard library
 			// comply with the type OclAny.
 			// OclAny behaves as a supertype for all the types except for the OCL pre-defined collection types.
 			// OclAny is itself an instance of the metatype AnyType.
-			return false == object instanceof Collection;
+			return false == object instanceof Collection<?>;
 		} 
 		else if(classifier == QvtOperationalStdLibrary.INSTANCE.getElementType()) {
 			if(object instanceof EObject) {
@@ -393,7 +393,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=227515
 		if(classifier.eClass().getEPackage() == EcorePackage.eINSTANCE && 
 			classifier.eClass().getClassifierID() == EcorePackage.eINSTANCE.getCollectionType().getClassifierID()) {
-			return object instanceof java.util.Collection;
+			return object instanceof java.util.Collection<?>;
 		}
 		
 		return super.isKindOf(object, classifier);

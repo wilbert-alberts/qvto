@@ -76,16 +76,16 @@ class DeprecatedImplicitSourceCallHelper {
 			
 			causeNode = (actualCallExpCS.getSimpleNameCS() != null) ? actualCallExpCS.getSimpleNameCS() : callExpCS;
 		} 
-		else if(callExpCS instanceof VariableExpCS && resultAST instanceof PropertyCallExp) {
+		else if(callExpCS instanceof VariableExpCS && resultAST instanceof PropertyCallExp<?, ?>) {
 			// property call using implicit source
 			causeNode = callExpCS;
 		}
 		
 		if(causeNode != null) {
 			// call performed on implicit source
-			if(resultAST instanceof CallExp) {
+			if(resultAST instanceof CallExp<?>) {
 				CallExp<EClassifier> call = (CallExp<EClassifier>) resultAST;
-				if(call.getSource() instanceof VariableExp) {
+				if(call.getSource() instanceof VariableExp<?, ?>) {
 					@SuppressWarnings("unchecked")
 					VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) call.getSource();     				
 					Variable<EClassifier, EParameter> refVar = varExp.getReferredVariable();
@@ -113,7 +113,7 @@ class DeprecatedImplicitSourceCallHelper {
 						    }
 						} 
 						else if(refVarName != null && refVarName.equals(QvtOperationalEnv.THIS)) {
-							if(resultAST instanceof OperationCallExp) {
+							if(resultAST instanceof OperationCallExp<?, ?>) {
 								@SuppressWarnings("unchecked")
 								OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>)resultAST;
 								EOperation referredOperation = operCall.getReferredOperation();
@@ -122,7 +122,7 @@ class DeprecatedImplicitSourceCallHelper {
 									QvtOperationalUtil.reportWarning(env, ValidationMessages.DeprecatedImplicitSourceCall_moduleScopeImplicitCall, 
 		    								causeNode);
 								}
-							} else if(resultAST instanceof PropertyCallExp) {
+							} else if(resultAST instanceof PropertyCallExp<?, ?>) {
 								@SuppressWarnings("unchecked")
 					        	PropertyCallExp<EClassifier, EStructuralFeature> propCall = (PropertyCallExp<EClassifier, EStructuralFeature>) resultAST;					        	
 								EStructuralFeature referredProperty = propCall.getReferredProperty();

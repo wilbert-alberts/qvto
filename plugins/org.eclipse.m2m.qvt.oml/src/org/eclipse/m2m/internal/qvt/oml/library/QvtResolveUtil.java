@@ -169,7 +169,7 @@ public class QvtResolveUtil {
 				return false;
 			}
 
-			return isCollectionConversionCall(operCall) && resolveExp.getType() instanceof CollectionType;			
+			return isCollectionConversionCall(operCall) && resolveExp.getType() instanceof CollectionType<?, ?>;			
 		}
 		return false;
 	}
@@ -325,7 +325,7 @@ public class QvtResolveUtil {
     private static List<TraceRecord> lookupTraceRecordsBySource(Object source, EClassifier declaredSourceType, EMap<Object, EList<TraceRecord>> source2RecordMap) {
     	List<TraceRecord> result = null;
     	// Remark: Should be removed as soon as implict collect is support on resolve too
-        if(declaredSourceType instanceof CollectionType && source instanceof Collection) {
+        if(declaredSourceType instanceof CollectionType<?, ?> && source instanceof Collection<?>) {
         	Collection<?> srcCol = (Collection<?>)source;
         	for (Object nextSrc : srcCol) {
         		EList<TraceRecord> nextPart = source2RecordMap.get(nextSrc);

@@ -110,21 +110,15 @@ class MappingExtensionHelper {
 
 	private static class MappingSourceReference {
 		private int startOffset;		
-		private int endOffset;
-		private MappingOperation mapping;
+		private int endOffset;		
 
-		private MappingSourceReference(MappingOperation mapping, int startOffset, int endOffset) {
+		private MappingSourceReference(int startOffset, int endOffset) {
 			this.startOffset = startOffset;
-			this.endOffset = endOffset;
-			this.mapping = mapping;
+			this.endOffset = endOffset;			
 		}		
 		
 		public int getStartOffset() { return startOffset; }
 		public int getEndOffset() { return endOffset; }
-
-		public MappingOperation getReferredOperation() {
-			return mapping; 
-		}
 	}
 	
 	private static class ExtensionSourceRefAdapter extends AdapterImpl {
@@ -159,14 +153,14 @@ class MappingExtensionHelper {
 	
 		@Override
 		public boolean isAdapterForType(Object type) {
-			if(type instanceof Class) {
+			if(type instanceof Class<?>) {
 				return ExtensionSourceRefAdapter.class.isAssignableFrom((Class<?>)type);
 			}
 			return super.isAdapterForType(ExtensionSourceRefAdapter.class);
 		}
 		
 		static void addRef(MappingOperation mapping, CSTNode sourceRef, List<MappingSourceReference> refList) {
-			refList.add(new MappingSourceReference(mapping, sourceRef.getStartOffset(), sourceRef.getEndOffset()));			
+			refList.add(new MappingSourceReference(sourceRef.getStartOffset(), sourceRef.getEndOffset()));			
 		}
 
 		public List<MappingSourceReference> getInheritReferences() {

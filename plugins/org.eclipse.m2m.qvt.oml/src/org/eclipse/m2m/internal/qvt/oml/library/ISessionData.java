@@ -58,7 +58,7 @@ public interface ISessionData {
 		
 		@Override
 		public boolean equals(Object obj) {
-			if(obj instanceof NamedEntry) {
+			if(obj instanceof NamedEntry<?>) {
 				@SuppressWarnings("unchecked")				
 				NamedEntry<T> namedEntry = (NamedEntry<T>) obj;
 				return fName.equals(namedEntry.fName);

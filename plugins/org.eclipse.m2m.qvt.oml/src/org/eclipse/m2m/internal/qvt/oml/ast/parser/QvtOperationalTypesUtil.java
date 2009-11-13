@@ -82,7 +82,7 @@ public class QvtOperationalTypesUtil {
         String elementTypeName;
         if (elementType == null) { // Here is the workaround
             elementTypeName = UNKNOWN_TYPE_NAME;
-        } else if (elementType instanceof VoidType) {
+        } else if (elementType instanceof VoidType<?>) {
                 elementTypeName = "T"; //$NON-NLS-1$
         } else {
             elementTypeName = getTypeName(elementType);

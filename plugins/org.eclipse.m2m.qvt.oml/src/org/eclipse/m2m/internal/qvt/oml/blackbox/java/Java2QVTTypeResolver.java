@@ -53,7 +53,7 @@ class Java2QVTTypeResolver {
 	EClassifier toEClassifier(Type type) {
 		EClassifier result = type2EClassifier(type);
 		if(result == null) {
-			if(type instanceof Class) {
+			if(type instanceof Class<?>) {
 				EClassifier eWrapper = asEClassifier((Class<?>) type);
 				EClassifier asOCLType = fEnv.getUMLReflection().asOCLType(eWrapper);
 				if(asOCLType != eWrapper) {
@@ -72,9 +72,9 @@ class Java2QVTTypeResolver {
 			ParameterizedType parameterizedType = (ParameterizedType) type;
 			return (EClassifier)handleParameterizedType(parameterizedType);			
 		} 
-		else if(type instanceof Class) {
+		else if(type instanceof Class<?>) {
 			return handleType((Class<?>)type);
-		} else if(type instanceof TypeVariable) {
+		} else if(type instanceof TypeVariable<?>) {
 			TypeVariable<?> typeVariable = (TypeVariable<?>) type;
 			OCLStandardLibrary<EClassifier> stdLib = fEnv.getOCLStandardLibrary();
 			if(stdLib.getT().getName().equals(typeVariable.getName())) {
@@ -99,7 +99,7 @@ class Java2QVTTypeResolver {
 		}
 
 		Type actualElementType = actualTypeArguments[0];
-		if(rawType instanceof Class == false) {
+		if(rawType instanceof Class<?> == false) {
 			return null;
 		}
 		
@@ -146,7 +146,7 @@ class Java2QVTTypeResolver {
 
 		EClassifier actualElementClassifier = null;
 		
-		if(elementType instanceof TypeVariable) {			
+		if(elementType instanceof TypeVariable<?>) {			
 			TypeVariable<?> typeVariable = (TypeVariable<?>)elementType;
 			String genericJavaTypeName = typeVariable.getName();
 			

@@ -412,7 +412,8 @@ public class QvtOperationalVisitorCS
 		
 		// overrides super implementation by handling ambiguities at WARN level
 		try {
-			Environment.Lookup<EPackage, EClassifier, EOperation, EStructuralFeature> lookup = OCLUtil.getAdapter(env, Environment.Lookup.class);
+			@SuppressWarnings("unchecked")
+			Environment.Lookup<?, EClassifier, EOperation, ?> lookup = OCLUtil.getAdapter(env, Environment.Lookup.class);
 			EOperation operation = lookup.tryLookupOperation(owner, name, args);
 			if (cstNode != null) {
 				cstNode.setAst(operation);
@@ -601,7 +602,7 @@ public class QvtOperationalVisitorCS
 			throws SemanticException {
 	    // stringLiteralExpCS() is not called directly for AST-CST binding creation done in literalExpCS()
 		OCLExpression<EClassifier> literalExp = literalExpCS(stringLiteralExpCS, env);
-		if (literalExp instanceof StringLiteralExp) {
+		if (literalExp instanceof StringLiteralExp<?>) {
 			return ((StringLiteralExp<EClassifier>) literalExp).getStringSymbol();
 		}
         return null;
@@ -712,15 +713,20 @@ public class QvtOperationalVisitorCS
 	        	org.eclipse.ocl.ecore.OCLExpression result = (org.eclipse.ocl.ecore.OCLExpression)super.oclExpressionCS(oclExpressionCS, env);
 
 	    		if (oclExpressionCS instanceof OperationCallExpCS) {
-	    			if (result instanceof OperationCallExp) {
-		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
-		    					(OperationCallExp<EClassifier, EOperation>) result, env);
+	    			if (result instanceof OperationCallExp<?,?>) {
+	    				@SuppressWarnings("unchecked")
+		    			OperationCallExp<EClassifier, EOperation> resultOpCall = (OperationCallExp<EClassifier, EOperation>) result;
+						validateOperationCall((OperationCallExpCS) oclExpressionCS, resultOpCall, env);
 	    			}
-	    			if (result instanceof IteratorExp 
-	    					&& ((IteratorExp<EClassifier, EOperation>) result).getBody() instanceof OperationCallExp) {
-		    			validateOperationCall((OperationCallExpCS) oclExpressionCS,
-		    					(OperationCallExp<EClassifier, EOperation>) ((IteratorExp<EClassifier, EOperation>) result).getBody(), 
-		    					env);
+	    			if (result instanceof IteratorExp<?,?>) {
+	    				@SuppressWarnings("unchecked")
+	    				IteratorExp<EClassifier, EOperation> resultIter = (IteratorExp<EClassifier, EOperation>) result;
+	    				
+						if(resultIter.getBody() instanceof OperationCallExp<?, ?>) {
+							@SuppressWarnings("unchecked")
+							OperationCallExp<EClassifier, EOperation> opCallBody = (OperationCallExp<EClassifier, EOperation>) resultIter.getBody();
+							validateOperationCall((OperationCallExpCS) oclExpressionCS, opCallBody, env);
+						}
 	    			}
 	    		}
 	    		return result;
@@ -1233,15 +1239,15 @@ public class QvtOperationalVisitorCS
         
         EClassifier bodyType = propertyCall.getType();
         
-        if (source.getType() instanceof SequenceType ||
-                source.getType() instanceof OrderedSetType) {
-            EClassifier c = getCollectionType(
+        if (source.getType() instanceof SequenceType<?, ?> ||
+                source.getType() instanceof OrderedSetType<?, ?>) {
+            EClassifier c = resolveCollectionType(
                     env,
                     CollectionKind.SEQUENCE_LITERAL,
                     bodyType);
             result.setType(c);
         } else {
-            EClassifier c = getCollectionType(
+            EClassifier c = resolveCollectionType(
                     env,
                     CollectionKind.BAG_LITERAL,
                     bodyType);
@@ -1258,7 +1264,7 @@ public class QvtOperationalVisitorCS
             return false;
         }
         return (callExpCS.getAccessor().getValue() == DotOrArrowEnum.ARROW) 
-                && (source.getType() instanceof CollectionType);
+                && (source.getType() instanceof CollectionType<?, ?>);
     }
     
 	@Override
@@ -1267,8 +1273,10 @@ public class QvtOperationalVisitorCS
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
         OCLExpression<EClassifier> result = super.variableExpCS(variableExpCS, env);
         
-        if(result instanceof PropertyCallExp) {
-        	DeprecatedImplicitSourceCallHelper.validateCallExp(variableExpCS, (PropertyCallExp<EClassifier, ?>)result, env);
+        if(result instanceof PropertyCallExp<?, ?>) {
+        	@SuppressWarnings("unchecked")
+        	PropertyCallExp<EClassifier, ?> propCallExp = (PropertyCallExp<EClassifier, ?>)result;
+			DeprecatedImplicitSourceCallHelper.validateCallExp(variableExpCS, propCallExp, env);
         }
         
         // AST binding      
@@ -1285,7 +1293,7 @@ public class QvtOperationalVisitorCS
     	
     	org.eclipse.ocl.ecore.OCLExpression result = oclExpressionCS(expressionCS, env);
 		if (expressionCS instanceof MappingCallExpCS) {
-		    if (result instanceof OperationCallExp) {
+		    if (result instanceof OperationCallExp<?, ?>) {
 		    	// FIXME - review this, seems to be useless as we create callexp according to referred operation		    	
 		    	if(result instanceof MappingCallExp) {
 		    		// keep 'virtual' attribute value
@@ -1295,7 +1303,8 @@ public class QvtOperationalVisitorCS
 		        if (mappingCallExp != null) {
 		            return mappingCallExp;
 		        }
-		    } else if (result instanceof IteratorExp) {
+		    } else if (result instanceof IteratorExp<?, ?>) {
+		    	@SuppressWarnings("unchecked")
 		        IteratorExp<EClassifier, EParameter> iteratorExp = (IteratorExp<EClassifier, EParameter>) result;
 		        MappingCallExp mappingCallExp = createMappingCallExp((MappingCallExpCS) expressionCS, iteratorExp.getBody());
 		        if (mappingCallExp != null) {
@@ -1834,8 +1843,8 @@ public class QvtOperationalVisitorCS
 		String value = null;
 		if (ownedTagCS.getOclExpressionCS() != null) {
 			org.eclipse.ocl.ecore.OCLExpression oclExpression = visitOclExpressionCS(ownedTagCS.getOclExpressionCS(), env);
-			if (oclExpression instanceof StringLiteralExp) {
-				value = ((StringLiteralExp) oclExpression).getStringSymbol();
+			if (oclExpression instanceof StringLiteralExp<?>) {
+				value = ((StringLiteralExp<?>) oclExpression).getStringSymbol();
 			}
 		}
 		
@@ -4114,7 +4123,7 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(forExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType<?,?>)) {
-            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
+            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp(env, forExpCS);
         }
         String name = forExpCS.getSimpleNameCS().getValue();
 
@@ -4171,7 +4180,7 @@ public class QvtOperationalVisitorCS
         OCLExpression<EClassifier> source =
             getCollectionSourceExpression(imperativeIterateExpCS.getSource(), env);
         if (!(source.getType() instanceof CollectionType<?,?>)) {
-            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp();
+            return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp(env, imperativeIterateExpCS);
         }
         String name = imperativeIterateExpCS.getSimpleNameCS().getValue();
 
@@ -4269,6 +4278,7 @@ public class QvtOperationalVisitorCS
         	org.eclipse.ocl.ecore.OCLExpression conditionExp = oclExpressionCS(imperativeIterateExpCS.getCondition(), env);
             astNode.setCondition(conditionExp);
             if (conditionExp instanceof TypeExp<?>) {
+            	@SuppressWarnings("unchecked")
                 TypeExp<EClassifier> typedCondition = (TypeExp<EClassifier>) conditionExp;
                 EClassifier rawTypeType = TypeUtil.resolveType(env, typedCondition.getType());
                 if (rawTypeType instanceof TypeType<?,?>) {
@@ -4289,12 +4299,12 @@ public class QvtOperationalVisitorCS
         if (name.equals("selectOne") || name.equals("collectOne") || name.equals("collectselectOne")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             astNode.setType(resultElementType);        
         } else if (name.equals("xselect")) { //$NON-NLS-1$
-            EClassifier resultCollectionType = getCollectionType(env, sourceCollectionType.getKind(), resultElementType);
+            EClassifier resultCollectionType = resolveCollectionType(env, sourceCollectionType.getKind(), resultElementType);
             astNode.setType(resultCollectionType);        
         } else { // xcollect and collectselect
-            EClassifier resultCollectionType = ((sourceCollectionType instanceof SetType) || (sourceCollectionType instanceof BagType)) ?
-                    getCollectionType(env, CollectionKind.BAG_LITERAL, resultElementType)
-                    : getCollectionType(env, CollectionKind.SEQUENCE_LITERAL, resultElementType);
+            EClassifier resultCollectionType = ((sourceCollectionType instanceof SetType<?, ?>) || (sourceCollectionType instanceof BagType<?, ?>)) ?
+            		resolveCollectionType(env, CollectionKind.BAG_LITERAL, resultElementType)
+                    : resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, resultElementType);
             astNode.setType(resultCollectionType);        
         }
 
@@ -4315,6 +4325,7 @@ public class QvtOperationalVisitorCS
         if (bodyExp instanceof CallExp) {
             CallExp bodyCallExp = (CallExp) bodyExp;
             if (bodyCallExp.getSource() instanceof VariableExp<?,?>) {
+            	@SuppressWarnings("unchecked")
                 VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) bodyCallExp.getSource();
                 return sourceExp.getReferredVariable() == vdcl;
             }
@@ -4325,6 +4336,7 @@ public class QvtOperationalVisitorCS
 
 	private MappingCallExp createMappingCallExp(MappingCallExpCS expressionCS, OCLExpression<EClassifier> result) {
 		if (result instanceof OperationCallExp<?,?>) {
+			@SuppressWarnings("unchecked")
 			OperationCallExp<EClassifier, EOperation> operationCallExp = (OperationCallExp<EClassifier, EOperation>) result;
 			EOperation operation = operationCallExp.getReferredOperation();
 			if (QvtOperationalUtil.isMappingOperation(operation)) {
@@ -4355,13 +4367,16 @@ public class QvtOperationalVisitorCS
 				EClassifier sourceType = operationCallExp.getSource().getType();
 				EClassifier argumentType = ((OCLExpression<EClassifier>) operationCallExp.getArgument().get(0))
 						.getType();
-				if (argumentType instanceof TypeType<?,?>
-						&& QvtOperationalParserUtil.isIncorrectCast(sourceType,
-								((TypeType<EClassifier, EOperation>) argumentType).getReferredType())) {
-					QvtOperationalUtil.reportWarning(env, ValidationMessages.incorrectCastWarning, opCallCS);
+				if (argumentType instanceof TypeType<?,?>) {
+					@SuppressWarnings("unchecked")
+					TypeType<EClassifier, EOperation> argTypeType = (TypeType<EClassifier, EOperation>) argumentType;
+					if(QvtOperationalParserUtil.isIncorrectCast(sourceType, argTypeType.getReferredType())) {
+						QvtOperationalUtil.reportWarning(env, ValidationMessages.incorrectCastWarning, opCallCS);
+					}
 				}
 			}
 		}
+		
 		if (QvtOperationalUtil.isMappingOperation(operationCallExp.getReferredOperation())) {
 			if (false == opCallCS instanceof MappingCallExpCS) {
 				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,
@@ -4855,6 +4870,12 @@ public class QvtOperationalVisitorCS
 			myErrorNodes = new java.util.HashSet<TypedElement<?>>();			
 		}
 		myErrorNodes.add(expr);
+	}
+	
+	protected EClassifier resolveCollectionType(
+			Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> env,
+			CollectionKind kind, EClassifier elementType) {
+		return TypeUtil.resolveCollectionType(env, kind, elementType);
 	}
 	
 	private static void createPropertyCallASTBinding(
