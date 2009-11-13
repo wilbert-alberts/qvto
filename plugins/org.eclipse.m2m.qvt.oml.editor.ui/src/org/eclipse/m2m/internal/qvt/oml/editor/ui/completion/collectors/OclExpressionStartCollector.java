@@ -44,19 +44,34 @@ public class OclExpressionStartCollector extends AbstractCollector {
 		    }
 		}
 		if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_SEMICOLON, QvtOpLPGParsersym.TK_LBRACE)) {
-		    IToken parentBracingExpression = data.getParentBracingExpression(INAPPLICABLE_BRACING_EXPRESSIONS, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
+		    IToken parentBracingExpression = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+		            	public boolean isSuited(IToken token) {
+		            		return QvtCompletionData.isKindOf(token, INAPPLICABLE_BRACING_EXPRESSIONS);        		
+		            	}
+		            },
+		    		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
 		    if ((parentBracingExpression != null) 
 		            && QvtCompletionData.isKindOf(parentBracingExpression, INAPPLICABLE_BRACING_EXPRESSIONS)) {
 		        return false;
 		    }
 		}
-		if (data.getParentBracingExpression(LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS) != null) {
+		if (data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+		        	public boolean isSuited(IToken token) {
+		        		return QvtCompletionData.isKindOf(token, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);        		
+		        	}
+		        },
+				QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, Integer.MAX_VALUE, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS) != null) {
 		    if (ResolveTypeCollector.isCollectorApplicable(data)) {
 		        return false;
 		    }
 		    if (QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_RPAREN)) {
 		        // check for switch ... { case(...) /*@*/
-	            IToken bracingSwitch = data.getParentBracingExpression(new int[] {QvtOpLPGParsersym.TK_switch}, QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
+	            IToken bracingSwitch = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+			            	public boolean isSuited(IToken token) {
+			            		return QvtCompletionData.isKindOf(token, new int[] {QvtOpLPGParsersym.TK_switch});        		
+			            	}
+			            },
+	            		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 1, null, null, null);
 	            if (bracingSwitch != null) {
 	                IToken caseToken = LightweightParserUtil.getPreviousTokenByKind(leftToken, QvtOpLPGParsersym.TK_case);
 	                return (caseToken != null) && (bracingSwitch.getEndOffset() < caseToken.getStartOffset());

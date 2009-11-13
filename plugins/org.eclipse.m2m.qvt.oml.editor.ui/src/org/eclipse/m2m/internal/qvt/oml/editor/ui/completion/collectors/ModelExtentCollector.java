@@ -36,7 +36,7 @@ public class ModelExtentCollector extends AbstractCollector {
 	@Override
 	protected boolean isApplicableInternal(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-		return QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_AT_SIGN);
+		return QvtCompletionData.isKindOf(leftToken, QvtOpLPGParsersym.TK_AT);
 	}
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals,

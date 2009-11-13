@@ -53,6 +53,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.ecore.TypeExp;
@@ -92,7 +93,7 @@ public class CompletionProposalUtil {
     
     private static final int[] PREDEFINED_INSTANCES = {
         QvtOpLPGParsersym.TK_null,
-        QvtOpLPGParsersym.TK_Invalid,
+        QvtOpLPGParsersym.TK_invalid,
         QvtOpLPGParsersym.TK_true,
         QvtOpLPGParsersym.TK_false
     };
@@ -598,8 +599,8 @@ public class CompletionProposalUtil {
                 if (contextTypeCS instanceof PathNameCS) {
                     if (longForm) {
                         PathNameCS pathNameCS = (PathNameCS) contextTypeCS;
-                        for (String name : pathNameCS.getSequenceOfNames()) {
-                            sb.append(name);
+                        for (SimpleNameCS name : pathNameCS.getSimpleNames()) {
+                            sb.append(name.getValue());
                             sb.append("::"); //$NON-NLS-1$
                         }
                     }

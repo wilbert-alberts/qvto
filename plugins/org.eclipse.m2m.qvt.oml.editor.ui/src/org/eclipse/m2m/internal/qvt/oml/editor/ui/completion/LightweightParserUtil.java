@@ -38,6 +38,7 @@ import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.parser.OCLLexer;
+import org.eclipse.ocl.utilities.PredefinedType;
 
 /**
  * @author aigdalov
@@ -117,18 +118,18 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_invresolveoneIn
     };
     
-    public static final int[] OCL_ITERATOR_TERMINALS = {
-        QvtOpLPGParsersym.TK_select,
-        QvtOpLPGParsersym.TK_reject,
-        QvtOpLPGParsersym.TK_collect,
-        QvtOpLPGParsersym.TK_forAll,
-        QvtOpLPGParsersym.TK_exists,
-        QvtOpLPGParsersym.TK_isUnique,
-        QvtOpLPGParsersym.TK_one,
-        QvtOpLPGParsersym.TK_any,
-        QvtOpLPGParsersym.TK_collectNested,
-        QvtOpLPGParsersym.TK_sortedBy,
-        QvtOpLPGParsersym.TK_closure
+    public static final String[] OCL_ITERATOR_TERMINALS = {
+        PredefinedType.SELECT_NAME,
+        PredefinedType.REJECT_NAME,
+        PredefinedType.COLLECT_NAME,
+        PredefinedType.FOR_ALL_NAME,
+        PredefinedType.EXISTS_NAME,
+        PredefinedType.IS_UNIQUE_NAME,
+        PredefinedType.ONE_NAME,
+        PredefinedType.ANY_NAME,
+        PredefinedType.COLLECT_NESTED_NAME,
+        PredefinedType.SORTED_BY_NAME,
+        PredefinedType.CLOSURE_NAME,
     };
     
     public static final int[] QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = {
@@ -138,17 +139,11 @@ public class LightweightParserUtil {
         QvtOpLPGParsersym.TK_collectOne
     };
     
-    public static final int[] ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR = 
-        uniteIntArrays(OCL_ITERATOR_TERMINALS, QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR);
-    
     public static final int[] QVTO_ITERATOR_TERMINALS = 
         uniteIntArrays(QVTO_ITERATOR_TERMINALS_WITH_IMPLICIT_ITERATOR,  new int[] {
                 QvtOpLPGParsersym.TK_collectselect,
                 QvtOpLPGParsersym.TK_collectselectOne
         });
-    
-    public static final int[] ITERATOR_TERMINALS = 
-        uniteIntArrays(OCL_ITERATOR_TERMINALS, QVTO_ITERATOR_TERMINALS);
     
     public static final int[] MAPPING_CLAUSE_TOKENS = {
         QvtOpLPGParsersym.TK_when, 

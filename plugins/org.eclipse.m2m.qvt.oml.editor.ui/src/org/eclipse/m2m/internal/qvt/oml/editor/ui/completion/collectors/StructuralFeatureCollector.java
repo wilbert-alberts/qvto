@@ -49,8 +49,12 @@ public class StructuralFeatureCollector extends AbstractCollector {
                 || (leftToken.getKind() == QvtOpLPGParsersym.TK_LBRACE)
                 || (leftToken.getKind() == QvtOpLPGParsersym.TK_RBRACE)
                 ) {
-            IToken structuralFeatureContainerToken = data.getParentBracingExpression(SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES, 
-                    QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
+            IToken structuralFeatureContainerToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+			        	public boolean isSuited(IToken token) {
+			        		return QvtCompletionData.isKindOf(token, SCTRUCTURALFEATURE_CONTAINER_TERMINALS_WITH_MAPPING_CLAUSES);        		
+			        	}
+			        },
+            		QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
                     1, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);
             if ((structuralFeatureContainerToken != null)
                     && QvtCompletionData.isKindOf(structuralFeatureContainerToken, SCTRUCTURALFEATURE_CONTAINER_TERMINALS)) {
@@ -72,7 +76,11 @@ public class StructuralFeatureCollector extends AbstractCollector {
             if (firstTypeToken != null) {
                 if (QvtCompletionData.isKindOf(firstTypeToken, QvtOpLPGParsersym.TK_LBRACE)) { // type not specified
                     // use type in mapping declaration
-                    IToken mappingToken = data.getParentBracingExpression(new int[] {QvtOpLPGParsersym.TK_mapping}, 
+                    IToken mappingToken = data.getParentBracingExpression(new QvtCompletionData.ITokenQualificator() {
+					        	public boolean isSuited(IToken token) {
+					        		return QvtCompletionData.isKindOf(token, new int[] {QvtOpLPGParsersym.TK_mapping});        		
+					        	}
+					        },
                             QvtOpLPGParsersym.TK_LBRACE, QvtOpLPGParsersym.TK_RBRACE, 
                             2, null, null, LightweightParserUtil.MAPPING_CLAUSE_TOKENS);          
                     if (mappingToken != null) {

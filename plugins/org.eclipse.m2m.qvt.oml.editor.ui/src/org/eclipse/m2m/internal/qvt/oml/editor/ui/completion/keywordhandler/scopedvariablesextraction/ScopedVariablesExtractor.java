@@ -98,8 +98,9 @@ public class ScopedVariablesExtractor {
     private Result analyseVariableDeclaringExpressions(IToken currentToken, QvtCompletionData data, Scope scope) {
         if (QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_let)) {
             return analyseLetExpression(currentToken, data, scope);
-        } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.ITERATOR_TERMINALS)
-                || QvtCompletionData.isKindOf(currentToken, QvtOpLPGParsersym.TK_iterate)) {
+        } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.QVTO_ITERATOR_TERMINALS)
+        		|| QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.OCL_ITERATOR_TERMINALS)
+                || QvtCompletionData.isKindOf(currentToken, "iterate")) { //$NON-NLS-1$
             return analyseIteratorExpression(currentToken, data, scope);
         } else if (QvtCompletionData.isKindOf(currentToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS)) {
             return analyseResolveExpression(currentToken, data, scope);

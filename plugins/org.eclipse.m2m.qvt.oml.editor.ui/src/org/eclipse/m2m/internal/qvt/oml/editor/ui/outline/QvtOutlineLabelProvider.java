@@ -199,13 +199,13 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 
     public static String getImportLabel(final PathNameCS path) {
         StringBuffer buffer = null;
-        for (String part : path.getSequenceOfNames()) {
+        for (SimpleNameCS part : path.getSimpleNames()) {
 			if (buffer != null) {
                 buffer.append("."); //$NON-NLS-1$
 			} else {
                 buffer = new StringBuffer();
 			}
-            buffer.append(part);
+            buffer.append(part.getValue());
 		}
 		return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
     }
