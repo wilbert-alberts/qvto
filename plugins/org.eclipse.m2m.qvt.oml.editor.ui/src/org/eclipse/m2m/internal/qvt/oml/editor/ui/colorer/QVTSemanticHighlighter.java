@@ -199,9 +199,9 @@ class QVTSemanticHighlighter {
 
 				if(!isStdlibElement(type)) {
 					// user model type
-					EList<String> names = n.getSequenceOfNames();
+					EList<SimpleNameCS> names = n.getSimpleNames();
 					if(names.size() > 1) {						
-						int length = names.get(names.size() - 1).length();
+						int length = names.get(names.size() - 1).getValue().length();
 						int offset = n.getEndOffset() - length;
 						return fCollector.visitToken(n, offset, length + 1, INDEX_USER_MODEL_ELEMENT);
 					}

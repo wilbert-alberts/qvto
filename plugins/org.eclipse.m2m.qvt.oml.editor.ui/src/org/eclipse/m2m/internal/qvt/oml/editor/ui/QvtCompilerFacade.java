@@ -22,13 +22,17 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.BasicMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.WorkspaceUnitResolver;
 import org.eclipse.ui.IEditorInput;
@@ -63,20 +67,13 @@ public class QvtCompilerFacade {
 			monitor.worked(1);
 
 			final String contents = document.get();			
-			try {				
-				final UnitProxy unit = WorkspaceUnitResolver.getUnit(file);			
-				QVTOCompiler compiler = new QVTOCompiler(unit.getResolver()) {
-					@Override
-					protected Reader createReader(UnitProxy source) throws IOException {
-						if(source.equals(unit)) {
-							return new StringReader(contents);
-						}
-						
-						return super.createReader(source);
-					}
-				};								
+			try {
+				UnitProxy unit = WorkspaceUnitResolver.getUnit(file);
+				UnitResolver unitResolver = unit.getResolver();
+				final UnitProxy inMemoryUnit = new InMemoryUnitProxy(unit.getNamespace(), unit.getName(), unit.getURI(), contents, unitResolver);
 				
-                result = compiler.compile(unit, options, new BasicMonitor.EclipseSubProgress(monitor, 2));
+				QVTOCompiler compiler = CompilerUtils.createCompiler(unitResolver);				
+                result = compiler.compile(inMemoryUnit, options, new BasicMonitor.EclipseSubProgress(monitor, 2));
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result);
@@ -131,4 +128,37 @@ public class QvtCompilerFacade {
 	}
 	
 	private static QvtCompilerFacade ourInstance;
+	
+	
+	static class InMemoryUnitProxy extends UnitProxy {
+		
+		public InMemoryUnitProxy(String namespace, String unitName, URI uri,
+				String fContents, UnitResolver fMyResolver) {
+			super(namespace, unitName, uri);
+			this.fContents = fContents;
+			this.fMyResolver = fMyResolver;
+		}
+
+		private final String fContents;
+		private final UnitResolver fMyResolver; 
+		
+		@Override
+		public UnitContents getContents() throws IOException {
+			return new UnitContents.CSTContents() {				
+				public Reader getContents() throws IOException {
+					return new StringReader(fContents);
+				}
+			};			
+		}
+
+		@Override
+		public int getContentType() {
+			return UnitProxy.TYPE_CST_STREAM;
+		}
+
+		@Override
+		public UnitResolver getResolver() {
+			return fMyResolver;
+		}
+	}
 }

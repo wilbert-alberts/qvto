@@ -47,6 +47,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
@@ -600,7 +601,7 @@ class QVTColorsConfigurationBlock {
 		assert findUnit != null;
 		try {			
 			// TODO - log error on compilation errors
-			QVTOCompiler compiler = new QVTOCompiler(findUnit.getResolver());
+			QVTOCompiler compiler = new QVTOCompiler(findUnit.getResolver(), new MetamodelRegistryProvider());
 			final CompiledUnit compiledPreviewUnit = compiler.compile(findUnit, new QvtCompilerOptions(), new BasicMonitor());
 			
 			final SemanticHighlightingManager semanticHighlightingManager = new SemanticHighlightingManager() {

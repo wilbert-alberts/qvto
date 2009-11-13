@@ -37,7 +37,7 @@ public class QVTColorsPreferencePage extends PreferencePage implements IWorkbenc
 	}
 
 	protected void setDescription() {
-		setDescription("Synta&x");
+		setDescription("Synta&x"); //$NON-NLS-1$
 	}
 
 	@Override
