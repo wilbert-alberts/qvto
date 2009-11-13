@@ -28,7 +28,7 @@ public class QvtNamesChecker {
 
 	public static final String QNAME_DELIMITER = "."; //$NON-NLS-1$
 	
-	private static final String ADJACENT_DELIMITERS_ERROR = QNAME_DELIMITER + QNAME_DELIMITER; //$NON-NLS-1$	
+	private static final String ADJACENT_DELIMITERS_ERROR = QNAME_DELIMITER + QNAME_DELIMITER;	
 
 	private static final IStatus invalidCUFileNameStatus = CommonPlugin.createStatus(IStatus.ERROR, 
 			NLS.bind(Messages.QvtNamesChecker_InvalidCUnitName, 
@@ -210,7 +210,7 @@ public class QvtNamesChecker {
 	 * @return array of name segments composing the given qualified name
 	 */
 	public static String[] getQualifiedNameSegments(String qualifiedName) {
-		StringTokenizer tokenizer = new StringTokenizer(qualifiedName, QNAME_DELIMITER); //$NON-NLS-1$
+		StringTokenizer tokenizer = new StringTokenizer(qualifiedName, QNAME_DELIMITER);
 		int segmentCount = tokenizer.countTokens();
 		String[] segments = new String[segmentCount];
 		

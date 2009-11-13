@@ -80,7 +80,7 @@ class DefaultExtensionDecoder implements ExeXMIExtensionEncoder  {
 					try {
 						nextInt = (sign * Integer.parseInt(nextToken, 16)) + prevStartPos;
 					} catch(NumberFormatException e) {						
-						throw new CorruptedExtensionData(NLS.bind("Invalid offset format ({0})", e.toString()));
+						throw new CorruptedExtensionData(NLS.bind("Invalid offset format ({0})", e.toString())); //$NON-NLS-1$
 					}
 						
 					if(i == 0) {
@@ -90,7 +90,7 @@ class DefaultExtensionDecoder implements ExeXMIExtensionEncoder  {
 						endPos = nextInt;
 					}
 				} else {
-					throw new CorruptedExtensionData("Missing offset data for existing AST Node");
+					throw new CorruptedExtensionData("Missing offset data for existing AST Node"); //$NON-NLS-1$
 				}
 			}
 			
@@ -100,7 +100,7 @@ class DefaultExtensionDecoder implements ExeXMIExtensionEncoder  {
 		}
 		
 		if(tokenizer.hasMoreTokens()) {
-			throw new CorruptedExtensionData("Too many offsets data existing AST Nodes");
+			throw new CorruptedExtensionData("Too many offsets data existing AST Nodes"); //$NON-NLS-1$
 		}		
 	}
 		
@@ -165,7 +165,7 @@ class DefaultExtensionDecoder implements ExeXMIExtensionEncoder  {
 				try {
 					count = Integer.parseInt(nextToken, 16);
 				} catch(NumberFormatException e) {
-					throw new CorruptedExtensionData(NLS.bind("Invalid offset format ({0})", e.toString()));
+					throw new CorruptedExtensionData(NLS.bind("Invalid offset format ({0})", e.toString())); //$NON-NLS-1$
 				}
 					
 				result = new int[count];
@@ -198,7 +198,7 @@ class DefaultExtensionDecoder implements ExeXMIExtensionEncoder  {
 		}
 		
 		if(lineOffsets == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		
 		StringBuilder buf = new StringBuilder(1024);

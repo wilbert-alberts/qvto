@@ -71,7 +71,7 @@ public class CompilerUtils {
 			children.add(createProblemDiagnostic(uri, problem));
 		}
 
-		String mainMessage = NLS.bind("Unit diagnostic - {0} errors, warnings {1}", errorCount, warnCount);
+		String mainMessage = NLS.bind("Unit diagnostic - {0} errors, warnings {1}", errorCount, warnCount); //$NON-NLS-1$
 		BasicDiagnostic unitDiagnostic = new BasicDiagnostic(uri.toString(), 0, children, mainMessage, null);
 		return unitDiagnostic;
 	}

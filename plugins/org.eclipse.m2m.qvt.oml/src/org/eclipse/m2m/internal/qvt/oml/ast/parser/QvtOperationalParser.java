@@ -27,9 +27,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLPGParsersym;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParser;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
@@ -43,8 +43,8 @@ public class QvtOperationalParser {
 	public QvtOperationalParser() {
 	}
 	
-	public static QvtOpLexer createLexer(final Reader is, final String name, QvtOperationalEnv env) throws ParserException {
-		QvtOpLexer lexer = new QvtOpLexer(env);
+	public static QVTOLexer createLexer(final Reader is, final String name, QvtOperationalEnv env) throws ParserException {
+		QVTOLexer lexer = new QVTOLexer(env);
 		lexer.initialize(correctLineBreaks(new OCLInput(is)), name);
 		return lexer;
 	}
@@ -57,7 +57,7 @@ public class QvtOperationalParser {
 		// the compiler and the rest of the tooling can adopt it
 		UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();		
 		try {			
-			QvtOpLexer lexer = createLexer(is, name, env);
+			QVTOLexer lexer = createLexer(is, name, env);
 			unitCS.setStartOffset(0);
 			unitCS.setEndOffset(lexer.getStreamLength());			
 
@@ -107,8 +107,8 @@ public class QvtOperationalParser {
 	}
 		
 	
-	private class RunnableQVTParser extends QvtOpLPGParser {
-		public RunnableQVTParser(QvtOpLexer lexStream) {
+	private class RunnableQVTParser extends QVTOParser {
+		public RunnableQVTParser(QVTOLexer lexStream) {
 			super(lexStream);
 		}
 		
@@ -127,7 +127,7 @@ public class QvtOperationalParser {
 		@Override
 		public void reportError(int errorCode, String locationInfo, int leftToken, int rightToken, String tokenText) {
 			// FIXME - review the strange block below
-			if (tokenText.contains(getTokenKindName(QvtOpLPGParsersym.TK_ERROR_TOKEN))) {
+			if (tokenText.contains(getTokenKindName(QVTOParsersym.TK_ERROR_TOKEN))) {
 				return;
 			} 
 			super.reportError(errorCode, locationInfo, leftToken, rightToken, tokenText);

@@ -16,7 +16,7 @@ import java.util.Arrays;
 import lpg.lpgjavaruntime.IntSegmentedTuple;
 
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QvtOpLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 
 /**
  * Implements quick search of a line number for a given position within a string
@@ -29,7 +29,7 @@ class BasicLineNumberProvider implements LineNumberProvider {
 		fLineEnds = lineEnds.clone();
 	}
 	
-    BasicLineNumberProvider(QvtOpLexer lexer) {
+    BasicLineNumberProvider(QVTOLexer lexer) {
     	
 		IntSegmentedTuple lineOffsets = lexer.getLineOffsets();
 		int[] lines = new int[lineOffsets.size()];
