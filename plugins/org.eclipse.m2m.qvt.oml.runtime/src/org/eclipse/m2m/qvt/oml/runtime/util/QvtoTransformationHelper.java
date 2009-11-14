@@ -40,11 +40,9 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompilerFacade;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.WorkspaceQvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
-import org.eclipse.m2m.internal.qvt.oml.runtime.util.UriMappingAwareResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.osgi.util.NLS;
 
@@ -112,13 +110,7 @@ public class QvtoTransformationHelper {
             if (metamodelResourceSet == null) {
                 metamodelResourceSet = new ResourceSetImpl();
             }
-            ResourceSet wrappedMetamodelResourceSet = metamodelResourceSet; 
             QvtModule qvtModule = TransformationUtil.getQvtModule(myTransfUri);
-            if (qvtModule instanceof WorkspaceQvtModule) {
-                WorkspaceQvtModule workspaceQvtModule = (WorkspaceQvtModule) qvtModule;
-                IFile transformationFile = workspaceQvtModule.getTransformationFile();
-                wrappedMetamodelResourceSet = new UriMappingAwareResourceSet(metamodelResourceSet, transformationFile);
-            }
 
             final List<ModelExtentContents> outExtents = new ArrayList<ModelExtentContents>();
         	final List<EObject> outMainParams = new ArrayList<EObject>();

@@ -457,14 +457,14 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 			
 			children.add(new BasicDiagnostic(Diagnostic.ERROR,
 					DIAGNOSTIC_SOURCE, 0,
-					"Unresolved compilation units", unresolved.toArray()));
+					"Unresolved compilation units", unresolved.toArray())); //$NON-NLS-1$
 		}
 		
 		// TODO - move to the qvto core plugin => externalize String 
 		if(!children.isEmpty()) {
 			return new BasicDiagnostic(
 					DIAGNOSTIC_SOURCE, 0, children,
-					"QVT imports diagnostic", null);		
+					"QVT imports diagnostic", null);		 //$NON-NLS-1$
 		}
 		
 		return Diagnostic.OK_INSTANCE;
