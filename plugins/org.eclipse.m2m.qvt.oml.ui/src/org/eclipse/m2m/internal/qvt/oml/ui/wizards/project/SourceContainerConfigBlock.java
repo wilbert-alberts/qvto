@@ -91,7 +91,7 @@ class SourceContainerConfigBlock {
         containerGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
 
         fSourceContainerLabel = new Label(containerGroup, SWT.CHECK);
-        fSourceContainerLabel.setText(Messages.QvtSettingsPropertyPage_SourceContainerLabel); //$NON-NLS-1$        
+        fSourceContainerLabel.setText(Messages.QvtSettingsPropertyPage_SourceContainerLabel);        
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
         data.horizontalSpan = 2;
         fSourceContainerLabel.setLayoutData(data);
@@ -225,10 +225,10 @@ class SourceContainerConfigBlock {
 		if(fProject.exists()) {
 			IResource container = (IResource)fProject.getWorkspace().getRoot().findMember(absPath);
 			if (container == null || !container.exists()) {
-				setWarningMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerDoesNotExist, absPath)); //$NON-NLS-1$
+				setWarningMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerDoesNotExist, absPath));
 			} 
 			else if(!(container instanceof IContainer)) {
-				setErrorMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerIsNotFolder, absPath)); //$NON-NLS-1$				
+				setErrorMessage(NLS.bind(Messages.QvtSettingsPropertyPage_ContainerIsNotFolder, absPath));				
 			}
 			
 			if(fStatus.isOK()) {

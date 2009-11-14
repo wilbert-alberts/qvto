@@ -633,7 +633,7 @@ public class QvtMetamodelMappingPage extends PropertyPage {
 			
 			if(data.eContainer() == null) {
 				// when adding new one, intially empty, take as invalid
-				updateStatus(validateURI(modelURIText.getText(), Messages.QvtMetamodelMappingPage_sourceURILabel)); //$NON-NLS-1$				
+				updateStatus(validateURI(modelURIText.getText(), Messages.QvtMetamodelMappingPage_sourceURILabel));				
 				modelURIText.setFocus();
 				targetURIText.setText("platform:/resource/*"); //$NON-NLS-1$				
 			} else {
@@ -722,7 +722,7 @@ public class QvtMetamodelMappingPage extends PropertyPage {
 		
 		private IStatus validateSourceURI() {
 			String uri = modelURIText.getText();
-			IStatus status = validateURI(uri, Messages.QvtMetamodelMappingPage_sourceURILabel);//$NON-NLS-1$
+			IStatus status = validateURI(uri, Messages.QvtMetamodelMappingPage_sourceURILabel);
 			if(status.isOK()) {
 				status = getSourceUriAlreadyExistsStatus(uri, uriMap.getMapping().indexOf(data));
 			}
