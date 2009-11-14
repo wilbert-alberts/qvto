@@ -38,8 +38,8 @@ public class QvtHyperlinkDetector implements IHyperlinkDetector {
 		myDocumentProvider = documentProvider;
 		myHelpers = new IHyperlinkDetectorHelper[] {
 				new ImportHyperlinkDetector(),
-				new ModelTypeHyperlinkDetector(),
 				new PathNameHyperlinkDetector(),
+				new ModelTypeHyperlinkDetector(),
 				new ObjectPropertyHyperlinkDetector(),
 				new VariableHyperlinkDetector(),
 				new ScopedIdentifierHyperLinkDetector(),

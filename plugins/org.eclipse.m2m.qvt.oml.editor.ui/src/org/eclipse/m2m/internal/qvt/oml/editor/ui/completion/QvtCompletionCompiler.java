@@ -26,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -113,12 +112,6 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     }
     
     @Override
-    protected void onCompilationUnitFinished(CompiledUnit unit) {    	
-    	CFileData cFileData = getCFileData(unit.getURI());
-    	cFileData.setCompiledUnit(unit);
-    }
-    
-    @Override
     protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
 		return new QvtCompletionVisitorCS(parser, options, null) {
 			@Override
@@ -188,7 +181,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     public CFileData getCFileData(URI unitURI) {
         CFileData cFileData = myCFileDataMap.get(unitURI);
         if (cFileData == null) {
-            cFileData = new CFileData(unitURI, myData);
+            cFileData = new CFileData();
             myCFileDataMap.put(unitURI, cFileData);        
         }
         return cFileData;

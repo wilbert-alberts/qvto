@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
@@ -21,23 +19,13 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
  * Created on Oct 23, 2007
  */
 public class CFileData {
-    private final URI myCFile;
-    private final QvtCompletionData myData;
-
+	
     private QVTOLexer myLexer;
     private UnitCS myUnitCS;
-    private CompiledUnit myCompiledUnit;    
     private String myLightweightScript;
  
-    public CFileData(URI unitURI, QvtCompletionData data) {
-        myCFile = unitURI;
-        myData = data;
+    public CFileData() {
     }
-    
-    public URI getCFile() {
-        return myCFile;
-    }
-    
     
     public QVTOLexer getLexer() {
         return myLexer;
@@ -64,10 +52,6 @@ public class CFileData {
         myUnitCS = unitCS;
     }
     
-    public void setCompiledUnit(CompiledUnit compiledUnit) {
-        myCompiledUnit = compiledUnit;
-    }    
-
     public String getLightweightScript() {
         return myLightweightScript;
     }
