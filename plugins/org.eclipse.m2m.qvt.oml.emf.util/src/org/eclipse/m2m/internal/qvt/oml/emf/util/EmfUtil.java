@@ -391,7 +391,7 @@ public class EmfUtil {
     }
 
 	public static Resource createResource(URI uri, ResourceSet outResourceSet) {
-		Resource resource = outResourceSet.createResource(uri); //$NON-NLS-1$
+		Resource resource = outResourceSet.createResource(uri);
 		if(resource != null) {
 			return resource;
 		}
