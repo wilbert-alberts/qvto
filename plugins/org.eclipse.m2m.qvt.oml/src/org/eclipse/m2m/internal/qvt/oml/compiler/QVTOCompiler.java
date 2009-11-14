@@ -381,19 +381,6 @@ public class QVTOCompiler {
     	this.fExeXMIResourceSet.getResources().clear();
     }
 	
-	/**
-	 * Notification operation which is called when a compilation unit and its
-	 * imported units has been compiled.
-	 * <p>
-	 * Subclasses may override this operation
-	 * 
-	 * @param unit
-	 *            the unit the compilation of which was finished
-	 */
-    protected void onCompilationUnitFinished(CompiledUnit unit) {
-    	// do nothing, clients will override
-    }
-    
     /**
      * The main compilation method - the common entry point to the compilation 
      */
@@ -543,11 +530,6 @@ public class QVTOCompiler {
 	    	// TODO - better to use this one as unit resolver 
 	    	fSource2Compiled.put(source.getURI(), result);
 
-	    	// FIXME - temp solution check for being a CST parsed
-	    	if(result.getURI().isPlatformResource()) {
-	    		onCompilationUnitFinished(result);
-	    	}
-	    	
 	    	monitor.worked(1);	    	
 	    	return result;
 	    	
