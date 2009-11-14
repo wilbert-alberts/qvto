@@ -102,7 +102,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 	 * @throws IllegalArgumentException if <code>uriStr</code> is not a valid URI
 	 */
 	public static EPackage loadResourceMetamodel(String uriStr) {
-		return new DescImpl(URI.createURI(uriStr), new ResourceSetImpl()).getEPackage(); //$NON-NLS-1$
+		return new DescImpl(URI.createURI(uriStr), new ResourceSetImpl()).getEPackage();
 	}
 		
 	private static class DescImpl implements EPackage.Descriptor {
