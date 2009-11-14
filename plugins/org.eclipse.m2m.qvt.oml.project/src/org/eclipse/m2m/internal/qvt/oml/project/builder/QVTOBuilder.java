@@ -62,7 +62,7 @@ import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 
 public class QVTOBuilder extends IncrementalProjectBuilder {
 	
-    public static final String SAVE_AST_XMI = "internal.save.xmi";
+    public static final String SAVE_AST_XMI = "internal.save.xmi"; //$NON-NLS-1$
 
 	public interface BuildListener {
         void buildPerformed();
@@ -341,7 +341,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			if(buildCommand != null) {
 				Map<?, ?> arguments = buildCommand.getArguments();
 				// Remark: internal option for saving xmi, used for testing at the moment
-				Object strValue = arguments.get(SAVE_AST_XMI); //$NON-NLS-1$
+				Object strValue = arguments.get(SAVE_AST_XMI);
 				return Boolean.valueOf(String.valueOf(strValue));
 			}
 		} catch (CoreException e) {
