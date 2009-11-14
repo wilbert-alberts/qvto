@@ -36,7 +36,7 @@ class BrowserNode implements IAdaptable {
 		myParent = parent;
 	}
 	
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")
 	public Object getAdapter(Class adapter) {		
 		if (getEObject() != null && adapter.isAssignableFrom(getEObject().getClass())) {
 			return getEObject();

@@ -304,8 +304,8 @@ public class MetamodelBrowser  implements IAdaptable {
             	if(e1 instanceof MetamodelNode && e2 instanceof MetamodelNode) {
             		MetamodelNode n1 = (MetamodelNode) e1;
 					MetamodelNode n2 = (MetamodelNode) e2;
-					String key1 = n1.getDescriptor().getId(); //$NON-NLS-1$
-					String key2 = n2.getDescriptor().getId(); //$NON-NLS-1$
+					String key1 = n1.getDescriptor().getId();
+					String key2 = n2.getDescriptor().getId();
 
 					if(n1.getPackage() != null && n1.getDescriptor().getLoadStatus().isOK()) {
 						key1 = n1.getPackage().getName();
@@ -763,7 +763,7 @@ public class MetamodelBrowser  implements IAdaptable {
         return false;
     }
 
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")
 	public Object getAdapter(Class key) {
         if (key.equals(IPropertySheetPage.class)) {
             return getPropertySheetPage();

@@ -131,7 +131,7 @@ public class MetamodelBrowserView extends ViewPart implements IResourceChangeLis
         }
     }
 
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")
 	@Override
 	public Object getAdapter(Class key) {
         Object adaptedObject = browser != null ? browser.getAdapter(key) : null;
