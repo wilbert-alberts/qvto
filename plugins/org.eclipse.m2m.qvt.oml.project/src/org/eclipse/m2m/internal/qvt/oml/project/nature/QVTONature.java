@@ -11,10 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.project.nature;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-
-import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -28,11 +24,9 @@ import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 public class QVTONature extends BaseNature {
 	
 	public static final String DEFAULT_SOURCE_FOLDER_PATH = "transformations"; //$NON-NLS-1$
-
-	private static final String LEGACY_BUILDER_ID = "org.eclipse.m2m.qvt.oml.QvtBuilder";//$NON-NLS-1$	
-	
     
-	public QVTONature() {		
+	public QVTONature() {
+		super();
 	}
     	
     @Override
@@ -42,7 +36,7 @@ public class QVTONature extends BaseNature {
             IProjectDescription description = project.getDescription();
             
             // might be migrating from the obsolete QVT nature
-        	boolean isMigrated = migrate(description);
+        	boolean isMigrated = false; //migrate(description);
 			if(!isMigrated) {
 				// add new QVT builder command, otherwise the migration step 
 				// derives it from the existing build spec
@@ -89,25 +83,5 @@ public class QVTONature extends BaseNature {
 				QVTOProjectPlugin.log(e.getStatus());
 			}
     	}
-    }
-
-	private boolean migrate(IProjectDescription description) throws CoreException {
-		boolean migrated = false;
-		
-		ICommand[] commands = description.getBuildSpec();
-    	for (ICommand nextCommand : commands) { 
-			if(LEGACY_BUILDER_ID.equals(nextCommand.getBuilderName())) {
-				nextCommand.setBuilderName(QVTOProjectPlugin.BUILDER_ID);
-				description.setBuildSpec(commands);
-				migrated = true;
-				break;
-			}
-		}
-    	
-    	LinkedHashSet<String> natures = new LinkedHashSet<String>(Arrays.asList(description.getNatureIds()));
-    	natures.remove(LegacyNature.ID);
-    	description.setNatureIds(natures.toArray(new String[natures.size()]));
-    	
-    	return migrated;
-	}    
+    }    
 }
