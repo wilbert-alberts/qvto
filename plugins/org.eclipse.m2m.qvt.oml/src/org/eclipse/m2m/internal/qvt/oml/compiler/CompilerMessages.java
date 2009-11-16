@@ -28,6 +28,8 @@ public class CompilerMessages extends NLS {
 
 	public static String moduleTransformationExpected;
 	
+	public static String unitDiagnostic;
+	
 	public static String QvtCompilerFacade_compilingScript;
 	public static String QvtCompilerFacade_acquiringScript;
 	
