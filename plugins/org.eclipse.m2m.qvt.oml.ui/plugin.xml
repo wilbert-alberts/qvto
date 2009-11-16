@@ -57,14 +57,6 @@
         <newWizardShortcut id="org.eclipse.m2m.qvt.oml.ui.wizards.NewQvtLibraryWizard"/>
      </perspectiveExtension>
   </extension>
-   <extension
-         point="org.eclipse.ui.ide.projectNatureImages">
-      <image
-            icon="icons/pr-legacy.gif"
-            id="org.eclipse.m2m.qvt.oml.project.LegacyNatureImage"
-            natureId="org.eclipse.m2m.qvt.oml.project.TransformationNature">
-      </image>
-   </extension>
   
   <extension point="org.eclipse.ui.ide.projectNatureImages">
 	<image
