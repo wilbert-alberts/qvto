@@ -25,23 +25,7 @@
       class = "org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage"
       genModel = "model/QVTOperational.genmodel" /> 
  </extension>
-
-
-
- <extension id="QvtBuilder" name="%legacyQvtBuilder" point="org.eclipse.core.resources.builders">
-      <builder
-            callOnEmptyDelta="true"
-            hasNature="true">
-         <run class="org.eclipse.m2m.internal.qvt.oml.legacy.QvtMigrationBuilder"/>
-      </builder>
-   </extension>
                                                           
- <extension point="org.eclipse.core.resources.markers" id="qvtProblem" name="%legacyQvtProblemName">
-	<super type="org.eclipse.core.resources.problemmarker"/>
-    <super type="org.eclipse.core.resources.textmarker"/>
-	<persistent value="true"/>
- </extension>
-
   <extension point="org.eclipse.emf.ecore.uri_mapping">
      <mapping
            source="http://www.eclipse.org/m2m/qvt/oml/1.0.0/Stdlib"
