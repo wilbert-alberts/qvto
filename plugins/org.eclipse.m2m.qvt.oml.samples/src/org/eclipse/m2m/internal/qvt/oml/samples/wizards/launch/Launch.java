@@ -41,7 +41,7 @@ public class Launch {
 	public void registerLaunchConfiguration(IContainer location)
 			throws CoreException {
 		String transformationType = myLaunchData.getTransformationType();
-		String configName = DebugPlugin.getDefault().getLaunchManager().generateUniqueLaunchConfigurationNameFrom(getLaunchName());
+		String configName = DebugPlugin.getDefault().getLaunchManager().generateLaunchConfigurationName(getLaunchName());
 		ILaunchConfigurationType launchType = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(transformationType);
 		
 		ILaunchConfigurationWorkingCopy store = launchType.newInstance(location, configName);
