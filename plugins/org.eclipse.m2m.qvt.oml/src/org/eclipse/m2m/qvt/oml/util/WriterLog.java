@@ -30,7 +30,8 @@ public class WriterLog implements Log {
 	private static final String LINE_SEP = System.getProperty("line.separator"); //$NON-NLS-1$
 		
 	private Writer fWriter;	
-	private String fRecordSeparator;	
+	private String fRecordSeparator;
+	private boolean fFlush;
 	private boolean fErrorLogged;
 	
 	/**
@@ -42,6 +43,23 @@ public class WriterLog implements Log {
 	 *             if the passed <code>writer</code> is <code>null</code>
 	 */
 	public WriterLog(Writer writer) {
+		this(writer, true);
+	}
+	
+	/**
+	 * Constructs a log for the given writer object.
+	 * 
+	 * @param writer
+	 *            the writer object to receive the log record data
+	 * @param flush
+	 *            if <code>true</code>, the writer gets flushed with every
+	 *            record logged. If set to <code>false</code>, the flushing
+	 *            behavior is dependent on the writer implementation used
+	 * @throws IllegalArgumentException
+	 *             if the passed <code>writer</code> is <code>null</code>
+	 * @since 3.0
+	 */
+	public WriterLog(Writer writer, boolean flush) {
 		if(writer == null) {
 			throw new IllegalArgumentException("null writer"); //$NON-NLS-1$
 		}
@@ -49,7 +67,8 @@ public class WriterLog implements Log {
 		fWriter = writer; 
 		fRecordSeparator = LINE_SEP;
 		fErrorLogged = false;
-	}
+		fFlush = flush;
+	}	
 	
 	protected final Writer getWriter() {
 		return fWriter;
@@ -77,7 +96,10 @@ public class WriterLog implements Log {
 	private void logRecord(String recordStr) {
 		try {
 			fWriter.write(recordStr);
-			fWriter.write(fRecordSeparator);			
+			fWriter.write(fRecordSeparator);
+			if(fFlush) {
+				fWriter.flush();
+			}
 		} catch (IOException e) {
 			if(!fErrorLogged) {
 				QvtPlugin.error(e);
