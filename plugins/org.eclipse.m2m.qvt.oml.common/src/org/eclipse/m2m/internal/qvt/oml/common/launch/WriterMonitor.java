@@ -13,64 +13,96 @@ package org.eclipse.m2m.internal.qvt.oml.common.launch;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.debug.core.IStreamListener;
-import org.eclipse.debug.core.model.IStreamMonitor;
+import org.eclipse.debug.core.model.IFlushableStreamMonitor;
 
 /**
- * @author vrepeshko
+ * A stream monitor connected to a Writer 
  */
-public class WriterMonitor extends Writer implements IStreamMonitor {
+public class WriterMonitor extends Writer implements IFlushableStreamMonitor {
 
-	@Override
-	public void close() throws IOException {
+	private List<IStreamListener> fListeners;
+	private IStreamListener[] fCachedListeners;
+	
+	private final StringBuffer fContents;
+	private boolean fIsBuffered;
+
+	public WriterMonitor() {
+		fContents = new StringBuffer();		
+		fIsBuffered = true;
+		fListeners = new LinkedList<IStreamListener>();
+	}
+	
+	public void flushContents() {
+		fContents.setLength(0);
 	}
 
-	@Override
-	public void flush() throws IOException {
+	public boolean isBuffered() {
+		return fIsBuffered;
 	}
 
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		String newText = new String(cbuf, off, len);
-		myContents.append(newText);
-		notifyListeners(newText);
+	public void setBuffered(boolean buffer) {
+		fIsBuffered = buffer;
 	}
 	
 	public String getContents() {
-		return myContents.toString();
+		return fContents.toString();
 	}
 	
 	private void notifyListeners(String newText) {
-		if (myListeners == null) {
-			return;
-		}
-		IStreamListener[] listeners = myListeners.toArray(new IStreamListener[myListeners.size()]);
+		IStreamListener[] listeners = getListeners();
 		for (IStreamListener listener : listeners) {
-			listener.streamAppended(newText, this);
+			try {
+				listener.streamAppended(newText, this);
+			} catch(RuntimeException e) {
+				// ignore a stupid listener
+			}
+		}
+	}
+
+	private synchronized IStreamListener[] getListeners() {
+		synchronized(fListeners) {
+			if(fCachedListeners == null) {
+				fCachedListeners = fListeners.toArray(new IStreamListener[fListeners.size()]);
+			}
+			
+			return fCachedListeners;
 		}
 	}
 	
 	public void addListener(IStreamListener listener) {
-		if (myListeners == null) {
-			myListeners = new ArrayList<IStreamListener>(1);
-		}
-		if (!myListeners.contains(listener)) {
-			myListeners.add(listener);
+		synchronized(fListeners) {
+			if (!fListeners.contains(listener)) {
+				fListeners.add(listener);
+				fCachedListeners = null;
+			}
 		}
 	}
 
 	public void removeListener(IStreamListener listener) {
-		if (myListeners == null) {
-			return;
+		synchronized(fListeners) {
+			fListeners.remove(listener);
+			fCachedListeners = null;
 		}
-		myListeners.remove(listener);
 	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+		fContents.append(cbuf, off, len);		
+		notifyListeners(new String(cbuf, off, len));
+	}	
 	
-	private List<IStreamListener> myListeners;
-	
-	private final StringBuffer myContents = new StringBuffer();
-	
+	// Writer operations
+	@Override
+	public void close() throws IOException {
+		// do nothing
+	}
+
+	@Override
+	public void flush() throws IOException {
+		// do nothing
+	}
 }

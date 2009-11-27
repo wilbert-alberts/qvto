@@ -24,10 +24,11 @@ public class StreamsProxy implements IStreamsProxy {
 
 	public StreamsProxy() {
 		myOutputStreamMonitor = new WriterMonitor();
+		myErrStreamMonitor = new WriterMonitor();
 	}
 	
 	public IStreamMonitor getErrorStreamMonitor() {
-		return null;
+		return myErrStreamMonitor;
 	}
 
 	public IStreamMonitor getOutputStreamMonitor() {
@@ -37,10 +38,14 @@ public class StreamsProxy implements IStreamsProxy {
 	public Writer getOutputWriter() {
 		return myOutputStreamMonitor;
 	}
+	
+	public Writer getErrWriter() {
+		return myErrStreamMonitor;
+	}	
 
 	public void write(String input) throws IOException {
 	}
 	
 	private final WriterMonitor myOutputStreamMonitor;
-
+	private final WriterMonitor myErrStreamMonitor;
 }
