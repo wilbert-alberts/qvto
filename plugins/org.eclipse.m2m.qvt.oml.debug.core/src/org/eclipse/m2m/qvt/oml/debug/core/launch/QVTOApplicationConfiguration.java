@@ -66,12 +66,20 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 
 		result.add(createArgStr(QVTOApplication.ARG_PORT, String.valueOf(getPort())));		
 		
-		URI transformationURI = QvtLaunchUtil.getTransformationURI(configuration);		
-		result.add(createArgStr(QVTOApplication.ARG_TRANSFORMATION,
-				QVTODebugUtil.toPlatformPluginURI(transformationURI.toString()).toString()));
+		String transformationURI = QvtLaunchUtil.getTransformationURI(configuration);
+		if(transformationURI != null) {
+			result.add(createArgStr(QVTOApplication.ARG_TRANSFORMATION,
+					QVTODebugUtil.toPlatformPluginURI(transformationURI).toString()));
+		}
 		
-		List<TargetUriData> modelURIs = QvtLaunchUtil.getTargetUris(configuration);		
+		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration);
+		if(traceFileURI != null) {
+			result.add(createArgStr(QVTOApplication.ARG_TRACE,
+					QVTODebugUtil.toPlatformPluginURI(traceFileURI).toString()));
+			
+		}
 		
+		List<TargetUriData> modelURIs = QvtLaunchUtil.getTargetUris(configuration);				
 		for (TargetUriData targetUriData : modelURIs) {
 			String nextURI = targetUriData.getUriString();
 			URI nextModelURI = QVTODebugUtil.toFileURI(nextURI);
