@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
@@ -50,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
@@ -70,6 +72,7 @@ public class InternalTransformationExecutor {
 	private CompiledUnit fCompiledUnit;
 	private ExecutionDiagnosticImpl fLoadDiagnostic;
 	private OperationalTransformation fTransformation;
+	private QvtOperationalEnvFactory fEnvFactory;
 
 	/**
 	 * Constructs the executor for the given transformation URI.
@@ -85,6 +88,10 @@ public class InternalTransformationExecutor {
 		}
 
 		fURI = uri;
+	}
+	
+	public URI getURI() {
+		return fURI;
 	}
 		
 	public InternalTransformationExecutor(URI uri, EPackage.Registry registry) {
@@ -188,12 +195,6 @@ public class InternalTransformationExecutor {
 
 		rawEvaluator.execute(fTransformation);
 
-		// instantiate trace model and pass it to transformation evaluation
-		// TODO: traces not involved yet, as it is not part of the API,
-		// provide an option to serialize to a resource
-		// Trace traces =
-		// evaluationEnv.getAdapter(InternalEvaluationEnv.class).getTraces();
-
 		// unpack the internal extents into the passed model parameters
 		List<Object> resultArgs = evaluationEnv.getOperationArgs();
 		int i = 0;
@@ -213,7 +214,15 @@ public class InternalTransformationExecutor {
 			}
 		}
 
+		// do some handy processing with traces
+		Trace traces = evaluationEnv.getAdapter(InternalEvaluationEnv.class).getTraces();
+		handleExecutionTraces(traces);
+		
 		return ExecutionDiagnostic.OK_INSTANCE;
+	}
+	
+	protected void handleExecutionTraces(Trace traces) {
+		// nothing intersting here
 	}
 
 	private void doLoad() {
@@ -314,6 +323,11 @@ public class InternalTransformationExecutor {
 	}
 
 	public OperationalTransformation getTransformation() {
+		// TODO - cached the transformation selected as main
+		if(fCompiledUnit == null) {
+			return null;
+		}
+		
 		List<Module> allModules = fCompiledUnit.getModules();
 		for (Module module : allModules) {
 			if (module instanceof OperationalTransformation) {
@@ -323,10 +337,15 @@ public class InternalTransformationExecutor {
 
 		return null;
 	}
+	
+	public void setEnvironmentFactory(QvtOperationalEnvFactory factory) {
+		fEnvFactory = factory;
+	}
 
 	protected QvtOperationalEnvFactory getEnvironmentFactory() {
-		return new QvtOperationalEnvFactory();
+		return fEnvFactory != null ? fEnvFactory : new QvtOperationalEnvFactory();
 	}
+	
 
 	private static ExecutionDiagnostic createExecutionFailure(
 			QvtRuntimeException qvtRuntimeException) {
@@ -343,7 +362,8 @@ public class InternalTransformationExecutor {
 		} else {
 			code = ExecutionDiagnostic.EXCEPTION_THROWN;
 			if (qvtRuntimeException instanceof QvtStackOverFlowError == false) {
-				data = new Object[] { qvtRuntimeException };
+				Throwable cause = qvtRuntimeException.getCause();
+				data = new Object[] { cause != null ? cause : qvtRuntimeException };
 			} else {
 				message = Messages.StackTraceOverFlowError;
 			}
