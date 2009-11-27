@@ -56,6 +56,23 @@ public class QvtLaunchUtil {
     	}
     	return targetUris;
 	}
+		
+	public static String getTransformationURI(ILaunchConfiguration configuration) throws CoreException {
+		String uriStr = configuration.getAttribute(IQvtLaunchConstants.MODULE, (String) null);
+		if(uriStr == null) {
+			// FIXME - why 2 ways of URI reference? legacy reasons?			
+			uriStr = configuration.getAttribute(IQvtLaunchConstants.TRANSFORMATION, (String) null);
+		}
+		return uriStr;
+	}
+	
+	public static String getTraceFileURI(ILaunchConfiguration configuration) throws CoreException {
+		return configuration.getAttribute(IQvtLaunchConstants.TRACE_FILE, (String) null);
+	}	
+	
+	public static boolean shouldGenerateTraceFile(ILaunchConfiguration configuration) throws CoreException {
+		return configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false);
+	}
 	
     public static TargetUriData getTargetUriData(ILaunchConfiguration configuration, int index) throws CoreException {
     	TargetUriData.TargetType targetType = TargetUriData.TargetType.NEW_MODEL;
@@ -71,6 +88,14 @@ public class QvtLaunchUtil {
     	boolean clearContents = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), true); 
     	
     	return new TargetUriData(targetType, uri, feature, clearContents);
+    }
+    
+    public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, List<TargetUriData> targetData) {
+        int index = 1;
+        for (TargetUriData targetUri : targetData) {
+    		QvtLaunchUtil.saveTargetUriData(configuration, targetUri, index);
+    		++index;
+        }
     }
     
     public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, TargetUriData targetData, int index) {
