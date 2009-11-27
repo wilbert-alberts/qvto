@@ -29,7 +29,9 @@ import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -436,12 +438,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			targetExtent = model.getExtent();			
 		}
 		
-		if (isReadonlyGuardEnabled()) {
-			targetExtent.guardAddObject(newObject);
+		if (isReadonlyGuardEnabled() && targetExtent.isReadonly()) {
+			internalEnv().throwQVTException(new QvtRuntimeException(
+					NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel, modelParam.getName() + 
+					" : " + QvtOperationalTypesUtil.getTypeFullName(modelParam.getEType())))); //$NON-NLS-1$
 		}
-		else {
-			targetExtent.addObject(newObject);
-		}
+
+		targetExtent.addObject(newObject);
+
 		return newObject;
 	}
 
@@ -556,34 +560,31 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				&& getContext().getSessionData().getValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED) == Boolean.TRUE;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void checkReadonlyGuard(EStructuralFeature eStructuralFeature, Object exprValue, EObject owner) {
-		EObject auxParent = owner;
-		while (auxParent != null) {
-			ModelParameterExtent.throwIfReadonlyExtent(auxParent);
-			auxParent = auxParent.eContainer();
-		}
-
-		if (eStructuralFeature instanceof EReference && ((EReference) eStructuralFeature).isContainment()) {
-			Collection<EObject> assignedObjects = new ArrayList<EObject>();
-			if (exprValue instanceof EObject) {
-				assignedObjects.add((EObject) exprValue);
-			}
-			else if (exprValue instanceof Collection<?>) {
-				for (Object element : (Collection<Object>) exprValue) {
-					if (element instanceof EObject) {
-						assignedObjects.add((EObject) element);
+		ModelParameter violatedReadonlyParam = ModelParameterExtent.getReadonlyModelParameter(owner);
+		
+		if(violatedReadonlyParam == null && eStructuralFeature instanceof EReference) {
+			EReference eReference = (EReference) eStructuralFeature;
+			if (eReference.isContainment()) {
+				if (exprValue instanceof EObject) {
+					violatedReadonlyParam = ModelParameterExtent.getReadonlyModelParameter((EObject) exprValue);
+				} else if (exprValue instanceof Collection<?>) {
+					for (Object element : (Collection<?>) exprValue) {
+						if (element instanceof EObject) {
+							violatedReadonlyParam = ModelParameterExtent.getReadonlyModelParameter((EObject) exprValue);							
+							if(violatedReadonlyParam != null) {
+								break;
+							}
+						}
 					}
 				}
 			}
-			
-			for (EObject eObj : assignedObjects) {
-				auxParent = eObj;
-				while (auxParent != null) {
-					ModelParameterExtent.throwIfReadonlyExtent(auxParent);
-					auxParent = auxParent.eContainer();
-				}
-			}
+		}
+
+		if(violatedReadonlyParam != null) {
+			internalEnv().throwQVTException(new QvtRuntimeException(
+					NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel, violatedReadonlyParam.getName() + 
+					" : " + QvtOperationalTypesUtil.getTypeFullName(violatedReadonlyParam.getEType())))); //$NON-NLS-1$
 		}
 	}
 

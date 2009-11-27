@@ -26,6 +26,7 @@ public class EvaluationMessages extends NLS {
     public static String FatalAssertionFailed;
 	public static String QvtOperationalEvaluationVisitorImpl_invalidConfigPropertyValue;
 	public static String QvtOperationalEvaluationVisitorImpl_UndefModelParamInTransf;
+	public static String QvtOperationalEvaluationVisitorImpl_unexpectedRuntimeExc;
 	public static String TerminatingExecution;
 	public static String UknownSourceLabel;
 	

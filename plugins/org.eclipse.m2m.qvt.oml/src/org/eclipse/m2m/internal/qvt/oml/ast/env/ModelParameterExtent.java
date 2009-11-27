@@ -34,10 +34,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.m2m.internal.qvt.oml.NLS;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 
@@ -124,24 +121,16 @@ public class ModelParameterExtent {
 		return myModelParameter;
 	}
 
-	public static void throwIfReadonlyExtent(EObject eObj) {
-		Adapter adapter = EcoreUtil.getAdapter(eObj.eAdapters(), ReadonlyExtentAdapter.class);
-		if (adapter != null) {
-			ModelParameter modelParameter = ((ReadonlyExtentAdapter) adapter).getModelParameterExtent().myModelParameter;
-			throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
-					modelParameter.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(modelParameter.getEType()))); //$NON-NLS-1$
-		}
-	}
-		
-	public void guardAddObject(EObject eObject) {
-		if (eObject != null) {
-			if (isReadonly()) {
-				throw new RuntimeException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ReadOnlyInputModel,
-						myModelParameter.getName() + " : " + QvtOperationalTypesUtil.getTypeFullName(myModelParameter.getEType()))); //$NON-NLS-1$
+	public static ModelParameter getReadonlyModelParameter(EObject eObj) {
+		EObject auxParent = eObj;
+		while (auxParent != null) {
+			Adapter adapter = EcoreUtil.getAdapter(auxParent.eAdapters(), ReadonlyExtentAdapter.class);
+			if (adapter != null) {				
+				return ((ReadonlyExtentAdapter) adapter).getModelParameterExtent().myModelParameter;
 			}
+			auxParent = auxParent.eContainer();
 		}
-		
-		addObject(eObject);
+		return null;
 	}
 	
 	public void addObject(EObject eObject) {
@@ -253,7 +242,7 @@ public class ModelParameterExtent {
 		}
 	}
 	
-	private boolean isReadonly() {
+	public boolean isReadonly() {
 		return myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN;
 	}
 

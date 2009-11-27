@@ -465,10 +465,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object visitImperativeOperation(ImperativeOperation imperativeOperation) {
-        if (imperativeOperation.isIsBlackbox()) {
-            throw new IllegalArgumentException(
-                    "Blackbox rules are not supported: " + imperativeOperation.getName()); //$NON-NLS-1$
-        }
 
         List<Object> args = getOperationalEvaluationEnv().getOperationArgs();
         Iterator<Object> argIt = args.iterator();
@@ -1454,10 +1450,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		// point to the module we are initializing
 		nestedEvalEnv.getAdapter(InternalEvaluationEnv.class).setCurrentIP(type);
 		try {
-			setOperationalEvaluationEnv(nestedEvalEnv);			
-	        // eventually cause STO exception
-	        EvaluationUtil.checkCurrentStackDepth(currentEvalEnv);
+			setOperationalEvaluationEnv(nestedEvalEnv);
+			// push stack before a chance for exception, to have push/pop in balance 
 			pushedStack(nestedEvalEnv);
+	        // eventually cause STO exception
+	        EvaluationUtil.checkCurrentStackDepth(currentEvalEnv);			
     	
 	    	for (ModuleImport moduleImport : type.getModuleImport()) {
 	    		Module importedModule = moduleImport.getImportedModule();	    		
@@ -1572,6 +1569,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {    	
+        if (method.isIsBlackbox() && method.getBody() == null) {
+            throw new IllegalArgumentException(
+                    "Can't execute blackbox operation" + method.getName()); //$NON-NLS-1$
+        }
 
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         
@@ -1628,15 +1629,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         catch (RuntimeException e) {
         	if(canBePropagated(e)) {
         		throw e;
-        	} else {
-        		QvtPlugin.error(e);
-        	}
-        	if (e.getLocalizedMessage() != null) {
-        		throwQVTException(new QvtRuntimeException(e.getLocalizedMessage()));
-        	}
-        	else {
-        		throwQVTException(new QvtRuntimeException(e));
-        	}
+        	} 
+        	
+        	String errorMessage = EvaluationMessages.QvtOperationalEvaluationVisitorImpl_unexpectedRuntimeExc;
+			QvtPlugin.error(errorMessage, e);
+			
+        	throwQVTException(new QvtRuntimeException(errorMessage, e));
         }
         finally {
             if(isMapping && isReusingMappingCall && callResult != null) {
