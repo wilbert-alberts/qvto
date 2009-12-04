@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -30,9 +31,10 @@ public class DebugTransformationRunner extends TransformationRunner {
 	private IQVTODebuggerShell fDebugShell;
 	private PrintWriter fErrorLog;
 	
-	public DebugTransformationRunner(URI transformationURI,
-			ExecutionContext context, List<URI> modelParamURIs) {
-		super(transformationURI, context, modelParamURIs);
+	public DebugTransformationRunner(URI transformationURI, 
+			EPackage.Registry packageRegistry, 
+			List<URI> modelParamURIs) {
+		super(transformationURI, packageRegistry, modelParamURIs);
 	}
 	
 	public void setErrorLog(PrintWriter fErrorLog) {
@@ -88,13 +90,13 @@ public class DebugTransformationRunner extends TransformationRunner {
 		
 	}
 
-	public DebuggableExecutorAdapter createDebugableAdapter() {
+	public DebuggableExecutorAdapter createDebugableAdapter(final ExecutionContext context) {
 		return new DebuggableExecutorAdapter() {
 			public Diagnostic execute() throws IllegalStateException {
 				if(fDebugShell == null) {
 					throw new IllegalStateException("Executor not connected to debugger"); //$NON-NLS-1$
 				}
-				return DebugTransformationRunner.this.execute();
+				return DebugTransformationRunner.this.execute(context);
 			}
 
 			public CompiledUnit getUnit() {

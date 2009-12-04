@@ -60,6 +60,8 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 	private final IProcess fProcess;
 
 	private QVTOThread fMainThread;
+	
+	private String fMainModuleName;
 
 	private boolean fIsStarting;
 	private boolean fIsSuspended = false;
@@ -198,7 +200,7 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 	}
 
 	public String getName() throws DebugException {
-		return "QVT VM";
+		return "QVTO Debug target";
 	}
 
 	public boolean supportsBreakpoint(IBreakpoint breakpoint) {
@@ -217,10 +219,19 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		sendRequest(new VMTerminateRequest());
 	}
 
-	protected void started() {
+	protected void started(String mainModuleName) {
+		setMainModuleName(mainModuleName);
 		setStarting(false);		
 	}
+		
+	synchronized protected void setMainModuleName(String mainModuleName) {
+		fMainModuleName = mainModuleName;
+	}
 	
+	synchronized public String getMainModuleName() {
+		return fMainModuleName;
+	}
+		
 	protected void terminated() {
 		QVTODebugCore.TRACE.trace(DebugOptions.TARGET, "Debug target terminated"); //$NON-NLS-1$
 
@@ -241,7 +252,7 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		fireTerminateEvent();
 		if(fProcess instanceof QVTOVirtualProcess) {
 			QVTOVirtualProcess vp = (QVTOVirtualProcess) fProcess;
-			((QVTOVirtualProcess) fProcess).terminated();
+			vp.terminated();
 		}
 	}
 
@@ -414,15 +425,32 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		}
 	}
 	
-	
-	
+		
 	private void setStarting(boolean isStarting) {
 		synchronized (fVMStartMonitor) {
 			fIsStarting = isStarting;
 			fVMStartMonitor.notify();
 		}
 	}
-
+	
+	private void handleBreakpointConditionError(VMSuspendEvent suspend) {
+		IStatus breakpointStatus = new BreakpointError(suspend
+				.getBreakpointID(), suspend.getReason(),
+				suspend.getReasonDetail());
+		
+		IStatusHandler handler = DebugPlugin.getDefault().getStatusHandler(breakpointStatus);
+		if(handler != null) {
+			try {
+				handler.handleStatus(breakpointStatus, QVTODebugTarget.this);									
+			} catch (CoreException e) {
+				QVTODebugCore.log(e.getStatus());
+			}
+		} else {
+			// no custom handler found, at least log the status
+			QVTODebugCore.log(breakpointStatus);
+		}
+	}	
+	
 	private VMEventListener createVMEventListener() {
 		return new VMEventListener() {
 			
@@ -432,23 +460,12 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 					fireResumeEvent(0);
 				} else if (event instanceof VMSuspendEvent) {
 					fIsSuspended = true;
-					VMSuspendEvent suspend = (VMSuspendEvent) event;
 					
+					VMSuspendEvent suspend = (VMSuspendEvent) event;					
 					fireSuspendEvent(suspend.detail);
 					
 					if (suspend.detail == VMSuspendEvent.BREAKPOINT_CONDITION_ERR) {
-						IStatus breakpointStatus = new BreakpointError(suspend.getBreakpointID(), suspend.reason);
-						IStatusHandler handler = DebugPlugin.getDefault().getStatusHandler(breakpointStatus);
-						if(handler != null) {
-							try {
-								handler.handleStatus(breakpointStatus, QVTODebugTarget.this);									
-							} catch (CoreException e) {
-								QVTODebugCore.log(e.getStatus());
-							}
-						} else {
-							// no custom handler found, at least log the status
-							QVTODebugCore.log(breakpointStatus);
-						}
+						handleBreakpointConditionError(suspend);
 					}
 					
 				} else if (event instanceof VMTerminateEvent) {
@@ -457,10 +474,11 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 				} else if (event instanceof VMDisconnectEvent) {
 					fIsSuspended = false;
 					terminated();
-				} else if (event instanceof VMStartEvent) {
-					started();
+				} else if (event instanceof VMStartEvent) {					
+					started(((VMStartEvent) event).mainModuleName);
 				}
 			}
+
 		};
 	}
 

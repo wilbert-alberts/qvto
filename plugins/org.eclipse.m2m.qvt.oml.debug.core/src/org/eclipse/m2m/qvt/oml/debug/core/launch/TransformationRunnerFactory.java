@@ -17,9 +17,9 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.TransformationRunner;
-import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
 import org.eclipse.osgi.util.NLS;
 
 public class TransformationRunnerFactory {
@@ -30,8 +30,10 @@ public class TransformationRunnerFactory {
 
 	public String traceFileURI;
 	
+	public EPackage.Registry packageRegistry;
+	
 
-	public TransformationRunner createRunner(ExecutionContextImpl context) throws DiagnosticException {
+	public TransformationRunner createRunner() throws DiagnosticException {
 		BasicDiagnostic diagnostic = QvtPlugin.createDiagnostic("Transformation runner problems");
 		
 		URI uri = null;
@@ -60,9 +62,9 @@ public class TransformationRunnerFactory {
 		
 		assert uri != null && paramURIs != null && !paramURIs.isEmpty();
 
-		TransformationRunner runner = createRunner(uri, paramURIs, context);
+		EPackage.Registry registry = this.packageRegistry != null ? this.packageRegistry : EPackage.Registry.INSTANCE;
+		TransformationRunner runner = createRunner(uri, registry, paramURIs);
 		
-		URI traceURI;
 		if(traceFileURI != null) {
 			try {
 				runner.setTraceFile(toURI(this.traceFileURI, "trace file"));
@@ -74,8 +76,8 @@ public class TransformationRunnerFactory {
 		return runner;
 	}
 	
-	protected TransformationRunner createRunner(URI transformationURI, List<URI> modelParamURIs, ExecutionContextImpl context) {
-		return new TransformationRunner(transformationURI, context, modelParamURIs);
+	protected TransformationRunner createRunner(URI transformationURI, EPackage.Registry packageRegistry, List<URI> modelParamURIs) {
+		return new TransformationRunner(transformationURI, packageRegistry, modelParamURIs);
 	}
 	
 	private URI toURI(String uriStr, String uriType) throws DiagnosticException {

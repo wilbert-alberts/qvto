@@ -29,7 +29,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMResponse;
 class VMRemoteClient {
 	
 	public static final int CONNECT_ATTEMPTS = 100;
-	public static final int CONNECT_ATTEMPT_DELAY = 50;
+	public static final int CONNECT_ATTEMPT_DELAY = 200;
 	
 	private InetSocketAddress fAddress;
 	private Socket fRequestSocket;		

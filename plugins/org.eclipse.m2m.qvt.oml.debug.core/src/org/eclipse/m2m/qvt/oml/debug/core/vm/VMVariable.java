@@ -17,12 +17,14 @@ public class VMVariable implements Serializable {
 	private static final long serialVersionUID = -7174716073141901340L;
 	
 	public static final int LOCAL = 0;
-	public static final int PROPERTY = 1;
-	public static final int THIS = 2;
-	public static final int MODEL_PARAMETER = 3;
-	public static final int INTERM_PROPERTY = 4;
-	public static final int COLLECTION_ELEMENT = 5;
+	public static final int ATTRIBUTE = 1;
+	public static final int REFERENCE = 2;
+	public static final int PREDEFINED_VAR = 3;
+	public static final int MODEL_PARAMETER = 4;
+	public static final int INTERM_PROPERTY = 5;
+	public static final int COLLECTION_ELEMENT = 6;
 
+	
 	public String name;
 	public String variableURI;
 	public Value value;

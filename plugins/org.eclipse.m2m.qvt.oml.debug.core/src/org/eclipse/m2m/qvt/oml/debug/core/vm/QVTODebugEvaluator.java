@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.DebugEvent;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -92,7 +94,7 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 			QVTODebugCore.TRACE.trace(DebugOptions.EVALUATOR,
 			"Debug evaluator going to initial SUSPEND state"); //$NON-NLS-1$
 			
-			request = shell.waitAndPopRequest(new VMStartEvent(true));
+			request = shell.waitAndPopRequest(new VMStartEvent(getMainModuleName(), true));
 		} catch (InterruptedException e) {
 			Thread.interrupted();
 			terminate();
@@ -203,6 +205,7 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 		return fLocationStack;
 	}
 
+	
 	protected Object preElementVisit(ASTNode element) {
 		setCurrentEnvInstructionPointer(element);
 		
@@ -217,6 +220,7 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 		} else if (element instanceof EStructuralFeature) {
 			// result = null;
 		} else if (element instanceof LoopExp<?, ?>) {
+			@SuppressWarnings("unchecked")
 			LoopExp<EClassifier, EParameter> loop = (LoopExp<EClassifier, EParameter>) element;
 
 			UnitLocation topLocation = getCurrentLocation();
@@ -255,7 +259,7 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 			setCurrentLocation(element, endLocation, true);
 		} else if (element instanceof EStructuralFeature) {
 			// result = null;
-		} else if (element instanceof LoopExp) {
+		} else if (element instanceof LoopExp<?, ?>) {
 			if (preState instanceof VMBreakpoint) {
 				fIterateBPHelper.removeIterateBreakpoint((VMBreakpoint) preState);
 			}
@@ -353,13 +357,25 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 			try {
 				isTriggered = Boolean.valueOf(breakpoint.hitAndCheckIfTriggered(this));
 			} catch(CoreException e) {
-				// breakpoint condition parsing or evaluation failed, notify the debug client
-				VMSuspendEvent suspendOnBpConditionErrr = createVMSuspendEvent(VMSuspendEvent.BREAKPOINT_CONDITION_ERR);
-				suspendOnBpConditionErrr.setBreakpointID(breakpoint.getID());
-				suspendOnBpConditionErrr.setReason(e.getMessage());
+				IStatus status = e.getStatus();
+				String reason = null; //$NON-NLS-1$
+				if(status.getCode() == ConditionChecker.ERR_CODE_COMPILATION) {
+					reason = "Breakpoint condition compilation failed";
+				} else if(status.getCode() == ConditionChecker.ERR_CODE_EVALUATION) {
+					reason = "Breakpoint condition evaluation failed";
+				}
 				
-				// suspend VM and wait for resolution by the debug client
-				suspendAndWaitForResume(location, suspendOnBpConditionErrr); 
+				if(reason != null) {
+					// breakpoint condition parsing or evaluation failed, notify the debug client
+					VMSuspendEvent suspendOnBpConditionErrr = createVMSuspendEvent(VMSuspendEvent.BREAKPOINT_CONDITION_ERR);
+					suspendOnBpConditionErrr.setBreakpointID(breakpoint.getID());
+					suspendOnBpConditionErrr.setReason(reason, status.getMessage());
+					// suspend VM and wait for resolution by the debug client
+					suspendAndWaitForResume(location, suspendOnBpConditionErrr);
+				} else {
+					QVTODebugCore.log(e.getStatus());
+				}
+				
 				continue;
 			}
 			
@@ -450,6 +466,13 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 		currentEnv.throwQVTException(new QvtInterruptedExecutionException("User termination request"));
 	}
 	
+	private String getMainModuleName() {
+		CompiledUnit mainUnit = fBPM.getUnitManager().getMainUnit();
+		if(mainUnit.getModules().isEmpty()) {
+			return "<null>"; //$NON-NLS-1$
+		}
+		return mainUnit.getModules().get(0).getName();
+	}
 	
 	private final class DebugInterceptor extends QvtGenericEvaluationVisitor implements InternalEvaluator {
 		

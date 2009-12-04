@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.debug.core.vm;
 
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EClassifier;
@@ -35,11 +36,14 @@ import org.eclipse.ocl.utilities.ASTNode;
 
 public class ConditionChecker {
 
+	public static final int ERR_CODE_COMPILATION = 100;
+	public static final int ERR_CODE_EVALUATION = 110;
+	
 	private final String fConditionBody;
 	private final ASTNode fTargetASTElement;
 	
 	private OCLExpression<EClassifier> fConditionAST;
-	private String fConditionError;
+	private IStatus fConditionError;
 
 
 	public ConditionChecker(String conditionBody, ASTNode targetASTElement) {
@@ -53,31 +57,32 @@ public class ConditionChecker {
 		
 	public boolean checkCondition(QvtOperationalEvaluationVisitorImpl mainEvaluator) throws CoreException {
 		OCLExpression<EClassifier> condition = getConditionAST();
-		if (condition == null) {
-			throw new CoreException(QVTODebugCore.createStatus(
-					IStatus.ERROR, fConditionError));
+		if (fConditionError != null) {
+			throw new CoreException(fConditionError);
 		}
-				
-		QvtOperationalEvaluationEnv evalEnv = mainEvaluator.getOperationalEvaluationEnv().cloneEvaluationEnv();
 		
-		QvtOperationalEvaluationVisitorImpl newVisitor = new QvtOperationalEvaluationVisitorImpl(
+		assert condition != null;
+		// FIXME - use a watching thread to interrupt infinite loop execution
+		QvtOperationalEvaluationEnv evalEnv = mainEvaluator.getOperationalEvaluationEnv().cloneEvaluationEnv();
+		QvtOperationalEvaluationVisitorImpl dedicatedVisitor = new QvtOperationalEvaluationVisitorImpl(
 				(QvtOperationalEnv) mainEvaluator.getEnvironment(), evalEnv);
 
 		try {
-			return Boolean.TRUE.equals(condition.accept(newVisitor));
-		} catch (Exception e) {
-			throw new CoreException(QVTODebugCore.createStatus(
-					IStatus.ERROR, "Condition evaluation error" + e.toString(), e));
+			return Boolean.TRUE.equals(condition.accept(dedicatedVisitor));
+		} catch (Throwable e) {
+			throw new CoreException(QVTODebugCore.createError(
+					e.toString(), ERR_CODE_EVALUATION, e));
 		}
 	}
-	
-	
-    private TargetContextEnv getEnvironmentForASTElement() {
+
+
+    private ASTElementContextEnv getEnvironmentForASTElement() {
+		// FIXME make module env available from the module
+		// workaround - just empty root env
+
 		QvtOperationalEnv env = (QvtOperationalEnv) ASTBindingHelper.resolveEnvironment(fTargetASTElement);
 
 		QvtOperationalEnvFactory factory = new QvtOperationalEnvFactory();
-		// FIXME make module env available from the module
-		// workaround - just empty root env
 		QvtOperationalEnv rootEnv = factory.createEnvironment();
 		QvtOperationalEnv contextEnv = rootEnv;
 
@@ -91,7 +96,8 @@ public class ConditionChecker {
     		context = context.eContainer();
     	}
     	
-    	return new TargetContextEnv(contextEnv);
+    	ASTElementContextEnv targetContextEnv = new ASTElementContextEnv(contextEnv, fTargetASTElement);
+		return targetContextEnv;
     }
     
 	private OCLExpression<EClassifier> getConditionAST() {
@@ -130,7 +136,7 @@ public class ConditionChecker {
     }
 
     private OCLExpression<EClassifier> analyzeCondition()  {
-    	TargetContextEnv env = getEnvironmentForASTElement();
+    	ASTElementContextEnv env = getEnvironmentForASTElement();
         OCLExpressionCS conditionCS = parseCondition(env);		
         OCLExpression<EClassifier> ast = null;
         
@@ -142,49 +148,22 @@ public class ConditionChecker {
             options.setReportErrors(true);
             options.setShowAnnotations(false);
             options.setSourceLineNumbersEnabled(false);
-            QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, env, options);
-            
-            ast = visitor.analyzeExpressionCS(conditionCS, env);
+            try {
+	            QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, env, options);            
+	            ast = visitor.analyzeExpressionCS(conditionCS, env);	            
+            } catch (Throwable e) {
+            	fConditionError = QVTODebugCore.createError("Failed to parse condition", ERR_CODE_COMPILATION,  e);
+            	QVTODebugCore.log(e);
+            	return null;
+			}
         }
-        
-        if(ast == null || env.hasErrors()) {
-        	ast = null;
-        	if(env.hasErrors()) {
-        		fConditionError = env.getErrorTxtBuffer().toString();
-        	} else {
-				fConditionError = "Failed to parse condition"; //$NON-NLS-1$            		
-        	}
-        }
-        
+
+    	if(env.hasErrors()) {
+    		fConditionError = QVTODebugCore.createError(env.getErrorTxtBuffer().toString(), ERR_CODE_COMPILATION, null);
+    	} else {
+    		fConditionError = QVTODebugCore.createError("Boolean type expression expected", ERR_CODE_COMPILATION, null);
+    	}
+    	
         return ast;
     }
-        
-	private class TargetContextEnv extends QvtOperationalEnv {
-
-		private StringBuilder fErrors = new StringBuilder();
-		
-		protected TargetContextEnv(QvtOperationalEnv parent) {
-			super(parent);
-		}
-		
-		StringBuilder getErrorTxtBuffer() {
-			return fErrors;
-		}
-		
-		@Override
-		public boolean hasErrors() {
-			return fErrors.length() > 0;
-		}
-		
-		@Override
-		public void reportError(String message, int startOffset, int endOffset) {
-			// do not propagate fErrors to the root environment
-			fErrors.append(message).append('\n');
-		}
-
-		@Override
-		public void reportWarning(String message, int startOffset, int endOffset) {
-			// not important
-		}
-	}    
 }

@@ -19,8 +19,8 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
-import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
@@ -38,18 +38,14 @@ class IterateBreakpointHelper {
 		fBreakpoints = new HashSet<VMBreakpoint>();
 	}
 	
-	VMBreakpoint stepIterateElement(LoopExp element, UnitLocation currentLocation) {			
+	VMBreakpoint stepIterateElement(LoopExp<EClassifier, ?> element, UnitLocation currentLocation) {			
 		Module currentModule = currentLocation.getModule();
 
-		CompiledUnit compiledModule = fBPM.getUnitManager().getCompiledModule(currentLocation.getURI());
-		
-		
-		LineNumberProvider lineNumProvider = fBPM.getLineNumberProvider(currentModule);
+		LineNumberProvider lineNumProvider = getLineNumberProvider(currentModule);
 		if(lineNumProvider == null) {
 			return null;
 		}
 
-		@SuppressWarnings("unchecked")
 		OCLExpression<EClassifier> body = element.getBody();
 		if (body == null) {
 			return null;
@@ -109,4 +105,8 @@ class IterateBreakpointHelper {
 		
 		fBreakpoints.clear();
 	}
+	
+    private LineNumberProvider getLineNumberProvider(Module module) {
+    	return ASTBindingHelper.getModuleSourceBinding(module).getLineNumberProvider();
+    }	
 }

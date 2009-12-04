@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.m2m.internal.qvt.oml.TransformationRunner;
+import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
 import org.eclipse.m2m.qvt.oml.debug.core.launch.TransformationRunnerFactory;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
@@ -41,6 +42,7 @@ public class QVTOApplication implements IApplication {
 
 
 	private TransformationRunnerFactory fRunnerFactory;
+	private ExecutionContext fContext;
 
 	public QVTOApplication() {
 		super();
@@ -70,7 +72,7 @@ public class QVTOApplication implements IApplication {
 	}
 
 	protected int doRun(TransformationRunner runner) {
-		Diagnostic diagnostic = runner.execute();
+		Diagnostic diagnostic = runner.execute(getExecutionContext());
 
 		if (diagnostic.getSeverity() == Diagnostic.ERROR) {
 			System.err.println(diagnostic);
@@ -92,7 +94,6 @@ public class QVTOApplication implements IApplication {
 	}
 
 	protected boolean processCommandLine(IApplicationContext context) {
-
 		String[] argsArray = (String[]) context.getArguments().get(
 				IApplicationContext.APPLICATION_ARGS);
 		
@@ -135,11 +136,22 @@ public class QVTOApplication implements IApplication {
 	}
 
 	protected TransformationRunner createRunner() throws DiagnosticException {
+
+		TransformationRunner runner = getRunnerFactory().createRunner();
+		return runner;
+	}
+	
+	protected ExecutionContext createExecutionContext() {
 		ExecutionContextImpl context = new ExecutionContextImpl();
 		context.setLog(new WriterLog(new PrintWriter(System.out), true));
-
-		TransformationRunner runner = getRunnerFactory().createRunner(context);
-		return runner;
+		return context;
+	}
+	
+	protected final ExecutionContext getExecutionContext() {
+		if(fContext == null) {
+			fContext = createExecutionContext(); 
+		}
+		return fContext;
 	}
 
 	protected String getCommandLineUsage() {

@@ -13,6 +13,7 @@ package org.eclipse.m2m.qvt.oml.debug.core.launch;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -44,6 +45,7 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 	
 	private int fPort;
 	private List<URI> fModels;
+	private URI fTraceURI;
 	
 	public QVTOApplicationConfiguration() {
 		fPort = -1;
@@ -74,9 +76,9 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 		
 		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration);
 		if(traceFileURI != null) {
+			fTraceURI = QVTODebugUtil.toFileURI(traceFileURI);
 			result.add(createArgStr(QVTOApplication.ARG_TRACE,
-					QVTODebugUtil.toPlatformPluginURI(traceFileURI).toString()));
-			
+					QVTODebugUtil.toPlatformPluginURI(fTraceURI.toString()).toString()));
 		}
 		
 		List<TargetUriData> modelURIs = QvtLaunchUtil.getTargetUris(configuration);				
@@ -143,7 +145,6 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 			launch.addDebugTarget(debugTarget);
 		} finally {
 			fPort = -1;
-			fModels.clear();
 		}
 	}
 
@@ -183,6 +184,7 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 	private void onTerminate() {	
 		// TODO - refresh only [out, inout] models, trace files in the workspace
 		// currently it's hard to deduce this info from the TargetURIData class
-		QVTODebugUtil.refreshInWorkspace(fModels);		
+		QVTODebugUtil.refreshInWorkspace(fModels);
+		QVTODebugUtil.refreshInWorkspace(Collections.singletonList(fTraceURI));
 	}	
 }

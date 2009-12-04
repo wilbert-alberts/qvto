@@ -57,11 +57,11 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 	public void launch(ILaunchConfiguration configuration, String mode,
 			ILaunch launch, IProgressMonitor monitor) throws CoreException {
 		
-		ExecutionContextImpl context = new ExecutionContextImpl();
+		ExecutionContextImpl context = createExecutionContext(configuration);
 		StreamsProxy streamsProxy = new StreamsProxy();
 		context.setLog(new WriterLog(streamsProxy.getOutputWriter(), true));
 		
-		DebugTransformationRunner runner = createRunner(configuration, context);
+		DebugTransformationRunner runner = createRunner(configuration);
 		runner.setErrorLog(new PrintWriter(streamsProxy.getErrWriter(), true));
 		
 		Diagnostic initDiagnostic = runner.initialize();
@@ -69,13 +69,13 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 			throw new CoreException(BasicDiagnostic.toIStatus(initDiagnostic));			
 		}
 		
-		DebuggableExecutorAdapter executable = runner.createDebugableAdapter();
+		DebuggableExecutorAdapter executable = runner.createDebugableAdapter(context);
 		IQVTOVirtualMachineShell vm = new QVTOVirtualMachine(executable);
 		
 		QVTOVirtualProcess process = new QVTOVirtualProcess(launch, vm);
 		process.setStreamsProxy(streamsProxy);
 		
-		List<IFile> transformationWsFile = QVTODebugUtil.toFile(runner.getTransformationURI());
+		List<IFile> transformationWsFile = QVTODebugUtil.toFiles(runner.getTransformationURI());
 		if(!transformationWsFile.isEmpty()) {			
 			addSourceModificationListener(transformationWsFile.get(0), process);
 		}
@@ -84,8 +84,18 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 		launch.addDebugTarget(debugTarget);
 	}
 	
+	private ExecutionContextImpl createExecutionContext(ILaunchConfiguration configuration) {
+		ExecutionContextImpl context = new ExecutionContextImpl();
+		Map<String, Object> configProperties = QvtLaunchUtil.loadConfigurationProperties(configuration);
+		for (String name : configProperties.keySet()) {
+			Object value = configProperties.get(name);
+			context.setConfigProperty(name, value);
+		}
+		return context;
+	}
 	
-	private DebugTransformationRunner createRunner(ILaunchConfiguration configuration, ExecutionContextImpl context) throws CoreException {
+	
+	private DebugTransformationRunner createRunner(ILaunchConfiguration configuration) throws CoreException {
 		DebugRunnerFactory runnerFactory = new DebugRunnerFactory();
 
 		runnerFactory.transformationURI = QvtLaunchUtil.getTransformationURI(configuration).toString();
@@ -102,15 +112,9 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 		if(traceFileURI != null && shouldGenerateTraceFile) {
 			runnerFactory.traceFileURI = traceFileURI;
 		}
-
-		Map<String, Object> configProperties = QvtLaunchUtil.loadConfigurationProperties(configuration);
-		for (String name : configProperties.keySet()) {
-			Object value = configProperties.get(name);
-			context.setConfigProperty(name, value);
-		}
 		
 		try {
-			return runnerFactory.createRunner(context);
+			return runnerFactory.createRunner();
 		} catch(DiagnosticException e) {
 			throw new CoreException(BasicDiagnostic.toIStatus(e.getDiagnostic()));
 		}

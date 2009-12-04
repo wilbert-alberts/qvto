@@ -37,12 +37,16 @@ public class UnitManager {
 		
 		fMainUnit = mainUnit;
 		try {
-			fUri2UnitMap = createFile2UnitMap(mainUnit);
+			fUri2UnitMap = createURI2UnitMap(mainUnit);
 		} catch (IOException e) {
 			fUri2UnitMap = Collections.emptyMap();			
 			QVTODebugCore.log(e);
 		}
 	}	
+	
+	public CompiledUnit getMainUnit() {
+		return fMainUnit;
+	}
 	
 	public CompiledUnit getCompiledModule(URI unitURI) {
 		UnitEntry numberProvider = fUri2UnitMap.get(unitURI);
@@ -75,17 +79,18 @@ public class UnitManager {
     	return null;
     }	
 	
-	private Map<URI, UnitEntry> createFile2UnitMap(CompiledUnit unit) throws IOException {
+	private Map<URI, UnitEntry> createURI2UnitMap(CompiledUnit mainUnit) throws IOException {
 		HashSet<CompiledUnit> allUnits = new HashSet<CompiledUnit>();
-		allUnits.add(unit);
-		QvtOperationalParserUtil.collectAllImports(unit, allUnits);
+		allUnits.add(mainUnit);
+		QvtOperationalParserUtil.collectAllImports(mainUnit, allUnits);
 		Map<URI, UnitEntry> file2Unit = new HashMap<URI, UnitEntry>();
 		
 		for (CompiledUnit nextUnit : allUnits) {
 			// FIXME
-			IModuleSourceInfo sourceBinding = ASTBindingHelper.getModuleSourceBinding(unit.getModules().get(0));
+			IModuleSourceInfo sourceBinding = ASTBindingHelper.getModuleSourceBinding(mainUnit.getModules().get(0));
 			if(sourceBinding != null) {
-				file2Unit.put(unit.getURI(), new UnitEntry(unit, sourceBinding.getLineNumberProvider()));
+				UnitEntry entry = new UnitEntry(nextUnit, sourceBinding.getLineNumberProvider());
+				file2Unit.put(nextUnit.getURI(), entry);
 			}
 		}
 		

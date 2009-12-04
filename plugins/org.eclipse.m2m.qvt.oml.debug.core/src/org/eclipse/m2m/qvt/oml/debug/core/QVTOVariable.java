@@ -15,29 +15,57 @@ import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMVariable;
 
-class QVTOVariable extends QVTODebugElement implements IVariable {
+public class QVTOVariable extends QVTODebugElement implements IVariable {
 	
+	private final VMVariable fUnderlyingVar;
+	private final IValue fValue;
 
-	private final VMVariable vmVar;
-	private IValue val;
-
+	
 	QVTOVariable(IQVTODebugTarget debugTarget, final VMVariable vmVar, long frameID) {
 		super(debugTarget);
 		
-		this.vmVar = vmVar;			
-		this.val = new QVTOValue(getQVTODebugTarget(), vmVar, frameID);
+		this.fUnderlyingVar = vmVar;			
+		this.fValue = new QVTOValue(getQVTODebugTarget(), vmVar, frameID);
 	}
 
+	public boolean isModelParameter() {
+		return fUnderlyingVar.kind == VMVariable.MODEL_PARAMETER;
+	}
+	
+	public boolean isLocalVariable() {
+		return fUnderlyingVar.kind == VMVariable.LOCAL;
+	}
+	
+	public boolean isCollectionElement() {
+		return fUnderlyingVar.kind == VMVariable.COLLECTION_ELEMENT;
+	}	
+
+	public boolean isPredefinedVariable() {
+		return fUnderlyingVar.kind == VMVariable.PREDEFINED_VAR;
+	}		
+	
+	public boolean isIntermProperty() {
+		return fUnderlyingVar.kind == VMVariable.INTERM_PROPERTY;
+	}	
+
+	public boolean isAttribute() {
+		return fUnderlyingVar.kind == VMVariable.ATTRIBUTE;
+	}	
+	
+	public boolean isReference() {
+		return fUnderlyingVar.kind == VMVariable.REFERENCE;
+	}	
+	
 	public IValue getValue() throws DebugException {
-		 return val;
+		 return fValue;
 	}
 
 	public String getName() throws DebugException {
-		return vmVar.name;
+		return fUnderlyingVar.name;
 	}
 	
 	public String getReferenceTypeName() throws DebugException {
-		return this.vmVar.type.declaringType;
+		return this.fUnderlyingVar.type.declaringType;
 	}	
 
 	public boolean hasValueChanged() throws DebugException {

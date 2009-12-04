@@ -18,10 +18,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -57,12 +55,14 @@ public class VMBreakpointManager {
 		return (breakpoint != null) ? Collections.singletonList(breakpoint) : Collections.<VMBreakpoint>emptyList();
 	}
 	
+	
 	public synchronized VMBreakpoint createBreakpoint(NewBreakpointData data) {
     	// FIXME - raise CoreEXxc... for invalid uris
     	URI uri = URI.createURI(data.targetURI);
-    	// FIXME - a temp hack to get correct source URI when running  a separate VM
-    	if(uri.isPlatformResource()) {
-    		//uri = URI.createPlatformPluginURI(uri.toPlatformString(true), true);
+    	
+    	// FIXME - a temp hack to get correct source URI when running a separate VM
+    	if(uri.isPlatformResource() && isPlatformDeployed()) {
+    		uri = URI.createPlatformPluginURI(uri.toPlatformString(true), true);
     	} 
 
     	if(fUnitManager.getCompiledModule(uri) == null) {
@@ -152,14 +152,9 @@ public class VMBreakpointManager {
         
         return false;
     }
-
-	/**
-     * Returns a provider of line information for a given mapping module which is one
-     * of modules involved in execution
-     * @param module a mapping module who's line information is needed
-     * @return a
-     */
-    public LineNumberProvider getLineNumberProvider(Module module) {
-    	return ASTBindingHelper.getModuleSourceBinding(module).getLineNumberProvider();
-    }
+    
+	private boolean isPlatformDeployed() {
+		CompiledUnit mainUnit = getUnitManager().getMainUnit();
+		return mainUnit.getURI().isPlatformPlugin();
+	}    
 }

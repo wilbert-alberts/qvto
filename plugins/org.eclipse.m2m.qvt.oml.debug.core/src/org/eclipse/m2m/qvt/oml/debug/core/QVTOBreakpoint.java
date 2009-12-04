@@ -25,7 +25,6 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 
@@ -69,7 +68,7 @@ public class QVTOBreakpoint extends LineBreakpoint {
     }
     
     QVTOBreakpoint(final URI sourceURI, int lineNumber, final boolean isRunToLine) throws CoreException {        
-        final IFile sourceFile = URIUtils.getFile(sourceURI);
+        final IFile sourceFile = QVTODebugUtil.toFile(sourceURI);
         final IResource markerResource = (sourceFile != null && !isRunToLine) ? sourceFile : ResourcesPlugin.getWorkspace().getRoot();
         
         final Integer lineNum = new Integer(lineNumber);
@@ -124,7 +123,7 @@ public class QVTOBreakpoint extends LineBreakpoint {
     	IMarker marker = getMarker();    
     	IResource res = marker.getResource();
     	if(res.getType() == IResource.FILE) {
-    		return URIUtils.getResourceURI(marker.getResource());
+    		return QVTODebugUtil.getResourceURI(marker.getResource());
     	}
     			
     	String uriStr = marker.getAttribute(TARGET_URI_ATTR, null);

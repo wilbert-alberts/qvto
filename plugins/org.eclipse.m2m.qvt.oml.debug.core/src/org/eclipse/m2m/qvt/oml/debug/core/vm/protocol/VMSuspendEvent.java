@@ -26,7 +26,9 @@ public class VMSuspendEvent extends VMEvent {
 
 	// TODO - currently using DebugEvent constants, QVTO should define its own
 	public int detail;
+	
 	public String reason;
+	public String reasonDetail;
 
 	public VMSuspendEvent(VMStackFrame[] stack, int detail) {
 		if(stack == null || stack.length == 0) {
@@ -46,12 +48,24 @@ public class VMSuspendEvent extends VMEvent {
 		this.breakpointID = breakpointID;
 	}
 	
-	public void setReason(String reason) {
+	public void setReason(String reason, String reasonDetail) {
+		if(reason == null && reasonDetail != null) {
+			throw new IllegalArgumentException();
+		}
 		this.reason = reason;
+		this.reasonDetail = reasonDetail;
 	}
 	
 	public String getReason() {
 		return reason;
+	}
+	
+	public String getReasonDetail() {
+		return reasonDetail;
+	}
+
+	public void setReasonDetail(String reasonDetail) {
+		this.reasonDetail = reasonDetail;
 	}
 	
 	@Override

@@ -15,8 +15,10 @@ public class VMStartEvent extends VMEvent {
 	private static final long serialVersionUID = 4489918763664221834L;
 
 	public final boolean suspendOnStartup;
+	public final String mainModuleName;
 	
-	public VMStartEvent(boolean suspendOnStartup) {
+	public VMStartEvent(String mainModuleName, boolean suspendOnStartup) {
 		this.suspendOnStartup = suspendOnStartup;
-	}		
+		this.mainModuleName = mainModuleName;
+	}
 }

@@ -15,16 +15,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
@@ -86,18 +85,6 @@ public class VariableFinder {
 		return new VMVariableResponse(variables.get(0), children);
 	}
 
-	private EClassifier declaredTypeOf(String varName) {
-		return fFeatureAccessor.getEvalEnv().getTypeOf(varName);
-	}
-
-	private EClassifier actualTypeOf(Object object) {
-		if (object instanceof EObject) {
-			return ((EObject) object).eClass();
-		}
-
-		return null;
-	}
-
 	public void find(String[] objectPath, boolean fetchChildVariables, List<VMVariable> result) {
 		if(objectPath == null) {
 			throw new IllegalArgumentException("null variable path"); //$NON-NLS-1$
@@ -115,12 +102,6 @@ public class VariableFinder {
 				result.add(variable);
 
 				if (fetchChildVariables) {
-					String childRootVar = variable.name;
-					// take the target referenced object as the root
-//					VariableFinder childFinder = new VariableFinder(
-//							childRootVar, referencedObj, fFeatureAccessor
-//									.getEvalEnv(), fFeatureAccessor);
-
 					collectChildVars(referencedObj, objectPath, fRootDeclaredType, result);
 				}
 			}
@@ -227,7 +208,10 @@ public class VariableFinder {
 		String varName = feature.getName();
 		EClassifier declaredType = fFeatureAccessor.getOCLType(feature);
 		
-		int kind = VMVariable.PROPERTY;
+		int kind = VMVariable.ATTRIBUTE;
+		if(feature instanceof EReference) {
+			kind = VMVariable.REFERENCE;
+		}
 		if (feature instanceof ContextualProperty) {
 			kind = VMVariable.INTERM_PROPERTY;
 		}
@@ -291,7 +275,7 @@ public class VariableFinder {
 
 		return URI.createHierarchicalURI(segments, null, null);
 	}
-
+	
 	private void collectChildVars(Object root, String[] parentPath, EClassifier containerType, List<VMVariable> result) {
 		String childPath[] = new String[parentPath.length + 1];
 		System.arraycopy(parentPath, 0, childPath, 0, parentPath.length);
@@ -340,7 +324,9 @@ public class VariableFinder {
 									
 			Dictionary<Object, Object> asDictionary = null;
 			if(root instanceof Dictionary<?, ?>) {
-				asDictionary = (Dictionary<Object, Object>) root;
+				@SuppressWarnings("unchecked")
+				Dictionary<Object, Object> dict = (Dictionary<Object, Object>) root;
+				asDictionary = dict;
 				elements = asDictionary.keys();
 			}			
 			
@@ -436,6 +422,9 @@ public class VariableFinder {
 		for (String varName : evalEnv.getNames()) {
 			VMVariable var = new VMVariable();
 			var.name = varName;
+			if(isPredefinedVar(varName, evalEnv)) {
+				var.kind = VMVariable.PREDEFINED_VAR;
+			}
 
 			Object value = evalEnv.getValueOf(varName);
 			EClassifier declaredType = evalEnv.getTypeOf(varName);
@@ -527,7 +516,6 @@ public class VariableFinder {
 
 		Map<String, ModelInstance> result = new HashMap<String, ModelInstance>(2);
 		TransformationInstance currentTransformation = (TransformationInstance) currentModule;
-		List<IVariable> modelParamVars = new LinkedList<IVariable>();
 	
 		for (ModelParameter modelParameter : currentTransformation.getTransformation().getModelParameter()) {
 			ModelInstance modelInstance = currentTransformation.getModel(modelParameter);
@@ -545,4 +533,10 @@ public class VariableFinder {
 		return result;
 	}
 	
+	private static boolean isPredefinedVar(String name, QvtOperationalEvaluationEnv evalEnv) {
+		if(("self".equals(name) || "result".equals(name)) && evalEnv.getOperation() != null) {
+			return true;
+		}
+		return "this".equals(name);
+	}
 }

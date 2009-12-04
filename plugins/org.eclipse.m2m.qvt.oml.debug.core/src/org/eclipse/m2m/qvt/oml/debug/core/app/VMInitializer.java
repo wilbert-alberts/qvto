@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.QVTOVirtualMachine;
@@ -25,18 +26,21 @@ class VMInitializer implements VMProvider {
 	public static final int INITIALIZE_TIMEOUT = 60 * 1000;
 
 	private final DebugTransformationRunner fRunner;
+	private final ExecutionContext fExecContext;
 	private final Object fLock = new Object();
 	
 	private Diagnostic fInitDiagnostic;
 	private Thread fInitThread;
 	private IQVTOVirtualMachineShell fVM;
 	
-	public VMInitializer(DebugTransformationRunner runner) {
-		if(runner == null) {
+	
+	public VMInitializer(DebugTransformationRunner runner, ExecutionContext execContext) {
+		if(runner == null || execContext == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		this.fRunner = runner;
+		fRunner = runner;
+		fExecContext = execContext;
 	}
 
 	public IQVTOVirtualMachineShell getVM() throws CoreException {
@@ -101,7 +105,7 @@ class VMInitializer implements VMProvider {
 			diagnostic = fRunner.initialize();
 			
 			if(QvtPlugin.isSuccess(diagnostic)) {
-				vm = new QVTOVirtualMachine(fRunner.createDebugableAdapter()); 
+				vm = new QVTOVirtualMachine(fRunner.createDebugableAdapter(fExecContext)); 
 			}
 			
 		} catch(Throwable e) {

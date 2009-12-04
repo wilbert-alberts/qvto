@@ -31,13 +31,20 @@ public class QVTODebugUtil {
 		super();
 	}
 
-	public static List<IFile> toFile(URI uri) {
+	public static URI getResourceURI(IResource resource) {
+		return URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
+	}
+	
+	public static IFile toFile(URI uri) {
+		List<IFile> files = toFiles(uri);
+		return files.isEmpty() ? null : files.get(0);
+	}
+	
+	public static List<IFile> toFiles(URI uri) {
 		if(uri.isPlatformResource()) {
 			String platformString = uri.toPlatformString(true);
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(platformString));
-			if(file.exists()) {
-				return Collections.singletonList(file);
-			}
+			return Collections.singletonList(file);
 		} else if(uri.isFile()) {
 			java.net.URI javaURI;
 			try {
@@ -52,10 +59,9 @@ public class QVTODebugUtil {
 			List<IFile> result = new ArrayList<IFile>(files.length);
 			
 			for (IFile nextFile : files) {
-				if(nextFile.exists()) {
-					result.add(nextFile);
-				}
+				result.add(nextFile);
 			}
+			return result;
 		}
 		return Collections.emptyList();
 	}
@@ -63,7 +69,7 @@ public class QVTODebugUtil {
 	public static void refreshInWorkspace(List<URI> uris) {
 		Set<IContainer> containers = new HashSet<IContainer>();
 		for (URI nextURI : uris) {
-			List<IFile> files = toFile(nextURI);
+			List<IFile> files = toFiles(nextURI);
 			for (IFile iFile : files) {
 				containers.add(iFile.getParent());
 			}

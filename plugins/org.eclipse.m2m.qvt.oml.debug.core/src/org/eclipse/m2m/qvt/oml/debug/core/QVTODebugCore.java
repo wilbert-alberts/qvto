@@ -82,6 +82,11 @@ public class QVTODebugCore extends Plugin {
 	public static IStatus createStatus(int severity, String message) {
 		return createStatus(severity, message, null);
 	}
+	
+	public static IStatus createError(String message, int code,  Throwable throwable) {
+		return new Status(IStatus.ERROR, PLUGIN_ID, code, message, throwable);
+	}
+	
 
     public static void log(IStatus status) {
     	QVTODebugCore debugPlugin = getDefault();

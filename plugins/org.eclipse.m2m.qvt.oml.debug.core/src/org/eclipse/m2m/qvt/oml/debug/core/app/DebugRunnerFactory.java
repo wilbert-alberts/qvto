@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.internal.qvt.oml.TransformationRunner;
-import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
 import org.eclipse.m2m.qvt.oml.debug.core.launch.TransformationRunnerFactory;
 
 public class DebugRunnerFactory extends TransformationRunnerFactory {
@@ -24,12 +24,12 @@ public class DebugRunnerFactory extends TransformationRunnerFactory {
 		super();
 	}
 	
-	protected TransformationRunner createRunner(URI transformationURI, List<URI> modelParamURIs, ExecutionContextImpl context) {
-		return new DebugTransformationRunner(transformationURI, context, modelParamURIs);
+	protected TransformationRunner createRunner(URI transformationURI, EPackage.Registry packageRegistry, List<URI> modelParamURIs) {
+		return new DebugTransformationRunner(transformationURI, packageRegistry, modelParamURIs);
 	}
 
 	@Override
-	public DebugTransformationRunner createRunner(ExecutionContextImpl context) throws DiagnosticException {
-		return (DebugTransformationRunner) super.createRunner(context);
+	public DebugTransformationRunner createRunner() throws DiagnosticException {
+		return (DebugTransformationRunner) super.createRunner();
 	}
 }

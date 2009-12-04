@@ -102,7 +102,7 @@ public class ValidBreakpointLocator {
 
 	static boolean isBreakpointableElementStart(ASTNode element) {
 		boolean breakpointable =
-            (element instanceof OCLExpression ||
+            (element instanceof OCLExpression<?> ||
 			element instanceof ObjectExp ||
 			element instanceof AssignExp ||
 			element instanceof BreakExp ||
