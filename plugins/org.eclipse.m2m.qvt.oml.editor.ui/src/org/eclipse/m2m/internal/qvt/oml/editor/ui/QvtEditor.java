@@ -240,7 +240,14 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
             
             myTreeViewer.addSelectionChangedListener(myOutlineSelectionListener);
         }
+        
+        updateStatusLine();
     }
+    
+	protected void updateStatusLine() {
+		setStatusLineErrorMessage(null);
+		setStatusLineMessage(null);
+	}
     
     @SuppressWarnings("unchecked")
 	@Override
