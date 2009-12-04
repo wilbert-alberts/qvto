@@ -6,6 +6,7 @@ feature@org.eclipse.m2m.qvt.oml=v20091113-1500,:pserver:anonymous@dev.eclipse.or
 feature@org.eclipse.m2m.qvt.oml.common=v20091113-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.common.feature
 feature@org.eclipse.m2m.qvt.oml.editor=v20091113-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.editor.feature
 feature@org.eclipse.m2m.qvt.oml.runtime=v20091113-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.runtime.feature
+feature@org.eclipse.m2m.qvt.oml.debug=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.debug.feature
 
 !*** QVT plug-ins ***************************************************************************
 plugin@org.eclipse.m2m.qvt.oml=v20091116-1630,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml
@@ -22,6 +23,8 @@ plugin@org.eclipse.m2m.qvt.oml.runtime.ui=v20091116-1630,:pserver:anonymous@dev.
 plugin@org.eclipse.m2m.qvt.oml.ui=v20091116-1630,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ui
 plugin@org.eclipse.m2m.qvt.oml.trace.edit=v20091113-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.trace.edit
 plugin@org.eclipse.m2m.qvt.oml.ecore.imperativeocl=v20091113-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.ecore.imperativeocl
+plugin@org.eclipse.m2m.qvt.oml.debug.core=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.debug.core
+plugin@org.eclipse.m2m.qvt.oml.debug.ui=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.debug.ui
 
 !*** QVT examples ***************************************************************************
 feature@org.eclipse.m2m.qvt.oml.examples=v20090616-1500,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/examples/org.eclipse.m2m.qvt.oml.examples-feature
