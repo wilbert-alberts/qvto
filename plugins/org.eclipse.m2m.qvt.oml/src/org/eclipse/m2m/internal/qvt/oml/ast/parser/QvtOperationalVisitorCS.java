@@ -622,7 +622,7 @@ public class QvtOperationalVisitorCS
 	 */
 	public OCLExpression<EClassifier> analyzeExpressionCS(OCLExpressionCS oclExpressionCS, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
-			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) throws SemanticException {
+			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		OCLExpression<EClassifier> result = oclExpressionCS(oclExpressionCS, env);	
 		validate(env);		
 		return result;
