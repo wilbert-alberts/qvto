@@ -61,46 +61,9 @@ public class BreakpointConditionEditor {
             fViewer = new ProjectionViewer(parent, null, null, true, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.LEFT_TO_RIGHT);
             fViewer.setInput(parent);
             IDocument document = new Document();
-//            JDIDebugUIPlugin.getDefault().getJavaTextTools().setupJavaDocumentPartitioner(document, IJavaPartitions.JAVA_PARTITIONING);
-//        // we can only do code assist if there is an associated type
-//            IJavaDebugContentAssistContext context = null;
-//            IType type = BreakpointUtils.getType(fBreakpoint);
-//            if (type == null) {
-//                context = new TypeContext(null, -1);
-//            } 
-//            else {
-//                try {   
-//                    String source = null;
-//                    ICompilationUnit compilationUnit = type.getCompilationUnit();
-//                    if (compilationUnit != null && compilationUnit.getJavaProject().getProject().exists()) {
-//                        source = compilationUnit.getSource();
-//                    } 
-//                    else {
-//                        IClassFile classFile = type.getClassFile();
-//                        if (classFile != null) {
-//                            source = classFile.getSource();
-//                        }
-//                    }
-//                    int lineNumber = fBreakpoint.getMarker().getAttribute(IMarker.LINE_NUMBER, -1);
-//                    int position= -1;
-//                    if (source != null && lineNumber != -1) {
-//                        try {
-//                            position = new Document(source).getLineOffset(lineNumber - 1);
-//                        } 
-//                        catch (BadLocationException e) {JDIDebugUIPlugin.log(e);}
-//                    }
-//                    context = new TypeContext(type, position);
-//                } 
-//                catch (CoreException e) {JDIDebugUIPlugin.log(e);}
-//            }
-//            fCompletionProcessor = new JavaDebugContentAssistProcessor(context);
-//            fViewer.configure(new DisplayViewerConfiguration() {
-//                public IContentAssistProcessor getContentAssistantProcessor() {
-//                        return fCompletionProcessor;
-//                }
-//            });
+
             fViewer.setEditable(true);
-        //if we don't check upstream tracing can throw assertion exceptions see bug 181914
+
             document.set((condition == null ? "" : condition)); //$NON-NLS-1$
             fViewer.setDocument(document);
             fViewer.setUndoManager(new TextViewerUndoManager(10));
