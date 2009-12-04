@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -51,36 +52,39 @@ public class TransformationRunner  {
 		};
 	}
 		
+	private final URI fTransformationURI;	
 	private final Executor fExecutor;
-	private final ExecutionContext fExeContext;
 	private final List<URI> fModelParamURIs;
 	private URI fTraceFileURI;
-	private URI fTransformationURI;
 	
 	private BasicDiagnostic fDiagnostic;
 	private List<ModelExtent> fModelParams;		
 	private ModelExtentHelper fExtentHelper;
+	private EPackage.Registry fPackageRegistry;
 	
 	
 	public TransformationRunner(URI transformationURI, 
-			ExecutionContext context,
+			EPackage.Registry packageRegistry,
 			List<URI> modelParamURIs) {
 		
-		if (transformationURI == null || context == null
-				|| modelParamURIs == null || modelParamURIs.contains(null)) {
+		if (transformationURI == null || modelParamURIs == null
+				|| modelParamURIs.contains(null)) {
 			throw new IllegalArgumentException();
 		}
 
-		this.fExeContext = context;
-		this.fExecutor = new Executor(transformationURI);
-		
-		this.fTransformationURI = transformationURI;
-		this.fModelParamURIs = modelParamURIs;
+		fExecutor = new Executor(transformationURI, packageRegistry);
+		fPackageRegistry = packageRegistry;
+		fTransformationURI = transformationURI;
+		fModelParamURIs = modelParamURIs;
 	}
 	
 	protected InternalTransformationExecutor getExecutor() {
 		return fExecutor;
 	};
+	
+	public void setPackageRegistry(EPackage.Registry registry) {
+		fPackageRegistry = registry;
+	}
 	
 	public URI getTransformationURI() {
 		return fTransformationURI;
@@ -114,6 +118,16 @@ public class TransformationRunner  {
 		}
 		
 		fExtentHelper = new ModelExtentHelper(transformation, fModelParamURIs);
+		//FIXME
+		ResourceSetImpl resourceSet = (ResourceSetImpl)fExtentHelper.getResourceSet();
+		for (String nsURI : fPackageRegistry.keySet()) {
+			EPackage ePackage = fPackageRegistry.getEPackage(nsURI);
+			if(ePackage.eResource() != null) {
+				resourceSet.getResources().add(ePackage.eResource());
+			}
+		}
+		//
+		
 		Diagnostic extentsDiagnostic = Diagnostic.OK_INSTANCE; 
 		try {
 			fModelParams = fExtentHelper.loadExtents();
@@ -155,7 +169,7 @@ public class TransformationRunner  {
 	}		
 
 
-	public Diagnostic execute() {
+	public Diagnostic execute(ExecutionContext context) {
 		Diagnostic diagnostic = initialize();
 		
 		if(!isSuccess(diagnostic)) {
@@ -166,7 +180,7 @@ public class TransformationRunner  {
 		try {			
 			ModelExtent[] params = fModelParams.toArray(new ModelExtent[fModelParams.size()]);
 			
-			ExecutionDiagnostic execDiagnostic = fExecutor.execute(fExeContext, params);
+			ExecutionDiagnostic execDiagnostic = fExecutor.execute(context, params);
 			handleExecution(execDiagnostic);
 			
 			Trace traces = fExecutor.fTraces;
