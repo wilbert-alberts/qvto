@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2009 Eclipse Modeling Project and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Radek Dvorak - initial API and implementation
+ -->
+
+<feature
+      id="org.eclipse.m2m.qvt.oml.debug"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.m2m.qvt.oml.debug.core">
+
+   <description url="http://www.eclipse.org/modeling/m2m">
+      %description
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.6.0" match="compatible"/>
+      <import plugin="org.eclipse.pde.launching" version="3.6.0" match="compatible"/>
+      <import plugin="org.eclipse.debug.core" version="3.6.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.runtime" version="2.1.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common" version="2.1.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.emf.util" version="2.0.100" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.editor.ui" version="2.1.0" match="compatible"/>
+      <import plugin="org.eclipse.core.expressions"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.pde.ui"/>
+      <import plugin="org.eclipse.jdt.debug.ui"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.ui"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common.ui"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.project"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.runtime.ui"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.debug.core" version="1.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.m2m.qvt.oml.debug.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.m2m.qvt.oml.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
