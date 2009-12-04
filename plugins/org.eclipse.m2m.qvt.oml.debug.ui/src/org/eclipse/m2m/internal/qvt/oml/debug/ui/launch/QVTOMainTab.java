@@ -18,6 +18,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.NLS;
+import org.eclipse.m2m.internal.qvt.oml.debug.ui.DebugUIMessages;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.app.QVTODebugApplication;
 import org.eclipse.pde.core.plugin.TargetPlatform;
@@ -146,7 +147,7 @@ public class QVTOMainTab implements ILaunchConfigurationTab {
 	}
 	
 	private void setBadApplicationError() {
-		setErrorMessage(NLS.bind("Must be run as application ''{0}''", APP_ID));
+		setErrorMessage(NLS.bind(DebugUIMessages.QVTOMainTab_mustRunAsQVTApp, APP_ID));
 	}
 	
 	private void setErrorMessage(String message) {

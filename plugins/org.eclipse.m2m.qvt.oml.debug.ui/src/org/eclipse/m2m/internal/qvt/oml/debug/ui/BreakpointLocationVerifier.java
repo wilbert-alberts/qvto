@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.ILineBreakpoint;
 import org.eclipse.jface.text.BadLocationException;
@@ -99,12 +98,12 @@ class BreakpointLocationVerifier {
 		
 		IDocumentProvider docProvider = fEditor.getDocumentProvider();
 		if(docProvider == null) {
-			return Status.CANCEL_STATUS;
+			return canceled();
 		}
 		
 		IDocument doc = docProvider.getDocument(fEditor.getEditorInput());
 		if(doc == null) {
-			return Status.CANCEL_STATUS;
+			return canceled();
 		}
 		
         CompiledUnit compilationUnit = fEditor.getValidCompiledModule(GET_AST_TIMEOUT);
@@ -117,12 +116,12 @@ class BreakpointLocationVerifier {
 						getLineNumberProvider(doc), lineNumber);                    	 
 		if(elements.isEmpty()) {
             report(NLS.bind(fInvalidLocationMessage, new Integer(lineNumber)));
-            return Status.CANCEL_STATUS;
+            return canceled();
 		}
 
-		return Status.OK_STATUS;
+		return canceled();
 	}
-	
+		
 	/**
 	 * Reports any status to the current active workbench shell
 	 * @param message the message to display
@@ -139,5 +138,9 @@ class BreakpointLocationVerifier {
 				}
 			}
 		});
+	}
+	
+	private IStatus canceled() {
+		return QVTODebugUIPlugin.createStatus(IStatus.CANCEL, fInvalidLocationMessage);
 	}
 }

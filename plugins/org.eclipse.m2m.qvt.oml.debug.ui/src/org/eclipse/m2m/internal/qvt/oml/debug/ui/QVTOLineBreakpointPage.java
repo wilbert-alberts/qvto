@@ -63,14 +63,14 @@ public class QVTOLineBreakpointPage extends QVTOBreakpointPage {
             QVTODebugUIPlugin.log(ce);
         }
         if (lineNumber.length() > 0) {
-            createLabel(parent, DebugUIMessages.QvtLineBreakpointPage_LineNumber); 
+            createLabel(parent, DebugUIMessages.QVTOLineBreakpointPage_LineNumber); 
             Text text = SWTFactory.createText(parent, SWT.READ_ONLY, 1, lineNumber.toString());
             text.setBackground(parent.getBackground());
         }
     }
     
     protected void createTypeSpecificEditors(Composite parent) throws CoreException {
-        setTitle(DebugUIMessages.QvtLineBreakpointPage_LineBreakpoint);
+        setTitle(DebugUIMessages.QVTOLineBreakpointPage_LineBreakpoint);
         QVTOBreakpoint breakpoint = (QVTOBreakpoint) getBreakpoint();
         if (breakpoint.supportsCondition()) {
             createConditionEditor(parent);
@@ -85,18 +85,7 @@ public class QVTOLineBreakpointPage extends QVTOBreakpointPage {
      */
     private void createConditionEditor(Composite parent) throws CoreException {
         QVTOBreakpoint breakpoint = (QVTOBreakpoint) getBreakpoint();
-        String label = DebugUIMessages.QvtLineBreakpointPage_EnableCondition; 
-//      String label = null;
-//        IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getAdapter(IBindingService.class);
-//        if(bindingService != null) {
-//            TriggerSequence keyBinding = bindingService.getBestActiveBindingFor(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-//            if (keyBinding != null) {
-//                label = MessageFormat.format(DebugUIMessages.QvtLineBreakpointPage_EnableConditionWithCodeAssist, new String[] {keyBinding.format()}); 
-//            } 
-//        }
-//        if (label == null) {
-//            label = DebugUIMessages.QvtLineBreakpointPage_EnableConditionWithoutCodeAssist; 
-//        }
+        String label = DebugUIMessages.QVTOLineBreakpointPage_EnableCondition; 
         
         Composite conditionComposite = SWTFactory.createGroup(parent, EMPTY_STRING, 1, 1, GridData.FILL_BOTH);
         fEnableConditionButton = createCheckButton(conditionComposite, label);
@@ -107,9 +96,9 @@ public class QVTOLineBreakpointPage extends QVTOBreakpointPage {
             }
         });
         fConditionEditor = new BreakpointConditionEditor(conditionComposite, this); 
-        fSuspendWhenLabel = createLabel(conditionComposite, DebugUIMessages.QvtLineBreakpointPage_SuspendCondition); 
-        fConditionIsTrue = createRadioButton(conditionComposite, DebugUIMessages.QvtLineBreakpointPage_ConditionTrue); 
-        fConditionHasChanged = createRadioButton(conditionComposite, DebugUIMessages.QvtLineBreakpointPage_ConditionValueChange); 
+        fSuspendWhenLabel = createLabel(conditionComposite, DebugUIMessages.QVTOLineBreakpointPage_SuspendCondition); 
+        fConditionIsTrue = createRadioButton(conditionComposite, DebugUIMessages.QVTOLineBreakpointPage_ConditionTrue); 
+        fConditionHasChanged = createRadioButton(conditionComposite, DebugUIMessages.QVTOLineBreakpointPage_ConditionValueChange); 
         if (breakpoint.isConditionSuspendOnTrue()) {
             fConditionIsTrue.setSelection(true);
         } 

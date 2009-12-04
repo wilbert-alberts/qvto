@@ -32,6 +32,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.QVTOStackFrame;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOThread;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOVariable;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMLocation;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
@@ -104,14 +105,14 @@ public class QVTODebugModelPresentation implements IDebugModelPresentation, IDeb
         } 
         else if(element instanceof QVTOThread) {
         	QVTOThread thread = (QVTOThread) element;
-        	String name = "main"; //$NON-NLS-1$ //$NON-NLS-2$
-        	String state = thread.isSuspended() ? "Suspended" : "Running"; //$NON-NLS-1$ //$NON-NLS-2$
-        	return MessageFormat.format("Thread [{0}] ({1})", name, state);
+        	String name = "main"; //$NON-NLS-1$
+        	String state = thread.isSuspended() ? DebugUIMessages.QVTODebugModelPresentation_Suspended : DebugUIMessages.QVTODebugModelPresentation_Running;
+        	return MessageFormat.format(DebugUIMessages.QVTODebugModelPresentation_ThreadLabel, name, state);
         } 
         else if(element instanceof QVTODebugTarget) {
         	QVTODebugTarget debugTarget = (QVTODebugTarget) element;
 			String moduleName = debugTarget.getMainModuleName();
-			return "Transformation [" + moduleName + "]";
+			return NLS.bind(DebugUIMessages.QVTODebugModelPresentation_TransformationLabel, moduleName);
         }
 
         return null;

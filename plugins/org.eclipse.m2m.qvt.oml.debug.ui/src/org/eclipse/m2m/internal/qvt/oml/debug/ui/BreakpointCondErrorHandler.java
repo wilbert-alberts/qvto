@@ -82,7 +82,7 @@ public class BreakpointCondErrorHandler implements IStatusHandler {
             public void run() {               
             	QVTOBreakpoint breakpoint = QVTOBreakpoint.getBreakpointByID(breakPointID);
             	if(breakpoint == null) {
-    				QVTODebugCore.log(QVTODebugCore.createStatus(IStatus.ERROR,"Breakpoint not found"));
+    				QVTODebugCore.log(QVTODebugCore.createStatus(IStatus.ERROR,"Breakpoint not found")); //$NON-NLS-1$
          			return;
             	}
 

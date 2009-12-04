@@ -124,13 +124,13 @@ public class QVTODebugUIPlugin extends AbstractUIPlugin {
 	public static void statusDialog(IStatus status) {
 		switch (status.getSeverity()) {
 		case IStatus.ERROR:
-			statusDialog(DebugUIMessages.Activator_StatusDialog_Error, status);
+			statusDialog(DebugUIMessages.StatusDialog_Error, status);
 			break;
 		case IStatus.WARNING:
-			statusDialog(DebugUIMessages.Activator_StatusDialog_Warning, status);
+			statusDialog(DebugUIMessages.StatusDialog_Warning, status);
 			break;
 		case IStatus.INFO:
-			statusDialog(DebugUIMessages.Activator_StatusDialog_Information,
+			statusDialog(DebugUIMessages.StatusDialog_Information,
 					status);
 			break;
 		}

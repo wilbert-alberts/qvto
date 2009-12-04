@@ -63,7 +63,7 @@ public class QVTOBreakpointPage extends PropertyPage {
     /**
      * the hit count fError message
      */
-    private static final String fgHitCountErrorMessage = DebugUIMessages.QvtBreakpointPage_HitCountErrorMessage; 
+    private static final String fgHitCountErrorMessage = DebugUIMessages.QVTOBreakpointPage_HitCountErrorMessage; 
     
     /**
      * Store the breakpoint properties.
@@ -169,7 +169,7 @@ public class QVTOBreakpointPage extends PropertyPage {
      * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
      */
     protected Control createContents(Composite parent) {
-        setTitle(DebugUIMessages.QvtBreakpointPage_ModulePrepareBreakpoint);
+        setTitle(DebugUIMessages.QVTOBreakpointPage_ModulePrepareBreakpoint);
         noDefaultAndApplyButton();
         Composite mainComposite = createComposite(parent, 1);
         try {
@@ -187,7 +187,7 @@ public class QVTOBreakpointPage extends PropertyPage {
                 getShell().addShellListener(new ShellListener() {
                     public void shellActivated(ShellEvent e) {
                         Shell shell = (Shell)e.getSource();
-                        shell.setText(MessageFormat.format(DebugUIMessages.QvtBreakpointPage_CreateBreakpointForModule, new Object[]{getName(getBreakpoint())})); 
+                        shell.setText(MessageFormat.format(DebugUIMessages.QVTOBreakpointPage_CreateBreakpointForModule, new Object[]{getName(getBreakpoint())})); 
                         shell.removeShellListener(this);
                     }
                     public void shellClosed(ShellEvent e) {
@@ -230,7 +230,7 @@ public class QVTOBreakpointPage extends PropertyPage {
         // TODO
         String typeName = getBreakpoint().getUnitURI().toPlatformString(true);
         if (typeName != null) {
-            createLabel(labelComposite, DebugUIMessages.QvtBreakpointPage_Module); 
+            createLabel(labelComposite, DebugUIMessages.QVTOBreakpointPage_Module); 
             Text text = SWTFactory.createText(labelComposite, SWT.READ_ONLY, 1, typeName);
             text.setBackground(parent.getBackground());
         }
@@ -243,7 +243,7 @@ public class QVTOBreakpointPage extends PropertyPage {
      */
     private void createHitCountEditor(Composite parent) throws CoreException {
         Composite hitCountComposite = createComposite(parent, 2);
-        fHitCountButton= createCheckButton(hitCountComposite, DebugUIMessages.QvtBreakpointPage_HitCount); 
+        fHitCountButton= createCheckButton(hitCountComposite, DebugUIMessages.QVTOBreakpointPage_HitCount); 
         fHitCountButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
                 fHitCountText.setEnabled(fHitCountButton.getSelection());
@@ -300,7 +300,7 @@ public class QVTOBreakpointPage extends PropertyPage {
      * @throws CoreException
      */
     protected void createEnabledButton(Composite parent) throws CoreException {
-        fEnabledButton = createCheckButton(parent, DebugUIMessages.QvtBreakpointPage_Enabled); 
+        fEnabledButton = createCheckButton(parent, DebugUIMessages.QVTOBreakpointPage_Enabled); 
         fEnabledButton.setSelection(getBreakpoint().isEnabled());
     }
     
@@ -386,7 +386,7 @@ public class QVTOBreakpointPage extends PropertyPage {
                 getBreakpoint().delete();
             }
         } catch (CoreException e) {
-            QVTODebugUIPlugin.statusDialog(DebugUIMessages.QvtBreakpointPage_CancelBreakpointCreationError, e.getStatus()); 
+            QVTODebugUIPlugin.statusDialog(DebugUIMessages.QVTOBreakpointPage_CancelBreakpointCreationError, e.getStatus()); 
         }
         return super.performCancel();
     }

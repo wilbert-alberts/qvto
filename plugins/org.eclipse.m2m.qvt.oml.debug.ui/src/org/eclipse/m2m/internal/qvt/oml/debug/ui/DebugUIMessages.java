@@ -15,56 +15,48 @@ import org.eclipse.osgi.util.NLS;
 public class DebugUIMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.m2m.internal.qvt.oml.debug.ui.DebugUIMessages"; //$NON-NLS-1$
 
-	public static String Activator_StatusDialog_Error;
-    public static String Activator_StatusDialog_Warning;
-    public static String Activator_StatusDialog_Information;
+	public static String StatusDialog_Error;
+    public static String StatusDialog_Warning;
+    public static String StatusDialog_Information;
 
     public static String BreakpointConditionEditor_EnterCondition;
-    public static String EnableDisableBreakpointRulerAction_EnableBreakpoint;
-	public static String EnableDisableBreakpointRulerAction_DisableBreakpoint;
-	public static String EnableDisableBreakpointRulerAction_EnableDisableBreakpoint;
-	public static String EnableDisableBreakpointRulerAction_ErrorTitle;
-	public static String EnableDisableBreakpointRulerAction_ErrorMessage;
-	public static String ManageBreakpointRulerAction_text;	
-	public static String QvtBreakpointListener_CompilationFailed;
 
-    public static String QvtBreakpointListener_ExceptionInRuntime;
+    public static String QVTOBreakpointPage_CancelBreakpointCreationError;
+    public static String QVTOBreakpointPage_CreateBreakpointForModule;
+    public static String QVTOBreakpointPage_Enabled;
+    public static String QVTOBreakpointPage_HitCount;
+    public static String QVTOBreakpointPage_HitCountErrorMessage;
+    public static String QVTOBreakpointPage_Module;
+    public static String QVTOBreakpointPage_ModulePrepareBreakpoint;
 
-    public static String QvtBreakpointPage_CancelBreakpointCreationError;
+	public static String QVTODebugModelPresentation_Running;
 
-    public static String QvtBreakpointPage_CreateBreakpointForModule;
+	public static String QVTODebugModelPresentation_Suspended;
 
-    public static String QvtBreakpointPage_Enabled;
+	public static String QVTODebugModelPresentation_ThreadLabel;
 
-    public static String QvtBreakpointPage_HitCount;
-
-    public static String QvtBreakpointPage_HitCountErrorMessage;
-
-    public static String QvtBreakpointPage_Module;
-
-    public static String QvtBreakpointPage_ModulePrepareBreakpoint;
+	public static String QVTODebugModelPresentation_TransformationLabel;
 
     public static String QVTOToggleBreakpointAdapter_VerifyBreakpointJob;
 	public static String QVTOToggleBreakpointAdapter_CannotSetBreakpoint;
-	public static String QvtLineBreakpointPage_ConditionTrue;
+	
+	public static String QVTOLineBreakpointPage_ConditionTrue;
+    public static String QVTOLineBreakpointPage_ConditionValueChange;
+    public static String QVTOLineBreakpointPage_EnableCondition;
+    public static String QVTOLineBreakpointPage_LineBreakpoint;
+    public static String QVTOLineBreakpointPage_LineNumber;
+    public static String QVTOLineBreakpointPage_SuspendCondition;
 
-    public static String QvtLineBreakpointPage_ConditionValueChange;
+	public static String QVTOMainTab_mustRunAsQVTApp;
 
-    public static String QvtLineBreakpointPage_EnableCondition;
-//    public static String QvtLineBreakpointPage_EnableConditionWithCodeAssist;
+	public static String QVTORunToLineAdapter_invalidLocation;
 
-//    public static String QvtLineBreakpointPage_EnableConditionWithoutCodeAssist;
-
-    public static String QvtLineBreakpointPage_LineBreakpoint;
-
-    public static String QvtLineBreakpointPage_LineNumber;
-
-    public static String QvtLineBreakpointPage_SuspendCondition;
-
-    public static String QvtRunToLineAdapter_InvalidLocation;
-	public static String QvtRunToLineAdapter_NoFile;
-	public static String QvtRunToLineAdapter_NoDocument;
-	public static String QvtRunToLineAdapter_NoInput;
+	public static String QVTORunToLineAdapter_runFailed;
+ 
+	public static String QVTORunToLineAdapter_NoFile;
+	public static String QVTORunToLineAdapter_NoDocument;
+	public static String QVTORunToLineAdapter_NoInput;
+	
     public static String BreakpointCondErrorHandler_EditConditionButtonLabel;
     public static String BreakpointCondErrorHandler_DialogTitle;
 	
