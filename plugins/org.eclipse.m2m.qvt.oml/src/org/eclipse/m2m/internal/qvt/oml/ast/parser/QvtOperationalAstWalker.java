@@ -508,7 +508,7 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
     	return myNodeProcessor;
     }
 
-    private void doProcess(Visitable e, Visitable parent) {
+    protected void doProcess(Visitable e, Visitable parent) {
         if(e != null && !myProcessed.contains(e)) {
             myNodeProcessor.process(e, parent);
             myProcessed.add(e);
