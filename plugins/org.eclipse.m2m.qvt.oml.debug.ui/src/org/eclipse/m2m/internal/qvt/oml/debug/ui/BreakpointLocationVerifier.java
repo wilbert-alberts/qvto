@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.ILineBreakpoint;
 import org.eclipse.jface.text.BadLocationException;
@@ -119,7 +120,7 @@ class BreakpointLocationVerifier {
             return canceled();
 		}
 
-		return canceled();
+		return Status.OK_STATUS;
 	}
 		
 	/**
