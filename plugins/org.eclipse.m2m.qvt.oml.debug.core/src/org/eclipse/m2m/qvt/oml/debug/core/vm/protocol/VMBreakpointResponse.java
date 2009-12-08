@@ -10,11 +10,31 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.debug.core.vm.protocol;
 
+import java.util.List;
+
 
 public class VMBreakpointResponse extends VMResponse {
 	private static final long serialVersionUID = -3465458653297749248L;
 
+	private long[] fAddedBreakpointsIDs;
+	
 	public VMBreakpointResponse() {
+		super();
+	}
 
+	public VMBreakpointResponse(List<Long> addedBreakpointIDs) {
+		if(addedBreakpointIDs == null || addedBreakpointIDs.contains(null)) {
+			throw new IllegalArgumentException("invalid installed breakpoints"); //$NON-NLS-1$
+		}
+		
+		fAddedBreakpointsIDs = new long[addedBreakpointIDs.size()];
+		int i = 0;
+		for (Long id : addedBreakpointIDs) {
+			fAddedBreakpointsIDs[i++] = id.longValue();
+		}
+	}
+
+	public long[] getAddedBreakpointsIDs() {
+		return fAddedBreakpointsIDs != null ? fAddedBreakpointsIDs.clone() : new long[0];
 	}
 }

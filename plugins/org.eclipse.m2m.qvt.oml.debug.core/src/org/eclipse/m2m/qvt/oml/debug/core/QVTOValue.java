@@ -18,13 +18,16 @@ import java.util.List;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMVariable;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.Value;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMDetailRequest;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMDetailResponse;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMResponse;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableResponse;
 
-class QVTOValue extends QVTODebugElement implements IValue {
+public class QVTOValue extends QVTODebugElement implements IValue {
 			
 	private final VMVariable vmVar;
 	private Value vmValue;
@@ -60,12 +63,28 @@ class QVTOValue extends QVTODebugElement implements IValue {
 		return this.vmVar.type.actualType;
 	}		
 	
+    public String computeDetail() throws DebugException {
+    	URI varURI = URI.createURI(getVariableURIForVMRequest());
+    	VMDetailRequest request = new VMDetailRequest(varURI);
+    	
+    	VMResponse response = getQVTODebugTarget().sendRequest(request);
+    	if(response instanceof VMDetailResponse) {
+    		VMDetailResponse detailResponse = (VMDetailResponse) response;
+    		return detailResponse.getDetail();
+    	}
+    	return ""; //$NON-NLS-1$
+    }
 	
-	private List<VMVariable> requestVariables() throws DebugException {
+    private String getVariableURIForVMRequest() {
 		String variableURI = vmVar.name;
 		if(!vmVar.isRootVariable()) {
 			variableURI = vmVar.variableURI;
 		}
+		return variableURI;
+    }
+    
+	private List<VMVariable> requestVariables() throws DebugException {
+		String variableURI = getVariableURIForVMRequest();
 		
 		VMVariableRequest request = new VMVariableRequest(
 				frameID, variableURI, true);

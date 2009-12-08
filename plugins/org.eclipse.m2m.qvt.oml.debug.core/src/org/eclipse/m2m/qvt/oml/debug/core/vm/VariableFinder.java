@@ -53,6 +53,21 @@ public class VariableFinder {
 		this.fFeatureAccessor = featureAccessor;
 	}
 	
+	public static String computeDetail(URI variableURI, UnitLocationExecutionContext frameContext) {
+		VariableFinder finder = new VariableFinder(frameContext);
+		String[] variablePath = getVariablePath(variableURI);
+		Object valueObject = finder.findStackObject(variablePath);
+		
+		if(valueObject != null) {
+			try {
+				return valueObject.toString();
+			} catch(RuntimeException e) {
+				// do nothing, empty detail will be returned
+			}
+		}
+		return null;
+	}
+	
 	public static VMResponse process(VMVariableRequest request,
 			List<UnitLocation> stack, UnitLocationExecutionContext frameContext) {
 		
