@@ -59,6 +59,10 @@ public class DebugUIMessages extends NLS {
 	
     public static String BreakpointCondErrorHandler_EditConditionButtonLabel;
     public static String BreakpointCondErrorHandler_DialogTitle;
+
+	public static String ModifiedSourceFileHandler_HotReplaceNotSupported;
+
+	public static String ModifiedSourceFileHandler_ModifiedDebuggedSource;
     
     public static String QVTOBreakpointProperties_RulerActionLabel;
 	

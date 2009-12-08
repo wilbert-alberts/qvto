@@ -162,6 +162,11 @@
              id="org.eclipse.m2m.qvt.oml.debug.ui.breakpointCondErrorHandler"
              plugin="org.eclipse.m2m.qvt.oml.debug.core">
        </statusHandler>
+       <statusHandler
+             class="org.eclipse.m2m.internal.qvt.oml.debug.ui.ModifiedSourceFileHandler"
+             code="300"
+             id="org.eclipse.m2m.qvt.oml.debug.ui.modifiedSourceHandler"
+             plugin="org.eclipse.m2m.qvt.oml.debug.core"/>       
     </extension>    
 
 </plugin>

@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.m2m.internal.qvt.oml.debug.ui.DebugUIMessages;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOBreakpoint;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -29,6 +30,7 @@ public class QVTOBreakpointPropertiesRulerAction extends RulerBreakpointAction i
 
     public QVTOBreakpointPropertiesRulerAction(ITextEditor editor, IVerticalRulerInfo info) {
         super(editor, info); 
+        setText(DebugUIMessages.QVTOBreakpointProperties_RulerActionLabel);
     }
 
     public void run() {

@@ -57,7 +57,7 @@ public class BreakpointCondErrorHandler implements IStatusHandler {
 	}
 	
 	public Object handleStatus(IStatus status, Object source) throws CoreException {
-		if(status instanceof BreakpointError == false || source instanceof IDebugTarget == false) {
+		if(source instanceof IDebugTarget == false) {
 			throw new CoreException(QVTODebugCore.createStatus(IStatus.ERROR,
 					"Unable to resolve status for:" + source)); //$NON-NLS-1$
 		}
