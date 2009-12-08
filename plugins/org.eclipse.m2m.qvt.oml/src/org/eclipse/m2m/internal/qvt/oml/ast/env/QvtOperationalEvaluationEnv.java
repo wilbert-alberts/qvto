@@ -655,7 +655,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return copyEnv(result);
 	}	
     
-	private QvtOperationalEvaluationEnv copyEnv(QvtOperationalEvaluationEnv env) {
+	protected QvtOperationalEvaluationEnv copyEnv(QvtOperationalEvaluationEnv env) {
         env.myInternal = internalEnv().clone();
         
         env.myOperationArgs.addAll(myOperationArgs);
