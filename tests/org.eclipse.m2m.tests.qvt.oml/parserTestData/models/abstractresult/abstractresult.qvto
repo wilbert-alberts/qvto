@@ -7,7 +7,7 @@ mapping main(in model: ecore::EPackage): ecore::EPackage {
 	eSubpackages += createPackage(model).oclAsType(ecore::EPackage);
 }
 
-mapping createPackage(in dummy: ecore::EPackage) : ecore::EObject {
+mapping createPackage(in dummy: ecore::EPackage) : ecore::EModelElement {
 	init {
 		result := object ecore::EPackage {
 			name := 'nested';

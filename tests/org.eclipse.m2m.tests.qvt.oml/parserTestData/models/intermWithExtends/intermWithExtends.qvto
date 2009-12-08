@@ -36,6 +36,6 @@ mapping EClassifier::toMyClass2() : MyClass2 {
 }
 
 mapping MyClass2::toEClass() : EClass {
-	name := self.eClass().name;
+	name := self.metaClassName();
 }
 

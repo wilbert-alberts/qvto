@@ -19,26 +19,26 @@ main() {
 	
 	var container := object EAnnotation {
 		source := 'testResult';
-		contents += a;
-		contents += aResult;	
-		contents += p;
-		contents += pResult;
+		contents += a.oclAsType(EObject);
+		contents += aResult.oclAsType(EObject);	
+		contents += p.oclAsType(EObject);
+		contents += pResult.oclAsType(EObject);
 	};	
 	root.eAnnotations += container;
 	
 	var a1 := a.map chainedDisjunctMapping('a1_chained');
 	assert fatal (a1.oclIsKindOf(EAttribute)); 
-	container.contents += a1;
+	container.contents += a1.oclAsType(EObject);
 	
 	var p1 := p.map chainedDisjunctMapping('p1_chained');
 	assert fatal (p1.oclIsKindOf(EParameter));
-	container.contents += p1;
+	container.contents += p1.oclAsType(EObject);
 	
 	var c1Src := object EClass { name := 'c1Src'; };
-	container.contents += c1Src;
+	container.contents += c1Src.oclAsType(EObject);
 	var c1 := c1Src.map chainedDisjunctMapping('c1_chained');
  	assert fatal (c1.oclIsKindOf(EReference));
- 	container.contents += c1;
+ 	container.contents += c1.oclAsType(EObject);
  	
 	-- trace fetch should work too
  	assert fatal (c1 = c1Src.map chainedDisjunctMapping('c1_chained'));
@@ -47,10 +47,10 @@ main() {
 	var wrongSrc := object EClass { 
 		name := null; -- causing precondition to fail 
 	};
-	container.contents += wrongSrc;			 	
+	container.contents += wrongSrc.oclAsType(EObject);			 	
 	var redirectedMappingResult := wrongSrc.map chainedDisjunctMapping('c1_chained');
 	assert fatal (redirectedMappingResult.oclIsKindOf(EAnnotation));
-	container.contents += redirectedMappingResult;
+	container.contents += redirectedMappingResult.oclAsType(EObject);
 	-- just correcting the precondition should make it work
 	-- new result will be created as previously, null was returned and no trace created
 	object wrongSrc: { name := 'x'; };
@@ -62,11 +62,11 @@ main() {
 	-- when called the no disjunct is applicable and returns null
 	var annotResult := c1Src.map chainedDisjunctMappingHideToEReference('$');
 	assert fatal(annotResult.oclIsKindOf(EAnnotation));
-	container.contents += annotResult;
+	container.contents += annotResult.oclAsType(EObject);
 
 	var pp := p1.invresolveone(EParameter).map chainedDisjunctMappingHideToEReference('$');	
 	assert fatal(pp.oclIsKindOf(EParameter));
-	container.contents += pp;
+	container.contents += pp.oclAsType(EObject);
 	
 	-- test self with inout 
 	c1Src._abstract := false; 
@@ -83,7 +83,7 @@ main() {
 }
 
 
-mapping inout EObject::fooDisjuncting(inout p : EPackage) : EPackage
+mapping inout EModelElement::fooDisjuncting(inout p : EPackage) : EPackage
 	disjuncts EPackage::fooDisjuncted when { p <> null } 
 {
 	name := 'EObject::fooDisjuncting'; -- not executed
@@ -105,7 +105,7 @@ mapping inout EPackage::fooDisjuncted(inout p_Renamed : EPackage) : EPackage {
 
  
 
-abstract mapping EModelElement::chainedDisjunctMapping(in strPar1 : String) : EObject
+abstract mapping EModelElement::chainedDisjunctMapping(in strPar1 : String) : EModelElement
 	disjuncts EClass::toEReference, EClass::toEAnnotation, ENamedElement::disjunctMapping 
 {} 
     
