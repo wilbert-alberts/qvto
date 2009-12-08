@@ -12,6 +12,8 @@ package org.eclipse.m2m.qvt.oml.debug.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +40,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMEventListener;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointResponse;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMDisconnectEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMRequest;
@@ -99,6 +102,9 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		// => do whatever initialization we need now
 		// install VM breakpoints
 		installVMBreakpoints();
+		
+		DebugEvent createEvent = new DebugEvent(this, DebugEvent.CREATE);
+		createEvent.setData(new HashMap<Long, QVTOBreakpoint>(fID2Breakpoint));
 
 		fMainThread = new QVTOThread(this);
 		fLaunch.addDebugTarget(this);
@@ -110,18 +116,18 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 			QVTODebugCore.log(e);
 		}
 		
-
 		IBreakpointManager breakpointManager = DebugPlugin.getDefault().getBreakpointManager();
 		breakpointManager.addBreakpointManagerListener(this);
 		breakpointManager.addBreakpointListener(this);
 		DebugPlugin.getDefault().addDebugEventListener(this);
 
-		fireCreationEvent();
+		fireEvent(createEvent);
 	}
 
 	private void installVMBreakpoints() {
+		HashMap<Long, QVTOBreakpoint> installedBreakpoints = new HashMap<Long, QVTOBreakpoint>();
 		List<NewBreakpointData> allBpData = new ArrayList<NewBreakpointData>();
-
+		
 		for (QVTOBreakpoint qvtBp : QVTODebugCore
 				.getQVTOBreakpoints(QVTOBreakpoint.class)) {
 			boolean enabled = false;
@@ -132,7 +138,7 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 			}
 
 			if (enabled) {
-				fID2Breakpoint.put(new Long(((QVTOBreakpoint) qvtBp).getID()),
+				installedBreakpoints.put(new Long(((QVTOBreakpoint) qvtBp).getID()),
 						qvtBp);
 				try {
 					allBpData.add(qvtBp.createNewBreakpointData());
@@ -147,11 +153,28 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 					.createAdd(allBpData
 							.toArray(new NewBreakpointData[allBpData.size()]));
 			try {
-				fVM.sendRequest(breakpointRequest);
+				VMResponse response = fVM.sendRequest(breakpointRequest);
+				// 
+				fID2Breakpoint.clear();
+				if(response instanceof VMBreakpointResponse) {
+					VMBreakpointResponse bpResponse = (VMBreakpointResponse) response;
+					
+					for(long addedID : bpResponse.getAddedBreakpointsIDs()) {
+						Long key = new Long(addedID);
+						QVTOBreakpoint bp = installedBreakpoints.get(key);
+						if(bp != null) {
+							fID2Breakpoint.put(key, bp);
+						}
+					}
+				}
 			} catch (IOException e) {
 				QVTODebugCore.log(e);
 			}
 		}
+	}
+	
+	public Collection<? extends IBreakpoint> getInstalledBreakpoints() {
+		return Collections.unmodifiableCollection(fID2Breakpoint.values());
 	}
 
 	public VMResponse sendRequest(VMRequest request) throws DebugException {
@@ -249,6 +272,8 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 			debugPlugin.removeDebugEventListener(this);
 		}
 
+		fID2Breakpoint.clear();
+		
 		fireTerminateEvent();
 		if(fProcess instanceof QVTOVirtualProcess) {
 			QVTOVirtualProcess vp = (QVTOVirtualProcess) fProcess;
@@ -279,16 +304,19 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		}
 
 		QVTOBreakpoint qvtBreakpoint = (QVTOBreakpoint) breakpoint;
-		fID2Breakpoint.put(new Long(((QVTOBreakpoint) breakpoint).getID()),
-				qvtBreakpoint);
-
 		try {
 			NewBreakpointData bpData = qvtBreakpoint.createNewBreakpointData();
 			VMBreakpointRequest addBreakpointRequest = VMBreakpointRequest
 					.createAdd(bpData);
 
-			sendRequest(addBreakpointRequest);
-			// TODO - add response check
+			VMResponse response = sendRequest(addBreakpointRequest);
+			if(response instanceof VMBreakpointResponse) {
+				VMBreakpointResponse bpResponse = (VMBreakpointResponse) response;
+				long[] addedIDs = bpResponse.getAddedBreakpointsIDs();
+				if(addedIDs.length > 0) {
+					fID2Breakpoint.put(new Long(addedIDs[0]), qvtBreakpoint);
+				}
+			}
 		} catch (CoreException e) {
 			QVTODebugCore.log(e.getStatus());
 		}

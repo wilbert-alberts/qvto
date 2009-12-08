@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker;
@@ -231,7 +232,11 @@ class ASTElementContextEnv extends QvtOperationalEnv {
 
 	private void initializeContextVariables(final EObject astContext) {
 		EnvVariableCollector varCollector = new EnvVariableCollector(astContext);
-		varCollector.visitImperativeOperation((ImperativeOperation) this.getContextOperation());
+		
+		EOperation contextOperation = this.getContextOperation();
+		if(contextOperation instanceof ImperativeOperation) {
+			varCollector.visitImperativeOperation((ImperativeOperation) contextOperation);
+		}
 		
 		List<Variable> variables = varCollector.getVariables();
 		if (!variables.isEmpty()) {

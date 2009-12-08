@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.debug.core.app;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ExecutionStackTraceElement;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugUtil;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.DebugEnvironmentFactory;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.DebuggableExecutorAdapter;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTODebuggerShell;
@@ -35,10 +38,20 @@ public class DebugTransformationRunner extends TransformationRunner {
 			EPackage.Registry packageRegistry, 
 			List<URI> modelParamURIs) {
 		super(transformationURI, packageRegistry, modelParamURIs);
+		
+		fErrorLog = new PrintWriter(new OutputStream() {
+			@Override
+			public void write(int b) throws IOException {
+				// do nothing I'm a <null> log
+			}
+		}, true);
 	}
 	
-	public void setErrorLog(PrintWriter fErrorLog) {
-		this.fErrorLog = fErrorLog;
+	public void setErrorLog(PrintWriter errorLog) {
+		if(errorLog == null) {
+			throw new IllegalArgumentException();
+		}
+		this.fErrorLog = errorLog;
 	}
 	
 	@Override
@@ -51,38 +64,28 @@ public class DebugTransformationRunner extends TransformationRunner {
 	
 	@Override
 	protected void handleLoadExtents(Diagnostic diagnostic) {
-		if(fErrorLog != null) {
-			fErrorLog.println("loaded models...");
-			fErrorLog.flush();
-		}
 	}
 	
 	@Override
 	protected void handleLoadTransformation(Diagnostic diagnostic) {
-		if(fErrorLog != null) {
-			fErrorLog.println("loaded transformation ...");
-			fErrorLog.flush();
-		}
 	}
 	
 	protected void handleExecution(org.eclipse.m2m.qvt.oml.ExecutionDiagnostic execDiagnostic) {
-		if(fErrorLog != null) {
-			List<ExecutionStackTraceElement> stackTrace = execDiagnostic.getStackTrace();
-			if(stackTrace != null && execDiagnostic.getCode() != ExecutionDiagnostic.USER_INTERRUPTED) {
-				fErrorLog.println(execDiagnostic);
-				
-				fErrorLog.println("[QVTO Stack trace:]");				
-				execDiagnostic.printStackTrace(fErrorLog);
-				fErrorLog.println();				
-			}
+		List<ExecutionStackTraceElement> stackTrace = execDiagnostic.getStackTrace();
+		if(stackTrace != null && execDiagnostic.getCode() != ExecutionDiagnostic.USER_INTERRUPTED) {
+			fErrorLog.println(execDiagnostic);
 			
-			if(execDiagnostic.getException() != null) {
-				fErrorLog.println("[Java cause:]");
-				execDiagnostic.getException().printStackTrace(fErrorLog);
-			}
-			
-			fErrorLog.flush();
+			fErrorLog.println("[QVTO Stack trace:]");				
+			execDiagnostic.printStackTrace(fErrorLog);
+			fErrorLog.println();				
 		}
+		
+		if(execDiagnostic.getException() != null) {
+			fErrorLog.println("[Java cause:]");
+			execDiagnostic.getException().printStackTrace(fErrorLog);
+		}
+		
+		fErrorLog.flush();
 	}	
 	
 	@Override
@@ -91,12 +94,25 @@ public class DebugTransformationRunner extends TransformationRunner {
 	}
 
 	public DebuggableExecutorAdapter createDebugableAdapter(final ExecutionContext context) {
+		
 		return new DebuggableExecutorAdapter() {
 			public Diagnostic execute() throws IllegalStateException {
 				if(fDebugShell == null) {
 					throw new IllegalStateException("Executor not connected to debugger"); //$NON-NLS-1$
 				}
-				return DebugTransformationRunner.this.execute(context);
+
+				CompiledUnit mainUnit = DebugTransformationRunner.this.getExecutor().getUnit();
+				if(mainUnit != null) {
+					QVTODebugUtil.attachEnvironment(mainUnit);
+				}
+				
+				Diagnostic execDiagnostic = DebugTransformationRunner.this.execute(context);
+				
+				if(execDiagnostic.getSeverity() != Diagnostic.OK) {
+					fErrorLog.println(execDiagnostic);
+				}
+
+				return execDiagnostic;
 			}
 
 			public CompiledUnit getUnit() {

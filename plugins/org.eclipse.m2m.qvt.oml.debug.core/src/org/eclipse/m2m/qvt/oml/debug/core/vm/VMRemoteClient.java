@@ -82,9 +82,7 @@ class VMRemoteClient {
 	VMResponse sendRequest(VMRequest request) throws IOException {
 		fRequestOut.writeObject(request);
 		fRequestOut.flush();
-		
-		System.out.println("Client sent request: " + request);
-		
+				
 		try {
 			if(fResponseIn == null) {
 				fResponseIn = new ObjectInputStream(fResponseIS);

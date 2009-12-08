@@ -24,6 +24,8 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointResponse;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMDetailRequest;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMDetailResponse;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMResponse;
@@ -86,8 +88,10 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			return handleStackFrameRequest((VMStackFrameRequest) request);
 		} else if(request instanceof VMVariableRequest) {
 			return handleVariableRequest((VMVariableRequest) request);
+		} else if(request instanceof VMDetailRequest) {
+			return handleValueDetailRequest((VMDetailRequest) request);
 		}
-		
+
 		synchronized (fLock) {
 			fRequests.add(request);			
 			fLock.notifyAll();
@@ -142,6 +146,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		if(actionKind == VMBreakpointRequest.ActionKind.ADD) {
 			List<BreakpointData> allBpData = request.getBreakpointData();
 			if(allBpData != null) {
+				List<Long> addedBpIDs = new ArrayList<Long>();
 				for (BreakpointData bpData : allBpData) {
 					if(bpData instanceof NewBreakpointData == false) {
 						continue;
@@ -151,6 +156,8 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 					VMBreakpoint breakpoint = fBreakpointManager.createBreakpoint(newBreakpoint);
 					
 					if(breakpoint != null) {
+						addedBpIDs.add(new Long(newBreakpoint.ID));
+						
 						QVTODebugCore.TRACE.trace(DebugOptions.VM,
 								"Installing breakpoing: " + " line:" //$NON-NLS-1$ //$NON-NLS-2$
 										+ newBreakpoint.line + " " //$NON-NLS-1$
@@ -160,9 +167,10 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 								"Failed to create breakpoing: " + " line:" //$NON-NLS-1$ //$NON-NLS-2$
 										+ newBreakpoint.line + " " //$NON-NLS-1$
 										+ newBreakpoint.targetURI);
-							
 					}
 				}
+				
+				return new VMBreakpointResponse(addedBpIDs);
 			}
 		} else if(actionKind == VMBreakpointRequest.ActionKind.REMOVE) {
 			fBreakpointManager.removeBreakpoint(request.getBreakpointID());
@@ -172,6 +180,14 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		
 		// TODO
 		return new VMBreakpointResponse();
+	}
+	
+	private VMResponse handleValueDetailRequest(VMDetailRequest request) {
+		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
+		UnitLocationExecutionContext context = new UnitLocationExecutionContext(
+				fInterpreter, fInterpreter.getCurrentLocation());
+		String detail = VariableFinder.computeDetail(request.getVariableURI(), context);		
+		return new VMDetailResponse(detail != null ? detail : ""); //$NON-NLS-1$
 	}
 	
 	private VMResponse handleVariableRequest(VMVariableRequest request) {
@@ -204,6 +220,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			Diagnostic diagnostic = executorAdapter.execute();
 			int severity = diagnostic.getSeverity();
 			if(severity == Diagnostic.ERROR || severity == Diagnostic.CANCEL) {
+				System.err.println(diagnostic.toString());
 				exitCode = -1;
 			}
 		} catch (Throwable e) {

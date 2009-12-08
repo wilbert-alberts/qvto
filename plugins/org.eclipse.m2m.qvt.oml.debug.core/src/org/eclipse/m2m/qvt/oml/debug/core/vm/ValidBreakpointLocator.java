@@ -15,13 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalAstWalker;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ObjectExp;
@@ -32,7 +32,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
-import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.IteratorExp;
 import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.expressions.OCLExpression;
@@ -115,15 +114,16 @@ public class ValidBreakpointLocator {
               && element instanceof ImperativeLoopExp == false;
 		
         if (breakpointable && (element instanceof ObjectExp)) {
-        	// FIXME - need to eliminate the implicit instantiation case,
-        	// avoid the dependency to CST
-            CSTNode cstNode = ASTBindingHelper.resolveCSTNode(element);
-            if (cstNode instanceof ObjectExpCS) {
-            	ObjectExpCS objectExpCS = (ObjectExpCS) cstNode;
-                if (objectExpCS.isIsImplicit()) {
-                    breakpointable = !objectExpCS.getExpressions().isEmpty();
-                }
-            }
+        	if(element.eContainer() instanceof MappingBody &&
+        		element.eContainingFeature() == ExpressionsPackage.eINSTANCE.getOperationBody_Content()) {
+        		// Remark:
+        		// Here we try to check if the object expression is implicit
+        		// IOW, has no concrete syntaxt element => mapped to mapping
+        		// body by its positions
+        		MappingBody mappingBody = (MappingBody) element.eContainer();
+        		ObjectExp objectExp = (ObjectExp) element;
+        		return mappingBody.getStartPosition() != objectExp.getStartPosition();
+        	}
         }
 		
 		return breakpointable;		

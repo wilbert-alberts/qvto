@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
@@ -25,7 +24,9 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.completion.parser.LightweightParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugUtil;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
@@ -77,23 +78,33 @@ public class ConditionChecker {
 
 
     private ASTElementContextEnv getEnvironmentForASTElement() {
-		// FIXME make module env available from the module
-		// workaround - just empty root env
-
-		QvtOperationalEnv env = (QvtOperationalEnv) ASTBindingHelper.resolveEnvironment(fTargetASTElement);
-
 		QvtOperationalEnvFactory factory = new QvtOperationalEnvFactory();
-		QvtOperationalEnv rootEnv = factory.createEnvironment();
-		QvtOperationalEnv contextEnv = rootEnv;
+		QvtOperationalEnv rootEnv = null;
 
-		
-    	EObject context = fTargetASTElement;    	
-    	while(context != null) {
-    		if(context instanceof EOperation) {
-    			contextEnv = factory.createOperationContext(rootEnv, (EOperation) context);
+    	EObject moduleContext = fTargetASTElement;    	
+    	while(moduleContext != null) {
+    		if(moduleContext instanceof Module) {
+    			rootEnv = QVTODebugUtil.getEnvironment((Module) moduleContext);
+    			break;
     		}
-    		
-    		context = context.eContainer();
+    		moduleContext = moduleContext.eContainer();
+    	}
+
+    	if(rootEnv == null) {
+    		rootEnv = factory.createEnvironment();
+    	}
+
+		QvtOperationalEnv contextEnv = null;    	
+    	EObject operContext = fTargetASTElement;    	
+    	while(operContext != null) {
+    		if(operContext instanceof EOperation) {
+    			contextEnv = factory.createOperationContext(rootEnv, (EOperation) operContext);
+    		}
+    		operContext = operContext.eContainer();
+    	}
+    	
+    	if(contextEnv == null) {
+    		contextEnv = rootEnv;
     	}
     	
     	ASTElementContextEnv targetContextEnv = new ASTElementContextEnv(contextEnv, fTargetASTElement);
@@ -150,7 +161,10 @@ public class ConditionChecker {
             options.setSourceLineNumbersEnabled(false);
             try {
 	            QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, env, options);            
-	            ast = visitor.analyzeExpressionCS(conditionCS, env);	            
+	            ast = visitor.analyzeExpressionCS(conditionCS, env);
+	            if(ast == null || ast.getType() != env.getOCLStandardLibrary().getBoolean()) {
+	            	env.reportError("Boolean type condition required", conditionCS);
+	            }
             } catch (Throwable e) {
             	fConditionError = QVTODebugCore.createError("Failed to parse condition", ERR_CODE_COMPILATION,  e);
             	QVTODebugCore.log(e);
@@ -160,8 +174,6 @@ public class ConditionChecker {
 
     	if(env.hasErrors()) {
     		fConditionError = QVTODebugCore.createError(env.getErrorTxtBuffer().toString(), ERR_CODE_COMPILATION, null);
-    	} else {
-    		fConditionError = QVTODebugCore.createError("Boolean type expression expected", ERR_CODE_COMPILATION, null);
     	}
     	
         return ast;

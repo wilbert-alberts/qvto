@@ -22,7 +22,21 @@ public class DebugEvaluationEnvironment extends QvtOperationalEvaluationEnv impl
 		fID = id;
 	}
 	
-	public long getID() {
+	public final long getID() {
 		return fID;
 	}
+	
+	@Override
+	public QvtOperationalEvaluationEnv cloneEvaluationEnv() {
+		QvtOperationalEvaluationEnv env = new DebugEvaluationEnvironment(getContext(), getParent(), fID);
+		return copyEnv(env);
+	}
+
+	@Override
+	public QvtOperationalEvaluationEnv createDeferredExecutionEnvironment() {
+		QvtOperationalEvaluationEnv parent = (getRoot() == this) ? parent = null : getRoot();
+		QvtOperationalEvaluationEnv result = new DebugEvaluationEnvironment(getContext(), parent, fID);		
+		return copyEnv(result);
+	}	
+	
 }

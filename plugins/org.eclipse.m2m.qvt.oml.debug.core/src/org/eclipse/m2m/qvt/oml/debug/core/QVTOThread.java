@@ -188,9 +188,8 @@ public class QVTOThread extends QVTODebugElement implements IThread, VMEventList
 				VMStackFrame suspendedAtLocation = suspendEvent.stackFrames[0];
 				
 				if(fLastSuspendedFrame != null && suspendedAtLocation != null &&					
-					suspendedAtLocation.id == fLastSuspendedFrame.id) {
+					suspendedAtLocation.id == fLastSuspendedFrame.id && !fFrames.isEmpty()) {
 					fFrames.get(0).setLocation(suspendedAtLocation);
-					
 				} else {
 					// stepped across stack frames since the last suspended
 					fFrames.clear();
