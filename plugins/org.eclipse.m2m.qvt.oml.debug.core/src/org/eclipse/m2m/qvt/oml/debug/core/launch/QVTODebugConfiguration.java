@@ -47,7 +47,7 @@ import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 	
-	public static final IStatus MODIFIED_SOURCE_STATUS = QVTODebugCore.createStatus(IStatus.ERROR, "Source file modified during execution ''{0}''");
+	public static final IStatus MODIFIED_SOURCE_STATUS = QVTODebugCore.createError("", 300, null); //$NON-NLS-1$
 	
 	public QVTODebugConfiguration() {
 		super();
