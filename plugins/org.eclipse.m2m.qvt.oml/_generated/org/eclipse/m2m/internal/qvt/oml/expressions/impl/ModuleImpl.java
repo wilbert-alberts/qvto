@@ -284,6 +284,16 @@ public class ModuleImpl extends EClassImpl implements Module {
 	protected ModuleImpl() {
 		super();
 	}
+	
+	@Override
+	public EPackage getEPackage() {
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=297275
+		// FIXME - consider using an EPackage container for all modules
+		// within a unit. This container should be constructed on the fly
+		// prior to transformation execution
+		EPackage ePackage = super.getEPackage();
+		return (ePackage != null) ? ePackage : this;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
