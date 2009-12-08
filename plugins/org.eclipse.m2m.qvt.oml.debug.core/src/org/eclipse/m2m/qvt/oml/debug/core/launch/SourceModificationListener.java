@@ -89,7 +89,7 @@ class SourceModificationListener implements IResourceChangeListener {
 			try {
 				resolved = handler.handleStatus(
 						QVTODebugConfiguration.MODIFIED_SOURCE_STATUS,
-						sourceFile);
+						sourceFile.getFullPath());
 				if (resolved instanceof IStatus) {
 					IStatus resolvedStatus = (IStatus) resolved;
 					if (resolvedStatus.getSeverity() == IStatus.CANCEL) {
