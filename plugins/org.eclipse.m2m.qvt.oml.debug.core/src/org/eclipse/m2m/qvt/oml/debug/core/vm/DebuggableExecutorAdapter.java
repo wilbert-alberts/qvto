@@ -14,10 +14,26 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 
 public interface DebuggableExecutorAdapter {
-	
+	/**
+	 * Connects this adapter to the debugger which will partipate in the
+	 * execution process
+	 * 
+	 * @param debugShell
+	 */
 	void connect(IQVTODebuggerShell debugShell);
-	
+
+	/**
+	 * Causes to run the executor behind this adapter
+	 * 
+	 * @return the status of finished execution
+	 * @throws IllegalStateException
+	 *             if this adapter is not connected to debugger
+	 */
 	Diagnostic execute() throws IllegalStateException;
-	
+
+	/**
+	 * Gets the main compiled unit to be executed
+	 * @return the unit object
+	 */
 	CompiledUnit getUnit();	
 }
