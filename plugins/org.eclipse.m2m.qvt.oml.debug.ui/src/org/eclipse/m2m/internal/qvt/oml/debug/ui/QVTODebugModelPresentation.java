@@ -30,6 +30,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.QVTOBreakpoint;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugTarget;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOStackFrame;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOThread;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTOValue;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOVariable;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMLocation;
 import org.eclipse.osgi.util.NLS;
@@ -119,7 +120,16 @@ public class QVTODebugModelPresentation implements IDebugModelPresentation, IDeb
 	}
 
     public void computeDetail(IValue value, IValueDetailListener listener) {
-        listener.detailComputed(value, value.toString());
+    	if(value instanceof QVTOValue) {
+    		QVTOValue qvtValue = (QVTOValue) value;
+    		try {
+				listener.detailComputed(value, qvtValue.computeDetail());
+			} catch (DebugException e) {
+				QVTODebugUIPlugin.log(e.getStatus());
+			}
+    	} else {
+    		listener.detailComputed(value, value.toString());
+    	}
 	}
 
 	public boolean isLabelProperty(Object element, String property) {
