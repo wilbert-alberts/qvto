@@ -180,7 +180,7 @@ public class TransformTests {
                         {"t1", "some"}//$NON-NLS-1$ //$NON-NLS-2$
                 }), 
                 new FileToFileData("resolveall"), //$NON-NLS-1$
-                new FileToFileData("egetcodegen"), //$NON-NLS-1$
+                
                 new FileToFileData("imports"), //$NON-NLS-1$
                 new FileToFileData("imports_transformations"), //$NON-NLS-1$        
                 new FileToFileData("assigntoprimfeature"), //$NON-NLS-1$    	
@@ -308,7 +308,7 @@ public class TransformTests {
             
             "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
             "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
-            "egetcodegen", // java method can't be called//$NON-NLS-1$
+
             
             "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
