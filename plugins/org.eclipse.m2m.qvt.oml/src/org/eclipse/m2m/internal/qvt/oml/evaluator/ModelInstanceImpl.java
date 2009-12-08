@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -44,6 +45,14 @@ class ModelInstanceImpl extends DynamicEObjectImpl  implements ModelInstance {
 
 	@Override
 	public String toString() {
-		return eClass().getName();
+		StringBuilder buf = new StringBuilder();
+		buf.append(eClass().getName()).append(" - "); //$NON-NLS-1$
+		ModelType modelType = getModelType();
+		
+		for(EPackage metamodel : modelType.getMetamodel()) {
+			buf.append(metamodel.getNsURI());
+		}
+		
+		return buf.toString();
 	}
 }
