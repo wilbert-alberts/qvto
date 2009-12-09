@@ -349,7 +349,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 	}
 	
 	private DictionaryType createDictionaryType() {
-		KEY_T = ImperativeOCLFactory.eINSTANCE.createTemplateParameterType();
+		KEY_T = org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createTemplateParameterType();
 		KEY_T.setName("KeyT"); //$NON-NLS-1$
 		fStdlibModule.getEClassifiers().add(KEY_T);
 		
