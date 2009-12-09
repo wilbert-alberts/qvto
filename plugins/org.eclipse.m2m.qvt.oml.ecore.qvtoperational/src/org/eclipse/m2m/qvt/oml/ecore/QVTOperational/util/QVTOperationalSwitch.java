@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalSwitch.java,v 1.3 2009/02/20 11:04:08 radvorak Exp $
+ * $Id: QVTOperationalSwitch.java,v 1.4 2009/12/09 14:03:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
@@ -197,17 +197,17 @@ public class QVTOperationalSwitch<T> {
 				if (result == null) result = caseImperativeExpression(imperativeCallExp);
 				if (result == null) result = caseEcore_FeatureCallExp(imperativeCallExp);
 				if (result == null) result = caseOperationCallExp(imperativeCallExp);
-				if (result == null) result = caseEcore_OCLExpression(imperativeCallExp);
 				if (result == null) result = caseEcore_CallExp(imperativeCallExp);
 				if (result == null) result = caseFeatureCallExp(imperativeCallExp);
+				if (result == null) result = caseEcore_OCLExpression(imperativeCallExp);
+				if (result == null) result = caseCallExp(imperativeCallExp);
 				if (result == null) result = caseETypedElement(imperativeCallExp);
 				if (result == null) result = caseOCLExpression(imperativeCallExp);
-				if (result == null) result = caseCallExp(imperativeCallExp);
+				if (result == null) result = caseCallingASTNode(imperativeCallExp);
 				if (result == null) result = caseENamedElement(imperativeCallExp);
 				if (result == null) result = caseTypedElement(imperativeCallExp);
 				if (result == null) result = caseVisitable(imperativeCallExp);
 				if (result == null) result = caseASTNode(imperativeCallExp);
-				if (result == null) result = caseCallingASTNode(imperativeCallExp);
 				if (result == null) result = caseEModelElement(imperativeCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -250,17 +250,17 @@ public class QVTOperationalSwitch<T> {
 				if (result == null) result = caseImperativeExpression(mappingCallExp);
 				if (result == null) result = caseEcore_FeatureCallExp(mappingCallExp);
 				if (result == null) result = caseOperationCallExp(mappingCallExp);
-				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
 				if (result == null) result = caseEcore_CallExp(mappingCallExp);
 				if (result == null) result = caseFeatureCallExp(mappingCallExp);
+				if (result == null) result = caseEcore_OCLExpression(mappingCallExp);
+				if (result == null) result = caseCallExp(mappingCallExp);
 				if (result == null) result = caseETypedElement(mappingCallExp);
 				if (result == null) result = caseOCLExpression(mappingCallExp);
-				if (result == null) result = caseCallExp(mappingCallExp);
+				if (result == null) result = caseCallingASTNode(mappingCallExp);
 				if (result == null) result = caseENamedElement(mappingCallExp);
 				if (result == null) result = caseTypedElement(mappingCallExp);
 				if (result == null) result = caseVisitable(mappingCallExp);
 				if (result == null) result = caseASTNode(mappingCallExp);
-				if (result == null) result = caseCallingASTNode(mappingCallExp);
 				if (result == null) result = caseEModelElement(mappingCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

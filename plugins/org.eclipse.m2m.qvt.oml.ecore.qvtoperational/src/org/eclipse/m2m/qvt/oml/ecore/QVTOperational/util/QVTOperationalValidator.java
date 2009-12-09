@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: QVTOperationalValidator.java,v 1.3 2009/02/20 12:52:33 radvorak Exp $
+ * $Id: QVTOperationalValidator.java,v 1.4 2009/12/09 14:03:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.util;
 
@@ -786,10 +786,11 @@ public class QVTOperationalValidator extends EObjectValidator {
 		boolean result=true;		
 		Variable referredObject = objectExp.getReferredObject();
 		EClass instantiatedClass = objectExp.getInstantiatedClass();
+		EClassifier referredObjectType = referredObject != null ? referredObject.getType() : null;
 		if (referredObject != null 
-			&& referredObject.getType() != null
+			&& referredObjectType != null
 			&& instantiatedClass != null) {
-			if (!TypeUtil.compatibleTypeMatch(env, instantiatedClass, referredObject.getType())) {
+			if (!TypeUtil.compatibleTypeMatch(env, instantiatedClass, referredObjectType)) {
 				result = false;
 			}
 		}
@@ -801,7 +802,7 @@ public class QVTOperationalValidator extends EObjectValidator {
 						 DIAGNOSTIC_SOURCE,
 						 0,
 						 "_UI_NonConformanceInstantiatedClassRefObject_diagnostic", //$NON-NLS-1$
-						 new Object[] { getObjectLabel(instantiatedClass, context), getObjectLabel(referredObject.getType(), context) },
+						 new Object[] { getObjectLabel(instantiatedClass, context), getObjectLabel(referredObjectType, context) },
 						 new Object[] { objectExp },
 						 context));
 			}

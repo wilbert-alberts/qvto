@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ResolveExpImpl.java,v 1.4 2009/02/20 11:04:08 radvorak Exp $
+ * $Id: ResolveExpImpl.java,v 1.5 2009/12/09 14:03:08 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.impl;
 
@@ -533,7 +533,7 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 	public <T, U extends Visitor<T,?,?,?,?,?,?,?,?,?>> T accept(U v) {		
 		if (v instanceof QVTOperationalVisitor)
 			return (T) ((QVTOperationalVisitor) v).visitResolveExp(this);
-		return (T) super.accept(v);
+		return super.accept(v);
 	}
 
 } //ResolveExpImpl
