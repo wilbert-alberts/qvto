@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLFactoryImpl.java,v 1.3 2009/05/15 16:13:08 radvorak Exp $
+ * $Id: ImperativeOCLFactoryImpl.java,v 1.4 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.*;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -45,7 +46,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
@@ -68,7 +68,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 */
 	public static ImperativeOCLFactory init() {
 		try {
-			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0/ImperativeOCL");  //$NON-NLS-1$
+			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/1.0/ImperativeOCL"); //$NON-NLS-1$ 
 			if (theImperativeOCLFactory != null) {
 				return theImperativeOCLFactory;
 			}
@@ -111,6 +111,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.FOR_EXP: return createForExp();
 			case ImperativeOCLPackage.IMPERATIVE_ITERATE_EXP: return createImperativeIterateExp();
 			case ImperativeOCLPackage.INSTANTIATION_EXP: return createInstantiationExp();
+			case ImperativeOCLPackage.LIST_LITERAL_EXP: return createListLiteralExp();
 			case ImperativeOCLPackage.LIST_TYPE: return createListType();
 			case ImperativeOCLPackage.LOG_EXP: return createLogExp();
 			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP: return createOrderedTupleLiteralExp();
@@ -119,7 +120,6 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.RAISE_EXP: return createRaiseExp();
 			case ImperativeOCLPackage.RETURN_EXP: return createReturnExp();
 			case ImperativeOCLPackage.SWITCH_EXP: return createSwitchExp();
-			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE: return createTemplateParameterType();
 			case ImperativeOCLPackage.TRY_EXP: return createTryExp();
 			case ImperativeOCLPackage.TYPEDEF: return createTypedef();
 			case ImperativeOCLPackage.UNLINK_EXP: return createUnlinkExp();
@@ -305,6 +305,17 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 * @since 3.0
+	 */
+	public ListLiteralExp createListLiteralExp() {
+		ListLiteralExpImpl listLiteralExp = new ListLiteralExpImpl();
+		return listLiteralExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public ListType createListType() {
 		ListTypeImpl listType = new ListTypeImpl();
@@ -379,16 +390,6 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	public SwitchExp createSwitchExp() {
 		SwitchExpImpl switchExp = new SwitchExpImpl();
 		return switchExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TemplateParameterType createTemplateParameterType() {
-		TemplateParameterTypeImpl templateParameterType = new TemplateParameterTypeImpl();
-		return templateParameterType;
 	}
 
 	/**

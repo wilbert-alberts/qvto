@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLPackageImpl.java,v 1.4 2009/05/15 16:13:08 radvorak Exp $
+ * $Id: ImperativeOCLPackageImpl.java,v 1.5 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.impl;
 
@@ -39,6 +39,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleLiteralExp;
@@ -48,7 +49,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
@@ -184,6 +184,13 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass listLiteralExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass listTypeEClass = null;
 
 	/**
@@ -234,13 +241,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	private EClass switchExpEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass templateParameterTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -318,20 +318,10 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link ImperativeOCLPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -343,7 +333,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		if (isInited) return (ImperativeOCLPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeOCLPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ImperativeOCLPackageImpl theImperativeOCLPackage = (ImperativeOCLPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof ImperativeOCLPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new ImperativeOCLPackageImpl());
+		ImperativeOCLPackageImpl theImperativeOCLPackage = (ImperativeOCLPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ImperativeOCLPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ImperativeOCLPackageImpl());
 
 		isInited = true;
 
@@ -368,6 +358,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		// Mark meta-data to indicate it can't be changed
 		theImperativeOCLPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(ImperativeOCLPackage.eNS_URI, theImperativeOCLPackage);
 		return theImperativeOCLPackage;
 	}
 
@@ -726,6 +719,26 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 * @since 3.0
+	 */
+	public EClass getListLiteralExp() {
+		return listLiteralExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @since 3.0
+	 */
+	public EReference getListLiteralExp_Element() {
+		return (EReference)listLiteralExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public EClass getListType() {
 		return listTypeEClass;
@@ -873,24 +886,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 */
 	public EReference getSwitchExp_ElsePart() {
 		return (EReference)switchExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTemplateParameterType() {
-		return templateParameterTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTemplateParameterType_Specification() {
-		return (EAttribute)templateParameterTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1147,6 +1142,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__EXTENT);
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__INSTANTIATED_CLASS);
 
+		listLiteralExpEClass = createEClass(LIST_LITERAL_EXP);
+		createEReference(listLiteralExpEClass, LIST_LITERAL_EXP__ELEMENT);
+
 		listTypeEClass = createEClass(LIST_TYPE);
 
 		logExpEClass = createEClass(LOG_EXP);
@@ -1171,9 +1169,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		switchExpEClass = createEClass(SWITCH_EXP);
 		createEReference(switchExpEClass, SWITCH_EXP__ALTERNATIVE_PART);
 		createEReference(switchExpEClass, SWITCH_EXP__ELSE_PART);
-
-		templateParameterTypeEClass = createEClass(TEMPLATE_PARAMETER_TYPE);
-		createEAttribute(templateParameterTypeEClass, TEMPLATE_PARAMETER_TYPE__SPECIFICATION);
 
 		tryExpEClass = createEClass(TRY_EXP);
 		createEReference(tryExpEClass, TRY_EXP__EXCEPT_CLAUSE);
@@ -1252,6 +1247,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		imperativeLoopExpEClass.getESuperTypes().add(theEcorePackage.getLoopExp());
 		imperativeLoopExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		instantiationExpEClass.getESuperTypes().add(this.getImperativeExpression());
+		listLiteralExpEClass.getESuperTypes().add(theEcorePackage.getLiteralExp());
 		listTypeEClass.getESuperTypes().add(theEcorePackage.getCollectionType());
 		logExpEClass.getESuperTypes().add(theEcorePackage.getOperationCallExp());
 		logExpEClass.getESuperTypes().add(this.getImperativeExpression());
@@ -1261,7 +1257,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		raiseExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		returnExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		switchExpEClass.getESuperTypes().add(this.getImperativeExpression());
-		templateParameterTypeEClass.getESuperTypes().add(theEcorePackage_1.getEClassifier());
 		tryExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		typedefEClass.getESuperTypes().add(theEcorePackage_1.getEClass());
 		unlinkExpEClass.getESuperTypes().add(this.getImperativeExpression());
@@ -1325,6 +1320,9 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEReference(getInstantiationExp_Extent(), theEcorePackage.getVariable(), null, "extent", null, 0, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getInstantiationExp_InstantiatedClass(), theEcorePackage_1.getEClass(), null, "instantiatedClass", null, 1, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(listLiteralExpEClass, ListLiteralExp.class, "ListLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getListLiteralExp_Element(), theEcorePackage.getOCLExpression(), null, "element", null, 0, -1, ListLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(logExpEClass, LogExp.class, "LogExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1349,9 +1347,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEClass(switchExpEClass, SwitchExp.class, "SwitchExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getSwitchExp_AlternativePart(), this.getAltExp(), null, "alternativePart", null, 0, -1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getSwitchExp_ElsePart(), theEcorePackage.getOCLExpression(), null, "elsePart", null, 0, 1, SwitchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(templateParameterTypeEClass, TemplateParameterType.class, "TemplateParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getTemplateParameterType_Specification(), theEcorePackage_1.getEString(), "specification", null, 0, 1, TemplateParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(tryExpEClass, TryExp.class, "TryExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTryExp_ExceptClause(), this.getCatchExp(), null, "exceptClause", null, 0, -1, TryExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1400,7 +1395,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	protected void createEmofAnnotations() {
-		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName";		 //$NON-NLS-1$
+		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName"; //$NON-NLS-1$		
 		addAnnotation
 		  (getAltExp_Body(), 
 		   source, 
@@ -1504,6 +1499,12 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 			 "body", "argOwner" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
+		  (getListLiteralExp_Element(), 
+		   source, 
+		   new String[] {
+			 "body", "elementOwner" //$NON-NLS-1$ //$NON-NLS-2$
+		   });		
+		addAnnotation
 		  (getLogExp_Condition(), 
 		   source, 
 		   new String[] {
@@ -1596,7 +1597,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";					 //$NON-NLS-1$
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$					
 		addAnnotation
 		  (assignExpEClass, 
 		   source, 
@@ -1608,7 +1609,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "constraints", "WellFormedName WellFormedTargetVar WellFormedBody WellFormedCondition" //$NON-NLS-1$ //$NON-NLS-2$
-		   });								
+		   });									
 		addAnnotation
 		  (orderedTupleTypeEClass, 
 		   source, 

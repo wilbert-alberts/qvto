@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLFactory.java,v 1.1 2008/09/02 20:01:44 radvorak Exp $
+ * $Id: ImperativeOCLFactory.java,v 1.2 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL;
 
@@ -160,6 +160,16 @@ public interface ImperativeOCLFactory extends EFactory {
 	InstantiationExp createInstantiationExp();
 
 	/**
+	 * Returns a new object of class '<em>List Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Literal Exp</em>'.
+	 * @generated
+	 * @since 3.0
+	 */
+	ListLiteralExp createListLiteralExp();
+
+	/**
 	 * Returns a new object of class '<em>List Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -230,15 +240,6 @@ public interface ImperativeOCLFactory extends EFactory {
 	 * @generated
 	 */
 	SwitchExp createSwitchExp();
-
-	/**
-	 * Returns a new object of class '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Parameter Type</em>'.
-	 * @generated
-	 */
-	TemplateParameterType createTemplateParameterType();
 
 	/**
 	 * Returns a new object of class '<em>Try Exp</em>'.

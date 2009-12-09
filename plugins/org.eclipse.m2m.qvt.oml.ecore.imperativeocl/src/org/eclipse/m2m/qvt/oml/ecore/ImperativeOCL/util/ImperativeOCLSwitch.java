@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLSwitch.java,v 1.3 2009/02/20 11:03:59 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.4 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.*;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -48,7 +49,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
@@ -393,6 +393,22 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ImperativeOCLPackage.LIST_LITERAL_EXP: {
+				ListLiteralExp listLiteralExp = (ListLiteralExp)theEObject;
+				T result = caseListLiteralExp(listLiteralExp);
+				if (result == null) result = caseEcore_LiteralExp(listLiteralExp);
+				if (result == null) result = caseEcore_OCLExpression(listLiteralExp);
+				if (result == null) result = caseLiteralExp(listLiteralExp);
+				if (result == null) result = caseETypedElement(listLiteralExp);
+				if (result == null) result = caseOCLExpression(listLiteralExp);
+				if (result == null) result = caseENamedElement(listLiteralExp);
+				if (result == null) result = caseTypedElement(listLiteralExp);
+				if (result == null) result = caseVisitable(listLiteralExp);
+				if (result == null) result = caseASTNode(listLiteralExp);
+				if (result == null) result = caseEModelElement(listLiteralExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ImperativeOCLPackage.LIST_TYPE: {
 				ListType listType = (ListType)theEObject;
 				T result = caseListType(listType);
@@ -415,17 +431,17 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = caseImperativeExpression(logExp);
 				if (result == null) result = caseEcore_FeatureCallExp(logExp);
 				if (result == null) result = caseOperationCallExp(logExp);
-				if (result == null) result = caseEcore_OCLExpression(logExp);
 				if (result == null) result = caseEcore_CallExp(logExp);
 				if (result == null) result = caseFeatureCallExp(logExp);
+				if (result == null) result = caseEcore_OCLExpression(logExp);
+				if (result == null) result = caseCallExp(logExp);
 				if (result == null) result = caseETypedElement(logExp);
 				if (result == null) result = caseOCLExpression(logExp);
-				if (result == null) result = caseCallExp(logExp);
+				if (result == null) result = caseCallingASTNode(logExp);
 				if (result == null) result = caseENamedElement(logExp);
 				if (result == null) result = caseTypedElement(logExp);
 				if (result == null) result = caseVisitable(logExp);
 				if (result == null) result = caseASTNode(logExp);
-				if (result == null) result = caseCallingASTNode(logExp);
 				if (result == null) result = caseEModelElement(logExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -505,15 +521,6 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = caseVisitable(switchExp);
 				if (result == null) result = caseASTNode(switchExp);
 				if (result == null) result = caseEModelElement(switchExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE: {
-				TemplateParameterType templateParameterType = (TemplateParameterType)theEObject;
-				T result = caseTemplateParameterType(templateParameterType);
-				if (result == null) result = caseEClassifier(templateParameterType);
-				if (result == null) result = caseENamedElement(templateParameterType);
-				if (result == null) result = caseEModelElement(templateParameterType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -847,6 +854,22 @@ public class ImperativeOCLSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>List Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>List Literal Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 * @since 3.0
+	 */
+	public T caseListLiteralExp(ListLiteralExp object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -963,21 +986,6 @@ public class ImperativeOCLSwitch<T> {
 	 * @generated
 	 */
 	public T caseSwitchExp(SwitchExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTemplateParameterType(TemplateParameterType object) {
 		return null;
 	}
 

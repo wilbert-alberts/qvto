@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLValidator.java,v 1.7 2009/05/15 16:14:34 radvorak Exp $
+ * $Id: ImperativeOCLValidator.java,v 1.8 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreValidator;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.*;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -55,7 +56,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
@@ -217,6 +217,8 @@ public class ImperativeOCLValidator extends EObjectValidator {
 				return validateImperativeLoopExp((ImperativeLoopExp)value, diagnostics, context);
 			case ImperativeOCLPackage.INSTANTIATION_EXP:
 				return validateInstantiationExp((InstantiationExp)value, diagnostics, context);
+			case ImperativeOCLPackage.LIST_LITERAL_EXP:
+				return validateListLiteralExp((ListLiteralExp)value, diagnostics, context);
 			case ImperativeOCLPackage.LIST_TYPE:
 				return validateListType((ListType)value, diagnostics, context);
 			case ImperativeOCLPackage.LOG_EXP:
@@ -233,8 +235,6 @@ public class ImperativeOCLValidator extends EObjectValidator {
 				return validateReturnExp((ReturnExp)value, diagnostics, context);
 			case ImperativeOCLPackage.SWITCH_EXP:
 				return validateSwitchExp((SwitchExp)value, diagnostics, context);
-			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE:
-				return validateTemplateParameterType((TemplateParameterType)value, diagnostics, context);
 			case ImperativeOCLPackage.TRY_EXP:
 				return validateTryExp((TryExp)value, diagnostics, context);
 			case ImperativeOCLPackage.TYPEDEF:
@@ -948,6 +948,28 @@ public class ImperativeOCLValidator extends EObjectValidator {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 * @since 3.0
+	 */
+	public boolean validateListLiteralExp(ListLiteralExp listLiteralExp, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = validate_EveryMultiplicityConforms(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= ecore_1Validator.validateOCLExpression_WellFormedName(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidLowerBound(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(listLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(listLiteralExp, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public boolean validateListType(ListType listType, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = validate_EveryMultiplicityConforms(listType, diagnostics, context);
@@ -1116,25 +1138,6 @@ public class ImperativeOCLValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidUpperBound(switchExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ConsistentBounds(switchExp, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateETypedElement_ValidType(switchExp, diagnostics, context);
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateTemplateParameterType(TemplateParameterType templateParameterType, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		boolean result = validate_EveryMultiplicityConforms(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateENamedElement_WellFormedName(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_WellFormedInstanceTypeName(templateParameterType, diagnostics, context);
-		if (result || diagnostics != null) result &= ecoreValidator.validateEClassifier_UniqueTypeParameterNames(templateParameterType, diagnostics, context);
 		return result;
 	}
 

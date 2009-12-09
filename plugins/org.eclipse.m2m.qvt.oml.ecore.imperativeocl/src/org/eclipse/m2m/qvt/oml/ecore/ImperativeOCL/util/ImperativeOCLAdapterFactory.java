@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLAdapterFactory.java,v 1.3 2009/02/20 11:03:59 radvorak Exp $
+ * $Id: ImperativeOCLAdapterFactory.java,v 1.4 2009/12/09 12:45:12 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.util;
 
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.*;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -49,7 +50,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.OrderedTupleType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnlinkExp;
@@ -192,6 +192,10 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createInstantiationExpAdapter();
 			}
 			@Override
+			public Adapter caseListLiteralExp(ListLiteralExp object) {
+				return createListLiteralExpAdapter();
+			}
+			@Override
 			public Adapter caseListType(ListType object) {
 				return createListTypeAdapter();
 			}
@@ -222,10 +226,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseSwitchExp(SwitchExp object) {
 				return createSwitchExpAdapter();
-			}
-			@Override
-			public Adapter caseTemplateParameterType(TemplateParameterType object) {
-				return createTemplateParameterTypeAdapter();
 			}
 			@Override
 			public Adapter caseTryExp(TryExp object) {
@@ -600,6 +600,21 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListLiteralExp <em>List Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListLiteralExp
+	 * @generated
+	 * @since 3.0
+	 */
+	public Adapter createListLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType <em>List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -708,20 +723,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSwitchExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType <em>Template Parameter Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType
-	 * @generated
-	 */
-	public Adapter createTemplateParameterTypeAdapter() {
 		return null;
 	}
 
