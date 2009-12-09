@@ -36,7 +36,7 @@ import org.eclipse.qvt.declarative.test.emof.tools.EquivalenceMap;
 
 public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsistencyTest
 {	
-	public static void expectedDifferences(EquivalenceHelper helper, Set<EcoreDifference> differences) {
+	public static void expectedEcoreDifferences(EquivalenceHelper helper, Set<EcoreDifference> differences, ResourceSet rightResourceSet) {
 		changeOfURI(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.eINSTANCE);
 		changeOfPrefix(differences, helper, org.eclipse.m2m.qvt.oml.ecore.QVTOperational.QVTOperationalPackage.eINSTANCE);			
 		//
@@ -67,11 +67,12 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 
 	@Override
 	protected Set<EcoreDifference> getExpectedEcore2EmofDifferences(EquivalenceHelper helper, EPackage rightPackage) {
+		ResourceSet rightResourceSet = rightPackage.eResource().getResourceSet();
 		Set<EcoreDifference> differences = new HashSet<EcoreDifference>();
-		QVTOperationalConsistencyTest.expectedDifferences(helper, differences);
+		QVTOperationalConsistencyTest.expectedEcoreDifferences(helper, differences, rightResourceSet);
 		helper.setLogStream(null);
-		EssentialOCLConsistencyTest.expectedEcoreDifferences(differences, helper);
-		EMOFConsistencyTest.expectedEcore2RoseDifferences(helper, differences, rightPackage.eResource().getResourceSet());		
+		EssentialOCLConsistencyTest.expectedEcoreDifferences(differences, helper, rightResourceSet);
+		EMOFConsistencyTest.expectedEcore2RoseDifferences(helper, differences, rightResourceSet);		
 		return differences;
 	}
 
@@ -121,10 +122,11 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		missingOpposite(differences, helper, QVTOperationalPackage.Literals.OPERATIONAL_TRANSFORMATION__RELATION);
 		missingOpposite(differences, helper, QVTOperationalPackage.Literals.RESOLVE_IN_EXP__IN_MAPPING);
 		helper.setLogStream(null);
-		QVTRelationConsistencyTest.expectedEmofDifferences(differences, helper);		
-		ImperativeOCLConsistencyTest.expectedEmofDifferences(differences, helper);
-		EssentialOCLConsistencyTest.expectedEmofDifferences(differences, helper);
-		EMOFConsistencyTest.expectedEmofDifferences(differences, helper);		
+		ResourceSet rightResourceSet = rightPackage.eResource().getResourceSet();
+		QVTRelationConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);		
+		ImperativeOCLConsistencyTest.expectedEmofDifferences(differences, helper, rightPackage.eResource().getResourceSet());
+		EssentialOCLConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);
+		EMOFConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);		
 		return differences;
 	}
 
@@ -235,12 +237,13 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		missingOpposite(differences, helper, QVTOperationalPackage.Literals.OPERATIONAL_TRANSFORMATION__RELATION);
 		missingOpposite(differences, helper, QVTOperationalPackage.Literals.RESOLVE_IN_EXP__IN_MAPPING);
 		helper.setLogStream(null);
+		ResourceSet rightResourceSet = rightPackage.eResource().getResourceSet();
 //		missingOppositeAnnotation(differences, helper, QVTOperationalPackage.Literals.PROPERTY_ASSIGNMENT__SLOT_EXPRESSION);
 		missingPrefix(differences, helper, QVTOperationalPackage.eINSTANCE);
-		QVTRelationConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
-		ImperativeOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
-		EssentialOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
-		EMOFConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper);
+		QVTRelationConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper, rightResourceSet);
+		ImperativeOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper, rightResourceSet);
+		EssentialOCLConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper, rightResourceSet);
+		EMOFConsistencyTest.expectedEmof2OmgEmofDifferences(differences, helper, rightResourceSet);
 		return differences;
 	}
 
@@ -262,10 +265,11 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 		changeOfOrdered(differences, helper, QVTOperationalPackage.Literals.OPERATION_BODY__CONTENT);
 		changeOfOppositeAnnotation(differences, helper, QVTOperationalPackage.Literals.MAPPING_PARAMETER__REFERRED_DOMAIN, getFeature(getClass(rightPackage, "MappingParameter"), "refinedDomain"));
 		helper.setLogStream(null);
-		QVTRelationConsistencyTest.expectedEmofDifferences(differences, helper);		
-		ImperativeOCLConsistencyTest.expectedEmofDifferences(differences, helper);
-		EssentialOCLConsistencyTest.expectedEmofDifferences(differences, helper);
-		EMOFConsistencyTest.expectedEmofDifferences(differences, helper);		
+		ResourceSet rightResourceSet = rightPackage.eResource().getResourceSet();
+		QVTRelationConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);		
+		ImperativeOCLConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);
+		EssentialOCLConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);
+		EMOFConsistencyTest.expectedEmofDifferences(differences, helper, rightResourceSet);		
 		return differences;
 	}
 
@@ -303,7 +307,12 @@ public class QVTOperationalConsistencyTest extends AbstractEssentialOCLConsisten
 	@Override
 	protected void installEmofOmgMappings(EquivalenceMap comparator, ResourceSet resourceSet) {
 		super.installEmofOmgMappings(comparator, resourceSet);
-		comparator.putEquivalence(ImperativeOCLPackage.eINSTANCE, getPackage(resourceSet, IMPERATIVE_OCL_PACKAGE_NAME.toLowerCase()));
+
+		EPackage emofPackage = getPackage(resourceSet, IMPERATIVE_OCL_PACKAGE_NAME.toLowerCase());
+		comparator.putEquivalence(ImperativeOCLPackage.eINSTANCE, emofPackage);
+		comparator.putEquivalence(ImperativeOCLPackage.Literals.LIST_LITERAL_EXP, null);
+		comparator.putEquivalence(null, getClass(emofPackage, "TemplateParameterType"));
+		
 		comparator.putEquivalence(QVTRelationPackage.eINSTANCE, getPackage(resourceSet, QVTRELATION_PACKAGE_NAME.toLowerCase()));
 		comparator.putEquivalence(QVTOperationalPackage.eINSTANCE, getPackage(resourceSet, QVTOPERATIONAL_PACKAGE_NAME.toLowerCase()));
 		comparator.putEquivalence(QVTOperationalPackage.Literals.MAPPING_PARAMETER__REFERRED_DOMAIN, getFeature(getClass(getPackage(resourceSet, QVTOPERATIONAL_PACKAGE_NAME.toLowerCase()), "MappingParameter"), "refinedDomain"));
