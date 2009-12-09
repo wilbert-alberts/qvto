@@ -11,7 +11,7 @@
  * 
  * </copyright>
  *
- * $Id: ModuleItemProvider.java,v 1.2 2009/01/25 23:12:44 radvorak Exp $
+ * $Id: ModuleItemProvider.java,v 1.3 2009/12/09 14:02:29 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.QVTOperational.provider;
 
@@ -429,11 +429,6 @@ public class ModuleItemProvider
 			(createChildParameter
 				(EcorePackage.Literals.EPACKAGE__ECLASSIFIERS,
 				 ImperativeOCLFactory.eINSTANCE.createOrderedTupleType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(EcorePackage.Literals.EPACKAGE__ECLASSIFIERS,
-				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
 
 		newChildDescriptors.add
 			(createChildParameter
