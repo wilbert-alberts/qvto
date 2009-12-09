@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLEditorPlugin.java,v 1.2 2009/01/25 23:11:30 radvorak Exp $
+ * $Id: ImperativeOCLEditorPlugin.java,v 1.3 2009/12/09 14:03:36 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.presentation;
 
@@ -18,8 +18,8 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-import org.eclipse.ocl.ecore.provider.OCLEcoreEditPlugin;
-import org.eclipse.ocl.edit.internal.OCLEditPlugin;
+import org.eclipse.ocl.ecore.edit.OCLEcoreEditPlugin;
+import org.eclipse.ocl.edit.OCLEditPlugin;
 
 /**
  * This is the central singleton for the ImperativeOCL editor plugin.
