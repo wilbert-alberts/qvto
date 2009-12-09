@@ -107,7 +107,7 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 		
 		runnerFactory.modelParamURI = modelURIs;
 
-		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration).toString();
+		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration);
 		boolean shouldGenerateTraceFile = QvtLaunchUtil.shouldGenerateTraceFile(configuration);
 		if(traceFileURI != null && shouldGenerateTraceFile) {
 			runnerFactory.traceFileURI = traceFileURI;
