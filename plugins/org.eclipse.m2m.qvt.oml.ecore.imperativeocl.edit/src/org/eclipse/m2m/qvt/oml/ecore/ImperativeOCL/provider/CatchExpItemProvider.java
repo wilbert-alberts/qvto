@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: CatchExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: CatchExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -86,8 +86,8 @@ public class CatchExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CatchExp_exception_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CatchExp_exception_feature", "_UI_CatchExp_type"),
+				 getString("_UI_CatchExp_exception_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CatchExp_exception_feature", "_UI_CatchExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.CATCH_EXP__EXCEPTION,
 				 true,
 				 false,
@@ -135,7 +135,7 @@ public class CatchExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CatchExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CatchExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -148,8 +148,8 @@ public class CatchExpItemProvider
 	public String getText(Object object) {
 		String label = ((CatchExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CatchExp_type") :
-			getString("_UI_CatchExp_type") + " " + label;
+			getString("_UI_CatchExp_type") : //$NON-NLS-1$
+			getString("_UI_CatchExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -241,6 +241,11 @@ public class CatchExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.CATCH_EXP__BODY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.CATCH_EXP__BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

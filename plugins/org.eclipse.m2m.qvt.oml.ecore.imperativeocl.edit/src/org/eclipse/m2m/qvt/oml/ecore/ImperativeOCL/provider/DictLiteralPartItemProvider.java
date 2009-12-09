@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: DictLiteralPartItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: DictLiteralPartItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -114,7 +114,7 @@ public class DictLiteralPartItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DictLiteralPart"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DictLiteralPart")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class DictLiteralPartItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DictLiteralPart_type");
+		return getString("_UI_DictLiteralPart_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -218,6 +218,11 @@ public class DictLiteralPartItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.DICT_LITERAL_PART__KEY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.DICT_LITERAL_PART__KEY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -438,6 +443,11 @@ public class DictLiteralPartItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.DICT_LITERAL_PART__VALUE,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.DICT_LITERAL_PART__VALUE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -617,7 +627,7 @@ public class DictLiteralPartItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

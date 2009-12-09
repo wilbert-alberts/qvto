@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: BlockExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: BlockExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -111,7 +111,7 @@ public class BlockExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/BlockExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/BlockExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -124,8 +124,8 @@ public class BlockExpItemProvider
 	public String getText(Object object) {
 		String label = ((BlockExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_BlockExp_type") :
-			getString("_UI_BlockExp_type") + " " + label;
+			getString("_UI_BlockExp_type") : //$NON-NLS-1$
+			getString("_UI_BlockExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -217,6 +217,11 @@ public class BlockExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.BLOCK_EXP__BODY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.BLOCK_EXP__BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

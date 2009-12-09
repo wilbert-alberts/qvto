@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: DictionaryTypeItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: DictionaryTypeItemProvider.java,v 1.3 2009/12/09 14:02:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -84,8 +84,8 @@ public class DictionaryTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DictionaryType_keyType_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DictionaryType_keyType_feature", "_UI_DictionaryType_type"),
+				 getString("_UI_DictionaryType_keyType_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DictionaryType_keyType_feature", "_UI_DictionaryType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.DICTIONARY_TYPE__KEY_TYPE,
 				 true,
 				 false,
@@ -103,7 +103,7 @@ public class DictionaryTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DictionaryType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DictionaryType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class DictionaryTypeItemProvider
 	public String getText(Object object) {
 		String label = ((DictionaryType)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_DictionaryType_type") :
-			getString("_UI_DictionaryType_type") + " " + label;
+			getString("_UI_DictionaryType_type") : //$NON-NLS-1$
+			getString("_UI_DictionaryType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

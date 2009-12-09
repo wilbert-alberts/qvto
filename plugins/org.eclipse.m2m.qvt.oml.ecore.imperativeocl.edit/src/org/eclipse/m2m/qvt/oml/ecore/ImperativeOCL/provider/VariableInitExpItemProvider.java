@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: VariableInitExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: VariableInitExpItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -86,8 +86,8 @@ public class VariableInitExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VariableInitExp_withResult_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VariableInitExp_withResult_feature", "_UI_VariableInitExp_type"),
+				 getString("_UI_VariableInitExp_withResult_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_VariableInitExp_withResult_feature", "_UI_VariableInitExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.VARIABLE_INIT_EXP__WITH_RESULT,
 				 true,
 				 false,
@@ -135,7 +135,7 @@ public class VariableInitExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableInitExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableInitExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -148,8 +148,8 @@ public class VariableInitExpItemProvider
 	public String getText(Object object) {
 		String label = ((VariableInitExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_VariableInitExp_type") :
-			getString("_UI_VariableInitExp_type") + " " + label;
+			getString("_UI_VariableInitExp_type") : //$NON-NLS-1$
+			getString("_UI_VariableInitExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

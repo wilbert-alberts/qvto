@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ComputeExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: ComputeExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class ComputeExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ComputeExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ComputeExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class ComputeExpItemProvider
 	public String getText(Object object) {
 		String label = ((ComputeExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ComputeExp_type") :
-			getString("_UI_ComputeExp_type") + " " + label;
+			getString("_UI_ComputeExp_type") : //$NON-NLS-1$
+			getString("_UI_ComputeExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -219,6 +219,11 @@ public class ComputeExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.COMPUTE_EXP__BODY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.COMPUTE_EXP__BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

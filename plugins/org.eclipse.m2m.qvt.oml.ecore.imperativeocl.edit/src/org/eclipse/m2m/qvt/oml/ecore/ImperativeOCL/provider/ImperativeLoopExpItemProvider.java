@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeLoopExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: ImperativeLoopExpItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -116,8 +116,8 @@ public class ImperativeLoopExpItemProvider
 	public String getText(Object object) {
 		String label = ((ImperativeLoopExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ImperativeLoopExp_type") :
-			getString("_UI_ImperativeLoopExp_type") + " " + label;
+			getString("_UI_ImperativeLoopExp_type") : //$NON-NLS-1$
+			getString("_UI_ImperativeLoopExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -213,6 +213,11 @@ public class ImperativeLoopExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -323,6 +328,11 @@ public class ImperativeLoopExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.LOOP_EXP__BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.LOOP_EXP__BODY,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -429,6 +439,11 @@ public class ImperativeLoopExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.IMPERATIVE_LOOP_EXP__CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.IMPERATIVE_LOOP_EXP__CONDITION,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -609,7 +624,7 @@ public class ImperativeLoopExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: TypedefItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: TypedefItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -88,8 +88,8 @@ public class TypedefItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Typedef_base_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Typedef_base_feature", "_UI_Typedef_type"),
+				 getString("_UI_Typedef_base_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Typedef_base_feature", "_UI_Typedef_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.TYPEDEF__BASE,
 				 true,
 				 false,
@@ -137,7 +137,7 @@ public class TypedefItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Typedef"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Typedef")); //$NON-NLS-1$
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class TypedefItemProvider
 	public String getText(Object object) {
 		String label = ((Typedef)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Typedef_type") :
-			getString("_UI_Typedef_type") + " " + label;
+			getString("_UI_Typedef_type") : //$NON-NLS-1$
+			getString("_UI_Typedef_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -243,6 +243,11 @@ public class TypedefItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.TYPEDEF__CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.TYPEDEF__CONDITION,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

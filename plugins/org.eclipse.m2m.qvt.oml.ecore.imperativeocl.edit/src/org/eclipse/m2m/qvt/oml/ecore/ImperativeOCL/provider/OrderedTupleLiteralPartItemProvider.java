@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: OrderedTupleLiteralPartItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: OrderedTupleLiteralPartItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -113,7 +113,7 @@ public class OrderedTupleLiteralPartItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleLiteralPart"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleLiteralPart")); //$NON-NLS-1$
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class OrderedTupleLiteralPartItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_OrderedTupleLiteralPart_type");
+		return getString("_UI_OrderedTupleLiteralPart_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -216,6 +216,11 @@ public class OrderedTupleLiteralPartItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.ORDERED_TUPLE_LITERAL_PART__VALUE,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.ORDERED_TUPLE_LITERAL_PART__VALUE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

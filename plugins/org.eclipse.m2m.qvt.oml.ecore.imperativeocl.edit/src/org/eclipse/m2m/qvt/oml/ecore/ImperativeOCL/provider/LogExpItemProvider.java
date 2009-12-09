@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: LogExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: LogExpItemProvider.java,v 1.3 2009/12/09 14:02:52 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -114,7 +114,7 @@ public class LogExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/LogExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/LogExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class LogExpItemProvider
 	public String getText(Object object) {
 		String label = ((LogExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_LogExp_type") :
-			getString("_UI_LogExp_type") + " " + label;
+			getString("_UI_LogExp_type") : //$NON-NLS-1$
+			getString("_UI_LogExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -224,6 +224,11 @@ public class LogExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.CALL_EXP__SOURCE,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -334,6 +339,11 @@ public class LogExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ExpressionsPackage.Literals.OPERATION_CALL_EXP__ARGUMENT,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionsPackage.Literals.OPERATION_CALL_EXP__ARGUMENT,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -440,6 +450,11 @@ public class LogExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.LOG_EXP__CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.LOG_EXP__CONDITION,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -620,7 +635,7 @@ public class LogExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

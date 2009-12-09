@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: OrderedTupleLiteralExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: OrderedTupleLiteralExpItemProvider.java,v 1.3 2009/12/09 14:02:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class OrderedTupleLiteralExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleLiteralExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleLiteralExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class OrderedTupleLiteralExpItemProvider
 	public String getText(Object object) {
 		String label = ((OrderedTupleLiteralExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_OrderedTupleLiteralExp_type") :
-			getString("_UI_OrderedTupleLiteralExp_type") + " " + label;
+			getString("_UI_OrderedTupleLiteralExp_type") : //$NON-NLS-1$
+			getString("_UI_OrderedTupleLiteralExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

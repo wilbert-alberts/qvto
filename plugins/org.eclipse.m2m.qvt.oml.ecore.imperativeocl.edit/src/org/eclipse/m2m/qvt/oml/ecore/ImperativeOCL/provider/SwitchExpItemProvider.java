@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: SwitchExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: SwitchExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class SwitchExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class SwitchExpItemProvider
 	public String getText(Object object) {
 		String label = ((SwitchExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_SwitchExp_type") :
-			getString("_UI_SwitchExp_type") + " " + label;
+			getString("_UI_SwitchExp_type") : //$NON-NLS-1$
+			getString("_UI_SwitchExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -224,6 +224,11 @@ public class SwitchExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.SWITCH_EXP__ELSE_PART,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.SWITCH_EXP__ELSE_PART,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -403,7 +408,7 @@ public class SwitchExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeOCLItemProviderAdapterFactory.java,v 1.3 2009/02/20 11:04:03 radvorak Exp $
+ * $Id: ImperativeOCLItemProviderAdapterFactory.java,v 1.4 2009/12/09 14:02:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -404,6 +404,29 @@ public class ImperativeOCLItemProviderAdapterFactory extends ImperativeOCLAdapte
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListLiteralExp} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ListLiteralExpItemProvider listLiteralExpItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListLiteralExp}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createListLiteralExpAdapter() {
+		if (listLiteralExpItemProvider == null) {
+			listLiteralExpItemProvider = new ListLiteralExpItemProvider(this);
+		}
+
+		return listLiteralExpItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -585,29 +608,6 @@ public class ImperativeOCLItemProviderAdapterFactory extends ImperativeOCLAdapte
 		}
 
 		return switchExpItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected TemplateParameterTypeItemProvider templateParameterTypeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TemplateParameterType}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTemplateParameterTypeAdapter() {
-		if (templateParameterTypeItemProvider == null) {
-			templateParameterTypeItemProvider = new TemplateParameterTypeItemProvider(this);
-		}
-
-		return templateParameterTypeItemProvider;
 	}
 
 	/**
@@ -861,6 +861,7 @@ public class ImperativeOCLItemProviderAdapterFactory extends ImperativeOCLAdapte
 		if (forExpItemProvider != null) forExpItemProvider.dispose();
 		if (imperativeIterateExpItemProvider != null) imperativeIterateExpItemProvider.dispose();
 		if (instantiationExpItemProvider != null) instantiationExpItemProvider.dispose();
+		if (listLiteralExpItemProvider != null) listLiteralExpItemProvider.dispose();
 		if (listTypeItemProvider != null) listTypeItemProvider.dispose();
 		if (logExpItemProvider != null) logExpItemProvider.dispose();
 		if (orderedTupleLiteralExpItemProvider != null) orderedTupleLiteralExpItemProvider.dispose();
@@ -869,7 +870,6 @@ public class ImperativeOCLItemProviderAdapterFactory extends ImperativeOCLAdapte
 		if (raiseExpItemProvider != null) raiseExpItemProvider.dispose();
 		if (returnExpItemProvider != null) returnExpItemProvider.dispose();
 		if (switchExpItemProvider != null) switchExpItemProvider.dispose();
-		if (templateParameterTypeItemProvider != null) templateParameterTypeItemProvider.dispose();
 		if (tryExpItemProvider != null) tryExpItemProvider.dispose();
 		if (typedefItemProvider != null) typedefItemProvider.dispose();
 		if (unlinkExpItemProvider != null) unlinkExpItemProvider.dispose();

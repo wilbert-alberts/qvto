@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeIterateExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: ImperativeIterateExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -83,8 +83,8 @@ public class ImperativeIterateExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ImperativeIterateExp_target_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ImperativeIterateExp_target_feature", "_UI_ImperativeIterateExp_type"),
+				 getString("_UI_ImperativeIterateExp_target_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ImperativeIterateExp_target_feature", "_UI_ImperativeIterateExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.IMPERATIVE_ITERATE_EXP__TARGET,
 				 true,
 				 false,
@@ -102,7 +102,7 @@ public class ImperativeIterateExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImperativeIterateExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImperativeIterateExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class ImperativeIterateExpItemProvider
 	public String getText(Object object) {
 		String label = ((ImperativeIterateExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ImperativeIterateExp_type") :
-			getString("_UI_ImperativeIterateExp_type") + " " + label;
+			getString("_UI_ImperativeIterateExp_type") : //$NON-NLS-1$
+			getString("_UI_ImperativeIterateExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class ImperativeIterateExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: InstantiationExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: InstantiationExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -87,8 +87,8 @@ public class InstantiationExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_InstantiationExp_extent_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InstantiationExp_extent_feature", "_UI_InstantiationExp_type"),
+				 getString("_UI_InstantiationExp_extent_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_InstantiationExp_extent_feature", "_UI_InstantiationExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.INSTANTIATION_EXP__EXTENT,
 				 true,
 				 false,
@@ -109,8 +109,8 @@ public class InstantiationExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_InstantiationExp_instantiatedClass_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_InstantiationExp_instantiatedClass_feature", "_UI_InstantiationExp_type"),
+				 getString("_UI_InstantiationExp_instantiatedClass_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_InstantiationExp_instantiatedClass_feature", "_UI_InstantiationExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.INSTANTIATION_EXP__INSTANTIATED_CLASS,
 				 true,
 				 false,
@@ -158,7 +158,7 @@ public class InstantiationExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/InstantiationExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/InstantiationExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class InstantiationExpItemProvider
 	public String getText(Object object) {
 		String label = ((InstantiationExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_InstantiationExp_type") :
-			getString("_UI_InstantiationExp_type") + " " + label;
+			getString("_UI_InstantiationExp_type") : //$NON-NLS-1$
+			getString("_UI_InstantiationExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -264,6 +264,11 @@ public class InstantiationExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.INSTANTIATION_EXP__ARGUMENT,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.INSTANTIATION_EXP__ARGUMENT,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

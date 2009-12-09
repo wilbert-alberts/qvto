@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: TryExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: TryExpItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class TryExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TryExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TryExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class TryExpItemProvider
 	public String getText(Object object) {
 		String label = ((TryExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_TryExp_type") :
-			getString("_UI_TryExp_type") + " " + label;
+			getString("_UI_TryExp_type") : //$NON-NLS-1$
+			getString("_UI_TryExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -224,6 +224,11 @@ public class TryExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.TRY_EXP__TRY_BODY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.TRY_EXP__TRY_BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -403,7 +408,7 @@ public class TryExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: RaiseExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: RaiseExpItemProvider.java,v 1.3 2009/12/09 14:02:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -82,8 +82,8 @@ public class RaiseExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RaiseExp_argument_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RaiseExp_argument_feature", "_UI_RaiseExp_type"),
+				 getString("_UI_RaiseExp_argument_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RaiseExp_argument_feature", "_UI_RaiseExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.RAISE_EXP__ARGUMENT,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class RaiseExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RaiseExp_exception_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RaiseExp_exception_feature", "_UI_RaiseExp_type"),
+				 getString("_UI_RaiseExp_exception_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RaiseExp_exception_feature", "_UI_RaiseExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.RAISE_EXP__EXCEPTION,
 				 true,
 				 false,
@@ -123,7 +123,7 @@ public class RaiseExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RaiseExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RaiseExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -136,8 +136,8 @@ public class RaiseExpItemProvider
 	public String getText(Object object) {
 		String label = ((RaiseExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_RaiseExp_type") :
-			getString("_UI_RaiseExp_type") + " " + label;
+			getString("_UI_RaiseExp_type") : //$NON-NLS-1$
+			getString("_UI_RaiseExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: WhileExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: WhileExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class WhileExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/WhileExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/WhileExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class WhileExpItemProvider
 	public String getText(Object object) {
 		String label = ((WhileExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_WhileExp_type") :
-			getString("_UI_WhileExp_type") + " " + label;
+			getString("_UI_WhileExp_type") : //$NON-NLS-1$
+			getString("_UI_WhileExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -219,6 +219,11 @@ public class WhileExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.WHILE_EXP__BODY,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.WHILE_EXP__BODY,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -439,6 +444,11 @@ public class WhileExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.WHILE_EXP__CONDITION,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.WHILE_EXP__CONDITION,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -618,7 +628,7 @@ public class WhileExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

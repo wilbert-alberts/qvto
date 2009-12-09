@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssignExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: AssignExpItemProvider.java,v 1.3 2009/12/09 14:02:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -87,8 +87,8 @@ public class AssignExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AssignExp_isReset_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AssignExp_isReset_feature", "_UI_AssignExp_type"),
+				 getString("_UI_AssignExp_isReset_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_AssignExp_isReset_feature", "_UI_AssignExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.ASSIGN_EXP__IS_RESET,
 				 true,
 				 false,
@@ -138,7 +138,7 @@ public class AssignExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AssignExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/AssignExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -151,8 +151,8 @@ public class AssignExpItemProvider
 	public String getText(Object object) {
 		String label = ((AssignExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AssignExp_type") :
-			getString("_UI_AssignExp_type") + " " + label;
+			getString("_UI_AssignExp_type") : //$NON-NLS-1$
+			getString("_UI_AssignExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -253,6 +253,11 @@ public class AssignExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.ASSIGN_EXP__DEFAULT_VALUE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.ASSIGN_EXP__DEFAULT_VALUE,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -473,6 +478,11 @@ public class AssignExpItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.ASSIGN_EXP__LEFT,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.ASSIGN_EXP__LEFT,
 				 ImperativeOCLFactory.eINSTANCE.createLogExp()));
 
 		newChildDescriptors.add
@@ -689,6 +699,11 @@ public class AssignExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.ASSIGN_EXP__VALUE,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.ASSIGN_EXP__VALUE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -869,7 +884,7 @@ public class AssignExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: OrderedTupleTypeItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: OrderedTupleTypeItemProvider.java,v 1.3 2009/12/09 14:02:52 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -83,8 +83,8 @@ public class OrderedTupleTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OrderedTupleType_elementType_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OrderedTupleType_elementType_feature", "_UI_OrderedTupleType_type"),
+				 getString("_UI_OrderedTupleType_elementType_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OrderedTupleType_elementType_feature", "_UI_OrderedTupleType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.ORDERED_TUPLE_TYPE__ELEMENT_TYPE,
 				 true,
 				 false,
@@ -102,7 +102,7 @@ public class OrderedTupleTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrderedTupleType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class OrderedTupleTypeItemProvider
 	public String getText(Object object) {
 		String label = ((OrderedTupleType)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_OrderedTupleType_type") :
-			getString("_UI_OrderedTupleType_type") + " " + label;
+			getString("_UI_OrderedTupleType_type") : //$NON-NLS-1$
+			getString("_UI_OrderedTupleType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

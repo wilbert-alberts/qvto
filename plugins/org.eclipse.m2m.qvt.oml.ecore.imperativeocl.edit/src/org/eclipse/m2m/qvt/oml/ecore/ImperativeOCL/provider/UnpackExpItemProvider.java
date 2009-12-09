@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: UnpackExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: UnpackExpItemProvider.java,v 1.3 2009/12/09 14:02:52 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -112,7 +112,7 @@ public class UnpackExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/UnpackExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/UnpackExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -125,8 +125,8 @@ public class UnpackExpItemProvider
 	public String getText(Object object) {
 		String label = ((UnpackExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_UnpackExp_type") :
-			getString("_UI_UnpackExp_type") + " " + label;
+			getString("_UI_UnpackExp_type") : //$NON-NLS-1$
+			getString("_UI_UnpackExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -219,6 +219,11 @@ public class UnpackExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.UNPACK_EXP__SOURCE,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.UNPACK_EXP__SOURCE,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter

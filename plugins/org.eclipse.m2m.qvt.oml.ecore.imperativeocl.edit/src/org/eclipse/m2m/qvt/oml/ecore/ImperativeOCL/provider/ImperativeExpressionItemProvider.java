@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: ImperativeExpressionItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: ImperativeExpressionItemProvider.java,v 1.3 2009/12/09 14:02:55 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -80,8 +80,8 @@ public class ImperativeExpressionItemProvider
 	public String getText(Object object) {
 		String label = ((ImperativeExpression)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ImperativeExpression_type") :
-			getString("_UI_ImperativeExpression_type") + " " + label;
+			getString("_UI_ImperativeExpression_type") : //$NON-NLS-1$
+			getString("_UI_ImperativeExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

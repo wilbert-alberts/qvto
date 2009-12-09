@@ -10,7 +10,7 @@
  *     A. Sanchez-Barbudo  - initial API and implementation
  * </copyright>
  *
- * $Id: AssertExpItemProvider.java,v 1.2 2009/01/25 23:11:51 radvorak Exp $
+ * $Id: AssertExpItemProvider.java,v 1.3 2009/12/09 14:02:53 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.provider;
 
@@ -87,8 +87,8 @@ public class AssertExpItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AssertExp_severity_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AssertExp_severity_feature", "_UI_AssertExp_type"),
+				 getString("_UI_AssertExp_severity_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_AssertExp_severity_feature", "_UI_AssertExp_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 ImperativeOCLPackage.Literals.ASSERT_EXP__SEVERITY,
 				 true,
 				 false,
@@ -137,7 +137,7 @@ public class AssertExpItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AssertExp"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/AssertExp")); //$NON-NLS-1$
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class AssertExpItemProvider
 	public String getText(Object object) {
 		String label = ((AssertExp)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AssertExp_type") :
-			getString("_UI_AssertExp_type") + " " + label;
+			getString("_UI_AssertExp_type") : //$NON-NLS-1$
+			getString("_UI_AssertExp_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -247,6 +247,11 @@ public class AssertExpItemProvider
 			(createChildParameter
 				(ImperativeOCLPackage.Literals.ASSERT_EXP__ASSERTION,
 				 ImperativeOCLFactory.eINSTANCE.createInstantiationExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ImperativeOCLPackage.Literals.ASSERT_EXP__ASSERTION,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -431,7 +436,7 @@ public class AssertExpItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);
