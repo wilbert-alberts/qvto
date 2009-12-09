@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: VarParameterImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
+ * $Id: VarParameterImpl.java,v 1.3 2009/12/09 14:03:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -253,7 +253,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public Operation getOperation() {
-		if (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__OPERATION) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__OPERATION) return null;
 		return (Operation)eContainer();
 	}
 
@@ -273,7 +273,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setOperation(Operation newOperation) {
-		if (newOperation != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__OPERATION && newOperation != null)) {
+		if (newOperation != eInternalContainer() || (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__OPERATION && newOperation != null)) {
 			if (EcoreUtil.isAncestor(this, newOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -294,7 +294,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getCtxOwner() {
-		if (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -314,7 +314,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setCtxOwner(ImperativeOperation newCtxOwner) {
-		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
+		if (newCtxOwner != eInternalContainer() || (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER && newCtxOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newCtxOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -356,7 +356,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public ImperativeOperation getResOwner() {
-		if (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__RES_OWNER) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__RES_OWNER) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -376,7 +376,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	public void setResOwner(ImperativeOperation newResOwner) {
-		if (newResOwner != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
+		if (newResOwner != eInternalContainer() || (eContainerFeatureID() != QVTOperationalPackage.VAR_PARAMETER__RES_OWNER && newResOwner != null)) {
 			if (EcoreUtil.isAncestor(this, newResOwner))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -440,7 +440,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case QVTOperationalPackage.VAR_PARAMETER__OPERATION:
 				return eInternalContainer().eInverseRemove(this, EMOFPackage.OPERATION__OWNED_PARAMETER, Operation.class, msgs);
 			case QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER:

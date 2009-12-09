@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalFactoryImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
+ * $Id: QVTOperationalFactoryImpl.java,v 1.3 2009/12/09 14:03:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -54,7 +54,7 @@ public class QVTOperationalFactoryImpl extends EFactoryImpl implements QVTOperat
 	 */
 	public static QVTOperationalFactory init() {
 		try {
-			QVTOperationalFactory theQVTOperationalFactory = (QVTOperationalFactory)EPackage.Registry.INSTANCE.getEFactory("http://schema.omg.org/spec/QVT/1.0/qvtoperational.xml"); 
+			QVTOperationalFactory theQVTOperationalFactory = (QVTOperationalFactory)EPackage.Registry.INSTANCE.getEFactory("http://schema.omg.org/spec/QVT/1.1/qvtoperational.xml"); 
 			if (theQVTOperationalFactory != null) {
 				return theQVTOperationalFactory;
 			}

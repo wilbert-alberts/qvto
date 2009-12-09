@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: QVTOperationalPackage.java,v 1.3 2009/02/20 12:55:55 radvorak Exp $
+ * $Id: QVTOperationalPackage.java,v 1.4 2009/12/09 14:03:27 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational;
 
@@ -46,7 +46,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://schema.omg.org/spec/QVT/1.0/qvtoperational.xml";
+	String eNS_URI = "http://schema.omg.org/spec/QVT/1.1/qvtoperational.xml";
 
 	/**
 	 * The package namespace name.

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OperationBodyImpl.java,v 1.2 2009/02/20 12:55:55 radvorak Exp $
+ * $Id: OperationBodyImpl.java,v 1.3 2009/12/09 14:03:26 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.QVTOperational.impl;
 
@@ -98,7 +98,7 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 	 * @generated
 	 */
 	public ImperativeOperation getOperation() {
-		if (eContainerFeatureID != QVTOperationalPackage.OPERATION_BODY__OPERATION) return null;
+		if (eContainerFeatureID() != QVTOperationalPackage.OPERATION_BODY__OPERATION) return null;
 		return (ImperativeOperation)eContainer();
 	}
 
@@ -118,7 +118,7 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 	 * @generated
 	 */
 	public void setOperation(ImperativeOperation newOperation) {
-		if (newOperation != eInternalContainer() || (eContainerFeatureID != QVTOperationalPackage.OPERATION_BODY__OPERATION && newOperation != null)) {
+		if (newOperation != eInternalContainer() || (eContainerFeatureID() != QVTOperationalPackage.OPERATION_BODY__OPERATION && newOperation != null)) {
 			if (EcoreUtil.isAncestor(this, newOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -186,7 +186,7 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
+		switch (eContainerFeatureID()) {
 			case QVTOperationalPackage.OPERATION_BODY__OPERATION:
 				return eInternalContainer().eInverseRemove(this, QVTOperationalPackage.IMPERATIVE_OPERATION__BODY, ImperativeOperation.class, msgs);
 		}
