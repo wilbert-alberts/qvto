@@ -56,6 +56,7 @@ public class ImperativeOCLMappingMetaData extends AbstractEMOFMappingMetaData
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.FOR_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createForExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.IMPERATIVE_ITERATE_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createImperativeIterateExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.INSTANTIATION_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createInstantiationExp());
+					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.LIST_LITERAL_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createListLiteralExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.LIST_TYPE: return getAdapter(ImperativeOCLFactory.eINSTANCE.createListType());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.LOG_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createLogExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createOrderedTupleLiteralExp());
@@ -64,7 +65,6 @@ public class ImperativeOCLMappingMetaData extends AbstractEMOFMappingMetaData
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.RAISE_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createRaiseExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.RETURN_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createReturnExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.SWITCH_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createSwitchExp());
-					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE: return getAdapter(ImperativeOCLFactory.eINSTANCE.createTemplateParameterType());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.TRY_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createTryExp());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.TYPEDEF: return getAdapter(ImperativeOCLFactory.eINSTANCE.createTypedef());
 					case org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage.UNLINK_EXP: return getAdapter(ImperativeOCLFactory.eINSTANCE.createUnlinkExp());

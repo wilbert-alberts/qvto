@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLSwitch.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
+ * $Id: ImperativeOCLSwitch.java,v 1.3 2009/12/09 14:03:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.util;
 
@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.*;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.AssignExp;
@@ -35,7 +36,6 @@ import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.OrderedTupleType;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.SwitchExp;
-import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.Typedef;
 import org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.UnlinkExp;
@@ -325,6 +325,18 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ImperativeOCLPackage.LIST_LITERAL_EXP: {
+				ListLiteralExp listLiteralExp = (ListLiteralExp)theEObject;
+				T result = caseListLiteralExp(listLiteralExp);
+				if (result == null) result = caseLiteralExp(listLiteralExp);
+				if (result == null) result = caseOclExpression(listLiteralExp);
+				if (result == null) result = caseTypedElement(listLiteralExp);
+				if (result == null) result = caseNamedElement(listLiteralExp);
+				if (result == null) result = caseElement(listLiteralExp);
+				if (result == null) result = caseObject(listLiteralExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ImperativeOCLPackage.LIST_TYPE: {
 				ListType listType = (ListType)theEObject;
 				T result = caseListType(listType);
@@ -343,8 +355,8 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = caseOperationCallExp(logExp);
 				if (result == null) result = caseImperativeExpression(logExp);
 				if (result == null) result = caseFeatureCallExp(logExp);
-				if (result == null) result = caseOclExpression(logExp);
 				if (result == null) result = caseCallExp(logExp);
+				if (result == null) result = caseOclExpression(logExp);
 				if (result == null) result = caseTypedElement(logExp);
 				if (result == null) result = caseNamedElement(logExp);
 				if (result == null) result = caseElement(logExp);
@@ -416,16 +428,6 @@ public class ImperativeOCLSwitch<T> {
 				if (result == null) result = caseNamedElement(switchExp);
 				if (result == null) result = caseElement(switchExp);
 				if (result == null) result = caseObject(switchExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.TEMPLATE_PARAMETER_TYPE: {
-				TemplateParameterType templateParameterType = (TemplateParameterType)theEObject;
-				T result = caseTemplateParameterType(templateParameterType);
-				if (result == null) result = caseType(templateParameterType);
-				if (result == null) result = caseNamedElement(templateParameterType);
-				if (result == null) result = caseElement(templateParameterType);
-				if (result == null) result = caseObject(templateParameterType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -745,6 +747,21 @@ public class ImperativeOCLSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>List Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>List Literal Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseListLiteralExp(ListLiteralExp object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -861,21 +878,6 @@ public class ImperativeOCLSwitch<T> {
 	 * @generated
 	 */
 	public T caseSwitchExp(SwitchExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Template Parameter Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTemplateParameterType(TemplateParameterType object) {
 		return null;
 	}
 

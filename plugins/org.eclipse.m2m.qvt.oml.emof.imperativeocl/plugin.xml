@@ -5,14 +5,14 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.2 2008/12/05 10:20:44 radvorak Exp $
+ $Id: plugin.xml,v 1.3 2009/12/09 14:03:53 radvorak Exp $
 -->
 
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://schema.omg.org/spec/QVT/1.0/imperativeocl.xml"
+            uri="http://schema.omg.org/spec/QVT/1.1/imperativeocl.xml"
             class="org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ImperativeOCLPackage"
             genModel="model/ImperativeOCL.genmodel"/>
    </extension>
@@ -29,7 +29,7 @@
            name="%_UI_ImperativeOCL_content_type"
            priority="normal">
         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
-           <parameter name="namespace" value="http://schema.omg.org/spec/QVT/1.0/imperativeocl.xml"/>
+           <parameter name="namespace" value="http://schema.omg.org/spec/QVT/1.1/imperativeocl.xml"/>
            <parameter name="kind" value="xmi"/>
         </describer>
      </content-type>

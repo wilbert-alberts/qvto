@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLPackage.java,v 1.2 2009/01/25 23:11:18 radvorak Exp $
+ * $Id: ImperativeOCLPackage.java,v 1.3 2009/12/09 14:03:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL;
 
@@ -44,7 +44,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://schema.omg.org/spec/QVT/1.0/imperativeocl.xml";
+	String eNS_URI = "http://schema.omg.org/spec/QVT/1.1/imperativeocl.xml";
 
 	/**
 	 * The package namespace name.
@@ -1104,6 +1104,61 @@ public interface ImperativeOCLPackage extends EPackage {
 	int INSTANTIATION_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListLiteralExpImpl <em>List Literal Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListLiteralExpImpl
+	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getListLiteralExp()
+	 * @generated
+	 */
+	int LIST_LITERAL_EXP = 16;
+
+	/**
+	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP__OWNED_COMMENT = EssentialOCLPackage.LITERAL_EXP__OWNED_COMMENT;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP__NAME = EssentialOCLPackage.LITERAL_EXP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP__TYPE = EssentialOCLPackage.LITERAL_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP__ELEMENT = EssentialOCLPackage.LITERAL_EXP_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>List Literal Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP_FEATURE_COUNT = EssentialOCLPackage.LITERAL_EXP_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListTypeImpl <em>List Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1111,7 +1166,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getListType()
 	 * @generated
 	 */
-	int LIST_TYPE = 16;
+	int LIST_TYPE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1166,7 +1221,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getLogExp()
 	 * @generated
 	 */
-	int LOG_EXP = 17;
+	int LOG_EXP = 18;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1248,7 +1303,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralExp()
 	 * @generated
 	 */
-	int ORDERED_TUPLE_LITERAL_EXP = 18;
+	int ORDERED_TUPLE_LITERAL_EXP = 19;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1303,7 +1358,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralPart()
 	 * @generated
 	 */
-	int ORDERED_TUPLE_LITERAL_PART = 19;
+	int ORDERED_TUPLE_LITERAL_PART = 20;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1340,7 +1395,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getOrderedTupleType()
 	 * @generated
 	 */
-	int ORDERED_TUPLE_TYPE = 20;
+	int ORDERED_TUPLE_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1431,7 +1486,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getRaiseExp()
 	 * @generated
 	 */
-	int RAISE_EXP = 21;
+	int RAISE_EXP = 22;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1495,7 +1550,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 22;
+	int RETURN_EXP = 23;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1550,7 +1605,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-	int SWITCH_EXP = 23;
+	int SWITCH_EXP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
@@ -1605,61 +1660,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TemplateParameterTypeImpl <em>Template Parameter Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TemplateParameterTypeImpl
-	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getTemplateParameterType()
-	 * @generated
-	 */
-	int TEMPLATE_PARAMETER_TYPE = 24;
-
-	/**
-	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE_PARAMETER_TYPE__OWNED_COMMENT = EMOFPackage.TYPE__OWNED_COMMENT;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE_PARAMETER_TYPE__NAME = EMOFPackage.TYPE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Package</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE_PARAMETER_TYPE__PACKAGE = EMOFPackage.TYPE__PACKAGE;
-
-	/**
-	 * The feature id for the '<em><b>Specification</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE_PARAMETER_TYPE__SPECIFICATION = EMOFPackage.TYPE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Template Parameter Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE_PARAMETER_TYPE_FEATURE_COUNT = EMOFPackage.TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TryExpImpl <em>Try Exp</em>}' class.
@@ -2506,6 +2506,27 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getInstantiationExp_InstantiatedClass();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListLiteralExp <em>List Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>List Literal Exp</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListLiteralExp
+	 * @generated
+	 */
+	EClass getListLiteralExp();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListLiteralExp#getElement <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Element</em>'.
+	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListLiteralExp#getElement()
+	 * @see #getListLiteralExp()
+	 * @generated
+	 */
+	EReference getListLiteralExp_Element();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.ListType <em>List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2683,27 +2704,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSwitchExp_ElsePart();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType <em>Template Parameter Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Template Parameter Type</em>'.
-	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType
-	 * @generated
-	 */
-	EClass getTemplateParameterType();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType#getSpecification <em>Specification</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Specification</em>'.
-	 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TemplateParameterType#getSpecification()
-	 * @see #getTemplateParameterType()
-	 * @generated
-	 */
-	EAttribute getTemplateParameterType_Specification();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.TryExp <em>Try Exp</em>}'.
@@ -3274,6 +3274,24 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference INSTANTIATION_EXP__INSTANTIATED_CLASS = eINSTANCE.getInstantiationExp_InstantiatedClass();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListLiteralExpImpl <em>List Literal Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListLiteralExpImpl
+		 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getListLiteralExp()
+		 * @generated
+		 */
+		EClass LIST_LITERAL_EXP = eINSTANCE.getListLiteralExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Element</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIST_LITERAL_EXP__ELEMENT = eINSTANCE.getListLiteralExp_Element();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ListTypeImpl <em>List Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3424,24 +3442,6 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SWITCH_EXP__ELSE_PART = eINSTANCE.getSwitchExp_ElsePart();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TemplateParameterTypeImpl <em>Template Parameter Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TemplateParameterTypeImpl
-		 * @see org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.ImperativeOCLPackageImpl#getTemplateParameterType()
-		 * @generated
-		 */
-		EClass TEMPLATE_PARAMETER_TYPE = eINSTANCE.getTemplateParameterType();
-
-		/**
-		 * The meta object literal for the '<em><b>Specification</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TEMPLATE_PARAMETER_TYPE__SPECIFICATION = eINSTANCE.getTemplateParameterType_Specification();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.qvt.oml.emof.ImperativeOCL.impl.TryExpImpl <em>Try Exp</em>}' class.

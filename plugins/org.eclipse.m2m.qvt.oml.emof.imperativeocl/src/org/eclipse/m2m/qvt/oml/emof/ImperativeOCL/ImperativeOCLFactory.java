@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImperativeOCLFactory.java,v 1.1 2008/09/02 20:36:35 radvorak Exp $
+ * $Id: ImperativeOCLFactory.java,v 1.2 2009/12/09 14:03:54 radvorak Exp $
  */
 package org.eclipse.m2m.qvt.oml.emof.ImperativeOCL;
 
@@ -152,6 +152,15 @@ public interface ImperativeOCLFactory extends EFactory {
 	InstantiationExp createInstantiationExp();
 
 	/**
+	 * Returns a new object of class '<em>List Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Literal Exp</em>'.
+	 * @generated
+	 */
+	ListLiteralExp createListLiteralExp();
+
+	/**
 	 * Returns a new object of class '<em>List Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,15 +231,6 @@ public interface ImperativeOCLFactory extends EFactory {
 	 * @generated
 	 */
 	SwitchExp createSwitchExp();
-
-	/**
-	 * Returns a new object of class '<em>Template Parameter Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Parameter Type</em>'.
-	 * @generated
-	 */
-	TemplateParameterType createTemplateParameterType();
 
 	/**
 	 * Returns a new object of class '<em>Try Exp</em>'.
