@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingOperationItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: EMappingOperationItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -94,8 +94,8 @@ public class EMappingOperationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EMappingOperation_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_name_feature", "_UI_EMappingOperation_type"),
+				 getString("_UI_EMappingOperation_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_name_feature", "_UI_EMappingOperation_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EMAPPING_OPERATION__NAME,
 				 true,
 				 false,
@@ -116,8 +116,8 @@ public class EMappingOperationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EMappingOperation_package_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_package_feature", "_UI_EMappingOperation_type"),
+				 getString("_UI_EMappingOperation_package_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_package_feature", "_UI_EMappingOperation_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EMAPPING_OPERATION__PACKAGE,
 				 true,
 				 false,
@@ -138,8 +138,8 @@ public class EMappingOperationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EMappingOperation_module_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_module_feature", "_UI_EMappingOperation_type"),
+				 getString("_UI_EMappingOperation_module_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_module_feature", "_UI_EMappingOperation_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EMAPPING_OPERATION__MODULE,
 				 true,
 				 false,
@@ -160,8 +160,8 @@ public class EMappingOperationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EMappingOperation_runtimeMappingOperation_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_runtimeMappingOperation_feature", "_UI_EMappingOperation_type"),
+				 getString("_UI_EMappingOperation_runtimeMappingOperation_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EMappingOperation_runtimeMappingOperation_feature", "_UI_EMappingOperation_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EMAPPING_OPERATION__RUNTIME_MAPPING_OPERATION,
 				 true,
 				 false,
@@ -179,7 +179,7 @@ public class EMappingOperationItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingOperation"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingOperation")); //$NON-NLS-1$
 	}
 
 	/**
@@ -192,8 +192,8 @@ public class EMappingOperationItemProvider
 	public String getText(Object object) {
 		String label = ((EMappingOperation)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_EMappingOperation_type") :
-			getString("_UI_EMappingOperation_type") + " " + label;
+			getString("_UI_EMappingOperation_type") : //$NON-NLS-1$
+			getString("_UI_EMappingOperation_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

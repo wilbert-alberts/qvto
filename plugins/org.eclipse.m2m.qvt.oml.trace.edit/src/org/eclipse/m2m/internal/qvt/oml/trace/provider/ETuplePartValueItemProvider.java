@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ETuplePartValueItemProvider.java,v 1.3 2009/03/15 10:13:59 radvorak Exp $
+ * $Id: ETuplePartValueItemProvider.java,v 1.4 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -90,8 +90,8 @@ public class ETuplePartValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ETuplePartValue_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ETuplePartValue_name_feature", "_UI_ETuplePartValue_type"),
+				 getString("_UI_ETuplePartValue_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ETuplePartValue_name_feature", "_UI_ETuplePartValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.ETUPLE_PART_VALUE__NAME,
 				 true,
 				 false,
@@ -112,8 +112,8 @@ public class ETuplePartValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ETuplePartValue_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ETuplePartValue_value_feature", "_UI_ETuplePartValue_type"),
+				 getString("_UI_ETuplePartValue_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ETuplePartValue_value_feature", "_UI_ETuplePartValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.ETUPLE_PART_VALUE__VALUE,
 				 true,
 				 false,
@@ -131,7 +131,7 @@ public class ETuplePartValueItemProvider
 	 */
     @Override
     public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ETuplePartValue"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ETuplePartValue")); //$NON-NLS-1$
 	}
 
     /**
@@ -144,8 +144,8 @@ public class ETuplePartValueItemProvider
     public String getText(Object object) {
 		String label = ((ETuplePartValue)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ETuplePartValue_type") :
-			getString("_UI_ETuplePartValue_type") + " " + label;
+			getString("_UI_ETuplePartValue_type") : //$NON-NLS-1$
+			getString("_UI_ETuplePartValue_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
     /**
@@ -196,7 +196,7 @@ public class ETuplePartValueItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

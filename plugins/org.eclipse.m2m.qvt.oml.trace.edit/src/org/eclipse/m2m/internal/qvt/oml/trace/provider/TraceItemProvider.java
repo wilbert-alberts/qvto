@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: TraceItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -120,7 +120,7 @@ public class TraceItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Trace"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Trace")); //$NON-NLS-1$
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class TraceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Trace_type");
+		return getString("_UI_Trace_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class TraceItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EValueItemProvider.java,v 1.7 2009/02/04 12:36:53 radvorak Exp $
+ * $Id: EValueItemProvider.java,v 1.8 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -101,8 +101,8 @@ public class EValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EValue_primitiveValue_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_primitiveValue_feature", "_UI_EValue_type"),
+				 getString("_UI_EValue_primitiveValue_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_primitiveValue_feature", "_UI_EValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EVALUE__PRIMITIVE_VALUE,
 				 true,
 				 false,
@@ -123,8 +123,8 @@ public class EValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EValue_modelElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_modelElement_feature", "_UI_EValue_type"),
+				 getString("_UI_EValue_modelElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_modelElement_feature", "_UI_EValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EVALUE__MODEL_ELEMENT,
 				 true,
 				 false,
@@ -145,8 +145,8 @@ public class EValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EValue_oclObject_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_oclObject_feature", "_UI_EValue_type"),
+				 getString("_UI_EValue_oclObject_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_oclObject_feature", "_UI_EValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EVALUE__OCL_OBJECT,
 				 true,
 				 false,
@@ -167,8 +167,8 @@ public class EValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EValue_collectionType_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_collectionType_feature", "_UI_EValue_type"),
+				 getString("_UI_EValue_collectionType_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EValue_collectionType_feature", "_UI_EValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.EVALUE__COLLECTION_TYPE,
 				 true,
 				 false,
@@ -217,7 +217,7 @@ public class EValueItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EValue"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EValue")); //$NON-NLS-1$
 	}
 
 	/**
@@ -230,8 +230,8 @@ public class EValueItemProvider
 	public String getText(Object object) {
 		String label = ((EValue)object).getPrimitiveValue();
 		return label == null || label.length() == 0 ?
-			getString("_UI_EValue_type") :
-			getString("_UI_EValue_type") + " " + label;
+			getString("_UI_EValue_type") : //$NON-NLS-1$
+			getString("_UI_EValue_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -328,11 +328,6 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 EcoreFactory.eINSTANCE.createEObject()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 EcoreFactory.eINSTANCE.createEAttribute()));
 
 		newChildDescriptors.add
@@ -364,6 +359,11 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 EcoreFactory.eINSTANCE.createEFactory()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 EcoreFactory.eINSTANCE.createEObject()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -449,6 +449,11 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 TypesFactory.eINSTANCE.createSetType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 TypesFactory.eINSTANCE.createTemplateParameterType()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -644,6 +649,11 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createSetType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 org.eclipse.ocl.ecore.EcoreFactory.eINSTANCE.createTemplateParameterType()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -993,6 +1003,11 @@ public class EValueItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
+				 ImperativeOCLFactory.eINSTANCE.createListLiteralExp()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 ImperativeOCLFactory.eINSTANCE.createListType()));
 
 		newChildDescriptors.add
@@ -1029,11 +1044,6 @@ public class EValueItemProvider
 			(createChildParameter
 				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
 				 ImperativeOCLFactory.eINSTANCE.createSwitchExp()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(TracePackage.Literals.EVALUE__INTERMEDIATE_ELEMENT,
-				 ImperativeOCLFactory.eINSTANCE.createTemplateParameterType()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -1093,7 +1103,7 @@ public class EValueItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

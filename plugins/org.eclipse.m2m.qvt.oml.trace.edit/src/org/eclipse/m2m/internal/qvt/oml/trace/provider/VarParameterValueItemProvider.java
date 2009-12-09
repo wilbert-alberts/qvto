@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: VarParameterValueItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: VarParameterValueItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -94,8 +94,8 @@ public class VarParameterValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VarParameterValue_kind_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_kind_feature", "_UI_VarParameterValue_type"),
+				 getString("_UI_VarParameterValue_kind_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_kind_feature", "_UI_VarParameterValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.VAR_PARAMETER_VALUE__KIND,
 				 true,
 				 false,
@@ -116,8 +116,8 @@ public class VarParameterValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VarParameterValue_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_name_feature", "_UI_VarParameterValue_type"),
+				 getString("_UI_VarParameterValue_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_name_feature", "_UI_VarParameterValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.VAR_PARAMETER_VALUE__NAME,
 				 true,
 				 false,
@@ -138,8 +138,8 @@ public class VarParameterValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VarParameterValue_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_type_feature", "_UI_VarParameterValue_type"),
+				 getString("_UI_VarParameterValue_type_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_type_feature", "_UI_VarParameterValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.VAR_PARAMETER_VALUE__TYPE,
 				 true,
 				 false,
@@ -160,8 +160,8 @@ public class VarParameterValueItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VarParameterValue_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_value_feature", "_UI_VarParameterValue_type"),
+				 getString("_UI_VarParameterValue_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_VarParameterValue_value_feature", "_UI_VarParameterValue_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.VAR_PARAMETER_VALUE__VALUE,
 				 true,
 				 false,
@@ -179,7 +179,7 @@ public class VarParameterValueItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/VarParameterValue"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/VarParameterValue")); //$NON-NLS-1$
 	}
 
 	/**
@@ -192,8 +192,8 @@ public class VarParameterValueItemProvider
 	public String getText(Object object) {
 		String label = ((VarParameterValue)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_VarParameterValue_type") :
-			getString("_UI_VarParameterValue_type") + " " + label;
+			getString("_UI_VarParameterValue_type") : //$NON-NLS-1$
+			getString("_UI_VarParameterValue_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: MappingOperationToTraceRecordMapEntryItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: MappingOperationToTraceRecordMapEntryItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -90,8 +90,8 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_MappingOperationToTraceRecordMapEntry_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_value_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
+				 getString("_UI_MappingOperationToTraceRecordMapEntry_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_value_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
 				 true,
 				 false,
@@ -112,8 +112,8 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_MappingOperationToTraceRecordMapEntry_key_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_key_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"),
+				 getString("_UI_MappingOperationToTraceRecordMapEntry_key_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_MappingOperationToTraceRecordMapEntry_key_feature", "_UI_MappingOperationToTraceRecordMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.MAPPING_OPERATION_TO_TRACE_RECORD_MAP_ENTRY__KEY,
 				 true,
 				 false,
@@ -131,7 +131,7 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingOperationToTraceRecordMapEntry"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingOperationToTraceRecordMapEntry")); //$NON-NLS-1$
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class MappingOperationToTraceRecordMapEntryItemProvider
 	@Override
 	public String getText(Object object) {
 		Map.Entry<?, ?> mappingOperationToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
-		return "" + mappingOperationToTraceRecordMapEntry.getKey() + " -> " + mappingOperationToTraceRecordMapEntry.getValue();
+		return "" + mappingOperationToTraceRecordMapEntry.getKey() + " -> " + mappingOperationToTraceRecordMapEntry.getValue(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

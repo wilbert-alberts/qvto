@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: TraceRecordItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: TraceRecordItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -92,8 +92,8 @@ public class TraceRecordItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_TraceRecord_mappingOperation_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TraceRecord_mappingOperation_feature", "_UI_TraceRecord_type"),
+				 getString("_UI_TraceRecord_mappingOperation_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_TraceRecord_mappingOperation_feature", "_UI_TraceRecord_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.TRACE_RECORD__MAPPING_OPERATION,
 				 true,
 				 false,
@@ -143,7 +143,7 @@ public class TraceRecordItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TraceRecord"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TraceRecord")); //$NON-NLS-1$
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class TraceRecordItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_TraceRecord_type");
+		return getString("_UI_TraceRecord_type"); //$NON-NLS-1$
 	}
 
 	/**

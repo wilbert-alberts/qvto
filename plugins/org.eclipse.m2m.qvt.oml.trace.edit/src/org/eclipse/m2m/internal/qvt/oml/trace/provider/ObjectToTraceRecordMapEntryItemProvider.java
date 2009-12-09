@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: ObjectToTraceRecordMapEntryItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: ObjectToTraceRecordMapEntryItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -92,8 +92,8 @@ public class ObjectToTraceRecordMapEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ObjectToTraceRecordMapEntry_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_value_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
+				 getString("_UI_ObjectToTraceRecordMapEntry_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_value_feature", "_UI_ObjectToTraceRecordMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__VALUE,
 				 true,
 				 false,
@@ -114,8 +114,8 @@ public class ObjectToTraceRecordMapEntryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ObjectToTraceRecordMapEntry_key_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_key_feature", "_UI_ObjectToTraceRecordMapEntry_type"),
+				 getString("_UI_ObjectToTraceRecordMapEntry_key_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ObjectToTraceRecordMapEntry_key_feature", "_UI_ObjectToTraceRecordMapEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 TracePackage.Literals.OBJECT_TO_TRACE_RECORD_MAP_ENTRY__KEY,
 				 true,
 				 false,
@@ -133,7 +133,7 @@ public class ObjectToTraceRecordMapEntryItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ObjectToTraceRecordMapEntry"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ObjectToTraceRecordMapEntry")); //$NON-NLS-1$
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class ObjectToTraceRecordMapEntryItemProvider
 	@Override
 	public String getText(Object object) {
 		Map.Entry<?, ?> objectToTraceRecordMapEntry = (Map.Entry<?, ?>)object;
-		return "" + objectToTraceRecordMapEntry.getKey() + " -> " + objectToTraceRecordMapEntry.getValue();
+		return "" + objectToTraceRecordMapEntry.getKey() + " -> " + objectToTraceRecordMapEntry.getValue(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

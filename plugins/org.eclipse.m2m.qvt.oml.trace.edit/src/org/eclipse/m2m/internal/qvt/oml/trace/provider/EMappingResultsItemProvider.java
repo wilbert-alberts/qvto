@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *
- * $Id: EMappingResultsItemProvider.java,v 1.2 2008/12/18 15:18:17 radvorak Exp $
+ * $Id: EMappingResultsItemProvider.java,v 1.3 2009/12/09 12:41:52 radvorak Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.trace.provider;
 
@@ -117,7 +117,7 @@ public class EMappingResultsItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingResults"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EMappingResults")); //$NON-NLS-1$
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class EMappingResultsItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_EMappingResults_type");
+		return getString("_UI_EMappingResults_type"); //$NON-NLS-1$
 	}
 
 	/**
