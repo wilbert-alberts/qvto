@@ -184,6 +184,13 @@ main() {
 	// test contextual operation with access to the library instance
 	assert fatal ("_End".appendToLibState() = "2_End");
 	assert fatal (getLibState() = "2_End");
+	
+	// Dictionary type mapping test 
+	var dict : Dict(String, String) := Dict { 1 = "1", 2 = "2" };
+	var str2strDict : Dict(String, String) = dict->toString2StringDict();
+	assert fatal (str2strDict->get("1") = "1");
+	assert fatal (str2strDict->get("2") = "2");
+	
 }
 
 helper checkPrimitiveTypeArgResult(r : Sequence(OclAny)) : OclVoid {
