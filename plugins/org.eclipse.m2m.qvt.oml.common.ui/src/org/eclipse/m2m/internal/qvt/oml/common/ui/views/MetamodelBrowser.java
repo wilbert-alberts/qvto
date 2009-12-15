@@ -26,9 +26,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.CommonUIPlugin;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -67,6 +66,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.dialogs.ComplexClassifierProvi
 import org.eclipse.m2m.internal.qvt.oml.common.ui.dialogs.OpenClassifierDialog;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
@@ -307,11 +307,11 @@ public class MetamodelBrowser  implements IAdaptable {
 					String key1 = n1.getDescriptor().getId();
 					String key2 = n2.getDescriptor().getId();
 
-					if(n1.getPackage() != null && n1.getDescriptor().getLoadStatus().isOK()) {
+					if(n1.getPackage() != null && isOK(n1.getDescriptor())) {
 						key1 = n1.getPackage().getName();
 					}
 					
-					if(n2.getPackage() != null && n2.getDescriptor().getLoadStatus().isOK()) {
+					if(n2.getPackage() != null && isOK(n2.getDescriptor())) {
 						key2 = n2.getPackage().getName();
 					}
 					
@@ -827,8 +827,8 @@ public class MetamodelBrowser  implements IAdaptable {
     		return ePackage.getNsURI();
 		}
 
-		public IStatus getLoadStatus() {
-			return Status.OK_STATUS;
+		public Diagnostic getLoadStatus() {
+			return Diagnostic.OK_INSTANCE;
 		}
 
 		public EPackage getModel() {
@@ -909,5 +909,9 @@ public class MetamodelBrowser  implements IAdaptable {
 			BrowserNode parentNode = (BrowserNode) parentElement;
 			return !(parentNode.getEObject() instanceof EPackage) || node.getEObject() instanceof EPackage;
 		}
-	};    
+	};   
+	
+	private static boolean isOK(IMetamodelDesc metamodelDesc) {
+		return EmfUtilPlugin.isSuccess(metamodelDesc.getLoadStatus());
+	}
 }

@@ -11,12 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.views;
 
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
@@ -62,8 +63,8 @@ class MetamodelNode extends BrowserNode {
 
 	@Override
 	public String getText() {
-		IStatus status = getDescriptor().getLoadStatus();
-		if(!status.isOK()) {
+		Diagnostic status = getDescriptor().getLoadStatus();
+		if(!EmfUtilPlugin.isSuccess(status)) {
 			return "[" + getDescriptor().getId() + "] " + status.getMessage(); //$NON-NLS-1$ //$NON-NLS-2$
 		}					
 		
@@ -73,7 +74,7 @@ class MetamodelNode extends BrowserNode {
 	@Override
 	public Image getImage() {
 		getPackage(); // ensure package loaded
-		if(!getDescriptor().getLoadStatus().isOK()) {
+		if(!EmfUtilPlugin.isSuccess(getDescriptor().getLoadStatus())) {
 			return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 		}
 		return super.getImage();

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -37,14 +38,14 @@ class ResourceModelNode extends MetamodelContainerNode {
 		this.contentNode = new MetamodelNode(descriptor, this, true) {
 			@Override
 			public boolean mayContain(EModelElement element) {
-				return uri.equals(EcoreUtil.getURI(element).trimFragment()) && descriptor().getLoadStatus().isOK();
+				return uri.equals(EcoreUtil.getURI(element).trimFragment()) && EmfUtilPlugin.isSuccess(descriptor().getLoadStatus());
 			}
 			
 			@Override
 			public BrowserNode resolveModelElement(EModelElement element) {
 				String uriFragment = EcoreUtil.getURI(element).fragment();
 				EObject rootPackage = contentNode.getEObject();								
-				if(rootPackage != null && descriptor().getLoadStatus().isOK()) {					
+				if(rootPackage != null && EmfUtilPlugin.isSuccess(descriptor().getLoadStatus())) {					
 					// in the underlying resource, look for EObject by the URI fragment
 					if(rootPackage.eResource() != null && uriFragment != null) {
 						EObject collocatedElement = rootPackage.eResource().getEObject(uriFragment);
