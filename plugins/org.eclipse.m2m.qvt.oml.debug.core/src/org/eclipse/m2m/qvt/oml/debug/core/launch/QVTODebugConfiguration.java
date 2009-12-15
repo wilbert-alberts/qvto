@@ -29,8 +29,13 @@ import org.eclipse.debug.core.model.ITerminate;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
@@ -98,7 +103,10 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 	private DebugTransformationRunner createRunner(ILaunchConfiguration configuration) throws CoreException {
 		DebugRunnerFactory runnerFactory = new DebugRunnerFactory();
 
-		runnerFactory.transformationURI = QvtLaunchUtil.getTransformationURI(configuration).toString();
+		String uri = QvtLaunchUtil.getTransformationURI(configuration);
+		runnerFactory.transformationURI = uri;
+		
+		runnerFactory.packageRegistry = createPackageRegistry(uri);
 		
 		List<String> modelURIs = new ArrayList<String>();
 		for (TargetUriData uriData : QvtLaunchUtil.getTargetUris(configuration)) {
@@ -109,7 +117,8 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 
 		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration);
 		boolean shouldGenerateTraceFile = QvtLaunchUtil.shouldGenerateTraceFile(configuration);
-		if(traceFileURI != null && shouldGenerateTraceFile) {
+		if (traceFileURI != null && traceFileURI.trim().length() != 0
+				&& shouldGenerateTraceFile) {
 			runnerFactory.traceFileURI = traceFileURI;
 		}
 		
@@ -144,5 +153,22 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 					}
 				});
 	
+	}
+
+	private EPackage.Registry createPackageRegistry(String transformationURIStr) {
+		URI transformationURI = URI.createURI(transformationURIStr);
+		try {		
+			if(transformationURI.isPlatformResource()) {
+				IFile file = QVTODebugUtil.toFile(transformationURI);
+				if(file != null && file.exists()) {	
+					return MetamodelURIMappingHelper.mappingsToEPackageRegistry(file.getProject(), new ResourceSetImpl());
+				}
+			}
+		} catch(Exception e) {
+			// FIXME
+			QVTODebugCore.log(e);
+		}		
+
+		return new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
 	}
 }

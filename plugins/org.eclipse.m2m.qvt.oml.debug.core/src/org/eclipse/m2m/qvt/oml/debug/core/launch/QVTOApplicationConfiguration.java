@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -71,14 +72,16 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 		String transformationURI = QvtLaunchUtil.getTransformationURI(configuration);
 		if(transformationURI != null) {
 			result.add(createArgStr(QVTOApplication.ARG_TRANSFORMATION,
-					QVTODebugUtil.toPlatformPluginURI(transformationURI).toString()));
+					createTransformationURI(transformationURI).toString()));
 		}
 		
 		String traceFileURI = QvtLaunchUtil.getTraceFileURI(configuration);
-		if(traceFileURI != null) {
+		boolean shouldGenerateTraceFile = QvtLaunchUtil.shouldGenerateTraceFile(configuration);
+		
+		if (traceFileURI != null && traceFileURI.trim().length() != 0 && shouldGenerateTraceFile) {
 			fTraceURI = QVTODebugUtil.toFileURI(traceFileURI);
 			result.add(createArgStr(QVTOApplication.ARG_TRACE,
-					QVTODebugUtil.toPlatformPluginURI(fTraceURI.toString()).toString()));
+					fTraceURI.toString().toString()));
 		}
 		
 		List<TargetUriData> modelURIs = QvtLaunchUtil.getTargetUris(configuration);				
@@ -96,6 +99,8 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 	
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
+		reset();
+		
 		int port = getPort();
 		if(port == -1) {
 			throw new CoreException(QVTODebugCore.createStatus(IStatus.ERROR, "Failed to find free debugging port"));
@@ -108,11 +113,14 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 		ILaunchConfiguration launchConfiguration = configuration;
 		
 		// launch the PDE process and connect the QVTO target to QVTO VM afterwards
-		super.launch(launchConfiguration, ILaunchManager.DEBUG_MODE, launch, new NullProgressMonitor());					
+		super.launch(launchConfiguration, mode, launch, new NullProgressMonitor());					
 
+		if(ILaunchManager.RUN_MODE.equals(mode)) {
+			return;
+		}
+		
 		IQVTOVirtualMachineShell vm;
 		try {
-			// FIXME - pass monitor for cancellation
 			Monitor connectMonitor = new BasicMonitor() {
 				public boolean isCanceled() {
 					IProcess p = getProcess(launch);
@@ -141,7 +149,12 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 			final IProcess pdeProcess = launchedProcesses[0];
 			addTerminationHook(pdeProcess);			
 		
-			QVTODebugTarget debugTarget = new QVTODebugTarget(pdeProcess, vm);
+			QVTODebugTarget debugTarget = new QVTODebugTarget(pdeProcess, vm) {
+				@Override
+				protected URI computeBreakpointURI(URI sourceURI) {				
+					return QVTODebugCore.getDefault().resolvePlatformPluginURI(sourceURI);
+				}
+			};
 			launch.addDebugTarget(debugTarget);
 		} finally {
 			fPort = -1;
@@ -156,6 +169,18 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 		}
 		
 		return launchedProcesses[0];
+	}
+	
+	private URI createTransformationURI(String uriStr) throws CoreException {
+		URI uri = URI.createURI(uriStr, true);
+		IFile file = QVTODebugUtil.toFile(uri);
+		if(file != null && file.exists()) {
+			URI platformPluginURI = QVTODebugCore.getDefault().resolvePlatformPluginURI(file);
+			if(platformPluginURI != null) {
+				uri = platformPluginURI;
+			} 
+		}
+		return uri;
 	}
 	
 	private static String createArgStr(String argName, String argValue) {
@@ -185,6 +210,14 @@ public class QVTOApplicationConfiguration extends EclipseApplicationLaunchConfig
 		// TODO - refresh only [out, inout] models, trace files in the workspace
 		// currently it's hard to deduce this info from the TargetURIData class
 		QVTODebugUtil.refreshInWorkspace(fModels);
-		QVTODebugUtil.refreshInWorkspace(Collections.singletonList(fTraceURI));
-	}	
+		if(fTraceURI != null) {
+			QVTODebugUtil.refreshInWorkspace(Collections.singletonList(fTraceURI));
+		}
+	}
+	
+	private void reset() {
+		fPort = -1;
+		fModels.clear();
+		fTraceURI = null;
+	}
 }

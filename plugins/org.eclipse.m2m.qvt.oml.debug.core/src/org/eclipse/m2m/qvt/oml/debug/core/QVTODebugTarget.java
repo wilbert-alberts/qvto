@@ -36,6 +36,7 @@ import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IMemoryBlock;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMEventListener;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
@@ -124,6 +125,10 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		fireEvent(createEvent);
 	}
 
+	protected URI computeBreakpointURI(URI sourceURI) {
+		return sourceURI;
+	}
+	
 	private void installVMBreakpoints() {
 		HashMap<Long, QVTOBreakpoint> installedBreakpoints = new HashMap<Long, QVTOBreakpoint>();
 		List<NewBreakpointData> allBpData = new ArrayList<NewBreakpointData>();
@@ -141,7 +146,10 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 				installedBreakpoints.put(new Long(((QVTOBreakpoint) qvtBp).getID()),
 						qvtBp);
 				try {
-					allBpData.add(qvtBp.createNewBreakpointData());
+					NewBreakpointData data = qvtBp.createNewBreakpointData();
+					data.targetURI = computeBreakpointURI(URI.createURI(data.targetURI, true)).toString();
+					
+					allBpData.add(data);
 				} catch (CoreException e) {
 					QVTODebugCore.log(e.getStatus());
 				}

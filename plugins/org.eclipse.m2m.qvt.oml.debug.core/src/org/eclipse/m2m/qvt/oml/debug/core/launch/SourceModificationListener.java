@@ -39,7 +39,19 @@ class SourceModificationListener implements IResourceChangeListener {
 		fTerminate = terminateable;
 	}
 
+	private boolean expired() {
+		if(fTerminate.isTerminated()) {
+			fTransfFile.getProject().getWorkspace().removeResourceChangeListener(this);
+			return true;
+		}
+		return false;
+	}
+	
 	public void resourceChanged(final IResourceChangeEvent event) {
+		if(expired()) {			
+			return;
+		}
+		
 		IResourceDelta delta = event.getDelta();
 
 		final boolean[] modified = new boolean[] { false };

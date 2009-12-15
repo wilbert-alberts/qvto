@@ -29,10 +29,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 
 public class QVTODebugUtil {
 	
@@ -101,23 +99,7 @@ public class QVTODebugUtil {
 		}
  		return uri;
 	}
-	
-	public static URI toPlatformPluginURI(String uriStr) {
-		URI result = URI.createURI(uriStr);
-		if(result.isPlatformResource()) {
-			result = URI.createPlatformPluginURI(result.toPlatformString(true), true);
-		}
-		return result;
-	}
-	
-	public static URI toPlatformResourceURI(String uriStr) {
-		URI result = URI.createURI(uriStr);
-		if(result.isPlatformPlugin()) {
-			result = URI.createPlatformResourceURI(result.toPlatformString(true), true);
-		}
-		return result;	
-	}
-	
+			
 	public static IStatus createDebugError(String message, Throwable throwable) {
 		return QVTODebugCore.createStatus(IStatus.ERROR, message, throwable);
 	}
