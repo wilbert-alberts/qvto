@@ -36,26 +36,10 @@ public class ResolutionContextImpl implements ResolutionContext {
 	
 
 	public <T> T getAdapter(Class<T> adapterType) {
-	// FIXME - revisit this class, we do not need this dependency in this plugin
-	if(EMFPlugin.IS_ECLIPSE_RUNNING) {
-		if (adapterType == IProject.class) {
-			if (fURI.isPlatformResource()) {
-				String wsFullPath = fURI.toPlatformString(true);
-				IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(wsFullPath);
-				if (resource != null) {
-					return adapterType.cast(resource.getProject());
-				}
-			}
-		} else if (adapterType == Bundle.class) {
-			if (fURI.isPlatformPlugin()) {
-				if (fURI.segmentCount() > 1) {
-					String bundleID = fURI.segment(1);
-					Bundle bundle = Platform.getBundle(bundleID);
-					return (bundle != null) ? adapterType.cast(bundle) : null;
-				}
-			}
+		// FIXME - revisit this class, we do not need this dependency in this plugin
+		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+			return Eclipse.getAdapter(fURI, adapterType);
 		}
-	}
 			
 		return null;
 	}
@@ -63,5 +47,29 @@ public class ResolutionContextImpl implements ResolutionContext {
 	@Override
 	public String toString() {	
 		return "Resolution context (" + fURI.toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	private static class Eclipse {		
+		
+		static <T> T getAdapter(URI contextURI, Class<T> adapterType) {		
+			if (adapterType == IProject.class) {
+				if (contextURI.isPlatformResource()) {
+					String wsFullPath = contextURI.toPlatformString(true);
+					IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(wsFullPath);
+					if (resource != null) {
+						return adapterType.cast(resource.getProject());
+					}
+				}
+			} else if (adapterType == Bundle.class) {
+				if (contextURI.isPlatformPlugin()) {
+					if (contextURI.segmentCount() > 1) {
+						String bundleID = contextURI.segment(1);
+						Bundle bundle = Platform.getBundle(bundleID);
+						return (bundle != null) ? adapterType.cast(bundle) : null;
+					}
+				}
+			}
+			return null;
+		}
 	}
 }
