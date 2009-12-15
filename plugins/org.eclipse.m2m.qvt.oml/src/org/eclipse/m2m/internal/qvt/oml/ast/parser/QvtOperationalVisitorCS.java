@@ -1859,6 +1859,9 @@ public class QvtOperationalVisitorCS
 		}
 		else if (scopedNameCS.getName() != null) {	
 			element = env.lookupProperty(tagContextType, scopedNameCS.getName());
+			if(element == null) {
+				element = env.lookupClassifier(Collections.singletonList(scopedNameCS.getName()));
+			}
 		}
 		
 		if (element == null) {
