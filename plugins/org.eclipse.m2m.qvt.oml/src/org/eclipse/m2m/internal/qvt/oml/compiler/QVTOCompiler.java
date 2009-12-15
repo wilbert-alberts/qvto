@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -54,6 +55,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalValidationVisit
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils.Eclipse;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -61,7 +63,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
@@ -103,9 +104,7 @@ public class QVTOCompiler {
 	 * @return the compiler instance
 	 */
     public static QVTOCompiler createCompilerWithHistory(UnitResolver importResolver, ResourceSet metamodelResourceSet) { 
-    	return new QVTOCompiler(importResolver, metamodelResourceSet != null ?
-					new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
-					new WorkspaceMetamodelRegistryProvider()) {
+    	return new QVTOCompiler(importResolver, createMetamodelRegistryProvider(metamodelResourceSet)) {
     		@Override
     		protected void afterCompileCleanup() {
     			// do nothing as we need to cross-reference cached modules on 
@@ -144,24 +143,7 @@ public class QVTOCompiler {
 		final EPackageRegistryImpl packageRegistryImpl = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
 		packageRegistryImpl.putAll(registry);
 		
-		IMetamodelRegistryProvider metamodelRegistryProvider = new WorkspaceMetamodelRegistryProvider(rs) {
-			IMetamodelProvider registry = new EmfStandaloneMetamodelProvider(packageRegistryImpl);
-			@Override
-			public MetamodelRegistry getRegistry(IRepositoryContext context) {
-				MetamodelRegistry result = super.getRegistry(context);
-				if(result == MetamodelRegistry.getInstance()) {
-					// FIXME - get rid of this hack by providing
-					// a protected method WorkspaceProvider::getDelegateRegistry();
-					// which by default returns MetamodelRegistry.getInstance()
-					result = new MetamodelRegistry(registry);
-				} else if(result != null) {
-					MetamodelRegistry customRegistry = new MetamodelRegistry(registry);					
-					customRegistry.merge(result);
-					result = customRegistry;
-				}
-				return result;
-			}
-		};
+		IMetamodelRegistryProvider metamodelRegistryProvider = createMetamodelRegistryProvider(packageRegistryImpl, rs);
 
 		return new QVTOCompiler(unitResolver, metamodelRegistryProvider);
 	}
@@ -511,7 +493,10 @@ public class QVTOCompiler {
 			if(options.isSourceLineNumbersEnabled()) {
 	        	addSourceLineNumberInfo(parseResult.parser, analysisResult, source);
 	    	}
-	    	
+			
+			// load black-box implementation bindings
+	    	//AST2BlackboxImplBinder.ensureImplementationBinding(source, analysisResult.modules);
+							    	
 	    	// report possible duplicate imports
 	    	checkForDupImports(allUnitImportsCS, env);
 	    	
@@ -806,5 +791,29 @@ public class QVTOCompiler {
 		public DependencyPathElement(UnitProxy importer) {
 			this.importer = importer;
 		}
+	}
+	
+	private static IMetamodelRegistryProvider createMetamodelRegistryProvider(ResourceSet metamodelResourceSet) {
+		if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
+			return Eclipse.createMetamodelRegistryProvider(metamodelResourceSet);
+		}
+		
+		return new IMetamodelRegistryProvider() {
+			public MetamodelRegistry getRegistry(IRepositoryContext context) {
+				return new MetamodelRegistry(new EmfStandaloneMetamodelProvider());
+			}
+		};
+	}
+
+	private static IMetamodelRegistryProvider createMetamodelRegistryProvider(final EPackage.Registry packageRegistry, ResourceSet metamodelResourceSet) {
+		if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
+			Eclipse.createMetamodelRegistryProvider(packageRegistry, metamodelResourceSet);
+		}
+		
+		return new IMetamodelRegistryProvider() {
+			public MetamodelRegistry getRegistry(IRepositoryContext context) {
+				return new MetamodelRegistry(new EmfStandaloneMetamodelProvider(packageRegistry));
+			}
+		};
 	}
 }

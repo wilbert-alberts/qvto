@@ -30,6 +30,8 @@ import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResourceRepositoryContext;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegistryProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 
@@ -78,12 +80,7 @@ public class CompilerUtils {
 	
 	static Monitor createMonitor(Monitor monitor, int ticks) {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			if (monitor instanceof IProgressMonitor) {
-				return new BasicMonitor.EclipseSubProgress((IProgressMonitor) monitor, ticks);
-			} else {
-				return new BasicMonitor.EclipseSubProgress(BasicMonitor.toIProgressMonitor(monitor), ticks);
-			}
-
+			return Eclipse.createMonitor(monitor, ticks);			
 		}
 		
 		return monitor;
@@ -91,7 +88,7 @@ public class CompilerUtils {
 	
 	static void throwOperationCanceled() throws RuntimeException {
 		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
-			throw new OperationCanceledException();
+			Eclipse.throwOperationCanceled();
 		} else {
 			throw new RuntimeException("Operation canceled"); //$NON-NLS-1$
 		}
@@ -121,7 +118,59 @@ public class CompilerUtils {
     }
     
     public static QVTOCompiler createCompiler(UnitResolver importResolver) {
-    	return new QVTOCompiler(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
+    	// FIXME - eliminate eclipse dependency here, the call should be should be responsible
+    	// for setting this up, as different domains have different requirements,
+    	// like editor, builders etc.
+    	if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
+    		return Eclipse.createCompiler(importResolver);
+    	}
+    	
+    	return QVTOCompiler.createCompiler(importResolver, EPackage.Registry.INSTANCE);
     }
     
+    static class Eclipse {
+
+        static QVTOCompiler createCompiler(UnitResolver importResolver) {
+        	return new QVTOCompiler(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
+        }    	
+
+    	static Monitor createMonitor(Monitor monitor, int ticks) {
+			if (monitor instanceof IProgressMonitor) {
+				return new BasicMonitor.EclipseSubProgress((IProgressMonitor) monitor, ticks);
+			} else {
+				return new BasicMonitor.EclipseSubProgress(BasicMonitor.toIProgressMonitor(monitor), ticks);
+			}
+    	}
+    	
+    	static void throwOperationCanceled() throws RuntimeException {
+    		throw new OperationCanceledException();
+    	}
+
+		static WorkspaceMetamodelRegistryProvider createMetamodelRegistryProvider(ResourceSet metamodelResourceSet) {
+			return metamodelResourceSet != null ?
+						new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) :
+						new WorkspaceMetamodelRegistryProvider();
+		}
+
+		static WorkspaceMetamodelRegistryProvider createMetamodelRegistryProvider(final EPackage.Registry packageRegistry, ResourceSet metamodelResourceSet) {
+			return new WorkspaceMetamodelRegistryProvider(metamodelResourceSet) {
+				IMetamodelProvider registry = new EmfStandaloneMetamodelProvider(packageRegistry);
+				@Override
+				public MetamodelRegistry getRegistry(IRepositoryContext context) {
+					MetamodelRegistry result = super.getRegistry(context);
+					if(result == MetamodelRegistry.getInstance()) {
+						// FIXME - get rid of this hack by providing
+						// a protected method WorkspaceProvider::getDelegateRegistry();
+						// which by default returns MetamodelRegistry.getInstance()
+						result = new MetamodelRegistry(registry);
+					} else if(result != null) {
+						MetamodelRegistry customRegistry = new MetamodelRegistry(registry);					
+						customRegistry.merge(result);
+						result = customRegistry;
+					}
+					return result;
+				}
+			};
+		}    	
+    }
 }

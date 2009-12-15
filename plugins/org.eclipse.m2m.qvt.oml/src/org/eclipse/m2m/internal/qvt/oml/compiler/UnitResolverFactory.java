@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -41,11 +42,71 @@ public interface UnitResolverFactory {
 		
 		UnitProxy getUnit(URI uri);
 		
-		Registry INSTANCE = new Registry() {
-			private List<UnitResolverFactory> factories = readFactories();
+		Registry INSTANCE = EMFPlugin.IS_ECLIPSE_RUNNING ? new EclipseRegistry() : new BasicRegistry();
+	}
+	
+	
+	class EclipseRegistry extends BasicRegistry {
+
+		public EclipseRegistry() {
+			super(readFactories());		
+		}
+	
+		private static List<UnitResolverFactory> readFactories() {
+			ArrayList<UnitResolverFactory> factoryEntries = new ArrayList<UnitResolverFactory>();
+			if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+				IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
+				IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(POINT_ID);
+				if(extensionPoint != null) {
+					IExtension[] allExtensions = extensionPoint.getExtensions();
+					for (IExtension nextExtension : allExtensions) {
+						IConfigurationElement[] elements = nextExtension.getConfigurationElements();
+						Object factoryObj = null;
+						try {
+							factoryObj = elements[0].createExecutableExtension(CLASS_ATTR);
+							if(factoryObj instanceof UnitResolverFactory) {
+								factoryEntries.add((UnitResolverFactory)factoryObj);
+							}
+						} catch (CoreException e) {								
+							QvtPlugin.getDefault().log(e.getStatus());
+						}
+					}						
+				}
+			}
+			return factoryEntries;
+	    }
+	}
+	
+	
+	class BasicRegistry implements Registry {
+		
+			private List<UnitResolverFactory> fFactories;
+			
+			BasicRegistry() {
+				this(Collections.<UnitResolverFactory>singletonList(new UnitResolverFactory() {
+
+					public UnitProxy findUnit(URI unitURI) {
+						return URIUnitResolver.getUnit(unitURI);
+					}
+
+					public UnitResolver getResolver(URI uri) {
+						return new URIUnitResolver(Collections.singletonList(uri.trimSegments(1)));
+					}
+
+					public boolean isAccepted(Object source) {						
+						return source instanceof URI;
+					}
+					
+				}));
+			}
+			
+			BasicRegistry(List<UnitResolverFactory> factories) {
+				assert factories != null;
+				this.fFactories = factories;
+			}
 			
 			public UnitResolverFactory getFactory(Object source) {
-				for (UnitResolverFactory nextFactory : factories) {
+				for (UnitResolverFactory nextFactory : fFactories) {
 					if(nextFactory.isAccepted(source)) {
 						return nextFactory;
 					}
@@ -59,33 +120,7 @@ public interface UnitResolverFactory {
 					return factory.findUnit(uri);
 				}
 				return null;
-			}		
-			
-			private List<UnitResolverFactory> readFactories() {
-				ArrayList<UnitResolverFactory> factoryEntries = new ArrayList<UnitResolverFactory>();
-				if(EMFPlugin.IS_ECLIPSE_RUNNING) {
-					IExtensionRegistry pluginRegistry = Platform.getExtensionRegistry();
-					IExtensionPoint extensionPoint = pluginRegistry.getExtensionPoint(POINT_ID);
-					if(extensionPoint != null) {
-						IExtension[] allExtensions = extensionPoint.getExtensions();
-						for (IExtension nextExtension : allExtensions) {
-							IConfigurationElement[] elements = nextExtension.getConfigurationElements();
-							Object factoryObj = null;
-							try {
-								factoryObj = elements[0].createExecutableExtension(CLASS_ATTR);
-								if(factoryObj instanceof UnitResolverFactory) {
-									factoryEntries.add((UnitResolverFactory)factoryObj);
-								}
-							} catch (CoreException e) {
-								QvtPlugin.getDefault().log(e.getStatus());
-							}
-						}						
-					}
-				}
-				return factoryEntries;
-		    }
-		    
-		};
+			}				
 	}
 	
 }
