@@ -32,7 +32,9 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
+import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 
@@ -360,5 +362,14 @@ public class AnnotatedJavaLibrary {
 	@Operation (kind=Kind.HELPER, contextual = true)
 	public String appendToLibState(String aString) {
 		return myState = myState + aString; 
+	}
+	
+	@Operation(contextual=true)
+	public Dictionary<String, String> toString2StringDict(Dictionary<Integer, String> self) {
+		Dictionary<String, String> result = Utils.createDictionary();
+		for (Integer key : self.keys()) {
+			result.put(key.toString(), self.get(key));
+		}
+		return result;
 	}
 }
