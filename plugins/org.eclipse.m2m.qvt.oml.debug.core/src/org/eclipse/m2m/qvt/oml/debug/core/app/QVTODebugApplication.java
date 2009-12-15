@@ -11,6 +11,7 @@
 package org.eclipse.m2m.qvt.oml.debug.core.app;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.eclipse.m2m.internal.qvt.oml.TransformationRunner;
 import org.eclipse.m2m.qvt.oml.debug.core.launch.TransformationRunnerFactory;
@@ -32,6 +33,7 @@ public class QVTODebugApplication extends QVTOApplication {
 	
 	protected int doRun(TransformationRunner runner) {		
 		DebugTransformationRunner dbgRunner = (DebugTransformationRunner) runner;
+		dbgRunner.setErrorLog(new PrintWriter(System.err));
 		
 		VMInitializer vmProvider = new VMInitializer(dbgRunner, getExecutionContext());
 		vmProvider.startBackgrouInitialization();
