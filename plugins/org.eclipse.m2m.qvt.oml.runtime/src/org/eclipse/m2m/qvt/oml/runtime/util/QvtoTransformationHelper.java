@@ -44,12 +44,14 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.Messages;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.osgi.util.NLS;
 
 /**
  * @author sboyko
  * 
  * @noextend This class is not intended to be subclassed by clients.
+ * @deprecated use {@link TransformationExecutor} class instead 
  */
 public class QvtoTransformationHelper {
 
