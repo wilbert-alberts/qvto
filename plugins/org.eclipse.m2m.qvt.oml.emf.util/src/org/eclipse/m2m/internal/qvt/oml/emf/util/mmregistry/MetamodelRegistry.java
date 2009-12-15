@@ -18,11 +18,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EFactory;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.osgi.util.NLS;
 
@@ -59,21 +59,21 @@ public class MetamodelRegistry {
     
     private static final MetamodelRegistry ourInstance = new MetamodelRegistry();
 	
-    private List<? extends IMetamodelProvider> myMetamodelProviders;	
 	private final Map<String, IMetamodelDesc> myMetamodelDescs;
 	
+	
 	private MetamodelRegistry() {
-		myMetamodelProviders = getMetamodelProviders();
-		if(!myMetamodelProviders.isEmpty()) {
-			myMetamodelProviders = Collections.singletonList(new EmfStandaloneMetamodelProvider(EPackage.Registry.INSTANCE));    				
-		} 
+		List<IMetamodelProvider> providers = new ArrayList<IMetamodelProvider>();
+		providers.add(new EmfStandaloneMetamodelProvider(EPackage.Registry.INSTANCE));
 		
-		myMetamodelDescs = getMetamodelDescs(myMetamodelProviders);		
+		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
+			providers.addAll(Eclipse.getMetamodelProviders());
+		}
+
+		myMetamodelDescs = getMetamodelDescs(providers);		
     }
 	
 	public MetamodelRegistry(IMetamodelProvider metamodelProvider) {
-		myMetamodelProviders = Collections.singletonList(metamodelProvider);
-		
 		myMetamodelDescs = new HashMap<String, IMetamodelDesc>(ourInstance.myMetamodelDescs);
 		myMetamodelDescs.putAll(getMetamodelDescs(Collections.singletonList(metamodelProvider)));
 	}
@@ -87,7 +87,7 @@ public class MetamodelRegistry {
 					packageRegistry.put(nsURI, new Desc(metamodelDesc));
 	        	}				
 			} catch (EmfException e) {
-				// stupid but normal ;)
+				// FIXME stupid but normal ;)
 			}
 		}
 
@@ -200,35 +200,6 @@ public class MetamodelRegistry {
         return desc;
 	}
 
-//    public static final IMetamodelDesc createUndeclaredMetamodel(String id, ResourceSet rs) throws EmfException {
-//        URI uri = URI.createURI(id);  
-//        return createUndeclaredMetamodel(uri, id, rs);
-//    }
-	
-//    public static final IMetamodelDesc createUndeclaredMetamodel(URI uri, String id, ResourceSet rs) throws EmfException {
-//        try {
-//        	int initialResourceCount = rs.getResources().size();
-//            Resource resource = rs.getResource(uri, true);
-//            if (resource != null) {
-//                EObject metamodel = resource.getContents().get(0);
-//                if (metamodel instanceof EPackage) {
-//                    return new EmfMetamodelDesc((EPackage) metamodel, id);
-////                      TODO: registration in the map must be done
-////                      in case the changes of resource are listened out for  
-////                        myMetamodelDescs.put(id, desc);
-//                }
-//                for (int i = rs.getResources().size()-1; i >= initialResourceCount; --i) {
-//                	Resource loadedResource = rs.getResources().get(i);
-//                	loadedResource.unload();
-//                	//rs.getResources().remove(i);
-//                }
-//            }
-//        } catch (Exception e) {
-//            throw new EmfException(e);
-//        }
-//        return null;
-//    }
-
     public static List<EPackage> resolveMetamodels(EPackage.Registry registry, List<String> packageName) throws EmfException {
 		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
 		
@@ -274,8 +245,8 @@ public class MetamodelRegistry {
 				return nextMetamodel.getNsURI();
 			}
 
-			public IStatus getLoadStatus() {
-				return Status.OK_STATUS;
+			public Diagnostic getLoadStatus() {
+				return Diagnostic.OK_INSTANCE;
 			}
 
 			public EPackage getModel() {
@@ -298,29 +269,6 @@ public class MetamodelRegistry {
 		
 		return EcoreEnvironment.findPackage(path, registry);
 	}	
-
-	private static List<IMetamodelProvider> getMetamodelProviders() {
-		List<IMetamodelProvider> metamodelProviders = new ArrayList<IMetamodelProvider>();
-		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
-			IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfUtilPlugin.getDefault().getBundle().getSymbolicName(), MM_POINT_ID);
-			
-			for (int i = 0; i < extensions.length; i++) {
-				IConfigurationElement extension = extensions[i];
-				try {
-					Object provider = extension.createExecutableExtension("class"); //$NON-NLS-1$
-					if(provider instanceof IMetamodelProvider) {
-						metamodelProviders.add((IMetamodelProvider)provider);
-					}
-				}
-				catch(Exception e) {
-					Logger.getLogger().log(Logger.WARNING, "Failed to instantiate " + extension.getAttribute("class") +  //$NON-NLS-1$ //$NON-NLS-2$
-							" from " + extension.getNamespaceIdentifier(), e); //$NON-NLS-1$
-				}
-			}
-		}
-		
-		return metamodelProviders;
-	}
 	
 	private static Map<String, IMetamodelDesc> getMetamodelDescs(List<? extends IMetamodelProvider> providers) {
 		Map<String, IMetamodelDesc> metamodelDescs = new HashMap<String, IMetamodelDesc>();		
@@ -331,7 +279,7 @@ public class MetamodelRegistry {
 	        	models = provider.getMetamodels();
         	}
         	catch(Exception e) {
-        		Logger.getLogger().log(Logger.SEVERE, "Failed to get metamodels from " + provider, e); //$NON-NLS-1$
+        		//Logger.getLogger().log(Logger.SEVERE, "Failed to get metamodels from " + provider, e); //$NON-NLS-1$
         		continue;
         	}
         	
@@ -343,6 +291,33 @@ public class MetamodelRegistry {
         }
 		
 		return metamodelDescs;
-	}
+	}	
 
+	private static class Eclipse {
+		
+		private static List<IMetamodelProvider> getMetamodelProviders() {
+			List<IMetamodelProvider> metamodelProviders = new ArrayList<IMetamodelProvider>();
+
+				IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EmfUtilPlugin.getDefault().getBundle().getSymbolicName(), MM_POINT_ID);
+				
+				for (int i = 0; i < extensions.length; i++) {
+					IConfigurationElement extension = extensions[i];
+					try {
+						Object provider = extension.createExecutableExtension("class"); //$NON-NLS-1$
+						if(provider instanceof IMetamodelProvider) {
+							metamodelProviders.add((IMetamodelProvider)provider);
+						}
+					}
+					catch(CoreException e) {
+						EmfUtilPlugin.getDefault().getLog().log(e.getStatus());
+					}					
+					catch(Exception e) {
+						EmfUtilPlugin.log(e);
+					}
+				}
+
+			
+			return metamodelProviders;
+		}		
+	}
 }

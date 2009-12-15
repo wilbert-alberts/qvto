@@ -11,8 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -32,7 +31,7 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
     
     private EPackage myPackage;
     
-    private IStatus status = Status.OK_STATUS;
+    private Diagnostic status = Diagnostic.OK_INSTANCE;
 	
 	
 	public EmfMetamodelDesc(EPackage.Descriptor packageDescriptor, String nsURI) {
@@ -63,9 +62,8 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
     		}
     		catch (Throwable ex) {
     			String errMessage = NLS.bind(Messages.MetamodelRegistry_LoadError, getId(), ex.getClass().getName());    			
-    			this.status = new Status(IStatus.ERROR, EmfUtilPlugin.ID, errMessage, ex);
-    			EmfUtilPlugin.getDefault().getLog().log(status);
-    			
+    			//this.status = new Status(IStatus.ERROR, EmfUtilPlugin.ID, errMessage, ex);
+    			this.status = EmfUtilPlugin.createErrorDiagnostic(errMessage, ex);
     			// create empty package representation
     			myPackage = EcoreFactory.eINSTANCE.createEPackage();
     			myPackage.setNsURI(getId());
@@ -77,7 +75,7 @@ public class EmfMetamodelDesc implements IMetamodelDesc {
         return myPackage;
     }
     
-    public IStatus getLoadStatus() {
+    public Diagnostic getLoadStatus() {
     	if(myPackage == null) {
     		// cause metamodel packages to load
     		getModel();

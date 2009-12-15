@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry;
 
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -44,7 +44,7 @@ public interface IMetamodelDesc {
      * 
      * @see #getModel()
      */
-    IStatus getLoadStatus();
+    Diagnostic getLoadStatus();
     
     /**
      * Indicates whether the metamodel for this descriptor has already been loaded.
