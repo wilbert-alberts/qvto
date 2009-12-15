@@ -117,16 +117,9 @@ public class TransformationRunner  {
 			return fDiagnostic;
 		}
 		
-		fExtentHelper = new ModelExtentHelper(transformation, fModelParamURIs);
-		//FIXME
-		ResourceSetImpl resourceSet = (ResourceSetImpl)fExtentHelper.getResourceSet();
-		for (String nsURI : fPackageRegistry.keySet()) {
-			EPackage ePackage = fPackageRegistry.getEPackage(nsURI);
-			if(ePackage.eResource() != null) {
-				resourceSet.getResources().add(ePackage.eResource());
-			}
-		}
-		//
+		// Note: initialized here already loaded transformation is required
+		fExtentHelper = new ModelExtentHelper(transformation, fModelParamURIs,
+				createResourceSet(fPackageRegistry));
 		
 		Diagnostic extentsDiagnostic = Diagnostic.OK_INSTANCE; 
 		try {
@@ -228,11 +221,28 @@ public class TransformationRunner  {
 		return Diagnostic.OK_INSTANCE;
 	}
 	
+	private static ResourceSetImpl createResourceSet(EPackage.Registry registry) {
+		Map<URI, Resource> resourceMap = new HashMap<URI, Resource>();
+		for (String key : registry.keySet()) {
+			Object value = registry.get(key);
+			if(value instanceof EPackage) {
+				EPackage ePackage = (EPackage) value;
+				Resource res = ePackage.eResource();
+				if(res != null && res.getURI() != null) {
+					resourceMap.put(res.getURI(), res);
+				}
+			}
+		}
+		
+		return new ResourceSetImpl();
+	}	
+	
 	/**
 	 * Successfully finished execution, no errors and user interruption 
 	 */
 	private static boolean isSuccess(Diagnostic diagnostic) {
 		int severity = diagnostic.getSeverity();
 		return severity != Diagnostic.ERROR && severity != Diagnostic.CANCEL;
-	}		
+	}
+		
 }

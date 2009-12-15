@@ -59,7 +59,7 @@ public class ModelExtentHelper {
 	private final ResourceSet fResourceSet;
 	
 	
-	public ModelExtentHelper(OperationalTransformation transformation, List<URI> modelExtentURIs) {
+	public ModelExtentHelper(OperationalTransformation transformation, List<URI> modelExtentURIs, ResourceSet resSet) {
 		if(transformation == null || modelExtentURIs == null || modelExtentURIs.contains(null)) {
 			throw new IllegalArgumentException();
 		}
@@ -67,7 +67,11 @@ public class ModelExtentHelper {
 		fTransformation = transformation;
 		fModelExtentURIs = modelExtentURIs;
 		fExtentMap = new LinkedHashMap<ModelParameter, ExtentEntry>();
-		fResourceSet = new ResourceSetImpl();
+		fResourceSet = resSet;
+	}
+	
+	public ModelExtentHelper(OperationalTransformation transformation, List<URI> modelExtentURIs) {
+		this(transformation, modelExtentURIs, new ResourceSetImpl());
 	}
 		
 	public ResourceSet getResourceSet() {
@@ -195,10 +199,9 @@ public class ModelExtentHelper {
 		}
 		return result;
 	}
-	
-	
-	
+		
 	private static boolean isDynamic(EObject eObject) {
+		// TODO
 		return eObject instanceof EStructuralFeature.Internal.DynamicValueHolder;
 	}	
 }
