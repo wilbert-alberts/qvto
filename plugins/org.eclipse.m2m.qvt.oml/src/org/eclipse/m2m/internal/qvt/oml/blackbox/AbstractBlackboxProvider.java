@@ -26,7 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 
 public abstract class AbstractBlackboxProvider {
 
-	protected interface InstanceAdapterFactory {
+	public interface InstanceAdapterFactory {
 		Object createAdapter(EObject moduleInstance);
 	}
 
@@ -55,8 +55,7 @@ public abstract class AbstractBlackboxProvider {
 		};
 	}
 
-	protected void setInstanceAdapterFactory(Module module,
-			final InstanceAdapterFactory factory) {
+	public static void setInstanceAdapterFactory(Module module, final InstanceAdapterFactory factory) {
 		ModuleInstanceFactory moduleInstanceFactory = (ModuleInstanceFactory) module
 				.getEFactoryInstance();
 		moduleInstanceFactory

@@ -140,19 +140,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				// non-transformation execution context
 				ASTBindingHelper.createCST2ASTBinding(CSTFactory.eINSTANCE.createLibraryCS(), module, moduleEnv);		
 
-				setInstanceAdapterFactory(module, new InstanceAdapterFactory() {												
-					public Object createAdapter(EObject moduleInstance) {
-						try {
-							return javaModuleClass.newInstance();
-						} catch (InstantiationException e) {
-							// FIXME - choose a better exception
-							throw new IllegalArgumentException("Illegal adapter instance", e);								 //$NON-NLS-1$
-						} catch (IllegalAccessException e) {
-							// FIXME - choose a better exception
-							throw new IllegalArgumentException("Illegal adapter instance", e); //$NON-NLS-1$
-						}
-					}
-				});
+				setInstanceAdapterFactory(module, createInstanceAdapterFactory(javaModuleClass));
 			}
 			
 			@Override
@@ -161,7 +149,23 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			}
 		};
 	}
-	
+
+	static InstanceAdapterFactory createInstanceAdapterFactory(final Class<?> javaModuleClass) {
+		return new InstanceAdapterFactory() {												
+			public Object createAdapter(EObject moduleInstance) {
+				try {
+					return javaModuleClass.newInstance();
+				} catch (InstantiationException e) {
+					// FIXME - choose a better exception
+					throw new IllegalArgumentException("Illegal adapter instance", e);								 //$NON-NLS-1$
+				} catch (IllegalAccessException e) {
+					// FIXME - choose a better exception
+					throw new IllegalArgumentException("Illegal adapter instance", e); //$NON-NLS-1$
+				}
+			}
+		};
+	}
+		
     private Map<String, Descriptor> readDescriptors() {
     	Map<String, Descriptor> providers = new HashMap<String, Descriptor>();
         
@@ -264,7 +268,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				moduleName = getSimpleNameFromJavaClass(className);
 			}
 			
-			ModuleHandle moduleHandle = new ModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
+			ModuleHandle moduleHandle = new BundleModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
 			fModules.add(moduleHandle);
 		}
 		

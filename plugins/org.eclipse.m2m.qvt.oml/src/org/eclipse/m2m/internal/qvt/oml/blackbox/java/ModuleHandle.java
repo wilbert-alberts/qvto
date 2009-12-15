@@ -15,28 +15,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
 
 class ModuleHandle {
-
-	private final String bundleId;
+	
 	private final String className;
 	private final String simpleName;
 	private final List<String> usedPackages;
 	
-	ModuleHandle(String bundleId, String className, String moduleName, List<String> usedPackages) {
-		if(bundleId == null || className == null || usedPackages == null) {
+	ModuleHandle(String className, String moduleName, List<String> usedPackages) {
+		if(className == null || usedPackages == null || moduleName == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		this.bundleId = bundleId;
 		this.className = className;			
 		this.simpleName = moduleName;
 		this.usedPackages = Collections.unmodifiableList(new ArrayList<String>(usedPackages));
 	}
 	
-	public String getSimpleName() {
+	
+	public String getModuleName() {
 		return simpleName;
 	}
 	
@@ -49,15 +46,11 @@ class ModuleHandle {
 	}
 	
 	public Class<?> getModuleJavaClass() throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(bundleId);
-		if(bundle != null) {
-			return bundle.loadClass(className);
-		}
-		return null;
+		return Class.forName(className);
 	}
 	
 	@Override
 	public String toString() {			
-		return simpleName + " - " + className + "(bundle=" + bundleId + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$   
+		return simpleName + ", javaClass: " + className; //$NON-NLS-1$   
 	}		
 }

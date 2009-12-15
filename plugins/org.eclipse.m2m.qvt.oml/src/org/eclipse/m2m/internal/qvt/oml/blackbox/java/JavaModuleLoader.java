@@ -60,12 +60,12 @@ abstract class JavaModuleLoader {
 			}
 		} catch (ClassNotFoundException e) {
 			fDiagnostics.add(DiagnosticUtil.createErrorDiagnostic(NLS.bind(
-				JavaBlackboxMessages.ModuleJavaClassNotFound, moduleHandle.getSimpleName()), e));
+				JavaBlackboxMessages.ModuleJavaClassNotFound, moduleHandle.getModuleName()), e));
 			// no sense to continue
 			return fDiagnostics;
 		}
 		
-		Library module = QvtOperationalStdLibrary.createLibrary(moduleHandle.getSimpleName());		
+		Library module = QvtOperationalStdLibrary.createLibrary(moduleHandle.getModuleName());		
 		fEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(module);
 		loadModule(fEnv, javaClass);
 		
