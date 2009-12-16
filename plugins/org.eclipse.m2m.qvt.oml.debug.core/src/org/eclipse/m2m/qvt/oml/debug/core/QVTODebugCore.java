@@ -16,7 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
@@ -42,7 +49,9 @@ public class QVTODebugCore extends Plugin {
 	// The shared instance
 	private static QVTODebugCore plugin;
 	
-	private Map<URI, URI> platformPluginMap;	
+	private Map<URI, URI> platformPluginMap;
+	private IResourceChangeListener resourceListener; 
+	private Object pluginMapLock = new Object();
 
 	/**
 	 * The constructor
@@ -60,6 +69,9 @@ public class QVTODebugCore extends Plugin {
 		plugin = this;
 		
 		TRACE.start(plugin);
+		
+		resourceListener = createResourceListen();
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceListener);
 	}
 
 	/*
@@ -71,6 +83,9 @@ public class QVTODebugCore extends Plugin {
 		super.stop(context);
 		
 		TRACE.stop();
+		if(resourceListener != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceListener); 
+		}
 	}
 
 	/**
@@ -174,18 +189,68 @@ public class QVTODebugCore extends Plugin {
 		return sourceFile;
 	}	
 	
-	private synchronized Map<URI, URI> getPlatformPluginMap() {
-		if(platformPluginMap == null) {
-			platformPluginMap = new HashMap<URI, URI>(); 
-			
-			Map<URI, URI> plugin2ResourceMap = EcorePlugin.computePlatformPluginToPlatformResourceMap();
-			platformPluginMap.putAll(plugin2ResourceMap);
-			
-			for (Map.Entry<URI, URI> entry : plugin2ResourceMap.entrySet()) {
-				platformPluginMap.put(entry.getValue(), entry.getKey());
-			}
+	private Map<URI, URI> getPlatformPluginMap() {
+		synchronized (pluginMapLock) {
+			if(platformPluginMap == null) {
+				platformPluginMap = new HashMap<URI, URI>(); 
+				
+				Map<URI, URI> plugin2ResourceMap = EcorePlugin.computePlatformPluginToPlatformResourceMap();
+				platformPluginMap.putAll(plugin2ResourceMap);
+				
+				for (Map.Entry<URI, URI> entry : plugin2ResourceMap.entrySet()) {
+					platformPluginMap.put(entry.getValue(), entry.getKey());
+				}
+			}			
 		}
 		
 		return platformPluginMap;
 	}	
+	
+	private void resetPlatformPluginMap() {
+		synchronized (pluginMapLock) {
+			platformPluginMap = null;
+		}
+	}
+	
+	private boolean process(IResourceDelta delta) {
+		IResource resource = delta.getResource();
+		if(isManifest(resource)) {
+			return true;
+		}
+
+		IResourceDelta[] affectedChildren = delta.getAffectedChildren();
+		for (IResourceDelta childDelta : affectedChildren) {			
+			if(process(childDelta)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isManifest(IResource resource) {
+		if (resource.getType() == IResource.FILE
+				&& resource.getName().equals("MANIFEST.MF") //$NON-NLS-1$
+				&& resource.getProjectRelativePath().equals(
+						new Path("META-INF/MANIFEST.MF"))) { //$NON-NLS-1$
+			return true;
+		}
+		return false;
+	}
+	
+	private IResourceChangeListener createResourceListen() {
+		return new IResourceChangeListener() {
+			
+			public void resourceChanged(IResourceChangeEvent event) {
+				if(event.getResource() instanceof IProject) {
+					QVTODebugCore.this.resetPlatformPluginMap();
+				}
+				
+				if(event.getDelta() != null) {
+					if(process(event.getDelta())) {
+						QVTODebugCore.this.resetPlatformPluginMap();
+					}
+				}
+			}
+		};
+	}
 }
