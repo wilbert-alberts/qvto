@@ -94,8 +94,8 @@ public class QVTODebugUtil {
 	public static URI toFileURI(String uriStr) {
 		URI uri = URI.createURI(uriStr);
 		if(uri.isPlatformResource()) {
-			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)));
-			uri = URI.createURI(file.getLocationURI().toString());
+			URI baseURI = URI.createURI(ResourcesPlugin.getWorkspace().getRoot().getLocationURI().toString());
+			uri = URI.createURI(baseURI.toString() + uri.toPlatformString(true), true);			
 		}
  		return uri;
 	}

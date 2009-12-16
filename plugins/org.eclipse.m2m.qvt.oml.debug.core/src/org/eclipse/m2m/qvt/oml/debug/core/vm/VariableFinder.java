@@ -162,6 +162,7 @@ public class VariableFinder {
 		
 		if(parentObj instanceof ModelInstance) {
 			parentObj = ((ModelInstance)parentObj).getExtent().getRootObjects();
+			nextDeclaredType = QvtOperationalStdLibrary.INSTANCE.getElementType();
 		}
 		
 		if (parentObj instanceof EObject) {
@@ -192,7 +193,7 @@ public class VariableFinder {
 			if (optParentDeclaredType instanceof CollectionType) {
 				CollectionType type = (CollectionType) optParentDeclaredType;
 				nextDeclaredType = type.getElementType();
-			} else {
+			} else if(nextDeclaredType == null) {
 				// FIXME
 				nextDeclaredType = this.fFeatureAccessor.getStandardLibrary().getOclAny();
 			}
@@ -310,6 +311,7 @@ public class VariableFinder {
 			StringBuilder uriBuf = new StringBuilder();			
 			List<EStructuralFeature> eAllFeatures = fFeatureAccessor.getAllFeatures(eClass);
 			
+			List<EClass> superClasses = eClass.getEAllSuperTypes();
 			for (EStructuralFeature feature : eAllFeatures) {		
 				EClass owner;
 				
@@ -322,7 +324,8 @@ public class VariableFinder {
 					owner = feature.getEContainingClass();
 				}
 							
-				uriBuf.append(owner.getClassifierID());
+				int index = superClasses.indexOf(owner);
+				uriBuf.append(index < 0 ? 0 : index);
 				uriBuf.append('.').append(feature.getName());
 				
 				childPath[childPath.length - 1] = uriBuf.toString();
@@ -363,18 +366,15 @@ public class VariableFinder {
 		}
 	}
 	
-	private static EClass selectEClass(EClass eClass, int eClassifierID) {
-		int id = eClass.getClassifierID();
-		if(id == eClassifierID) {
-			return eClass;
-		}
-
-		for (EClass  superClass : eClass.getEAllSuperTypes()) {
-			if(superClass.getClassifierID() == eClassifierID) {
-				return superClass;
+	private static EClass selectEClass(EClass eClass, int index) {
+		if(index > 0) {
+			EList<EClass> superClasses = eClass.getEAllSuperTypes();
+			if(index < superClasses.size()) {
+				return superClasses.get(index);
 			}
 		}
-		return null;
+		
+		return eClass;
 	}
 
 	private Object getElement(Collection<?> collection, int index) {
@@ -397,7 +397,7 @@ public class VariableFinder {
 		String actualRef = featureRef.startsWith("+") ? featureRef.substring(1) : featureRef;
 		boolean isIntermediate = featureRef.length() != actualRef.length();
 		
-		int classID;
+		int classIndex;
 		String featureName;
 		try {
 			int delimiterPos = actualRef.indexOf('.');
@@ -405,13 +405,13 @@ public class VariableFinder {
 				throw new IllegalArgumentException("navigatin feature: " + actualRef);
 			}
 			
- 			classID = Integer.parseInt(actualRef.substring(0, delimiterPos));
+ 			classIndex = Integer.parseInt(actualRef.substring(0, delimiterPos));
  			featureName = actualRef.substring(delimiterPos + 1);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Illegal feature reference: " + featureRef);
 		}
 		
-		EClass featureOwner = selectEClass(actualTarget, classID);
+		EClass featureOwner = selectEClass(actualTarget, classIndex);
 		if(featureOwner == null) {
 			return null;
 		}

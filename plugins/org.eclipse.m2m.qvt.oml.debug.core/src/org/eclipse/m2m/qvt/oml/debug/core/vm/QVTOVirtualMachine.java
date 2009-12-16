@@ -80,18 +80,23 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	}
 	
 	public VMResponse sendRequest(VMRequest request) throws IOException {
-		if(request instanceof VMStartRequest) {
-			return start();
-		} else if(request instanceof VMBreakpointRequest) {
-			return handleBreakPointRequest((VMBreakpointRequest) request);
-		} else if(request instanceof VMStackFrameRequest) {
-			return handleStackFrameRequest((VMStackFrameRequest) request);
-		} else if(request instanceof VMVariableRequest) {
-			return handleVariableRequest((VMVariableRequest) request);
-		} else if(request instanceof VMDetailRequest) {
-			return handleValueDetailRequest((VMDetailRequest) request);
+		try {
+			if(request instanceof VMStartRequest) {
+				return start();
+			} else if(request instanceof VMBreakpointRequest) {
+				return handleBreakPointRequest((VMBreakpointRequest) request);
+			} else if(request instanceof VMStackFrameRequest) {
+				return handleStackFrameRequest((VMStackFrameRequest) request);
+			} else if(request instanceof VMVariableRequest) {
+				return handleVariableRequest((VMVariableRequest) request);
+			} else if(request instanceof VMDetailRequest) {
+				return handleValueDetailRequest((VMDetailRequest) request);
+			}
+		} catch (RuntimeException e) {
+			QVTODebugCore.log(e);
+			return VMResponse.createERROR();
 		}
-
+			
 		synchronized (fLock) {
 			fRequests.add(request);			
 			fLock.notifyAll();
