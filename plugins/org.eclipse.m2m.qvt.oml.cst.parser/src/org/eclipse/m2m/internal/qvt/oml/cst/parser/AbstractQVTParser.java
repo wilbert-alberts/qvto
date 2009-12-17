@@ -1059,12 +1059,17 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	protected PathNameCS createPathNameCS(IToken token) {
 		PathNameCS result = CSTFactory.eINSTANCE.createPathNameCS();
-		result.getSimpleNames().add(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token));
+		SimpleNameCS simpleNameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token);
+		setOffsets(simpleNameCS, token);
+		result.getSimpleNames().add(simpleNameCS);
 		return result;
 	}
 
 	protected PathNameCS extendPathNameCS(PathNameCS path, IToken token) {
-		path.getSimpleNames().add(createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token));
+		SimpleNameCS simpleNameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, token);
+		setOffsets(simpleNameCS, token);
+
+		path.getSimpleNames().add(simpleNameCS);
 		return path;
 	}
 	
