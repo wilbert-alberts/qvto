@@ -458,7 +458,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
         	// NPE and disposed status check
         	return;
         }
-        s.getShell().getDisplay().syncExec(new Runnable() {
+        s.getShell().getDisplay().asyncExec(new Runnable() {
             public void run() {
             	if (myTreeViewer != null && !myTreeViewer.getControl().isDisposed()) {
                     if (unit != null) {

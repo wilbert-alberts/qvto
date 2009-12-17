@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -168,13 +167,20 @@ class QVTSemanticHighlighter {
 			
 			if(isStdlibElement(type)) {
 				return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
-			} else if(type instanceof Module) {
+			} else if(type instanceof Module && 
+					n.eContainingFeature() != org.eclipse.ocl.cst.CSTPackage.eINSTANCE.getPathNameCS_SimpleNames()) {
 				return fCollector.visitToken(n, INDEX_MODULE_ELEMENT);					
 			} else if(type.eClass().getEPackage() != ExpressionsPackage.eINSTANCE) {
 				return fCollector.visitToken(n, INDEX_USER_MODEL_ELEMENT);				
 			} 
 		} else if(ast instanceof EEnumLiteral) {
 			return fCollector.visitToken(n, INDEX_USER_MODEL_ELEMENT);
+		} else if(ast instanceof EPackage) {
+			if(isStdlibElement((EPackage)ast)) {
+				return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
+			} else {
+				return fCollector.visitToken(n, INDEX_USER_MODEL_ELEMENT);
+			}
 		}
 		
 		if(ast instanceof ModelParameter) {
@@ -188,33 +194,14 @@ class QVTSemanticHighlighter {
 		EClassifier type = null;
 		Object ast = n.getAst();
 		type = toType(type, ast);
-
+		
 		if(type != null) {
 			if(type instanceof PrimitiveType) {
 				return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
 			} else {
-				if(type instanceof EClass && IntermediateClassFactory.isIntermediateClass(type)) {
+				if (type instanceof EClass
+						&& IntermediateClassFactory.isIntermediateClass(type)) {
 					return fCollector.visitToken(n, INDEX_INTERM_DATA);
-				}
-
-				if(!isStdlibElement(type)) {
-					// user model type
-					EList<SimpleNameCS> names = n.getSimpleNames();
-					if(names.size() > 1) {						
-						int length = names.get(names.size() - 1).getValue().length();
-						int offset = n.getEndOffset() - length;
-						return fCollector.visitToken(n, offset, length + 1, INDEX_USER_MODEL_ELEMENT);
-					}
-
-					if(type instanceof Module) {
-						return fCollector.visitToken(n, INDEX_MODULE_ELEMENT);		
-					} 
-					
-					if(type.eClass().getEPackage() != ExpressionsPackage.eINSTANCE) {
-						return fCollector.visitToken(n, INDEX_USER_MODEL_ELEMENT);
-					}
-				} else {
-					return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
 				}
 			}
 		}
@@ -346,7 +333,7 @@ class QVTSemanticHighlighter {
 	
 	private boolean isStdlibElement(EClassifier type) {
 		EPackage ePackage = type.getEPackage();
-		return ePackage != null && isStdlibElement(ePackage);
+		return ePackage != null && isStdlibElement(ePackage) || type instanceof PredefinedType<?>;
 	}
 	
 	private boolean isStdlibElement(EPackage ePackage) {
