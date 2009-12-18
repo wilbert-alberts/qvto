@@ -32,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
@@ -45,14 +46,18 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
 import org.eclipse.ocl.cst.IntegerLiteralExpCS;
+import org.eclipse.ocl.cst.IteratorExpCS;
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.RealLiteralExpCS;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.VariableExpCS;
+import org.eclipse.ocl.ecore.CollectionType;
+import org.eclipse.ocl.ecore.IteratorExp;
 import org.eclipse.ocl.ecore.PrimitiveType;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.utilities.PredefinedType;
@@ -137,7 +142,11 @@ class QVTSemanticHighlighter {
 					visit((AssertExpCS) object);
 				} else if(object instanceof ModulePropertyCS) {
 					visit((ModulePropertyCS) object);
-				}					
+				} else if(object instanceof IteratorExpCS) {
+					visit((IteratorExpCS) object);
+				} else if(object instanceof ImperativeIterateExpCS) {
+					visit((ImperativeIterateExpCS) object);
+				}
 			}			
 		} finally {
 			setModel(null);			
@@ -166,7 +175,9 @@ class QVTSemanticHighlighter {
 			}
 			
 			if(isStdlibElement(type)) {
-				return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
+				if(type instanceof CollectionType == false) {
+					return fCollector.visitToken(n, INDEX_STDLIB_ELEMENT);
+				}
 			} else if(type instanceof Module && 
 					n.eContainingFeature() != org.eclipse.ocl.cst.CSTPackage.eINSTANCE.getPathNameCS_SimpleNames()) {
 				return fCollector.visitToken(n, INDEX_MODULE_ELEMENT);					
@@ -268,7 +279,22 @@ class QVTSemanticHighlighter {
 		}
 		return fCollector.visitToken(classifierDefCS.getSimpleNameCS(), INDEX_INTERM_DATA);
 	}
-
+		
+	protected boolean visit(ImperativeIterateExpCS iteratorExpCS) {
+		Object ast = iteratorExpCS.getAst();
+		if(ast instanceof ImperativeIterateExp) {
+			return fCollector.visitToken(iteratorExpCS.getSimpleNameCS(), INDEX_STDLIB_ELEMENT);
+		}
+		return false;		
+	}
+	
+	protected boolean visit(IteratorExpCS iteratorExpCS) {
+		Object ast = iteratorExpCS.getAst();
+		if(ast instanceof IteratorExp) {
+			return fCollector.visitToken(iteratorExpCS.getSimpleNameCS(), INDEX_STDLIB_ELEMENT);
+		}
+		return false;
+	}
 	protected boolean visit(ModulePropertyCS propertyCS) {
 		SimpleNameCS simpleNameCS = propertyCS.getSimpleNameCS();
 		if(simpleNameCS != null) {

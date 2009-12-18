@@ -61,7 +61,16 @@ class SemanticHighlightingReconciler implements IQVTReconcilingListener, ITextIn
 			return false;
 		}
 
+		private boolean isValidNode(CSTNode node) {
+			int offset = node.getStartOffset();
+			return !(offset == 0 && node.eContainer() != null);
+		}
+		
 		public boolean visitToken(CSTNode node, int highlighting) {
+			if(!isValidNode(node)) {
+				return false;
+			}
+			
 			fToken.update(node, null);
 
 			if (highlighting >= 0 && highlighting < fJobSemanticHighlightings.length) {
@@ -80,6 +89,10 @@ class SemanticHighlightingReconciler implements IQVTReconcilingListener, ITextIn
 		}
 		
 		public boolean visitToken(CSTNode node, int offset, int length, int highlighting) {
+			if(!isValidNode(node)) {
+				return false;
+			}
+
 			fToken.update(node, null);
 
 			if (highlighting >= 0 && highlighting < fJobSemanticHighlightings.length) {
