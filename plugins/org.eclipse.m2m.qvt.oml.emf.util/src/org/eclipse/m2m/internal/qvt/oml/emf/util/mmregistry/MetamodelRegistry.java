@@ -278,7 +278,7 @@ public class MetamodelRegistry {
         	try {
 	        	models = provider.getMetamodels();
         	}
-        	catch(Exception e) {
+        	catch(Throwable e) { // should be more generic here as since for example NoSuchMethodError isn't an Exception
         		//Logger.getLogger().log(Logger.SEVERE, "Failed to get metamodels from " + provider, e); //$NON-NLS-1$
         		continue;
         	}
