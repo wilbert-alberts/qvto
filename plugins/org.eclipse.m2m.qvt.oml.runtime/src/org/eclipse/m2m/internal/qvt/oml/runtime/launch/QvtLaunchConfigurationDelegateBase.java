@@ -15,8 +15,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -187,20 +189,12 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			if(resSet != null) {
 				break;
 			}
-		}
-        
+		}        
         if(resSet == null) {
         	resSet = EmfUtil.getOutputResourceSet();
         }
         
         Iterator<ModelExtentContents> itrExtent = out.getExtents().iterator();
-        for (TargetUriData outData : targetData) {
-        	if (itrExtent.hasNext()) {
-        		confineInResource(itrExtent.next(), outData, resSet);
-        	}
-        }
-        
-        itrExtent = out.getExtents().iterator();
         for (TargetUriData outUriData : targetData) {
         	if (!itrExtent.hasNext()) {
         		throw new MdaException("Imcomplete transformation results"); //$NON-NLS-1$
@@ -238,9 +232,21 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         switch(targetData.getTargetType()) {
         	case NEW_MODEL: {
         		try {
-        	    	Resource outExtent = resSet.getResource(outUri, false);
-        			//outExtent.getContents().addAll(extent.getAllRootElements());
-        			EmfUtil.saveModel(outExtent, outUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
+            		URI modelUri = outUri.trimFragment();
+           	    	Resource outExtent = resSet.getResource(modelUri, false);
+           	    	if(outExtent == null) {
+           	    		outExtent = EmfUtil.createResource(modelUri, resSet);       	    	
+               			resSet.getResources().add(outExtent);
+               			outExtent.getContents().addAll(extent.getAllRootElements());
+           	    	} else {
+           	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
+
+           	    		outExtent.getContents().retainAll(essentialRootElements);
+           	    		essentialRootElements.removeAll(outExtent.getContents());
+           	    		outExtent.getContents().addAll(essentialRootElements);
+           	    	}
+           	    	
+        			EmfUtil.saveModel(outExtent, modelUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
         		}
         		catch(EmfException e) {
         			throw new MdaException(e);
@@ -301,26 +307,19 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.refresh(outUri);
     }
 
-	private static void confineInResource(ModelExtentContents extent, TargetUriData targetData, ResourceSet resSet) throws MdaException {    	
-    	URI outUri = toUri(targetData.getUriString());
-    	
-        switch(targetData.getTargetType()) {
-        	case NEW_MODEL: {
-       	    	Resource outExtent = resSet.getResource(outUri, false);
-       	    	if(outExtent == null) {
-       	    		outExtent = EmfUtil.createResource(outUri, resSet);       	    	
-       	    	} else {
-       	    		outExtent.getContents().clear();
-       	    	}
-       			outExtent.getContents().addAll(extent.getAllRootElements());
-       			resSet.getResources().add(outExtent);
-        		break;
-        	}
-        }
-    }
-    
-    
-    private static void saveResource(EObject obj) throws IOException {
+    private static Set<EObject> getEssentialRootElements(List<EObject> allRootElements) {
+    	Set<EObject> roots = new LinkedHashSet<EObject>();
+    	for (EObject e : allRootElements) {
+    		EObject nextRoot = e;
+    		while (nextRoot.eContainer() instanceof EObject && nextRoot.eContainer().eResource() == e.eResource()) {
+    			nextRoot = nextRoot.eContainer();
+    		}
+    		roots.add(nextRoot);
+    	}
+		return roots;
+	}
+
+	private static void saveResource(EObject obj) throws IOException {
     	Resource resource = obj.eResource();
     	if(resource == null) {
     		Logger.getLogger().warning("Object has no resource: " + obj); //$NON-NLS-1$

@@ -442,6 +442,8 @@ public class QvtValidator {
 				return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UriNotFile, new Object[] {destUri, scheme}));
 			}
 		}
+		return okStatus;
+		/*
 		else {
 			if ("archive".equals(scheme)) { //$NON-NLS-1$
 				return okStatus;  
@@ -465,6 +467,7 @@ public class QvtValidator {
 			}
 		}
 		return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UriCorrupted, destUri));
+		*/
     }
 	
 }
