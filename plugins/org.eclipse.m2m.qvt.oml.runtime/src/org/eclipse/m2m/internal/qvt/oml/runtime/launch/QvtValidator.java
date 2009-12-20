@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
