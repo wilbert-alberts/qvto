@@ -13,13 +13,17 @@ package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EmfModelContentProvider;
 
 public class ResourceSourceDestChooser extends ResourceSourceChooser implements IDestinationChooser {
     public ResourceSourceDestChooser(ResourceSet rs) {
-    	super(false, rs);
+    	super(true, rs);
     }
     
     @Override
@@ -37,16 +41,22 @@ public class ResourceSourceDestChooser extends ResourceSourceChooser implements 
         }
 
         IFile file = WorkspaceUtils.getWorkspaceFile(uri);
-        if(file == null) {
-            return;
+        if(file != null) {
+	        if (file.exists()) {
+	        	myInitialSelection = createSelectionForUri(uri, file);
+	        }
+	        else {
+	            myInitialSelection = new StructuredSelection(file.getParent());
+	            myFileName = file.getName();
+	        }
+	        return;
         }
 
-        if (file.exists()) {
-        	myInitialSelection = createSelectionForUri(uri, file);
-        }
-        else {
-            myInitialSelection = new StructuredSelection(file.getParent());
-            myFileName = file.getName();
+        ModelContent loadModel = EmfUtil.safeLoadModel(uri, myResourceSet);
+        EObject obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
+        if (obj != null) {
+            myInitialSelection = new StructuredSelection(EmfModelContentProvider.makeEObjectNode(obj, null));
+            return;
         }
     }
 
