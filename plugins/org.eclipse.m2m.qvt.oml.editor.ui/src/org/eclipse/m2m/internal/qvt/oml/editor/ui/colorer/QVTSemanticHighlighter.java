@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lpg.lpgjavaruntime.IToken;
+
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -279,10 +281,14 @@ class QVTSemanticHighlighter {
 		}
 		return fCollector.visitToken(classifierDefCS.getSimpleNameCS(), INDEX_INTERM_DATA);
 	}
-		
+
 	protected boolean visit(ImperativeIterateExpCS iteratorExpCS) {
+		IToken endToken = iteratorExpCS.getEndToken();
+		if(endToken != null && "]".equals(endToken.toString())) { //$NON-NLS-1$
+			return false;
+		}
 		Object ast = iteratorExpCS.getAst();
-		if(ast instanceof ImperativeIterateExp) {
+		if(ast instanceof ImperativeIterateExp) {			
 			return fCollector.visitToken(iteratorExpCS.getSimpleNameCS(), INDEX_STDLIB_ELEMENT);
 		}
 		return false;		
