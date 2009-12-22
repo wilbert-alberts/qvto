@@ -41,7 +41,7 @@ public class BlackboxRegistry {
 	private BlackboxRegistry() {
 		try {
 			if(EMFPlugin.IS_ECLIPSE_RUNNING) {
-				fProviders = readProviders();
+				fProviders = Eclipse.readProviders();
 			} else {
 				fProviders = Collections.emptyList();
 			}
@@ -83,30 +83,31 @@ public class BlackboxRegistry {
 		return result;
 	}
 
+	private static class Eclipse {
+	    private static List<AbstractBlackboxProvider> readProviders() {
+	        List<AbstractBlackboxProvider> providers = new LinkedList<AbstractBlackboxProvider>();
+	        
+	        IConfigurationElement[] configs =
+	            Platform.getExtensionRegistry().getConfigurationElementsFor(
+	                QvtPlugin.ID, BLACKBOX_PROVIDER_EXTENSION);
 	
-    private static List<AbstractBlackboxProvider> readProviders() {
-        List<AbstractBlackboxProvider> providers = new LinkedList<AbstractBlackboxProvider>();
-        
-        IConfigurationElement[] configs =
-            Platform.getExtensionRegistry().getConfigurationElementsFor(
-                QvtPlugin.ID, BLACKBOX_PROVIDER_EXTENSION);
-
-        for (IConfigurationElement element : configs) {
-            if (element.getName().equals(PROVIDER_ELEMENT)) {
-                try {
-                	Object extension = element.createExecutableExtension(CLASS_ATTR);
-                	if(extension instanceof AbstractBlackboxProvider == false) {
-                		QvtPlugin.error("Provider must implement AbstractBlackboxProvider interace: " + extension); //$NON-NLS-1$
-                		continue;
-                	}
-
-                	providers.add((AbstractBlackboxProvider)extension);
-                } catch (CoreException e) {
-                    QvtPlugin.getDefault().log(e.getStatus());
-                }
-            }
-        }
-        
-        return providers;
-    }
+	        for (IConfigurationElement element : configs) {
+	            if (element.getName().equals(PROVIDER_ELEMENT)) {
+	                try {
+	                	Object extension = element.createExecutableExtension(CLASS_ATTR);
+	                	if(extension instanceof AbstractBlackboxProvider == false) {
+	                		QvtPlugin.error("Provider must implement AbstractBlackboxProvider interace: " + extension); //$NON-NLS-1$
+	                		continue;
+	                	}
+	
+	                	providers.add((AbstractBlackboxProvider)extension);
+	                } catch (CoreException e) {
+	                    QvtPlugin.getDefault().log(e.getStatus());
+	                }
+	            }
+	        }
+	        
+	        return providers;
+	    }
+	}
 }
