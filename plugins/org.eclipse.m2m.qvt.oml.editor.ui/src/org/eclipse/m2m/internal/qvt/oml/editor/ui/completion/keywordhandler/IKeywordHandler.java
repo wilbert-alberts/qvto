@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CFileData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
@@ -21,5 +21,5 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
  * Created on Oct 23, 2007
  */
 public interface IKeywordHandler {
-    public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData cFileData);
+    public String handle(IToken keyword, IPrsStream prsStream, QvtCompletionData data, CFileData cFileData);
 }

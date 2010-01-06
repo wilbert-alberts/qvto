@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.scopedvariablesextraction;
 
-import lpg.lpgjavaruntime.IToken;
+import lpg.runtime.IToken;
 
 /**
 * @author aigdalov

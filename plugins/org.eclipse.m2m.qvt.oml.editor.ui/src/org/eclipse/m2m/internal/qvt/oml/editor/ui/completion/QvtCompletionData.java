@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -71,7 +71,7 @@ public class QvtCompletionData {
     private IToken myLeftToken;
     private IToken myCurrentToken;
     private QVTOLexer myLexer;
-    private PrsStream myPrsStream;
+    private IPrsStream myPrsStream;
     private Exception myException;
     private IFile myIFile;
     private UnitProxy myCFile;
@@ -95,7 +95,7 @@ public class QvtCompletionData {
             myQvtCompiler = createQvtCompiler();
             myLexer = myQvtCompiler.createLexer(unit);
 
-            myPrsStream = myLexer.getPrsStream();
+            myPrsStream = myLexer.getIPrsStream();
             getLeftTokenAndCurrentToken();
         } catch (Exception ex) {
             myException = ex;
@@ -135,7 +135,7 @@ public class QvtCompletionData {
         return myLexer;
     }
 
-    public PrsStream getPrsStream() {
+    public IPrsStream getPrsStream() {
         return myPrsStream;
     }
 
@@ -328,7 +328,7 @@ public class QvtCompletionData {
     public static final IToken[] extractTokens(IToken startToken, int... endTokenKinds) {
         List<IToken> tokens = new ArrayList<IToken>();
         IToken currentToken = startToken;
-        PrsStream prsStream = startToken.getPrsStream();
+        IPrsStream prsStream = startToken.getIPrsStream();
         while (true) {
             if (QvtCompletionData.isKindOf(currentToken, endTokenKinds)) {
                 return tokens.toArray(new IToken[tokens.size()]);

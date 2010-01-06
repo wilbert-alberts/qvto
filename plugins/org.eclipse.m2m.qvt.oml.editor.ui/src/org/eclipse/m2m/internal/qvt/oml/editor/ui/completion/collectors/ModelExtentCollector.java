@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
 import java.util.Collection;
 
-import lpg.lpgjavaruntime.IToken;
+import lpg.runtime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
@@ -36,7 +36,7 @@ public class ModelExtentCollector extends AbstractCollector {
 	@Override
 	protected boolean isApplicableInternal(QvtCompletionData data) {
         IToken leftToken = data.getLeftToken();
-		return QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_AT);
+		return QvtCompletionData.isKindOf(leftToken, QVTOParsersym.TK_AT_SIGN);
 	}
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals,

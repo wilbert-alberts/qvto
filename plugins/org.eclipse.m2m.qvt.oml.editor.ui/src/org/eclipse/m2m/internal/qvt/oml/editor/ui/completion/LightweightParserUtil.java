@@ -15,8 +15,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
+import lpg.runtime.PrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -168,7 +169,7 @@ public class LightweightParserUtil {
     }
     
     public static final IToken getNextToken(IToken token) {
-        PrsStream prsStream = token.getPrsStream();
+        IPrsStream prsStream = token.getIPrsStream();
         int nextTokenIndex = token.getTokenIndex() + 1;
         if (nextTokenIndex < prsStream.getSize()) {
             return prsStream.getTokenAt(nextTokenIndex);
@@ -177,7 +178,7 @@ public class LightweightParserUtil {
     }
 
     public static final IToken getPreviousToken(IToken token) {
-        PrsStream prsStream = token.getPrsStream();
+        IPrsStream prsStream = token.getIPrsStream();
         int nextTokenIndex = token.getTokenIndex() - 1;
         if (nextTokenIndex >= 0) {
             return prsStream.getTokenAt(nextTokenIndex);
@@ -190,7 +191,7 @@ public class LightweightParserUtil {
     }
     
     public static final IToken getNextTokenByKind(IToken startToken, int[] kinds) {
-        PrsStream prsStream = startToken.getPrsStream();
+        IPrsStream prsStream = startToken.getIPrsStream();
         for (int i = startToken.getTokenIndex(), n = prsStream.getSize(); i < n; i++) {
             IToken token = prsStream.getTokenAt(i);
             if (QvtCompletionData.isKindOf(token, kinds)) {
@@ -266,7 +267,7 @@ public class LightweightParserUtil {
     public static final String getText(IToken start, IToken end) {
         int startOffset = start.getStartOffset();
         int endOffset = end.getEndOffset();
-        PrsStream prsStream = start.getPrsStream();
+        IPrsStream prsStream = start.getIPrsStream();
         return getText(startOffset, endOffset, prsStream);
     }
 
@@ -276,7 +277,7 @@ public class LightweightParserUtil {
         return getText(startOffset, endOffset, prsStream);
     }
 
-    private static String getText(int startOffset, int endOffset, PrsStream prsStream) {
+    private static String getText(int startOffset, int endOffset, IPrsStream prsStream) {
         return new String(prsStream.getInputChars(), startOffset, endOffset - startOffset + 1);
     }
 
@@ -319,7 +320,7 @@ public class LightweightParserUtil {
 
     public static final IToken[] extractOclExpressionCSTokens(IToken trailingToken, QvtCompletionData data) {
         List<IToken> tokens = new ArrayList<IToken>();
-        PrsStream prsStream = data.getPrsStream();
+        IPrsStream prsStream = data.getPrsStream();
         int mode = BRACING_PAIRS.length;
         int depth = 0;
         for (int i = trailingToken.getTokenIndex() - 1; i >= 0; i--) {

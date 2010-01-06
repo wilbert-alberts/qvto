@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IToken;
+import lpg.runtime.IPrsStream;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
@@ -44,7 +44,7 @@ public class ColonColonCollector extends AbstractCollector {
 
 	public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
     	IToken leftToken = data.getLeftToken();
-    	PrsStream prsStream = data.getPrsStream();
+    	IPrsStream prsStream = data.getPrsStream();
 		List<String> pathName = new ArrayList<String>();
 		IToken pathNameFirstToken = leftToken;
 		for (int i = leftToken.getTokenIndex(); i >= 1; i -= 2) {

@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CFileData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
@@ -22,7 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
  * Created on Nov 6, 2007
  */
 public class ScriptHeaderHandler implements IKeywordHandler {
-    public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData fileData) {
+    public String handle(IToken keyword, IPrsStream prsStream, QvtCompletionData data, CFileData fileData) {
         if (keyword.getTokenIndex() == 0) {
             IToken[] headerTokens = QvtCompletionData.extractTokens(keyword, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS);
             if (headerTokens != null) {

@@ -12,8 +12,8 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
 import java.util.Collection;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EParameter;
@@ -146,7 +146,7 @@ public class StructuralFeatureCollector extends AbstractCollector {
                 			lastColoncolon = prevToken;
                 		}
                 		if ((QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_inout)) && (lastColoncolon != null)) {
-                			PrsStream prsStream = token.getPrsStream();
+                			IPrsStream prsStream = token.getIPrsStream();
                 			IToken[] tokenArray = new IToken[lastColoncolon.getTokenIndex() - token.getTokenIndex()];
                 			for (int i = token.getTokenIndex(); i < lastColoncolon.getTokenIndex(); i++) {
                 				tokenArray[i - token.getTokenIndex()] = prsStream.getTokenAt(i);

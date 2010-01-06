@@ -16,8 +16,8 @@ import java.io.StringReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.BadLocationException;
@@ -142,7 +142,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         CFileData cFileData = getCFileData(cFile.getURI());
         try {
             QVTOLexer lexer = createLexer(cFile);
-            PrsStream prsStream = lexer.getPrsStream();
+            IPrsStream prsStream = lexer.getIPrsStream();
             IKeywordHandler[] keywordHandlers = KeywordHandlerRegistry.getInstance().getKeywordHandlers();
             StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getStreamLength());
             for (int i = 0, n = prsStream.getSize(); i < n; i++) {

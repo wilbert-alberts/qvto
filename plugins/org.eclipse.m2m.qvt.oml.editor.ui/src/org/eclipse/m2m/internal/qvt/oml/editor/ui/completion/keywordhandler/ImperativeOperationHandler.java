@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CFileData;
@@ -26,7 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.scop
 public class ImperativeOperationHandler implements IKeywordHandler {
     private final ScopedVariablesExtractor myScopedVariablesExtractor = new ScopedVariablesExtractor();
     
-    public String handle(IToken keyword, PrsStream prsStream, QvtCompletionData data, CFileData cFileData) {
+    public String handle(IToken keyword, IPrsStream prsStream, QvtCompletionData data, CFileData cFileData) {
         if (QvtCompletionData.isKindOf(keyword, LightweightParserUtil.IMPERATIVE_OPERATION_TOKENS)) {
             if (QvtCompletionData.isKindOf(keyword, QVTOParsersym.TK_main)) {
                 IToken previousToken = LightweightParserUtil.getPreviousToken(keyword);

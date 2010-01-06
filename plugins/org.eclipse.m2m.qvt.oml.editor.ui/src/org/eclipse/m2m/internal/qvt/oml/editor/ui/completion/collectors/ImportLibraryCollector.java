@@ -12,7 +12,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
 import java.util.Collection;
 
-import lpg.lpgjavaruntime.IToken;
+import lpg.runtime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;

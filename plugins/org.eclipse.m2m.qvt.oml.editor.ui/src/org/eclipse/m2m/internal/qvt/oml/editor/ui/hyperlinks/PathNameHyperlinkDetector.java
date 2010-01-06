@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.PrsStream;
+import lpg.runtime.IPrsStream;
+import lpg.runtime.IToken;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
@@ -208,7 +208,7 @@ public class PathNameHyperlinkDetector implements IHyperlinkDetectorHelper {
 		IToken startToken = pathNameCS.getStartToken();
 		IToken endToken = pathNameCS.getEndToken();
 		
-		PrsStream prsStream = startToken.getPrsStream();
+		IPrsStream prsStream = startToken.getIPrsStream();
 		IToken nextToken = startToken;
 		
 		int tokenIndex = 1;
