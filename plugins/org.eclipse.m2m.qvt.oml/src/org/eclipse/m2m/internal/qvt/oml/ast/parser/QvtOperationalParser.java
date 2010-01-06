@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.io.Reader;
 
-import lpg.lpgjavaruntime.BadParseException;
+import lpg.runtime.BadParseException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -29,7 +29,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
@@ -119,33 +118,11 @@ public class QvtOperationalParser {
 		@Override
 		protected void OnParseError(BadParseException e) {
 			super.OnParseError(e);
-//			IToken token = (IToken) getTokens().get(e.error_token);
-//			getErrorsList().add(new QvtMessage(e.getLocalizedMessage(), token.getStartOffset(),
-//					token.getEndOffset()-token.getStartOffset()));
 		}
 		
 		@Override
-		public void reportError(int errorCode, String locationInfo, int leftToken, int rightToken, String tokenText) {
-			// FIXME - review the strange block below
-			if (tokenText.contains(getTokenKindName(QVTOParsersym.TK_ERROR_TOKEN))) {
-				return;
-			} 
-			super.reportError(errorCode, locationInfo, leftToken, rightToken, tokenText);
-		}
-		
-		@Override
-		public void reportError(int errorCode, String locationInfo, String tokenText) {
-			super.reportError(errorCode, locationInfo, tokenText);
-		}
-		
-		@Override
-		public void reportError(int i, int j) {
-			super.reportError(i, j);
-		}
-		
-		@Override
-		public void reportError(int i, String code) {
-			super.reportError(i, code);
+		public void reportError(int errorCode, int leftToken, int rightToken, String tokenText) {
+			super.reportError(errorCode, leftToken, rightToken, tokenText);
 		}
 		
 		// FIXME - OCL 1.2 migration, workaround for ArrayIndexOutBounds

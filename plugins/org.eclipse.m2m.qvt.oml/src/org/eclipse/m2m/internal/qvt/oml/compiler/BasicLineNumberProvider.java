@@ -13,7 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.Arrays;
 
-import lpg.lpgjavaruntime.IntSegmentedTuple;
+import lpg.runtime.IntSegmentedTuple;
 
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
