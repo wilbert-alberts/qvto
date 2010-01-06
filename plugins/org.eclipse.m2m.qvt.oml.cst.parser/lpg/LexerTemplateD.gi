@@ -10,30 +10,30 @@
 --
 -- B E G I N N I N G   O F   T E M P L A T E   LexerTemplateD
 --
-%Options programming_language=java,margin=4
-%Options table
-%options action=("*.java", "/.", "./")
-%options ParseTable=lpg.lpgjavaruntime.ParseTable
-%Options prefix=Char_
+%options programming_language=java,margin=4
+%options table
+%options action-block=("*.java", "/.", "./")
+%options ParseTable=lpg.runtime.ParseTable
+%options prefix=Char_
 
 --
 -- This template requires that the name of the EOF token be set
 -- to EOF and that the prefix be "Char_" to be consistent with
 -- KeywordTemplateD.
 --
-$Eof
+%Eof
     EOF
-$End
+%End
 
 --
 -- This template also requires that the name of the parser EOF
 -- Token to be exported be set to EOF_TOKEN
 --
-$Export
+%Export
     EOF_TOKEN
-$End
+%End
 
-$Define
+%Define
     --
     -- Macros that are be needed in an instance of this template
     --
@@ -119,17 +119,18 @@ $Define
             }
             return;
         }./
-$End
+%End
 
-$Globals
-    /.import lpg.lpgjavaruntime.*;
+%Globals
+    /.import lpg.runtime.*;
     import org.eclipse.ocl.lpg.AbstractLexer;
     import org.eclipse.ocl.lpg.AbstractParser;
     ./
-$End
+%End
 
-$Headers
+%Headers
     /.
+    @SuppressWarnings("nls")
     public class $action_type extends $super_stream_class implements $exp_type, $sym_type, RuleAction$additional_interfaces
     {
         private static ParseTable prs = new $prs_type();
@@ -154,7 +155,7 @@ $Headers
         }
         
 		public $action_class($environment_class environment, char[] chars) {
-			this(environment, chars, "QVTO", ECLIPSE_TAB_VALUE); //$NON-NLS-1$
+			this(environment, chars, "OCL", ECLIPSE_TAB_VALUE);
 			kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
 		}
 
@@ -167,13 +168,17 @@ $Headers
         	return oclEnvironment;
         }
 
+        @Override
         public int [] getKeywordKinds() { return kwLexer.getKeywordKinds(); }
+
         public int getLeftSpan() { return lexParser.getFirstToken(); }
         public $prs_stream_class getParser() { return parser; }
         public int getRhsFirstTokenIndex(int i) { return lexParser.getFirstToken(i); }
         public int getRhsLastTokenIndex(int i) { return lexParser.getLastToken(i); }
         public int getRightSpan() { return lexParser.getLastToken(); }
-        @Override public int getToken(int i) { return lexParser.getToken(i); }
+
+        @Override
+        public int getToken(int i) { return lexParser.getToken(i); }
 
         @Override
         public void initialize(char [] content, String filename)
@@ -198,7 +203,7 @@ $Headers
         public void lexToTokens(Monitor monitor, $prs_stream_class parser)
         {
             if (getInputChars() == null)
-                throw new NullPointerException("LexStream was not initialized"); //$NON-NLS-1$
+                throw new NullPointerException("LexStream was not initialized");
 
             this.parser = parser;
 
@@ -213,18 +218,18 @@ $Headers
             return;
         }
     ./
-$End
+%End
 
-$Rules
+%Rules
     /.$BeginActions./
-$End
+%End
 
-$Trailers
+%Trailers
     /.
         $EndActions
     }
     ./
-$End
+%End
 
 --
 -- E N D   O F   T E M P L A T E
