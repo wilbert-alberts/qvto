@@ -8,14 +8,14 @@
 -- * http://www.eclipse.org/legal/epl-v10.html
 -- *
 -- * Contributors:
--- *   Borland - Initial API and implementation
+-- *   See Notice Declaration below
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
+-- * $Id: ImperativeOCLLexer.gi,v 1.1 2010/01/06 18:56:13 sboyko Exp $
 -- */
 --
--- The QVT Operational Lexer
+-- The Imperative OCL Lexer
 --
 
 %options scopes
@@ -24,53 +24,27 @@
 %options fp=QVTOLexer,prefix=Char_
 %options single-productions
 %options noserialize
-%options template=../lpg/LexerTemplateD.g
-%options filter=QVTOKWLexer.g
-%options export_terminals=("QVTParsersym.java", "TK_")
+%options template=../lpg/LexerTemplateD.gi
+%options filter=ImperativeOCLKWLexer.gi
+%options export_terminals=("ImperativeOCLParsersym.java", "TK_")
 %options include_directory=".;../lpg"
 
 
-$Define
+%Import
+	EssentialOCLLexer.gi
 
-	--
-	-- Definition of macro used in the included file OCLLexer.g
-	--
-	$OCLKWLexer /.QVTOKWLexer./
-
-$End
-
-$Include
-	LexerBasicMap.g
-$End
-
-$Headers
-	/.
-		/*
-	./
-$End
-
-
-$Import
-	OCLLexer.g
-
-$DropRules
-
+%DropRules
 	Token ::= '"' SLNotDQ '"'
 
-$End
+%End
 
-$Globals
-    /.import org.eclipse.ocl.parser.OCLKWLexer;
-    ./
-$End
+%Define
+	$kw_lexer_class /.ImperativeOCLKWLexer./
 
-$Headers
-	/.
-		*/
-	./
-$End
+%End
 
-$Notice
+
+%Notice
 	/./**
  * <copyright>
  *
@@ -85,27 +59,23 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QVTOLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
-$End
+%End
 
-$Export
 
-	ADD_ASSIGN
+%Export
 	RESET_ASSIGN
+	ADD_ASSIGN
 	EXCLAMATION_MARK
 	NOT_EQUAL_EXEQ
-	STEREOTYPE_QUALIFIER_OPEN
-	STEREOTYPE_QUALIFIER_CLOSE
-	MULTIPLICITY_RANGE
-	TILDE_SIGN
+	AT_SIGN
 	COLONCOLONEQUAL
-	
-$End
+	QUESTIONMARK
 
-$Rules
+%End
 
+%Rules
 	Token ::= ':' '='
 		/.$BeginAction
 					makeToken($_RESET_ASSIGN);
@@ -130,33 +100,21 @@ $Rules
 		  $EndAction
 		./
 
-	Token ::= '<' '<'
+	Token ::= '@'
 		/.$BeginAction
-					makeToken($_STEREOTYPE_QUALIFIER_OPEN);
-		  $EndAction
-		./
-
-	Token ::= '>' '>'
-		/.$BeginAction
-					makeToken($_STEREOTYPE_QUALIFIER_CLOSE);
-		  $EndAction
-		./
-
-	Token ::= '.' '.' '.'
-		/.$BeginAction
-					makeToken($_MULTIPLICITY_RANGE);
-		  $EndAction
-		./
-
-	Token ::= '~'
-		/.$BeginAction
-					makeToken($_TILDE_SIGN);
+					makeToken($_AT_SIGN);
 		  $EndAction
 		./
 
 	Token ::= ':' ':' '='
 		/.$BeginAction
 					makeToken($_COLONCOLONEQUAL);
+		  $EndAction
+		./
+
+	Token ::= '?'
+		/.$BeginAction
+					makeToken($_QUESTIONMARK);
 		  $EndAction
 		./
 
@@ -174,9 +132,9 @@ $Rules
 		  $EndAction
 		./
 
-	SLNotDQOpt -> $empty
+	SLNotDQOpt -> %empty
 			| SLNotDQ
 
 	SLC -> '/' '/'
 
-$End
+%End

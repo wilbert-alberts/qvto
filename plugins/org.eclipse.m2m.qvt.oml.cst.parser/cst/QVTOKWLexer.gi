@@ -8,60 +8,30 @@
 -- * http://www.eclipse.org/legal/epl-v10.html
 -- *
 -- * Contributors:
--- *   Borland - Initial API and implementation
+-- *   See Notice Declaration below
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOKWLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $ 
+-- * $Id: QVTOKWLexer.gi,v 1.1 2010/01/06 18:56:14 sboyko Exp $ 
 -- */
 --
--- The QVT KeyWord Lexer
+-- The QVTo KeyWord Lexer
 --
 
-%Options slr
-%Options fp=QVTOKWLexer,prefix=Char_
+%options slr
+%options fp=QVTOKWLexer,prefix=Char_
 %options noserialize
-%options template=../lpg/KeywordTemplateD.g
-%options export_terminals=("QVTParsersym.java", "TK_")
+%options template=../lpg/KeywordTemplateD.gi
+%options export_terminals=("QVTOParsersym.java", "TK_")
 %options include_directory=".;../lpg"
 
 
-$Start
-	QVTKeyWord
-$End
+%Import
+	ImperativeOCLKWLexer.gi
+%End
 
-$Import
-	OCLKWLexer.g
 
-$DropRules
-
-	KeyWord ::= i n v
-	KeyWord ::= p r e
-	KeyWord ::= p o s t
-	KeyWord ::= b o d y
-	KeyWord ::= c o n t e x t
-	KeyWord ::= p a c k a g e
-	KeyWord ::= e n d p a c k a g e
-	KeyWord ::= d e f
-	KeyWord ::= a t t r
-	KeyWord ::= o p e r
-	KeyWord ::= d e r i v e
-	
-$DropSymbols
-	
-	inv
-	pre
-	post
-	context
-	endpackage
-	def
-	attr
-	oper
-	derive
-	
-$End
-
-$Notice
+%Notice
 	/./**
  * <copyright>
  *
@@ -76,14 +46,15 @@ $Notice
  *
  * </copyright>
  *
- * $Id: QVTOKWLexer.g,v 1.1 2009/11/13 22:09:02 sboyko Exp $
  */
 	./
-$End
+%End
 
-$Export
+
+%Export
+	static
+	init
 	end
-	while
 	out
 	object
 	transformation
@@ -95,7 +66,6 @@ $Export
 	helper
 	inout
 	when
-	var
 	configuration
 	intermediate
 	property
@@ -103,12 +73,8 @@ $Export
 	class
 	population	
 	map
-	new
 	xmap
 	late
-	log
-	assert
-	with
 	resolve
 	resolveone
 	resolveIn
@@ -128,29 +94,12 @@ $Export
 	result
 	main
 	this
-	switch
-	case
-	xselect         
-	xcollect        
-	selectOne       
-	collectOne      
-	collectselect   
-	collectselectOne
-	return
 	rename
 	disjuncts
 	merges
 	inherits	
-	forEach
-	forOne
-	compute
-
-	Dict
-	List
-        break
         composes
         constructor
-        continue
         datatype
         default
         derived
@@ -171,24 +120,33 @@ $Export
         typedef
         unlimited
 
-$End
+%End
 
-$Rules
+%Start
+	QVTOKeyWord
+%End
 
--- The Goal for the parser is a single Keyword
+%Rules
+	-- The Goal for the parser is a single keyword
+	QVTOKeyWord ::=
 
-	QVTKeyWord ::=
-		KeyWord
+		ImperativeOCLKeyWord
+		
+		| s t a t i c
+		/.$BeginAction
+			$setResult($_static);
+		  $EndAction
+		./
+
+		| i n i t
+		/.$BeginAction
+			$setResult($_init);
+		  $EndAction
+		./
 		
 		| e n d
 		/.$BeginAction
 			$setResult($_end);
-		  $EndAction
-		./
-		
-		| w h i l e
-		/.$BeginAction
-			$setResult($_while);
 		  $EndAction
 		./
 		
@@ -246,12 +204,6 @@ $Rules
 		  $EndAction
 		./		
 
-		| r e t u r n
-		/.$BeginAction
-			$setResult($_return);
-		  $EndAction
-		./		
-		
 		| r e n a m e
 		/.$BeginAction
 			$setResult($_rename);
@@ -285,12 +237,6 @@ $Rules
 		| w h e n
 		/.$BeginAction
 			$setResult($_when);
-		  $EndAction
-		./
-		
-		| v a r
-		/.$BeginAction
-			$setResult($_var);
 		  $EndAction
 		./
 		
@@ -342,33 +288,9 @@ $Rules
 		  $EndAction
 		./
 
-		| n e w
-		/.$BeginAction
-			$setResult($_new);
-		  $EndAction
-		./
-		
 		| l a t e
 		/.$BeginAction
 			$setResult($_late);
-		  $EndAction
-		./
-
-		| l o g
-		/.$BeginAction
-			$setResult($_log);
-		  $EndAction
-		./
-		
-		| a s s e r t
-		/.$BeginAction
-			$setResult($_assert);
-		  $EndAction
-		./
-
-		| w i t h
-		/.$BeginAction
-			$setResult($_with);
 		  $EndAction
 		./
 
@@ -486,90 +408,6 @@ $Rules
 		  $EndAction
 		./
 		
-		| s w i t c h
-		/.$BeginAction
-			$setResult($_switch);
-		  $EndAction
-		./
-		
-		| c a s e
-		/.$BeginAction
-			$setResult($_case);
-		  $EndAction
-		./
-		
-		| x s e l e c t
-		/.$BeginAction
-			$setResult($_xselect);
-		  $EndAction
-		./
-		
-		| x c o l l e c t
-		/.$BeginAction
-			$setResult($_xcollect);
-		  $EndAction
-		./
-		
-		| s e l e c t O n e
-		/.$BeginAction
-			$setResult($_selectOne);
-		  $EndAction
-		./
-		
-		| c o l l e c t O n e
-		/.$BeginAction
-			$setResult($_collectOne);
-		  $EndAction
-		./
-		
-		| c o l l e c t s e l e c t
-		/.$BeginAction
-			$setResult($_collectselect);
-		  $EndAction
-		./
-		
-		| c o l l e c t s e l e c t O n e
-		/.$BeginAction
-			$setResult($_collectselectOne);
-		  $EndAction
-		./
-
-		| f o r E a c h
-		/.$BeginAction
-			$setResult($_forEach);
-		  $EndAction
-		./
-		
-		| f o r O n e
-		/.$BeginAction
-			$setResult($_forOne);
-		  $EndAction
-		./
-		
-		| c o m p u t e
-		/.$BeginAction
-			$setResult($_compute);
-		  $EndAction
-		./
-		
-		| D i c t 
-		/.$BeginAction
-			$setResult($_Dict);
-		  $EndAction
-		./
-		
-		| L i s t 
-		/.$BeginAction
-			$setResult($_List);
-		  $EndAction
-		./
-		
-		| b r e a k 
-		/.$BeginAction
-			$setResult($_break);
-		  $EndAction
-		./
-		
 		| c o m p o s e s 
 		/.$BeginAction
 			$setResult($_composes);
@@ -579,12 +417,6 @@ $Rules
 		| c o n s t r u c t o r 
 		/.$BeginAction
 			$setResult($_constructor);
-		  $EndAction
-		./
-		
-		| c o n t i n u e 
-		/.$BeginAction
-			$setResult($_continue);
 		  $EndAction
 		./
 		
@@ -702,5 +534,4 @@ $Rules
 		  $EndAction
 		./
 
-$End
-
+%End

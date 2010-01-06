@@ -10,26 +10,26 @@
 %options ast_type=CSTNode
 %options programming_language=java
 %options action=("*.java", "/.", "./")
-%options ParseTable=lpg.lpgjavaruntime.ParseTable
+%options ParseTable=lpg.runtime.ParseTable
 
-$Start
+%Start
     QvtLwGoal
-$End
+%End
 
-$Import
-	../QVTOParser.g
+%Import
+	../QVTOParser.gi
 
-$Globals
+%Globals
 	/.
 	import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParserprs;
 	import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 	import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;	
 	./
-$End
+%End
 
 
-$Rules
+%Rules
 	QvtLwGoal -> OclExpressionCS
 	QvtLwGoal -> topLevel
-$End
+%End
