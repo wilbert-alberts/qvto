@@ -14,10 +14,11 @@
 *   E.D.Willink - Remove unnecessary warning suppression
 *   E.D.Willink - Bugs 184048, 225493, 243976, 259818, 282882, 287993, 288040, 292112
 *   Borland - Bug 242880
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
+* $Id: LightweightTypeParserprs.java,v 1.2 2010/01/06 18:55:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -30,10 +31,10 @@
 *
 * Contributors:
 *   Borland - Initial API and implementation
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -46,31 +47,162 @@
 *
 * Contributors:
 *   Borland - Initial API and implementation
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
-*/
-/**
-* <copyright>
-*
-* Copyright (c) 2006, 2007 Borland Inc.
-* All rights reserved.   This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*   Borland - Initial API and implementation
-*
-* </copyright>
-*
-* $Id: LightweightTypeParserprs.java,v 1.1 2009/11/13 22:09:02 sboyko Exp $
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.completion.parser;
 
-public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, LightweightTypeParsersym {
+public class LightweightTypeParserprs implements lpg.runtime.ParseTable, LightweightTypeParsersym {
+    public final static int ERROR_SYMBOL = 162;
+    public final int getErrorSymbol() { return ERROR_SYMBOL; }
+
+    public final static int SCOPE_UBOUND = 4;
+    public final int getScopeUbound() { return SCOPE_UBOUND; }
+
+    public final static int SCOPE_SIZE = 5;
+    public final int getScopeSize() { return SCOPE_SIZE; }
+
+    public final static int MAX_NAME_LENGTH = 28;
+    public final int getMaxNameLength() { return MAX_NAME_LENGTH; }
+
+    public final static int NUM_STATES = 24;
+    public final int getNumStates() { return NUM_STATES; }
+
+    public final static int NT_OFFSET = 162;
+    public final int getNtOffset() { return NT_OFFSET; }
+
+    public final static int LA_STATE_OFFSET = 1459;
+    public final int getLaStateOffset() { return LA_STATE_OFFSET; }
+
+    public final static int MAX_LA = 1;
+    public final int getMaxLa() { return MAX_LA; }
+
+    public final static int NUM_RULES = 682;
+    public final int getNumRules() { return NUM_RULES; }
+
+    public final static int NUM_NONTERMINALS = 280;
+    public final int getNumNonterminals() { return NUM_NONTERMINALS; }
+
+    public final static int NUM_SYMBOLS = 442;
+    public final int getNumSymbols() { return NUM_SYMBOLS; }
+
+    public final static int SEGMENT_SIZE = 8192;
+    public final int getSegmentSize() { return SEGMENT_SIZE; }
+
+    public final static int START_STATE = 683;
+    public final int getStartState() { return START_STATE; }
+
+    public final static int IDENTIFIER_SYMBOL = 1;
+    public final int getIdentifier_SYMBOL() { return IDENTIFIER_SYMBOL; }
+
+    public final static int EOFT_SYMBOL = 26;
+    public final int getEoftSymbol() { return EOFT_SYMBOL; }
+
+    public final static int EOLT_SYMBOL = 26;
+    public final int getEoltSymbol() { return EOLT_SYMBOL; }
+
+    public final static int ACCEPT_ACTION = 776;
+    public final int getAcceptAction() { return ACCEPT_ACTION; }
+
+    public final static int ERROR_ACTION = 777;
+    public final int getErrorAction() { return ERROR_ACTION; }
+
+    public final static boolean BACKTRACK = true;
+    public final boolean getBacktrack() { return BACKTRACK; }
+
+    public final int getStartSymbol() { return lhs(0); }
+    public final boolean isValidForParser() { return LightweightTypeParsersym.isValidForParser; }
+
+
+    public interface IsNullable {
+        public final static byte isNullable[] = {0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,1,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,1,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            1,1,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,1,0,1,0,
+            0,0,1,1,0,0,1,0,0,0,
+            0,0,0,0,0,1,1,0,0,0,
+            0,0,0,0,1,0,0,0,1,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,1,0,0,0,0,0,
+            1,0,0,0,0,0,1,0,0,1,
+            0,1,0,0,0,0,0,0,0,0,
+            1,0,1,0,0,1,1,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,1,0,0,0,0,1,0,
+            0,0,0,1,1,0,0,0,0,1,
+            0,0,0,1,0,1,0,0,0,0,
+            1,1,0,0,0,1,1,1,1,1,
+            1,0,0,0,1,0,0,0,0,0,
+            0,0,0,0,0,0,0,1,0,0,
+            0,1,0,1,1,0,0,0,0,1,
+            1,1,0,0,0,1,0,0,0,0,
+            0,1,1,1,0,0,1,0,0,0,
+            0,0
+        };
+    };
+    public final static byte isNullable[] = IsNullable.isNullable;
+    public final boolean isNullable(int index) { return isNullable[index] != 0; }
+
+    public interface ProsthesesIndex {
+        public final static char prosthesesIndex[] = {0,
+            12,9,10,14,15,16,17,123,125,20,
+            2,6,8,13,18,19,103,1,3,4,
+            5,7,11,21,22,23,24,25,26,27,
+            28,29,30,31,32,33,34,35,36,37,
+            38,39,40,41,42,43,44,45,46,47,
+            48,49,50,51,52,53,54,55,56,57,
+            58,59,60,61,62,63,64,65,66,67,
+            68,69,70,71,72,73,74,75,76,77,
+            78,79,80,81,82,83,84,85,86,87,
+            88,89,90,91,92,93,94,95,96,97,
+            98,99,100,101,102,104,105,106,107,108,
+            109,110,111,112,113,114,115,116,117,118,
+            119,120,121,122,124,126,127,128,129,130,
+            131,132,133,134,135,136,137,138,139,140,
+            141,142,143,144,145,146,147,148,149,150,
+            151,152,153,154,155,156,157,158,159,160,
+            161,162,163,164,165,166,167,168,169,170,
+            171,172,173,174,175,176,177,178,179,180,
+            181,182,183,184,185,186,187,188,189,190,
+            191,192,193,194,195,196,197,198,199,200,
+            201,202,203,204,205,206,207,208,209,210,
+            211,212,213,214,215,216,217,218,219,220,
+            221,222,223,224,225,226,227,228,229,230,
+            231,232,233,234,235,236,237,238,239,240,
+            241,242,243,244,245,246,247,248,249,250,
+            251,252,253,254,255,256,257,258,259,260,
+            261,262,263,264,265,266,267,268,269,270,
+            271,272,273,274,275,276,277,278,279,280
+        };
+    };
+    public final static char prosthesesIndex[] = ProsthesesIndex.prosthesesIndex;
+    public final int prosthesesIndex(int index) { return prosthesesIndex[index]; }
 
     public interface IsKeyword {
         public final static byte isKeyword[] = {0,
@@ -79,17 +211,18 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
             0,0,0,1,1,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            0,0,1,0,1,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            1,0,0,0,1,0,0,0,0,0,
-            0,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
-            1,1,1,1,1,1,1,1,0,0
+            1,1,1,1,1,1,1,1,1,1,
+            1,1,1,1,1,1,1,1,1,1,
+            1,1,1,1,1,1,1,1,1,1,
+            1,1,1,1,1,1,1,1,1,1,
+            1,0
         };
     };
     public final static byte isKeyword[] = IsKeyword.isKeyword;
@@ -294,7 +427,7 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            0
+            0,0,0
         };
     };
     public final static char termCheck[] = TermCheck.termCheck;
@@ -304,7 +437,7 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
         public final static char termAction[] = {0,
             777,811,777,777,1454,1453,1077,825,827,828,
             826,824,697,816,817,818,819,820,821,822,
-            823,777,777,811,696,695,1454,1453,776,825,
+            823,777,777,811,695,696,1454,1453,776,825,
             827,828,826,824,805,816,817,818,819,820,
             821,822,823,58,811,777,811,1454,1453,1454,
             1453,777,777,701,711,777,777,756,721,53,
@@ -328,7 +461,7 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
 
     public interface Asr {
         public final static char asr[] = {0,
-            24,25,12,13,14,15,16,17,18,19,
+            25,24,12,13,14,15,16,17,18,19,
             20,11,7,10,8,9,5,4,1,0,
             2,0,23,26,22,6,3,0,23,26,
             0,3,1,5,4,0,6,0,21,0
@@ -358,22 +491,23 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
 
     public interface TerminalIndex {
         public final static char terminalIndex[] = {0,
-            158,11,12,151,153,19,78,79,80,81,
-            82,83,84,85,86,87,88,89,90,91,
-            20,21,27,112,113,161,33,34,35,1,
+            161,11,12,133,135,19,58,59,60,61,
+            62,63,64,65,66,67,68,69,70,71,
+            20,21,29,72,73,163,37,38,39,1,
             2,3,4,5,6,7,8,9,10,13,
             14,15,16,17,18,22,23,24,25,26,
-            28,29,36,37,38,39,40,41,42,43,
-            44,45,46,47,48,49,50,51,52,53,
-            54,55,56,57,58,30,31,59,60,61,
-            62,63,64,65,66,67,68,69,70,71,
-            72,73,74,75,76,77,92,93,94,95,
-            96,97,98,99,100,101,102,103,104,105,
-            106,107,108,109,110,111,114,115,116,117,
+            27,28,30,31,40,41,32,33,34,35,
+            42,43,44,45,46,47,48,49,50,51,
+            52,53,54,55,56,57,74,75,76,77,
+            78,79,80,81,82,83,84,85,86,87,
+            88,89,90,91,92,93,94,95,96,97,
+            98,99,100,101,102,103,104,105,106,107,
+            108,109,110,111,112,113,114,115,116,117,
             118,119,120,121,122,123,124,125,126,127,
-            128,129,130,131,132,133,134,135,136,137,
-            138,139,140,141,142,143,144,145,146,147,
-            148,149,150,152,154,155,156,157,159,160
+            128,129,130,131,132,134,136,137,138,139,
+            140,141,142,143,144,145,146,147,148,149,
+            150,151,152,153,154,155,156,157,158,159,
+            160,162
         };
     };
     public final static char terminalIndex[] = TerminalIndex.terminalIndex;
@@ -381,8 +515,8 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
 
     public interface NonterminalIndex {
         public final static char nonterminalIndex[] = {0,
-            164,163,0,166,167,0,0,0,0,169,
-            162,0,0,165,0,168,0,0,0,0,
+            166,165,0,168,169,0,0,0,0,171,
+            164,0,0,167,0,170,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
@@ -456,9 +590,9 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
 
     public interface ScopeRhs {
         public final static char scopeRhs[] = {0,
-            165,6,165,2,25,0,12,0,165,2,
-            25,0,19,167,12,0,165,2,24,0,
-            175,2,12,0,165,2,162,0
+            167,6,167,2,24,0,3,0,167,2,
+            24,0,6,167,3,0,167,2,25,0,
+            177,2,12,0,167,2,164,0
         };
     };
     public final static char scopeRhs[] = ScopeRhs.scopeRhs;
@@ -474,9 +608,9 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
 
     public interface InSymb {
         public final static char inSymb[] = {0,
-            0,171,25,24,12,162,164,165,2,2,
-            2,2,22,23,165,165,175,161,176,165,
-            6,21,6,165
+            0,173,24,25,12,164,166,167,2,2,
+            2,2,22,23,167,167,177,163,178,167,
+            6,21,6,167
         };
     };
     public final static char inSymb[] = InSymb.inSymb;
@@ -509,18 +643,121 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
             ";", //$NON-NLS-1$
             ".", //$NON-NLS-1$
             "..", //$NON-NLS-1$
-            "+=", //$NON-NLS-1$
             ":=", //$NON-NLS-1$
-            "@", //$NON-NLS-1$
+            "+=", //$NON-NLS-1$
             "!", //$NON-NLS-1$
             "!=", //$NON-NLS-1$
+            "@", //$NON-NLS-1$
             "::=", //$NON-NLS-1$
             "?", //$NON-NLS-1$
+            "<<", //$NON-NLS-1$
+            ">>", //$NON-NLS-1$
+            "...", //$NON-NLS-1$
+            "~", //$NON-NLS-1$
             "$empty", //$NON-NLS-1$
             "INTEGER_LITERAL", //$NON-NLS-1$
             "REAL_LITERAL", //$NON-NLS-1$
             "STRING_LITERAL", //$NON-NLS-1$
+            "SINGLE_LINE_COMMENT", //$NON-NLS-1$
+            "MULTI_LINE_COMMENT", //$NON-NLS-1$
+            "and", //$NON-NLS-1$
+            "implies", //$NON-NLS-1$
+            "not", //$NON-NLS-1$
+            "or", //$NON-NLS-1$
+            "xor", //$NON-NLS-1$
+            "if", //$NON-NLS-1$
+            "then", //$NON-NLS-1$
+            "else", //$NON-NLS-1$
+            "endif", //$NON-NLS-1$
+            "let", //$NON-NLS-1$
+            "in", //$NON-NLS-1$
+            "false", //$NON-NLS-1$
+            "true", //$NON-NLS-1$
+            "null", //$NON-NLS-1$
+            "invalid", //$NON-NLS-1$
+            "self", //$NON-NLS-1$
+            "Bag", //$NON-NLS-1$
+            "Collection", //$NON-NLS-1$
+            "OrderedSet", //$NON-NLS-1$
+            "Sequence", //$NON-NLS-1$
+            "Set", //$NON-NLS-1$
+            "Tuple", //$NON-NLS-1$
+            "Boolean", //$NON-NLS-1$
+            "Integer", //$NON-NLS-1$
+            "Real", //$NON-NLS-1$
+            "String", //$NON-NLS-1$
+            "UnlimitedNatural", //$NON-NLS-1$
+            "OclAny", //$NON-NLS-1$
+            "OclInvalid", //$NON-NLS-1$
+            "OclVoid", //$NON-NLS-1$
+            "Dict", //$NON-NLS-1$
+            "List", //$NON-NLS-1$
+            "break", //$NON-NLS-1$
+            "switch", //$NON-NLS-1$
+            "case", //$NON-NLS-1$
+            "xselect", //$NON-NLS-1$
+            "xcollect", //$NON-NLS-1$
+            "selectOne", //$NON-NLS-1$
+            "collectOne", //$NON-NLS-1$
+            "collectselect", //$NON-NLS-1$
+            "collectselectOne", //$NON-NLS-1$
+            "return", //$NON-NLS-1$
+            "forEach", //$NON-NLS-1$
+            "forOne", //$NON-NLS-1$
+            "var", //$NON-NLS-1$
+            "while", //$NON-NLS-1$
+            "continue", //$NON-NLS-1$
+            "log", //$NON-NLS-1$
+            "assert", //$NON-NLS-1$
+            "with", //$NON-NLS-1$
+            "compute", //$NON-NLS-1$
+            "new", //$NON-NLS-1$
+            "init", //$NON-NLS-1$
+            "static", //$NON-NLS-1$
+            "end", //$NON-NLS-1$
+            "out", //$NON-NLS-1$
+            "object", //$NON-NLS-1$
+            "transformation", //$NON-NLS-1$
+            "import", //$NON-NLS-1$
+            "library", //$NON-NLS-1$
+            "metamodel", //$NON-NLS-1$
+            "mapping", //$NON-NLS-1$
+            "query", //$NON-NLS-1$
+            "helper", //$NON-NLS-1$
+            "inout", //$NON-NLS-1$
+            "when", //$NON-NLS-1$
+            "configuration", //$NON-NLS-1$
+            "intermediate", //$NON-NLS-1$
+            "property", //$NON-NLS-1$
+            "opposites", //$NON-NLS-1$
             "class", //$NON-NLS-1$
+            "population", //$NON-NLS-1$
+            "map", //$NON-NLS-1$
+            "xmap", //$NON-NLS-1$
+            "late", //$NON-NLS-1$
+            "resolve", //$NON-NLS-1$
+            "resolveone", //$NON-NLS-1$
+            "resolveIn", //$NON-NLS-1$
+            "resolveoneIn", //$NON-NLS-1$
+            "invresolve", //$NON-NLS-1$
+            "invresolveone", //$NON-NLS-1$
+            "invresolveIn", //$NON-NLS-1$
+            "invresolveoneIn", //$NON-NLS-1$
+            "modeltype", //$NON-NLS-1$
+            "uses", //$NON-NLS-1$
+            "where", //$NON-NLS-1$
+            "refines", //$NON-NLS-1$
+            "access", //$NON-NLS-1$
+            "extends", //$NON-NLS-1$
+            "blackbox", //$NON-NLS-1$
+            "abstract", //$NON-NLS-1$
+            "result", //$NON-NLS-1$
+            "main", //$NON-NLS-1$
+            "this", //$NON-NLS-1$
+            "rename", //$NON-NLS-1$
+            "disjuncts", //$NON-NLS-1$
+            "merges", //$NON-NLS-1$
+            "inherits", //$NON-NLS-1$
             "composes", //$NON-NLS-1$
             "constructor", //$NON-NLS-1$
             "datatype", //$NON-NLS-1$
@@ -542,108 +779,7 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
             "try", //$NON-NLS-1$
             "typedef", //$NON-NLS-1$
             "unlimited", //$NON-NLS-1$
-            "invalid", //$NON-NLS-1$
-            "STEREOTYPE_QUALIFIER_OPEN", //$NON-NLS-1$
-            "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
-            "MULTIPLICITY_RANGE", //$NON-NLS-1$
-            "TILDE_SIGN", //$NON-NLS-1$
-            "and", //$NON-NLS-1$
-            "implies", //$NON-NLS-1$
-            "not", //$NON-NLS-1$
-            "or", //$NON-NLS-1$
-            "xor", //$NON-NLS-1$
-            "if", //$NON-NLS-1$
-            "then", //$NON-NLS-1$
-            "else", //$NON-NLS-1$
-            "endif", //$NON-NLS-1$
-            "let", //$NON-NLS-1$
-            "in", //$NON-NLS-1$
-            "false", //$NON-NLS-1$
-            "true", //$NON-NLS-1$
-            "null", //$NON-NLS-1$
-            "self", //$NON-NLS-1$
-            "Bag", //$NON-NLS-1$
-            "Collection", //$NON-NLS-1$
-            "OrderedSet", //$NON-NLS-1$
-            "Sequence", //$NON-NLS-1$
-            "Set", //$NON-NLS-1$
-            "Tuple", //$NON-NLS-1$
-            "Boolean", //$NON-NLS-1$
-            "Integer", //$NON-NLS-1$
-            "Real", //$NON-NLS-1$
-            "String", //$NON-NLS-1$
-            "UnlimitedNatural", //$NON-NLS-1$
-            "OclAny", //$NON-NLS-1$
-            "OclInvalid", //$NON-NLS-1$
-            "OclVoid", //$NON-NLS-1$
-            "end", //$NON-NLS-1$
-            "while", //$NON-NLS-1$
-            "when", //$NON-NLS-1$
-            "var", //$NON-NLS-1$
-            "log", //$NON-NLS-1$
-            "assert", //$NON-NLS-1$
-            "with", //$NON-NLS-1$
-            "switch", //$NON-NLS-1$
-            "case", //$NON-NLS-1$
-            "xselect", //$NON-NLS-1$
-            "xcollect", //$NON-NLS-1$
-            "selectOne", //$NON-NLS-1$
-            "collectOne", //$NON-NLS-1$
-            "collectselect", //$NON-NLS-1$
-            "collectselectOne", //$NON-NLS-1$
-            "return", //$NON-NLS-1$
-            "forEach", //$NON-NLS-1$
-            "forOne", //$NON-NLS-1$
-            "compute", //$NON-NLS-1$
-            "new", //$NON-NLS-1$
-            "List", //$NON-NLS-1$
-            "Dict", //$NON-NLS-1$
-            "break", //$NON-NLS-1$
-            "continue", //$NON-NLS-1$
-            "out", //$NON-NLS-1$
-            "object", //$NON-NLS-1$
-            "transformation", //$NON-NLS-1$
-            "import", //$NON-NLS-1$
-            "library", //$NON-NLS-1$
-            "metamodel", //$NON-NLS-1$
-            "mapping", //$NON-NLS-1$
-            "query", //$NON-NLS-1$
-            "helper", //$NON-NLS-1$
-            "inout", //$NON-NLS-1$
-            "configuration", //$NON-NLS-1$
-            "intermediate", //$NON-NLS-1$
-            "property", //$NON-NLS-1$
-            "opposites", //$NON-NLS-1$
-            "population", //$NON-NLS-1$
-            "map", //$NON-NLS-1$
-            "xmap", //$NON-NLS-1$
-            "late", //$NON-NLS-1$
-            "resolve", //$NON-NLS-1$
-            "resolveone", //$NON-NLS-1$
-            "resolveIn", //$NON-NLS-1$
-            "resolveoneIn", //$NON-NLS-1$
-            "invresolve", //$NON-NLS-1$
-            "invresolveone", //$NON-NLS-1$
-            "invresolveIn", //$NON-NLS-1$
-            "invresolveoneIn", //$NON-NLS-1$
-            "modeltype", //$NON-NLS-1$
-            "uses", //$NON-NLS-1$
-            "where", //$NON-NLS-1$
-            "refines", //$NON-NLS-1$
-            "access", //$NON-NLS-1$
-            "extends", //$NON-NLS-1$
-            "blackbox", //$NON-NLS-1$
-            "abstract", //$NON-NLS-1$
-            "static", //$NON-NLS-1$
-            "result", //$NON-NLS-1$
-            "main", //$NON-NLS-1$
-            "this", //$NON-NLS-1$
-            "rename", //$NON-NLS-1$
-            "inherits", //$NON-NLS-1$
-            "merges", //$NON-NLS-1$
-            "disjuncts", //$NON-NLS-1$
             "IDENTIFIER", //$NON-NLS-1$
-            "init", //$NON-NLS-1$
             "ERROR_TOKEN", //$NON-NLS-1$
             "EOF_TOKEN", //$NON-NLS-1$
             "QvtLwGoal", //$NON-NLS-1$
@@ -659,53 +795,6 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
     public final static String name[] = Name.name;
     public final String name(int index) { return name[index]; }
 
-    public final static int
-           ERROR_SYMBOL      = 160,
-           SCOPE_UBOUND      = 4,
-           SCOPE_SIZE        = 5,
-           MAX_NAME_LENGTH   = 28;
-
-    public final int getErrorSymbol() { return ERROR_SYMBOL; }
-    public final int getScopeUbound() { return SCOPE_UBOUND; }
-    public final int getScopeSize() { return SCOPE_SIZE; }
-    public final int getMaxNameLength() { return MAX_NAME_LENGTH; }
-
-    public final static int
-           NUM_STATES        = 24,
-           NT_OFFSET         = 160,
-           LA_STATE_OFFSET   = 1459,
-           MAX_LA            = 1,
-           NUM_RULES         = 682,
-           NUM_NONTERMINALS  = 280,
-           NUM_SYMBOLS       = 440,
-           SEGMENT_SIZE      = 8192,
-           START_STATE       = 683,
-           IDENTIFIER_SYMBOL = 1,
-           EOFT_SYMBOL       = 26,
-           EOLT_SYMBOL       = 26,
-           ACCEPT_ACTION     = 776,
-           ERROR_ACTION      = 777;
-
-    public final static boolean BACKTRACK = true;
-
-    public final int getNumStates() { return NUM_STATES; }
-    public final int getNtOffset() { return NT_OFFSET; }
-    public final int getLaStateOffset() { return LA_STATE_OFFSET; }
-    public final int getMaxLa() { return MAX_LA; }
-    public final int getNumRules() { return NUM_RULES; }
-    public final int getNumNonterminals() { return NUM_NONTERMINALS; }
-    public final int getNumSymbols() { return NUM_SYMBOLS; }
-    public final int getSegmentSize() { return SEGMENT_SIZE; }
-    public final int getStartState() { return START_STATE; }
-    public final int getStartSymbol() { return lhs[0]; }
-    public final int getIdentifierSymbol() { return IDENTIFIER_SYMBOL; }
-    public final int getEoftSymbol() { return EOFT_SYMBOL; }
-    public final int getEoltSymbol() { return EOLT_SYMBOL; }
-    public final int getAcceptAction() { return ACCEPT_ACTION; }
-    public final int getErrorAction() { return ERROR_ACTION; }
-    public final boolean isValidForParser() { return isValidForParser; }
-    public final boolean getBacktrack() { return BACKTRACK; }
-
     public final int originalState(int state) {
         return -baseCheck[state];
     }
@@ -719,10 +808,16 @@ public class LightweightTypeParserprs implements lpg.lpgjavaruntime.ParseTable, 
         return inSymb[originalState(state)];
     }
 
+    /**
+     * assert(! goto_default);
+     */
     public final int ntAction(int state, int sym) {
         return baseAction[state + sym];
     }
 
+    /**
+     * assert(! shift_default);
+     */
     public final int tAction(int state, int sym) {
         int i = baseAction[state],
             k = i + sym;

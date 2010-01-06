@@ -11,23 +11,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
 public class QvtKeywords {
 
-	private static final List<String> excludedOCLKeywords = Arrays.asList(
-		"inv", //$NON-NLS-1$
-		"pre", //$NON-NLS-1$
-		"post", //$NON-NLS-1$
-		"endpackage", //$NON-NLS-1$
-		"def" //$NON-NLS-1$		
-	);
-	
 	private static final Set<String> tempKeywords = new HashSet<String>(); 
 	static {
     	for (String string : QVTOParsersym.orderedTerminalSymbols) {
@@ -35,8 +25,6 @@ public class QvtKeywords {
                 tempKeywords.add(string);
     		}
 		}
-    	
-    	tempKeywords.removeAll(excludedOCLKeywords);
 	}
 		
 	public static final Set<String> KEYWORDS = Collections.unmodifiableSet(tempKeywords);	

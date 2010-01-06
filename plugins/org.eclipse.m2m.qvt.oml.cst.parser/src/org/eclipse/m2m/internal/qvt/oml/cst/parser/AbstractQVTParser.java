@@ -14,9 +14,9 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import lpg.lpgjavaruntime.IToken;
-import lpg.lpgjavaruntime.ParseErrorCodes;
-import lpg.lpgjavaruntime.Token;
+import lpg.runtime.IToken;
+import lpg.runtime.ParseErrorCodes;
+import lpg.runtime.Token;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -113,15 +113,6 @@ import org.eclipse.ocl.parser.AbstractOCLParser;
 
 public abstract class AbstractQVTParser extends AbstractOCLParser {
 
-	protected static class Empty {		
-		private static final EList<?> EMPTY_LIST_INSTANCE = new BasicEList.UnmodifiableEList<Object>(0, new Object[0]);
-		
-		@SuppressWarnings("unchecked")
-		static final <T> EList<T> list() { 
-			return (EList<T>)EMPTY_LIST_INSTANCE;	
-		}
-	}
-		
 	private boolean isCSTTokenEnabled = false;
 	
 	protected AbstractQVTParser(BasicEnvironment environment) {
@@ -138,7 +129,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	
 	@Override
 	public QVTOLexer getLexer() {
-		return (QVTOLexer) super.getLexStream();
+		return (QVTOLexer) super.getILexStream();
 	} 
 
 	protected void reportWarning(String message, int startOffset, int endOffset) {
@@ -211,18 +202,22 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	        }
 	        trailingUnitElement = unitElement;
 	    }
-	    if (modules.isEmpty()) {
-            reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
+	    if (modules.isEmpty()) {	    	
+            reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
+            		trailingUnitElement.getEndToken().getTokenIndex(),
                     Messages.NoModulesDeclared);
             return null;
 	    }
 	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {
-	        reportError(ParseErrorCodes.INVALID_CODE, "",  //$NON-NLS-1$
+	        reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
+        		trailingUnitElement.getEndToken().getTokenIndex(),
 	                Messages.MultipleModulesExtraUnitElements);
 	    }
         // TODO: support multiple modules
 	    if (modules.size() > 1) {
-	        reportError(ParseErrorCodes.INVALID_CODE, "", "Multiple modules are unsupported yet!"); //$NON-NLS-1$ //$NON-NLS-2$
+	        reportError(ParseErrorCodes.INVALID_CODE,  startingUnitElement.getStartToken().getTokenIndex(),
+        		trailingUnitElement.getEndToken().getTokenIndex()
+        		, "Multiple modules are unsupported yet!"); //$NON-NLS-1$
 	    }
         for (MappingModuleCS moduleCS : modules) {
             // FIXME: clone imports and modeltypes for multiple modules
@@ -769,7 +764,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 			EList<PackageRefCS> packageRefList, EList<StatementCS> whereList) {
 				ModelTypeCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModelTypeCS();
 				SimpleNameCS identifierCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL,
-							(identifier.getPrsStream() == null ? null : identifier));
+							(identifier.getIPrsStream() == null ? null : identifier));
 				identifierCS.setStartOffset(identifier.getStartOffset());
 				identifierCS.setEndOffset(identifier.getEndOffset());
 				result.setIdentifierCS(identifierCS);
@@ -1097,7 +1092,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		IToken prevToken = getTokenAt(token.getTokenIndex() - 1);
 		int prevTokenLine = prevToken.getLine();
 		if (prevTokenLine == tokenLine) {
-			reportError(lpg.lpgjavaruntime.ParseErrorCodes.INVALID_CODE, "", prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$ //$NON-NLS-2$
+			reportError(lpg.runtime.ParseErrorCodes.INVALID_CODE, prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$
 		}
 
 		return super.extendStringLiteralExpCS(string, token);

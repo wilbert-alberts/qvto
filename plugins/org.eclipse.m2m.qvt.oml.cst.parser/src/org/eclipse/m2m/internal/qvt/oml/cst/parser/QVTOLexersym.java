@@ -13,24 +13,11 @@
 *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 *   Borland - Bug 242880
 *   E.D.Willink - Bug 292112
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
+*
 * </copyright>
 *
-* $Id: QVTOLexersym.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
-*/
-/**
-* Complete OCL Lexer
-* <copyright>
-*
-* Copyright (c) 2005, 2009 IBM Corporation and others.
-* All rights reserved.   This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*   IBM - Initial API and implementation
-*   E.D.Willink - Bug 292112, 292594
-* </copyright>
+* $Id: QVTOLexersym.java,v 1.2 2010/01/06 18:55:01 sboyko Exp $
 */
 /**
 * <copyright>
@@ -46,7 +33,21 @@
 *
 * </copyright>
 *
-* $Id: QVTOLexersym.java,v 1.1 2009/11/13 22:09:03 sboyko Exp $
+*/
+/**
+* <copyright>
+*
+* Copyright (c) 2006-2008 Borland Inc.
+* All rights reserved.   This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Borland - Initial API and implementation
+*
+* </copyright>
+*
 */
 
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
@@ -54,9 +55,9 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 public interface QVTOLexersym {
     public final static int
       Char_CtlCharNotWS = 103,
-      Char_LF = 94,
-      Char_CR = 95,
-      Char_HT = 76,
+      Char_LF = 93,
+      Char_CR = 94,
+      Char_HT = 75,
       Char_FF = 100,
       Char_a = 17,
       Char_b = 18,
@@ -123,41 +124,41 @@ public interface QVTOLexersym {
       Char_9 = 10,
       Char_AfterASCIINotAcute = 68,
       Char_Space = 69,
-      Char_DoubleQuote = 77,
-      Char_SingleQuote = 78,
-      Char_Percent = 96,
-      Char_VerticalBar = 79,
-      Char_Exclamation = 80,
-      Char_AtSign = 81,
-      Char_BackQuote = 82,
+      Char_DoubleQuote = 76,
+      Char_SingleQuote = 77,
+      Char_Percent = 95,
+      Char_VerticalBar = 78,
+      Char_Exclamation = 79,
+      Char_AtSign = 80,
+      Char_BackQuote = 81,
       Char_Acute = 101,
-      Char_Tilde = 83,
-      Char_Sharp = 97,
-      Char_DollarSign = 84,
-      Char_Ampersand = 98,
-      Char_Caret = 70,
-      Char_Colon = 71,
-      Char_SemiColon = 85,
+      Char_Tilde = 82,
+      Char_Sharp = 96,
+      Char_DollarSign = 83,
+      Char_Ampersand = 97,
+      Char_Caret = 98,
+      Char_Colon = 70,
+      Char_SemiColon = 84,
       Char_BackSlash = 99,
-      Char_LeftBrace = 86,
-      Char_RightBrace = 87,
-      Char_LeftBracket = 88,
-      Char_RightBracket = 89,
-      Char_QuestionMark = 90,
-      Char_Comma = 91,
+      Char_LeftBrace = 85,
+      Char_RightBrace = 86,
+      Char_LeftBracket = 87,
+      Char_RightBracket = 88,
+      Char_QuestionMark = 89,
+      Char_Comma = 90,
       Char_Dot = 12,
-      Char_LessThan = 72,
+      Char_LessThan = 71,
       Char_GreaterThan = 15,
-      Char_Plus = 73,
+      Char_Plus = 72,
       Char_Minus = 16,
-      Char_Slash = 74,
-      Char_Star = 75,
-      Char_LeftParen = 92,
-      Char_RightParen = 93,
+      Char_Slash = 73,
+      Char_Star = 74,
+      Char_LeftParen = 91,
+      Char_RightParen = 92,
       Char_Equal = 11,
       Char_EOF = 102;
 
-      public final static String orderedTerminalSymbols[] = {
+    public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
                  "0", //$NON-NLS-1$
                  "1", //$NON-NLS-1$
@@ -228,7 +229,6 @@ public interface QVTOLexersym {
                  "Z", //$NON-NLS-1$
                  "AfterASCIINotAcute", //$NON-NLS-1$
                  "Space", //$NON-NLS-1$
-                 "Caret", //$NON-NLS-1$
                  "Colon", //$NON-NLS-1$
                  "LessThan", //$NON-NLS-1$
                  "Plus", //$NON-NLS-1$
@@ -257,6 +257,7 @@ public interface QVTOLexersym {
                  "Percent", //$NON-NLS-1$
                  "Sharp", //$NON-NLS-1$
                  "Ampersand", //$NON-NLS-1$
+                 "Caret", //$NON-NLS-1$
                  "BackSlash", //$NON-NLS-1$
                  "FF", //$NON-NLS-1$
                  "Acute", //$NON-NLS-1$
@@ -264,5 +265,6 @@ public interface QVTOLexersym {
                  "CtlCharNotWS" //$NON-NLS-1$
              };
 
+    public final static int numTokenKinds = orderedTerminalSymbols.length;
     public final static boolean isValidForParser = true;
 }
