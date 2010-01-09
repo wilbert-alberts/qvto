@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.gi,v 1.2 2010/01/09 17:25:22 sboyko Exp $ 
+-- * $Id: miscellaneous.gi,v 1.3 2010/01/09 18:34:42 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -140,14 +140,14 @@
     	}
 
 		protected void OnParseError(BadParseException e) {
-			System.err.println(getFileName());
-			java.util.ArrayList<?> tokens = getTokens();
-			String result = getName(e.error_token) + " ~~ "; 
-			for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
-				result += tokens.get(i).toString();
-				result += " "; 
-			}
-			System.err.println(result);
+			//System.err.println(getFileName());
+			//java.util.ArrayList<?> tokens = getTokens();
+			//String result = getName(e.error_token) + " ~~ "; 
+			//for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
+			//	result += tokens.get(i).toString();
+			//	result += " "; 
+			//}
+			//System.err.println(result);
 		}
 	./
 
@@ -222,17 +222,17 @@
 								
 		
 		private void diagnozeErrorToken(int token_index) {
-			IToken token = getIToken(token_index);
-			if (token instanceof lpg.runtime.ErrorToken) {
-				token = ((lpg.runtime.ErrorToken) token).getErrorToken();
-			}
-			
-			reportError(lpg.runtime.ParseErrorCodes.MISPLACED_CODE, token.getTokenIndex(), token.getTokenIndex(),  
-					"'" + 
-					token.toString() + "'");
-			reset(token.getTokenIndex()); // point to error token
+			//IToken token = getIToken(token_index);
+			//if (token instanceof lpg.runtime.ErrorToken) {
+			//	token = ((lpg.runtime.ErrorToken) token).getErrorToken();
+			//}			
+			//reportError(lpg.runtime.ParseErrorCodes.MISPLACED_CODE, token.getTokenIndex(), token.getTokenIndex(),  
+			//		"'" + 
+			//		token.toString() + "'");
+
+			reset(token_index); // point to error token
 			DiagnoseParser diagnoseParser = new DiagnoseParser(this, prs);
-			diagnoseParser.diagnose(token.getTokenIndex());
+			diagnoseParser.diagnose(token_index);
 			$setResult(null);
 		}
 	./
