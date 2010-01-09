@@ -17,7 +17,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOLexer.java,v 1.4 2010/01/09 18:33:29 sboyko Exp $
+* $Id: QVTOLexer.java,v 1.5 2010/01/09 22:42:03 sboyko Exp $
 */
 /**
 * <copyright>

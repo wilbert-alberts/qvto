@@ -202,10 +202,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	        }
 	        trailingUnitElement = unitElement;
 	    }
-	    if (modules.isEmpty()) {	    	
-            reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
-            		trailingUnitElement.getEndToken().getTokenIndex(),
-                    Messages.NoModulesDeclared);
+	    if (modules.isEmpty()) {
+	    	if (startingUnitElement != null) {
+	            reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
+	            		trailingUnitElement.getEndToken().getTokenIndex(),
+	                    Messages.NoModulesDeclared);
+	    	}
             return null;
 	    }
 	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {

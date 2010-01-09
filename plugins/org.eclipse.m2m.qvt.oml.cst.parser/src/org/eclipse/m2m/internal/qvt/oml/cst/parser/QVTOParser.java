@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOParser.java,v 1.4 2010/01/09 18:33:29 sboyko Exp $
+* $Id: QVTOParser.java,v 1.5 2010/01/09 22:42:03 sboyko Exp $
 */
 /**
 * <copyright>
@@ -2178,25 +2178,25 @@ import org.eclipse.ocl.utilities.PredefinedType;
             }
 	 
             //
-            // Rule 290:  CallExpCS ::= . qvtErrorToken
+            // Rule 290:  CallExpCS ::= primaryExpCS . qvtErrorToken
             //
             case 290: {
                 
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-				setOffsets(result, getIToken(dtParser.getToken(1)));
+				setOffsets(result, (CSTNode)dtParser.getSym(1), getIToken(dtParser.getToken(2)));
 				dtParser.setSym1(result);
 	          break;
             }
 	 
             //
-            // Rule 291:  CallExpCS ::= -> qvtErrorToken
+            // Rule 291:  CallExpCS ::= primaryExpCS -> qvtErrorToken
             //
             case 291: {
                 
 				CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 	 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
-				setOffsets(result, getIToken(dtParser.getToken(1)));
+				setOffsets(result, (CSTNode)dtParser.getSym(1), getIToken(dtParser.getToken(2)));
 				dtParser.setSym1(result);
 	          break;
             }

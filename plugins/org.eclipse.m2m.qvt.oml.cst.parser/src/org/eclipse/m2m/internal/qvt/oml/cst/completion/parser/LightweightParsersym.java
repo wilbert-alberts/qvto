@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.4 2010/01/09 18:33:29 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.5 2010/01/09 22:42:02 sboyko Exp $
 */
 /**
 * <copyright>
@@ -57,32 +57,32 @@ package org.eclipse.m2m.internal.qvt.oml.cst.completion.parser;
 
 public interface LightweightParsersym {
     public final static int
-      TK_INTEGER_LITERAL = 28,
-      TK_REAL_LITERAL = 29,
-      TK_STRING_LITERAL = 25,
-      TK_PLUS = 68,
-      TK_MINUS = 9,
-      TK_MULTIPLY = 8,
-      TK_DIVIDE = 69,
+      TK_INTEGER_LITERAL = 26,
+      TK_REAL_LITERAL = 27,
+      TK_STRING_LITERAL = 23,
+      TK_PLUS = 67,
+      TK_MINUS = 8,
+      TK_MULTIPLY = 7,
+      TK_DIVIDE = 68,
       TK_GREATER = 72,
       TK_LESS = 73,
-      TK_EQUAL = 63,
+      TK_EQUAL = 61,
       TK_GREATER_EQUAL = 74,
       TK_LESS_EQUAL = 75,
       TK_NOT_EQUAL = 76,
       TK_LPAREN = 2,
       TK_RPAREN = 4,
-      TK_LBRACE = 62,
-      TK_RBRACE = 65,
-      TK_LBRACKET = 70,
+      TK_LBRACE = 60,
+      TK_RBRACE = 63,
+      TK_LBRACKET = 69,
       TK_RBRACKET = 105,
-      TK_ARROW = 24,
-      TK_BAR = 67,
-      TK_COMMA = 61,
-      TK_COLON = 64,
-      TK_COLONCOLON = 66,
-      TK_SEMICOLON = 52,
-      TK_DOT = 7,
+      TK_ARROW = 70,
+      TK_BAR = 66,
+      TK_COMMA = 59,
+      TK_COLON = 62,
+      TK_COLONCOLON = 64,
+      TK_SEMICOLON = 58,
+      TK_DOT = 65,
       TK_DOTDOT = 106,
       TK_RESET_ASSIGN = 77,
       TK_ADD_ASSIGN = 99,
@@ -99,38 +99,38 @@ public interface LightweightParsersym {
       TK_TILDE_SIGN = 121,
       TK_and = 80,
       TK_implies = 96,
-      TK_not = 37,
+      TK_not = 35,
       TK_or = 83,
       TK_xor = 86,
-      TK_if = 40,
+      TK_if = 38,
       TK_then = 122,
       TK_else = 111,
       TK_endif = 112,
-      TK_let = 41,
+      TK_let = 39,
       TK_in = 84,
-      TK_false = 30,
-      TK_true = 31,
-      TK_null = 32,
-      TK_invalid = 33,
-      TK_self = 38,
-      TK_Bag = 10,
-      TK_Collection = 11,
-      TK_OrderedSet = 12,
-      TK_Sequence = 13,
-      TK_Set = 14,
-      TK_Tuple = 15,
-      TK_Boolean = 16,
-      TK_Integer = 17,
-      TK_Real = 18,
-      TK_String = 19,
-      TK_UnlimitedNatural = 20,
-      TK_OclAny = 21,
-      TK_OclInvalid = 22,
-      TK_OclVoid = 23,
-      TK_Dict = 26,
-      TK_List = 27,
-      TK_break = 42,
-      TK_switch = 39,
+      TK_false = 28,
+      TK_true = 29,
+      TK_null = 30,
+      TK_invalid = 31,
+      TK_self = 36,
+      TK_Bag = 9,
+      TK_Collection = 10,
+      TK_OrderedSet = 11,
+      TK_Sequence = 12,
+      TK_Set = 13,
+      TK_Tuple = 14,
+      TK_Boolean = 15,
+      TK_Integer = 16,
+      TK_Real = 17,
+      TK_String = 18,
+      TK_UnlimitedNatural = 19,
+      TK_OclAny = 20,
+      TK_OclInvalid = 21,
+      TK_OclVoid = 22,
+      TK_Dict = 24,
+      TK_List = 25,
+      TK_break = 40,
+      TK_switch = 37,
       TK_case = 113,
       TK_xselect = 123,
       TK_xcollect = 124,
@@ -138,22 +138,22 @@ public interface LightweightParsersym {
       TK_collectOne = 126,
       TK_collectselect = 127,
       TK_collectselectOne = 128,
-      TK_return = 49,
+      TK_return = 47,
       TK_forEach = 129,
       TK_forOne = 130,
-      TK_var = 50,
-      TK_while = 43,
-      TK_continue = 44,
-      TK_log = 45,
-      TK_assert = 51,
+      TK_var = 48,
+      TK_while = 41,
+      TK_continue = 42,
+      TK_log = 43,
+      TK_assert = 49,
       TK_with = 131,
-      TK_compute = 46,
-      TK_new = 47,
+      TK_compute = 44,
+      TK_new = 45,
       TK_init = 132,
       TK_static = 85,
       TK_end = 87,
       TK_out = 97,
-      TK_object = 48,
+      TK_object = 46,
       TK_transformation = 100,
       TK_import = 133,
       TK_library = 101,
@@ -169,17 +169,17 @@ public interface LightweightParsersym {
       TK_opposites = 134,
       TK_class = 135,
       TK_population = 114,
-      TK_map = 34,
-      TK_xmap = 35,
-      TK_late = 36,
-      TK_resolve = 53,
-      TK_resolveone = 54,
-      TK_resolveIn = 55,
-      TK_resolveoneIn = 56,
-      TK_invresolve = 57,
-      TK_invresolveone = 58,
-      TK_invresolveIn = 59,
-      TK_invresolveoneIn = 60,
+      TK_map = 32,
+      TK_xmap = 33,
+      TK_late = 34,
+      TK_resolve = 50,
+      TK_resolveone = 51,
+      TK_resolveIn = 52,
+      TK_resolveoneIn = 53,
+      TK_invresolve = 54,
+      TK_invresolveone = 55,
+      TK_invresolveIn = 56,
+      TK_invresolveoneIn = 57,
       TK_modeltype = 136,
       TK_uses = 137,
       TK_where = 138,
@@ -228,7 +228,6 @@ public interface LightweightParsersym {
                  "RPAREN", //$NON-NLS-1$
                  "result", //$NON-NLS-1$
                  "this", //$NON-NLS-1$
-                 "DOT", //$NON-NLS-1$
                  "MULTIPLY", //$NON-NLS-1$
                  "MINUS", //$NON-NLS-1$
                  "Bag", //$NON-NLS-1$
@@ -245,7 +244,6 @@ public interface LightweightParsersym {
                  "OclAny", //$NON-NLS-1$
                  "OclInvalid", //$NON-NLS-1$
                  "OclVoid", //$NON-NLS-1$
-                 "ARROW", //$NON-NLS-1$
                  "STRING_LITERAL", //$NON-NLS-1$
                  "Dict", //$NON-NLS-1$
                  "List", //$NON-NLS-1$
@@ -273,7 +271,6 @@ public interface LightweightParsersym {
                  "return", //$NON-NLS-1$
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$
-                 "SEMICOLON", //$NON-NLS-1$
                  "resolve", //$NON-NLS-1$
                  "resolveone", //$NON-NLS-1$
                  "resolveIn", //$NON-NLS-1$
@@ -282,16 +279,19 @@ public interface LightweightParsersym {
                  "invresolveone", //$NON-NLS-1$
                  "invresolveIn", //$NON-NLS-1$
                  "invresolveoneIn", //$NON-NLS-1$
+                 "SEMICOLON", //$NON-NLS-1$
                  "COMMA", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
                  "EQUAL", //$NON-NLS-1$
                  "COLON", //$NON-NLS-1$
                  "RBRACE", //$NON-NLS-1$
                  "COLONCOLON", //$NON-NLS-1$
+                 "DOT", //$NON-NLS-1$
                  "BAR", //$NON-NLS-1$
                  "PLUS", //$NON-NLS-1$
                  "DIVIDE", //$NON-NLS-1$
                  "LBRACKET", //$NON-NLS-1$
+                 "ARROW", //$NON-NLS-1$
                  "EXCLAMATION_MARK", //$NON-NLS-1$
                  "GREATER", //$NON-NLS-1$
                  "LESS", //$NON-NLS-1$
