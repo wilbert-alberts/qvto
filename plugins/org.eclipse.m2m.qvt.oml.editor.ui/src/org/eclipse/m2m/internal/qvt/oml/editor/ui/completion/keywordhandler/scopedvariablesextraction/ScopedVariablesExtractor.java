@@ -396,7 +396,8 @@ public class ScopedVariablesExtractor {
                 Result variableResult = extractVariable(nextToken, iteratorExpressionStart,
                         data, updatedScope, new int[] {QVTOParsersym.TK_EQUAL}, unexpectedTerminator, delimiters);
                 if (variableResult == null) {
-                    return new Result(startToken, lastKnownGoodToken, null, updatedScope.getParent());
+                	IToken followToken = getNextToken(nextToken, data);
+                    return new Result(startToken, followToken != null ? followToken : nextToken, null, updatedScope.getParent());
                 }
                 if (variableResult.getScope() != updatedScope) {
                     return variableResult;

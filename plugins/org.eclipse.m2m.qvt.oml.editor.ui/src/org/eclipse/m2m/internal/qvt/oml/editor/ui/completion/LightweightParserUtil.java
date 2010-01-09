@@ -423,7 +423,7 @@ public class LightweightParserUtil {
         }
         
         public CSTNode runParser() throws ParserException {
-            return parser(10);
+            return parser(-1);
         }
     }
 
@@ -433,7 +433,7 @@ public class LightweightParserUtil {
         }
         
         public CSTNode runParser() throws ParserException {
-            return parser(10);
+            return parser(-1);
         }
     }
 }
