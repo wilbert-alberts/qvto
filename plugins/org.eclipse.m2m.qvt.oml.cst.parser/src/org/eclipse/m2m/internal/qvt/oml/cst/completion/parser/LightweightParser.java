@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightParser.java,v 1.2 2010/01/06 18:55:04 sboyko Exp $
+* $Id: LightweightParser.java,v 1.3 2010/01/09 17:24:11 sboyko Exp $
 */
 /**
 * <copyright>
@@ -227,8 +227,13 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 		}
 
 		try {
-		    workaroundEOFErrors();
-			return (CSTNode) dtParser.fuzzyParse(error_repair_count);
+			workaroundEOFErrors();
+			if (error_repair_count > 0) {
+				return (CSTNode) dtParser.fuzzyParse(error_repair_count);
+			}
+			else {
+				return (CSTNode) dtParser.parse(error_repair_count);
+			}
 		}
 		catch (BadParseException e) {
 			OnParseError(e);
@@ -4538,7 +4543,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
             }
 	 
             //
-            // Rule 555:  navigable_prop ::= TILDE_SIGN
+            // Rule 555:  navigable_prop ::= ~
             //
             case 555: {
                 
