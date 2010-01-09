@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOParser.java,v 1.3 2010/01/09 17:24:11 sboyko Exp $
+* $Id: QVTOParser.java,v 1.4 2010/01/09 18:33:29 sboyko Exp $
 */
 /**
 * <copyright>
@@ -251,14 +251,14 @@ import org.eclipse.ocl.utilities.PredefinedType;
 	}
 
 	protected void OnParseError(BadParseException e) {
-		System.err.println(getFileName());
-		java.util.ArrayList<?> tokens = getTokens();
-		String result = getName(e.error_token) + " ~~ ";  //$NON-NLS-1$
-		for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
-			result += tokens.get(i).toString();
-			result += " ";  //$NON-NLS-1$
-		}
-		System.err.println(result);
+		//System.err.println(getFileName());
+		//java.util.ArrayList<?> tokens = getTokens();
+		//String result = getName(e.error_token) + " ~~ ";  //$NON-NLS-1$
+		//for (int i = Math.max(0, e.error_token-5), n = Math.min(tokens.size(), e.error_token+5); i < n; ++i) {
+		//	result += tokens.get(i).toString();
+		//	result += " ";  //$NON-NLS-1$
+		//}
+		//System.err.println(result);
 	}
 
 
@@ -275,17 +275,17 @@ import org.eclipse.ocl.utilities.PredefinedType;
 							
 	
 	private void diagnozeErrorToken(int token_index) {
-		IToken token = getIToken(token_index);
-		if (token instanceof lpg.runtime.ErrorToken) {
-			token = ((lpg.runtime.ErrorToken) token).getErrorToken();
-		}
-		
-		reportError(lpg.runtime.ParseErrorCodes.MISPLACED_CODE, token.getTokenIndex(), token.getTokenIndex(),  
-				"'" +  //$NON-NLS-1$
-				token.toString() + "'"); //$NON-NLS-1$
-		reset(token.getTokenIndex()); // point to error token
+		//IToken token = getIToken(token_index);
+		//if (token instanceof lpg.runtime.ErrorToken) {
+		//	token = ((lpg.runtime.ErrorToken) token).getErrorToken();
+		//}			
+		//reportError(lpg.runtime.ParseErrorCodes.MISPLACED_CODE, token.getTokenIndex(), token.getTokenIndex(),  
+		//		"'" +  //$NON-NLS-1$
+		//		token.toString() + "'"); //$NON-NLS-1$
+
+		reset(token_index); // point to error token
 		DiagnoseParser diagnoseParser = new DiagnoseParser(this, prs);
-		diagnoseParser.diagnose(token.getTokenIndex());
+		diagnoseParser.diagnose(token_index);
 		dtParser.setSym1(null);
 	}
 

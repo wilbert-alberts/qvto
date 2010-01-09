@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.3 2010/01/09 17:24:11 sboyko Exp $
+* $Id: LightweightTypeParserprs.java,v 1.4 2010/01/09 18:33:28 sboyko Exp $
 */
 /**
 * <copyright>
