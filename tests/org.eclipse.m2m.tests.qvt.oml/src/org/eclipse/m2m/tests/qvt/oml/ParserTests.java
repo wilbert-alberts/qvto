@@ -165,7 +165,7 @@ public class ParserTests {
         new TestData("modifyresult", 0), //$NON-NLS-1$
         new TestData("wrongorderininit", 1), //$NON-NLS-1$
         new TestData("duplicateinitvariable", 1), //$NON-NLS-1$
-        TestData.createSourceChecked("missingObjectType", 3, 0), // replaced former 'nestedouterror' //$NON-NLS-1$
+        TestData.createSourceChecked("missingObjectType", 1, 0), // replaced former 'nestedouterror' //$NON-NLS-1$
         new TestData("emptyinit", 0), //$NON-NLS-1$
         new TestData("assignresultininit", 0), //$NON-NLS-1$
         new TestData("assign_inoutParam", 2), //$NON-NLS-1$
