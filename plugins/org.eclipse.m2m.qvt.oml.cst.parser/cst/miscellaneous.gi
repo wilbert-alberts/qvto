@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.gi,v 1.1 2010/01/06 18:56:12 sboyko Exp $ 
+-- * $Id: miscellaneous.gi,v 1.2 2010/01/09 17:25:22 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -111,8 +111,13 @@
 			}
 
 			try {
-			    workaroundEOFErrors();
-				return ($ast_type) dtParser.fuzzyParse(error_repair_count);
+				workaroundEOFErrors();
+				if (error_repair_count > 0) {
+					return ($ast_type) dtParser.fuzzyParse(error_repair_count);
+				}
+				else {
+					return ($ast_type) dtParser.parse(error_repair_count);
+				}
 			}
 			catch (BadParseException e) {
 				OnParseError(e);

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.1 2010/01/06 18:56:10 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.2 2010/01/09 17:25:22 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -897,7 +897,7 @@
 		  $EndCode
 		./
 
-	navigable_prop ::= TILDE_SIGN
+	navigable_prop ::= '~'
 		/.$BeginCode
 					CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
 					setOffsets(result, getIToken($getToken(1)));
