@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.gi,v 1.3 2010/01/09 18:34:42 sboyko Exp $ 
+-- * $Id: miscellaneous.gi,v 1.4 2010/01/09 22:44:06 sboyko Exp $ 
 -- */
 --
 -- The QVT Operational Parser
@@ -695,19 +695,19 @@
 	--=== // Expressions (end) ===--
 		
 	--=== OCL grammar error recovery extensions (start) ===--
-	CallExpCS ::= '.' qvtErrorToken
+	CallExpCS ::= primaryExpCS '.' qvtErrorToken
 		/.$BeginCode
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-					setOffsets(result, getIToken($getToken(1)));
+					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
 					$setResult(result);
 		  $EndCode
 		./
-	CallExpCS ::= '->' qvtErrorToken
+	CallExpCS ::= primaryExpCS '->' qvtErrorToken
 		/.$BeginCode
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
-					setOffsets(result, getIToken($getToken(1)));
+					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
 					$setResult(result);
 		  $EndCode
 		./

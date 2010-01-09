@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.gi,v 1.1 2010/01/06 18:56:13 sboyko Exp $ 
+-- * $Id: ImperativeOCL.gi,v 1.2 2010/01/09 22:44:06 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL Parser
@@ -897,7 +897,6 @@
 					$setResult(iterateExpCS);
 		  $EndCode
 		./
-	--LoopExpCS -> imperativeIterateExpCS
 
         -- here x12 means full notation in the 1 and 2 forms, x3 - in the 3 form
 	-- <source> -> <collector-name> (<body_or_condition>) ;                              (1)
