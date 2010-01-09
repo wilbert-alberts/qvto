@@ -64,7 +64,7 @@ public class QvtOperationalParser {
 			myParser.enableCSTTokens(Boolean.TRUE.equals(env.getValue(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS)));
 			
 			lexer.lexToTokens(myParser);
-			result = (MappingModuleCS) myParser.runParser(100);	
+			result = (MappingModuleCS) myParser.runParser(-1);	
 		}
 		catch (ParserException ex) {
 			env.reportError(ex.getLocalizedMessage(), 0, 0);
@@ -122,6 +122,11 @@ public class QvtOperationalParser {
 		
 		@Override
 		public void reportError(int errorCode, int leftToken, int rightToken, String tokenText) {
+			if (errorCode == lpg.runtime.ParseErrorCodes.MISPLACED_CODE) {
+				// when parsed with max_error_count < 0 (means that "the number of error token recoveries is unlimited")
+				// then MISPLACED_CODE duplicates DELETION_CODE for the same ERROR_TOKEN
+				return;
+			}
 			super.reportError(errorCode, leftToken, rightToken, tokenText);
 		}
 		
