@@ -115,5 +115,5 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
     protected IStructuredSelection myInitialSelection;
     private URI myUri;
     private final boolean myIsConsiderAdaptes;
-    private final ResourceSet myResourceSet;
+    protected final ResourceSet myResourceSet;
 }

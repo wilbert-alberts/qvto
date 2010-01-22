@@ -20,7 +20,7 @@ public class DefaultMetamodelHandler implements IMetamodelHandler {
     }
 
     public ISourceChooser getSourceChooser(ResourceSet rs) {
-        return new ResourceSourceChooser(false, rs);
+        return new ResourceSourceChooser(true, rs);
     }
 
     public ISourceChooser getSourceAdaptableChooser(ResourceSet rs) {
