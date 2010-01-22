@@ -149,7 +149,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	
 	@Override
 	public Object visitIfExp(org.eclipse.ocl.expressions.IfExp<EClassifier> ifExp) {
-		// QVT language also defines an imperative “if-then-else” construct that is less constrained 
+		// QVT language also defines an imperative "if-then-else" construct that is less constrained 
 		// as the corresponding OCL construct
 		
 		if (ifExp.getCondition() == null || ifExp.getThenExpression() == null) {
