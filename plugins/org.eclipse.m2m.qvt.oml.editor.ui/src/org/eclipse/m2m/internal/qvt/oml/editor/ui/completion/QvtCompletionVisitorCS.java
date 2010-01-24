@@ -32,15 +32,12 @@ import org.eclipse.ocl.utilities.ASTNode;
  * Created on Nov 7, 2007
  */
 public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
-    private final QvtCompletionData myData;
     private QvtOperationalEnv myEnv; 
 
     public QvtCompletionVisitorCS(
             AbstractQVTParser parser,
-            QvtCompilerOptions options,
-            QvtCompletionData data) {
+            QvtCompilerOptions options) {
         super(parser, options);
-        myData = data;
         myEnv = (QvtOperationalEnv) parser.getEnvironment();
     }
 

@@ -12,7 +12,8 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
+import org.eclipse.ocl.lpg.AbstractLexer;
 
 /**
  * @author Aleksandr Igdalov
@@ -20,22 +21,31 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
  */
 public class CFileData {
 	
-    private QVTOLexer myLexer;
+    private AbstractLexer myLexer;
+    private AbstractQVTParser myParser;
     private UnitCS myUnitCS;
     private String myLightweightScript;
  
     public CFileData() {
     }
     
-    public QVTOLexer getLexer() {
+    public AbstractLexer getLexer() {
         return myLexer;
     }
 
-    public void setLexer(QVTOLexer lexer) {
+    public void setLexer(AbstractLexer lexer) {
         myLexer = lexer;
     }
     
-    public MappingModuleCS getMappingModuleCS() {
+	public void setParser(AbstractQVTParser myParser) {
+		this.myParser = myParser;
+	}
+
+	public AbstractQVTParser getParser() {
+		return myParser;
+	}
+
+	public MappingModuleCS getMappingModuleCS() {
     	if(myUnitCS == null || myUnitCS.getModules().isEmpty()) {
     		return null;
     	}
@@ -59,4 +69,5 @@ public class CFileData {
     public void setLightweightScript(String lightweightScript) {
         myLightweightScript = lightweightScript;
     }
+
 }

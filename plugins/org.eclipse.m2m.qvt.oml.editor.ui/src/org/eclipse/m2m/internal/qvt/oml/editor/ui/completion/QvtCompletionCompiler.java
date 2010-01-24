@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryPr
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.lpg.AbstractLexer;
 
 /**
  * @author aigdalov
@@ -62,7 +63,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         return myCFileDataMap;
     }
 
-    public QVTOLexer createLexer(UnitProxy unit) throws IOException, ParserException, BadLocationException {
+    public AbstractLexer createLexer(UnitProxy unit) throws IOException, ParserException, BadLocationException {
         CFileData cFileData = getCFileData(unit.getURI());
         if (cFileData.getLexer() != null) {
             return cFileData.getLexer();
@@ -75,7 +76,9 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         cFileData.setLexer(lexer);
         try {
             lexer.reset(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
-            lexer.lexer(new QVTOParser(lexer).getIPrsStream());
+            QVTOParser qvtoParser = new QVTOParser(lexer);
+            lexer.lexer(qvtoParser.getIPrsStream());
+            cFileData.setParser(qvtoParser);
         } finally {
             reader.close();
         }
@@ -113,7 +116,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     
     @Override
     protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
-		return new QvtCompletionVisitorCS(parser, options, null) {
+		return new QvtCompletionVisitorCS(parser, options) {
 			@Override
 			protected void setEnv(QvtOperationalEnv env) {			
 				super.setEnv(env);
@@ -125,7 +128,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     @Override
     protected CSTParseResult parse(UnitProxy source, QvtCompilerOptions options) throws ParserException {
      	CFileData cFileData = compile(source);
-		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getILexStream().getIPrsStream();
+		AbstractQVTParser qvtParser = cFileData.getParser();
 
     	UnitCS unitCS = cFileData.getUnitCS();
     	
@@ -141,7 +144,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     private CFileData compile(UnitProxy cFile) {
         CFileData cFileData = getCFileData(cFile.getURI());
         try {
-            QVTOLexer lexer = createLexer(cFile);
+            AbstractLexer lexer = createLexer(cFile);
             IPrsStream prsStream = lexer.getILexStream().getIPrsStream();
             IKeywordHandler[] keywordHandlers = KeywordHandlerRegistry.getInstance().getKeywordHandlers();
             StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getILexStream().getStreamLength());

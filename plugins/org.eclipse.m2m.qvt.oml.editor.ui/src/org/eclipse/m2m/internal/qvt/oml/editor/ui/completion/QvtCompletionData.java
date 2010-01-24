@@ -36,12 +36,12 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParsersym;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.Activator;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.ocl.lpg.AbstractLexer;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -70,7 +70,7 @@ public class QvtCompletionData {
     private final Map<String, Object> myUserData = new HashMap<String, Object>();
     private IToken myLeftToken;
     private IToken myCurrentToken;
-    private QVTOLexer myLexer;
+    private AbstractLexer myLexer;
     private IPrsStream myPrsStream;
     private Exception myException;
     private IFile myIFile;
@@ -131,7 +131,7 @@ public class QvtCompletionData {
         return myCurrentToken;
     }
 
-    public QVTOLexer getLexer() {
+    public AbstractLexer getLexer() {
         return myLexer;
     }
 
