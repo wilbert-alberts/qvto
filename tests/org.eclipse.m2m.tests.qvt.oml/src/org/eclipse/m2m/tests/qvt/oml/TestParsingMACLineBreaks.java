@@ -30,7 +30,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "abc;\r"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 	
@@ -38,7 +38,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "abc;\r\n"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 	
@@ -46,7 +46,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "abc;\n"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 	
@@ -54,7 +54,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "a\n \r \r\n"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 3);
 	}
 	
@@ -62,7 +62,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "\rabc;"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 	
@@ -70,7 +70,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "\r\nabc;"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 	
@@ -78,7 +78,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 		String contents = "\nabc;"; //$NON-NLS-1$
 		QVTOLexer lexer = createLexer(contents);
 		
-		final int lineCount = lexer.getLineCount();
+		final int lineCount = lexer.getILexStream().getLineCount();
 		assertEquals(lineCount, 1);
 	}
 
@@ -88,7 +88,7 @@ public class TestParsingMACLineBreaks extends TestCase {
 				new StringReader(contents), "testLineBreak",  //$NON-NLS-1$
 				QvtOperationalEnvFactory.INSTANCE.createEnvironment());
 		
-		lexer.computeLineOffsets();
+		lexer.getILexStream().computeLineOffsets();
 		
 		return lexer;
 	}
