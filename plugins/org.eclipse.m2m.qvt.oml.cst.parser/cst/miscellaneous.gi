@@ -12,10 +12,10 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.gi,v 1.4 2010/01/09 22:44:06 sboyko Exp $ 
+-- * $Id: miscellaneous.gi,v 1.5 2010/01/24 13:59:56 sboyko Exp $ 
 -- */
 --
--- The QVT Operational Parser
+-- The QVTo Parser
 --
 
 %Import
@@ -35,8 +35,9 @@
 %Define
 	-- Definition of macros used in the parser template
 	--
-	$prs_stream_class /.AbstractQVTParser./
-	$lex_stream_class /.QVTOLexer./
+	$super_parser_class /.AbstractQVTParser./
+	$super_lexer_class /.QVTOLexer./
+	$environment_class /.Environment<?,?,?,?,?,?,?,?,?,?,?,?>./
 
 	$EMPTY_ELIST /.ourEmptyEList./
 
@@ -122,8 +123,8 @@
 			catch (BadParseException e) {
 				OnParseError(e);
 
-				reset(e.error_token); // point to error token
-				DiagnoseParser diagnoseParser = new DiagnoseParser(this, prsTable);
+				prsStream.reset(e.error_token); // point to error token
+				DiagnoseParser diagnoseParser = new DiagnoseParser(prsStream, prsTable);
 				diagnoseParser.diagnose(e.error_token);
 			}
 
@@ -230,8 +231,8 @@
 			//		"'" + 
 			//		token.toString() + "'");
 
-			reset(token_index); // point to error token
-			DiagnoseParser diagnoseParser = new DiagnoseParser(this, prs);
+			prsStream.reset(token_index); // point to error token
+			DiagnoseParser diagnoseParser = new DiagnoseParser(prsStream, prsTable);
 			diagnoseParser.diagnose(token_index);
 			$setResult(null);
 		}

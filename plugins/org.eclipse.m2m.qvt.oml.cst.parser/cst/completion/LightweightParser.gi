@@ -1,16 +1,11 @@
 %options escape=$
 %options la=2
-%options table=java
 %options fp=LightweightParser,prefix=TK_
-%options error-maps
-%options scopes
-%options margin=4
 %options noserialize
---%options template=dtParserTemplateD.g
+--%options import_terminals=../QVTOLexer.gi
 %options ast_type=CSTNode
-%options programming_language=java
-%options action=("*.java", "/.", "./")
-%options ParseTable=lpg.runtime.ParseTable
+%options template=btParserTemplateF.gi
+%options include_directory=".;../lpg;../../lpg"
 
 %Start
     QvtLwGoal
@@ -18,6 +13,7 @@
 
 %Import
 	../QVTOParser.gi
+%End
 
 %Globals
 	/.

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.2 2010/01/09 17:25:22 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.3 2010/01/24 13:59:56 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -20,18 +20,11 @@
 
 %options escape=$
 %options la=2
-%options table=java
 %options fp=QVTOParser,prefix=TK_
-%options error_maps
-%options scopes
-%options margin=4
 %options noserialize
---%options template=dtParserTemplateD.g
 %options import_terminals=QVTOLexer.gi
 %options ast_type=CSTNode
-%options programming_language=java
-%options action=("*.java", "/.", "./")
-%options ParseTable=lpg.runtime.ParseTable
+%options template=btParserTemplateF.gi
 %options include_directory=".;../lpg"
 
 
@@ -76,6 +69,7 @@
 	import org.eclipse.ocl.cst.DotOrArrowEnum;
 	import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 	import org.eclipse.ocl.utilities.PredefinedType;
+	import org.eclipse.ocl.Environment;
 	./
 %End
 

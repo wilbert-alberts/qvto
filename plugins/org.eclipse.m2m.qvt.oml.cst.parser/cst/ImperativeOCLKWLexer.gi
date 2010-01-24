@@ -12,16 +12,16 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCLKWLexer.gi,v 1.1 2010/01/06 18:56:11 sboyko Exp $ 
+-- * $Id: ImperativeOCLKWLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL KeyWord Lexer
 --
 
 %options slr
-%options fp=QVTOKWLexer,prefix=Char_
+%options fp=ImperativeOCLKWLexer,prefix=Char_
 %options noserialize
-%options template=../lpg/KeywordTemplateD.gi
+%options template=../lpg/KeywordTemplateF.gi
 %options export_terminals=("ImperativeOCLParsersym.java", "TK_")
 %options include_directory=".;../lpg"
 

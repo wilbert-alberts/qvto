@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOKWLexer.gi,v 1.1 2010/01/06 18:56:14 sboyko Exp $ 
+-- * $Id: QVTOKWLexer.gi,v 1.2 2010/01/24 13:59:57 sboyko Exp $ 
 -- */
 --
 -- The QVTo KeyWord Lexer
@@ -21,7 +21,7 @@
 %options slr
 %options fp=QVTOKWLexer,prefix=Char_
 %options noserialize
-%options template=../lpg/KeywordTemplateD.gi
+%options template=../lpg/KeywordTemplateF.gi
 %options export_terminals=("QVTOParsersym.java", "TK_")
 %options include_directory=".;../lpg"
 

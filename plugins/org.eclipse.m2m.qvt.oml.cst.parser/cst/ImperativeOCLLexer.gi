@@ -12,19 +12,18 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCLLexer.gi,v 1.1 2010/01/06 18:56:13 sboyko Exp $
+-- * $Id: ImperativeOCLLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $
 -- */
 --
 -- The Imperative OCL Lexer
 --
 
-%options scopes
 %options escape=$
 %options la=2
-%options fp=QVTOLexer,prefix=Char_
+%options fp=ImperativeOCLLexer,prefix=Char_
 %options single-productions
 %options noserialize
-%options template=../lpg/LexerTemplateD.gi
+%options template=../lpg/LexerTemplateF.gi
 %options filter=ImperativeOCLKWLexer.gi
 %options export_terminals=("ImperativeOCLParsersym.java", "TK_")
 %options include_directory=".;../lpg"
