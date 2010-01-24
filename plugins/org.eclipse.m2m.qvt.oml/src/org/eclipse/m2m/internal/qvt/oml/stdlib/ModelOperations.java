@@ -54,7 +54,7 @@ public class ModelOperations extends AbstractContextualOperations {
 		return new OperationProvider[] {
 			new OwnedOperationProvider(UNSUPPORTED_OPER, "asTransformation", new String[] { "model" }, //$NON-NLS-1$ //$NON-NLS-2$
 					getStdlib().getTransformationClass(), getStdlib().getModelClass()),
-			new OwnedOperationProvider(COPY, COPY_NAME, getStdlib().getModelClass()), //$NON-NLS-1$
+			new OwnedOperationProvider(COPY, COPY_NAME, getStdlib().getModelClass()),
 			
 			createOwnedStaticOperationProvider(CREATE_EMPTY_MODEL, CREATE_EMPTY_MODEL_NAME, null, getStdlib().getModelClass()),
 			

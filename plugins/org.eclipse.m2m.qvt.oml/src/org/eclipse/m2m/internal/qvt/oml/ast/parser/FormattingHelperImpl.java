@@ -35,7 +35,7 @@ public class FormattingHelperImpl extends AbstractFormattingHelper {
 		EClassifier owner = uml.getOwningClassifier(operation);
 		if (owner != null && owner instanceof Module == false) {
 			result.append(formatQualifiedName(owner));
-			result.append(getSeparator()); //$NON-NLS-1$
+			result.append(getSeparator());
 		}
 
 		result.append(formatName(operation));

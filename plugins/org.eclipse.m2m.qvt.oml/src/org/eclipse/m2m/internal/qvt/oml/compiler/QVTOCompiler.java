@@ -61,7 +61,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -71,6 +70,7 @@ import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
+import org.eclipse.ocl.lpg.AbstractLexer;
 
 
 public class QVTOCompiler {
@@ -580,7 +580,7 @@ public class QVTOCompiler {
 	}
 	
 	private void addSourceLineNumberInfo(AbstractQVTParser parser, CSTAnalysisResult analysisResult, UnitProxy source) {
-		QVTOLexer lexer = parser.getLexer();
+		AbstractLexer lexer = parser.getLexer();
 		if (lexer != null) {
 			URI sourceURI = source.getURI();
 			if(sourceURI != null && analysisResult.modules != null) {

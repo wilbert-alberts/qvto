@@ -1205,7 +1205,7 @@ public class QvtOperationalVisitorCS
 			EClass, EObject> env,
             CSTNode cstNode) {
         
-        @SuppressWarnings("unchecked") //$NON-NLS-1$
+        @SuppressWarnings("unchecked")
         EClassifier sourceElementType = ((CollectionType<EClassifier, EOperation>) source.getType())
             .getElementType();
         
@@ -1743,7 +1743,7 @@ public class QvtOperationalVisitorCS
 			if(methodCS.getMappingDeclarationCS() != null) {
 				SimpleNameCS methodNameCS = methodCS.getMappingDeclarationCS().getSimpleNameCS();
 				if(methodNameCS != null) {
-					name = methodNameCS.getValue(); //$NON-NLS-1$
+					name = methodNameCS.getValue();
 				}
 			}
 			
@@ -2462,7 +2462,7 @@ public class QvtOperationalVisitorCS
 				break;
 			case 0:
     			String message = NLS.bind(ValidationMessages.UnresolvedModuleReference, 
-    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS)); //$NON-NLS-1$
+    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS));
     			env.reportError(message, moduleRefCS);
     			break;
     		default:

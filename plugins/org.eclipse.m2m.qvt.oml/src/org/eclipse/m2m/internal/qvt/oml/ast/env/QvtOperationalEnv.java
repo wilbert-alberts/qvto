@@ -859,9 +859,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		if(parser != null) {
 			AbstractLexer lexer = parser.getLexer();
 			if(lexer != null) {
-				if(startOffset <= lexer.getStreamLength()) {
+				if(startOffset <= lexer.getILexStream().getStreamLength()) {
 					try {
-						return lexer.getLineNumberOfCharAt(startOffset);	
+						return lexer.getILexStream().getLineNumberOfCharAt(startOffset);	
 					} catch (RuntimeException e) {
 						// TODO - add trace
 						// do nothing, the line number just not available

@@ -1195,7 +1195,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(args.size() > 1) {
 			element = args.get(1).accept(getVisitor());
 			if(element == invalid) {
-				formatedElement = invalidRepr; //$NON-NLS-1$
+				formatedElement = invalidRepr;
 			} else {
 				formatedElement = EvaluationUtil.formatLoggedElement(element);
 			}
@@ -1563,8 +1563,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
     	boolean isBodyExecuted() { return myStatus == BODY_EXECUTED; }
     	boolean isPreconditionFailed() { return (myStatus & PRECOND_FAILED) != 0; };
-    	boolean isFetchedFromTrace() { return (myStatus & FETCHED_FROM_TRACE) != 0; };
-    	boolean isNoDisjunctSelected() { return (myStatus & NO_DISJUCT_SELECTED) != 0; };    	
+    	//boolean isFetchedFromTrace() { return (myStatus & FETCHED_FROM_TRACE) != 0; };
+    	//boolean isNoDisjunctSelected() { return (myStatus & NO_DISJUCT_SELECTED) != 0; };    	
     }
     
     private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {    	
@@ -1704,7 +1704,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				.throwQVTException(exception);
     }
     
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")
 	@Override
     protected Object call(EOperation operation, OCLExpression<EClassifier> body, Object target, Object[] args) {
     	if(target instanceof EObject) {
@@ -1787,7 +1787,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return super.visitCollectionLiteralExp(cl);
 	}
 
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Object navigate(EStructuralFeature property, OCLExpression<EClassifier> derivation, Object target) {
 		Environment myEnv = getEnvironment(); 

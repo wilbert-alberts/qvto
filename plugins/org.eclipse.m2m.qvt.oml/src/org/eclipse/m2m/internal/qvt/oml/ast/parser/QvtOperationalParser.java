@@ -41,8 +41,7 @@ public class QvtOperationalParser {
 	}
 	
 	public static QVTOLexer createLexer(final Reader is, final String name, QvtOperationalEnv env) throws ParserException {
-		QVTOLexer lexer = new QVTOLexer(env);
-		lexer.initialize(correctLineBreaks(new OCLInput(is)), name);
+		QVTOLexer lexer = new QVTOLexer(env, correctLineBreaks(new OCLInput(is)), name, 4);
 		return lexer;
 	}
 	
@@ -56,12 +55,12 @@ public class QvtOperationalParser {
 		try {			
 			QVTOLexer lexer = createLexer(is, name, env);
 			unitCS.setStartOffset(0);
-			unitCS.setEndOffset(lexer.getStreamLength());			
+			unitCS.setEndOffset(lexer.getILexStream().getStreamLength());			
 
 			myParser = new RunnableQVTParser(lexer);		
 			myParser.enableCSTTokens(Boolean.TRUE.equals(env.getValue(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS)));
 			
-			lexer.lexToTokens(myParser);
+			lexer.lexer(myParser.getIPrsStream());
 			result = (MappingModuleCS) myParser.runParser(-1);	
 		}
 		catch (ParserException ex) {
@@ -110,7 +109,7 @@ public class QvtOperationalParser {
 		}
 		
 		public EObject runParser(int max_error_count) throws ParserException {
-			return parseTokensToCST(null, max_error_count);
+			return parser(max_error_count);
 		}
 		
 //		@Override
@@ -126,7 +125,7 @@ public class QvtOperationalParser {
 		// FIXME - OCL 1.2 migration, workaround for ArrayIndexOutBounds
 		@Override
 		public String computeInputString(int left, int right) {
-			char[] chars = getInputChars();
+			char[] chars = getIPrsStream().getInputChars();
 			
 			if(right < left) {
 				right = left;

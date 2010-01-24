@@ -35,7 +35,7 @@ public class ExeXMISerializer {
 	}
 	
 	public static URI toXMIUnitURI(URI uri) {
-		return uri.trimFileExtension().appendFileExtension(ExeXMISerializer.COMPILED_XMI_FILE_EXTENSION); //$NON-NLS-1$
+		return uri.trimFileExtension().appendFileExtension(ExeXMISerializer.COMPILED_XMI_FILE_EXTENSION);
 	}	
 	
 	public static void saveUnitXMI(CompiledUnit[] units, EPackage.Registry metamodelRegistry) throws IOException {

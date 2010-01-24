@@ -101,7 +101,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		fFactory = new StdlibFactory(this);
 		
 		assert fStdlibModule.eResource() != null;
-		fStdlibModule.eResource().setURI(URI.createURI(fStdlibModule.getNsURI())); //$NON-NLS-1$		
+		fStdlibModule.eResource().setURI(URI.createURI(fStdlibModule.getNsURI()));		
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
 		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
