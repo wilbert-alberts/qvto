@@ -95,7 +95,7 @@ public class QvtCompletionData {
             myQvtCompiler = createQvtCompiler();
             myLexer = myQvtCompiler.createLexer(unit);
 
-            myPrsStream = myLexer.getIPrsStream();
+            myPrsStream = myLexer.getILexStream().getIPrsStream();
             getLeftTokenAndCurrentToken();
         } catch (Exception ex) {
             myException = ex;

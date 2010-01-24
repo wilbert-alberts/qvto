@@ -74,8 +74,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         
         cFileData.setLexer(lexer);
         try {
-            lexer.initialize(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
-            lexer.lexToTokens(new QVTOParser(lexer));
+            lexer.reset(new OCLInput(reader).getContent(), unit.getURI().lastSegment());
+            lexer.lexer(new QVTOParser(lexer).getIPrsStream());
         } finally {
             reader.close();
         }
@@ -125,7 +125,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     @Override
     protected CSTParseResult parse(UnitProxy source, QvtCompilerOptions options) throws ParserException {
      	CFileData cFileData = compile(source);
-		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getParser();
+		AbstractQVTParser qvtParser = (AbstractQVTParser) cFileData.getLexer().getILexStream().getIPrsStream();
 
     	UnitCS unitCS = cFileData.getUnitCS();
     	
@@ -142,9 +142,9 @@ public class QvtCompletionCompiler extends QVTOCompiler {
         CFileData cFileData = getCFileData(cFile.getURI());
         try {
             QVTOLexer lexer = createLexer(cFile);
-            IPrsStream prsStream = lexer.getIPrsStream();
+            IPrsStream prsStream = lexer.getILexStream().getIPrsStream();
             IKeywordHandler[] keywordHandlers = KeywordHandlerRegistry.getInstance().getKeywordHandlers();
-            StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getStreamLength());
+            StringBuilder lightweightScriptBuilder = new StringBuilder(lexer.getILexStream().getStreamLength());
             for (int i = 0, n = prsStream.getSize(); i < n; i++) {
                 IToken token = prsStream.getTokenAt(i);
                 for (IKeywordHandler keywordHandler : keywordHandlers) {
@@ -165,7 +165,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
 
             UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();
         	unitCS.setStartOffset(0);
-        	unitCS.setStartOffset(lexer.getStreamLength());
+        	unitCS.setStartOffset(lexer.getILexStream().getStreamLength());
             
             if (cstNode instanceof MappingModuleCS) {  	
             	unitCS.getTopLevelElements().add((MappingModuleCS) cstNode);

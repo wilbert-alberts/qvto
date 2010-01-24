@@ -234,19 +234,14 @@ public class LightweightParserUtil {
 
     public static final OCLExpression<EClassifier> getOclExpression(OCLExpressionCS oclExpressionCS, QvtCompletionData data) {
         if (oclExpressionCS != null) {
-            OCLLexer oclLexer = new OCLLexer(data.getEnvironment());
-            try {
-                oclLexer.initialize(new OCLInput("").getContent(), data.getCFile().getName()); //$NON-NLS-1$
-                QvtCompilerOptions options = new QvtCompilerOptions();
-                options.setReportErrors(false);
-                options.setShowAnnotations(false);
-                options.setSourceLineNumbersEnabled(false);
-                QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, data.getEnvironment(), options);
+            OCLLexer oclLexer = new OCLLexer(data.getEnvironment(), new char[0], data.getCFile().getName(), 4);
+            QvtCompilerOptions options = new QvtCompilerOptions();
+            options.setReportErrors(false);
+            options.setShowAnnotations(false);
+            options.setSourceLineNumbersEnabled(false);
+            QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, data.getEnvironment(), options);
 
-				return visitor.analyzeExpressionCS(oclExpressionCS, data.getEnvironment());
-            } catch (ParserException e) {
-                Activator.log(e);
-            }
+			return visitor.analyzeExpressionCS(oclExpressionCS, data.getEnvironment());
         }
         return null;
     }
@@ -296,16 +291,15 @@ public class LightweightParserUtil {
     public static final CSTNode parse(String script, UnitProxy unit, ParserTypeEnum parserType) {
         try {
         	QvtOperationalEnv env = new QvtOperationalEnvFactory().createEnvironment();
-            QVTOLexer lexer = new QVTOLexer(env);
-            lexer.initialize(new OCLInput(script).getContent(), unit.getName());
+            QVTOLexer lexer = new QVTOLexer(env, new OCLInput(script).getContent(), unit.getName(), 4);
             AbstractQVTParser parser = null;
             switch (parserType) {
                 case LIGHTWEIGHT_PARSER: parser = new RunnableLightweightParser(lexer); break;
                 case LIGHTWEIGHT_TYPE_PARSER: parser = new RunnableLightweightTypeParser(lexer); break;
                 default: throw new RuntimeException("Unknown parserType: " + parserType); //$NON-NLS-1$
             }
-            parser.resetTokenStream();
-            lexer.lexToTokens(parser);
+            parser.getIPrsStream().resetTokenStream();
+            lexer.lexer(parser.getIPrsStream());
             return (CSTNode) ((ILightweightParser) parser).runParser();
         } catch (Exception ex) {
             Activator.log(ex);
