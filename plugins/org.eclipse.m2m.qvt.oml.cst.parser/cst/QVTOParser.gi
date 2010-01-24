@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.3 2010/01/24 13:59:56 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.4 2010/01/24 15:34:17 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -64,7 +64,6 @@
 	import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 	import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
-	import org.eclipse.ocl.cst.BooleanLiteralExpCS;
 	import org.eclipse.ocl.cst.LiteralExpCS;	
 	import org.eclipse.ocl.cst.DotOrArrowEnum;
 	import org.eclipse.ocl.util.OCLStandardLibraryUtil;
