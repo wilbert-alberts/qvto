@@ -125,14 +125,13 @@ public class ConditionChecker {
 	    
     private OCLExpressionCS parseCondition(QvtOperationalEnv env) {    	
         try {        	
-            QVTOLexer lexer = new QVTOLexer(env);
-            lexer.initialize(new OCLInput(fConditionBody).getContent(), "Condition"); //$NON-NLS-1$
+            QVTOLexer lexer = new QVTOLexer(env, new OCLInput(fConditionBody).getContent());
             
             LightweightParser parser = new LightweightParser(lexer);            
             parser.enableCSTTokens(true);
-            parser.resetTokenStream();            
-            lexer.lexToTokens(parser);
-            CSTNode cst = parser.parseTokensToCST(null, 10);
+            parser.getIPrsStream().resetTokenStream();            
+            lexer.lexer(parser.getIPrsStream());
+            CSTNode cst = parser.parser(10);
             if(cst instanceof OCLExpressionCS) {
             	return (OCLExpressionCS) cst;
             }		
@@ -152,8 +151,7 @@ public class ConditionChecker {
         OCLExpression<EClassifier> ast = null;
         
         if (conditionCS != null && !env.hasErrors()) {
-            OCLLexer oclLexer = new OCLLexer(env);
-            oclLexer.initialize(new char[0], "Condition"); //$NON-NLS-1$
+            OCLLexer oclLexer = new OCLLexer(env, new char[0]);
             
             QvtCompilerOptions options = new QvtCompilerOptions(); 
             options.setReportErrors(true);
