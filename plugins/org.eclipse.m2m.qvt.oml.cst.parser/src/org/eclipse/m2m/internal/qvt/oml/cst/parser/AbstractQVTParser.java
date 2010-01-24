@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lpg.runtime.IToken;
-import lpg.runtime.ParseErrorCodes;
 import lpg.runtime.Token;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -115,10 +114,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	private boolean isCSTTokenEnabled = false;
 	
-	protected AbstractQVTParser(BasicEnvironment environment) {
-		super(environment);
-	}
-
 	protected AbstractQVTParser(QVTOLexer lexStream) {
 		super(lexStream);
 	}
@@ -127,11 +122,6 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		this.isCSTTokenEnabled = enable;
 	}
 	
-	@Override
-	public QVTOLexer getLexer() {
-		return (QVTOLexer) super.getILexStream();
-	} 
-
 	protected void reportWarning(String message, int startOffset, int endOffset) {
         BasicEnvironment env = getEnvironment();
         if (env != null && env.getProblemHandler() != null) {
@@ -204,22 +194,22 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	    }
 	    if (modules.isEmpty()) {
 	    	if (startingUnitElement != null) {
-	            reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
-	            		trailingUnitElement.getEndToken().getTokenIndex(),
-	                    Messages.NoModulesDeclared);
+	            reportError(Messages.NoModulesDeclared, startingUnitElement.getStartToken().getTokenIndex(),
+	            		trailingUnitElement.getEndToken().getTokenIndex()
+	                    );
 	    	}
             return null;
 	    }
 	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {
-	        reportError(ParseErrorCodes.INVALID_CODE, startingUnitElement.getStartToken().getTokenIndex(),
-        		trailingUnitElement.getEndToken().getTokenIndex(),
-	                Messages.MultipleModulesExtraUnitElements);
+	        reportError(Messages.MultipleModulesExtraUnitElements, startingUnitElement.getStartToken().getTokenIndex(),
+        		trailingUnitElement.getEndToken().getTokenIndex()
+	                );
 	    }
         // TODO: support multiple modules
 	    if (modules.size() > 1) {
-	        reportError(ParseErrorCodes.INVALID_CODE,  startingUnitElement.getStartToken().getTokenIndex(),
-        		trailingUnitElement.getEndToken().getTokenIndex()
-        		, "Multiple modules are unsupported yet!"); //$NON-NLS-1$
+	        reportError("Multiple modules are unsupported yet!", //$NON-NLS-1$ 
+	        		startingUnitElement.getStartToken().getTokenIndex(),
+        		trailingUnitElement.getEndToken().getTokenIndex());
 	    }
         for (MappingModuleCS moduleCS : modules) {
             // FIXME: clone imports and modeltypes for multiple modules
@@ -337,7 +327,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected final MappingQueryCS createMappingQueryCS(boolean isEntryOp, MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
 		if (sym != null && sym.getSimpleNameCS() != null 
 				&& !isEntryOp && QVTOParsersym.orderedTerminalSymbols[QVTOParsersym.TK_main].equals(sym.getSimpleNameCS().getValue())) {
-			reportWarning(NLS.bind(Messages.EntryOp_DisallowedDeclAsHelper, null), sym.getStartOffset(), sym.getEndOffset());
+			reportWarning(Messages.EntryOp_DisallowedDeclAsHelper, sym.getStartOffset(), sym.getEndOffset());
 		}
 		MappingQueryCS query = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
 		query.setMappingDeclarationCS(sym);
@@ -744,7 +734,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         
     	int startOffset = (cond != null ? cond.getStartOffset() : (body != null ? body.getStartOffset() : -1));
     	int endOffset = (body != null ? body.getEndOffset() : (cond != null ? cond.getEndOffset() : -1));
-		reportWarning(NLS.bind(Messages.AbstractQVTParser_DeprecatedSwitchAltExp, null), startOffset, endOffset);
+		reportWarning(Messages.AbstractQVTParser_DeprecatedSwitchAltExp, startOffset, endOffset);
 
 		return result;
 	}
@@ -1091,10 +1081,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected StringLiteralExpCS extendStringLiteralExpCS(StringLiteralExpCS string, IToken token) {
 
 		int tokenLine = token.getLine();
-		IToken prevToken = getTokenAt(token.getTokenIndex() - 1);
+		IToken prevToken = getRhsIToken(token.getTokenIndex() - 1);
 		int prevTokenLine = prevToken.getLine();
 		if (prevTokenLine == tokenLine) {
-			reportError(lpg.runtime.ParseErrorCodes.INVALID_CODE, prevToken.getTokenIndex(), token.getTokenIndex(), "Multiline string literals must be located in different lines!"); //$NON-NLS-1$
+			reportError("Multiline string literals must be located in different lines!",  //$NON-NLS-1$
+					prevToken.getTokenIndex(), token.getTokenIndex());
 		}
 
 		return super.extendStringLiteralExpCS(string, token);

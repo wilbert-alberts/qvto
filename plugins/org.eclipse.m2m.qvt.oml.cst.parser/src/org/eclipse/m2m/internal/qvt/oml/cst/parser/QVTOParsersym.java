@@ -15,10 +15,11 @@
 *   E.D.Willink - Bugs 184048, 225493, 243976, 259818, 282882, 287993, 288040, 292112
 *   Borland - Bug 242880
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396)
 *
 * </copyright>
 *
-* $Id: QVTOParsersym.java,v 1.5 2010/01/09 22:42:03 sboyko Exp $
+* $Id: QVTOParsersym.java,v 1.6 2010/01/24 13:58:43 sboyko Exp $
 */
 /**
 * <copyright>

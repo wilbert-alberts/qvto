@@ -15,10 +15,11 @@
 *   E.D.Willink - Bugs 184048, 225493, 243976, 259818, 282882, 287993, 288040, 292112
 *   Borland - Bug 242880
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396)
 *
 * </copyright>
 *
-* $Id: LightweightTypeParserprs.java,v 1.5 2010/01/09 22:42:02 sboyko Exp $
+* $Id: LightweightTypeParserprs.java,v 1.6 2010/01/24 13:58:42 sboyko Exp $
 */
 /**
 * <copyright>
@@ -229,7 +230,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final boolean isKeyword(int index) { return isKeyword[index] != 0; }
 
     public interface BaseCheck {
-        public final static byte baseCheck[] = {0,
+        public final static short baseCheck[] = {0,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
             1,1,1,1,1,1,1,1,1,1,
@@ -298,21 +299,49 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             0,1,5,5,3,2,1,1,1,1,
             7,5,7,5,4,3,1,1,3,3,
             1,3,3,1,1,1,1,4,3,1,
-            7,1,-1,0,0,0,0,0,0,0,
-            0,0,-2,0,-3,-4,-5,-6,-7,0,
-            -9,0,0,0,0,0,0,0,0,0,
-            -10,0,0,0,0,0,0,0,0,0,
-            -12,0,0,0,0,0,0,0,0,0,
-            -21,0,0,0,0,0,0,0,0,0,
-            -22,0,0,0,0,0,0,0,0,0,
-            -13,0,0,0,-8,-11,0,-23,0,-14,
-            -15,-16,0,0,0,0,-17,0,-18,-19,
-            0,0,-20,-24,0
+            7,1,-1,1,2,3,4,5,6,7,
+            8,9,-2,11,-3,-4,-5,-6,-7,17,
+            -9,1,2,3,4,5,6,7,8,9,
+            -10,1,2,3,4,5,6,7,8,9,
+            -12,1,2,3,4,5,6,7,8,9,
+            -21,1,2,3,4,5,6,7,8,9,
+            -22,1,2,3,4,5,6,7,8,9,
+            -13,1,2,3,-8,-11,1,-23,1,-14,
+            -15,-16,12,13,14,10,-17,10,-18,-19,
+            15,16,-20,-24,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0
         };
     };
-    public final static byte baseCheck[] = BaseCheck.baseCheck;
+    public final static short baseCheck[] = BaseCheck.baseCheck;
     public final int baseCheck(int index) { return baseCheck[index]; }
-    public final static byte rhs[] = baseCheck;
+    public final static short rhs[] = baseCheck;
     public final int rhs(int index) { return rhs[index]; };
 
     public interface BaseAction {
@@ -491,7 +520,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
 
     public interface TerminalIndex {
         public final static char terminalIndex[] = {0,
-            161,11,12,133,135,19,58,59,60,61,
+            162,11,12,133,135,19,58,59,60,61,
             62,63,64,65,66,67,68,69,70,71,
             20,21,29,72,73,163,37,38,39,1,
             2,3,4,5,6,7,8,9,10,13,
@@ -507,7 +536,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             128,129,130,131,132,134,136,137,138,139,
             140,141,142,143,144,145,146,147,148,149,
             150,151,152,153,154,155,156,157,158,159,
-            160,162
+            160,161
         };
     };
     public final static char terminalIndex[] = TerminalIndex.terminalIndex;
@@ -779,8 +808,8 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             "try", //$NON-NLS-1$
             "typedef", //$NON-NLS-1$
             "unlimited", //$NON-NLS-1$
-            "IDENTIFIER", //$NON-NLS-1$
             "ERROR_TOKEN", //$NON-NLS-1$
+            "IDENTIFIER", //$NON-NLS-1$
             "EOF_TOKEN", //$NON-NLS-1$
             "QvtLwGoal", //$NON-NLS-1$
             "CollectionTypeIdentifierCS", //$NON-NLS-1$

@@ -13,6 +13,7 @@
 *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 *   E.D.Willink - Bug 285633, 292112
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396) 
 *
 * </copyright>
 *
@@ -53,7 +54,7 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
 
 
-public class QVTOKWLexer extends QVTOKWLexerprs implements QVTOParsersym
+public class QVTOKWLexer extends QVTOKWLexerprs
 {
     private char[] inputChars;
     private final int keywordKind[] = new int[121 + 1];
@@ -149,7 +150,7 @@ public class QVTOKWLexer extends QVTOKWLexerprs implements QVTOParsersym
         tokenKind['Z'] = QVTOKWLexersym.Char_Z;
     };
 
-    final int getKind(int c)
+    final int getKind(char c)
     {
         return (((c & 0xFFFFFF80) == 0) /* 0 <= c < 128? */ ? tokenKind[c] : 0);
     }
@@ -993,7 +994,6 @@ public class QVTOKWLexer extends QVTOKWLexerprs implements QVTOParsersym
 		keywordKind[121] = (QVTOParsersym.TK_unlimited);
 	  
 	
-
         for (int i = 0; i < keywordKind.length; i++)
         {
             if (keywordKind[i] == 0)
