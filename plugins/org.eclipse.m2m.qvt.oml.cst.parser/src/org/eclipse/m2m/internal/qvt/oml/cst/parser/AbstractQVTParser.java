@@ -1081,11 +1081,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected StringLiteralExpCS extendStringLiteralExpCS(StringLiteralExpCS string, IToken token) {
 
 		int tokenLine = token.getLine();
-		IToken prevToken = getRhsIToken(token.getTokenIndex() - 1);
+		IToken prevToken = getIPrsStream().getIToken(token.getTokenIndex() - 1);
 		int prevTokenLine = prevToken.getLine();
 		if (prevTokenLine == tokenLine) {
 			reportError("Multiline string literals must be located in different lines!",  //$NON-NLS-1$
-					prevToken.getTokenIndex(), token.getTokenIndex());
+					prevToken.getStartOffset(), token.getEndOffset());
 		}
 
 		return super.extendStringLiteralExpCS(string, token);

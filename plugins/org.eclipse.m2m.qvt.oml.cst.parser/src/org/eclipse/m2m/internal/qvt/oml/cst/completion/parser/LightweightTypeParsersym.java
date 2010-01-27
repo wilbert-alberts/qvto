@@ -14,12 +14,13 @@
 *   E.D.Willink - Remove unnecessary warning suppression
 *   E.D.Willink - Bugs 184048, 225493, 243976, 259818, 282882, 287993, 288040, 292112
 *   Borland - Bug 242880
-*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
-*   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396)
-*
+*   Adolfo Sanchez-Barbudo Herrera (Open Canarias):
+*        - 242153: LPG v 2.0.17 adoption.
+*        - 299396: Introducing new LPG templates
+*        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.6 2010/01/24 13:58:42 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.7 2010/01/27 17:22:41 sboyko Exp $
 */
 /**
 * <copyright>
