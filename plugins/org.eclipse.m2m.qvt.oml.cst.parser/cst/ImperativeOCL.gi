@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.gi,v 1.2 2010/01/09 22:44:06 sboyko Exp $ 
+-- * $Id: ImperativeOCL.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL Parser
@@ -120,35 +120,35 @@
 	listTypeCS ::= List '(' typeCS ')'
 		/.$BeginCode
 					CSTNode result = createListTypeCS(
-							(TypeCS)$getSym(3)
+							(TypeCS)getRhsSym(3)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./
 
 	listLiteralCS ::= List '{' CollectionLiteralPartsCSopt '}'
 		/.$BeginCode
-					CSTNode result = createListLiteralExpCS((EList)$getSym(3));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					CSTNode result = createListLiteralExpCS((EList)getRhsSym(3));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./ 
 	
 	typeCS -> dictTypeCS
 	dictTypeCS ::= Dict '(' typeCS ',' typeCS ')'
 		/.$BeginCode
-					CSTNode result = createDictTypeCS((TypeCS)$getSym(3), (TypeCS)$getSym(5));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-					$setResult(result);
+					CSTNode result = createDictTypeCS((TypeCS)getRhsSym(3), (TypeCS)getRhsSym(5));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+					setResult(result);
 		  $EndCode
 		./	
 
 	dictLiteralCS ::= Dict '{' dictLiteralPartListCSopt '}'
 		/.$BeginCode
-					CSTNode result = createDictLiteralExpCS((EList<DictLiteralPartCS>)$getSym(3));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					CSTNode result = createDictLiteralExpCS((EList<DictLiteralPartCS>)getRhsSym(3));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./ 
 	
@@ -158,9 +158,9 @@
 	
 	dictLiteralPartCS ::= literalSimpleCS '=' OclExpressionCS
 		/.$BeginCode
-					CSTNode result = createDictLiteralPartCS((LiteralExpCS)$getSym(1), (OCLExpressionCS)$getSym(3));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
+					CSTNode result = createDictLiteralPartCS((LiteralExpCS)getRhsSym(1), (OCLExpressionCS)getRhsSym(3));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 	
@@ -171,36 +171,36 @@
 	dictLiteralPartListCS ::= dictLiteralPartCS
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 	dictLiteralPartListCS ::= dictLiteralPartListCS ',' dictLiteralPartCS
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	dictLiteralPartListCS ::= dictLiteralPartListCS qvtErrorToken
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
 		  $EndCode
 		./
 
 	OclExpressionCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt
 		/.$BeginCode
-				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)$getSym(2));
+				ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)getRhsSym(2));
 				CSTNode result = createExpressionStatementCS(returnExpCS);
 				if(returnExpCS.getValue() != null) {
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(2));			
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(2));			
 				} else {
-					setOffsets(result, getIToken($getToken(1)));
+					setOffsets(result, getRhsIToken(1));
 				}
 				setOffsets(returnExpCS, result);
-				$setSym1(result);
+				setResult(result);
 		  $EndCode
 		./
 	 
@@ -208,19 +208,19 @@
 
 	var_init_group_exp ::= var var_init_declarator_list
 		/.$BeginCode
-					$setResult($getSym(2));
+					setResult(getRhsSym(2));
 		  $EndCode
 		./
 
 	var_init_group_exp ::= var '(' var_init_declarator_list ')'
 		/.$BeginCode
-					$setResult($getSym(3));
+					setResult(getRhsSym(3));
 		  $EndCode
 		./
 
 	var_init_group_exp ::= var '(' var_init_declarator_list qvtErrorToken
 		/.$BeginCode
-					$setResult($getSym(3));
+					setResult(getRhsSym(3));
 		  $EndCode
 		./
 
@@ -228,41 +228,41 @@
 
 	var_init_exp ::= var var_init_declarator
 		/.$BeginCode
-					$setResult($getSym(2));
+					setResult(getRhsSym(2));
 		  $EndCode
 		./
 
 	var_init_exp ::= var '(' var_init_declarator ')'
 		/.$BeginCode
-					$setResult($getSym(3));
+					setResult(getRhsSym(3));
 		  $EndCode
 		./
 
 	var_init_exp ::= var '(' var_init_declarator qvtErrorToken
 		/.$BeginCode
-					$setResult($getSym(3));
+					setResult(getRhsSym(3));
 		  $EndCode
 		./
 
 	var_init_exp ::= var qvtErrorToken
 		/.$BeginCode
-					$setResult($EMPTY_ELIST);
+					setResult($EMPTY_ELIST);
 		  $EndCode
 		./
 
 	var_init_declarator_list ::= var_init_declarator ',' var_init_declarator
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					result.add($getSym(3));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator_list ::= var_init_declarator_list ',' var_init_declarator
 		/.$BeginCode
-					EList result = (EList) $getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList) getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -270,73 +270,73 @@
 	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5),
-							(Boolean)$getSym(4)
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(Boolean)getRhsSym(4)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator ::= IDENTIFIER ':' typeCS var_init_op qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
 							null,
-							(Boolean)$getSym(4)
+							(Boolean)getRhsSym(4)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator ::= IDENTIFIER var_init_op OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
-							(OCLExpressionCS)$getSym(3),
-							(Boolean)$getSym(2)
+							(OCLExpressionCS)getRhsSym(3),
+							(Boolean)getRhsSym(2)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator ::= IDENTIFIER var_init_op qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
 							null,
-							(Boolean)$getSym(2)
+							(Boolean)getRhsSym(2)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator ::= IDENTIFIER ':' typeCS
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
 							null,
 							false
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	var_init_declarator ::= IDENTIFIER ':' qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createVariableInitializationCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
 							null,
 							false
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 		
@@ -344,12 +344,12 @@
 		/.$NewCase./
 	var_init_op ::= ':='
 		/.$BeginCode
-					$setResult(false);
+					setResult(false);
 		  $EndCode
 		./
 	var_init_op ::= '::='
 		/.$BeginCode
-					$setResult(true);
+					setResult(true);
 		  $EndCode
 		./
 
@@ -358,46 +358,46 @@
 	assignStatementCS ::= primaryExpCS ':=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createAssignStatementCS(
-							(OCLExpressionCS)$getSym(1),
-							(OCLExpressionCS)$getSym(3),
+							(OCLExpressionCS)getRhsSym(1),
+							(OCLExpressionCS)getRhsSym(3),
 							false
 						);
-					setOffsets(result, (CSTNode)$getSym(1), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	assignStatementCS ::= primaryExpCS ':=' qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createAssignStatementCS(
-							(OCLExpressionCS)$getSym(1),
+							(OCLExpressionCS)getRhsSym(1),
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null),
 							false
 						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 
 	assignStatementCS ::= primaryExpCS '+=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createAssignStatementCS(
-							(OCLExpressionCS)$getSym(1),
-							(OCLExpressionCS)$getSym(3),
+							(OCLExpressionCS)getRhsSym(1),
+							(OCLExpressionCS)getRhsSym(3),
 							true
 						);
-					setOffsets(result, (CSTNode)$getSym(1), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	assignStatementCS ::= primaryExpCS '+=' qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createAssignStatementCS(
-							(OCLExpressionCS)$getSym(1),
+							(OCLExpressionCS)getRhsSym(1),
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null),
 							true
 						);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -408,25 +408,25 @@
 	whileExpCS ::= while '(' declarator1 ';' OclExpressionCS ')' whileBodyCS
 		/.$BeginCode
 					CSTNode result = createWhileExpCS(
-							(VariableCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5),
-							(BlockExpCS)$getSym(7)
+							(VariableCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(BlockExpCS)getRhsSym(7)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(7));
+					setResult(result);
 		  $EndCode
 		./
 
 	whileExpCS ::= while '(' assignStatementCS ';' OclExpressionCS ')' whileBodyCS
 		/.$BeginCode
-					AssignStatementCS assignment = (AssignStatementCS)$getSym(3);
+					AssignStatementCS assignment = (AssignStatementCS)getRhsSym(3);
 					CSTNode result = createWhileExpCS(
 							getVariableFromAssignment(assignment),
-							(OCLExpressionCS)$getSym(5),
-							(BlockExpCS)$getSym(7)
+							(OCLExpressionCS)getRhsSym(5),
+							(BlockExpCS)getRhsSym(7)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(7));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(7));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -434,11 +434,11 @@
 		/.$BeginCode
 					CSTNode result = createWhileExpCS(
 							null,
-							(OCLExpressionCS)$getSym(3),
-							(BlockExpCS)$getSym(5)
+							(OCLExpressionCS)getRhsSym(3),
+							(BlockExpCS)getRhsSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
 		  $EndCode
 		./
 	
@@ -446,11 +446,11 @@
 
 	IteratorExpCS ::= primaryExpCS '->' forExpCS
 		/.$BeginCode
-					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
-					ForExpCS forExpCS = (ForExpCS)$getSym(3);
+					OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
+					ForExpCS forExpCS = (ForExpCS)getRhsSym(3);
 					forExpCS.setSource(source);
 					setOffsets(forExpCS, source, forExpCS);
-					$setResult(forExpCS);
+					setResult(forExpCS);
 		  $EndCode
 		./
 
@@ -460,15 +460,15 @@
 	forExpDeclaratorList ::= IDENTIFIER
         	/.$BeginCode
 			EList result = new BasicEList();
-			result.add(getIToken($getToken(1)));
-			$setResult(result);
+			result.add(getRhsIToken(1));
+			setResult(result);
 	          $EndCode
         	./
 	forExpDeclaratorList ::= forExpDeclaratorList ',' IDENTIFIER
         	/.$BeginCode
-			EList result = (EList)$getSym(1);
-			result.add(getIToken($getToken(3)));
-			$setResult(result);
+			EList result = (EList)getRhsSym(1);
+			result.add(getRhsIToken(3));
+			setResult(result);
 	          $EndCode
         	./
 
@@ -478,7 +478,7 @@
         
 	forExpConditionOpt ::= '|' OclExpressionCS
         	/.$BeginCode
-                	    $setResult((OCLExpressionCS)$getSym(2));
+                	    setResult((OCLExpressionCS)getRhsSym(2));
 	          $EndCode
         	./
 
@@ -488,26 +488,26 @@
 	forExpCS ::= forOpCode '(' forExpDeclaratorList forExpConditionOpt ')' expression_block
 		/.$BeginCode
 					CSTNode result = createForExpCS(
-							getIToken($getToken(1)),
-							(EList)$getSym(3),
-							(OCLExpressionCS)$getSym(4),
-							(BlockExpCS)$getSym(6)
+							getRhsIToken(1),
+							(EList)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(4),
+							(BlockExpCS)getRhsSym(6)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(6));
+					setResult(result);
 		  $EndCode
 		./
 
 	forExpCS ::= forOpCode qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createForExpCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -525,84 +525,84 @@
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							(OCLExpressionCS)$getSym(6)
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
+							(OCLExpressionCS)getRhsSym(6)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS endif
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
-							(OCLExpressionCS)$getSym(6)
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
+							(OCLExpressionCS)getRhsSym(6)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(6));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(6));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
-							(OCLExpressionCS)$getSym(4),
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)getRhsSym(2),
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)$getSym(2),
+							(OCLExpressionCS)getRhsSym(2),
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(2));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(2));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -610,15 +610,15 @@
 	IfExpCS ::= if qvtErrorToken
 		/.$BeginCode
 					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS("");
-					invalidCondition.setStartOffset(getIToken($getToken(1)).getEndOffset());
-					invalidCondition.setEndOffset(getIToken($getToken(1)).getEndOffset());
+					invalidCondition.setStartOffset(getRhsIToken(1).getEndOffset());
+					invalidCondition.setEndOffset(getRhsIToken(1).getEndOffset());
 					CSTNode result = createIfExpCS(
 							invalidCondition,
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -630,18 +630,18 @@
 
 	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginCode
-					Object[] switchBody = (Object[]) $getSym(2);
+					Object[] switchBody = (Object[]) getRhsSym(2);
 
 					CSTNode result = createSwitchExpCS(
 							(EList<SwitchAltExpCS>) switchBody[0],
 							(OCLExpressionCS) switchBody[1]
 						);
 					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
-						setOffsets(result, getIToken($getToken(1)), (IToken) switchBody[2]);
+						setOffsets(result, getRhsIToken(1), (IToken) switchBody[2]);
 					} else { // In case of errors in switchBody
-						setOffsets(result, getIToken($getToken(1)), (CSTNode) switchBody[2]);
+						setOffsets(result, getRhsIToken(1), (CSTNode) switchBody[2]);
 					}
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -650,46 +650,46 @@
 	switchDeclaratorCS ::= IDENTIFIER
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
 	switchDeclaratorCS ::= IDENTIFIER '=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
-							(OCLExpressionCS)$getSym(3)
+							(OCLExpressionCS)getRhsSym(3)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 
 	-- 'collect' shorthand for switch keyword 
 	IterateExpCS ::= primaryExpCS '->' switch '(' switchDeclaratorCS ')' switchBodyExpCS
 		/.$BeginCode
-					Object[] switchBody = (Object[]) $getSym(7);
+					Object[] switchBody = (Object[]) getRhsSym(7);
 
 					OCLExpressionCS switchExpCS = (OCLExpressionCS) createSwitchExpCS(
 							(EList<SwitchAltExpCS>) switchBody[0],
 							(OCLExpressionCS) switchBody[1]							
 						);
 					if (switchBody[2] instanceof IToken) { // In case of correct and incorrect syntax
-						setOffsets(switchExpCS, getIToken($getToken(3)), (IToken) switchBody[2]);
+						setOffsets(switchExpCS, getRhsIToken(3), (IToken) switchBody[2]);
 					} else if (switchBody[2] instanceof CSTNode) { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(3)), (CSTNode) switchBody[2]);
+						setOffsets(switchExpCS, getRhsIToken(3), (CSTNode) switchBody[2]);
 					} else { // In case of errors in switchBody
-						setOffsets(switchExpCS, getIToken($getToken(3)), getIToken($getToken(6)));
+						setOffsets(switchExpCS, getRhsIToken(3), getRhsIToken(6));
 					}
 
 					EList<VariableCS> iterators = new BasicEList<VariableCS>();
-					iterators.add((VariableCS) $getSym(5));
+					iterators.add((VariableCS) getRhsSym(5));
 					CallExpCS result = createImperativeIterateExpCS(
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"), 
 							iterators,
@@ -698,10 +698,10 @@
 							null
 						);
 						
-					result.setSource((OCLExpressionCS) $getSym(1));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
+					result.setSource((OCLExpressionCS) getRhsSym(1));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
 					
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -711,65 +711,65 @@
 							new BasicEList(),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
 	switchBodyExpCS ::= '{' switchAltExpCSList switchElseExpCSOpt '}'
 		/.$BeginCode
-					Object[] result = new Object[] {$getSym(2), $getSym(3), getIToken($getToken(4))};
-					$setResult(result);
+					Object[] result = new Object[] {getRhsSym(2), getRhsSym(3), getRhsIToken(4)};
+					setResult(result);
 		  $EndCode
 		./
 
 	switchBodyExpCS ::= '{' switchAltExpCSList switchElseExpCSOpt qvtErrorToken
 		/.$BeginCode
-					Object[] result = new Object[] {$getSym(2), $getSym(3), $getSym(3)};
-					$setResult(result);
+					Object[] result = new Object[] {getRhsSym(2), getRhsSym(3), getRhsSym(3)};
+					setResult(result);
 		  $EndCode
 		./
 
 	switchBodyExpCS ::= '{' qvtErrorToken
 		/.$BeginCode
-					Object[] result = new Object[] {new BasicEList(), null, getIToken($getToken(1))};
-					$setResult(result);
+					Object[] result = new Object[] {new BasicEList(), null, getRhsIToken(1)};
+					setResult(result);
 		  $EndCode
 		./
 
 	switchAltExpCSList ::= switchAltExpCS
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 	switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(2));
+					setResult(result);
 		  $EndCode
 		./
 
 	switchAltExpCS ::= case '(' OclExpressionCS ')' expression_statement
 		/.$BeginCode
 					CSTNode result = createSwitchAltExpCS(
-							(OCLExpressionCS) $getSym(3),
-							(OCLExpressionCS) $getSym(5)
+							(OCLExpressionCS) getRhsSym(3),
+							(OCLExpressionCS) getRhsSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+					setResult(result);
 		  $EndCode
 		./
 	switchAltExpCS ::= case '(' OclExpressionCS ')' qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createSwitchAltExpCS(
-							(OCLExpressionCS) $getSym(3),
+							(OCLExpressionCS) getRhsSym(3),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./
 	
@@ -779,12 +779,12 @@
 
 	switchElseExpCS ::= else expression_statement
 		/.$BeginCode
-					$setResult((CSTNode)$getSym(2));
+					setResult((CSTNode)getRhsSym(2));
 		  $EndCode
 		./
 	switchElseExpCS ::= else qvtErrorToken
 		/.$BeginCode
-					$setResult(null);
+					setResult(null);
 		  $EndCode
 		./
 
@@ -793,10 +793,10 @@
 	OclExpressionCS ::= primaryOCLExpressionCS 
 		/.$BeginCode
 					CSTNode result = createExpressionStatementCS(
-							(OCLExpressionCS)$getSym(1)
+							(OCLExpressionCS)getRhsSym(1)
 						);
-					setOffsets(result, (CSTNode)$getSym(1));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -806,8 +806,8 @@
 		
 	logWhenExp ::= when OclExpressionCS
         /.$BeginCode
-				OCLExpressionCS condition = (OCLExpressionCS) $getSym(2);
-				$setResult(condition);
+				OCLExpressionCS condition = (OCLExpressionCS) getRhsSym(2);
+				setResult(condition);
           $EndCode
         ./	
 	
@@ -817,14 +817,14 @@
 		
 	logExpCS ::= log '(' argumentsCSopt ')' logWhenExpOpt
         /.$BeginCode
-				OCLExpressionCS condition = (OCLExpressionCS) $getSym(5);
-				LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)$getSym(3), condition);
+				OCLExpressionCS condition = (OCLExpressionCS) getRhsSym(5);
+				LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)getRhsSym(3), condition);
 				if(condition != null) {
-					setOffsets(result, getIToken($getToken(1)), condition);
+					setOffsets(result, getRhsIToken(1), condition);
 				} else {
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
 				}
-				$setResult(result);
+				setResult(result);
           $EndCode
         ./
 
@@ -833,7 +833,7 @@
 
 	severityKindCS ::= simpleNameCS
 		/.$BeginCode
-				$setResult($getSym(1));
+				setResult(getRhsSym(1));
 		  $EndCode
 		./
 		
@@ -845,9 +845,9 @@
 	
 	assertWithLogExp ::= with logExpCS
         /.$BeginCode
-				LogExpCS logExp = (LogExpCS) $getSym(2);
-				setOffsets(logExp, getIToken($getToken(2)), logExp);
-				$setResult(logExp);
+				LogExpCS logExp = (LogExpCS) getRhsSym(2);
+				setOffsets(logExp, getRhsIToken(2), logExp);
+				setResult(logExp);
           $EndCode
         ./	
 	
@@ -857,13 +857,13 @@
 		        
 	assertExpCS ::= assert severityKindCSOpt '(' OclExpressionCS ')' assertWithLogExpOpt
         /.$BeginCode
-				LogExpCS logExpCS = (LogExpCS)$getSym(6);
-				OCLExpressionCS condition = (OCLExpressionCS)$getSym(4);
-				AssertExpCS result = (AssertExpCS)createAssertExpCS(condition, (SimpleNameCS)$getSym(2), logExpCS);
+				LogExpCS logExpCS = (LogExpCS)getRhsSym(6);
+				OCLExpressionCS condition = (OCLExpressionCS)getRhsSym(4);
+				AssertExpCS result = (AssertExpCS)createAssertExpCS(condition, (SimpleNameCS)getRhsSym(2), logExpCS);
 		
 				CSTNode end = logExpCS != null ? logExpCS : condition; 
-				setOffsets(result, getIToken($getToken(1)), end);
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1), end);
+				setResult(result);
           $EndCode
         ./
 
@@ -873,11 +873,11 @@
 	computeExpCS ::= compute '(' declarator ')' expression_block
 		/.$BeginCode
 					CSTNode result = createComputeExpCS(
-						(VariableCS) $getSym(3),
-						(OCLExpressionCS) $getSym(5)
+						(VariableCS) getRhsSym(3),
+						(OCLExpressionCS) getRhsSym(5)
 					);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -890,11 +890,11 @@
 
 	IterateExpCS ::= primaryExpCS '->' imperativeIterateExpCS
 		/.$BeginCode
-					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
-					ImperativeIterateExpCS iterateExpCS = (ImperativeIterateExpCS) $getSym(3);
+					OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
+					ImperativeIterateExpCS iterateExpCS = (ImperativeIterateExpCS) getRhsSym(3);
 					iterateExpCS.setSource(source);
 					setOffsets(iterateExpCS, source, iterateExpCS);
-					$setResult(iterateExpCS);
+					setResult(iterateExpCS);
 		  $EndCode
 		./
 
@@ -919,13 +919,13 @@
 		/.$NewCase./
 	imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 '(' imperativeIterContents3 ')'
 		/.$BeginCode
-					String opCode = getTokenText($getToken(1));
+					String opCode = getRhsTokenText(1);
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								getIToken($getToken(1))
+								getRhsIToken(1)
 							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
-					Object[] iterContents = (Object[]) $getSym(3);
+					setOffsets(simpleNameCS, getRhsIToken(1));
+					Object[] iterContents = (Object[]) getRhsSym(3);
 					OCLExpressionCS bodyCS = null;
 					OCLExpressionCS conditionCS = null;
 					if ("xcollect".equals(opCode) 
@@ -941,8 +941,8 @@
 							bodyCS,
 							conditionCS
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(4)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -950,9 +950,9 @@
 		/.$BeginCode
 					SimpleNameCS simpleNameCS = createSimpleNameCS(
 								SimpleTypeEnum.KEYWORD_LITERAL,
-								getIToken($getToken(1))
+								getRhsIToken(1)
 							);
-					setOffsets(simpleNameCS, getIToken($getToken(1)));
+					setOffsets(simpleNameCS, getRhsIToken(1));
 					CSTNode result = createImperativeIterateExpCS(
 							simpleNameCS,
 							$EMPTY_ELIST,
@@ -960,18 +960,18 @@
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 		
 
 	imperativeIterContents12 ::= OclExpressionCS
 		/.$BeginCode
-					$setResult(new Object[] {
+					setResult(new Object[] {
 							$EMPTY_ELIST,
 							null,
-							$getSym(1)
+							getRhsSym(1)
 						});
 		  $EndCode
 		./
@@ -979,39 +979,39 @@
 	imperativeIterContents12 ::= uninitializedVariableCS '|' OclExpressionCS
 		/.$BeginCode
 					EList iters = new BasicEList();
-					iters.add($getSym(1));
+					iters.add(getRhsSym(1));
 					
-					$setResult(new Object[] {
+					setResult(new Object[] {
 							iters,
 							null,
-							$getSym(3)
+							getRhsSym(3)
 						});
 		  $EndCode
 		./
 
 	imperativeIterContents12 ::= simpleNameCS ',' variableDeclarationListCS '|' OclExpressionCS
 		/.$BeginCode
-                    SimpleNameCS name = (SimpleNameCS)$getSym(1);
+                    SimpleNameCS name = (SimpleNameCS)getRhsSym(1);
                     CSTNode variableCS = createVariableCS(name, null, null);
                     setOffsets(variableCS, name);
 
-					EList iters = (EList) $getSym(3);
+					EList iters = (EList) getRhsSym(3);
 					iters.add(0, variableCS);
 					
-					$setResult(new Object[] {
+					setResult(new Object[] {
 							iters,
 							null,
-							$getSym(5)
+							getRhsSym(5)
 						});
 		  $EndCode
 		./
 
 	imperativeIterContents3 ::= variableDeclarationListCS ';' initializedVariableCS '|' OclExpressionCS
 		/.$BeginCode
-					$setResult(new Object[] {
-							$getSym(1),
-							$getSym(3),
-							$getSym(5)
+					setResult(new Object[] {
+							getRhsSym(1),
+							getRhsSym(3),
+							getRhsSym(5)
 						});
 		  $EndCode
 		./
@@ -1019,15 +1019,15 @@
 	variableDeclarationListCS ::= uninitializedVariableCS
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 	variableDeclarationListCS ::= variableDeclarationListCS ',' uninitializedVariableCS
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -1042,12 +1042,12 @@
 	declarator_vsep ::= IDENTIFIER '|'
         	/.$BeginCode
 			CSTNode result = createVariableCS(
-						getIToken($getToken(1)),
+						getRhsIToken(1),
                                                 null,
 						null
 						);
-                        setOffsets(result, getIToken($getToken(1)));
-                        $setResult(result);
+                        setOffsets(result, getRhsIToken(1));
+                        setResult(result);
 	          $EndCode
         	./
 
@@ -1058,49 +1058,49 @@
 	-- xselect/collectselect shorthand
 	IterateExpCS ::= primaryExpCS exclamationOpt '[' declarator_vsepOpt OclExpressionCS ']'
 		/.$BeginCode
-			OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
+			OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 			if (source instanceof ImperativeIterateExpCS) {
-				String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) 
+				String opCode = isTokenOfType(getRhsIToken(2), $sym_type.TK_EXCLAMATION_MARK) 
 					?  "collectselectOne" 
 					: "collectselect"; 
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 						SimpleTypeEnum.KEYWORD_LITERAL,
 						opCode
 						);
-				setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(6)));
+				setOffsets(simpleNameCS, getRhsIToken(3), getRhsIToken(6));
 
 				ImperativeIterateExpCS result = (ImperativeIterateExpCS) source;
 				result.setSimpleNameCS(simpleNameCS);
 				
-				VariableCS variableCS = (VariableCS) $getSym(4);
+				VariableCS variableCS = (VariableCS) getRhsSym(4);
 		        if (variableCS != null) {
 		            result.setTarget(variableCS);
 		        }
-		        result.setCondition((OCLExpressionCS) $getSym(5));
+		        result.setCondition((OCLExpressionCS) getRhsSym(5));
 				
-				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+				setResult(result);
 			}
 			else {
-				String opCode = isTokenOfType(getIToken($getToken(2)), $sym_type.TK_EXCLAMATION_MARK) 
+				String opCode = isTokenOfType(getRhsIToken(2), $sym_type.TK_EXCLAMATION_MARK) 
 					?  "selectOne" 
 					: "xselect"; 
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 						SimpleTypeEnum.KEYWORD_LITERAL,
 						opCode
 						);
-				setOffsets(simpleNameCS, getIToken($getToken(3)), getIToken($getToken(6)));
+				setOffsets(simpleNameCS, getRhsIToken(3), getRhsIToken(6));
 				
 				CallExpCS result = createImperativeIterateExpCS(
 						simpleNameCS,
 						$EMPTY_ELIST,
-						(VariableCS) $getSym(4),
+						(VariableCS) getRhsSym(4),
 						null,
-						(OCLExpressionCS) $getSym(5)
+						(OCLExpressionCS) getRhsSym(5)
 						);
 				result.setSource(source);
-				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+				setResult(result);
 			}
 		  $EndCode
 		./
@@ -1114,8 +1114,8 @@
 					opCode
 					);
 
-			OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
-			SimpleNameCS featureNameCS = (SimpleNameCS)$getSym(3);
+			OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
+			SimpleNameCS featureNameCS = (SimpleNameCS)getRhsSym(3);
 			OCLExpressionCS featureCallExpCS = createFeatureCallExpCS(
 					source,
 					null,
@@ -1133,66 +1133,66 @@
 					null
 					);
 			result.setSource(featureCallExpCS);
-			setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-			$setResult(result);
+			setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+			setResult(result);
 		  $EndCode
 		./
 
 	--primaryExpCS ::= primaryExpCS '.' FeatureCallExpCS exclamationOpt '[' OclExpressionCS ']'
 	--	/.$BeginCode
-	--				CallExpCS callExpCS = (CallExpCS)$getSym(3);
-	--				callExpCS.setSource((OCLExpressionCS)$getSym(1));
+	--				CallExpCS callExpCS = (CallExpCS)getRhsSym(3);
+	--				callExpCS.setSource((OCLExpressionCS)getRhsSym(1));
 	--				callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-	--				setOffsets(callExpCS, (CSTNode)$getSym(1), callExpCS);
+	--				setOffsets(callExpCS, (CSTNode)getRhsSym(1), callExpCS);
 	--  
 	--
-	--			        String opCode = isTokenOfType(getIToken($getToken(4)), $sym_type.TK_EXCLAMATION_MARK)
+	--			        String opCode = isTokenOfType(getRhsIToken(4), $sym_type.TK_EXCLAMATION_MARK)
 	-- 	 					?  "selectOne" 
 	--						: "xselect"; 
 	--				SimpleNameCS simpleNameCS = createSimpleNameCS(
 	--							SimpleTypeEnum.KEYWORD_LITERAL,
 	--							opCode
 	--						);
-	--				setOffsets(simpleNameCS, getIToken($getToken(5)), getIToken($getToken(7)));
+	--				setOffsets(simpleNameCS, getRhsIToken(5), getRhsIToken(7));
 	--				CallExpCS result = createImperativeIterateExpCS(
 	--						simpleNameCS,
 	--						$EMPTY_ELIST,
 	--						null,
 	--						null,
-	--						(OCLExpressionCS) $getSym(6)
+	--						(OCLExpressionCS) getRhsSym(6)
 	--					);
 	--				result.setSource(callExpCS);
-	--				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(7)));
-	--				$setResult(result);
+	--				setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+	--				setResult(result);
 	--	  $EndCode
 	--	./
 
 	primaryNotNameCS -> newExpCS
 	newExpCS ::= new newTypespecCS '(' argumentsCSopt ')' 
 		/.$BeginCode
-				OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) $getSym(2), (EList) $getSym(4));
-				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(5)));
-				$setResult(result);
+				OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) getRhsSym(2), (EList) getRhsSym(4));
+				setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+				setResult(result);
 		  $EndCode
 		./	
 
 	newTypespecCS ::= pathNameCS
 		/.$BeginCode
 					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
+						(TypeCS)getRhsSym(1),
 						null
 						);
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 	
 	newTypespecCS ::= pathNameCS '@' IDENTIFIER
 		/.$BeginCode
 					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
-						getIToken($getToken(3))
+						(TypeCS)getRhsSym(1),
+						getRhsIToken(3)
 						);
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -1202,16 +1202,16 @@
 	primaryNotNameCS ::= break
 		/.$BeginCode
 				OCLExpressionCS result = createBreakCS();
-				setOffsets(result, getIToken($getToken(1)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
 		  $EndCode
 		./	
 	
 	primaryNotNameCS ::= continue
 		/.$BeginCode
 				OCLExpressionCS result = createContinueCS();
-				setOffsets(result, getIToken($getToken(1)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
 		  $EndCode
 		./	
 
@@ -1219,21 +1219,21 @@
 	switchAltExpCS ::= '(' OclExpressionCS ')' '?' OclExpressionCS ';'
 		/.$BeginCode
 					CSTNode result = createSwitchAltExpCSDeprecated(
-							(OCLExpressionCS) $getSym(2),
-							(OCLExpressionCS) $getSym(5)
+							(OCLExpressionCS) getRhsSym(2),
+							(OCLExpressionCS) getRhsSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(6)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+					setResult(result);
 		  $EndCode
 		./
 	switchAltExpCS ::= '(' OclExpressionCS ')' qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createSwitchAltExpCSDeprecated(
-							(OCLExpressionCS) $getSym(2),
+							(OCLExpressionCS) getRhsSym(2),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 	switchAltExpCS ::= '(' qvtErrorToken
@@ -1242,27 +1242,27 @@
 							null,
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
 	switchElseExpCS ::= else '?' OclExpressionCS ';'
 		/.$BeginCode
-			    	int startOffset = getIToken($getToken(1)).getStartOffset();
-			    	int endOffset = getIToken($getToken(4)).getEndOffset();
+			    	int startOffset = getRhsIToken(1).getStartOffset();
+			    	int endOffset = getRhsIToken(4).getEndOffset();
 					reportWarning(org.eclipse.m2m.internal.qvt.oml.cst.parser.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
-					$setResult((CSTNode)$getSym(3));
+					setResult((CSTNode)getRhsSym(3));
 		  $EndCode
 		./
 	switchElseExpCS ::= else '?' OclExpressionCS qvtErrorToken
 		/.$BeginCode
-			    	int startOffset = getIToken($getToken(1)).getStartOffset();
-			    	int endOffset = getIToken($getToken(3)).getEndOffset();
+			    	int startOffset = getRhsIToken(1).getStartOffset();
+			    	int endOffset = getRhsIToken(3).getEndOffset();
 					reportWarning(org.eclipse.m2m.internal.qvt.oml.cst.parser.NLS.bind(org.eclipse.m2m.internal.qvt.oml.cst.parser.Messages.AbstractQVTParser_DeprecatedSwitchElseExp, null), startOffset, endOffset);
 					
-					$setResult((CSTNode)$getSym(3));
+					setResult((CSTNode)getRhsSym(3));
 		  $EndCode
 		./
 	--=== Non-standard extensions and legacy support (end) ===--

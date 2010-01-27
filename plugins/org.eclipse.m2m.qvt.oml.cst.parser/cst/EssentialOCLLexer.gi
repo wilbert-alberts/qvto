@@ -12,7 +12,7 @@
 -- *   
 -- * </copyright>
 -- *
--- * $Id: EssentialOCLLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $
+-- * $Id: EssentialOCLLexer.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $
 -- */
 --
 -- The Essential OCL Lexer
@@ -104,7 +104,7 @@
  $copyright_contributions
  * </copyright>
  *
- * $Id: EssentialOCLLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $
+ * $Id: EssentialOCLLexer.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $
  */
 	./
 %End

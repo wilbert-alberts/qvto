@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: miscellaneous.gi,v 1.5 2010/01/24 13:59:56 sboyko Exp $ 
+-- * $Id: miscellaneous.gi,v 1.6 2010/01/27 17:21:47 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -234,7 +234,7 @@
 			prsStream.reset(token_index); // point to error token
 			DiagnoseParser diagnoseParser = new DiagnoseParser(prsStream, prsTable);
 			diagnoseParser.diagnose(token_index);
-			$setResult(null);
+			setResult(null);
 		}
 	./
 %End
@@ -246,9 +246,9 @@
 		/.$EmptyListAction./
 	qualifierList ::= qualifierList qualifier
 		/.$BeginCode
-					EList result = (EList) $getSym(1);
-					result.add($getSym(2));
-					$setResult(result);
+					EList result = (EList) getRhsSym(1);
+					result.add(getRhsSym(2));
+					setResult(result);
 		  $EndCode
 		./		
 		
@@ -258,9 +258,9 @@
 		/.$NewCase./
 	qualifier ::= static
 		/.$BeginCode
-					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getIToken($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -268,18 +268,18 @@
 		/.$EmptyListAction./
 	colon_param_listOpt ::= ':' param_list
 		/.$BeginCode
-					$setResult($getSym(2));
+					setResult(getRhsSym(2));
 		  $EndCode
 		./
 
 	complete_signature ::= simple_signature colon_param_listOpt
 		/.$BeginCode
-					SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)$getSym(1);
-					EList<ParameterDeclarationCS> resultList = (EList<ParameterDeclarationCS>)$getSym(2);
+					SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)getRhsSym(1);
+					EList<ParameterDeclarationCS> resultList = (EList<ParameterDeclarationCS>)getRhsSym(2);
 					CSTNode result = createCompleteSignatureCS(simpleSignatureCS, resultList);
 					result.setStartOffset(simpleSignatureCS.getStartOffset());
 					result.setEndOffset(getEndOffset(simpleSignatureCS.getEndOffset(), resultList));
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -289,9 +289,9 @@
 
 	simple_signature ::= '(' param_listOpt ')' 
 		/.$BeginCode
-					CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)$getSym(2));
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
+					CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)getRhsSym(2));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -301,51 +301,51 @@
 
 	param_list ::= param_list ',' param
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	param_list ::= param_list ',' qvtErrorToken
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
 		  $EndCode
 		./
 	param_list ::= param
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 	param_list ::= qvtErrorToken
 		/.$BeginCode
 					EList result = new BasicEList();
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
 	param ::= param_directionOpt IDENTIFIER ':' typespec
 		/.$BeginCode
-					DirectionKindCS paramDirectionCS = (DirectionKindCS) $getSym(1);
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
 					CSTNode result = createParameterDeclarationCS(
 							paramDirectionCS,
-							getIToken($getToken(2)),
-							(TypeSpecCS)$getSym(4)
+							getRhsIToken(2),
+							(TypeSpecCS)getRhsSym(4)
 						);
 					
-					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : getIToken($getToken(2)).getStartOffset());
-					result.setEndOffset(((CSTNode)$getSym(4)).getEndOffset());
+					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : getRhsIToken(2).getStartOffset());
+					result.setEndOffset(((CSTNode)getRhsSym(4)).getEndOffset());
 					
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 		
 	param ::= param_directionOpt typespec
 		/.$BeginCode
-					DirectionKindCS paramDirectionCS = (DirectionKindCS) $getSym(1);
-					TypeSpecCS paramTypeCS = (TypeSpecCS) $getSym(2);
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
+					TypeSpecCS paramTypeCS = (TypeSpecCS) getRhsSym(2);
 					CSTNode result = createParameterDeclarationCS(
 							paramDirectionCS,
 							null,
@@ -355,7 +355,7 @@
 					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : paramTypeCS.getStartOffset());
 					result.setEndOffset(paramTypeCS.getEndOffset());
 					
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -368,8 +368,8 @@
 					CSTNode result = createDirectionKindCS(
 							DirectionKindEnum.IN
 						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -378,8 +378,8 @@
 					CSTNode result = createDirectionKindCS(
 							DirectionKindEnum.OUT
 						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 	
@@ -388,8 +388,8 @@
 					CSTNode result = createDirectionKindCS(
 							DirectionKindEnum.INOUT
 						);
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -399,68 +399,68 @@
 	declarator1 ::= IDENTIFIER ':' typeCS
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
 							null
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	
 	declarator1 ::= IDENTIFIER ':' typeCS '=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5)
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
 		  $EndCode
 		./
 
 	declarator1 ::= IDENTIFIER ':' typeCS ':=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
-							(TypeCS)$getSym(3),
-							(OCLExpressionCS)$getSym(5)
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(5));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
 		  $EndCode
 		./
 		
 	declarator2 ::= IDENTIFIER ':=' OclExpressionCS
 		/.$BeginCode
 					CSTNode result = createVariableCS(
-							getIToken($getToken(1)),
+							getRhsIToken(1),
 							null,
-							(OCLExpressionCS)$getSym(3)
+							(OCLExpressionCS)getRhsSym(3)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 
 	typespec ::= typeCS
 		/.$BeginCode
 					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
+						(TypeCS)getRhsSym(1),
 						null
 						);
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 	
 	typespec ::= typeCS '@' IDENTIFIER
 		/.$BeginCode
 					CSTNode result = createTypeSpecCS(
-						(TypeCS)$getSym(1),
-						getIToken($getToken(3))
+						(TypeCS)getRhsSym(1),
+						getRhsIToken(3)
 						);
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -470,21 +470,21 @@
 	
 	scoped_identifier ::= typeCS2 '::' IDENTIFIER
 		/.$BeginCode
-					ScopedNameCS result = createScopedNameCS((TypeCS)$getSym(1), getTokenText($getToken(3)));		
-					setOffsets(result, (CSTNode) $getSym(1), getIToken($getToken(3)));
-					$setResult(result);
+					ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), getRhsTokenText(3));		
+					setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier ::= typeCS2 '::' qvtErrorToken
 		/.$BeginCode
-					ScopedNameCS result = createScopedNameCS((TypeCS)$getSym(1), ""); 		
-					setOffsets(result, (CSTNode) $getSym(1), getIToken($getToken(2)));
-					$setResult(result);
+					ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), ""); 		
+					setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier ::= scoped_identifier2
 		/.$BeginCode
-					PathNameCS pathNameCS = (PathNameCS)$getSym(1);
+					PathNameCS pathNameCS = (PathNameCS)getRhsSym(1);
 					String name = pathNameCS.getSimpleNames().remove(pathNameCS.getSimpleNames().size() - 1).getValue();
 					TypeCS typeCS = pathNameCS.getSimpleNames().isEmpty() ? null : pathNameCS;
 
@@ -495,57 +495,57 @@
                                         // reduce the region by the removed name element
 					pathNameCS.setEndOffset(pathNameCS.getEndOffset() - (name != null ? name.length() : 0) - 2);
 					
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier2 ::= IDENTIFIER
 		/.$BeginCode
-					CSTNode result = createPathNameCS(getIToken($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier2 ::= main
 		/.$BeginCode
-					CSTNode result = createPathNameCS(getIToken($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier2 ::= scoped_identifier2 '::' IDENTIFIER
 		/.$BeginCode
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getIToken($getToken(3)));
-					setOffsets(result, result, getIToken($getToken(3)));
-					$setResult(result);
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, getRhsIToken(3));
+					setOffsets(result, result, getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
 		/.$BeginCode
-					PathNameCS result = (PathNameCS)$getSym(1);
+					PathNameCS result = (PathNameCS)getRhsSym(1);
 					result = extendPathNameCS(result, (IToken) null);
-					setOffsets(result, result, getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, result, getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier_list ::= scoped_identifier
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier_list ::= scoped_identifier_list ',' scoped_identifier
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 	scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
 		  $EndCode
 		./
 
@@ -562,43 +562,43 @@
 	expression_semi_list ::= expression_semi_list_element
 		/.$BeginCode
 					EList result = new BasicEList();
-					Object element = $getSym(1);
+					Object element = getRhsSym(1);
 					if (element instanceof EList) {
 						result.addAll((EList) element);
 					} else {
 						result.add(element);
 					}
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 	expression_semi_list ::= expression_semi_list ';' expression_semi_list_element 
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					Object element = $getSym(3);
+					EList result = (EList)getRhsSym(1);
+					Object element = getRhsSym(3);
 					if (element instanceof EList) {
 						result.addAll((EList) element);
 					} else {
 						result.add(element);
 					}
-					$setResult(result);
+					setResult(result);
 		  $EndCode
 		./
 	expression_semi_list ::= expression_semi_list qvtErrorToken 
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
 		  $EndCode
 		./
 
 	expression_block ::= '{' expression_listOpt '}'
 		/.$BeginCode
-				EList bodyList = (EList) $getSym(2);
+				EList bodyList = (EList) getRhsSym(2);
 				CSTNode result = createBlockExpCS(
 					bodyList
 				);
 				
-				setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+				setResult(result);
 	          $EndCode
 		./
 
@@ -608,8 +608,8 @@
 					$EMPTY_ELIST
 				);
 				
-				setOffsets(result, getIToken($getToken(1)));
-				$setResult(result);
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
 	          $EndCode
 		./
 
@@ -618,31 +618,31 @@
 	
 	qualifiedNameCS ::= qvtIdentifierCS
 		/.$BeginCode
-					CSTNode result = createPathNameCS(getIToken($getToken(1)));
-					setOffsets(result, getIToken($getToken(1)));
-					$setResult(result);
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
 		  $EndCode
 		./
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtIdentifierCS
 		/.$BeginCode
-					PathNameCS result = (PathNameCS)$getSym(1);
-					result = extendPathNameCS(result, getIToken($getToken(3)));
-					setOffsets(result, result, getIToken($getToken(3)));
-					$setResult(result);
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, getRhsIToken(3));
+					setOffsets(result, result, getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
 		/.$BeginCode
-					PathNameCS result = (PathNameCS)$getSym(1);
+					PathNameCS result = (PathNameCS)getRhsSym(1);
 					result = extendPathNameCS(result, (IToken) null);
-					setOffsets(result, result, getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, result, getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
 		/.$BeginCode
-					PathNameCS result = (PathNameCS)$getSym(1);
-					$setResult(result);
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					setResult(result);
 		  $EndCode	
 		./	
 	--=== // general purpose grammar rules (end) ===--
@@ -657,39 +657,39 @@
 	letExpSubCS3 ::= untypedInitializedVariableCS
 		/.$BeginCode
 					EList result = new BasicEList();
-					result.add($getSym(1));
-					$setResult(result);
+					result.add(getRhsSym(1));
+					setResult(result);
 		  $EndCode
 		./
 
 	letExpSubCS3 ::= letExpSubCS3 ',' untypedInitializedVariableCS 
 		/.$BeginCode
-					EList result = (EList)$getSym(1);
-					result.add($getSym(3));
-					$setResult(result);
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 			
 	LetExpCS ::= let letExpSubCS3 in OclExpressionCS
 		/.$BeginCode
-					EList variables = (EList)$getSym(2);
+					EList variables = (EList)getRhsSym(2);
 					CSTNode result = createLetExpCS(
 							variables,
-							(OCLExpressionCS)$getSym(4)
+							(OCLExpressionCS)getRhsSym(4)
 						);
-					setOffsets(result, getIToken($getToken(1)), (CSTNode)$getSym(4));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
+					setResult(result);
 		  $EndCode
 		./
 	LetExpCS ::= let letExpSubCS3 in qvtErrorToken
 		/.$BeginCode
-					EList variables = (EList)$getSym(2);
+					EList variables = (EList)getRhsSym(2);
 					CSTNode result = createLetExpCS(
 							variables,
 							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null)
 						);
-					setOffsets(result, getIToken($getToken(1)), getIToken($getToken(3)));
-					$setResult(result);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
 		  $EndCode
 		./
 
@@ -700,16 +700,16 @@
 		/.$BeginCode
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	CallExpCS ::= primaryExpCS '->' qvtErrorToken
 		/.$BeginCode
 					CallExpCS result = TempFactory.eINSTANCE.createErrorCallExpCS();
 		 			result.setAccessor(DotOrArrowEnum.ARROW_LITERAL);
-					setOffsets(result, (CSTNode)$getSym(1), getIToken($getToken(2)));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), getRhsIToken(2));
+					setResult(result);
 		  $EndCode
 		./
 	argumentsCS ::= qvtErrorToken
@@ -719,8 +719,8 @@
 
 	IteratorExpCS ::= primaryExpCS '->' simpleNameCS '(' qvtErrorToken
 		/.$BeginCode
-					OCLExpressionCS source = (OCLExpressionCS)$getSym(1);
-					SimpleNameCS simpleNameCS = (SimpleNameCS)$getSym(3);
+					OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
+					SimpleNameCS simpleNameCS = (SimpleNameCS)getRhsSym(3);
 					CSTNode result = createIteratorExpCS(
 							source,
 							simpleNameCS,
@@ -728,8 +728,8 @@
 							null,
 							null
 						);
-					setOffsets(result, source, getIToken($getToken(4)));
-					$setResult(result);
+					setOffsets(result, source, getRhsIToken(4));
+					setResult(result);
 		  $EndCode
 		./
 	--=== OCL grammar error recovery extensions (end) ===--
@@ -741,7 +741,7 @@
 	
 	qvtErrorToken ::= ERROR_TOKEN
 		/.$BeginCode
-					diagnozeErrorToken($getToken(1));
+					diagnozeErrorToken(getRhsTokenIndex(1));
 		  $EndCode
 		./
 
@@ -755,16 +755,16 @@
 								SimpleTypeEnum.STRING_LITERAL,
 								OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
 							);
-					setOffsets(simpleNameCS, getIToken($getToken(2)));
+					setOffsets(simpleNameCS, getRhsIToken(2));
 					EList args = new BasicEList();
-					args.add($getSym(3));
+					args.add(getRhsSym(3));
 					CSTNode result = createOperationCallExpCS(
-							(OCLExpressionCS)$getSym(1),
+							(OCLExpressionCS)getRhsSym(1),
 							simpleNameCS,
 							args
 						);
-					setOffsets(result, (CSTNode)$getSym(1), (CSTNode)$getSym(3));
-					$setResult(result);
+					setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
+					setResult(result);
 		  $EndCode
 		./
 
