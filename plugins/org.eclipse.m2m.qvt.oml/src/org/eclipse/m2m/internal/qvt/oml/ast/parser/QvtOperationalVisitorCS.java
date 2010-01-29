@@ -107,6 +107,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
@@ -115,8 +116,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ErrorCallExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
@@ -918,17 +917,17 @@ public class QvtOperationalVisitorCS
     protected OCLExpression<EClassifier> propertyCallExpCS(CallExpCS propertyCallExpCS, 
             Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env)
              {
-        if (propertyCallExpCS instanceof ErrorCallExpCS) {
-            OCLExpressionCS sourceExpCS = propertyCallExpCS.getSource();
-            if (sourceExpCS != null) {
-                if (propertyCallExpCS.getAccessor() == DotOrArrowEnum.ARROW_LITERAL) {
-                    getCollectionSourceExpression(sourceExpCS, env);
-                } else {
-                    oclExpressionCS(sourceExpCS, env);
-                }
-            }
-            return null;
-        }
+//        if (propertyCallExpCS instanceof ErrorCallExpCS) {
+//            OCLExpressionCS sourceExpCS = propertyCallExpCS.getSource();
+//            if (sourceExpCS != null) {
+//                if (propertyCallExpCS.getAccessor() == DotOrArrowEnum.ARROW_LITERAL) {
+//                    getCollectionSourceExpression(sourceExpCS, env);
+//                } else {
+//                    oclExpressionCS(sourceExpCS, env);
+//                }
+//            }
+//            return null;
+//        }
         OCLExpression<EClassifier> result = super.propertyCallExpCS(propertyCallExpCS, env);
         if(result != null) {
             // AST binding    
