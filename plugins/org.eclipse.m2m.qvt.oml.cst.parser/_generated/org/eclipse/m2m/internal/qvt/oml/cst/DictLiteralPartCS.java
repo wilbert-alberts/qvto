@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: DictLiteralPartCS.java,v 1.1 2009/01/09 15:59:22 radvorak Exp $
+ * $Id: DictLiteralPartCS.java,v 1.2 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

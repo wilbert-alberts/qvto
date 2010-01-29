@@ -11,11 +11,12 @@
  * 
  * 
  *
- * $Id: UnitCS.java,v 1.2 2009/02/19 11:25:54 radvorak Exp $
+ * $Id: UnitCS.java,v 1.3 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.CSTNode;
 
 /**
@@ -66,7 +67,7 @@ public interface UnitCS extends CSTNode {
 	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Modules</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Modules</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

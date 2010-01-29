@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTPackageImpl.java,v 1.32 2009/04/21 13:39:40 aigdalov Exp $
+ * $Id: CSTPackageImpl.java,v 1.33 2010/01/29 15:23:40 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -20,7 +20,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -83,7 +85,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
@@ -95,8 +99,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.impl.TempPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -299,6 +301,69 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass blockExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass computeExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass whileExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass imperativeLoopExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass forExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass imperativeIterateExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass switchExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass switchAltExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass variableInitializationCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass assignStatementCSEClass = null;
 
 	/**
@@ -327,13 +392,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass variableInitializationCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass mappingBodyCSEClass = null;
 
 	/**
@@ -356,41 +414,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass imperativeOperationCallExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass whileExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass switchExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass switchAltExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass blockExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass computeExpCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -495,27 +518,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass imperativeLoopExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass forExpCSEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass imperativeIterateExpCSEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass returnExpCSEClass = null;
 
 	/**
@@ -580,6 +582,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass unitCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass resolveOpArgsExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass scopedNameCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -675,16 +691,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		// Initialize simple dependencies
 		org.eclipse.ocl.cst.CSTPackage.eINSTANCE.eClass();
 
-		// Obtain or create and register interdependencies
-		TempPackageImpl theTempPackage = (TempPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TempPackage.eNS_URI) instanceof TempPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TempPackage.eNS_URI) : TempPackage.eINSTANCE);
-
 		// Create package meta-data objects
 		theCSTPackage.createPackageContents();
-		theTempPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCSTPackage.initializePackageContents();
-		theTempPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCSTPackage.freeze();
@@ -1462,6 +1473,231 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBlockExpCS() {
+		return blockExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBlockExpCS_BodyExpressions() {
+		return (EReference)blockExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getComputeExpCS() {
+		return computeExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getComputeExpCS_ReturnedElement() {
+		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getComputeExpCS_Body() {
+		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getWhileExpCS() {
+		return whileExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWhileExpCS_Body() {
+		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWhileExpCS_Condition() {
+		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWhileExpCS_ResultVar() {
+		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getImperativeLoopExpCS() {
+		return imperativeLoopExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getImperativeLoopExpCS_Condition() {
+		return (EReference)imperativeLoopExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getForExpCS() {
+		return forExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getImperativeIterateExpCS() {
+		return imperativeIterateExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getImperativeIterateExpCS_Target() {
+		return (EReference)imperativeIterateExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSwitchExpCS() {
+		return switchExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSwitchExpCS_AlternativePart() {
+		return (EReference)switchExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSwitchExpCS_ElsePart() {
+		return (EReference)switchExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSwitchAltExpCS() {
+		return switchAltExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSwitchAltExpCS_Condition() {
+		return (EReference)switchAltExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSwitchAltExpCS_Body() {
+		return (EReference)switchAltExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVariableInitializationCS() {
+		return variableInitializationCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVariableInitializationCS_OclExpressionCS() {
+		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVariableInitializationCS_SimpleNameCS() {
+		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVariableInitializationCS_TypeCS() {
+		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVariableInitializationCS_WithResult() {
+		return (EAttribute)variableInitializationCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAssignStatementCS() {
 		return assignStatementCSEClass;
 	}
@@ -1527,51 +1763,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getExpressionStatementCS_OclExpressionCS() {
 		return (EReference)expressionStatementCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getVariableInitializationCS() {
-		return variableInitializationCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVariableInitializationCS_OclExpressionCS() {
-		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVariableInitializationCS_SimpleNameCS() {
-		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVariableInitializationCS_TypeCS() {
-		return (EReference)variableInitializationCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getVariableInitializationCS_WithResult() {
-		return (EAttribute)variableInitializationCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1662,141 +1853,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getImperativeOperationCallExpCS_Module() {
 		return (EReference)imperativeOperationCallExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getWhileExpCS() {
-		return whileExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWhileExpCS_Body() {
-		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWhileExpCS_Condition() {
-		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWhileExpCS_ResultVar() {
-		return (EReference)whileExpCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getSwitchExpCS() {
-		return switchExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSwitchExpCS_AlternativePart() {
-		return (EReference)switchExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSwitchExpCS_ElsePart() {
-		return (EReference)switchExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getSwitchAltExpCS() {
-		return switchAltExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSwitchAltExpCS_Condition() {
-		return (EReference)switchAltExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSwitchAltExpCS_Body() {
-		return (EReference)switchAltExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getBlockExpCS() {
-		return blockExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getBlockExpCS_BodyExpressions() {
-		return (EReference)blockExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getComputeExpCS() {
-		return computeExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getComputeExpCS_ReturnedElement() {
-		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getComputeExpCS_Body() {
-		return (EReference)computeExpCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2245,51 +2301,6 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getImperativeLoopExpCS() {
-		return imperativeLoopExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getImperativeLoopExpCS_Condition() {
-		return (EReference)imperativeLoopExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getForExpCS() {
-		return forExpCSEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getImperativeIterateExpCS() {
-		return imperativeIterateExpCSEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getImperativeIterateExpCS_Target() {
-		return (EReference)imperativeIterateExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getReturnExpCS() {
 		return returnExpCSEClass;
 	}
@@ -2544,6 +2555,60 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EReference getUnitCS_Imports() {
 		return (EReference)unitCSEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getResolveOpArgsExpCS() {
+		return resolveOpArgsExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResolveOpArgsExpCS_Target() {
+		return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResolveOpArgsExpCS_Condition() {
+		return (EReference)resolveOpArgsExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getScopedNameCS() {
+		return scopedNameCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScopedNameCS_TypeCS() {
+		return (EReference)scopedNameCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getScopedNameCS_Name() {
+		return (EAttribute)scopedNameCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2892,6 +2957,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(unitCSEClass, UNIT_CS__MODEL_TYPES);
 		createEReference(unitCSEClass, UNIT_CS__IMPORTS);
 
+		resolveOpArgsExpCSEClass = createEClass(RESOLVE_OP_ARGS_EXP_CS);
+		createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__TARGET);
+		createEReference(resolveOpArgsExpCSEClass, RESOLVE_OP_ARGS_EXP_CS__CONDITION);
+
+		scopedNameCSEClass = createEClass(SCOPED_NAME_CS);
+		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
+		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -2924,11 +2997,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		TempPackage theTempPackage = (TempPackage)EPackage.Registry.INSTANCE.getEPackage(TempPackage.eNS_URI);
 		org.eclipse.ocl.cst.CSTPackage theCSTPackage_1 = (org.eclipse.ocl.cst.CSTPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.ocl.cst.CSTPackage.eNS_URI);
-
-		// Add subpackages
-		getESubpackages().add(theTempPackage);
 
 		// Create type parameters
 
@@ -3005,6 +3074,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		dictLiteralPartCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		tagCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		unitCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		scopedNameCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -3040,7 +3111,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getLocalPropertyCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, LocalPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(contextualPropertyCSEClass, ContextualPropertyCS.class, "ContextualPropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getContextualPropertyCS_ScopedNameCS(), theTempPackage.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getContextualPropertyCS_ScopedNameCS(), this.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getContextualPropertyCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getContextualPropertyCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, ContextualPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -3246,7 +3317,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(mappingExtensionCSEClass, MappingExtensionCS.class, "MappingExtensionCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getMappingExtensionCS_Kind(), this.getMappingExtensionKindCS(), "kind", "disjuncts", 0, 1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(getMappingExtensionCS_MappingIdentifiers(), theTempPackage.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingExtensionCS_MappingIdentifiers(), this.getScopedNameCS(), null, "mappingIdentifiers", null, 1, -1, MappingExtensionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(instantiationExpCSEClass, InstantiationExpCS.class, "InstantiationExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getInstantiationExpCS_TypeSpecCS(), this.getTypeSpecCS(), null, "typeSpecCS", null, 1, 1, InstantiationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -3271,7 +3342,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(tagCSEClass, TagCS.class, "TagCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTagCS_Name(), theCSTPackage_1.getStringLiteralExpCS(), null, "name", null, 1, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getTagCS_ScopedNameCS(), theTempPackage.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTagCS_ScopedNameCS(), this.getScopedNameCS(), null, "scopedNameCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTagCS_OclExpressionCS(), theCSTPackage_1.getOCLExpressionCS(), null, "oclExpressionCS", null, 0, 1, TagCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(unitCSEClass, UnitCS.class, "UnitCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -3279,6 +3350,14 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getUnitCS_Modules(), this.getMappingModuleCS(), null, "modules", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getUnitCS_ModelTypes(), this.getModelTypeCS(), null, "modelTypes", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getUnitCS_Imports(), this.getImportCS(), null, "imports", null, 0, -1, UnitCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(resolveOpArgsExpCSEClass, ResolveOpArgsExpCS.class, "ResolveOpArgsExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getResolveOpArgsExpCS_Target(), theCSTPackage_1.getVariableCS(), null, "target", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getResolveOpArgsExpCS_Condition(), theCSTPackage_1.getOCLExpressionCS(), null, "condition", null, 0, 1, ResolveOpArgsExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getScopedNameCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

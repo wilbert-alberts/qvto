@@ -11,11 +11,12 @@
  * 
  * 
  *
- * $Id: MappingDeclarationCS.java,v 1.6 2009/01/28 22:14:35 sboyko Exp $
+ * $Id: MappingDeclarationCS.java,v 1.7 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;

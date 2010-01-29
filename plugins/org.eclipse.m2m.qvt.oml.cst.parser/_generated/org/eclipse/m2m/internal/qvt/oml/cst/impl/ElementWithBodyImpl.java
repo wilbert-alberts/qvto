@@ -11,14 +11,17 @@
  * 
  * 
  *
- * $Id: ElementWithBodyImpl.java,v 1.3 2009/02/16 12:44:05 aigdalov Exp $
+ * $Id: ElementWithBodyImpl.java,v 1.4 2010/01/29 15:23:39 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
 

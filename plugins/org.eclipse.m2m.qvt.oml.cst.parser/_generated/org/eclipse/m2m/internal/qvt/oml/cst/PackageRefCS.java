@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: PackageRefCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: PackageRefCS.java,v 1.2 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

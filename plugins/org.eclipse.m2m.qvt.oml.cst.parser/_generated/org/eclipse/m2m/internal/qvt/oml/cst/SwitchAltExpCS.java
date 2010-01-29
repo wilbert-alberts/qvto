@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: SwitchAltExpCS.java,v 1.3 2009/02/19 11:25:54 radvorak Exp $
+ * $Id: SwitchAltExpCS.java,v 1.4 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

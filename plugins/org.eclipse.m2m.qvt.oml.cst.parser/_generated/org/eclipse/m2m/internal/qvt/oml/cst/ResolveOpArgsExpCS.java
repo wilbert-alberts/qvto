@@ -11,9 +11,9 @@
  * 
  * 
  *
- * $Id: ResolveOpArgsExpCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ResolveOpArgsExpCS.java,v 1.1 2010/01/29 15:23:42 sboyko Exp $
  */
-package org.eclipse.m2m.internal.qvt.oml.cst.temp;
+package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
@@ -27,12 +27,12 @@ import org.eclipse.ocl.cst.VariableCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS#getTarget <em>Target</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getResolveOpArgsExpCS()
+ * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getResolveOpArgsExpCS()
  * @model
  * @generated
  */
@@ -54,14 +54,14 @@ public interface ResolveOpArgsExpCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
 	 * @see #setTarget(VariableCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getResolveOpArgsExpCS_Target()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getResolveOpArgsExpCS_Target()
 	 * @model
 	 * @generated
 	 */
 	VariableCS getTarget();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS#getTarget <em>Target</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS#getTarget <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Target</em>' reference.
@@ -80,14 +80,14 @@ public interface ResolveOpArgsExpCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' reference.
 	 * @see #setCondition(OCLExpressionCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getResolveOpArgsExpCS_Condition()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getResolveOpArgsExpCS_Condition()
 	 * @model
 	 * @generated
 	 */
 	OCLExpressionCS getCondition();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS#getCondition <em>Condition</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS#getCondition <em>Condition</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Condition</em>' reference.

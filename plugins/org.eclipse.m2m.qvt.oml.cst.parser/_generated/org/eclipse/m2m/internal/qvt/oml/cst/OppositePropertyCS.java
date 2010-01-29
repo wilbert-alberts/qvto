@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: OppositePropertyCS.java,v 1.2 2008/12/25 20:58:34 sboyko Exp $
+ * $Id: OppositePropertyCS.java,v 1.3 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

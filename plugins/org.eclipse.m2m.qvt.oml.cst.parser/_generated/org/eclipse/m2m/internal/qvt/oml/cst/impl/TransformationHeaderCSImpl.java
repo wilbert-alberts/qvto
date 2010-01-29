@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: TransformationHeaderCSImpl.java,v 1.2 2009/01/13 20:23:45 radvorak Exp $
+ * $Id: TransformationHeaderCSImpl.java,v 1.3 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,19 +19,26 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
+
 import org.eclipse.ocl.cst.PathNameCS;
 import org.eclipse.ocl.cst.StringLiteralExpCS;
+
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

@@ -11,13 +11,16 @@
  * 
  * 
  *
- * $Id: MappingCallExpCSImpl.java,v 1.5 2009/11/13 21:35:09 radvorak Exp $
+ * $Id: MappingCallExpCSImpl.java,v 1.6 2010/01/29 15:23:40 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
 

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ListTypeCS.java,v 1.1 2008/12/29 16:24:28 aigdalov Exp $
+ * $Id: ListTypeCS.java,v 1.2 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

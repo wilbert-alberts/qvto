@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: LocalPropertyCSImpl.java,v 1.3 2010/01/29 15:23:41 sboyko Exp $
+ * $Id: ScopedNameCSImpl.java,v 1.1 2010/01/29 15:23:40 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -24,26 +24,27 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
-import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 
-import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.TypeCS;
+
+import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Local Property CS</b></em>'.
+ * An implementation of the model object '<em><b>Scoped Name CS</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.LocalPropertyCSImpl#getTypeCS <em>Type CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.LocalPropertyCSImpl#getOclExpressionCS <em>Ocl Expression CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ScopedNameCSImpl#getTypeCS <em>Type CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ScopedNameCSImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPropertyCS {
+public class ScopedNameCSImpl extends CSTNodeImpl implements ScopedNameCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -62,21 +63,31 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	protected TypeCS typeCS;
 
 	/**
-	 * The cached value of the '{@link #getOclExpressionCS() <em>Ocl Expression CS</em>}' containment reference.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOclExpressionCS()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected OCLExpressionCS oclExpressionCS;
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected LocalPropertyCSImpl() {
+	protected ScopedNameCSImpl() {
 		super();
 	}
 
@@ -87,7 +98,7 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CSTPackage.Literals.LOCAL_PROPERTY_CS;
+		return CSTPackage.Literals.SCOPED_NAME_CS;
 	}
 
 	/**
@@ -108,7 +119,7 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -123,14 +134,14 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.SCOPED_NAME_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -138,8 +149,8 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OCLExpressionCS getOclExpressionCS() {
-		return oclExpressionCS;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -147,33 +158,11 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOclExpressionCS(OCLExpressionCS newOclExpressionCS, NotificationChain msgs) {
-		OCLExpressionCS oldOclExpressionCS = oclExpressionCS;
-		oclExpressionCS = newOclExpressionCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOclExpressionCS(OCLExpressionCS newOclExpressionCS) {
-		if (newOclExpressionCS != oclExpressionCS) {
-			NotificationChain msgs = null;
-			if (oclExpressionCS != null)
-				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
-			if (newOclExpressionCS != null)
-				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
-			msgs = basicSetOclExpressionCS(newOclExpressionCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.SCOPED_NAME_CS__NAME, oldName, name));
 	}
 
 	/**
@@ -184,10 +173,8 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS:
+			case CSTPackage.SCOPED_NAME_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
-			case CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS:
-				return basicSetOclExpressionCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -200,10 +187,10 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS:
+			case CSTPackage.SCOPED_NAME_CS__TYPE_CS:
 				return getTypeCS();
-			case CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS:
-				return getOclExpressionCS();
+			case CSTPackage.SCOPED_NAME_CS__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -216,11 +203,11 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS:
+			case CSTPackage.SCOPED_NAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS:
-				setOclExpressionCS((OCLExpressionCS)newValue);
+			case CSTPackage.SCOPED_NAME_CS__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -234,11 +221,11 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS:
+			case CSTPackage.SCOPED_NAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS:
-				setOclExpressionCS((OCLExpressionCS)null);
+			case CSTPackage.SCOPED_NAME_CS__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -252,12 +239,28 @@ public class LocalPropertyCSImpl extends ModulePropertyCSImpl implements LocalPr
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.LOCAL_PROPERTY_CS__TYPE_CS:
+			case CSTPackage.SCOPED_NAME_CS__TYPE_CS:
 				return typeCS != null;
-			case CSTPackage.LOCAL_PROPERTY_CS__OCL_EXPRESSION_CS:
-				return oclExpressionCS != null;
+			case CSTPackage.SCOPED_NAME_CS__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //LocalPropertyCSImpl
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: "); //$NON-NLS-1$
+		result.append(name);
+		result.append(')');
+		return result.toString();
+	}
+
+} //ScopedNameCSImpl

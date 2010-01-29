@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ComputeExpCS.java,v 1.1 2008/10/13 13:05:00 aigdalov Exp $
+ * $Id: ComputeExpCS.java,v 1.2 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

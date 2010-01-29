@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ImperativeOperationCallExpCS.java,v 1.1 2009/04/21 13:39:42 aigdalov Exp $
+ * $Id: ImperativeOperationCallExpCS.java,v 1.2 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -46,7 +46,7 @@ public interface ImperativeOperationCallExpCS extends OperationCallExpCS {
 	 * Returns the value of the '<em><b>Module</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Module</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Module</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCLLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $
+-- * $Id: ImperativeOCLLexer.gi,v 1.3 2010/01/29 15:23:42 sboyko Exp $
 -- */
 --
 -- The Imperative OCL Lexer
@@ -67,8 +67,6 @@
 	RESET_ASSIGN
 	ADD_ASSIGN
 	EXCLAMATION_MARK
-	NOT_EQUAL_EXEQ
-	AT_SIGN
 	COLONCOLONEQUAL
 	QUESTIONMARK
 
@@ -90,18 +88,6 @@
 	Token ::= '!'
 		/.$BeginAction
 					makeToken($_EXCLAMATION_MARK);
-		  $EndAction
-		./
-
-	Token ::= '!' '='
-		/.$BeginAction
-					makeToken($_NOT_EQUAL_EXEQ);
-		  $EndAction
-		./
-
-	Token ::= '@'
-		/.$BeginAction
-					makeToken($_AT_SIGN);
 		  $EndAction
 		./
 

@@ -11,11 +11,12 @@
  * 
  * 
  *
- * $Id: ModelTypeCS.java,v 1.3 2009/01/28 22:31:09 sboyko Exp $
+ * $Id: ModelTypeCS.java,v 1.4 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.SimpleNameCS;

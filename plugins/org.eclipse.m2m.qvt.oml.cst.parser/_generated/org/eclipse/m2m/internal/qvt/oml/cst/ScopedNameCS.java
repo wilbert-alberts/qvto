@@ -11,9 +11,9 @@
  * 
  * 
  *
- * $Id: ScopedNameCS.java,v 1.1 2008/04/06 10:18:40 sboyko Exp $
+ * $Id: ScopedNameCS.java,v 1.1 2010/01/29 15:23:42 sboyko Exp $
  */
-package org.eclipse.m2m.internal.qvt.oml.cst.temp;
+package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.TypeCS;
@@ -26,12 +26,12 @@ import org.eclipse.ocl.cst.TypeCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS#getTypeCS <em>Type CS</em>}</li>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS#getTypeCS <em>Type CS</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getScopedNameCS()
+ * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getScopedNameCS()
  * @model
  * @generated
  */
@@ -53,14 +53,14 @@ public interface ScopedNameCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getScopedNameCS_TypeCS()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getScopedNameCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */
 	TypeCS getTypeCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS#getTypeCS <em>Type CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS#getTypeCS <em>Type CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type CS</em>' containment reference.
@@ -79,14 +79,14 @@ public interface ScopedNameCS extends CSTNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage#getScopedNameCS_Name()
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getScopedNameCS_Name()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.

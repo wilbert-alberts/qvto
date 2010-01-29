@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.5 2010/01/27 17:21:50 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.6 2010/01/29 15:23:42 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -52,7 +52,7 @@
 	import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
@@ -168,6 +168,8 @@
 	STEREOTYPE_QUALIFIER_CLOSE ::= '>>'
 	MULTIPLICITY_RANGE         ::= '...'
 	TILDE_SIGN                 ::= '~'
+	NOT_EQUAL_EXEQ             ::= '!='
+	AT_SIGN                    ::= '@'
 
 %End
 
@@ -1934,6 +1936,84 @@
 		  $EndCode
 		./
 
+
+	----- 'let' extension in QVT, in OCL variable has to define type
+
+	letExpSubCS3 ::= untypedInitializedVariableCS
+		/.$BeginCode
+					EList result = new BasicEList();
+					result.add(getRhsSym(1));
+					setResult(result);
+		  $EndCode
+		./
+	letExpSubCS3 ::= letExpSubCS3 ',' untypedInitializedVariableCS 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+			
+	LetExpCS ::= let letExpSubCS3 in OclExpressionCS
+		/.$BeginCode
+					EList variables = (EList)getRhsSym(2);
+					CSTNode result = createLetExpCS(
+							variables,
+							(OCLExpressionCS)getRhsSym(4)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
+					setResult(result);
+		  $EndCode
+		./
+	LetExpCS ::= let letExpSubCS3 in qvtErrorToken
+		/.$BeginCode
+					EList variables = (EList)getRhsSym(2);
+					CSTNode result = createLetExpCS(
+							variables,
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, (IToken) null)
+						);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+
+
+        ----- '!=' - a synonym of '<>'
+
+	equalityNotNameNotLetCS ::= equalityNotLetCS '!=' relationalNotLetCS
+		/.$NewCase./
+	equalityWithLetCS ::= equalityNotLetCS '!=' relationalWithLetCS
+		/.$BeginCode
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.STRING_LITERAL,
+								OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
+							);
+					setOffsets(simpleNameCS, getRhsIToken(2));
+					EList args = new BasicEList();
+					args.add(getRhsSym(3));
+					CSTNode result = createOperationCallExpCS(
+							(OCLExpressionCS)getRhsSym(1),
+							simpleNameCS,
+							args
+						);
+					setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+
+
+	----- QVTo type extension for InstantiationExp
+
+	newTypespecCS ::= pathNameCS '@' IDENTIFIER
+		/.$BeginCode
+					CSTNode result = createTypeSpecCS(
+						(TypeCS)getRhsSym(1),
+						getRhsIToken(3)
+						);
+					setResult(result);
+		  $EndCode
+		./
+
 	--=== // Expressions (end) ===--
 
 
@@ -1979,6 +2059,301 @@
 					setResult(result);
 		  $EndCode
 		./
+
 	--=== Non-standard extensions and legacy support (end) ===--
+
+
+
+	--=== General purpose grammar rules (start) ===--
+
+	qualifierList ::= %empty
+		/.$EmptyListAction./
+	qualifierList ::= qualifierList qualifier
+		/.$BeginCode
+					EList result = (EList) getRhsSym(1);
+					result.add(getRhsSym(2));
+					setResult(result);
+		  $EndCode
+		./		
+		
+	qualifier ::= blackbox
+		/.$NewCase./
+	qualifier ::= abstract
+		/.$NewCase./
+	qualifier ::= static
+		/.$BeginCode
+					CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+
+
+	colon_param_listOpt ::= %empty	 
+		/.$EmptyListAction./
+	colon_param_listOpt ::= ':' param_list
+		/.$BeginCode
+					setResult(getRhsSym(2));
+		  $EndCode
+		./
+
+	complete_signature ::= simple_signature colon_param_listOpt
+		/.$BeginCode
+					SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)getRhsSym(1);
+					EList<ParameterDeclarationCS> resultList = (EList<ParameterDeclarationCS>)getRhsSym(2);
+					CSTNode result = createCompleteSignatureCS(simpleSignatureCS, resultList);
+					result.setStartOffset(simpleSignatureCS.getStartOffset());
+					result.setEndOffset(getEndOffset(simpleSignatureCS.getEndOffset(), resultList));
+					setResult(result);
+		  $EndCode
+		./
+
+	simple_signatureOpt ::= %empty
+		/.$NullAction./
+	simple_signatureOpt -> simple_signature
+
+	simple_signature ::= '(' param_listOpt ')' 
+		/.$BeginCode
+					CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)getRhsSym(2));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+
+	param_listOpt ::= %empty
+		/.$EmptyListAction./
+	param_listOpt -> param_list
+
+	param_list ::= param_list ',' param
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+	param_list ::= param_list ',' qvtErrorToken
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
+		  $EndCode
+		./
+	param_list ::= param
+		/.$BeginCode
+					EList result = new BasicEList();
+					result.add(getRhsSym(1));
+					setResult(result);
+		  $EndCode
+		./
+	param_list ::= qvtErrorToken
+		/.$BeginCode
+					EList result = new BasicEList();
+					setResult(result);
+		  $EndCode
+		./
+
+	param ::= param_directionOpt IDENTIFIER ':' typespec
+		/.$BeginCode
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
+					CSTNode result = createParameterDeclarationCS(
+							paramDirectionCS,
+							getRhsIToken(2),
+							(TypeSpecCS)getRhsSym(4)
+						);
+					
+					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : getRhsIToken(2).getStartOffset());
+					result.setEndOffset(((CSTNode)getRhsSym(4)).getEndOffset());
+					
+					setResult(result);
+		  $EndCode
+		./
+		
+	param ::= param_directionOpt typespec
+		/.$BeginCode
+					DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
+					TypeSpecCS paramTypeCS = (TypeSpecCS) getRhsSym(2);
+					CSTNode result = createParameterDeclarationCS(
+							paramDirectionCS,
+							null,
+							paramTypeCS
+						);
+
+					result.setStartOffset(paramDirectionCS != null ? paramDirectionCS.getStartOffset() : paramTypeCS.getStartOffset());
+					result.setEndOffset(paramTypeCS.getEndOffset());
+					
+					setResult(result);
+		  $EndCode
+		./
+
+	param_directionOpt ::= %empty
+		/.$NullAction./
+	param_directionOpt -> param_direction
+	
+	param_direction ::= in
+		/.$BeginCode
+					CSTNode result = createDirectionKindCS(
+							DirectionKindEnum.IN
+						);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+	param_direction ::= out
+		/.$BeginCode
+					CSTNode result = createDirectionKindCS(
+							DirectionKindEnum.OUT
+						);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+	param_direction ::= inout
+		/.$BeginCode
+					CSTNode result = createDirectionKindCS(
+							DirectionKindEnum.INOUT
+						);
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+
+
+	typespec ::= typeCS
+		/.$BeginCode
+					CSTNode result = createTypeSpecCS(
+						(TypeCS)getRhsSym(1),
+						null
+						);
+					setResult(result);
+		  $EndCode
+		./
+	typespec ::= typeCS '@' IDENTIFIER
+		/.$BeginCode
+					CSTNode result = createTypeSpecCS(
+						(TypeCS)getRhsSym(1),
+						getRhsIToken(3)
+						);
+					setResult(result);
+		  $EndCode
+		./
+
+
+	typeCS2 -> primitiveTypeCS
+	typeCS2 -> tupleTypeCS
+	typeCS2 -> collectionTypeCS
+	
+	scoped_identifier ::= typeCS2 '::' IDENTIFIER
+		/.$BeginCode
+					ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), getRhsTokenText(3));		
+					setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier ::= typeCS2 '::' qvtErrorToken
+		/.$BeginCode
+					ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), ""); 		
+					setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(2));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier ::= scoped_identifier2
+		/.$BeginCode
+					PathNameCS pathNameCS = (PathNameCS)getRhsSym(1);
+					String name = pathNameCS.getSimpleNames().remove(pathNameCS.getSimpleNames().size() - 1).getValue();
+					TypeCS typeCS = pathNameCS.getSimpleNames().isEmpty() ? null : pathNameCS;
+
+					ScopedNameCS result = createScopedNameCS(typeCS, name);		
+
+					setOffsets(result, pathNameCS);
+
+                                        // reduce the region by the removed name element
+					pathNameCS.setEndOffset(pathNameCS.getEndOffset() - (name != null ? name.length() : 0) - 2);
+					
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier2 ::= IDENTIFIER
+		/.$BeginCode
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier2 ::= main
+		/.$BeginCode
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier2 ::= scoped_identifier2 '::' IDENTIFIER
+		/.$BeginCode
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, getRhsIToken(3));
+					setOffsets(result, result, getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
+		/.$BeginCode
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, (IToken) null);
+					setOffsets(result, result, getRhsIToken(2));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier_list ::= scoped_identifier
+		/.$BeginCode
+					EList result = new BasicEList();
+					result.add(getRhsSym(1));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier_list ::= scoped_identifier_list ',' scoped_identifier
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+	scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
+		  $EndCode
+		./
+
+	qualifiedNameCS ::= qvtIdentifierCS
+		/.$BeginCode
+					CSTNode result = createPathNameCS(getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+	qualifiedNameCS ::= qualifiedNameCS '.' qvtIdentifierCS
+		/.$BeginCode
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, getRhsIToken(3));
+					setOffsets(result, result, getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
+		/.$BeginCode
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					result = extendPathNameCS(result, (IToken) null);
+					setOffsets(result, result, getRhsIToken(2));
+					setResult(result);
+		  $EndCode
+		./
+	qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
+		/.$BeginCode
+					PathNameCS result = (PathNameCS)getRhsSym(1);
+					setResult(result);
+		  $EndCode	
+		./	
+
+	qvtIdentifierCS -> simpleNameCS
+
+	--=== General purpose grammar rules (end) ===--
 
 %End

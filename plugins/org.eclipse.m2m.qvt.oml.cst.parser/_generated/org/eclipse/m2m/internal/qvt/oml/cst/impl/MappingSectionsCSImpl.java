@@ -11,20 +11,24 @@
  * 
  * 
  *
- * $Id: MappingSectionsCSImpl.java,v 1.2 2009/01/13 20:23:49 radvorak Exp $
+ * $Id: MappingSectionsCSImpl.java,v 1.3 2010/01/29 15:23:40 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
+
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

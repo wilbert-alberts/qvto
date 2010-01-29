@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ResolveInExpCS.java,v 1.2 2008/05/15 13:53:39 radvorak Exp $
+ * $Id: ResolveInExpCS.java,v 1.3 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -73,7 +73,7 @@ public interface ResolveInExpCS extends ResolveExpCS {
 	 * Returns the value of the '<em><b>In Mapping Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>In Mapping Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>In Mapping Name</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

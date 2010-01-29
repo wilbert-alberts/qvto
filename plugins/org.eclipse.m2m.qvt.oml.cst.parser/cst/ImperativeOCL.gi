@@ -12,20 +12,36 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $ 
+-- * $Id: ImperativeOCL.gi,v 1.4 2010/01/29 15:23:42 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL Parser
 --
 
 %Import
-	miscellaneous.gi
-
+	EssentialOCL.gi
 
 %DropRules
-	-- 'if' extension in QVTo
+	-- Dropped due to 13.2 (OCL spec) and 6.4 (QVT-ImperativeOCL spec). These rules conflict with imperative iterator shorthands
+	AssociationClassCallExpCS ::= simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
+	AssociationClassCallExpCS ::= primaryExpCS '.' simpleNameCS '[' argumentsCS ']' isMarkedPreCSopt
+
+	-- Excessive rule in OCL grammar
+	CollectionLiteralExpCS ::= collectionTypeCS '{' CollectionLiteralPartsCSopt '}'
+
+	-- 'if' extension in Imperative OCL
 	IfExpCS ::= if OclExpressionCS then OclExpressionCS else OclExpressionCS endif
 
+%End
+
+%Define
+	-- Definition of macros used in the parser template
+	--
+	$super_parser_class /.AbstractQVTParser./
+	$super_lexer_class /.QVTOLexer./
+	$environment_class /.Environment<?,?,?,?,?,?,?,?,?,?,?,?>./
+
+	$EMPTY_ELIST /.ourEmptyEList./
 %End
 
 %Globals
@@ -45,8 +61,7 @@
 	import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;	
 	import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-	import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
+	import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
 	./
@@ -73,6 +88,29 @@
 	./
 %End
 
+
+%Headers
+	/.
+		@SuppressWarnings("unchecked")
+		private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);								
+								
+		
+		private void diagnozeErrorToken(int token_index) {
+			//IToken token = getIToken(token_index);
+			//if (token instanceof lpg.runtime.ErrorToken) {
+			//	token = ((lpg.runtime.ErrorToken) token).getErrorToken();
+			//}			
+			//reportError(lpg.runtime.ParseErrorCodes.MISPLACED_CODE, token.getTokenIndex(), token.getTokenIndex(),  
+			//		"'" + 
+			//		token.toString() + "'");
+
+			prsStream.reset(token_index); // point to error token
+			DiagnoseParser diagnoseParser = new DiagnoseParser(prsStream, prsTable);
+			diagnoseParser.diagnose(token_index);
+			setResult(null);
+		}
+	./
+%End
 
 %KeyWords
 	Dict
@@ -104,8 +142,6 @@
 	RESET_ASSIGN      ::= ':='
 	ADD_ASSIGN        ::= '+='
 	EXCLAMATION_MARK  ::= '!'
-	NOT_EQUAL_EXEQ    ::= '!='
-	AT_SIGN           ::= '@'
 	COLONCOLONEQUAL   ::= '::='
 	QUESTIONMARK      ::= '?'
 
@@ -203,6 +239,10 @@
 				setResult(result);
 		  $EndCode
 		./
+
+	oclExpressionCSOpt -> OclExpressionCS 
+	oclExpressionCSOpt ::= %empty
+		/.$NullAction./
 	 
 	expression_semi_list_element -> var_init_group_exp
 
@@ -453,6 +493,27 @@
 					setResult(forExpCS);
 		  $EndCode
 		./
+
+	IteratorExpCS ::= primaryExpCS '->' simpleNameCS '(' qvtErrorToken
+		/.$BeginCode
+					OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
+					SimpleNameCS simpleNameCS = (SimpleNameCS)getRhsSym(3);
+					CSTNode result = createIteratorExpCS(
+							source,
+							simpleNameCS,
+							null,
+							null,
+							null
+						);
+					setOffsets(result, source, getRhsIToken(4));
+					setResult(result);
+		  $EndCode
+		./
+
+	argumentsCS ::= qvtErrorToken
+		/.$EmptyListAction./	
+	argumentsCS -> argumentsCS ',' qvtErrorToken
+
 
 	forOpCode -> forEach
 	forOpCode -> forOne
@@ -1138,35 +1199,6 @@
 		  $EndCode
 		./
 
-	--primaryExpCS ::= primaryExpCS '.' FeatureCallExpCS exclamationOpt '[' OclExpressionCS ']'
-	--	/.$BeginCode
-	--				CallExpCS callExpCS = (CallExpCS)getRhsSym(3);
-	--				callExpCS.setSource((OCLExpressionCS)getRhsSym(1));
-	--				callExpCS.setAccessor(DotOrArrowEnum.DOT_LITERAL);
-	--				setOffsets(callExpCS, (CSTNode)getRhsSym(1), callExpCS);
-	--  
-	--
-	--			        String opCode = isTokenOfType(getRhsIToken(4), $sym_type.TK_EXCLAMATION_MARK)
-	-- 	 					?  "selectOne" 
-	--						: "xselect"; 
-	--				SimpleNameCS simpleNameCS = createSimpleNameCS(
-	--							SimpleTypeEnum.KEYWORD_LITERAL,
-	--							opCode
-	--						);
-	--				setOffsets(simpleNameCS, getRhsIToken(5), getRhsIToken(7));
-	--				CallExpCS result = createImperativeIterateExpCS(
-	--						simpleNameCS,
-	--						$EMPTY_ELIST,
-	--						null,
-	--						null,
-	--						(OCLExpressionCS) getRhsSym(6)
-	--					);
-	--				result.setSource(callExpCS);
-	--				setOffsets(result, getRhsIToken(1), getRhsIToken(7));
-	--				setResult(result);
-	--	  $EndCode
-	--	./
-
 	primaryNotNameCS -> newExpCS
 	newExpCS ::= new newTypespecCS '(' argumentsCSopt ')' 
 		/.$BeginCode
@@ -1186,16 +1218,6 @@
 		  $EndCode
 		./
 	
-	newTypespecCS ::= pathNameCS '@' IDENTIFIER
-		/.$BeginCode
-					CSTNode result = createTypeSpecCS(
-						(TypeCS)getRhsSym(1),
-						getRhsIToken(3)
-						);
-					setResult(result);
-		  $EndCode
-		./
-
 		
 	-- imperative BreakExp and ContinueExp registration
 		
@@ -1214,6 +1236,136 @@
 				setResult(result);
 		  $EndCode
 		./	
+
+
+	--=== General purpose grammar rules (start) ===--
+
+	declarator -> declarator1
+	declarator -> declarator2
+
+	declarator1 ::= IDENTIFIER ':' typeCS
+		/.$BeginCode
+					CSTNode result = createVariableCS(
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							null
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+	
+	declarator1 ::= IDENTIFIER ':' typeCS '=' OclExpressionCS
+		/.$BeginCode
+					CSTNode result = createVariableCS(
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
+		  $EndCode
+		./
+
+	declarator1 ::= IDENTIFIER ':' typeCS ':=' OclExpressionCS
+		/.$BeginCode
+					CSTNode result = createVariableCS(
+							getRhsIToken(1),
+							(TypeCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
+		  $EndCode
+		./
+		
+	declarator2 ::= IDENTIFIER ':=' OclExpressionCS
+		/.$BeginCode
+					CSTNode result = createVariableCS(
+							getRhsIToken(1),
+							null,
+							(OCLExpressionCS)getRhsSym(3)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(3));
+					setResult(result);
+		  $EndCode
+		./
+
+
+	semicolonOpt -> ';'
+	semicolonOpt -> %empty
+
+	expression_listOpt ::= %empty
+		/.$EmptyListAction./
+	expression_listOpt -> expression_list
+
+	expression_list -> expression_semi_list semicolonOpt
+
+	expression_semi_list_element -> OclExpressionCS
+	expression_semi_list ::= expression_semi_list_element
+		/.$BeginCode
+					EList result = new BasicEList();
+					Object element = getRhsSym(1);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	expression_semi_list ::= expression_semi_list ';' expression_semi_list_element 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					Object element = getRhsSym(3);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	expression_semi_list ::= expression_semi_list qvtErrorToken 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
+		  $EndCode
+		./
+
+	expression_block ::= '{' expression_listOpt '}'
+		/.$BeginCode
+				EList bodyList = (EList) getRhsSym(2);
+				CSTNode result = createBlockExpCS(
+					bodyList
+				);
+				
+				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+				setResult(result);
+	          $EndCode
+		./
+	expression_block ::= '{' qvtErrorToken
+		/.$BeginCode
+				CSTNode result = createBlockExpCS(
+					$EMPTY_ELIST
+				);
+				
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
+	          $EndCode
+		./
+
+	expression_statement -> OclExpressionCS ';'
+	expression_statement -> expression_block semicolonOpt
+
+	qvtErrorToken ::= ERROR_TOKEN
+		/.$BeginCode
+					diagnozeErrorToken(getRhsTokenIndex(1));
+		  $EndCode
+		./
+
+	--=== General purpose grammar rules (end) ===--
+
 
 	--=== Non-standard extensions and legacy support (start) ===--
 	switchAltExpCS ::= '(' OclExpressionCS ')' '?' OclExpressionCS ';'

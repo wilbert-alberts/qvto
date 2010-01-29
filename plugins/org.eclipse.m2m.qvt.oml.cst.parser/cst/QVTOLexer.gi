@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOLexer.gi,v 1.2 2010/01/24 13:59:56 sboyko Exp $
+-- * $Id: QVTOLexer.gi,v 1.3 2010/01/29 15:23:42 sboyko Exp $
 -- */
 --
 -- The QVTo Lexer
@@ -64,6 +64,8 @@
 	STEREOTYPE_QUALIFIER_CLOSE
 	MULTIPLICITY_RANGE
 	TILDE_SIGN
+	NOT_EQUAL_EXEQ
+	AT_SIGN
 
 %End
 
@@ -91,5 +93,18 @@
 					makeToken($_TILDE_SIGN);
 		  $EndAction
 		./
+
+	Token ::= '!' '='
+		/.$BeginAction
+					makeToken($_NOT_EQUAL_EXEQ);
+		  $EndAction
+		./
+
+	Token ::= '@'
+		/.$BeginAction
+					makeToken($_AT_SIGN);
+		  $EndAction
+		./
+
 
 %End

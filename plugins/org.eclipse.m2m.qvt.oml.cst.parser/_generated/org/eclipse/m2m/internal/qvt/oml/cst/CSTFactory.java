@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTFactory.java,v 1.18 2009/04/21 13:39:42 aigdalov Exp $
+ * $Id: CSTFactory.java,v 1.19 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
@@ -240,6 +240,87 @@ public interface CSTFactory extends EFactory {
 	MappingSectionsCS createMappingSectionsCS();
 
 	/**
+	 * Returns a new object of class '<em>Block Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Block Exp CS</em>'.
+	 * @generated
+	 */
+	BlockExpCS createBlockExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Compute Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Compute Exp CS</em>'.
+	 * @generated
+	 */
+	ComputeExpCS createComputeExpCS();
+
+	/**
+	 * Returns a new object of class '<em>While Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>While Exp CS</em>'.
+	 * @generated
+	 */
+	WhileExpCS createWhileExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Imperative Loop Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Imperative Loop Exp CS</em>'.
+	 * @generated
+	 */
+	ImperativeLoopExpCS createImperativeLoopExpCS();
+
+	/**
+	 * Returns a new object of class '<em>For Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>For Exp CS</em>'.
+	 * @generated
+	 */
+	ForExpCS createForExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Imperative Iterate Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Imperative Iterate Exp CS</em>'.
+	 * @generated
+	 */
+	ImperativeIterateExpCS createImperativeIterateExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Switch Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Switch Exp CS</em>'.
+	 * @generated
+	 */
+	SwitchExpCS createSwitchExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Switch Alt Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Switch Alt Exp CS</em>'.
+	 * @generated
+	 */
+	SwitchAltExpCS createSwitchAltExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Variable Initialization CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Variable Initialization CS</em>'.
+	 * @generated
+	 */
+	VariableInitializationCS createVariableInitializationCS();
+
+	/**
 	 * Returns a new object of class '<em>Assign Statement CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -276,15 +357,6 @@ public interface CSTFactory extends EFactory {
 	ExpressionStatementCS createExpressionStatementCS();
 
 	/**
-	 * Returns a new object of class '<em>Variable Initialization CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Variable Initialization CS</em>'.
-	 * @generated
-	 */
-	VariableInitializationCS createVariableInitializationCS();
-
-	/**
 	 * Returns a new object of class '<em>Mapping Body CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -319,51 +391,6 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ImperativeOperationCallExpCS createImperativeOperationCallExpCS();
-
-	/**
-	 * Returns a new object of class '<em>While Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>While Exp CS</em>'.
-	 * @generated
-	 */
-	WhileExpCS createWhileExpCS();
-
-	/**
-	 * Returns a new object of class '<em>Switch Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Switch Exp CS</em>'.
-	 * @generated
-	 */
-	SwitchExpCS createSwitchExpCS();
-
-	/**
-	 * Returns a new object of class '<em>Switch Alt Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Switch Alt Exp CS</em>'.
-	 * @generated
-	 */
-	SwitchAltExpCS createSwitchAltExpCS();
-
-	/**
-	 * Returns a new object of class '<em>Block Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Block Exp CS</em>'.
-	 * @generated
-	 */
-	BlockExpCS createBlockExpCS();
-
-	/**
-	 * Returns a new object of class '<em>Compute Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Compute Exp CS</em>'.
-	 * @generated
-	 */
-	ComputeExpCS createComputeExpCS();
 
 	/**
 	 * Returns a new object of class '<em>Direction Kind CS</em>'.
@@ -483,33 +510,6 @@ public interface CSTFactory extends EFactory {
 	AssertExpCS createAssertExpCS();
 
 	/**
-	 * Returns a new object of class '<em>Imperative Loop Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Imperative Loop Exp CS</em>'.
-	 * @generated
-	 */
-	ImperativeLoopExpCS createImperativeLoopExpCS();
-
-	/**
-	 * Returns a new object of class '<em>For Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>For Exp CS</em>'.
-	 * @generated
-	 */
-    ForExpCS createForExpCS();
-
-    /**
-	 * Returns a new object of class '<em>Imperative Iterate Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Imperative Iterate Exp CS</em>'.
-	 * @generated
-	 */
-	ImperativeIterateExpCS createImperativeIterateExpCS();
-
-	/**
 	 * Returns a new object of class '<em>Return Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -598,6 +598,24 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	UnitCS createUnitCS();
+
+	/**
+	 * Returns a new object of class '<em>Resolve Op Args Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Resolve Op Args Exp CS</em>'.
+	 * @generated
+	 */
+	ResolveOpArgsExpCS createResolveOpArgsExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Scoped Name CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Scoped Name CS</em>'.
+	 * @generated
+	 */
+	ScopedNameCS createScopedNameCS();
 
 	/**
 	 * Returns the package supported by this factory.

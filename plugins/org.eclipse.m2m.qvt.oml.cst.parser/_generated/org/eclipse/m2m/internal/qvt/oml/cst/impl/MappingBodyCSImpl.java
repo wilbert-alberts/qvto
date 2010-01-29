@@ -11,13 +11,16 @@
  * 
  * 
  *
- * $Id: MappingBodyCSImpl.java,v 1.4 2009/02/16 12:44:05 aigdalov Exp $
+ * $Id: MappingBodyCSImpl.java,v 1.5 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
 

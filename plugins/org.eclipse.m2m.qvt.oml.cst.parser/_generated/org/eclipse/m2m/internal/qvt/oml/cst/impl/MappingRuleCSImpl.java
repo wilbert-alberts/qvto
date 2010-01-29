@@ -11,18 +11,22 @@
  * 
  * 
  *
- * $Id: MappingRuleCSImpl.java,v 1.3 2009/01/13 20:23:48 radvorak Exp $
+ * $Id: MappingRuleCSImpl.java,v 1.4 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
+
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**

@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: ClassifierDefCSImpl.java,v 1.8 2009/02/19 11:25:51 radvorak Exp $
+ * $Id: ClassifierDefCSImpl.java,v 1.9 2010/01/29 15:23:40 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
@@ -19,18 +19,25 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
+
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
+
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**

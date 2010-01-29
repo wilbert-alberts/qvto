@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: MappingRuleCS.java,v 1.3 2009/01/13 20:23:40 radvorak Exp $
+ * $Id: MappingRuleCS.java,v 1.4 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 

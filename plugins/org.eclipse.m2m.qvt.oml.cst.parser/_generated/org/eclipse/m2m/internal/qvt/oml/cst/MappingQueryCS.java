@@ -11,11 +11,12 @@
  * 
  * 
  *
- * $Id: MappingQueryCS.java,v 1.3 2009/01/13 20:23:41 radvorak Exp $
+ * $Id: MappingQueryCS.java,v 1.4 2010/01/29 15:23:42 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**

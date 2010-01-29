@@ -11,11 +11,10 @@
  * 
  * 
  *
- * $Id: ContextualPropertyCS.java,v 1.1 2008/04/24 12:15:21 sboyko Exp $
+ * $Id: ContextualPropertyCS.java,v 1.2 2010/01/29 15:23:41 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.cst.TypeCS;
 
