@@ -135,7 +135,7 @@ public class SignatureUtil {
 	}
 	
 	public static boolean isStdLibType(EClassifier type) {
-		return type instanceof PredefinedType;
+		return type instanceof PredefinedType<?>;
 	}
 
 
