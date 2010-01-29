@@ -11,82 +11,19 @@
  * 
  * 
  *
- * $Id: CSTAdapterFactory.java,v 1.20 2009/04/21 13:39:43 aigdalov Exp $
+ * $Id: CSTAdapterFactory.java,v 1.21 2010/01/29 15:27:09 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.*;
-import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
-import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
-import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
+
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
@@ -426,6 +363,14 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseUnitCS(UnitCS object) {
 				return createUnitCSAdapter();
+			}
+			@Override
+			public Adapter caseResolveOpArgsExpCS(ResolveOpArgsExpCS object) {
+				return createResolveOpArgsExpCSAdapter();
+			}
+			@Override
+			public Adapter caseScopedNameCS(ScopedNameCS object) {
+				return createScopedNameCSAdapter();
 			}
 			@Override
 			public Adapter caseCSTNode(CSTNode object) {
@@ -844,6 +789,132 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS <em>Block Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS
+	 * @generated
+	 */
+	public Adapter createBlockExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS <em>Compute Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS
+	 * @generated
+	 */
+	public Adapter createComputeExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS <em>While Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS
+	 * @generated
+	 */
+	public Adapter createWhileExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS <em>Imperative Loop Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS
+	 * @generated
+	 */
+	public Adapter createImperativeLoopExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS <em>For Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS
+	 * @generated
+	 */
+	public Adapter createForExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS <em>Imperative Iterate Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS
+	 * @generated
+	 */
+	public Adapter createImperativeIterateExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS <em>Switch Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS
+	 * @generated
+	 */
+	public Adapter createSwitchExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS <em>Switch Alt Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS
+	 * @generated
+	 */
+	public Adapter createSwitchAltExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS <em>Variable Initialization CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS
+	 * @generated
+	 */
+	public Adapter createVariableInitializationCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS <em>Assign Statement CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -900,20 +971,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS <em>Variable Initialization CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS
-	 * @generated
-	 */
-	public Adapter createVariableInitializationCSAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS <em>Mapping Body CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -966,76 +1023,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createImperativeOperationCallExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS <em>While Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS
-	 * @generated
-	 */
-	public Adapter createWhileExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS <em>Switch Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS
-	 * @generated
-	 */
-	public Adapter createSwitchExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS <em>Switch Alt Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS
-	 * @generated
-	 */
-	public Adapter createSwitchAltExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS <em>Block Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS
-	 * @generated
-	 */
-	public Adapter createBlockExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS <em>Compute Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS
-	 * @generated
-	 */
-	public Adapter createComputeExpCSAdapter() {
 		return null;
 	}
 
@@ -1236,48 +1223,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS <em>Imperative Loop Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS
-	 * @generated
-	 */
-	public Adapter createImperativeLoopExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS <em>For Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS
-	 * @generated
-	 */
-    public Adapter createForExpCSAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS <em>Imperative Iterate Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS
-	 * @generated
-	 */
-	public Adapter createImperativeIterateExpCSAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS <em>Return Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1418,6 +1363,34 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS <em>Resolve Op Args Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS
+	 * @generated
+	 */
+	public Adapter createResolveOpArgsExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS <em>Scoped Name CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS
+	 * @generated
+	 */
+	public Adapter createScopedNameCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.CSTNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1460,6 +1433,20 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.LoopExpCS <em>Loop Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.cst.LoopExpCS
+	 * @generated
+	 */
+	public Adapter createLoopExpCSAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.FeatureCallExpCS <em>Feature Call Exp CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1484,20 +1471,6 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOperationCallExpCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.cst.LoopExpCS <em>Loop Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.cst.LoopExpCS
-	 * @generated
-	 */
-	public Adapter createLoopExpCSAdapter() {
 		return null;
 	}
 

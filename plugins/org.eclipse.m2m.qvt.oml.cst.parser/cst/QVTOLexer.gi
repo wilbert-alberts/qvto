@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOLexer.gi,v 1.3 2010/01/29 15:23:42 sboyko Exp $
+-- * $Id: QVTOLexer.gi,v 1.4 2010/01/29 15:27:08 sboyko Exp $
 -- */
 --
 -- The QVTo Lexer

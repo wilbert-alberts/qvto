@@ -11,7 +11,7 @@
  * 
  * 
  *
- * $Id: CSTSwitch.java,v 1.21 2009/04/21 13:39:42 aigdalov Exp $
+ * $Id: CSTSwitch.java,v 1.22 2010/01/29 15:27:09 sboyko Exp $
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.util;
 
@@ -19,74 +19,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.m2m.internal.qvt.oml.cst.*;
-import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
-import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ConfigPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ContextualPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ContinueExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
-import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeLoopExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ListTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LocalPropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionsCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModelTypeCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleRefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MultiplicityDefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ObjectExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
+
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CallExpCS;
 import org.eclipse.ocl.cst.FeatureCallExpCS;
@@ -734,6 +669,20 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CSTPackage.RESOLVE_OP_ARGS_EXP_CS: {
+				ResolveOpArgsExpCS resolveOpArgsExpCS = (ResolveOpArgsExpCS)theEObject;
+				T result = caseResolveOpArgsExpCS(resolveOpArgsExpCS);
+				if (result == null) result = caseCSTNode(resolveOpArgsExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.SCOPED_NAME_CS: {
+				ScopedNameCS scopedNameCS = (ScopedNameCS)theEObject;
+				T result = caseScopedNameCS(scopedNameCS);
+				if (result == null) result = caseCSTNode(scopedNameCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -1129,6 +1078,141 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Block Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Block Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBlockExpCS(BlockExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseComputeExpCS(ComputeExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>While Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>While Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseWhileExpCS(WhileExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Imperative Loop Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Imperative Loop Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseImperativeLoopExpCS(ImperativeLoopExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseForExpCS(ForExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Imperative Iterate Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Imperative Iterate Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseImperativeIterateExpCS(ImperativeIterateExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Switch Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Switch Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSwitchExpCS(SwitchExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Switch Alt Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Switch Alt Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSwitchAltExpCS(SwitchAltExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVariableInitializationCS(VariableInitializationCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Assign Statement CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1189,21 +1273,6 @@ public class CSTSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Variable Initialization CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVariableInitializationCS(VariableInitializationCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Mapping Body CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1260,81 +1329,6 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseImperativeOperationCallExpCS(ImperativeOperationCallExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>While Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>While Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseWhileExpCS(WhileExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Switch Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Switch Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseSwitchExpCS(SwitchExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Switch Alt Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Switch Alt Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseSwitchAltExpCS(SwitchAltExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Block Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Block Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBlockExpCS(BlockExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Compute Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseComputeExpCS(ComputeExpCS object) {
 		return null;
 	}
 
@@ -1549,51 +1543,6 @@ public class CSTSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative Loop Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative Loop Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseImperativeLoopExpCS(ImperativeLoopExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>For Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseForExpCS(ForExpCS object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative Iterate Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative Iterate Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseImperativeIterateExpCS(ImperativeIterateExpCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Return Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1744,6 +1693,36 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Resolve Op Args Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Resolve Op Args Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResolveOpArgsExpCS(ResolveOpArgsExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Scoped Name CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Scoped Name CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseScopedNameCS(ScopedNameCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1789,6 +1768,21 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Loop Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Loop Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLoopExpCS(LoopExpCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Feature Call Exp CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1815,21 +1809,6 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseOperationCallExpCS(OperationCallExpCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Loop Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Loop Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseLoopExpCS(LoopExpCS object) {
 		return null;
 	}
 

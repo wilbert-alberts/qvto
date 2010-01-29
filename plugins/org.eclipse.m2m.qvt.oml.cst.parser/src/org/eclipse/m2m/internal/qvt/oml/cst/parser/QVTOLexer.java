@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOLexer.java,v 1.7 2010/01/27 17:22:41 sboyko Exp $
+* $Id: QVTOLexer.java,v 1.8 2010/01/29 15:27:08 sboyko Exp $
 */
 /**
 * <copyright>
@@ -789,74 +789,74 @@ public void reset(Reader reader, String filename) throws java.io.IOException {
             }
 	
             //
-            // Rule 266:  Token ::= ! =
+            // Rule 266:  Token ::= : : =
             //
             case 266: { 
-				makeToken(QVTOParsersym.TK_NOT_EQUAL_EXEQ);
-	              break;
-            }
-	
-            //
-            // Rule 267:  Token ::= @
-            //
-            case 267: { 
-				makeToken(QVTOParsersym.TK_AT_SIGN);
-	              break;
-            }
-	
-            //
-            // Rule 268:  Token ::= : : =
-            //
-            case 268: { 
 				makeToken(QVTOParsersym.TK_COLONCOLONEQUAL);
 	              break;
             }
 	
             //
-            // Rule 269:  Token ::= ?
+            // Rule 267:  Token ::= ?
             //
-            case 269: { 
+            case 267: { 
 				makeToken(QVTOParsersym.TK_QUESTIONMARK);
 	              break;
             }
 	
             //
-            // Rule 276:  Token ::= DoubleQuote SLNotDQOpt DoubleQuote
+            // Rule 274:  Token ::= DoubleQuote SLNotDQOpt DoubleQuote
             //
-            case 276: { 
+            case 274: { 
 				makeToken(QVTOParsersym.TK_STRING_LITERAL);
 	              break;
             }
 	
             //
-            // Rule 280:  Token ::= < <
+            // Rule 278:  Token ::= < <
             //
-            case 280: { 
+            case 278: { 
 				makeToken(QVTOParsersym.TK_STEREOTYPE_QUALIFIER_OPEN);
 	              break;
             }
 	
             //
-            // Rule 281:  Token ::= > >
+            // Rule 279:  Token ::= > >
             //
-            case 281: { 
+            case 279: { 
 				makeToken(QVTOParsersym.TK_STEREOTYPE_QUALIFIER_CLOSE);
 	              break;
             }
 	
             //
-            // Rule 282:  Token ::= . . .
+            // Rule 280:  Token ::= . . .
             //
-            case 282: { 
+            case 280: { 
 				makeToken(QVTOParsersym.TK_MULTIPLICITY_RANGE);
 	              break;
             }
 	
             //
-            // Rule 283:  Token ::= ~
+            // Rule 281:  Token ::= ~
+            //
+            case 281: { 
+				makeToken(QVTOParsersym.TK_TILDE_SIGN);
+	              break;
+            }
+	
+            //
+            // Rule 282:  Token ::= ! =
+            //
+            case 282: { 
+				makeToken(QVTOParsersym.TK_NOT_EQUAL_EXEQ);
+	              break;
+            }
+	
+            //
+            // Rule 283:  Token ::= @
             //
             case 283: { 
-				makeToken(QVTOParsersym.TK_TILDE_SIGN);
+				makeToken(QVTOParsersym.TK_AT_SIGN);
 	              break;
             }
 	

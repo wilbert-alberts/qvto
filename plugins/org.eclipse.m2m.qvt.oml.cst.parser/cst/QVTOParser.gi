@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.6 2010/01/29 15:23:42 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.7 2010/01/29 15:27:08 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser

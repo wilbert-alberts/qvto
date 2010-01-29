@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightTypeParsersym.java,v 1.7 2010/01/27 17:22:41 sboyko Exp $
+* $Id: LightweightTypeParsersym.java,v 1.8 2010/01/29 15:27:07 sboyko Exp $
 */
 /**
 * <copyright>
@@ -89,16 +89,16 @@ public interface LightweightTypeParsersym {
       TK_RESET_ASSIGN = 49,
       TK_ADD_ASSIGN = 50,
       TK_EXCLAMATION_MARK = 51,
-      TK_NOT_EQUAL_EXEQ = 52,
+      TK_COLONCOLONEQUAL = 52,
+      TK_QUESTIONMARK = 53,
+      TK_SINGLE_LINE_COMMENT = 54,
+      TK_MULTI_LINE_COMMENT = 55,
+      TK_STEREOTYPE_QUALIFIER_OPEN = 56,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 57,
+      TK_MULTIPLICITY_RANGE = 58,
+      TK_TILDE_SIGN = 59,
+      TK_NOT_EQUAL_EXEQ = 60,
       TK_AT_SIGN = 23,
-      TK_COLONCOLONEQUAL = 53,
-      TK_QUESTIONMARK = 54,
-      TK_SINGLE_LINE_COMMENT = 55,
-      TK_MULTI_LINE_COMMENT = 56,
-      TK_STEREOTYPE_QUALIFIER_OPEN = 57,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 58,
-      TK_MULTIPLICITY_RANGE = 59,
-      TK_TILDE_SIGN = 60,
       TK_and = 61,
       TK_implies = 62,
       TK_not = 63,
@@ -275,7 +275,6 @@ public interface LightweightTypeParsersym {
                  "RESET_ASSIGN", //$NON-NLS-1$
                  "ADD_ASSIGN", //$NON-NLS-1$
                  "EXCLAMATION_MARK", //$NON-NLS-1$
-                 "NOT_EQUAL_EXEQ", //$NON-NLS-1$
                  "COLONCOLONEQUAL", //$NON-NLS-1$
                  "QUESTIONMARK", //$NON-NLS-1$
                  "SINGLE_LINE_COMMENT", //$NON-NLS-1$
@@ -284,6 +283,7 @@ public interface LightweightTypeParsersym {
                  "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
                  "MULTIPLICITY_RANGE", //$NON-NLS-1$
                  "TILDE_SIGN", //$NON-NLS-1$
+                 "NOT_EQUAL_EXEQ", //$NON-NLS-1$
                  "and", //$NON-NLS-1$
                  "implies", //$NON-NLS-1$
                  "not", //$NON-NLS-1$

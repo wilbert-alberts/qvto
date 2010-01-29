@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.7 2010/01/27 17:22:41 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.8 2010/01/29 15:27:07 sboyko Exp $
 */
 /**
 * <copyright>
@@ -83,22 +83,22 @@ public interface LightweightParsersym {
       TK_COMMA = 59,
       TK_COLON = 62,
       TK_COLONCOLON = 64,
-      TK_SEMICOLON = 58,
+      TK_SEMICOLON = 50,
       TK_DOT = 65,
       TK_DOTDOT = 106,
       TK_RESET_ASSIGN = 77,
       TK_ADD_ASSIGN = 99,
       TK_EXCLAMATION_MARK = 71,
-      TK_NOT_EQUAL_EXEQ = 79,
-      TK_AT_SIGN = 107,
-      TK_COLONCOLONEQUAL = 108,
-      TK_QUESTIONMARK = 109,
+      TK_COLONCOLONEQUAL = 107,
+      TK_QUESTIONMARK = 108,
       TK_SINGLE_LINE_COMMENT = 146,
       TK_MULTI_LINE_COMMENT = 147,
-      TK_STEREOTYPE_QUALIFIER_OPEN = 110,
+      TK_STEREOTYPE_QUALIFIER_OPEN = 109,
       TK_STEREOTYPE_QUALIFIER_CLOSE = 119,
       TK_MULTIPLICITY_RANGE = 120,
       TK_TILDE_SIGN = 121,
+      TK_NOT_EQUAL_EXEQ = 79,
+      TK_AT_SIGN = 110,
       TK_and = 80,
       TK_implies = 96,
       TK_not = 35,
@@ -174,14 +174,14 @@ public interface LightweightParsersym {
       TK_map = 32,
       TK_xmap = 33,
       TK_late = 34,
-      TK_resolve = 50,
-      TK_resolveone = 51,
-      TK_resolveIn = 52,
-      TK_resolveoneIn = 53,
-      TK_invresolve = 54,
-      TK_invresolveone = 55,
-      TK_invresolveIn = 56,
-      TK_invresolveoneIn = 57,
+      TK_resolve = 51,
+      TK_resolveone = 52,
+      TK_resolveIn = 53,
+      TK_resolveoneIn = 54,
+      TK_invresolve = 55,
+      TK_invresolveone = 56,
+      TK_invresolveIn = 57,
+      TK_invresolveoneIn = 58,
       TK_modeltype = 136,
       TK_uses = 137,
       TK_where = 138,
@@ -273,6 +273,7 @@ public interface LightweightParsersym {
                  "return", //$NON-NLS-1$
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$
+                 "SEMICOLON", //$NON-NLS-1$
                  "resolve", //$NON-NLS-1$
                  "resolveone", //$NON-NLS-1$
                  "resolveIn", //$NON-NLS-1$
@@ -281,7 +282,6 @@ public interface LightweightParsersym {
                  "invresolveone", //$NON-NLS-1$
                  "invresolveIn", //$NON-NLS-1$
                  "invresolveoneIn", //$NON-NLS-1$
-                 "SEMICOLON", //$NON-NLS-1$
                  "COMMA", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
                  "EQUAL", //$NON-NLS-1$
@@ -330,10 +330,10 @@ public interface LightweightParsersym {
                  "intermediate", //$NON-NLS-1$
                  "RBRACKET", //$NON-NLS-1$
                  "DOTDOT", //$NON-NLS-1$
-                 "AT_SIGN", //$NON-NLS-1$
                  "COLONCOLONEQUAL", //$NON-NLS-1$
                  "QUESTIONMARK", //$NON-NLS-1$
                  "STEREOTYPE_QUALIFIER_OPEN", //$NON-NLS-1$
+                 "AT_SIGN", //$NON-NLS-1$
                  "else", //$NON-NLS-1$
                  "endif", //$NON-NLS-1$
                  "case", //$NON-NLS-1$

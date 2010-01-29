@@ -76,7 +76,9 @@ import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ResolveOpArgsExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ReturnExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SimpleSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.StatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
@@ -87,9 +89,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ResolveOpArgsExpCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.ScopedNameCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.temp.TempFactory;
 import org.eclipse.ocl.cst.CSTFactory;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.CollectionLiteralPartCS;
@@ -591,7 +590,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected final CSTNode createResolveOpArgsExpCS(IToken target, TypeCS typeCS, OCLExpressionCS condition) {
-	    ResolveOpArgsExpCS resolveOpArgsExpCS = TempFactory.eINSTANCE.createResolveOpArgsExpCS();
+	    ResolveOpArgsExpCS resolveOpArgsExpCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createResolveOpArgsExpCS();
 	    VariableCS variableCS = CSTFactory.eINSTANCE.createVariableCS();
 	    variableCS.setTypeCS(typeCS);
 	    if (target == null) {
@@ -648,7 +647,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 
 	protected final ScopedNameCS createScopedNameCS(TypeCS typeCS, String name) {
-		ScopedNameCS result = TempFactory.eINSTANCE.createScopedNameCS();
+		ScopedNameCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createScopedNameCS();
 		result.setTypeCS(typeCS);
 		result.setName(name);
 		if(typeCS != null) {

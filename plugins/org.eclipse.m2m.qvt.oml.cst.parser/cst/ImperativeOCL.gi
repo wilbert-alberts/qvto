@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.gi,v 1.4 2010/01/29 15:23:42 sboyko Exp $ 
+-- * $Id: ImperativeOCL.gi,v 1.5 2010/01/29 15:27:08 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL Parser
