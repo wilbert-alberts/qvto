@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.7 2010/01/29 15:27:08 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.8 2010/02/01 19:03:54 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -2296,7 +2296,7 @@
 	scoped_identifier2 ::= scoped_identifier2 '::' qvtErrorToken
 		/.$BeginCode
 					PathNameCS result = (PathNameCS)getRhsSym(1);
-					result = extendPathNameCS(result, (IToken) null);
+					result = extendPathNameCS(result, getRhsIToken(3));
 					setOffsets(result, result, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -2340,7 +2340,7 @@
 	qualifiedNameCS ::= qualifiedNameCS '.' qvtErrorToken
 		/.$BeginCode
 					PathNameCS result = (PathNameCS)getRhsSym(1);
-					result = extendPathNameCS(result, (IToken) null);
+					result = extendPathNameCS(result, getRhsIToken(3));
 					setOffsets(result, result, getRhsIToken(2));
 					setResult(result);
 		  $EndCode

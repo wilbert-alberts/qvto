@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightParserprs.java,v 1.9 2010/01/29 15:27:07 sboyko Exp $
+* $Id: LightweightParserprs.java,v 1.10 2010/02/01 19:03:53 sboyko Exp $
 */
 /**
 * <copyright>

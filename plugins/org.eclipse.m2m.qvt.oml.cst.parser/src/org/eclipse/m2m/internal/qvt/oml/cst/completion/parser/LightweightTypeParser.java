@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightTypeParser.java,v 1.8 2010/01/29 15:27:06 sboyko Exp $
+* $Id: LightweightTypeParser.java,v 1.9 2010/02/01 19:03:52 sboyko Exp $
 */
 /**
 * <copyright>
@@ -6233,7 +6233,7 @@ protected String getRhsTokenText(int i) {
                //#line 2298 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
-				result = extendPathNameCS(result, (IToken) null);
+				result = extendPathNameCS(result, getRhsIToken(3));
 				setOffsets(result, result, getRhsIToken(2));
 				setResult(result);
 	                  break;
@@ -6306,7 +6306,7 @@ protected String getRhsTokenText(int i) {
                //#line 2342 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
-				result = extendPathNameCS(result, (IToken) null);
+				result = extendPathNameCS(result, getRhsIToken(3));
 				setOffsets(result, result, getRhsIToken(2));
 				setResult(result);
 	                  break;
