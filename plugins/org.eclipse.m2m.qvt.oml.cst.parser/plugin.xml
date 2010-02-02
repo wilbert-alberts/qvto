@@ -14,7 +14,7 @@
  
  
 
- $Id: plugin.xml,v 1.3 2008/12/23 15:28:10 aigdalov Exp $
+ $Id: plugin.xml,v 1.4 2010/02/02 15:28:19 sboyko Exp $
 -->
 
 <plugin>
@@ -23,13 +23,6 @@
       <package
             uri="http://www.eclipse.org/QVT2/1.0.0/Operational/cst"
             class="org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage"
-            genModel="model/QVTOperationalCST.genmodel"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.eclipse.org/QVT2/1.0.0/Operational/cst/temp"
-            class="org.eclipse.m2m.internal.qvt.oml.cst.temp.TempPackage"
             genModel="model/QVTOperationalCST.genmodel"/>
    </extension>
 
