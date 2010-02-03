@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import lpg.runtime.ParseErrorCodes;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -39,5 +41,15 @@ public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
     @Override
     public String toString() {    
     	return  "QVTOEnv:" + myFile.toString(); //$NON-NLS-1$
+    }
+    
+    @Override
+    public void parserError(int errorCode, int leftToken, int rightToken, String tokenText) {
+    	if (tokenText.equals("\"qvtErrorToken\"")) { //$NON-NLS-1$
+    		if (errorCode == ParseErrorCodes.SUBSTITUTION_CODE) {
+    			errorCode = ParseErrorCodes.INVALID_TOKEN_CODE;
+    		}
+    	}
+    	super.parserError(errorCode, leftToken, rightToken, tokenText);
     }
 }
