@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: QVTOParser.gi,v 1.8 2010/02/01 19:03:54 sboyko Exp $ 
+-- * $Id: QVTOParser.gi,v 1.9 2010/02/03 18:18:51 sboyko Exp $ 
 -- */
 --
 -- The QVTo Parser
@@ -202,7 +202,9 @@
 		  $EndCode
 		./
 
-	_import ::= import qvtErrorToken
+	importDeclaration -> qvtErrorToken
+
+	_import ::= import importDeclaration
 		/.$BeginCode
 					CSTNode result = createLibraryImportCS(
 							createPathNameCS()
@@ -371,7 +373,10 @@
 					setResult(result);
 		  $EndCode
 		./
-	library_h ::= library qvtErrorToken
+
+	libraryDeclaration -> qvtErrorToken
+
+	library_h ::= library libraryDeclaration
 		/.$BeginCode
 					CSTNode result = createTransformationHeaderCS(
 							$EMPTY_ELIST,
@@ -543,7 +548,10 @@
 					setResult(result);
 		  $EndCode
 		./
-	_modeltype ::= modeltype qvtErrorToken
+
+	modeltypeDeclaration -> qvtErrorToken
+
+	_modeltype ::= modeltype modeltypeDeclaration
 		/.$BeginCode
 					ModelTypeCS result = createModelTypeCS(
 							new Token(0, 0, 0),

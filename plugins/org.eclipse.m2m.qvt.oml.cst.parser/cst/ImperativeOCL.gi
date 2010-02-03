@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: ImperativeOCL.gi,v 1.5 2010/01/29 15:27:08 sboyko Exp $ 
+-- * $Id: ImperativeOCL.gi,v 1.6 2010/02/03 18:18:51 sboyko Exp $ 
 -- */
 --
 -- The Imperative OCL Parser
@@ -583,6 +583,10 @@
 	ifExpBodyCS -> OclExpressionCS
 	ifExpBodyCS -> expression_block
 
+	ifThenPart -> qvtErrorToken
+	ifElsePart -> qvtErrorToken
+	ifExpression -> qvtErrorToken
+
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
@@ -607,19 +611,7 @@
 		  $EndCode
 		./
 
-	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS qvtErrorToken
-		/.$BeginCode
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)getRhsSym(2),
-							(OCLExpressionCS)getRhsSym(4),
-							(OCLExpressionCS)getRhsSym(6)
-						);
-					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(6));
-					setResult(result);
-		  $EndCode
-		./
-
-	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifElsePart
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)getRhsSym(2),
@@ -631,19 +623,7 @@
 		  $EndCode
 		./
 
-	IfExpCS ::= if OclExpressionCS then ifExpBodyCS qvtErrorToken
-		/.$BeginCode
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)getRhsSym(2),
-							(OCLExpressionCS)getRhsSym(4),
-							null
-						);
-					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
-					setResult(result);
-		  $EndCode
-		./
-
-	IfExpCS ::= if OclExpressionCS then qvtErrorToken
+	IfExpCS ::= if OclExpressionCS then ifThenPart
 		/.$BeginCode
 					CSTNode result = createIfExpCS(
 							(OCLExpressionCS)getRhsSym(2),
@@ -655,20 +635,7 @@
 		  $EndCode
 		./
 
-	IfExpCS ::= if OclExpressionCS qvtErrorToken
-		/.$BeginCode
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)getRhsSym(2),
-							null,
-							null
-						);
-					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(2));
-					setResult(result);
-		  $EndCode
-		./
-
-
-	IfExpCS ::= if qvtErrorToken
+	IfExpCS ::= if ifExpression
 		/.$BeginCode
 					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS("");
 					invalidCondition.setStartOffset(getRhsIToken(1).getEndOffset());

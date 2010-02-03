@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: LightweightParsersym.java,v 1.9 2010/02/01 19:03:52 sboyko Exp $
+* $Id: LightweightParsersym.java,v 1.10 2010/02/03 18:18:50 sboyko Exp $
 */
 /**
 * <copyright>
@@ -72,7 +72,7 @@ public interface LightweightParsersym {
       TK_GREATER_EQUAL = 74,
       TK_LESS_EQUAL = 75,
       TK_NOT_EQUAL = 76,
-      TK_LPAREN = 2,
+      TK_LPAREN = 1,
       TK_RPAREN = 4,
       TK_LBRACE = 60,
       TK_RBRACE = 63,
@@ -218,14 +218,14 @@ public interface LightweightParsersym {
       TK_try = 160,
       TK_typedef = 161,
       TK_unlimited = 162,
-      TK_ERROR_TOKEN = 1,
+      TK_ERROR_TOKEN = 2,
       TK_IDENTIFIER = 3,
       TK_EOF_TOKEN = 118;
 
     public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
-                 "ERROR_TOKEN", //$NON-NLS-1$
                  "LPAREN", //$NON-NLS-1$
+                 "ERROR_TOKEN", //$NON-NLS-1$
                  "IDENTIFIER", //$NON-NLS-1$
                  "RPAREN", //$NON-NLS-1$
                  "result", //$NON-NLS-1$

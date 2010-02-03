@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOLexerprs.java,v 1.9 2010/02/01 19:04:10 sboyko Exp $
+* $Id: QVTOLexerprs.java,v 1.10 2010/02/03 18:18:50 sboyko Exp $
 */
 /**
 * <copyright>
