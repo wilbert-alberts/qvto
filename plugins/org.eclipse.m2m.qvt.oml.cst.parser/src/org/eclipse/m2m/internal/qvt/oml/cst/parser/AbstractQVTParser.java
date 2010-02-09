@@ -192,7 +192,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	        trailingUnitElement = unitElement;
 	    }
 	    if (modules.isEmpty()) {
-	    	if (startingUnitElement != null) {
+	    	if (startingUnitElement != null && startingUnitElement.getStartToken() != null) {
 	            reportError(Messages.NoModulesDeclared, startingUnitElement.getStartToken().getTokenIndex(),
 	            		trailingUnitElement.getEndToken().getTokenIndex()
 	                    );
