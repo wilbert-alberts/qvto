@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: EssentialOCLKWLexer.gi,v 1.3 2010/01/27 17:21:51 sboyko Exp $
+-- * $Id: EssentialOCLKWLexer.gi,v 1.4 2010/02/09 17:12:44 sboyko Exp $
 -- */
 --
 -- The Essential OCL KeyWord Lexer

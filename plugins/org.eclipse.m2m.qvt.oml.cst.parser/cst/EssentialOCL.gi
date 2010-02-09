@@ -12,7 +12,7 @@
 -- *
 -- * </copyright>
 -- *
--- * $Id: EssentialOCL.gi,v 1.3 2010/01/27 17:21:51 sboyko Exp $
+-- * $Id: EssentialOCL.gi,v 1.4 2010/02/09 17:12:44 sboyko Exp $
 -- */
 --
 -- The EssentialOCL Parser
@@ -89,7 +89,7 @@
  *        - 300534: Removing the use of deprecated macros.
  * </copyright>
  *
- * $Id: EssentialOCL.gi,v 1.3 2010/01/27 17:21:51 sboyko Exp $
+ * $Id: EssentialOCL.gi,v 1.4 2010/02/09 17:12:44 sboyko Exp $
  */
     ./
 %End
@@ -230,8 +230,8 @@
 	* @return the correspondent IToken.
 	*
 	* @since 3.0	
-	* @deprecated
 	*/
+	@Deprecated
 	protected IToken getIToken(int i) {
 		return prsStream.getIToken(i);
 	}
@@ -250,9 +250,8 @@
 	* </p>
 	* @param i the right hand side token index
 	* @result the text of the correspondent right hand side IToken.
-	*
-	* @deprecated 
 	*/
+	@Deprecated
 	protected String getTokenText(int i) {
 		return prsStream.getTokenText(i);
 	}

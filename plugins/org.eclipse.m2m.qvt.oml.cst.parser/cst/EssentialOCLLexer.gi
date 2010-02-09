@@ -12,7 +12,7 @@
 -- *   
 -- * </copyright>
 -- *
--- * $Id: EssentialOCLLexer.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $
+-- * $Id: EssentialOCLLexer.gi,v 1.4 2010/02/09 17:12:44 sboyko Exp $
 -- */
 --
 -- The Essential OCL Lexer
@@ -77,6 +77,7 @@
 	/**
 	 * @since 3.0
 	 */
+    @Override
     public void reset(Reader reader, String filename) throws java.io.IOException {
     	char[] input_chars = getInputChars(reader);
         reset(input_chars, filename, ECLIPSE_TAB_VALUE);
@@ -104,7 +105,7 @@
  $copyright_contributions
  * </copyright>
  *
- * $Id: EssentialOCLLexer.gi,v 1.3 2010/01/27 17:21:48 sboyko Exp $
+ * $Id: EssentialOCLLexer.gi,v 1.4 2010/02/09 17:12:44 sboyko Exp $
  */
 	./
 %End
