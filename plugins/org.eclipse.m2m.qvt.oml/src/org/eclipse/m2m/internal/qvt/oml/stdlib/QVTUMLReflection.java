@@ -210,10 +210,14 @@ public class QVTUMLReflection
 		return fUmlReflection.getClassifiers(pkg);
 	}
 
-	public List<EObject> getConstrainedElements(Constraint constraint) {
+	public List<? extends EObject> getConstrainedElements(Constraint constraint) {
 		return fUmlReflection.getConstrainedElements(constraint);
 	}
 
+	public void addConstrainedElement(Constraint constraint, EObject constrainedElement) {
+		fUmlReflection.addConstrainedElement(constraint, constrainedElement);
+	}
+	
 	public Constraint getConstraint(ExpressionInOCL<EClassifier, EParameter> specification) {
 		return fUmlReflection.getConstraint(specification);
 	}
