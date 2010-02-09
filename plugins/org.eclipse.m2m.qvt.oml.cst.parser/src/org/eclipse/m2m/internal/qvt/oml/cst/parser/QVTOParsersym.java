@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: QVTOParsersym.java,v 1.10 2010/02/03 18:18:50 sboyko Exp $
+* $Id: QVTOParsersym.java,v 1.11 2010/02/09 17:12:05 sboyko Exp $
 */
 /**
 * <copyright>
