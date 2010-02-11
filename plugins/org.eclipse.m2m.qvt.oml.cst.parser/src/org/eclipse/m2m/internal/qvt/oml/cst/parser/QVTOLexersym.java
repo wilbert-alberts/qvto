@@ -2,7 +2,7 @@
 * Essential OCL Lexer
 * <copyright>
 *
-* Copyright (c) 2005, 2009 IBM Corporation and others.
+* Copyright (c) 2005, 2010 IBM Corporation and others.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -12,13 +12,13 @@
 *   IBM - Initial API and implementation
 *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
 *   Borland - Bug 242880
-*   E.D.Willink - Bug 292112
+*   E.D.Willink - Bug 292112, 295166
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396)
 *
 * </copyright>
 *
-* $Id: QVTOLexersym.java,v 1.11 2010/02/09 17:12:05 sboyko Exp $
+* $Id: QVTOLexersym.java,v 1.12 2010/02/11 15:40:43 sboyko Exp $
 */
 /**
 * <copyright>
@@ -58,7 +58,7 @@ public interface QVTOLexersym {
       Char_CtlCharNotWS = 103,
       Char_LF = 93,
       Char_CR = 94,
-      Char_HT = 75,
+      Char_HT = 76,
       Char_FF = 100,
       Char_a = 17,
       Char_b = 18,
@@ -125,20 +125,20 @@ public interface QVTOLexersym {
       Char_9 = 10,
       Char_AfterASCIINotAcute = 68,
       Char_Space = 69,
-      Char_DoubleQuote = 76,
-      Char_SingleQuote = 77,
+      Char_DoubleQuote = 77,
+      Char_SingleQuote = 70,
       Char_Percent = 95,
       Char_VerticalBar = 78,
       Char_Exclamation = 79,
       Char_AtSign = 80,
       Char_BackQuote = 81,
-      Char_Acute = 101,
+      Char_Acute = 102,
       Char_Tilde = 82,
       Char_Sharp = 96,
       Char_DollarSign = 83,
       Char_Ampersand = 97,
       Char_Caret = 98,
-      Char_Colon = 70,
+      Char_Colon = 71,
       Char_SemiColon = 84,
       Char_BackSlash = 99,
       Char_LeftBrace = 85,
@@ -148,16 +148,16 @@ public interface QVTOLexersym {
       Char_QuestionMark = 89,
       Char_Comma = 90,
       Char_Dot = 12,
-      Char_LessThan = 71,
+      Char_LessThan = 72,
       Char_GreaterThan = 15,
-      Char_Plus = 72,
+      Char_Plus = 73,
       Char_Minus = 16,
-      Char_Slash = 73,
-      Char_Star = 74,
+      Char_Slash = 74,
+      Char_Star = 75,
       Char_LeftParen = 91,
       Char_RightParen = 92,
       Char_Equal = 11,
-      Char_EOF = 102;
+      Char_EOF = 101;
 
     public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
@@ -230,6 +230,7 @@ public interface QVTOLexersym {
                  "Z", //$NON-NLS-1$
                  "AfterASCIINotAcute", //$NON-NLS-1$
                  "Space", //$NON-NLS-1$
+                 "SingleQuote", //$NON-NLS-1$
                  "Colon", //$NON-NLS-1$
                  "LessThan", //$NON-NLS-1$
                  "Plus", //$NON-NLS-1$
@@ -237,7 +238,6 @@ public interface QVTOLexersym {
                  "Star", //$NON-NLS-1$
                  "HT", //$NON-NLS-1$
                  "DoubleQuote", //$NON-NLS-1$
-                 "SingleQuote", //$NON-NLS-1$
                  "VerticalBar", //$NON-NLS-1$
                  "Exclamation", //$NON-NLS-1$
                  "AtSign", //$NON-NLS-1$
@@ -261,8 +261,8 @@ public interface QVTOLexersym {
                  "Caret", //$NON-NLS-1$
                  "BackSlash", //$NON-NLS-1$
                  "FF", //$NON-NLS-1$
-                 "Acute", //$NON-NLS-1$
                  "EOF", //$NON-NLS-1$
+                 "Acute", //$NON-NLS-1$
                  "CtlCharNotWS" //$NON-NLS-1$
              };
 

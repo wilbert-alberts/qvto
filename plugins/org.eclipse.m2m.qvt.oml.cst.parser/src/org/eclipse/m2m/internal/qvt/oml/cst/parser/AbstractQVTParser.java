@@ -1091,14 +1091,14 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 	@Override
-	protected String unSingleQuote(IToken token) {
-		if (token == null) {
-			return ""; //$NON-NLS-1$
+	protected String unSingleQuote(String quoted) {
+		int quotedLength = quoted.length();
+		if ((quotedLength >= 2) && (quoted.charAt(0) == '"') && (quoted.charAt(quotedLength-1) == '"')) {
+			return quoted.substring(1, quotedLength-1);
 		}
-		if (token.toString().startsWith("\"")) { //$NON-NLS-1$
-			return unDoubleQuote(token);
+		else {
+			return super.unSingleQuote(quoted);
 		}
-		return super.unSingleQuote(token);
 	}
 	
 	@Override
