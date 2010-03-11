@@ -9,10 +9,10 @@ feature@org.eclipse.m2m.qvt.oml.runtime=v20091113-1500,:pserver:anonymous@dev.ec
 feature@org.eclipse.m2m.qvt.oml.debug=v20091209-2000,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.debug.feature
 
 !*** QVT plug-ins ***************************************************************************
-plugin@org.eclipse.m2m.qvt.oml=v20100131-2300,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml
+plugin@org.eclipse.m2m.qvt.oml=v20100311-1400,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml
 plugin@org.eclipse.m2m.qvt.oml.common=v20091205-0148,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.common
 plugin@org.eclipse.m2m.qvt.oml.common.ui=v20091215-2112,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.common.ui
-plugin@org.eclipse.m2m.qvt.oml.cst.parser=v20100202-1830,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.cst.parser
+plugin@org.eclipse.m2m.qvt.oml.cst.parser=v20100311-1400,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.cst.parser
 plugin@org.eclipse.m2m.qvt.oml.editor.ui=v20100131-2300,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.editor.ui
 plugin@org.eclipse.m2m.qvt.oml.emf.util=v20100122-1411,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.emf.util
 plugin@org.eclipse.m2m.qvt.oml.emf.util.ui=v20100122-1411,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/plugins/org.eclipse.m2m.qvt.oml.emf.util.ui
