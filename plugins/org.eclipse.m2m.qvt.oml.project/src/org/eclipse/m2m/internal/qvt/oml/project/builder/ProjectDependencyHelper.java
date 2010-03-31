@@ -21,9 +21,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
-import org.eclipse.pde.core.plugin.IPluginImport;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
 
 
 class ProjectDependencyHelper {
@@ -64,23 +61,26 @@ class ProjectDependencyHelper {
 	}
 
 	public static  Set<IProject> collectQvtPluginWorkspaceDependencies(IProject dependantProject, Set<IProject> pluginDependencies, boolean recursive) {
-		IPluginModelBase plugin = findPluginModelByProject(dependantProject);
-		if(plugin != null) {
-			for (IPluginImport nextImport : plugin.getPluginBase().getImports()) {
-				String importID = nextImport.getId();
-				IPluginModelBase depPlugin = findPluginModelByID(importID);
-				if(depPlugin != null && depPlugin.getUnderlyingResource() != null) {
-					IProject projectDep = depPlugin.getUnderlyingResource().getProject();
-
-					if(!pluginDependencies.contains(projectDep) && isQvtProject(projectDep)) {
-						pluginDependencies.add(depPlugin.getUnderlyingResource().getProject());
-						if(recursive) {
-							collectQvtPluginWorkspaceDependencies(dependantProject, pluginDependencies, recursive);
-						}
-					}
-				}
-			}
-		}
+	// FIXME - removing pde.core depency, crossproject dependant builds
+	// are not fully supported at the moment anyway 
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=307676
+//		IPluginModelBase plugin = findPluginModelByProject(dependantProject);
+//		if(plugin != null) {
+//			for (IPluginImport nextImport : plugin.getPluginBase().getImports()) {
+//				String importID = nextImport.getId();
+//				IPluginModelBase depPlugin = findPluginModelByID(importID);
+//				if(depPlugin != null && depPlugin.getUnderlyingResource() != null) {
+//					IProject projectDep = depPlugin.getUnderlyingResource().getProject();
+//
+//					if(!pluginDependencies.contains(projectDep) && isQvtProject(projectDep)) {
+//						pluginDependencies.add(depPlugin.getUnderlyingResource().getProject());
+//						if(recursive) {
+//							collectQvtPluginWorkspaceDependencies(dependantProject, pluginDependencies, recursive);
+//						}
+//					}
+//				}
+//			}
+//		}
 		return pluginDependencies;
 	}
 
@@ -112,13 +112,13 @@ class ProjectDependencyHelper {
 	    
 	    return Collections.emptySet();
 	}
-
-    private static IPluginModelBase findPluginModelByProject(IProject project) {
-		return PluginRegistry.findModel(project);
-	}
-
-	private static IPluginModelBase findPluginModelByID(String importID) {
-		return PluginRegistry.findModel(importID);
-	}
+//
+//    private static IPluginModelBase findPluginModelByProject(IProject project) {
+//		return PluginRegistry.findModel(project);
+//	}
+//
+//	private static IPluginModelBase findPluginModelByID(String importID) {
+//		return PluginRegistry.findModel(importID);
+//	}
 
 }
