@@ -33,8 +33,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
 
 public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryProvider {
 
@@ -76,16 +74,6 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 		
 		if(wsResource != null) {
 			IProject project = wsResource.getProject();
-			IPluginModelBase pluginModel = PluginRegistry.findModel(project);
-
-			String namespace = null;
-			if(pluginModel != null) {
-				namespace = pluginModel.getPluginBase().getId();
-			} else {
-				// not a plugin
-				namespace = project.getName();
-			}
-			
 			if(MetamodelURIMappingHelper.hasMappingResource(project)) {
 				if(perProjectRegs == null) {
 					perProjectRegs = new HashMap<String, MetamodelRegistry>();
@@ -95,7 +83,7 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 				MetamodelRegistry reg = perProjectRegs.get(projectKey);
 				if(reg == null) {
 					try {
-						reg = createRegistry(MetamodelURIMappingHelper.loadMappings(project), namespace);
+						reg = createRegistry(MetamodelURIMappingHelper.loadMappings(project));
 						perProjectRegs.put(projectKey, reg);
 						return reg;
 					} catch (IOException e) {
@@ -110,7 +98,7 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 		return MetamodelRegistry.getInstance();
 	}
 	
-	private MetamodelRegistry createRegistry(MappingContainer mappings, String namespace) {
+	private MetamodelRegistry createRegistry(MappingContainer mappings) {
 		WorskpaceMetamodelProvider metamodelProvider = new WorskpaceMetamodelProvider(resolutionRSet);				
 		
 		for (URIMapping nextMapping : mappings.getMapping()) {
