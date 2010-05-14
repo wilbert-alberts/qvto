@@ -259,6 +259,7 @@ public class InternalTransformationExecutor {
 						ExecutionDiagnostic.TRANSFORMATION_LOAD_FAILED, NLS
 								.bind(Messages.NotTransformationInUnitError,
 										fURI));
+				return;
 			}
 
 			ExecutionDiagnosticImpl validForExecution = checkIsExecutable(fTransformation);
