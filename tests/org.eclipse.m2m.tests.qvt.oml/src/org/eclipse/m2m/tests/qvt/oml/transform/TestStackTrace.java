@@ -22,12 +22,12 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackOverFlowError;
 public class TestStackTrace extends AbstractStackTraceTest {
 	
 	public TestStackTrace() {
-		super(new FileToFileData("stacktrace"));
+		super(new FileToFileData("stacktrace")); //$NON-NLS-1$
 	}
 
 	@Override
 	public void setUp() throws Exception {
-		if("testUknownSourceStackTrace".equals(getName())) {
+		if("testUknownSourceStackTrace".equals(getName())) { //$NON-NLS-1$
 			// we need to compile concrete syntax which is instructed to skip line number info
 			fUseCompiledXMI = false;
 		}
@@ -71,7 +71,7 @@ public class TestStackTrace extends AbstractStackTraceTest {
 	}	
 	
 	public void testStackOverFlow() throws Exception {
-		QvtRuntimeException e = runQvtModuleTestCase("stackOverFlow");				
+		QvtRuntimeException e = runQvtModuleTestCase("stackOverFlow"); //$NON-NLS-1$
 		
 		assertValidQVTRuntimeException(e);
 		assertEquals(QvtStackOverFlowError.class, e.getClass());
@@ -86,9 +86,9 @@ public class TestStackTrace extends AbstractStackTraceTest {
 			if(--elementCount == 0) {
 				break;
 			}
-			assertEquals("causeStackOverFlow", element.getOperationName());
-			assertEquals("auxtransf", element.getModuleName());			
-			assertEquals("auxtransf.qvto", element.getUnitName());			
+			assertEquals("causeStackOverFlow", element.getOperationName()); //$NON-NLS-1$
+			assertEquals("auxtransf", element.getModuleName()); //$NON-NLS-1$
+			assertEquals("auxtransf.qvto", element.getUnitName()); //$NON-NLS-1$
 			assertEquals(6, element.getLineNumber());			
 		}
 	}
@@ -97,7 +97,7 @@ public class TestStackTrace extends AbstractStackTraceTest {
 	 * Just verifies a complete regular stack trace 
 	 */
 	public void testCreateInstaceFailure() throws Exception {
-		String testCase = "createInstaceFailure";
+		String testCase = "createInstaceFailure"; //$NON-NLS-1$
 		QvtRuntimeException e = runQvtModuleTestCase(testCase);
 		assertValidQVTRuntimeException(e);
 

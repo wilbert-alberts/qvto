@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 
 
 public class FilesToFilesData extends ModelTestData {

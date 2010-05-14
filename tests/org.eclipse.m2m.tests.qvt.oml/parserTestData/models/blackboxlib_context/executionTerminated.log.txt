@@ -1,0 +1,5 @@
+console output from blackbox lib
+test
+test2
+org.eclipse.m2m.internal.qvt.oml.evaluator.QvtInterruptedExecutionException
+	at blackboxlib_context::main(blackboxlib_context.qvto:16)

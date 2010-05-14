@@ -44,6 +44,7 @@ public class TransformTests {
 
         suite.addTestSuite(TestStackTrace.class);
         suite.addTestSuite(TestInvalidConfigProperty.class);
+        suite.addTestSuite(TestBlackboxLibContext.class);
 
         return suite;
     }
@@ -119,7 +120,6 @@ public class TransformTests {
                 new FileToFileData("transformationWithModuleElements_257055"), //$NON-NLS-1$                
                 new FileToFileData("objectExpBodyExpressions_253051"), //$NON-NLS-1$                
                 new FileToFileData("mappingBodyExpressions_252358"), //$NON-NLS-1$                
-                new FileToFileData("blackboxlib_annotation_java"), //$NON-NLS-1$                
                 new FileToFileData("helperSimpleDef_252173"), //$NON-NLS-1$                
                 new FileToFileData("compositetransf"), //$NON-NLS-1$                
                 new FileToFileData("computeExp_250403"), //$NON-NLS-1$
@@ -127,6 +127,7 @@ public class TransformTests {
                 new FileToFileData("bug244701"), //$NON-NLS-1$
         		new FileToFileData("virtualPredefinedTypeOpers"), //$NON-NLS-1$        		
         		new FileToFileData("blackboxlib_237781"), //$NON-NLS-1$        		
+                new FileToFileData("blackboxlib_annotation_java"), //$NON-NLS-1$                
                 new FileToFileData("bug233984"), //$NON-NLS-1$
                 new FileToFileData("collectionMappingResult"), //$NON-NLS-1$
         		new FileToFileData("intermediateprop_import"), //$NON-NLS-1$ 
@@ -293,13 +294,12 @@ public class TransformTests {
         		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
         			.includeMetamodelFile("MyUnbound.ecore"), //$NON-NLS-1$
         		new FilesToFilesData("nullableEnum", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
-        			.includeMetamodelFile("NullableEnumTest.ecore")
+        			.includeMetamodelFile("NullableEnumTest.ecore") //$NON-NLS-1$
         };
     }
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
     		"compositetransf", // FIXME - make this included as java-less    		 //$NON-NLS-1$
-    		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
             // tests using imports are excluded as the compiler never resolved imported unit
             // to unitName.qvto.javaless (patched original sources)
@@ -312,6 +312,7 @@ public class TransformTests {
             
             "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
             "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models  //$NON-NLS-1$
     }));
 }

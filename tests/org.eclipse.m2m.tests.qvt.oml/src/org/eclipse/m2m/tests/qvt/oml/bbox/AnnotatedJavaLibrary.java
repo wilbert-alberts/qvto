@@ -33,6 +33,7 @@ import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.util.Bag;
@@ -372,4 +373,25 @@ public class AnnotatedJavaLibrary {
 		}
 		return result;
 	}
+
+	@Operation (kind=Kind.HELPER, withExecutionContext=true)
+	public void logToConsole(IContext context, String param) {
+		context.getLog().log(param);
+	}
+
+	@Operation (withExecutionContext=true)
+	public void cancelExecution(IContext context) {
+		context.getMonitor().cancel();
+	}
+	
+	@Operation (contextual=true, withExecutionContext=true)
+	public String getProperty(IContext context, String strContext) {
+		return context.getConfigProperty(strContext).toString();
+	}
+	
+	@Operation (kind=Kind.OPERATION, contextual=true, withExecutionContext=true)
+	public String getConfigProperty(IContext context, String strContext, String value) {
+		return context.getConfigProperty(strContext+value).toString();
+	}
+	
 }

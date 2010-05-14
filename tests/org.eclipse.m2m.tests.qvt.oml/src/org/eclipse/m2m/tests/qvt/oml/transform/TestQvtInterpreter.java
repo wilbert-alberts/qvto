@@ -37,10 +37,10 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.WorkspaceQvtModule;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public class TestQvtInterpreter extends TestTransformation {

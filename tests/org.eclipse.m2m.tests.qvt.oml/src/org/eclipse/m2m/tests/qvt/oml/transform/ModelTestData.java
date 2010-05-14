@@ -43,9 +43,9 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
-import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.TreeComparator;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.edit.TreeEdit;
@@ -239,8 +239,8 @@ public abstract class ModelTestData {
             throw new IllegalArgumentException("Project not found: " + destProjectName); //$NON-NLS-1$
         }
         
-        ISessionData.NamedEntry<IProject> projectData = new ISessionData.NamedEntry<IProject>("project");
-		context.getSessionData().setValue(projectData, toProject); //$NON-NLS-1$
+        ISessionData.NamedEntry<IProject> projectData = new ISessionData.NamedEntry<IProject>("project"); //$NON-NLS-1$
+		context.getSessionData().setValue(projectData, toProject);
         return context;
     }
     

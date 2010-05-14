@@ -45,7 +45,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
@@ -53,6 +52,7 @@ import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
