@@ -48,7 +48,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
@@ -58,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.eclipse.osgi.util.NLS;
 
@@ -241,7 +241,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
            	    	} else {
            	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
 
-           	    		outExtent.getContents().retainAll(essentialRootElements);
+           	    		//outExtent.getContents().retainAll(essentialRootElements);
            	    		essentialRootElements.removeAll(outExtent.getContents());
            	    		outExtent.getContents().addAll(essentialRootElements);
            	    	}

@@ -18,8 +18,8 @@ import java.util.List;
 
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 
 
 public interface TransformationRunner {
