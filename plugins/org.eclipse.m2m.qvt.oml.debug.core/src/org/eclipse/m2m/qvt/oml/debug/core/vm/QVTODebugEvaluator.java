@@ -35,7 +35,6 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMRequest;
@@ -46,6 +45,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMSuspendEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMSuspendRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMTerminateRequest;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.ocl.expressions.LoopExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
@@ -510,6 +510,9 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 
 		@Override
 		protected Object genericPreVisitAST(ASTNode visited) {
+			if (getContext().getMonitor() != null && getContext().getMonitor().isCanceled()) {    				
+				throwQVTException(new QvtInterruptedExecutionException());    				
+			}
 			return preElementVisit(visited);
 		}
 
