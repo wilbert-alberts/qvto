@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.library;
 
+import org.eclipse.m2m.qvt.oml.util.IContext;
+
 /**
  * @author Aleksandr Igdalov
  */

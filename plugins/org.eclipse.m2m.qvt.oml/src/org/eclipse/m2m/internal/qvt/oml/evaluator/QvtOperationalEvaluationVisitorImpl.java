@@ -87,7 +87,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ImperativeOperationImpl
 import org.eclipse.m2m.internal.qvt.oml.expressions.impl.OperationBodyImpl;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.library.EObjectEStructuralFeaturePair;
-import org.eclipse.m2m.internal.qvt.oml.library.IContext;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
@@ -125,6 +124,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
@@ -2070,7 +2070,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private InternalEvaluator createInterruptibleVisitor() {
-    	final EvaluationMonitor monitor = (EvaluationMonitor)getContext().getMonitor();
+    	final EvaluationMonitor monitor = getContext().getMonitor();
     	    
     	class InterruptVisitor extends QvtGenericEvaluationVisitor.Any implements InternalEvaluator {
     		public InterruptVisitor() {

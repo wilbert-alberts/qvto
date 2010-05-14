@@ -1,9 +1,10 @@
-package org.eclipse.m2m.internal.qvt.oml.library;
+package org.eclipse.m2m.qvt.oml.util;
 
 
 /**
  * @noimplement
  * @noextend
+ * @since 3.0
  */
 public interface ISessionData {
 

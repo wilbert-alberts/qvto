@@ -43,7 +43,8 @@ class JavaMethodHandlerFactory {
 		}
 		
 		Operation opAnnotation = method.getAnnotation(Operation.class);		
-		return new Handler(method, opAnnotation != null && opAnnotation.contextual());
+		return new Handler(method, opAnnotation != null && opAnnotation.contextual(),
+				opAnnotation != null && opAnnotation.withExecutionContext());
 	}
 	
 	private Object getInvalidResult() {
@@ -56,15 +57,17 @@ class JavaMethodHandlerFactory {
 		private Class<?>[] fCachedParamTypes;
 		private Object[] fArgs;
 		private boolean fIsContextual;
+		private final boolean fWithExecutionContext;
 		private boolean fRequiresNumConversion;
 		private int fFatalErrorCount;		
 		
-		Handler(Method method, boolean isContextual) {
+		Handler(Method method, boolean isContextual, boolean isWithExecutionContext) {
 			assert method != null;
 			
 			fMethod = method;
 			fCachedParamTypes = fMethod.getParameterTypes(); 			
 			fIsContextual = isContextual;
+			fWithExecutionContext = isWithExecutionContext;
 			fRequiresNumConversion = requiresNumberConversion(); 
 			fFatalErrorCount = 0;
 		}		
@@ -111,22 +114,31 @@ class JavaMethodHandlerFactory {
 			return fFatalErrorCount > FAILURE_COUNT_TOLERANCE;
 		}
 		
-		private Object[] prepareArguments(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) { 
-			if(fIsContextual) {
-				if(fArgs == null) {
-					fArgs = new Object[args.length + 1];
-				}
-				
-				fArgs[0] = source;
-			} else {			
-				if(fArgs == null) {
-					fArgs = new Object[args.length];
-				}
+		private Object[] prepareArguments(Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			int argCount = args.length;
+			if (fIsContextual) {
+				argCount++;
+			}
+			if (fWithExecutionContext) {
+				argCount++;
 			}
 
+			if(fArgs == null) {
+				fArgs = new Object[argCount];
+			}
+			
+			int argIndex = 0;
+			if (fWithExecutionContext) {
+				fArgs[argIndex] = evalEnv.getContext();
+				argIndex++;
+			}
+			if (fIsContextual) {
+				fArgs[argIndex] = source;
+				argIndex++;
+			}
+			
 			// filter out possible OclInvalid argument values passed from AST based evaluation
 			// source can't be this case as the call can not be made
-			int destPos = fIsContextual ? 1 : 0;
 			for (int i = 0; i < args.length; i++) {
 				Object nextArg = args[i];
 				if(nextArg == getInvalidResult()) {
@@ -136,9 +148,9 @@ class JavaMethodHandlerFactory {
 				}
 				// number have to converted as java binary compatible
 				if(fRequiresNumConversion) {
-					nextArg = NumberConversions.convertNumber(nextArg, fCachedParamTypes[destPos]);
+					nextArg = NumberConversions.convertNumber(nextArg, fCachedParamTypes[argIndex]);
 				}
-				fArgs[destPos++] = nextArg;
+				fArgs[argIndex++] = nextArg;
 			}
 			
 			return (fArgs != null) ? fArgs : args;

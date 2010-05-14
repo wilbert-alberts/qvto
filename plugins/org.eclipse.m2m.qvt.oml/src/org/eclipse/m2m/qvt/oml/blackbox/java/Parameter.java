@@ -44,5 +44,5 @@ public @interface Parameter {
 	 * @return the String object (empty string if nothing has been explicitly
 	 *         specified)
 	 */
-	String description() default ""; //$NON-NLS-1$
+	String description() default "";
 }

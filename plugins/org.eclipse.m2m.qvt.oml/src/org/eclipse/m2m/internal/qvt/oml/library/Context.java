@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
+import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
 /**

@@ -31,6 +31,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.ocl.Environment;
 
 class OperationBuilder {
@@ -58,9 +59,16 @@ class OperationBuilder {
     	Type[] paramTypes = method.getGenericParameterTypes();
     	Annotation[][] annotations = method.getParameterAnnotations();
 
+    	int paramTypesCount = paramTypes.length;
     	Operation operAnnotation = method.getAnnotation(Operation.class);
+    	boolean isWithExecutionContext = operAnnotation != null && operAnnotation.withExecutionContext();
+    	if(isWithExecutionContext && (paramTypesCount == 0 || paramTypes[0] != IContext.class)) {
+    		reportError(NLS.bind(JavaBlackboxMessages.QvtoContextParameterRequired, method.getName()), method);
+    		--paramTypesCount;
+    	}
+
     	boolean isContextual = operAnnotation != null && operAnnotation.contextual();
-    	if(isContextual && paramTypes.length == 0) {
+    	if(isContextual && paramTypesCount == 0) {
     		reportError(NLS.bind(JavaBlackboxMessages.FirstContextualOperationParameterRequired, 
     				method), method);
     	}
@@ -92,6 +100,11 @@ class OperationBuilder {
         int i = 0;
         final QvtOperationalModuleEnv environment = fTypeResolver.getEnvironment();
 		for (Type paramType : paramTypes) {
+            if (i == 0 && paramType == IContext.class) {
+            	i++;
+            	continue;
+            }
+            
             VarParameter varParam = (operKind != Kind.OPERATION) ? 
             		ExpressionsFactory.eINSTANCE.createVarParameter() : null;
             EParameter eParameter = varParam != null ? varParam : EcoreFactory.eINSTANCE.createEParameter();
@@ -104,18 +117,18 @@ class OperationBuilder {
             if(eParameter.getEType() == null) {
             	reportError(NLS.bind(JavaBlackboxMessages.UnresolvedOclTypeForJavaType, paramType, method), method);
             }
-                      
+            
             Parameter paramAnno = getParameterAnnotation(annotations[i]);
             String paramName;            
             if(paramAnno != null && paramAnno.name() != null) {
                 paramName = paramAnno.name();            	
             } else {
-            	paramName = "arg" + i; //$NON-NLS-1$;            	
+            	paramName = "arg" + (isWithExecutionContext ? i-1 : i); //$NON-NLS-1$;            	
             }
             
             eParameter.setName(paramName);
                     	
-			if(isContextual && i == 0) {
+			if(isContextual && (isWithExecutionContext ? i == 1 : i == 0)) {
         		if(operKind != Kind.OPERATION) {
         			assert operation instanceof ImperativeOperation;
         			assert varParam != null;

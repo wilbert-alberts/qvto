@@ -9,16 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.m2m.internal.qvt.oml.library;
+package org.eclipse.m2m.qvt.oml.util;
 
 import java.util.Map;
 
-import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
-import org.eclipse.m2m.qvt.oml.util.Log;
 
 /**
  * @noimplement
  * @noextend
+ * @since 3.0
  */
 public interface IContext {
 

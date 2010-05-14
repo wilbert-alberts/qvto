@@ -60,6 +60,16 @@ public @interface Operation {
 	boolean contextual() default false;		
 	
 	/**
+	 * Indicates whether the associated operation would receive execution 
+	 * context (of <code>org.eclipse.m2m.qvt.oml.util.IContext</code> class) as the first parameter.
+	 * 
+	 * @return <code>true</code> if the associated operation receives execution context as the first
+	 *         parameter, otherwise <code>false</code> (default value).
+	 * @since 3.0
+	 */
+	boolean withExecutionContext() default false;
+	
+	/**
 	 * Indicates the operation kind specified for the annotated Java operation 
 	 * @return the kind object
 	 */

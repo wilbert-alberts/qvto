@@ -8,6 +8,7 @@ public class JavaBlackboxMessages extends NLS {
 	public static String BlackboxUnitLoadFailed;
 
 	public static String FirstContextualOperationParameterRequired;
+	public static String QvtoContextParameterRequired;
 
 	public static String InvalidJavaClassForModule;
 

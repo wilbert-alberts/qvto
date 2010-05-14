@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.m2m.internal.qvt.oml.library.ISessionData;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 
 public class QVTEvaluationOptions {
 
