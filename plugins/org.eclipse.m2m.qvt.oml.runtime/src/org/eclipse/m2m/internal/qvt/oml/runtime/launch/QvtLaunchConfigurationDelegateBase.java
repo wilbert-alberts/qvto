@@ -242,7 +242,11 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
            	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
 
            	    		//outExtent.getContents().retainAll(essentialRootElements);
-           	    		essentialRootElements.removeAll(outExtent.getContents());
+           	    		if (!essentialRootElements.isEmpty()) {
+           	    			EObject firstElem = essentialRootElements.iterator().next();
+           	    			ModelContent resolvedContent = new ModelContent(outExtent.getContents()).getResolvedContent(firstElem);
+               	    		essentialRootElements.removeAll(resolvedContent.getContent());
+           	    		}
            	    		outExtent.getContents().addAll(essentialRootElements);
            	    	}
            	    	
