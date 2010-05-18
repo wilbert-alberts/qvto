@@ -39,30 +39,12 @@ public class JavalessFileToFileData extends ModelTestData {
         myFileData = (FileToFileData) data;
         myPatchedData = null;
         
-        ecoreFileMetamodels.add(URI.createURI("platform:/plugin/org.eclipse.m2m.tests.qvt.oml/models/javaless.ecore"));
+        ecoreFileMetamodels.add(URI.createURI(JavalessUtil.JAVALESS_METAMODEL));
     }
     
 	@Override
 	public void prepare(TestProject testProject) throws Exception {
 		super.prepare(testProject);
-		
-//		Registry mappingsToEPackageRegistry = MetamodelURIMappingHelper.mappingsToEPackageRegistry(testProject.getProject(), new ResourceSetImpl());
-//		
-//		if(mappingsToEPackageRegistry != null && mappingsToEPackageRegistry.containsKey(JavalessMetamodelProvider.JAVALESS_METAMODEL_ID)) {
-//			return;			
-//		}
-//		
-//		Resource mappingRes = MetamodelURIMappingHelper.createMappingResource(testProject.getProject());
-//		MappingContainer newMappings = MetamodelURIMappingHelper.createNewMappings(mappingRes);
-//		URIMapping uriMapping = MModelURIMapFactory.eINSTANCE.createURIMapping();
-//		uriMapping.setSourceURI(JavalessMetamodelProvider.JAVALESS_METAMODEL_ID);
-//		uriMapping.setTargetURI("platform:/plugin/org.eclipse.m2m.tests.qvt.oml/models/javaless.ecore"); //$NON-NLS-1$
-//		newMappings.getMapping().add(uriMapping);
-//		
-//		mappingRes.save(null);		
-//		
-//		setPackageRegistry(MetamodelURIMappingHelper.mappingsToEPackageRegistry(testProject.getProject(), new ResourceSetImpl()));
-//		
 		getExpected(testProject.getProject());
 	}
 	
@@ -116,7 +98,6 @@ public class JavalessFileToFileData extends ModelTestData {
 	    		contents = JavalessUtil.changeTransformationName(contents, myFileData.getName(), patchedName);
 	    		contents = JavalessUtil.patchContents(contents);
 	    		
-	    		//String newFileName = patchedName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 	    		String plainName = origTransformationFile.getName();
 	    		plainName = plainName.substring(0, plainName.indexOf(MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT));
 	    		String newQVTFileName =  plainName + "_javaless" + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT; //$NON-NLS-1$	    		

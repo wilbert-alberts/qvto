@@ -58,9 +58,12 @@ public class JavalessUtil {
     	return fname.endsWith(".ecore"); //$NON-NLS-1$
     }
     
+    public static final String JAVALESS_METAMODEL = "platform:/plugin/org.eclipse.m2m.tests.qvt.oml/models/javaless.ecore";  //$NON-NLS-1$
+    private static final String JAVALESS_METAMODEL_ID = "http://www.example.com/javaless/2006";  //$NON-NLS-1$
+
     private final static Map<String, String> REPLACEMENTS = new HashMap<String, String>();
     static {
-    	REPLACEMENTS.put(EcorePackage.eNS_URI, JavalessMetamodelProvider.JAVALESS_METAMODEL_ID);
+    	REPLACEMENTS.put(EcorePackage.eNS_URI, JAVALESS_METAMODEL_ID);
     	REPLACEMENTS.put("ecore\\(", "javaless("); //$NON-NLS-1$ //$NON-NLS-2$
     	REPLACEMENTS.put("ecore:", "javaless:"); //$NON-NLS-1$ //$NON-NLS-2$
     	REPLACEMENTS.put(":ecore", ":javaless"); //$NON-NLS-1$ //$NON-NLS-2$
