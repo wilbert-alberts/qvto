@@ -36,13 +36,13 @@ public class ExecutionTimeGuardTest extends TestCase {
 		super.setUp();
 		
 		if(!IS_QVTO_INITIALIZED) {
-			assertSuccessExecutionTime("WarmUp.qvto", 8000);
+			assertSuccessExecutionTime("WarmUp.qvto", 8000); //$NON-NLS-1$
 			IS_QVTO_INITIALIZED = true;
 		}
 	}
 	
 	public void testTraceLookup_287589() throws Exception {
-		assertSuccessExecutionTime("traceLookup_287589.qvto", 4000); //$NON-NLS-1$
+		assertSuccessExecutionTime("traceLookup_287589.qvto", 5000); //$NON-NLS-1$
 	}
 	
 	private static void assertSuccessExecutionTime(String transfPath, long limitInMs) {
