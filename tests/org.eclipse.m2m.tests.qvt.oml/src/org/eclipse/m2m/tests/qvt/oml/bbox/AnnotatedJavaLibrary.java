@@ -24,9 +24,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
@@ -385,13 +387,25 @@ public class AnnotatedJavaLibrary {
 	}
 	
 	@Operation (contextual=true, withExecutionContext=true)
-	public String getProperty(IContext context, String strContext) {
+	public String getConfigProperty(IContext context, String strContext) {
 		return context.getConfigProperty(strContext).toString();
 	}
 	
 	@Operation (kind=Kind.OPERATION, contextual=true, withExecutionContext=true)
-	public String getConfigProperty(IContext context, String strContext, String value) {
+	public String getConfigProperty2(IContext context, String strContext, String value) {
 		return context.getConfigProperty(strContext+value).toString();
+	}
+	
+	/*
+	 * This library method is used for testing UML2-like behavior 
+	 * of org.eclipse.uml2.uml.internal.operations.ElementOperations::applyStereotype(..)
+	 */
+	public void createStereotypeApplication(ENamedElement element) {
+		if (element.eResource() != null) {
+			EClass stereotypeApplication = (EClass) EcoreUtil.create(EcorePackage.Literals.ECLASS);
+			stereotypeApplication.setName(element.getName() + " : stereotypeApplication"); //$NON-NLS-1$
+			element.eResource().getContents().add(stereotypeApplication);
+		}
 	}
 	
 }

@@ -1,0 +1,13 @@
+import org.bar.Foo; 
+
+modeltype ECORE uses 'http://www.eclipse.org/emf/2002/Ecore';
+	
+transformation uml2_stereotypeApplication(inout m1 : ECORE, out m2 : ECORE);
+
+main() {
+	var cls1 := object EClass@m1 {name := "foo"};
+	createStereotypeApplication(cls1);
+
+	var cls2 := object EClass@m2 {name := "foo"};
+	createStereotypeApplication(cls2);
+}

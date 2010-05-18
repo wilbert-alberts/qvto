@@ -10,8 +10,8 @@ configuration property strTest2 : String;
 main() {
 	logToConsole('console output from blackbox lib');
 
-	log('strTest'.getProperty());
-	log('strTest'.getConfigProperty('2'));
+	log('strTest'.getConfigProperty());
+	log('strTest'.getConfigProperty2('2'));
 
 	cancelExecution();
 
