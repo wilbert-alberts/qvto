@@ -96,6 +96,8 @@ public class QvtOperationalParserUtil {
 	private static final String QVT_IS_STATIC = "static"; //$NON-NLS-1$	
 	
 	private static final String QVT_INIT_EXPRESSION_URI = QVT_NAMESPACE_URI + "/initExp"; //$NON-NLS-1$
+
+	public static final String QVT_AUTOGEN_MODELPARAM_EXPRESSION_URI = QVT_NAMESPACE_URI + "/autoModelParam"; //$NON-NLS-1$
 	
 	private static final String QVT_DEPRECATED = "deprecated"; //$NON-NLS-1$
 	private static final String QVT_UNSUPPORTED = "unsupported"; //$NON-NLS-1$	

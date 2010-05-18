@@ -3,9 +3,12 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEnvironmentBase;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -46,8 +49,12 @@ public class DeprecatedSignaturelessTransf {
 
 	private static ModelParameter createModelParam(EParameter param) {
 		ModelParameter modelParam = ExpressionsFactory.eINSTANCE.createModelParameter();
-		modelParam.setName("$" + param.getName()); //$NON-NLS-1$
+		modelParam.setName(QvtEnvironmentBase.GENERATED_NAME_SPECIAL_PREFIX + param.getName());
 		modelParam.setType(createModelType(param.getEType()));
+
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(QvtOperationalParserUtil.QVT_AUTOGEN_MODELPARAM_EXPRESSION_URI);
+		modelParam.getEAnnotations().add(annotation);
 		
 		if(param instanceof VarParameter) {
 			VarParameter varParameter = (VarParameter) param;

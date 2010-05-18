@@ -25,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
@@ -65,7 +66,8 @@ public class EvaluationUtil {
 		for(ModelParameter modelParam : transformation.getModelParameter()) {
 			ModelInstance model = transfInstance.getModel(modelParam);
 			ModelExtentContents contents = model.getExtent().getContents();
-			if (modelParam.getKind() != DirectionKind.IN) {
+			if (modelParam.getKind() != DirectionKind.IN 
+					&& modelParam.getEAnnotation(QvtOperationalParserUtil.QVT_AUTOGEN_MODELPARAM_EXPRESSION_URI) == null) {
 	        	extents.add(contents);
 			}			
 		}
