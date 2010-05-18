@@ -16,7 +16,7 @@
 			<zipfileset src="${buildDirectory}/${buildLabel}/${SDKZip}"
 			            dirmode="775"
 			            filemode="664"
-			            excludes="**/${domainNamespace}.*.examples*, **/${domainNamespace}.*.examples*/**, **/${domainNamespace}.*.samples*, **/${domainNamespace}.*.samples*/**, **/${domainNamespace}.*.sdk*, **/${domainNamespace}.*.sdk*/**, **/${domainNamespace}.*.all*, **/${domainNamespace}.*.all*/**, **/${domainNamespace}.*.doc*, **/${domainNamespace}.*.doc*/**, **/${domainNamespace}.*.source*, **/${domainNamespace}.*.source*/**, **/*src.zip"
+			            excludes="**/${domainNamespace}.*.examples*, **/${domainNamespace}.*.examples*/**, **/${domainNamespace}.*.samples*, **/${domainNamespace}.*.samples*/**, **/${domainNamespace}.*.sdk*, **/${domainNamespace}.*.sdk*/**, **/${domainNamespace}.*.all*, **/${domainNamespace}.*.all*/**, **/${domainNamespace}.*.doc*, **/${domainNamespace}.*.doc*/**, **/${domainNamespace}.*.source*, **/${domainNamespace}.*.source*/**, **/*src.zip, **/${domainNamespace}.m2m.qvt.oml.ui*, **/${domainNamespace}.m2m.qvt.oml.ui*/**"
 			>
 			<include name="**/${domainNamespace}.m2m.qvt.oml*/" />
 			<include name="**/${domainNamespace}.m2m.qvt.oml*/**" />
