@@ -300,20 +300,25 @@ public class TransformTests {
     }
 
     private static final Set<String> JAVALESS_EXCLUDES = new HashSet<String>(Arrays.asList(new String[] {
-    		"compositetransf", // FIXME - make this included as java-less    		 //$NON-NLS-1$
-            "primtypesecore", // uses getDataTypeInstance() defined on ecore //$NON-NLS-1$
-            // tests using imports are excluded as the compiler never resolved imported unit
-            // to unitName.qvto.javaless (patched original sources)
-            "virtual_contextVsOverride", "operation_override", "import_access_extends", "import_access_extends_cfgprop", "importedvirtuals", "imports_transformations", "imports", "virt", "full", "fqntraces", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+    		// uses getDataTypeInstance() defined on ecore 
+            "primtypesecore", //$NON-NLS-1$
+            
+            // failed to save compiled XMI (ocl problems) 
+            "operation_override", "import_access_extends", "import_access_extends_cfgprop", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            
+            // fqn access are not correctly patched 
             "importedInstances", "fqn_noncontextual", "fqnOperationCalls_271789", "fqnMainCalls_271987", "fqnMainCalls_272937", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             
-            "libraryWithModuleElements_257184", "libraryHeaderWithSignature_257575",// TODO import other files //$NON-NLS-1$ //$NON-NLS-2$
-            "assigntonullowner", "resolveall", // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" //$NON-NLS-1$ //$NON-NLS-2$
-
+            // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" 
+            "assigntonullowner", "resolveall", //$NON-NLS-1$ //$NON-NLS-2$
             
-            "intermediateprop_import", "_while", "oclAllInstances", "bug216317", "simplestXCollectShorthand", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-            "bug2787", "bug2839", "bug2437_4", "bug2437_5", // uses getEClassifier() defined on ecore //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    		"blackboxlib_237781", //$NON-NLS-1$ // imports java lib oper requiring generated ecore metamodel
-            "blackboxlib_annotation_java", // generated ECORE models -> not applicable to dynamic models  //$NON-NLS-1$
+            // uses getEClassifier() defined on ecore 
+            "bug2787", "bug2839", "bug2437_4", "bug2437_5", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    		
+            // imports java lib oper requiring generated ecore metamodel
+            "blackboxlib_237781", //$NON-NLS-1$
+            
+            // generated ECORE models -> not applicable to dynamic models  
+            "blackboxlib_annotation_java", //$NON-NLS-1$
     }));
 }

@@ -60,7 +60,13 @@ public class TestQvtInterpreter extends TestTransformation {
     public void setUp() throws Exception {   
     	super.setUp();
     	
-    	buildTestProject();
+    	try {
+    		buildTestProject();
+    	}
+    	catch (Exception e) {
+			tearDown();
+			throw e;
+		}
     }
     
     @Override

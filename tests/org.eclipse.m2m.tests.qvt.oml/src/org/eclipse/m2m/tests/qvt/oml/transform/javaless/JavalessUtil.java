@@ -13,6 +13,8 @@ package org.eclipse.m2m.tests.qvt.oml.transform.javaless;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.m2m.tests.qvt.oml.transform.FileToFileData;
@@ -48,7 +50,16 @@ public class JavalessUtil {
     }
     
     public static String changeTransformationName(String content, String oldName, String newName) {
-    	//TODO: more accurate
+    	// update local imports
+    	//
+		Pattern p = Pattern.compile("(import\\s*models\\." + oldName + "\\..*);"); //$NON-NLS-1$ //$NON-NLS-2$
+		Matcher m = p.matcher(content);
+		if (m.find()) {
+			content = m.replaceAll(m.group(1) + "_javaless;"); //$NON-NLS-1$
+		}
+
+		// update transformation name
+		//
     	return content.replaceFirst(
     			"\\s*transformation\\s+" + oldName,  //$NON-NLS-1$
     			"\ntransformation " + newName); //$NON-NLS-1$ 
