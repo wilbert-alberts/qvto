@@ -11,37 +11,25 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.ExeXMISerializer;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
-import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.WorkspaceQvtModule;
 import org.eclipse.m2m.qvt.oml.util.IContext;
-import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public class TestQvtInterpreter extends TestTransformation {
 	
@@ -53,7 +41,7 @@ public class TestQvtInterpreter extends TestTransformation {
 	
     public TestQvtInterpreter(ModelTestData data) {
         super(data);        
-		setName(PREFIX + data.getName()); //$NON-NLS-1$
+		setName(PREFIX + data.getName());
     }
     
     protected static String getActualTestName(String executedTestName) {
@@ -65,11 +53,7 @@ public class TestQvtInterpreter extends TestTransformation {
     	final ResourceSetImpl resSet = new ResourceSetImpl();
 		Registry metamodelRegistry = getData().getMetamodelResolutionRegistry(getProject(), resSet);
 		resSet.setPackageRegistry(metamodelRegistry);
-		return new DefaultTransformer(true, metamodelRegistry) {
-			public ResourceSetImpl createInputResourceSet() {
-				return resSet;
-			}
-		};
+		return new DefaultTransformer(true, metamodelRegistry);
     }
        
 	@Override
@@ -117,8 +101,7 @@ public class TestQvtInterpreter extends TestTransformation {
 					URI resourceURI = URI.createPlatformResourceURI(transformationFile.getFullPath().toString(), true);
 					UnitResolver resolver = factory.getResolver(resourceURI);
 													        
-					//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
-			        URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI); //$NON-NLS-1$		
+			        URI binURI = ExeXMISerializer.toXMIUnitURI(resourceURI);		
 			        assertTrue("Requires serialized AST for execution", URIConverter.INSTANCE.exists(binURI, null)); //$NON-NLS-1$
 			    		
 			        ResourceSetImpl resSet = CompiledUnit.createResourceSet();     			
@@ -128,66 +111,22 @@ public class TestQvtInterpreter extends TestTransformation {
 				        resSet.setPackageRegistry(root);
 			        }
 			        
-			        //temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
 					myCompiler = CompilerUtils.createCompiler(resolver);
+					myCompiler.getResourceSet().setPackageRegistry(resSet.getPackageRegistry());
         			return new CompiledUnit(binURI, resSet);
-        			
-//					myCompiler = QVTOCompiler.createCompiler(resolver, resSet.getPackageRegistry());     
-//					// TODO - why not calling the compiler instance directly here?
-//					return QVTOCompiler.compile(new HashSet<URI>(Collections.singletonList(resourceURI)), resSet.getPackageRegistry())[0];        			
+       			
 				}
 			};
 
 			return new QvtInterpretedTransformation(qvtModule); 
 		}
 		
-		public ResourceSetImpl createInputResourceSet() {
-			return new ResourceSetImpl();
-		}
-				
-		public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
-        	QvtInterpretedTransformation trans = getTransformation(transformation);
-  
+		public List<URI> transform(IFile transformation, List<URI> inUris, IContext qvtContext) throws Exception {
+        	QvtInterpretedTransformation transf = getTransformation(transformation);
+        	
         	//TestUtil.assertAllPersistableAST(trans.getModule().getUnit());
-        	ResourceSetImpl inputResourceSet = createInputResourceSet();
-        	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
-        	for (URI uri : inUris) {        		
-				ModelContent in = EmfUtil.loadModel(uri, inputResourceSet);
-        		inputs.add(in);
-        	}
-            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new ModelContent[inputs.size()]), qvtContext);
-            TransformationRunner.Out output = null;
-            try {
-            	output = trans.run(input);
-            } catch (QvtRuntimeException e) {            	
-            	TestUtil.logQVTStackTrace(e);
-				throw e;
-			}
+        	return launchTransform(transformation, inUris, qvtContext, transf);
+		}
 
-            //OperationalTransformation transformationModule = (OperationalTransformation) trans.getModule().getUnit();            
-            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>();            
-            if(output.getOutParamValues().isEmpty() || !returnMainOperationOutput()) {            
-            	List<ModelExtentContents> extents = output.getExtents(); 
-            	int i = 0;
-            	for (ModelExtentContents outExtent : extents) {
-            		URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
-            		result.put(outExtent, extentURI);
-            	}            
-            } else {
-            	int i = 0;            	
-            	for (Object object : output.getOutParamValues()) {
-            		ModelExtentContents outExtent = new ModelParameterExtent(
-            				Collections.singletonList((EObject) object), null, null).getContents();            		
-            		URI extentURI = saveModel("extent.param" + (++i), outExtent, new EclipseFile(transformation));            		
-					result.put(outExtent, extentURI);
-            	}
-            }
-            saveTraceData(output.getTrace(), new EclipseFile(transformation));
-            return result;
-		}
-		
-		protected boolean returnMainOperationOutput() {
-			return true;
-		}
 	}
 }

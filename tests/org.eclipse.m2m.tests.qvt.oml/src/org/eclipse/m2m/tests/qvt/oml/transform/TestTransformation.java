@@ -12,8 +12,8 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,25 +33,26 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseResource;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
 import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
-import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
-import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -189,20 +190,17 @@ public abstract class TestTransformation extends TestCase {
         public void check(ModelTestData data, IProject project) throws Exception {
             IFile transformation = getIFile(data.getTransformation(project));
             
-            LinkedHashMap<ModelExtentContents, URI> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
+            List<URI> transfResult = myTransformer.transform(transformation, data.getIn(project), data.getContext());
         	List<URI> expectedResultURIs = data.getExpected(project);
         	
         	ResourceSetImpl rs = new ResourceSetImpl();
         	rs.setPackageRegistry(data.getMetamodelResolutionRegistry(project, rs));
         	int i = 0;
-        	for (ModelExtentContents nextExtent : transfResult.keySet()) {
+        	for (URI actualResultURI : transfResult) {
         		URI uri = expectedResultURIs.get(i++);
         		Resource expectedResource = rs.getResource(uri, true);
-        		List<EObject> actualExtentObjects = nextExtent.getAllRootElements();
         		
-        		URI actualResultURI = transfResult.get(nextExtent);
-        		// reload in the same resource set
-        		actualExtentObjects = rs.getResource(actualResultURI, true).getContents();
+        		List<EObject> actualExtentObjects = rs.getResource(actualResultURI, true).getContents();
         		data.compareWithExpected(expectedResource.getContents(), actualExtentObjects);
 			}        	
         }
@@ -211,7 +209,7 @@ public abstract class TestTransformation extends TestCase {
     };
     
     public static interface ITransformer {
-    	LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
+    	List<URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception;
     }	
 
     protected void checkTransformation(IChecker checker) throws Exception {
@@ -244,61 +242,45 @@ public abstract class TestTransformation extends TestCase {
         return traceFile;
     }
     
-    public static void saveTraceData(Trace trace, CFile qvtFile) throws MdaException {
-        new TraceSerializer(trace).saveTraceModel(getTraceFile(qvtFile));
+    protected static CFile getModelExtentFile(CFile qvtFile, TransformationParameter transfParam) throws MdaException {
+    	String fileExtension = transfParam.getMetamodels().isEmpty() ? TransformationUtil.DEFAULT_RESULT_EXTENSION
+    			: transfParam.getMetamodels().get(0).getName();
+        String fileName = qvtFile.getUnitName() + ".extent_" + transfParam.getName() + '.' + fileExtension; //$NON-NLS-1$
+        CFile modelExtentFile = qvtFile.getParent().getFile(fileName);
+        return modelExtentFile;
     }
     
-    public static EObject saveLoad(IFile transformation, EObject out) throws Exception {
-        String baseName = transformation.getName();
-        baseName = baseName.substring(0, baseName.length() - transformation.getFileExtension().length());
-        File file = new File(transformation.getParent().getLocation().toFile(), baseName + getExtensionForEObject(out));
-        ExtendedEmfUtil.saveModel(out, new IOFile(file));
-        ModelContent loadModel = ExtendedEmfUtil.loadModel(new IOFile(file));
-        if (loadModel != null && !loadModel.getContent().isEmpty()) {
-        	return loadModel.getContent().get(0);
-        }
-        return null;
-    }
-
-    
-    public static URI saveModel(String extentName, ModelExtentContents extent, CFile qvtFile) throws MdaException {
-        String fileName = qvtFile.getUnitName() + "." + extentName + "." + getExtensionForResult(extent); //$NON-NLS-1$ //$NON-NLS-2$
-        CFile outFile = qvtFile.getParent().getFile(fileName);
-
-    	URI uri;
-		try {
-			uri = URI.createURI(outFile.getFileStore().toURI().toString());
-		} catch (IOException e) {
-			throw new MdaException(e);
-		}
+	protected static List<URI> launchTransform(IFile transformation, List<URI> inUris, IContext qvtContext,
+			QvtTransformation transf) throws Exception {
 		
-		Resource resource = EmfUtil.createResource(uri, new ResourceSetImpl());
-    	resource.getContents().addAll(extent.getAllRootElements());
-        ExtendedEmfUtil.saveModel(resource, outFile);
-        return uri;
-    }
-
-    public static String getExtensionForResult(ModelExtentContents extent) {
-    	EObject eObject = null;
-    	for (EObject nextObject : extent.getAllRootElements()) {
-			eObject = nextObject;
-			break;
-		}
+		EclipseFile eclipseFile = new EclipseFile(transformation);
     	
-    	if(eObject == null || eObject.eClass() == null || eObject.eClass().getEPackage() == null) {
-            return "xmi"; //$NON-NLS-1$
-        }
-        
-        EPackage root = EmfUtil.getRootPackage(eObject.eClass().getEPackage());
-        return root.getName();
-    }
-    
-    
-    private static String getExtensionForEObject(EObject eObject) {
-    	EPackage ePackage = eObject.eClass().getEPackage();
-    	if (ePackage == null) {
-    		return TransformationUtil.DEFAULT_RESULT_EXTENSION;
-    	}
-    	return EmfUtil.getRootPackage(ePackage).getName();
-    }
+    	List<ModelContent> inObjects = new ArrayList<ModelContent>(transf.getParameters().size());
+    	List<TargetUriData> targetData = new ArrayList<TargetUriData>(transf.getParameters().size());
+    	List<URI> resultUris = new ArrayList<URI>(transf.getParameters().size());
+    	
+    	Iterator<URI> itInUris = inUris.iterator();
+		for (TransformationParameter transfParam : transf.getParameters()) {
+			URI inUri = null;
+			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+    			inUri = itInUris.next();
+		        ModelContent inModel = transf.loadInput(inUri);
+		        inObjects.add(inModel);
+			}
+			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+				if (inUri == null) {
+			        CFile outFile = getModelExtentFile(eclipseFile, transfParam);	    			        
+			        inUri = URI.createURI(outFile.getFileStore().toURI().toString());
+				}
+				targetData.add(new TargetUriData(TargetType.NEW_MODEL, inUri.toString(), null, false));
+				resultUris.add(inUri);
+			}
+		}
+
+		URI traceURI = URI.createFileURI(((EclipseResource) getTraceFile(eclipseFile)).getResource().getFullPath().toString());
+		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, traceURI.toString(), qvtContext);
+		
+		transf.cleanup();    		
+        return resultUris;
+	}
 }

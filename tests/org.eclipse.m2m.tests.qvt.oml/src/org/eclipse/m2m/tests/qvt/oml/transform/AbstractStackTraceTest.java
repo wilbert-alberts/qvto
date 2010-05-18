@@ -16,23 +16,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.CharBuffer;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.qvt.oml.util.IContext;
@@ -125,7 +119,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	private ITransformer createTransformer() {
 		return new TestQvtInterpreter.DefaultTransformer(true, EPackage.Registry.INSTANCE) {
 			
-	        public LinkedHashMap<ModelExtentContents, URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
+	        public List<URI> transform(IFile transformation, List<URI> inUris, IContext context) throws Exception {
 	        	QvtInterpretedTransformation transf;
 	        	if(fUseCompiledXMI) {
 	        		transf = getTransformation(transformation);
@@ -143,25 +137,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        	Context qvtContext = QvtLaunchUtil.createContext(context.getConfigProperties());
 	        	qvtContext.setLog(new WriterLog(fLogger));
 	            
-	        	List<ModelContent> inputs = new ArrayList<ModelContent>(inUris.size());
-	        	for (URI uri : inUris) {
-	        		ModelContent in = transf.loadInput(uri);
-	        		inputs.add(in);
-	        	}
-	            TransformationRunner.In input = new TransformationRunner.In(inputs.toArray(new ModelContent[inputs.size()]), qvtContext);	            
-	            TransformationRunner.Out output = transf.run(input);
-
-	            List<ModelExtentContents> extents = output.getExtents();
-	            LinkedHashMap<ModelExtentContents, URI> result = new LinkedHashMap<ModelExtentContents, URI>(); 
-	            int i = 0;
-	            for (ModelExtentContents outExtent : extents) {
-	                URI extentURI = saveModel("extent" + (++i), outExtent, new EclipseFile(transformation));
-	                result.put(outExtent, extentURI);
-	            }
-	            
-	            saveTraceData(output.getTrace(), new EclipseFile(transformation));	            
-	            
-	            return result;
+	        	return launchTransform(transformation, inUris, qvtContext, transf);
 	        }
 		};
 	}	

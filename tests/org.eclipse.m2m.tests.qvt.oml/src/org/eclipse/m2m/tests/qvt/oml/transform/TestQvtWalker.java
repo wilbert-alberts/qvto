@@ -32,7 +32,7 @@ public class TestQvtWalker extends TestTransformation {
 	
 	public TestQvtWalker(ModelTestData data) {
         super(data);        
-		setName(PREFIX + data.getName()); //$NON-NLS-1$
+		setName(PREFIX + data.getName());
     }
 
     @Override
