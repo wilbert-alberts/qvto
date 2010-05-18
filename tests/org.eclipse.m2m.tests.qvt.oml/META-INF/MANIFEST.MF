@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %name
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.tests.qvt.oml;singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: %providerName
@@ -28,7 +28,7 @@ Require-Bundle: org.junit4;bundle-version="[4.5.0,5.0.0)",
  org.eclipse.m2m.qvt.oml.runtime,
  org.eclipse.m2m.qvt.oml.project,
  org.eclipse.m2m.qvt.oml.ocl,
- org.eclipse.m2m.qvt.oml.samples,
+ org.eclipse.m2m.qvt.oml.examples,
  org.eclipse.ant.core,
  org.eclipse.debug.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
