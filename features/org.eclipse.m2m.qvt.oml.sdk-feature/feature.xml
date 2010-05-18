@@ -20,10 +20,6 @@
    </license>
 
    <includes
-         id="org.eclipse.m2m.qvt.oml.common"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.m2m.qvt.oml"
          version="0.0.0"/>
 
@@ -44,10 +40,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.m2m.qvt.oml.common.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.m2m.qvt.oml.source"
          version="0.0.0"/>
 
@@ -62,11 +54,11 @@
    <includes
          id="org.eclipse.m2m.qvt.oml.debug"
          version="0.0.0"/>
-   
+
    <includes
          id="org.eclipse.m2m.qvt.oml.debug.source"
          version="0.0.0"/>
-         
+
    <requires>
       <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.core.resources" version="3.4.0" match="compatible"/>
@@ -78,11 +70,11 @@
       <import plugin="org.eclipse.ui" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.m2m.qvt.oml" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common" version="2.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common.ui" version="2.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.emf.util" version="2.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.project" version="2.0.0" match="compatible"/>
       <import plugin="com.ibm.icu"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.common.ui" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.emf.util" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.m2m.qvt.oml.project" version="3.0.0" match="compatible"/>
    </requires>
 
    <plugin
