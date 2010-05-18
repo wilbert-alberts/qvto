@@ -28,7 +28,7 @@ Require-Bundle: org.junit4;bundle-version="[4.5.0,5.0.0)",
  org.eclipse.m2m.qvt.oml.runtime,
  org.eclipse.m2m.qvt.oml.project,
  org.eclipse.m2m.qvt.oml.ocl,
- org.eclipse.m2m.qvt.oml.examples,
+ org.eclipse.m2m.qvt.oml.samples,
  org.eclipse.ant.core,
  org.eclipse.debug.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
