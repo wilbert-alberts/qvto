@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.m2m.qvt.oml.ui;singleton:=true
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -16,10 +16,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.m2m.qvt.oml;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.m2m.qvt.oml.common;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.m2m.qvt.oml.common.ui;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.m2m.qvt.oml.project;bundle-version="[3.0.0,4.0.0)"
+ org.eclipse.m2m.qvt.oml.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.common.ui;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.m2m.qvt.oml.project;bundle-version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.internal.qvt.oml.ui;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.ui.wizards;x-internal:=true,
