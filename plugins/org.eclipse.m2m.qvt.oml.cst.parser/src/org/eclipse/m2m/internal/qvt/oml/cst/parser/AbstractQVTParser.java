@@ -1143,7 +1143,12 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 
 	@Override
 	protected void setOffsets(CSTNode cstNode, IToken start, CSTNode end) {
-		super.setOffsets(cstNode, start, end);
+		if (end == null) {
+			super.setOffsets(cstNode, start);
+		}
+		else {
+			super.setOffsets(cstNode, start, end);
+		}
 		
 		if(!isCSTTokenEnabled) {
 			cstNode.setStartToken(null);
