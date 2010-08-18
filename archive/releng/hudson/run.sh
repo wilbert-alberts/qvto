@@ -17,6 +17,7 @@ version="3.0.1"
 # leave blank to use assumed values (which may be wrong!)
 projRelengRoot='-projRelengRoot :pserver:anonymous@dev.eclipse.org:/cvsroot/modeling'
 projRelengPath='-projRelengPath org.eclipse.m2m/org.eclipse.qvtoml.releng'
+projRelengBranch='-projRelengBranch R3_0_maintenance'
 
 # where should we look for pre-checked out project sources for org.eclipse.dash.common.releng and org.eclipse.releng.basebuilder ?
 cvsProjectBaseDir=/opt/public/cbi/build # build.eclipse.org
@@ -86,7 +87,7 @@ thirdPartyJarsDir="${writableBuildRoot}/3rdPartyJars"
 cd ${writableBuildRoot}/org.eclipse.dash.common.releng/tools/scripts
 ./start.sh -projectid ${projectid} -version ${version} -buildType ${buildType} -buildTimestamp ${buildTimestamp} \
   -writableBuildRoot ${writableBuildRoot} -thirdPartyJarsDir ${thirdPartyJarsDir} -downloadsDir ${downloadsDir} -buildDir ${buildDir} \
-  ${projRelengRoot} ${projRelengPath} ${EXTRAFLAGS} 2>&1
+  ${projRelengRoot} ${projRelengPath} ${projRelengBranch} ${EXTRAFLAGS} 2>&1
 
 # remove file so workspace navigation is one click simpler
 rm -f ${writableBuildRoot}/.cvspass
