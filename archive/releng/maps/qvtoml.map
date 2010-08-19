@@ -37,7 +37,7 @@ plugin@org.eclipse.m2m.tests.qvt.oml.ui=v20100524-1530,:pserver:anonymous@dev.ec
 
 !*** Special entries from eclipse  
 plugin@org.eclipse.test=R3_6,:pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse,
-fragment@org.eclipse.ant.optional.junit=R3_6,:pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse,
+fragment@org.eclipse.ant.optional.junit=R3_0_maintenance,:pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse,
 
 !*** QVTO Docs ***************************************************************************
 feature@org.eclipse.m2m.qvt.oml.doc=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/doc/org.eclipse.m2m.qvt.oml.doc-feature
