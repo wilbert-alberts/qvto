@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,7 +35,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.ocl.util.CollectionUtil;
 
 /**
  * @since 2.0
@@ -161,7 +161,8 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		for (EStructuralFeature eStructuralFeature : instance.eClass().getEAllStructuralFeatures()) {
 			if (eStructuralFeature.getEType() instanceof CollectionType) {
 				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) eStructuralFeature.getEType();
-				instance.eSet(eStructuralFeature, CollectionUtil.createNewCollection(collectionType.getKind()));
+				Collection<Object> currentValues = EvaluationUtil.createNewCollection(collectionType);
+				instance.eSet(eStructuralFeature, currentValues);
 			}
 		}
 	}

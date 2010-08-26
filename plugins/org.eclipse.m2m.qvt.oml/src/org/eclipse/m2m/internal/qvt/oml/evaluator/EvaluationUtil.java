@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
@@ -36,11 +38,16 @@ import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
+import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
 
 /**
@@ -231,4 +238,24 @@ public class EvaluationUtil {
     	
     	return result;
     }	
+    
+	public static <E> Collection<E> createNewCollection(CollectionType<EClassifier, EOperation> collectionType) {
+		Collection<E> result = null;
+		
+		if (collectionType instanceof ListType) {
+			result = Utils.createList();
+		}
+		else if (collectionType instanceof DictionaryType) {
+			result = Utils.createDictionary();
+		}
+		else {
+			CollectionKind kind = collectionType.getKind();
+			if (kind != null && kind != CollectionKind.COLLECTION_LITERAL) {
+				result = CollectionUtil.createNewCollection(collectionType.getKind());
+			}
+		}
+		
+		return result;
+	}	
+    
 }

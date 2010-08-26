@@ -104,7 +104,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
@@ -126,7 +125,6 @@ import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.Log;
-import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -1014,17 +1012,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				value = Double.valueOf(0);
 			} else if(varDeclType == oclstdlib.getUnlimitedNatural()) {
 				value = Integer.valueOf(0);
-			} else if(varDeclType instanceof ListType) {
-				value = Utils.createList();
-			} else if(varDeclType instanceof DictionaryType) {
-				value = Utils.createDictionary();
 			} else if(varDeclType instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) varDeclType;
-				CollectionKind kind = collectionType.getKind();
-				if(kind != null && kind != CollectionKind.COLLECTION_LITERAL) {
-					value = CollectionUtil.createNewCollection(kind);
-				}
+				value = EvaluationUtil.createNewCollection(collectionType);
 			}
 		}
 		
@@ -1311,7 +1302,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             
             Object initResultVal = null;
             if (imperativeIterateExp.getName().equals("xselect")) { //$NON-NLS-1$
-                initResultVal = CollectionUtil.createNewCollection(collType.getKind());
+                initResultVal = EvaluationUtil.createNewCollection(collType);
             } else if (imperativeIterateExp.getName().equals("xcollect")  //$NON-NLS-1$
                     || imperativeIterateExp.getName().equals("collectselect")) { //$NON-NLS-1$
                 initResultVal = ((collType instanceof SetType<?,?>) || (collType instanceof BagType<?,?>)) ?
@@ -2039,11 +2030,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			if(type instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>)type;
-				if(collectionType.getKind() == CollectionKind.COLLECTION_LITERAL) {
-					newInstance = CollectionUtil.createNewSequence();
-				} else {
-					newInstance = CollectionUtil.createNewCollection(collectionType.getKind());
-				}
+				newInstance = EvaluationUtil.createNewCollection(collectionType);
 			} else {
 				newInstance = getOperationalEvaluationEnv().createInstance(type, extent);
 
