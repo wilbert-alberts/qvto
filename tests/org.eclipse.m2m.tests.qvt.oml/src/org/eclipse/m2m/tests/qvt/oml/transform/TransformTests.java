@@ -79,6 +79,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+        		new FilesToFilesData("dicttype", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("transf_inheritance"), //$NON-NLS-1$
         		new FilesToFilesData("uml2_stereotypeApplication", Collections.singletonList("in.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
