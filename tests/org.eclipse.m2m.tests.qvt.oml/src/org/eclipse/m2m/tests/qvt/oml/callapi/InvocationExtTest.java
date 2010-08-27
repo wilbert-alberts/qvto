@@ -62,7 +62,7 @@ public class InvocationExtTest extends TestCase {
 		
 		fInOut = new BasicModelExtent();
 		EPackage inOutObject = EcoreFactory.eINSTANCE.createEPackage();
-		inOutObject.setName(fInOutPackageInitialName); //$NON-NLS-1$
+		inOutObject.setName(fInOutPackageInitialName);
 		fInOut.add(inOutObject);
 		
 		fInitialInputContents = new ArrayList<EObject>(fInput.getContents());
@@ -75,7 +75,7 @@ public class InvocationExtTest extends TestCase {
 
 	private void assertInOutObject() {
 		EPackage inoutObjevt = (EPackage)EcoreUtil.getObjectByType(fInOut.getContents(), EcorePackage.eINSTANCE.getEPackage());
-		assertEquals(fInOutPackageInitialName + "_Ecore2EcoreExt", inoutObjevt.getName());
+		assertEquals(fInOutPackageInitialName + "_Ecore2EcoreExt", inoutObjevt.getName()); //$NON-NLS-1$
 		assertEquals(1, inoutObjevt.getEClassifiers().size());
 	}
 	
