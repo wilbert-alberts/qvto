@@ -1808,10 +1808,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         
 	@Override
 	protected OCLExpression<EClassifier> getOperationBody(EOperation operation) {
-		if(operation != null && OCLAnnotationSupport.isDynamicClassOperation(operation)) {			
-			return getOCLAnnotationSupport().getBody(operation);
+		if(operation == null) {
+			return null;
 		}
 		
+		if(OCLAnnotationSupport.isDynamicClassOperation(operation)) {			
+			return getOCLAnnotationSupport().getBody(operation);
+		}		
 		return super.getOperationBody(operation);
 	}
     
