@@ -37,7 +37,9 @@ import org.eclipse.debug.core.model.IMemoryBlock;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.QVTOVirtualMachine;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMEventListener;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
@@ -548,7 +550,18 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 			}
 		}
 	}
-
+	
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (QvtOperationalEvaluationEnv.class == adapter) {
+			if (getVM() instanceof QVTOVirtualMachine) {
+				return ((QVTOVirtualMachine) getVM()).getEvaluationEnv();
+			}
+		}
+		
+		return super.getAdapter(adapter);
+	}
+	
 	private class EventDispatchJob implements Runnable {
 
 		EventDispatchJob() {

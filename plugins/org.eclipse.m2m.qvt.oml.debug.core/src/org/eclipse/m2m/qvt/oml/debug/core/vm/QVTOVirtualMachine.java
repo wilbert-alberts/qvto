@@ -18,6 +18,7 @@ import java.util.concurrent.BlockingQueue;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
@@ -103,6 +104,16 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		}
 		
 		return VMResponse.createOK();
+	}
+	
+	/**
+	 * @noreference This method is not intended to be referenced by clients.
+	 */
+	public QvtOperationalEvaluationEnv getEvaluationEnv() {
+		if (fInterpreter == null) {
+			return null;
+		}
+		return fInterpreter.getOperationalEvaluationEnv();
 	}
 	
 	private VMResponse start() {
@@ -296,4 +307,5 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			}
 		}
 	}
+
 }
