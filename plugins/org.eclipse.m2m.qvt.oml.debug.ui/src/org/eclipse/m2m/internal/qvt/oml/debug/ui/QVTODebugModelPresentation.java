@@ -113,7 +113,8 @@ public class QVTODebugModelPresentation implements IDebugModelPresentation, IDeb
         else if(element instanceof QVTODebugTarget) {
         	QVTODebugTarget debugTarget = (QVTODebugTarget) element;
 			String moduleName = debugTarget.getMainModuleName();
-			return NLS.bind(DebugUIMessages.QVTODebugModelPresentation_TransformationLabel, moduleName);
+			String launchConfigName = debugTarget.getLaunch().getLaunchConfiguration().getName();
+			return NLS.bind(DebugUIMessages.QVTODebugModelPresentation_TransformationLabel, moduleName, launchConfigName);
         }
 
         return null;
