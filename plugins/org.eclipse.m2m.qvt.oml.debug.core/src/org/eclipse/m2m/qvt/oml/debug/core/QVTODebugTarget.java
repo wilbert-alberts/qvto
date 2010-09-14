@@ -562,6 +562,13 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		return super.getAdapter(adapter);
 	}
 	
+	public Object evaluate(String expressionText) throws CoreException {
+		if (getVM() instanceof QVTOVirtualMachine) {
+			return ((QVTOVirtualMachine) getVM()).evaluate(expressionText);
+		}
+		return null;
+	}
+	
 	private class EventDispatchJob implements Runnable {
 
 		EventDispatchJob() {

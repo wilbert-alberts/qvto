@@ -462,7 +462,7 @@ public class VariableFinder {
 		return result;
 	}
 
-	private static void setValueAndType(VMVariable variable, Object value,
+	public static void setValueAndType(VMVariable variable, Object value,
 			EClassifier optDeclaredType, QvtOperationalEvaluationEnv evalEnv) {
 		String declaredTypeName = (optDeclaredType != null) ? optDeclaredType
 				.getName() : null;

@@ -16,9 +16,13 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.cst.completion.parser.LightweightParser;
+import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
@@ -37,6 +41,11 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMStartRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMTerminateEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest.ActionKind;
+import org.eclipse.ocl.OCLInput;
+import org.eclipse.ocl.ParserException;
+import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.cst.OCLExpressionCS;
+import org.eclipse.ocl.utilities.ASTNode;
 
 public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		
@@ -115,6 +124,42 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		}
 		return fInterpreter.getOperationalEvaluationEnv();
 	}
+	
+	public Object evaluate(String expressionText) throws CoreException {
+		if (fInterpreter == null) {
+			return null;
+		}
+
+		ASTNode astNode = fInterpreter.getCurrentLocation().getElement();
+        if (astNode == null) {
+            return null;
+        }
+        
+        ConditionChecker fakeChecker = new ConditionChecker(expressionText, astNode);
+        return fakeChecker.evaluate(fInterpreter);
+	}
+	
+    private OCLExpressionCS parseExpression(String expressionText, QvtOperationalEnv env) {    	
+        try {        	
+            QVTOLexer lexer = new QVTOLexer(env, new OCLInput(expressionText).getContent());
+            
+            LightweightParser parser = new LightweightParser(lexer);            
+            parser.enableCSTTokens(true);
+            parser.getIPrsStream().resetTokenStream();            
+            lexer.lexer(parser.getIPrsStream());
+            CSTNode cst = parser.parser(10);
+            if(cst instanceof OCLExpressionCS) {
+            	return (OCLExpressionCS) cst;
+            }		
+            
+            env.reportError("Not an OCL expression", -1, -1); //$NON-NLS-1$
+        } catch (ParserException ex) {
+        	// add parser error to environment
+            env.reportError(ex.toString(), -1, -1);            
+        }
+        
+        return null;
+    }
 	
 	private VMResponse start() {
 		Thread executorThread = new Thread(createVMRunnable());
