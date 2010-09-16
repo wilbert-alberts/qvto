@@ -29,7 +29,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableResponse;
 
 public class QVTOValue extends QVTODebugElement implements IValue {
 			
-	private final VMVariable vmVar;
+	final VMVariable vmVar;
 	private Value vmValue;
 	private long frameID;
 
@@ -83,7 +83,7 @@ public class QVTOValue extends QVTODebugElement implements IValue {
 		return variableURI;
     }
     
-	private List<VMVariable> requestVariables() throws DebugException {
+	List<VMVariable> requestVariables() throws DebugException {
 		String variableURI = getVariableURIForVMRequest();
 		
 		VMVariableRequest request = new VMVariableRequest(
@@ -103,5 +103,6 @@ public class QVTOValue extends QVTODebugElement implements IValue {
 	
 	public boolean isAllocated() throws DebugException {
 		return true;
-	}		
+	}
+	
 }

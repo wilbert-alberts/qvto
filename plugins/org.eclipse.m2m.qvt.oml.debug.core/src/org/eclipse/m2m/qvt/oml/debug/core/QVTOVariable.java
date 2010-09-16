@@ -17,55 +17,59 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.VMVariable;
 
 public class QVTOVariable extends QVTODebugElement implements IVariable {
 	
-	private final VMVariable fUnderlyingVar;
-	private final IValue fValue;
+	final VMVariable vmVar;
+	private final long fFrameID;
+	protected IValue fValue;
 
 	
 	QVTOVariable(IQVTODebugTarget debugTarget, final VMVariable vmVar, long frameID) {
 		super(debugTarget);
 		
-		this.fUnderlyingVar = vmVar;			
-		this.fValue = new QVTOValue(getQVTODebugTarget(), vmVar, frameID);
+		this.vmVar = vmVar;			
+		this.fFrameID = frameID;
 	}
 
 	public boolean isModelParameter() {
-		return fUnderlyingVar.kind == VMVariable.MODEL_PARAMETER;
+		return vmVar.kind == VMVariable.MODEL_PARAMETER;
 	}
 	
 	public boolean isLocalVariable() {
-		return fUnderlyingVar.kind == VMVariable.LOCAL;
+		return vmVar.kind == VMVariable.LOCAL;
 	}
 	
 	public boolean isCollectionElement() {
-		return fUnderlyingVar.kind == VMVariable.COLLECTION_ELEMENT;
+		return vmVar.kind == VMVariable.COLLECTION_ELEMENT;
 	}	
 
 	public boolean isPredefinedVariable() {
-		return fUnderlyingVar.kind == VMVariable.PREDEFINED_VAR;
+		return vmVar.kind == VMVariable.PREDEFINED_VAR;
 	}		
 	
 	public boolean isIntermProperty() {
-		return fUnderlyingVar.kind == VMVariable.INTERM_PROPERTY;
+		return vmVar.kind == VMVariable.INTERM_PROPERTY;
 	}	
 
 	public boolean isAttribute() {
-		return fUnderlyingVar.kind == VMVariable.ATTRIBUTE;
+		return vmVar.kind == VMVariable.ATTRIBUTE;
 	}	
 	
 	public boolean isReference() {
-		return fUnderlyingVar.kind == VMVariable.REFERENCE;
-	}	
+		return vmVar.kind == VMVariable.REFERENCE;
+	}
 	
 	public IValue getValue() throws DebugException {
-		 return fValue;
+		if (fValue == null) {
+			fValue = new QVTOValue(getQVTODebugTarget(), vmVar, fFrameID);
+		}
+		return fValue;
 	}
 
 	public String getName() throws DebugException {
-		return fUnderlyingVar.name;
+		return vmVar.name;
 	}
 	
 	public String getReferenceTypeName() throws DebugException {
-		return this.fUnderlyingVar.type.declaringType;
+		return this.vmVar.type.declaringType;
 	}	
 
 	public boolean hasValueChanged() throws DebugException {

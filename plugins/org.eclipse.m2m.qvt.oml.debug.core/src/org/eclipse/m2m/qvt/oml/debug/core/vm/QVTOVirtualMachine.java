@@ -18,13 +18,13 @@ import java.util.concurrent.BlockingQueue;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.debug.core.model.IValue;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.cst.completion.parser.LightweightParser;
-import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugTarget;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTOLocalValue;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTOLocalValue.LocalValue;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
@@ -41,10 +41,6 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMStartRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMTerminateEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest.ActionKind;
-import org.eclipse.ocl.OCLInput;
-import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.cst.CSTNode;
-import org.eclipse.ocl.cst.OCLExpressionCS;
 import org.eclipse.ocl.utilities.ASTNode;
 
 public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
@@ -115,17 +111,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		return VMResponse.createOK();
 	}
 	
-	/**
-	 * @noreference This method is not intended to be referenced by clients.
-	 */
-	public QvtOperationalEvaluationEnv getEvaluationEnv() {
-		if (fInterpreter == null) {
-			return null;
-		}
-		return fInterpreter.getOperationalEvaluationEnv();
-	}
-	
-	public Object evaluate(String expressionText) throws CoreException {
+	public IValue evaluate(String expressionText, QVTODebugTarget debugTarget, long frameID) throws CoreException {
 		if (fInterpreter == null) {
 			return null;
 		}
@@ -135,31 +121,15 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
             return null;
         }
         
-        ConditionChecker fakeChecker = new ConditionChecker(expressionText, astNode);
-        return fakeChecker.evaluate(fInterpreter);
-	}
-	
-    private OCLExpressionCS parseExpression(String expressionText, QvtOperationalEnv env) {    	
-        try {        	
-            QVTOLexer lexer = new QVTOLexer(env, new OCLInput(expressionText).getContent());
-            
-            LightweightParser parser = new LightweightParser(lexer);            
-            parser.enableCSTTokens(true);
-            parser.getIPrsStream().resetTokenStream();            
-            lexer.lexer(parser.getIPrsStream());
-            CSTNode cst = parser.parser(10);
-            if(cst instanceof OCLExpressionCS) {
-            	return (OCLExpressionCS) cst;
-            }		
-            
-            env.reportError("Not an OCL expression", -1, -1); //$NON-NLS-1$
-        } catch (ParserException ex) {
-        	// add parser error to environment
-            env.reportError(ex.toString(), -1, -1);            
-        }
+        ConditionChecker localChecker = new ConditionChecker(expressionText, astNode);
+        LocalValue lv = new LocalValue();
+        lv.valueObject = localChecker.evaluate(fInterpreter);
+        lv.valueType = localChecker.getConditionType();
         
-        return null;
-    }
+		return new QVTOLocalValue(debugTarget, frameID, new String[] {expressionText}, lv, 
+				new UnitLocationExecutionContext(
+		        		fInterpreter.getEnvironment(), fInterpreter.getOperationalEvaluationEnv()));
+	}
 	
 	private VMResponse start() {
 		Thread executorThread = new Thread(createVMRunnable());
@@ -246,7 +216,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	private VMResponse handleValueDetailRequest(VMDetailRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		UnitLocationExecutionContext context = new UnitLocationExecutionContext(
-				fInterpreter, fInterpreter.getCurrentLocation());
+				fInterpreter.getEnvironment(), fInterpreter.getCurrentLocation().getEvalEnv());
 		String detail = VariableFinder.computeDetail(request.getVariableURI(), context);		
 		return new VMDetailResponse(detail != null ? detail : ""); //$NON-NLS-1$
 	}
@@ -254,7 +224,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	private VMResponse handleVariableRequest(VMVariableRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		UnitLocationExecutionContext context = new UnitLocationExecutionContext(
-				fInterpreter, fInterpreter.getCurrentLocation());
+				fInterpreter.getEnvironment(), fInterpreter.getCurrentLocation().getEvalEnv());
 		return VariableFinder.process(request, fInterpreter.getLocationStack(),
 				context);
 	}
@@ -334,7 +304,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		}
 		
 		public VMRequest waitAndPopRequest(VMEvent suspend) throws InterruptedException {
-			// FIXME - should be locked to ensure noone can really send a request until
+			// FIXME - should be locked to ensure none can really send a request until
 			// we deliver the event
 			handleVMEvent(suspend);
 			
@@ -352,5 +322,6 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			}
 		}
 	}
+
 
 }

@@ -24,11 +24,9 @@ import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMLocation;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMStackFrame;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMVariable;
-import org.eclipse.m2m.qvt.oml.debug.core.vm.VariableFinder;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMResponse;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMStackFrameRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMStackFrameResponse;
@@ -196,16 +194,7 @@ public class QVTOStackFrame extends QVTODebugElement implements IStackFrame {
 	}
 
 	public IValue evaluate(String expressionText) throws CoreException {
-		Object result = ((QVTODebugTarget) getQVTODebugTarget()).evaluate(expressionText);
-		QvtOperationalEvaluationEnv evalEnv = (QvtOperationalEvaluationEnv) getQVTODebugTarget().getAdapter(QvtOperationalEvaluationEnv.class);
-
-		VMVariable var = new VMVariable();
-		var.name = expressionText;
-		var.kind = VMVariable.LOCAL;
-		var.variableURI = fUnderlyingFrame.getLocation().getURI();
-		VariableFinder.setValueAndType(var, result, null, evalEnv);
-		
-		return new QVTOVariable(getQVTODebugTarget(), var, fUnderlyingFrame.id).getValue();
+		return ((QVTODebugTarget) getQVTODebugTarget()).evaluate(expressionText, fUnderlyingFrame.id);
 	}
 
 	VMStackFrame requestStackFrame() throws DebugException {
@@ -226,5 +215,5 @@ public class QVTOStackFrame extends QVTODebugElement implements IStackFrame {
 		
 		return frame;
 	}
-
+	
 }

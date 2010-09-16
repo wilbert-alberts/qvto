@@ -16,38 +16,49 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public class UnitLocationExecutionContext implements VMFrameExecutionContext {
 
-	private UnitLocation fLocation;
-	private QvtOperationalEvaluationVisitorImpl fEvaluator;
+	private final Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
+			EParameter,EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> fEnv;
+	private final QvtOperationalEvaluationEnv fEvalEnv;
 
-	UnitLocationExecutionContext(QvtOperationalEvaluationVisitorImpl evaluator, UnitLocation location) {
-		if(evaluator == null || location == null) {
+	UnitLocationExecutionContext(
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral,
+					EParameter,EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			QvtOperationalEvaluationEnv evalEnv) {
+		if (env == null || evalEnv == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		fLocation = location;
-		fEvaluator = evaluator;
+		fEnv = env;
+		fEvalEnv = evalEnv;
 	}
 	
 	public EClassifier getOCLType(EStructuralFeature feature) {
-		return fEvaluator.getEnvironment().getUMLReflection().getOCLType(feature);
+		return fEnv.getUMLReflection().getOCLType(feature);
 	}
 	
 	public OCLStandardLibrary<EClassifier> getStandardLibrary() {	
-		return fEvaluator.getEnvironment().getOCLStandardLibrary();
+		return fEnv.getOCLStandardLibrary();
 	}
 	
 	public List<EStructuralFeature> getAllFeatures(EClass eClass) {
@@ -68,15 +79,15 @@ public class UnitLocationExecutionContext implements VMFrameExecutionContext {
 	}
 
 	public QvtOperationalEvaluationEnv getEvalEnv() {
-		return fLocation.getEvalEnv();
+		return fEvalEnv;
 	}
 
 	public Object getValue(EStructuralFeature feature, EObject target) {
-		return fLocation.getEvalEnv().navigateProperty(feature, null, target);
+		return fEvalEnv.navigateProperty(feature, null, target);
 	}
 
 	private void collectIntermediateProperties(List<EStructuralFeature> properties, EClass targetClass) {
-		QvtOperationalEvaluationEnv evalEnv = fLocation.getEvalEnv();		
+		QvtOperationalEvaluationEnv evalEnv = fEvalEnv;		
 		InternalEvaluationEnv internEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
 		
 		ModuleInstance currentModule = internEvalEnv.getCurrentModule();

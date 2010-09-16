@@ -80,6 +80,13 @@ public class ConditionChecker {
 		return Boolean.TRUE.equals(evaluate(mainEvaluator));
 	}
 	
+	public EClassifier getConditionType() {
+		if (fConditionAST != null) { 
+			return fConditionAST.getType();
+		}
+		return null;
+	}
+	
 
     private ASTElementContextEnv getEnvironmentForASTElement() {
 		QvtOperationalEnvFactory factory = new QvtOperationalEnvFactory();
