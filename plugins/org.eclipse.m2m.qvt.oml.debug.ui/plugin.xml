@@ -37,17 +37,50 @@
 	      </viewerContribution>    
 	      
 		<viewerContribution
-			id="org.eclipse.m2m.qvt.oml.debug.ui.QVTOEditorRulerPopupActions"
+			id="org.eclipse.m2m.qvt.oml.debug.ui.QVTOEditorRunToLine"
 			targetID="#QvtoEditorContext">
-			<action
+		 <action
+               class="org.eclipse.debug.ui.actions.RunToLineActionDelegate"
                label="%RunToLine.label"
                definitionId="org.eclipse.debug.ui.commands.RunToLine"
-               class="org.eclipse.debug.ui.actions.RunToLineActionDelegate"
                menubarPath="additions"
-               id="org.eclipse.m2m.qvt.oml.debug.ui.RunToLineAction">
-	        </action>	            
+               id="org.eclipse.m2m.qvt.oml.debug.ui.actions.RunToLineAction">
+	     </action>	            
+         <visibility>
+               <systemProperty
+                     name="org.eclipse.m2m.qvt.oml.debug.debuggerActive"
+                     value="true"/>
+         </visibility>
 		</viewerContribution>
 		
+       <viewerContribution
+            id="org.eclipse.m2m.qvt.oml.debug.ui.QVTOEditorWatch"
+            targetID="#QvtoEditorContext">
+         <action
+               class="org.eclipse.m2m.internal.qvt.oml.debug.ui.actions.QVTOWatchAction"
+               label="%watch"
+               enablesFor="+"
+               icon="icons/watch_exp_enabled.gif"
+               id="org.eclipse.m2m.qvt.oml.debug.ui.actions.WatchAction"
+               menubarPath="additions">
+            <enablement>
+               <and>
+                  <systemProperty
+                        name="org.eclipse.m2m.qvt.oml.debug.debuggerActive"
+                        value="true"/>
+                  <objectClass name="org.eclipse.jface.text.ITextSelection"/>
+               </and>
+            </enablement>
+         </action>
+         <visibility>
+            <and>
+               <systemProperty
+                     name="org.eclipse.m2m.qvt.oml.debug.debuggerActive"
+                     value="true"/>
+               <objectClass name="org.eclipse.jface.text.ITextSelection"/>
+            </and>
+         </visibility>
+      </viewerContribution>
  
       <objectContribution
       		id="org.eclipse.m2m.qvt.oml.debug.ui.QVTOBreakpointObjectActions"
