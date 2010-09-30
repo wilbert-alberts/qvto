@@ -91,7 +91,7 @@ fi
 
 # define where to do all the work; start with a fresh folder each time
 writableBuildRoot="/home/data/httpd/download-staging.priv/modeling/m2m/qvtoml"
-if [[ -d ${writableBuildRoot} ]]; then rm -fr ${writableBuildRoot}; fi
+if [[ -d ${writableBuildRoot} ]]; then rm -fr ${writableBuildRoot}/*.*; fi
 
 # define required folders
 downloadsDir="${writableBuildRoot}/downloads"
