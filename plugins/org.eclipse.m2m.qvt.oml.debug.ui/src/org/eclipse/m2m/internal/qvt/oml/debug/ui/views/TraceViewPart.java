@@ -11,6 +11,7 @@
 package org.eclipse.m2m.internal.qvt.oml.debug.ui.views;
 
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.ui.AbstractDebugView;
 import org.eclipse.debug.ui.DebugUITools;
@@ -99,24 +100,30 @@ public class TraceViewPart extends AbstractDebugView implements IDebugContextLis
             if (firstElement == null) {
                 return;
             }
-            QVTOStackFrame qvtStackFrame = null;
+            
+            IDebugTarget debugTarget = null;
             if (firstElement instanceof QVTOThread) {
             	QVTOThread qvtThread = (QVTOThread) firstElement;
                 try {
                     IStackFrame[] stackFrames = qvtThread.getStackFrames();
-                    if (stackFrames.length == 0) {
+                    if (stackFrames.length == 0 
+                    		|| false == stackFrames[0] instanceof QVTOStackFrame) {
                     	return;
                     }
-					qvtStackFrame = (QVTOStackFrame) stackFrames[0];
+                    debugTarget = ((QVTOStackFrame) stackFrames[0]).getDebugTarget();
                 } catch (DebugException e) {
                 	QVTODebugCore.log(e);
                 }
             }
-			if (firstElement instanceof QVTOStackFrame) {
-				qvtStackFrame = (QVTOStackFrame) firstElement;
+            else if (firstElement instanceof QVTOStackFrame) {
+				debugTarget = ((QVTOStackFrame) firstElement).getDebugTarget();
 			}
-            if (qvtStackFrame != null) {
-            	QvtOperationalEvaluationEnv evalEnv = (QvtOperationalEvaluationEnv) qvtStackFrame.getDebugTarget().getAdapter(QvtOperationalEvaluationEnv.class);
+            else if (firstElement instanceof IDebugTarget) {
+				debugTarget = (IDebugTarget) firstElement;
+			}
+
+			if (debugTarget != null) {
+            	QvtOperationalEvaluationEnv evalEnv = (QvtOperationalEvaluationEnv) debugTarget.getAdapter(QvtOperationalEvaluationEnv.class);
             	if (evalEnv != null) {
 	                InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
 	                Trace trace = internEnv.getTraces();
