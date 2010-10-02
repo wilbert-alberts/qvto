@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugTarget;
@@ -129,6 +130,13 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		return new QVTOLocalValue(debugTarget, frameID, new String[] {expressionText}, lv, 
 				new UnitLocationExecutionContext(
 		        		fInterpreter.getEnvironment(), fInterpreter.getOperationalEvaluationEnv()));
+	}
+
+	public QvtOperationalEvaluationEnv getEvaluationEnv() {
+		if (fInterpreter == null) {
+			return null;
+		}
+		return fInterpreter.getOperationalEvaluationEnv();
 	}
 	
 	private VMResponse start() {
@@ -322,6 +330,5 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			}
 		}
 	}
-
 
 }
