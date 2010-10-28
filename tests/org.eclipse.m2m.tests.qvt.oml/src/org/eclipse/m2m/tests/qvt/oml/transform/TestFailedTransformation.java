@@ -17,7 +17,7 @@ public class TestFailedTransformation extends TestTransformation {
 
     public TestFailedTransformation(ModelTestData data) {
         super(data);
-        setName(TestQvtInterpreter.PREFIX + data.getName()); //$NON-NLS-1$
+        setName(TestQvtInterpreter.PREFIX + data.getName());
     }
 	
 	public TestFailedTransformation(String testName) {

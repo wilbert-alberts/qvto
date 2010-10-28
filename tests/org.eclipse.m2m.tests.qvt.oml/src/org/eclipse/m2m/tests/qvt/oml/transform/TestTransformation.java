@@ -259,6 +259,7 @@ public abstract class TestTransformation extends TestCase {
     	List<TargetUriData> targetData = new ArrayList<TargetUriData>(transf.getParameters().size());
     	List<URI> resultUris = new ArrayList<URI>(transf.getParameters().size());
     	
+    	int outExtentCount = 0;
     	Iterator<URI> itInUris = inUris.iterator();
 		for (TransformationParameter transfParam : transf.getParameters()) {
 			URI inUri = null;
@@ -271,14 +272,24 @@ public abstract class TestTransformation extends TestCase {
 				if (inUri == null) {
 			        CFile outFile = getModelExtentFile(eclipseFile, transfParam);	    			        
 			        inUri = URI.createURI(outFile.getFileStore().toURI().toString());
+			        ++outExtentCount;
 				}
 				targetData.add(new TargetUriData(TargetType.NEW_MODEL, inUri.toString(), null, false));
 				resultUris.add(inUri);
 			}
 		}
 
+		int inoutExtentCount = 0;
+		if (!inObjects.isEmpty()) {
+			inoutExtentCount = inObjects.get(0).getResourceSet().getResources().size();
+		}
+		
 		URI traceURI = URI.createFileURI(((EclipseResource) getTraceFile(eclipseFile)).getResource().getFullPath().toString());
 		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, traceURI.toString(), qvtContext);
+		
+		if (!inObjects.isEmpty()) {
+			assertEquals(inoutExtentCount+outExtentCount, inObjects.get(0).getResourceSet().getResources().size());
+		}
 		
 		transf.cleanup();    		
         return resultUris;

@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 public class AllCallAPITests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for org.eclipse.m2m.tests.qvt.oml.callapi");
+		TestSuite suite = new TestSuite("Test for org.eclipse.m2m.tests.qvt.oml.callapi"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
 		suite.addTestSuite(BasicModelExtentTest.class);
 		suite.addTestSuite(InvocationTest.class);

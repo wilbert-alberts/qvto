@@ -79,6 +79,8 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
+        		new FilesToFilesData("dicttype", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("transf_inheritance"), //$NON-NLS-1$
         		new FilesToFilesData("uml2_stereotypeApplication", Collections.singletonList("in.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
         		new FileToFileData("virtual_contextVsOverride"), //$NON-NLS-1$
@@ -308,6 +310,7 @@ public class TransformTests {
             
             // fqn access are not correctly patched 
             "importedInstances", "fqn_noncontextual", "fqnOperationCalls_271789", "fqnMainCalls_271987", "fqnMainCalls_272937", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            "transf_inheritance", //$NON-NLS-1$
             
             // reference not in required format: eSuperTypes = "#//NEW_Class1" instead of "//@eClassifiers.0" 
             "assigntonullowner", "resolveall", //$NON-NLS-1$ //$NON-NLS-2$

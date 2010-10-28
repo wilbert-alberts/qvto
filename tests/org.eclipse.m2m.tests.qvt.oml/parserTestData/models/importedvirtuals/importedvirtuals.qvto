@@ -111,8 +111,8 @@ query testOverrideLocalQuery() : Boolean {
 		checkImported2LocalQuery()
 	} = Sequence {
 		'importedvirtuals::localQuery',
-		'Imported::localQuery',
-		'Imported2::localQuery'
+		'importedvirtuals::localQuery',
+		'importedvirtuals::localQuery'
 	}
 }
 
