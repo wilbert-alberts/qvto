@@ -150,7 +150,7 @@ public class EvaluationUtil {
 		}
     }
     
-    static String formatLoggedElement(Object element) {
+    static Object formatLoggedElement(Object element) {
     	if(element instanceof ExceptionInstance) {
     		ExceptionInstance exception = (ExceptionInstance) element;    		
     		
@@ -162,7 +162,7 @@ public class EvaluationUtil {
 			return contents.toString(); 
     	}
     	
-    	return String.valueOf(element);
+    	return element;
     }
     
     static void checkCurrentStackDepth(QvtOperationalEvaluationEnv env) throws QvtStackOverFlowError {
