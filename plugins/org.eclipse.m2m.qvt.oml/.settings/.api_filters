@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component id="org.eclipse.m2m.qvt.oml" version="2">
+<resource path="META-INF/MANIFEST.MF">
+<filter id="927989779">
+<message_arguments>
+<message_argument value="3.1.0.qualifier"/>
+<message_argument value="org.eclipse.m2m.qvt.oml.cst.parser"/>
+</message_arguments>
+</filter>
+</resource>
 <resource path="_generated/org/eclipse/m2m/internal/qvt/oml/expressions/VisitableASTNode.java" type="org.eclipse.m2m.internal.qvt.oml.expressions.VisitableASTNode">
 <filter id="571473929">
 <message_arguments>
