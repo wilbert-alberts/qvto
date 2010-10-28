@@ -3,7 +3,6 @@
 !*** QVT features ***************************************************************************
 feature@org.eclipse.m2m.qvt.oml.sdk=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.sdk-feature
 feature@org.eclipse.m2m.qvt.oml=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.feature
-feature@org.eclipse.m2m.qvt.oml.common=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.common.feature
 feature@org.eclipse.m2m.qvt.oml.editor=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.editor.feature
 feature@org.eclipse.m2m.qvt.oml.runtime=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.runtime.feature
 feature@org.eclipse.m2m.qvt.oml.debug=v20100606-1530,:pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,,org.eclipse.m2m/org.eclipse.m2m.qvt.oml/features/org.eclipse.m2m.qvt.oml.debug.feature
