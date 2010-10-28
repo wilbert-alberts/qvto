@@ -20,10 +20,6 @@
    </license>
 
    <includes
-         id="org.eclipse.m2m.qvt.oml.common"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.m2m.qvt.oml"
          version="0.0.0"/>
 
@@ -41,10 +37,6 @@
 
    <includes
          id="org.eclipse.m2m.qvt.oml.doc"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.m2m.qvt.oml.common.source"
          version="0.0.0"/>
 
    <includes
