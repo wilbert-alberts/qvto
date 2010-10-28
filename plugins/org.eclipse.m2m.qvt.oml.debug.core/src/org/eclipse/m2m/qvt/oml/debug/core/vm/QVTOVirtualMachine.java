@@ -132,6 +132,9 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		        		fInterpreter.getEnvironment(), fInterpreter.getOperationalEvaluationEnv()));
 	}
 
+	/**
+	 * @since 1.1
+	 */
 	public QvtOperationalEvaluationEnv getEvaluationEnv() {
 		if (fInterpreter == null) {
 			return null;
