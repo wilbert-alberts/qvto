@@ -28,6 +28,7 @@ public class VMVariable implements Serializable {
 	public String name;
 	public String variableURI;
 	public Value value;
+	public Object valueObject;
 	public Value.Type type;
 	public int kind;
 	

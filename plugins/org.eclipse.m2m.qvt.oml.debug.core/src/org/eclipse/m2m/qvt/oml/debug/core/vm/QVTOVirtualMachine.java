@@ -16,10 +16,16 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.debug.core.model.IValue;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.DebugOptions;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugTarget;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTOLocalValue;
+import org.eclipse.m2m.qvt.oml.debug.core.QVTOLocalValue.LocalValue;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.BreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
@@ -36,6 +42,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMStartRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMTerminateEvent;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMVariableRequest;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest.ActionKind;
+import org.eclipse.ocl.utilities.ASTNode;
 
 public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		
@@ -103,6 +110,33 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		}
 		
 		return VMResponse.createOK();
+	}
+	
+	public IValue evaluate(String expressionText, QVTODebugTarget debugTarget, long frameID) throws CoreException {
+		if (fInterpreter == null) {
+			return null;
+		}
+
+		ASTNode astNode = fInterpreter.getCurrentLocation().getElement();
+        if (astNode == null) {
+            return null;
+        }
+        
+        ConditionChecker localChecker = new ConditionChecker(expressionText, astNode);
+        LocalValue lv = new LocalValue();
+        lv.valueObject = localChecker.evaluate(fInterpreter);
+        lv.valueType = localChecker.getConditionType();
+        
+		return new QVTOLocalValue(debugTarget, frameID, new String[] {expressionText}, lv, 
+				new UnitLocationExecutionContext(
+		        		fInterpreter.getEnvironment(), fInterpreter.getOperationalEvaluationEnv()));
+	}
+
+	public QvtOperationalEvaluationEnv getEvaluationEnv() {
+		if (fInterpreter == null) {
+			return null;
+		}
+		return fInterpreter.getOperationalEvaluationEnv();
 	}
 	
 	private VMResponse start() {
@@ -190,7 +224,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	private VMResponse handleValueDetailRequest(VMDetailRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		UnitLocationExecutionContext context = new UnitLocationExecutionContext(
-				fInterpreter, fInterpreter.getCurrentLocation());
+				fInterpreter.getEnvironment(), fInterpreter.getCurrentLocation().getEvalEnv());
 		String detail = VariableFinder.computeDetail(request.getVariableURI(), context);		
 		return new VMDetailResponse(detail != null ? detail : ""); //$NON-NLS-1$
 	}
@@ -198,7 +232,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	private VMResponse handleVariableRequest(VMVariableRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		UnitLocationExecutionContext context = new UnitLocationExecutionContext(
-				fInterpreter, fInterpreter.getCurrentLocation());
+				fInterpreter.getEnvironment(), fInterpreter.getCurrentLocation().getEvalEnv());
 		return VariableFinder.process(request, fInterpreter.getLocationStack(),
 				context);
 	}
@@ -278,7 +312,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 		}
 		
 		public VMRequest waitAndPopRequest(VMEvent suspend) throws InterruptedException {
-			// FIXME - should be locked to ensure noone can really send a request until
+			// FIXME - should be locked to ensure none can really send a request until
 			// we deliver the event
 			handleVMEvent(suspend);
 			
@@ -296,4 +330,5 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			}
 		}
 	}
+
 }

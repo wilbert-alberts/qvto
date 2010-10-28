@@ -56,7 +56,7 @@ public class ConditionChecker {
 		fTargetASTElement = targetASTElement;
 	}
 		
-	public boolean checkCondition(QvtOperationalEvaluationVisitorImpl mainEvaluator) throws CoreException {
+	public Object evaluate(QvtOperationalEvaluationVisitorImpl mainEvaluator) throws CoreException {
 		OCLExpression<EClassifier> condition = getConditionAST();
 		if (fConditionError != null) {
 			throw new CoreException(fConditionError);
@@ -69,13 +69,24 @@ public class ConditionChecker {
 				(QvtOperationalEnv) mainEvaluator.getEnvironment(), evalEnv);
 
 		try {
-			return Boolean.TRUE.equals(condition.accept(dedicatedVisitor));
+			return condition.accept(dedicatedVisitor);
 		} catch (Throwable e) {
 			throw new CoreException(QVTODebugCore.createError(
 					e.toString(), ERR_CODE_EVALUATION, e));
 		}
 	}
 
+	public boolean checkCondition(QvtOperationalEvaluationVisitorImpl mainEvaluator) throws CoreException {
+		return Boolean.TRUE.equals(evaluate(mainEvaluator));
+	}
+	
+	public EClassifier getConditionType() {
+		if (fConditionAST != null) { 
+			return fConditionAST.getType();
+		}
+		return null;
+	}
+	
 
     private ASTElementContextEnv getEnvironmentForASTElement() {
 		QvtOperationalEnvFactory factory = new QvtOperationalEnvFactory();
@@ -160,8 +171,9 @@ public class ConditionChecker {
             try {
 	            QvtOperationalVisitorCS visitor = new QvtOperationalVisitorCS(oclLexer, env, options);            
 	            ast = visitor.analyzeExpressionCS(conditionCS, env);
-	            if(ast == null || ast.getType() != env.getOCLStandardLibrary().getBoolean()) {
-	            	env.reportError("Boolean type condition required", conditionCS);
+	            if(ast == null) { // || ast.getType() != env.getOCLStandardLibrary().getBoolean()) {
+	            	//env.reportError("Boolean type condition required", conditionCS);
+	            	env.reportError("Invalid expression", conditionCS);
 	            }
             } catch (Throwable e) {
             	fConditionError = QVTODebugCore.createError("Failed to parse condition", ERR_CODE_COMPILATION,  e);

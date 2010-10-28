@@ -44,7 +44,7 @@ public class TransformationRunnerFactory {
 		}
 
 		List<URI> paramURIs = new ArrayList<URI>();
-		if(this.modelParamURI != null && !this.modelParamURI.isEmpty()) {
+		if(this.modelParamURI != null) {
 			for (String paramURIStr : this.modelParamURI) {
 				try {
 					paramURIs.add(toURI(paramURIStr, "model parameter"));
@@ -60,8 +60,6 @@ public class TransformationRunnerFactory {
 			throw new DiagnosticException(diagnostic);
 		}
 		
-		assert uri != null && paramURIs != null && !paramURIs.isEmpty();
-
 		EPackage.Registry registry = this.packageRegistry != null ? this.packageRegistry : EPackage.Registry.INSTANCE;
 		TransformationRunner runner = createRunner(uri, registry, paramURIs);
 		

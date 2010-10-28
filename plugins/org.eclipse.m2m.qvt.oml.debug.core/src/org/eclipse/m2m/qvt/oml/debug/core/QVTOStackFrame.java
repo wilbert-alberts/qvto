@@ -15,11 +15,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IRegisterGroup;
 import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
+import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMLocation;
@@ -191,6 +193,10 @@ public class QVTOStackFrame extends QVTODebugElement implements IStackFrame {
 		getThread().terminate();
 	}
 
+	public IValue evaluate(String expressionText) throws CoreException {
+		return ((QVTODebugTarget) getQVTODebugTarget()).evaluate(expressionText, fUnderlyingFrame.id);
+	}
+
 	VMStackFrame requestStackFrame() throws DebugException {
 		VMStackFrame frame = null;
 		
@@ -209,4 +215,5 @@ public class QVTOStackFrame extends QVTODebugElement implements IStackFrame {
 		
 		return frame;
 	}
+	
 }

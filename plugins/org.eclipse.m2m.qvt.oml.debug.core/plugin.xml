@@ -36,5 +36,11 @@
 			class="org.eclipse.m2m.qvt.oml.debug.core.srclookup.QVTOSourcePathComputer"
 			id="org.eclipse.m2m.qvt.oml.debug.srclookup.QVTOSourcePathComputer"/>
     </extension>
+
+    <extension point="org.eclipse.debug.core.watchExpressionDelegates">
+       <watchExpressionDelegate
+         	debugModel="org.eclipse.m2m.qvt.oml.debug"
+         	delegateClass="org.eclipse.m2m.qvt.oml.debug.core.QVTOWatchExpressionDelegate"/>
+    </extension>   
  
 </plugin>

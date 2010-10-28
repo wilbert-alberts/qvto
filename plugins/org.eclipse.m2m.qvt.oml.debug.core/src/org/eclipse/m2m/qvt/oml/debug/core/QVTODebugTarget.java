@@ -36,8 +36,11 @@ import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IMemoryBlock;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
+import org.eclipse.debug.core.model.IValue;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
+import org.eclipse.m2m.qvt.oml.debug.core.vm.QVTOVirtualMachine;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.VMEventListener;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMBreakpointRequest;
@@ -109,6 +112,7 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 
 		fMainThread = new QVTOThread(this);
 		fLaunch.addDebugTarget(this);
+		System.setProperty(QVTODebugCore.DEBUGGER_ACTIVE_PROPERTY, Boolean.TRUE.toString());		
 
 		try {
 			// wake up so far suspended VM
@@ -265,6 +269,7 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 		
 	protected void terminated() {
 		QVTODebugCore.TRACE.trace(DebugOptions.TARGET, "Debug target terminated"); //$NON-NLS-1$
+		System.setProperty(QVTODebugCore.DEBUGGER_ACTIVE_PROPERTY, Boolean.FALSE.toString());		
 
 		setStarting(false);
 		
@@ -548,7 +553,24 @@ public class QVTODebugTarget extends QVTODebugElement implements IQVTODebugTarge
 			}
 		}
 	}
-
+	
+	public IValue evaluate(String expressionText, long frameID) throws CoreException {
+		if (getVM() instanceof QVTOVirtualMachine) {
+			return ((QVTOVirtualMachine) getVM()).evaluate(expressionText, this, frameID);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (QvtOperationalEvaluationEnv.class == adapter) {
+			if (getVM() instanceof QVTOVirtualMachine) {
+				return ((QVTOVirtualMachine) getVM()).getEvaluationEnv();
+			}
+		}
+		return super.getAdapter(adapter);
+	}
+	
 	private class EventDispatchJob implements Runnable {
 
 		EventDispatchJob() {

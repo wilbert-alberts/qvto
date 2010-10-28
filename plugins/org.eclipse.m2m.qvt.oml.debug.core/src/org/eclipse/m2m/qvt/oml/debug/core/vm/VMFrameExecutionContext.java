@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 
-interface VMFrameExecutionContext {
+public interface VMFrameExecutionContext {
 	
 	EClassifier getOCLType(EStructuralFeature feature);
 	

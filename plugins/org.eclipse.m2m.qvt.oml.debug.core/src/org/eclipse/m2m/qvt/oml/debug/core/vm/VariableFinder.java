@@ -44,17 +44,20 @@ import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 
 public class VariableFinder {
 
-	private VMFrameExecutionContext fFeatureAccessor;
+	private final VMFrameExecutionContext fFeatureAccessor;
+	private final boolean fIsStoreValues;
 	private VMVariable fTargetVar;
 	private EClassifier fRootDeclaredType;
 	
+	
 
-	public VariableFinder(VMFrameExecutionContext featureAccessor) {
-		this.fFeatureAccessor = featureAccessor;
+	public VariableFinder(VMFrameExecutionContext featureAccessor, boolean isStoreValues) {
+		fFeatureAccessor = featureAccessor;
+		fIsStoreValues = isStoreValues;
 	}
 	
 	public static String computeDetail(URI variableURI, UnitLocationExecutionContext frameContext) {
-		VariableFinder finder = new VariableFinder(frameContext);
+		VariableFinder finder = new VariableFinder(frameContext, false);
 		String[] variablePath = getVariablePath(variableURI);
 		Object valueObject = finder.findStackObject(variablePath);
 		
@@ -82,7 +85,7 @@ public class VariableFinder {
 
 		String[] variablePath = getVariablePath(variableURI);
 
-		VariableFinder variableManager = new VariableFinder(frameContext);
+		VariableFinder variableManager = new VariableFinder(frameContext, false);
 		
 		List<VMVariable> variables = new ArrayList<VMVariable>();
 		variableManager.find(variablePath, request.includeChildVars, variables);
@@ -249,14 +252,16 @@ public class VariableFinder {
 	
 	
 	private VMVariable createVariable(String varName, int kind,
-			EClassifier declaredType, Object nextObj, String uri) {
+			EClassifier declaredType, Object varObj, String uri) {
 		VMVariable result = new VMVariable();
-		result.name = varName != null ? varName : "<null>";
+		result.name = String.valueOf(varName);
 		result.kind = kind;
 		result.variableURI = uri;
 
-		VariableFinder.setValueAndType(result, nextObj, declaredType,
-				this.fFeatureAccessor.getEvalEnv());
+		setValueAndType(result, varObj, declaredType, fFeatureAccessor.getEvalEnv());
+		if (fIsStoreValues) {
+			result.valueObject = varObj;
+		}
 		return result;
 	}
 
@@ -292,7 +297,7 @@ public class VariableFinder {
 		return URI.createHierarchicalURI(segments, null, null);
 	}
 	
-	private void collectChildVars(Object root, String[] parentPath, EClassifier containerType, List<VMVariable> result) {
+	public void collectChildVars(Object root, String[] parentPath, EClassifier containerType, List<VMVariable> result) {
 		String childPath[] = new String[parentPath.length + 1];
 		System.arraycopy(parentPath, 0, childPath, 0, parentPath.length);
 		
@@ -462,7 +467,7 @@ public class VariableFinder {
 		return result;
 	}
 
-	private static void setValueAndType(VMVariable variable, Object value,
+	public static void setValueAndType(VMVariable variable, Object value,
 			EClassifier optDeclaredType, QvtOperationalEvaluationEnv evalEnv) {
 		String declaredTypeName = (optDeclaredType != null) ? optDeclaredType
 				.getName() : null;
