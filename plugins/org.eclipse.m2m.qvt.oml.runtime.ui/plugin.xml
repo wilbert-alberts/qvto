@@ -111,7 +111,7 @@
             category="org.eclipse.m2m.qvt.oml.wizardCategory"
             class="org.eclipse.m2m.internal.qvt.oml.runtime.ui.ant.NewCompositeTransformationWizard"
             icon="icons/anttasks.gif"
-            id="com.borland.m2m.qvt.common.wizards.NewCompositeTransformationWizard"
+            id="org.eclipse.m2m.qvt.oml.runtime.ui.wizards.NewCompositeTransformationWizard"
             name="%transformationSetWizardName">
          <description>
          	%transformationSetWizardName.description
