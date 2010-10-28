@@ -32,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.IntermediatePropertyModelAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
@@ -54,12 +55,12 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 
 
@@ -501,21 +502,32 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
         	Collection<Object> currentValues = (Collection<Object>) owner.eGet(eStructuralFeature);        	
     		if(currentValues == null) {
             	CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) eStructuralFeature.getEType();    			
-    			currentValues = CollectionUtil.createNewCollection(collectionType.getKind());
+				currentValues = EvaluationUtil.createNewCollection(collectionType);
     			owner.eSet(eStructuralFeature, currentValues);        			
     		}
 
         	if(isReset) {
         		currentValues.clear();
         	}
-        	if(exprValue instanceof Collection) {
+        	
+        	if (exprValue instanceof Dictionary<?, ?> && currentValues instanceof Dictionary<?, ?>) {
+        		Dictionary<Object, Object> newVal = (Dictionary<Object, Object>) exprValue;
+        		for (Object nextKey : newVal.keys()) {
+        			Object nextValue = newVal.get(nextKey);
+        			//if (nextValue != getInvalidResult() && nextValue != null) {
+        				((Dictionary<Object, Object>) currentValues).put(nextKey, nextValue);
+        			//}
+				}
+        	}
+        	else if (exprValue instanceof Collection) {
         		Collection<Object> newVal = (Collection<Object>) exprValue;
         		for (Object nextElement : newVal) {
-        			if(nextElement != getInvalidResult() && nextElement != null) {
+        			if (nextElement != getInvalidResult() && nextElement != null) {
         				currentValues.add(nextElement);
         			}
 				}
-        	} else if(exprValue != getInvalidResult() && exprValue != null) {
+        	}
+        	else if (exprValue != getInvalidResult() && exprValue != null) {
         		currentValues.add(exprValue);
         	}
         	

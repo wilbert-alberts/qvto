@@ -105,7 +105,6 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
     private List<org.eclipse.ocl.ecore.Variable> myImplicitVars = new LinkedList<org.eclipse.ocl.ecore.Variable>();
 
     private QVTUMLReflection fQVUMLReflection;
-	private boolean fUsesLegacyImplicitImports = false;
 	private List<QvtEnvironmentBase> fByAccess;
 	private List<QvtEnvironmentBase> fByExtension;
 	private List<QvtEnvironmentBase> fAllExtendedModuleEnvs;	
@@ -426,26 +425,6 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		// reset cached all extended modules
 	}
 	
-	public final boolean usesImplicitExtendsImport() {
-		return fUsesLegacyImplicitImports;
-	}
-	/**
-	 * Support for legacy import without module usage declarations
-	 *  
-	 * @param importedEnv the imported environemts
-	 */
-	public final void addImplicitExtendsImport(QvtEnvironmentBase importedEnv) {
-		QvtEnvironmentBase rootEnv = getRootEnv();
-		if(rootEnv != this) {
-			// propagate to the top level parent
-			rootEnv.addImplicitExtendsImport(importedEnv);
-			return;
-		}
-
-		this.fUsesLegacyImplicitImports = true;
-		addImport(ImportKind.EXTENSION, importedEnv);
-	}
-
 	public final List<QvtEnvironmentBase> getImportsByAccess() {
 		QvtEnvironmentBase rootEnv = getRootEnv();
 		if(rootEnv != this) {
@@ -539,12 +518,10 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
         
         boolean isContextual = !(ownerType == definingModule);
         if(!isContextual) {
-        	if(!usesImplicitExtendsImport()) {
-        		EOperation overridden = findMatchingFromExtended(getModuleContextType(), operation);
-        		if(overridden != null) {
-        			operations.add(overridden);
-        		}
-        	}
+    		EOperation overridden = findMatchingFromExtended(getModuleContextType(), operation);
+    		if(overridden != null) {
+    			operations.add(overridden);
+    		}
         } else {        
         // collect fOperationsHolder additional fOperationsHolder defined for sub-types of the checked owner type,
         // Note: those from super-types are included by MDT OCL TypeUtil.getOperations(...);
@@ -595,7 +572,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 				if(ownerType == nextOwner || !isContextual) {
 					if(definingModule != next.getEContainingClass()) {
 						// we try to override operation only from extended modules
-						if(!usesImplicitExtendsImport() && isImportedByExtends(next)) {
+						if(isImportedByExtends(next)) {
 							result = new CollisionStatus(next, CollisionStatus.OVERRIDES);
 						}
 					} else {

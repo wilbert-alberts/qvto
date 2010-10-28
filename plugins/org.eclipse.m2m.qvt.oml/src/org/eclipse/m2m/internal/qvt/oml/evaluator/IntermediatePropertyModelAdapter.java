@@ -30,7 +30,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.ocl.util.CollectionUtil;
 
 /**
  * @author sboyko
@@ -82,7 +81,7 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
 		if (feature.getEType() instanceof CollectionType<?,?>) {
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) feature.getEType();
-			return CollectionUtil.createNewCollection(collectionType.getKind());
+			return EvaluationUtil.createNewCollection(collectionType);
 		}
     	
     	return null;

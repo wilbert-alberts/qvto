@@ -2297,9 +2297,19 @@ public class QvtOperationalVisitorCS
 	
 	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver) {
 		
-		EList<ModuleUsageCS> moduleUsages = parsedModuleCS.getHeaderCS().getModuleUsages();		
-		boolean hasModuleUsage = !moduleUsages.isEmpty();
-	    EMap<String, List<QvtOperationalModuleEnv>> importMap = new BasicEMap<String, List<QvtOperationalModuleEnv>>(5);
+		List<ModuleUsageCS> moduleUsages = new ArrayList<ModuleUsageCS>(parsedModuleCS.getHeaderCS().getModuleUsages());		
+		EMap<String, List<QvtOperationalModuleEnv>> importMap = new BasicEMap<String, List<QvtOperationalModuleEnv>>(5);
+		
+		Set<String> usedModulePathes = new HashSet<String>();
+		for (ModuleUsageCS moduleUsageCS : moduleUsages) {
+			for (ModuleRefCS moduleRefCS : moduleUsageCS.getModuleRefs()) {
+				PathNameCS modulePathNameCS = moduleRefCS.getPathNameCS();
+				if (modulePathNameCS != null) {
+					String modulePath = QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS);
+					usedModulePathes.add(modulePath);
+				}
+			}
+		}
 	    
 		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
 			if(nextImportedCS.getPathNameCS() == null) {
@@ -2308,10 +2318,38 @@ public class QvtOperationalVisitorCS
 			}
 
 			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
-			EList<SimpleNameCS> importedUnitQName = nextImportedCS.getPathNameCS().getSimpleNames();
+			PathNameCS importedUnitPathCS = nextImportedCS.getPathNameCS();
+			EList<SimpleNameCS> importedUnitQName = importedUnitPathCS.getSimpleNames();
 			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(QvtOperationalParserUtil.getSequenceOfNames(importedUnitQName));
 			
 			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
+				String importedUnitPath = QvtOperationalParserUtil.getStringRepresentation(importedUnitPathCS);
+				if (false == usedModulePathes.contains(importedUnitPath)) {
+					// we might have duplicates in imports, so avoid exceptions in environments
+					usedModulePathes.add(importedUnitPath);
+					
+					// process imports here only in case of the legacy implicit import by extension, 
+					// pass the responsibility to module usage analysis						
+					ModuleUsageCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleUsageCS();
+					result.setImportKind(ImportKindEnum.EXTENSION);
+	
+					PathNameCS pathNameCS = CSTFactory.eINSTANCE.createPathNameCS();
+					for (SimpleNameCS simpleNameCS : importedUnitPathCS.getSimpleNames()) {
+						SimpleNameCS copyCS = CSTFactory.eINSTANCE.createSimpleNameCS();
+						copyCS.setType(simpleNameCS.getType());
+						copyCS.setValue(simpleNameCS.getValue());
+						pathNameCS.getSimpleNames().add(copyCS);
+					}
+					
+					ModuleRefCS moduleRefCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleRefCS();
+					moduleRefCS.setPathNameCS(pathNameCS);
+					moduleRefCS.setStartOffset(importedUnitPathCS.getStartOffset());
+					moduleRefCS.setEndOffset(importedUnitPathCS.getEndOffset());
+					result.getModuleRefs().add(moduleRefCS);
+					
+					moduleUsages.add(result);
+				}
+
 				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
 					URI sourceURI = getSourceURI(nextImportedEnv);
 					nextImportedCS.setAst(sourceURI);
@@ -2321,31 +2359,6 @@ public class QvtOperationalVisitorCS
 					if(importedModule == null) {
 						// nothing to import in, no module was successfully parsed
 						continue;
-					}
-					
-					// process imports here only in case of the legacy implicit import by extension, 
-					// otherwise pass the responsibility to module usage analysis						
-					if(!hasModuleUsage) {						
-						if(!env.getImportsByExtends().contains(nextImportedEnv)) {
-							// we might have duplicates in imports, so avoid exceptions in environments
-							env.addImplicitExtendsImport(nextImportedEnv);
-						}
-																					
-						ModuleImport moduleImport = ExpressionsFactory.eINSTANCE.createModuleImport();					
-						moduleImport.setImportedModule(importedModule);
-						moduleImport.setKind(ImportKind.EXTENSION);
-						moduleImport.setStartPosition(nextImportedCS.getStartOffset());
-						moduleImport.setEndPosition(nextImportedCS.getEndOffset());
-												
-						module.getModuleImport().add(moduleImport);
-						
-						if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
-							validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
-						}					
-						
-						if(myCompilerOptions.isGenerateCompletionData()) {
-							ASTBindingHelper.createCST2ASTBinding(nextImportedCS, moduleImport);
-						}
 					}
 				}
 				
@@ -2375,63 +2388,79 @@ public class QvtOperationalVisitorCS
     			continue;
     		}
     		
-    		EList<SimpleNameCS> qname = modulePathNameCS.getSimpleNames();    		
-    		if(qname.size() == 1) {
-    			String moduleName = qname.get(0).getValue();
-    			for (String unitQName : importMap.keySet()) {
-    				List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(unitQName);
-    				
-    				for (QvtOperationalModuleEnv nextModuleEnv : moduleEnvs) {
-						Module nextImportedModule = nextModuleEnv.getModuleContextType();
-					
-						if(nextImportedModule != null && moduleName.equals(nextImportedModule.getName())) {
-							List<ModelType> refereceSignatureModelTypes = new ArrayList<ModelType>(5);							
-							EList<ParameterDeclarationCS> signatureParams = moduleRefCS.getParameters();
-							if(signatureParams.isEmpty()) {
-								// be tolerant, we are not specific about the model types, select only by name
-								resolvedModuleEnvs.add(nextModuleEnv);
-								continue;
-							}
-							
-							for (ParameterDeclarationCS nextParamCS : signatureParams) {
-								TypeSpecCS nextTypeCS = nextParamCS.getTypeSpecCS();
-								if(nextTypeCS != null && nextTypeCS.getTypeCS() instanceof PathNameCS) {
-									PathNameCS modelTypeCS = (PathNameCS) nextTypeCS.getTypeCS();
- 									EClassifier modelType = modelTypeCS.getSimpleNames().isEmpty() ? null : env.getModelType(modelTypeCS.getSimpleNames().get(0).getValue());
- 									if(modelType instanceof ModelType) {
- 										refereceSignatureModelTypes.add((ModelType) modelType);
- 									}
-								}
-							}
+    		String moduleName = QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS.getSimpleNames(), "."); //$NON-NLS-1$
+			List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(moduleName);
+			
+			// backward compatibility on using short module name as module reference 
+			if (moduleEnvs == null && modulePathNameCS.getSimpleNames().size() == 1) {
+	    		moduleName = modulePathNameCS.getSimpleNames().get(0).getValue();
 
-							List<ModelType> importedSignatureTypes;
-							if(nextImportedModule instanceof OperationalTransformation) {
-								OperationalTransformation ot = (OperationalTransformation) nextImportedModule;
-								importedSignatureTypes = QvtOperationalUtil.collectValidModelParamaterTypes(ot);
-							} else {
-								// the only place where a library can declare its signature
-								importedSignatureTypes = nextImportedModule.getUsedModelType();								
-							}
-							
-							if(refereceSignatureModelTypes.size() == importedSignatureTypes.size()) {
-								boolean compatible = true;
-								for (int i = 0; i < refereceSignatureModelTypes.size(); i++) {
-									if(!QvtOperationalUtil.isCompatibleModelType(
-										refereceSignatureModelTypes.get(i), importedSignatureTypes.get(i))) {
-										compatible = false;
-										break;
-									}
-								}
-								
-								if(compatible) {
-									resolvedModuleEnvs.add(nextModuleEnv);
-								}
+    			done:
+    			for (String unitQName : importMap.keySet()) {
+    				List<QvtOperationalModuleEnv> localModuleEnvs = importMap.get(unitQName);
+    				
+    				for (QvtOperationalModuleEnv nextModuleEnv : localModuleEnvs) {
+						Module nextImportedModule = nextModuleEnv.getModuleContextType();
+						if (nextImportedModule != null && moduleName.equals(nextImportedModule.getName())) {
+							moduleEnvs = localModuleEnvs;
+							break done;
+						}
+    				}
+    			}
+			}
+			if (moduleEnvs == null) {
+				moduleEnvs = Collections.emptyList();
+			}
+			
+			for (QvtOperationalModuleEnv nextModuleEnv : moduleEnvs) {
+				Module nextImportedModule = nextModuleEnv.getModuleContextType();
+			
+				if(nextImportedModule != null) {
+					List<ModelType> refereceSignatureModelTypes = new ArrayList<ModelType>(5);							
+					EList<ParameterDeclarationCS> signatureParams = moduleRefCS.getParameters();
+					if(signatureParams.isEmpty()) {
+						// be tolerant, we are not specific about the model types, select only by name
+						resolvedModuleEnvs.add(nextModuleEnv);
+						continue;
+					}
+					
+					for (ParameterDeclarationCS nextParamCS : signatureParams) {
+						TypeSpecCS nextTypeCS = nextParamCS.getTypeSpecCS();
+						if(nextTypeCS != null && nextTypeCS.getTypeCS() instanceof PathNameCS) {
+							PathNameCS modelTypeCS = (PathNameCS) nextTypeCS.getTypeCS();
+							EClassifier modelType = modelTypeCS.getSimpleNames().isEmpty() ? null : env.getModelType(modelTypeCS.getSimpleNames().get(0).getValue());
+							if(modelType instanceof ModelType) {
+								refereceSignatureModelTypes.add((ModelType) modelType);
 							}
 						}
 					}
+
+					List<ModelType> importedSignatureTypes;
+					if(nextImportedModule instanceof OperationalTransformation) {
+						OperationalTransformation ot = (OperationalTransformation) nextImportedModule;
+						importedSignatureTypes = QvtOperationalUtil.collectValidModelParamaterTypes(ot);
+					} else {
+						// the only place where a library can declare its signature
+						importedSignatureTypes = nextImportedModule.getUsedModelType();								
+					}
+					
+					if(refereceSignatureModelTypes.size() == importedSignatureTypes.size()) {
+						boolean compatible = true;
+						for (int i = 0; i < refereceSignatureModelTypes.size(); i++) {
+							if(!QvtOperationalUtil.isCompatibleModelType(
+								refereceSignatureModelTypes.get(i), importedSignatureTypes.get(i))) {
+								compatible = false;
+								break;
+							}
+						}
+						
+						if(compatible) {
+							resolvedModuleEnvs.add(nextModuleEnv);
+						}
+					}
 				}
-    		}
-    		    		
+			}
+			
     		int matchCount = resolvedModuleEnvs.size();
 			switch(matchCount) {			
 			case 1:
@@ -2578,13 +2607,6 @@ public class QvtOperationalVisitorCS
 			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfRefineNotSupported,
 					new Object[] { }), headerCS.getTransformationRefineCS());
 		}
-		if (!headerCS.getModuleUsages().isEmpty()) {
-// supported now			
-//			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfUsagesNotSupported,
-//					new Object[] { }), 
-//					headerCS.getModuleUsages().get(0).getStartOffset(),
-//					headerCS.getModuleUsages().get(headerCS.getModuleUsages().size()-1).getEndOffset());
-		}		
 	}
 
     protected void visitOperationalTransformationSignature(TransformationHeaderCS headerCS,

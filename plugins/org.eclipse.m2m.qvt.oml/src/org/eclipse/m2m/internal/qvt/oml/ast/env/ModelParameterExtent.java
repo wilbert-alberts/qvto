@@ -212,6 +212,10 @@ public class ModelParameterExtent {
 			}
 		}
 		
+		if (myInMemoryResource != null && myInMemoryResource.getResourceSet() != null) {
+			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);			
+		}
+		
 		return new ExtentContents(initialObjects, allRootObjects);
 	}
 		
