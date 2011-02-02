@@ -360,7 +360,7 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 		
 		public EvalEnvImpl(NonTransformationExecutionContext execCtx, 
 				EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
-			super(parent);
+			super(parent == null ? new EcoreEvaluationEnvironment((EcoreEnvironmentFactory) null) : parent);
 			fExecCtx = execCtx;
 		}
 		
