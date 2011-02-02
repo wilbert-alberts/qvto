@@ -872,7 +872,7 @@ final class CustomOclValidationVisitor extends
         return (myUml != null) && myUml.isStatic(feature);
     }
 
-	private Boolean visitFeatureCallExp(FeatureCallExp<EClassifier> exp) {
+    public Boolean visitFeatureCallExp(FeatureCallExp<EClassifier> exp) {
 		if (exp.isMarkedPre()) {
 			// check for a postcondition constraint
 			if (!myEnv.isInPostcondition(exp)) {
