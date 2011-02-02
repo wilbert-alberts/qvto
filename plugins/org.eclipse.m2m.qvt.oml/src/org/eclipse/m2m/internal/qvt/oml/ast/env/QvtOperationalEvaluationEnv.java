@@ -57,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.types.AnyType;
@@ -70,7 +71,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public static final int MAX_STACK_DEPTH = 300;
 	
 	protected QvtOperationalEvaluationEnv(IContext context, QvtOperationalEvaluationEnv parent) {
-		super(parent);
+		super(parent == null ? new EcoreEvaluationEnvironment((EcoreEnvironmentFactory)null) : parent);
 		if(parent == null) {
 			myRootEnv = this;
 			myInternal = new RootInternal(context);
@@ -201,7 +202,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	@Override
 	public QvtOperationalEvaluationEnv getParent() {
-		return (QvtOperationalEvaluationEnv) super.getParent();
+		return super.getParent() instanceof QvtOperationalEvaluationEnv ? 
+				(QvtOperationalEvaluationEnv) super.getParent() : null;
 	}
 
     /**
