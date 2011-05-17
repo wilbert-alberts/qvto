@@ -10,10 +10,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
-  <eClassifiers xsi:type="ecore:EClass" name="fail"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
-  <eClassifiers xsi:type="ecore:EClass" name="fail"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
@@ -24,8 +20,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
-  <eClassifiers xsi:type="ecore:EClass" name="fail"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
   <eClassifiers xsi:type="ecore:EClass" name="ok"/>
-  <eClassifiers xsi:type="ecore:EClass" name="fail"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ok"/>
 </ecore:EPackage>
