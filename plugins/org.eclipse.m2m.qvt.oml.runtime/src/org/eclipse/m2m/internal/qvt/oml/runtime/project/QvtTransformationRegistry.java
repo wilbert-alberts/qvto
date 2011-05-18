@@ -26,10 +26,6 @@ public class QvtTransformationRegistry extends TransformationRegistry {
         return ourInstance;
     }
 
-    public QvtCompiledTransformation getTransformationById(final String id) {
-        return (QvtCompiledTransformation)getSingleTransformationById(id);
-    }
-    
     @Override
 	protected CompiledTransformation makeTransformation(IConfigurationElement element) throws MdaException {
         String namespace = element.getNamespaceIdentifier();
