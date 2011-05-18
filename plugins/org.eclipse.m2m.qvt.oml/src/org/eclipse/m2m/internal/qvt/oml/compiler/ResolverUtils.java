@@ -156,33 +156,6 @@ public class ResolverUtils {
 		return qualifiedName.split("\\."); //$NON-NLS-1$    	
     }	
 	
-	public static UnitProxy createUnitProxy(String qualifiedName, URI uri, final String contents, final UnitResolver resolver) {
-		String[] segments = getNameSegments(qualifiedName);
-		String namespace = null;
-		if(segments.length > 1) {
-			namespace = toQualifiedName(segments, 0, segments.length - 2);
-		}
-		
-		String name = segments[segments.length - 1];
-		
-		return new UnitProxy(namespace, name, uri) {
-			@Override
-			public UnitContents getContents() throws IOException {
-				return createCSTContents(contents);
-			}
-			
-			@Override
-			public int getContentType() {			
-				return TYPE_CST_STREAM;
-			}
-			
-			@Override
-			public UnitResolver getResolver() {			
-				return resolver;
-			}
-		};
-	}
-	
 	public static String toNamespaceRelativeUnitFilePath(String qualifiedName) {
 		return qualifiedName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 	}	

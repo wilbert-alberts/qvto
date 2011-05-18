@@ -35,6 +35,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
 import org.eclipse.ocl.AbstractTypeResolver;
 import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.TypeUtil;
@@ -150,7 +151,14 @@ class BasicTypeResolverImpl
 							getEnvironment(),
 							type.getElementType(),
 							elementType) == UMLReflection.SAME_TYPE)) {
+					if (elementType instanceof AnyType<?> && type.getElementType() instanceof AnyType<?>) {
+						if (((AnyType<?>)elementType).getName().equals(((AnyType<?>)type.getElementType()).getName())) {
+							return type;
+						}
+					}
+					else {
 						return type;
+					}
 				}
 	        }
 		}

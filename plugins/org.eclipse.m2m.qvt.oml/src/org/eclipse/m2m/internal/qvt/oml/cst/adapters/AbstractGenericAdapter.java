@@ -35,11 +35,4 @@ public abstract class AbstractGenericAdapter<T> implements Adapter {
         myTarget = newTarget;
     }
 
-    public T getObject() {
-        return myObject;
-    }
-
-    public void setObject(T object) {
-        myObject = object;
-    }
 }

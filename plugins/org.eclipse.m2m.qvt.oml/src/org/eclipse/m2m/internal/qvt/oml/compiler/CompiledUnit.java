@@ -246,10 +246,6 @@ public class CompiledUnit {
 		this.fImports = imports; 
 	}
 	
-	List<String> getQualifiedName() {
-		return fQname;
-	}	
-	
 	public String getName() {
 		return fQname.get(fQname.size() - 1);
 	}

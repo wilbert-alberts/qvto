@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -166,9 +168,14 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		if(fCtx2OperationMap == null) {
 			return;
 		}
+		List<ImperativeOperation> operList = fCtx2OperationMap.get(context);
+		if(operList != null) {
+			result.addAll(operList);
+			return;
+		}
 		for (EClassifier ctx : fCtx2OperationMap.keySet()) {
 			if (TypeUtil.exactTypeMatch(fOwner, ctx, context)) {
-				List<ImperativeOperation> operList = fCtx2OperationMap.get(ctx);
+				operList = fCtx2OperationMap.get(ctx);
 				if(operList != null) {
 					result.addAll(operList);
 					return;
@@ -243,7 +250,7 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		
 		if(operation instanceof ImperativeOperation) {
 			if(fCtx2OperationMap == null) {
-				fCtx2OperationMap = new HashMap<EClassifier, List<ImperativeOperation>>();
+				fCtx2OperationMap = new LinkedHashMap<EClassifier, List<ImperativeOperation>>();
 			}
 			List<ImperativeOperation> operList = fCtx2OperationMap.get(owner);
 			if(operList == null) {
@@ -294,7 +301,7 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 	
 	private void addAdditionalType(EClassifier type) {
 		if(fAdditionalTypes == null) {
-			fAdditionalTypes = new HashSet<EClassifier>();
+			fAdditionalTypes = new LinkedHashSet<EClassifier>();
 		}
 
 		fAdditionalTypes.add(type);

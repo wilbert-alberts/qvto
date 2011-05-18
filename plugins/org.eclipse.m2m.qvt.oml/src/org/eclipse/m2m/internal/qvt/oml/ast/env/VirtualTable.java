@@ -62,27 +62,6 @@ public abstract class VirtualTable implements IVirtualOperationTable {
 		}
 	}
 	
-	public void addOperationInModule(EOperation operation, Module exposeToCallerFrom) {
-		if(operation == null) {
-			throw new IllegalArgumentException();
-		}
-		
-		if(fModule2OperationsMap == null) {
-			fModule2OperationsMap = new HashMap<Module, List<EOperation>>();
-		}
-		
-		
-		List<EOperation> operations = fModule2OperationsMap.get(exposeToCallerFrom);
-		if(operations == null) {
-			operations = new LinkedList<EOperation>();
-			fModule2OperationsMap.put(exposeToCallerFrom, operations);
-		}
-		
-		if(!operations.contains(operation)) {
-			operations.add(operation);
-		}
-	}
-
 	@SuppressWarnings("unchecked")	
 	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, InternalEvaluationEnv evalEnv) {
 		return lookupActualOperation(actualContextType, env, null, evalEnv);
@@ -136,23 +115,6 @@ public abstract class VirtualTable implements IVirtualOperationTable {
 		return null;
 	}
 
-	public void merge(VirtualTable another) {
-		for (EOperation nextOperation : another.getOperations()) {
-			this.addOperation(nextOperation);
-		}
-		
-		if(another.fModule2OperationsMap != null) {
-			for (Module nextModule : another.fModule2OperationsMap.keySet()) {
-				List<EOperation> operations = another.fModule2OperationsMap.get(nextModule);
-				if(operations != null) {
-					for (EOperation nextOperation : operations) {
-						this.addOperationInModule(nextOperation, nextModule);						
-					}
-				}
-			}
-		}
-	}	
-	
 	private List<EOperation> getModuleScopeOperations(Module module) {
 		if(module == null || fModule2OperationsMap == null || fModule2OperationsMap.containsKey(module) == false) {
 			return Collections.emptyList();

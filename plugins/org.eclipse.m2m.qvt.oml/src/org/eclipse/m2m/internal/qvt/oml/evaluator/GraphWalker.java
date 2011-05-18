@@ -118,20 +118,6 @@ public class GraphWalker {
         return new Traverser().walkDepthFirst(root, visited, processor);
     }
     
-    public Object[] findFirstCycle(Object root) {
-        try {
-            walkDepthFirst(root, new VertexProcessor() {
-                public boolean process(Object node) {
-                    return false;
-                }});
-            
-            return null;
-        }
-        catch (CycleException e) {
-            return new Object[] {e.getFrom(), e.getTo()};
-        }
-    }
-	
 	public int getMinimumDistance(Object source, Object dest, int weight) {
 		Map<ObjectPair, Integer> pathToWeight = new HashMap<ObjectPair, Integer>();
 		getMinDistanceImpl(source, pathToWeight, weight);
