@@ -41,31 +41,6 @@ public class ExtendedEmfUtil {
 		}
     }
     
-    public static void saveModel(Resource extent, CFile file) throws MdaException {
-    	Map<?,?> options = EmfUtil.DEFAULT_SAVE_OPTIONS;
-        try {
-        	URI uri = URI.createURI(file.getFileStore().toURI().toString());
-			EmfUtil.saveModel(extent, uri, options);
-		} catch (EmfException e) {
-			throw new MdaException(e);
-		} catch (IOException e) {
-			throw new MdaException(e);
-		} catch (Exception e) {
-            throw new MdaException(NLS.bind(Messages.InvalidFilePath, new Object[] {file}), e);
-		}
-        
-        try {
-            file.refresh();
-        } 
-        catch (Exception e) {
-        	throw new MdaException(NLS.bind(Messages.InvalidFilePath, new Object[] {file}), e);
-        }
-    }
-
-    public static void saveModel(EObject eObject, CFile file) throws MdaException {
-        saveModel(eObject, file, EmfUtil.DEFAULT_SAVE_OPTIONS);
-    }
-
     public static void saveModel(EObject eObject, CFile file, Map<?,?> options) throws MdaException {
         try {
         	URI uri = URI.createURI(file.getFileStore().toURI().toString());
