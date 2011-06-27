@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -241,13 +242,19 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
            	    	} else {
            	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
 
-           	    		//outExtent.getContents().retainAll(essentialRootElements);
-           	    		if (!essentialRootElements.isEmpty()) {
-           	    			EObject firstElem = essentialRootElements.iterator().next();
-           	    			ModelContent resolvedContent = new ModelContent(outExtent.getContents()).getResolvedContent(firstElem);
-               	    		essentialRootElements.removeAll(resolvedContent.getContent());
+           	    		if (essentialRootElements.isEmpty()) {
+           	    			outExtent.getContents().clear();
            	    		}
-           	    		outExtent.getContents().addAll(essentialRootElements);
+           	    		else if (outExtent.getContents().isEmpty()) {
+               	    		outExtent.getContents().addAll(essentialRootElements);
+           	    		}
+           	    		else {
+           	    			Set<EObject> resolvedRootElements = getResolvedContent(essentialRootElements, outExtent.getContents().get(0));
+           	    			
+               	    		outExtent.getContents().retainAll(resolvedRootElements);
+               	    		resolvedRootElements.removeAll(outExtent.getContents());
+               	    		outExtent.getContents().addAll(resolvedRootElements);
+           	    		}
            	    	}
            	    	
         			EmfUtil.saveModel(outExtent, modelUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
@@ -311,6 +318,20 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.refresh(outUri);
     }
 
+	private static Set<EObject> getResolvedContent(Collection<EObject> content, EObject metamodel) {
+		Set<EObject> resolvedObjs = new LinkedHashSet<EObject>(content.size());
+		for (EObject obj : content) {
+			EObject resolved = null;
+			try {
+				resolved = EmfUtil.resolveSource(obj, metamodel);
+			}
+			catch (Exception ex) {				
+			}
+			resolvedObjs.add(resolved != null ? resolved : obj);
+		}
+		return resolvedObjs;
+	}
+    
     private static Set<EObject> getEssentialRootElements(List<EObject> allRootElements) {
     	Set<EObject> roots = new LinkedHashSet<EObject>();
     	for (EObject e : allRootElements) {
