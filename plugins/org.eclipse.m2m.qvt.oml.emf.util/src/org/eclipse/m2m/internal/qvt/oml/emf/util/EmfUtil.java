@@ -132,7 +132,10 @@ public class EmfUtil {
         	ResourceSet inRS = in.eResource() != null ? in.eResource().getResourceSet() : null;
         	if (inputType.eResource().getResourceSet() != inRS
         			&& inputType.eResource().getResourceSet() != null) {
-        		return inputType.eResource().getResourceSet().getEObject(EcoreUtil.getURI(in), true);
+        		URI uri = EcoreUtil.getURI(in);
+        		if (uri != null && !"#//".equals(uri.toString())) { //$NON-NLS-1$
+        			return inputType.eResource().getResourceSet().getEObject(uri, true);
+        		}
         	}
         }
         return in;
