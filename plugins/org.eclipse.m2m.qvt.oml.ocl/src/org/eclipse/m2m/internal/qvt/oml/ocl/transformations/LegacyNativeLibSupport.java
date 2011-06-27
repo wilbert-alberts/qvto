@@ -33,8 +33,11 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.ocl.expressions.ExpressionsFactory;
+import org.eclipse.ocl.expressions.TypeExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.TypeUtil;
+import org.eclipse.ocl.utilities.TypedElement;
 
 /**
  * This class facilitates registration and invocation of legacy java native
@@ -151,12 +154,20 @@ public class LegacyNativeLibSupport {
 	private static EOperation defineOperation(QvtOperationalEnv env, LibraryOperation libOperation, 
 			EClassifier contextType, EClassifier returnType, EClassifier... paramTypes) {
 		
-		List<Variable<EClassifier, EParameter>> stringArgList = new ArrayList<Variable<EClassifier, EParameter>>();
+		List<TypedElement<EClassifier>> stringArgList = new ArrayList<TypedElement<EClassifier>>();
 		for (EClassifier cls : paramTypes) {
-			Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
-			stringVariable.setName(cls.getName());
-			stringVariable.setType(cls);
-			stringArgList.add(stringVariable);
+			if (cls instanceof TypeType<?, ?>) {
+				TypeExp<EClassifier> typeExp = ExpressionsFactory.eINSTANCE.createTypeExp();
+				typeExp.setName(cls.getName());
+				typeExp.setType(cls);
+				stringArgList.add(typeExp);
+			}
+			else {
+				Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
+				stringVariable.setName(cls.getName());
+				stringVariable.setType(cls);
+				stringArgList.add(stringVariable);
+			}
 		}
 		
 		String opName = libOperation.getName();
