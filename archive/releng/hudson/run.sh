@@ -121,7 +121,7 @@ ln -s ${cvsProjectBaseDir}/org.eclipse.releng.basebuilder ${writableBuildRoot}/
 ln -s ${cvsProjectBaseDir}/org.eclipse.dash.common.releng ${writableBuildRoot}/
 
 # symlink 3rdPartyJars (reuse existing content on build.eclipse.org for ant-contrib.jar, etc.)
-ln -s ${thirdPartyJarsDir} ${writableBuildRoot}/
+if [[ ! -d ${thirdPartyJarsDir} ]]; then ln -s ${thirdPartyJarsDir} ${writableBuildRoot}/; fi
 thirdPartyJarsDir="${writableBuildRoot}/3rdPartyJars"
 
 # clean up any *-SNAPSHOT.zip files in ${downloadsDir}
