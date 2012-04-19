@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EFactory;
@@ -216,52 +215,6 @@ public class MetamodelRegistry {
                 
         return metamodels;
 	}	
-	
-    public IMetamodelDesc[] getMetamodelDesc(List<String> packageName) throws EmfException {
-		final List<EPackage> metamodels = new UniqueEList<EPackage>(1);
-		
-        for (IMetamodelDesc d: myMetamodelDescs.values()) {
-        	EPackage pack = d.getModel();
-        	if (pack == null || pack.getESuperPackage() != null) {
-        		continue;
-        	}
-        	EPackage lookupPackage = lookupPackage(pack, packageName);
-        	if (lookupPackage != null) {
-        		metamodels.add(lookupPackage);
-        	}
-        }
-        
-        if (metamodels.isEmpty()) {
-        	throw new EmfException(NLS.bind(Messages.MetamodelRegistry_0,
-        			packageName, myMetamodelDescs.values()));
-        }
-        
-        IMetamodelDesc[] result = new IMetamodelDesc[metamodels.size()];
-        int pos = 0;
-        for (final EPackage nextMetamodel : metamodels) {
-        	result[pos++] = new IMetamodelDesc() {
-
-			public String getId() {
-				return nextMetamodel.getNsURI();
-			}
-
-			public Diagnostic getLoadStatus() {
-				return Diagnostic.OK_INSTANCE;
-			}
-
-			public EPackage getModel() {
-				return nextMetamodel;
-			}
-
-			public boolean isLoaded() {
-				return true;
-			}
-        	
-        };
-        }
-        
-        return result;
-	}
 	
 	public static EPackage lookupPackage(EPackage rootPackage, List<String> path) {
 		EPackage.Registry registry = new EPackageRegistryImpl();
