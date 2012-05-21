@@ -190,14 +190,14 @@ public class StringLibrary {
         if (self == null || str == null) {
             return INDEX_NOT_FOUND;
         }
-        return new Integer(self.lastIndexOf(str));
+        return new Integer(self.lastIndexOf(str)+1);
     }
 
     public Integer lastIndexOf(String self, String str, Integer fromIndex) {
         if (self == null || str == null || fromIndex == null) {
             return INDEX_NOT_FOUND;
         }
-        return new Integer(self.lastIndexOf(str, fromIndex.intValue()));
+        return new Integer(self.lastIndexOf(str, fromIndex.intValue())+1);
     }
 
     public String trim(String self) {
