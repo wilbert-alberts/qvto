@@ -181,12 +181,26 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		// FIXME - workaround for a issue of multiple typle type instances, possibly coming from 
 		// imported modules. The super impl. looks for the property by feature instance, do it
 		// by name here to avoid lookup failure, IllegalArgExc...
-		if(target instanceof Tuple<?, ?> && target instanceof EObject) {
-            EObject etarget = (EObject) target;
-            resolvedProperty = etarget.eClass().getEStructuralFeature(property.getName());
-            if(resolvedProperty == null) { 
-            	return null;
-            }
+		if(target instanceof Tuple<?, ?>) {
+			if (target instanceof EObject) {
+	            EObject etarget = (EObject) target;
+	            resolvedProperty = etarget.eClass().getEStructuralFeature(property.getName());
+	            if(resolvedProperty == null) { 
+	            	return null;
+	            }
+			}
+			else {
+				resolvedProperty = null;
+				for (EStructuralFeature feature : ((Tuple<EOperation, EStructuralFeature>) target).getTupleType().oclProperties()) {
+					if (property.getName().equals(feature.getName())) {
+						resolvedProperty = feature;
+						break;
+					}
+				}
+	            if(resolvedProperty == null) { 
+	            	return null;
+	            }
+			}
 		}
 		else if(property.getEType() instanceof CollectionType<?, ?> && target instanceof EObject) {
 			// module property of direct OCL collection type => override the super impl which coerce the result value 

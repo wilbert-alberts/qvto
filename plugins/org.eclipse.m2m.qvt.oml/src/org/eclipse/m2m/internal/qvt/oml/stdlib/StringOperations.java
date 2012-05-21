@@ -35,7 +35,7 @@ public class StringOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {
 		OCLStandardLibrary<EClassifier> oclStdLib = getStdlib().getEnvironment().getOCLStandardLibrary();		
 		return new OperationProvider[] {
-			new OperationProvider(STRING_CONCAT, PredefinedType.PLUS_NAME, oclStdLib.getString(), oclStdLib.getString()),
+			//new OperationProvider(STRING_CONCAT, PredefinedType.PLUS_NAME, oclStdLib.getString(), oclStdLib.getString()),
 			new OperationProvider(ADD_SUFFIX_NUMBER, ADD_SUFFIX_NUMBER_NAME, oclStdLib.getString()),
 			new OperationProvider(AS_BOOLEAN, AS_BOOLEAN_NAME, oclStdLib.getBoolean()),			
 			new OperationProvider(AS_FLOAT, AS_FLOAT_NAME, oclStdLib.getReal()),
@@ -73,12 +73,12 @@ public class StringOperations extends AbstractContextualOperations {
 		};
 	}
 	
-	static CallHandler STRING_CONCAT = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			// TODO - return OCLInvalid if arg is null of invalid
-			return ((String) source).concat(String.valueOf(args[0]));
-		}
-	};
+//	static CallHandler STRING_CONCAT = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			// TODO - return OCLInvalid if arg is null of invalid
+//			return ((String) source).concat(String.valueOf(args[0]));
+//		}
+//	};
 	
 	static final String LENGTH_NAME = "length"; //$NON-NLS-1$
 	
