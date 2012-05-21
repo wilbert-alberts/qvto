@@ -17,7 +17,7 @@ main() {
 	assert fatal ('abc'.lastToUpper() = 'abC');
 	assert fatal ('abc'.indexOf('abc') = 1);
 	assert fatal ('abc'.indexOf('b') = 2);	
-	assert fatal ('abc'.indexOf('x') = -1);	
+	assert fatal ('abc'.indexOf('x') = 0);	
 	
 	var nullStr : String := null;
 	assert fatal ('abc'.endsWith('bc') and nullStr.endsWith('a').oclIsInvalid());	

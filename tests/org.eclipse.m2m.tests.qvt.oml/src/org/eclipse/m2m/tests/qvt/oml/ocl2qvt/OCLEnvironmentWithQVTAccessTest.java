@@ -250,7 +250,7 @@ public class OCLEnvironmentWithQVTAccessTest extends TestCase {
 			assertNull(helper.getProblems());
 						
 			Object result = evaluate(fOCL.createQuery(q));			
-			assertEquals("name = xxxAb1", result);
+			assertEquals("name = xxxAb2", result);
 			
 		} catch (ParserException e) {
 			e.printStackTrace();			
