@@ -6,7 +6,7 @@
       provider-name="%providerName"
       plugin="org.eclipse.m2m.qvt.oml"
       image="eclipse_update_120.jpg"
-      license-feature="org.eclipse.ocl.license"
+      license-feature="org.eclipse.qvto.license"
       license-feature-version="1.0.0.qualifier">
 
    <description url="http://www.eclipse.org/modeling/m2m">
