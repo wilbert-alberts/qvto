@@ -35,6 +35,12 @@
       </rm:uri>
     </rm:provider>
     <rm:provider componentTypes="eclipse.feature" readerType="local">
+      <rm:uri format="{0}/features/{1}.feature">
+        <bc:propertyRef key="git.qvto.local.repository.location"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
+    <rm:provider componentTypes="eclipse.feature" readerType="local">
       <rm:uri format="{0}/features/{1}-feature">
         <bc:propertyRef key="git.qvto.local.repository.location"/>
         <bc:propertyRef key="buckminster.component"/>
