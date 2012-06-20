@@ -9,7 +9,7 @@
       license-feature="org.eclipse.qvto.license"
       license-feature-version="1.0.0.qualifier">
 
-   <description url="http://www.eclipse.org/modeling/m2m">
+   <description url="http://www.eclipse.org/mmt/qvto">
       %description
    </description>
 
