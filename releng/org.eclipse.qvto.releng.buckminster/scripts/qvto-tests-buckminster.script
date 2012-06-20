@@ -11,8 +11,9 @@ import --properties "${checkout.location}/buildroot/build.properties" "org.eclip
 
 build
 
-#junit --launch "org.eclipse.qvto.xtext.qvtcore.tests/.launches/All\ QVTcore\ Tests.launch" --flatXML --output "${checkout.location}/MMT-QVTo.test.results/org.eclipse.qvto.xtext.qvtcore.tests.xml"
-#junit --launch "org.eclipse.qvto.xtext.qvtrelation.tests/.launches/All\ QVTrelation\ Tests.launch" --flatXML --output "${checkout.location}/MMT-QVTo.test.results/org.eclipse.qvto.xtext.qvtrelation.tests.xml"
+junit --launch "org.eclipse.m2m.tests.qvt.oml/org.eclipse.m2m.tests.qvt.oml.AllTests.launch" --flatXML --output "${checkout.location}/MMT-QVTo.test.results/org.eclipse.m2m.tests.qvt.oml.AllTests.xml"
+#junit --launch "org.eclipse.m2m.tests.qvt.oml.ui/org.eclipse.m2m.internal.tests.qvt.oml.ui.AllTests.launch" --flatXML --output "${checkout.location}/MMT-QVTo.test.results/org.eclipse.m2m.internal.tests.qvt.oml.ui.AllTests.xml"
+junit --launch "org.eclipse.m2m.tests.qvt.oml.ui/org.eclipse.m2m.internal.tests.qvt.oml.ui.AllTest_disabled_asserts.launch" --flatXML --output "${checkout.location}/MMT-QVTo.test.results/org.eclipse.m2m.tests.qvt.oml.ui/org.eclipse.m2m.internal.tests.qvt.oml.ui.AllTest_disabled_asserts.xml"
 
 perform --properties "${checkout.location}/buildroot/build.properties" "-Dbuckminster.reference.repository=${reference.repository}" "org.eclipse.qvto.releng.build:eclipse.feature#build"
 perform --properties "${checkout.location}/buildroot/build.properties" "org.eclipse.qvto.releng.buckminster:buckminster#setup.promoter"
