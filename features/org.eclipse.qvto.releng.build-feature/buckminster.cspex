@@ -6,7 +6,7 @@
 		
 		<!-- tests-job needs qvto core tests to run every QVTo JUnit. This also may be useful
 		if we wanted the tools job produce a zip with all automated tests -->
-		<cs:dependency name="org.eclipse.qvto.tests" componentType="eclipse.feature" />
+		<cs:dependency name="org.eclipse.m2m.qvt.oml.tests" componentType="eclipse.feature" />
 		
 		<!-- indirect dependencies -->		
 		<cs:dependency name="org.eclipse.rcp" componentType="eclipse.feature" />
