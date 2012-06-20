@@ -10,6 +10,7 @@
   <rm:property key="build.type" mutable="false" value="I"/>
   <rm:property key="ocl.tools.last.p2.repository.location" value="https://hudson.eclipse.org/hudson/job/buckminster-mdt-ocl-tools-3.2-master/lastSuccessfulBuild/artifact/MDT-OCL.p2.repository/"/>
   <rm:locator pattern="^org\.eclipse\.m2m\.qvt\.oml.*$" searchPathRef="qvto-source-code"/>
+  <rm:locator pattern="^org\.eclipse\.m2m\.tests\.qvt\.oml.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.qvto.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.emf\.compare.*" searchPathRef="emfcompare"/>
   <rm:locator pattern="^org\.eclipse\.ocl.*" searchPathRef="ocl"/>
@@ -58,8 +59,20 @@
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+    <rm:provider componentTypes="eclipse.feature" readerType="local">
+      <rm:uri format="{0}/doc/{1}-feature">
+        <bc:propertyRef key="git.qvto.local.repository.location"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
     <rm:provider componentTypes="osgi.bundle,unknown" readerType="local">
       <rm:uri format="{0}/examples/{1}">
+        <bc:propertyRef key="git.qvto.local.repository.location"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
+    <rm:provider componentTypes="eclipse.feature" readerType="local">
+      <rm:uri format="{0}/examples/{1}-feature">
         <bc:propertyRef key="git.qvto.local.repository.location"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>

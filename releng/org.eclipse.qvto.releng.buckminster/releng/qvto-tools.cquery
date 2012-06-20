@@ -4,7 +4,7 @@
     <cq:property key="target.arch" value="*"/>
     <cq:property key="target.os" value="*"/>
     <cq:property key="target.ws" value="*"/>
-    <cq:advisorNode namePattern="^org\.eclipse\.m2m\.qvt\.oml\.*\.source$" skipComponent="true"/>
+    <cq:advisorNode namePattern="^org\.eclipse\.m2m\.qvt\.oml.*\.source$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.qvto\.examples\.source$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.qvto\.examples.*\.source$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.qvto\.edit\.source$" skipComponent="true"/>
