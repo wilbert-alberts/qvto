@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
 
-<target includeMode="feature" name="Eclipse QVTo API Base Line" sequenceNumber="8">
+<target name="Eclipse QVTo API Base Line" sequenceNumber="6">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.m2m.qvt.oml.sdk.feature.group" version="3.0.0.v20100606-1530-7R6-DN-P5-IA2U3ZvsZvgAU8z-wP"/>
-<repository location="http://download.eclipse.org/mmt/qvto/updates/releases"/>
+<unit id="org.eclipse.ocl.all.sdk.feature.group" version="3.1.0.v20110606-1427"/>
+<unit id="org.eclipse.ocl.examples.feature.group" version="3.1.0.v20110606-1427"/>
+<repository location="http://download.eclipse.org/releases/indigo"/>
 </location>
 </locations>
-<includeBundles>
-</includeBundles>
+<includeBundles/>
 </target>
