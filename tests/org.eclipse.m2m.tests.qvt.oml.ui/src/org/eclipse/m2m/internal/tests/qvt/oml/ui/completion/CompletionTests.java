@@ -30,7 +30,7 @@ public class CompletionTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Operational QVT code completion"); //$NON-NLS-1$
 		try {
-			loadTestCases(suite, TestUtil.getPluginRelativeFile(CompletionTest.BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER));
+			loadTestCases(suite, ICompletionTestConstants.COMPLETION_TEST_FOLDER, TestUtil.getPluginRelativeFile(CompletionTest.BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,11 +40,11 @@ public class CompletionTests {
 		return suite;
 	}
 	
-	private static void loadTestCases(final TestSuite suite, final File folder) {
+	private static void loadTestCases(final TestSuite suite, final String testFolder, final File folder) {
 		File[] contents = folder.listFiles();
 		for (int i = 0; i < contents.length; i++) {
 			if (isCompletionTestFolder(contents[i])) {
-				suite.addTest(new CompletionTest(contents[i].getName()));
+				suite.addTest(new CompletionTest(testFolder, contents[i].getName()));
 			}
 		}
 	}
