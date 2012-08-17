@@ -19,6 +19,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 public interface ICompletionTestConstants {
 	public static final String COMPLETION_TEST_FOLDER = "completionTestData"; //$NON-NLS-1$
 	
+	public static final String COMPLETION_TEST_FOLDER_WITH_NS_URIS = "completionTestDataWithNsURIs"; //$NON-NLS-1$
+	
 	public static final String ANNOTATED_TRANSFORMATION_FILE = "t.a" + MDAConstants.QVTO_FILE_EXTENSION; //$NON-NLS-1$
 	
 	public static final String COMPLETION_ANNOTATION = "/*@*/"; //$NON-NLS-1$
