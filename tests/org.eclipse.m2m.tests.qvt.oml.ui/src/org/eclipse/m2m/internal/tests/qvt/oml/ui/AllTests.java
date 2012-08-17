@@ -15,7 +15,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.completion.CompletionTests;
-import org.eclipse.m2m.internal.tests.qvt.oml.ui.completion.CompletionTestsWithNsURIs;
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.editor.AllEditorTests;
 
 /**
@@ -31,7 +30,6 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml.ui"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
         suite.addTest(CompletionTests.suite());
-        suite.addTest(CompletionTestsWithNsURIs.suite());
 		suite.addTest(AllEditorTests.suite());
 		//$JUnit-END$
 		return suite;

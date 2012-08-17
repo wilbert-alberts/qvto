@@ -69,9 +69,8 @@ public class CompletionTest extends AbstractCompletionTest {
         enableQVTOCapabilities();
     }
 
-	public CompletionTest(final String testFolder, final String folder) {
+	public CompletionTest(final String folder) {
 		super(folder);
-		this.testFolder = testFolder;
 		myFolder = folder;
 	}
 	
@@ -122,7 +121,7 @@ public class CompletionTest extends AbstractCompletionTest {
 	
 	protected void initializeProject() throws Exception {
 		myTestProject = new TestProject("CompletionTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
-        File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, testFolder
+        File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
                 + "/" + myFolder); //$NON-NLS-1$
         FileUtil.copyFolder(srcFolder, myTestProject.getQVTSourceContainer().getLocation().toFile());
 		myTestProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -150,7 +149,7 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected String saveActualProposalStrings() throws Exception {
-	    File folder = TestUtil.getPluginRelativeFile(BUNDLE, testFolder
+	    File folder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
                 + "/" + myFolder); //$NON-NLS-1$
 	    File file = new File(folder, ICompletionTestConstants.EXPECTED_PROPOSALS_FILE);
 		String fileName = file.getAbsolutePath();
@@ -251,19 +250,19 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected File getAnnotatedTransformationFile() throws IOException {
-		return TestUtil.getPluginRelativeFile(BUNDLE, testFolder
+		return TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
 				+ "/" + myFolder + "/" + ICompletionTestConstants.ANNOTATED_TRANSFORMATION_FILE); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	protected File getExpectedProposalsFile() throws IOException {
-		return TestUtil.getPluginRelativeFile(BUNDLE, testFolder
+		return TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
 				+ "/" + myFolder + "/" + ICompletionTestConstants.EXPECTED_PROPOSALS_FILE); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	protected boolean expectedProposalsFileExisits() throws IOException {
         Bundle bundle = Platform.getBundle(BUNDLE);
         
-        URL url = bundle.getEntry(testFolder
+        URL url = bundle.getEntry(ICompletionTestConstants.COMPLETION_TEST_FOLDER
 				+ "/" + myFolder + "/" + ICompletionTestConstants.EXPECTED_PROPOSALS_FILE); //$NON-NLS-1$ //$NON-NLS-2$
         return url != null;
 	}
@@ -309,7 +308,6 @@ public class CompletionTest extends AbstractCompletionTest {
 
 	private int myOffset;
 	private final String myFolder;
-	private final String testFolder;
 	private TestProject myTestProject;
 	private boolean isModeStrict = true;
 	private final Set<String> myActualProposalStrings = new LinkedHashSet<String>();

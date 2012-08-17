@@ -20,8 +20,8 @@ import java.io.PrintWriter;
  */
 public class CompletionTestDataCreator extends CompletionTest {
 
-	public CompletionTestDataCreator(final String testFolder, final String folder) {
-		super(testFolder, folder);
+	public CompletionTestDataCreator(final String folder) {
+		super(folder);
 	}
 	
 	@Override
