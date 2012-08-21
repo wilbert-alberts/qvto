@@ -5,7 +5,7 @@ mv buildroot/buckminster.output/org.eclipse.qvto.releng.build_*-eclipse.feature/
 
 if [ ${MANAGE_JAVADOC} = "true" ]
 then
-  mkdir MDT-OCL.javadoc
+  mkdir MMT-QVTo.javadoc
   mv buildroot/buckminster.output/org.eclipse.qvto.releng.buckminster_*-buckminster/javadoc/MMT-QVTo-javadoc.zip MMT-QVTo.javadoc/MMT-QVTo-javadoc.zip
 #  rm -rf buildroot/buckminster.output/org.eclipse.qvto.releng.buckminster_*-buckminster/javadoc
 fi
