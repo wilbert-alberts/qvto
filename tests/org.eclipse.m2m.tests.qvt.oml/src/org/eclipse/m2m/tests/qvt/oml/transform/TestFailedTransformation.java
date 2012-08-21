@@ -61,7 +61,7 @@ public class TestFailedTransformation extends TestTransformation {
 		String logContents = myLogger.getBuffer().toString();
 		assertFalse("Non-empty trace expected", logContents.length() == 0); //$NON-NLS-1$
 		
-		assertEquals(expectedContents, logContents);
+		assertEqualContents(expectedContents, logContents);
 	}
 	
 	private String loadExpectedTraceLog(String fileName) throws IOException {

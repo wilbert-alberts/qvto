@@ -45,7 +45,7 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 				
 		String dumpedContents = loadExpectedStackDump(testCase);
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());
 	}
 	
 	
@@ -65,7 +65,7 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 
 		String dumpedContents = loadExpectedStackDump(testcase);
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());
 		
 		assertLogMatch(testcase);		
 	}	
@@ -106,7 +106,7 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 				
 		String dumpedContents = loadExpectedStackDump(testCase);
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());		
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());		
 	}
 
 	public void testUknownSourceStackTrace() throws Exception {
@@ -120,6 +120,6 @@ public class TestStackTrace extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 
 		String dumpedContents = loadExpectedStackDump("testUknownSourceStackTrace"); //$NON-NLS-1$
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents, strWriter.getBuffer().toString());
 	}
 }

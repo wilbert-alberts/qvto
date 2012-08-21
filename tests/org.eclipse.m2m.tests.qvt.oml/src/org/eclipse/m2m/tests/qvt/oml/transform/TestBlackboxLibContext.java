@@ -38,7 +38,7 @@ public class TestBlackboxLibContext extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 
 		String dumpedContents = loadExpectedStackDump(testcase);
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());
 		
 		assertLogMatch(testcase);		
 	}

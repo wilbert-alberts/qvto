@@ -89,7 +89,7 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 		String logContents = fLogger != null ? fLogger.getBuffer().toString() : ""; //$NON-NLS-1$
 		assertFalse("Non-empty log expected", logContents.length() == 0); //$NON-NLS-1$
 		
-		assertEquals(expectedContents, logContents);
+		assertEqualContents(expectedContents, logContents);
 	}
 
 	private String loadExpectedLogDump(String testCase) throws IOException {
