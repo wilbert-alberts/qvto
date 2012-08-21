@@ -34,10 +34,9 @@
 			</fileset>
 			<fileset dir="${examplesSourcesLocation}" defaultexcludes="true">
 				<include name="**/*.java" />
-				<!--exclude name="**/org/eclipse/qvto/examples/build/**"/>
-				<exclude name="**/org/eclipse/ocl/examples/editor/ocl/**"/>
-				<exclude name="**/org/eclipse/ocl/examples/editor/ui/**"/>
-				<exclude name="**/org/eclipse/ocl/examples/project/**"/-->
+				<exclude name="/rdb/**"/>
+				<exclude name="/simpleuml/**"/>
+				<exclude name="/qvto/**"/>
 			</fileset>
 			<tag name="generated" description="Generated"></tag>
 			<tag name="model" description="Model"></tag>
