@@ -16,10 +16,6 @@
       %copyright
    </copyright>
 
-   <requires>
-      <import plugin="org.eclipse.help" version="3.4.0" match="compatible"/>
-   </requires>
-
    <plugin
          id="org.eclipse.m2m.qvt.oml.doc"
          download-size="0"

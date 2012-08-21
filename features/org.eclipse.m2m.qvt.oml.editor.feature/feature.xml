@@ -21,27 +21,6 @@
       %license
    </license>
 
-   <requires>
-      <import plugin="org.eclipse.core.resources" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>
-      <import plugin="org.eclipse.jface.text" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.ui" version="3.5.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.views" version="3.3.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.editors" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.compare" version="3.5.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.5.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.jdt.ui" version="3.5.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common.ui" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.emf.util" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.project" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.runtime" version="3.0.0" match="compatible"/>
-   </requires>
-
    <plugin
          id="org.eclipse.m2m.qvt.oml.editor.ui"
          download-size="0"
