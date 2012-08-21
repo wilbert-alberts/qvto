@@ -63,7 +63,7 @@
 			</cs:actorProperties>
 			<cs:properties>
 				<cs:property key="content.ius" value="org.eclipse.m2m.qvt.oml.sdk.feature.group" />
-				<cs:property key="target.platform.ius" value="lpg.runtime.java,lpg.runtime.java.source" />
+				<!--cs:property key="target.platform.ius" value="lpg.runtime.java,lpg.runtime.java.source" /-->
 				<cs:property key="package.name" value="mmt-qvto-SDK" />
 			</cs:properties>
 			<cs:prerequisites>
@@ -101,8 +101,8 @@
 	<cs:groups>
 		<cs:public name="build">
 			<cs:attribute name="package.mmt-qvto-Update" />
-			<!--cs:attribute name="package.mmt-qvto-SDK" /> 
-			<cs:attribute name="package.mmt-qvto-examples" /--> 
+			<cs:attribute name="package.mmt-qvto-SDK" /> 
+			<cs:attribute name="package.mmt-qvto-examples"> 
 		</cs:public>
 	</cs:groups>
 </cs:cspecExtension>
