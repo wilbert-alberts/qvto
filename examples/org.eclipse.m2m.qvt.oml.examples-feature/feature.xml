@@ -2,12 +2,14 @@
 <feature
       id="org.eclipse.m2m.qvt.oml.examples"
       label="%featureName"
-      version="3.1.0.qualifier"
+      version="3.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.m2m.qvt.oml.samples"
-      image="eclipse_update_120.jpg">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.qvto.license"
+      license-feature-version="1.0.0.qualifier">
 
-   <description url="http://www.eclipse.org/modeling/m2m">
+   <description url="http://www.eclipse.org/mmt/qvto">
       %description
    </description>
 
