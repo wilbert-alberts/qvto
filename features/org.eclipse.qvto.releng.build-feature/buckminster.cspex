@@ -79,7 +79,7 @@
 				<cs:property key="targets" value="package.ius" />
 			</cs:actorProperties>
 			<cs:properties>
-				<cs:property key="content.ius" value="org.eclipse.qvto.examples.feature.group" />
+				<cs:property key="content.ius" value="org.eclipse.m2m.qvt.oml.examples.feature.group" />
 				<cs:property key="package.name" value="mmt-qvto-examples" />
 			</cs:properties>
 			<cs:prerequisites>
