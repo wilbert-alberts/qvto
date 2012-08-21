@@ -102,7 +102,7 @@
 		<cs:public name="build">
 			<cs:attribute name="package.mmt-qvto-Update" />
 			<cs:attribute name="package.mmt-qvto-SDK" /> 
-			<cs:attribute name="package.mmt-qvto-examples"> 
+			<cs:attribute name="package.mmt-qvto-examples" /> 
 		</cs:public>
 	</cs:groups>
 </cs:cspecExtension>
