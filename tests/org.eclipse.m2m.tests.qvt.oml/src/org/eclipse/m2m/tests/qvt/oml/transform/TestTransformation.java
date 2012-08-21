@@ -156,6 +156,16 @@ public abstract class TestTransformation extends TestCase {
 		
 		fail(buf.toString());
 	}
+	
+	protected void assertEqualContents(String expectedContents, String actualContents) {
+		String lineSeparator = System.getProperty("line.separator");
+		if (!"\n".equals(lineSeparator)) {
+			expectedContents = expectedContents.replace(lineSeparator, "\n");
+			actualContents = actualContents.replace(lineSeparator, "\n");
+		}
+		
+		assertEquals(expectedContents, actualContents);
+	}
     
     @Override
 	public void tearDown() throws Exception {

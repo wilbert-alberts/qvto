@@ -38,7 +38,7 @@ public class TestInvalidConfigProperty extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 
 		String dumpedContents = loadExpectedStackDump("invalidIntConfigProp"); //$NON-NLS-1$
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());
 	}
 	
 	public void testInvalidRealConfigProp() throws Exception {
@@ -55,7 +55,7 @@ public class TestInvalidConfigProperty extends AbstractStackTraceTest {
 		e.printQvtStackTrace(new PrintWriter(strWriter));
 
 		String dumpedContents = loadExpectedStackDump("invalidRealConfigProp"); //$NON-NLS-1$
-		assertEquals(dumpedContents.toString(), strWriter.getBuffer().toString());
+		assertEqualContents(dumpedContents.toString(), strWriter.getBuffer().toString());
 	}
 	
 	public void testUndefinedConfigProp() throws Exception {
