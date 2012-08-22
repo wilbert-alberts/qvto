@@ -40,8 +40,8 @@ public class StringOperations extends AbstractContextualOperations {
 			new OperationProvider(AS_BOOLEAN, AS_BOOLEAN_NAME, oclStdLib.getBoolean()),			
 			new OperationProvider(AS_FLOAT, AS_FLOAT_NAME, oclStdLib.getReal()),
 			new OperationProvider(AS_INTEGER, AS_INTEGER_NAME, oclStdLib.getInteger()),
-			new OperationProvider(ENDS_WITH, ENDS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$			
-			new OperationProvider(EQUALS_IGNORE_CASE, EQUALS_IGNORE_CASE_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$
+//			new OperationProvider(ENDS_WITH, ENDS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$			
+//			new OperationProvider(EQUALS_IGNORE_CASE, EQUALS_IGNORE_CASE_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(FIND, FIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(FIRST_TO_UPPER, FIRST_TO_UPPER_NAME, oclStdLib.getString()),
 			
@@ -49,7 +49,7 @@ public class StringOperations extends AbstractContextualOperations {
 			
 			createAdditionalStaticOperationProvider(GET_STR_COUNTER, GET_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
 			createAdditionalStaticOperationProvider(INCR_STR_COUNTER, INCR_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
-			new OperationProvider(INDEX_OF, INDEX_OF_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
+//			new OperationProvider(INDEX_OF, INDEX_OF_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(IS_QUOTED, IS_QUOTED_NAME, new String[] { "s" }, oclStdLib.getBoolean(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(LAST_TO_UPPER, LAST_TO_UPPER_NAME, oclStdLib.getString()),			
 			new OperationProvider(LENGTH, LENGTH_NAME, oclStdLib.getInteger()),
@@ -63,12 +63,12 @@ public class StringOperations extends AbstractContextualOperations {
 					oclStdLib.getString(), oclStdLib.getString(), oclStdLib.getString()),
 			createAdditionalStaticOperationProvider(RESTART_ALL_STR_COUNTER, RESTART_ALL_STR_COUNTER_NAME, null, oclStdLib.getOclVoid()),
 			new OperationProvider(RFIND, RFIND_NAME, new String[] { "match" }, oclStdLib.getInteger(), oclStdLib.getString()), //$NON-NLS-1$			
-			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()),			 //$NON-NLS-1$
+//			new OperationProvider(STARTS_WITH, STARTS_WITH_NAME, new String[] { "match" }, oclStdLib.getBoolean(), oclStdLib.getString()),			 //$NON-NLS-1$
 			createAdditionalStaticOperationProvider(START_STR_COUNTER, START_STR_COUNTER_NAME, new String[] { "s" }, oclStdLib.getOclVoid(), oclStdLib.getString()), //$NON-NLS-1$
 			new OperationProvider(SUBSTRING_AFTER, SUBSTRING_AFTER_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			
 			new OperationProvider(SUBSTRING_BEFORE, SUBSTRING_BEFORE_NAME, new String[] { "match" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$			
 			new OperationProvider(QUOTIFY, QUOTIFY_NAME, new String[] { "s" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$
-			new OperationProvider(TRIM, TRIME_NAME, oclStdLib.getString()),
+//			new OperationProvider(TRIM, TRIME_NAME, oclStdLib.getString()),
 			new OperationProvider(UNQUOTIFY, UNQUOTIFY_NAME, new String[] { "s" }, oclStdLib.getString(), oclStdLib.getString()), //$NON-NLS-1$
 		};
 	}
@@ -152,53 +152,53 @@ public class StringOperations extends AbstractContextualOperations {
 		}
 	};
 	
-	static final String INDEX_OF_NAME = "indexOf"; //$NON-NLS-1$
-	static final CallHandler INDEX_OF = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			String self = (String) source;
-			Object leftVal = args[0];
-			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
-				return -1;
-			}
-			
-			int result = self.indexOf((String)leftVal);
-			return (result >= 0) ? result + 1 : -1;
-		}
-	};
+//	static final String INDEX_OF_NAME = "indexOf"; //$NON-NLS-1$
+//	static final CallHandler INDEX_OF = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			String self = (String) source;
+//			Object leftVal = args[0];
+//			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+//				return -1;
+//			}
+//			
+//			int result = self.indexOf((String)leftVal);
+//			return (result >= 0) ? result + 1 : -1;
+//		}
+//	};
 
-	static final String ENDS_WITH_NAME = "endsWith"; //$NON-NLS-1$
-	static final CallHandler ENDS_WITH = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			String self = (String) source;
-			Object leftVal = args[0];
-			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
-				return false;
-			}
+//	static final String ENDS_WITH_NAME = "endsWith"; //$NON-NLS-1$
+//	static final CallHandler ENDS_WITH = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			String self = (String) source;
+//			Object leftVal = args[0];
+//			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+//				return false;
+//			}
+//
+//			return Boolean.valueOf(self.endsWith((String)leftVal));
+//		}
+//	};
 
-			return Boolean.valueOf(self.endsWith((String)leftVal));
-		}
-	};
+//	static final String STARTS_WITH_NAME = "startsWith"; //$NON-NLS-1$
+//	static final CallHandler STARTS_WITH = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			String self = (String) source;
+//			Object leftVal = args[0];
+//			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+//				return false;
+//			}
+//
+//			return Boolean.valueOf(self.startsWith((String)leftVal));
+//		}
+//	};
 
-	static final String STARTS_WITH_NAME = "startsWith"; //$NON-NLS-1$
-	static final CallHandler STARTS_WITH = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			String self = (String) source;
-			Object leftVal = args[0];
-			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
-				return false;
-			}
-
-			return Boolean.valueOf(self.startsWith((String)leftVal));
-		}
-	};
-
-	static final String TRIME_NAME = "trim"; //$NON-NLS-1$
-	static final CallHandler TRIM = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			String self = (String) source;
-			return self.trim();
-		}
-	};
+//	static final String TRIME_NAME = "trim"; //$NON-NLS-1$
+//	static final CallHandler TRIM = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			String self = (String) source;
+//			return self.trim();
+//		}
+//	};
 
 	static final String NORMALIZE_SPACE_NAME = "normalizeSpace"; //$NON-NLS-1$
 	static final CallHandler NORMALIZE = new CallHandler() {
@@ -257,18 +257,18 @@ public class StringOperations extends AbstractContextualOperations {
 		}
 	};
 	
-	static final String EQUALS_IGNORE_CASE_NAME = "equalsIgnoreCase"; //$NON-NLS-1$
-	static final CallHandler EQUALS_IGNORE_CASE = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			String self = (String) source;
-			Object leftVal = args[0];
-			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
-				return false;
-			}
-
-			return Boolean.valueOf(self.equalsIgnoreCase((String)leftVal));
-		}
-	};
+//	static final String EQUALS_IGNORE_CASE_NAME = "equalsIgnoreCase"; //$NON-NLS-1$
+//	static final CallHandler EQUALS_IGNORE_CASE = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			String self = (String) source;
+//			Object leftVal = args[0];
+//			if(leftVal == null && leftVal == CallHandlerAdapter.getInvalidResult(evalEnv)) {
+//				return false;
+//			}
+//
+//			return Boolean.valueOf(self.equalsIgnoreCase((String)leftVal));
+//		}
+//	};
 
 	static final String FIND_NAME = "find"; //$NON-NLS-1$
 	static final CallHandler FIND = new CallHandler() {
