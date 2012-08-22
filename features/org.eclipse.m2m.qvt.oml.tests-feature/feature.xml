@@ -17,27 +17,6 @@
       %copyright
    </copyright>
 
-   <requires>
-      <import plugin="org.junit4" version="4.5.0" match="compatible"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.emf.codegen.ecore"/>
-      <import plugin="org.eclipse.m2m.qvt.oml"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.common"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.emf.util"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.runtime"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.project"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.ocl"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.samples"/>
-      <import plugin="org.eclipse.ant.core"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.m2m.qvt.oml.editor.ui"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.editors"/>
-   </requires>
-
    <plugin
          id="org.eclipse.m2m.tests.qvt.oml"
          download-size="0"
