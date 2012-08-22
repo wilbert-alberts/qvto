@@ -7,7 +7,7 @@ addbaseline -A "Eclipse QVTo API Base Line"
 # We set the path of the new target platform
 setpref targetPlatformPath="${checkout.location}/buildroot/target.platform"
 
-import --properties "${checkout.location}/buildroot/build.properties" "org.eclipse.qvto.git/releng/org.eclipse.qvto.releng.buckminster/releng/qvto-tests-all.mspec"
+import --properties "${checkout.location}/buildroot/build.properties" "org.eclipse.qvto.git/releng/org.eclipse.qvto.releng.buckminster/releng/qvto.mspec"
 
 build
 
