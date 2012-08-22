@@ -30,8 +30,8 @@ COMPACT_BUILD_ID="${COMPACT_BUILD_ID:0:12}"
 	echo "hudson.build.id=${BUILD_ID}"
 
 	echo
-	echo "# Define if Huson Build should create javadoc (added by Hudson job definition)"
-	echo "# manage.javadoc=${MANAGE_JAVADOC}"
+	echo "# Define if Hudson Build should create javadoc (added by Hudson job definition)"
+	echo "manage.javadoc=${MANAGE_JAVADOC}"
 
 	echo
 	echo "# Override default locations (added by Hudson job definition)"
