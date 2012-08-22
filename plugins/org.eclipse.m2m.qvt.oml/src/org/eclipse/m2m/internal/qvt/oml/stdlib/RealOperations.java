@@ -19,13 +19,13 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 
 public class RealOperations extends AbstractContextualOperations {
 
-	public static final String TO_STRING_NAME = "toString"; //$NON-NLS-1$
+//	public static final String TO_STRING_NAME = "toString"; //$NON-NLS-1$
 	
-	private static final CallHandler TO_STRING = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
-			return String.valueOf(source);
-		}
-	};	
+//	private static final CallHandler TO_STRING = new CallHandler() {
+//		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+//			return String.valueOf(source);
+//		}
+//	};	
 	
 		
 	public RealOperations(AbstractQVTStdlib library) {
@@ -36,7 +36,7 @@ public class RealOperations extends AbstractContextualOperations {
 	protected OperationProvider[] getOperations() {
 		OCLStandardLibrary<EClassifier> oclStdlib = getStdlib().getEnvironment().getOCLStandardLibrary();
 		return new OperationProvider[] {
-			new OperationProvider(TO_STRING, TO_STRING_NAME, oclStdlib.getString())
+//			new OperationProvider(TO_STRING, TO_STRING_NAME, oclStdlib.getString())
 		};
 	}
 }
