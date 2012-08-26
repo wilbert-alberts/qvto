@@ -31,13 +31,13 @@ public class StringLibrary {
      */
     public static class Metainfo {
 
-        private static final String[] STARTS_WITH = new String[] {
-        	STRING_CONTEXT,
-                "String", "Boolean" }; //$NON-NLS-1$ //$NON-NLS-2$
+//        private static final String[] STARTS_WITH = new String[] {
+//        	STRING_CONTEXT,
+//                "String", "Boolean" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-        public static String[] startsWith(String self, String prefix) {
-            return STARTS_WITH;
-        }
+//        public static String[] startsWith(String self, String prefix) {
+//            return STARTS_WITH;
+//        }
 
         private static final String[] STARTS_WITH_OFFSET = new String[] {
         	STRING_CONTEXT,
@@ -48,21 +48,21 @@ public class StringLibrary {
             return STARTS_WITH_OFFSET;
         }
 
-        private static final String[] ENDS_WITH = new String[] {
-        	STRING_CONTEXT,
-                "String", "Boolean" }; //$NON-NLS-1$ //$NON-NLS-2$
+//        private static final String[] ENDS_WITH = new String[] {
+//        	STRING_CONTEXT,
+//                "String", "Boolean" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-        public static String[] endsWith(String self, String suffix) {
-            return ENDS_WITH;
-        }
+//        public static String[] endsWith(String self, String suffix) {
+//            return ENDS_WITH;
+//        }
 
-        private static final String[] INDEX_OF = new String[] {
-        	STRING_CONTEXT,
-                "String", "Integer" }; //$NON-NLS-1$ //$NON-NLS-2$
+//        private static final String[] INDEX_OF = new String[] {
+//        	STRING_CONTEXT,
+//                "String", "Integer" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-        public static String[] indexOf(String self, String str) {
-            return INDEX_OF;
-        }
+//        public static String[] indexOf(String self, String str) {
+//            return INDEX_OF;
+//        }
 
         private static final String[] INDEX_OF_FROMINDEX = new String[] {
         	STRING_CONTEXT,
@@ -73,13 +73,13 @@ public class StringLibrary {
             return INDEX_OF_FROMINDEX;
         }
 
-        private static final String[] LAST_INDEX_OF = new String[] {
-        	STRING_CONTEXT,
-                "String", "Integer" }; //$NON-NLS-1$ //$NON-NLS-2$
+//        private static final String[] LAST_INDEX_OF = new String[] {
+//        	STRING_CONTEXT,
+//                "String", "Integer" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-        public static String[] lastIndexOf(String self, String str) {
-            return LAST_INDEX_OF;
-        }
+//        public static String[] lastIndexOf(String self, String str) {
+//            return LAST_INDEX_OF;
+//        }
 
         private static final String[] LAST_INDEX_OF_FROMINDEX = new String[] {
         	STRING_CONTEXT,
@@ -90,22 +90,22 @@ public class StringLibrary {
             return LAST_INDEX_OF_FROMINDEX;
         }
 
-        private static final String[] TRIM = new String[] {
-        	STRING_CONTEXT,
-                "String" }; //$NON-NLS-1$
+//        private static final String[] TRIM = new String[] {
+//        	STRING_CONTEXT,
+//                "String" }; //$NON-NLS-1$
 
-        public static String[] trim(String self) {
-            return TRIM;
-        }
+//        public static String[] trim(String self) {
+//            return TRIM;
+//        }
 
-        private static final String[] REPLACE_ALL = new String[] {
-        	STRING_CONTEXT,
-                "String", "String", "String" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+//        private static final String[] REPLACE_ALL = new String[] {
+//        	STRING_CONTEXT,
+//                "String", "String", "String" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-        public static String[] replaceAll(String self, String regexp,
-                String replacement) {
-            return REPLACE_ALL;
-        }
+//        public static String[] replaceAll(String self, String regexp,
+//                String replacement) {
+//            return REPLACE_ALL;
+//        }
 
         private static final String[] REPLACE = new String[] {
         	STRING_CONTEXT,
@@ -115,21 +115,21 @@ public class StringLibrary {
             return REPLACE;
         }
         
-        private static final String[] TO_LOWER_CASE = new String[] {
-        	STRING_CONTEXT,
-            	"String" }; //$NON-NLS-1$ 
+//        private static final String[] TO_LOWER_CASE = new String[] {
+//        	STRING_CONTEXT,
+//            	"String" }; //$NON-NLS-1$ 
 
-	    public static String[] toLowerCase(String self) {
-	        return TO_LOWER_CASE;
-	    }
+//	    public static String[] toLowerCase(String self) {
+//	        return TO_LOWER_CASE;
+//	    }
 	    
-        private static final String[] TO_UPPER_CASE = new String[] {
-        	STRING_CONTEXT,
-        		"String" }; //$NON-NLS-1$ 
+//        private static final String[] TO_UPPER_CASE = new String[] {
+//        	STRING_CONTEXT,
+//        		"String" }; //$NON-NLS-1$ 
 
-	    public static String[] toUpperCase(String self) {
-	        return TO_UPPER_CASE;
-	    }
+//	    public static String[] toUpperCase(String self) {
+//	        return TO_UPPER_CASE;
+//	    }
 
 	    private static final String[] SPLIT_1 = new String[] {
 	    	STRING_CONTEXT,
@@ -151,12 +151,12 @@ public class StringLibrary {
 
     private static final Integer INDEX_NOT_FOUND = new Integer(-1);
 
-    public Boolean startsWith(String self, String prefix) {
-        if (self == null || prefix == null) {
-            return Boolean.FALSE;
-        }
-        return Boolean.valueOf(self.startsWith(prefix));
-    }
+//    public Boolean startsWith(String self, String prefix) {
+//        if (self == null || prefix == null) {
+//            return Boolean.FALSE;
+//        }
+//        return Boolean.valueOf(self.startsWith(prefix));
+//    }
 
     public Boolean startsWith(String self, String prefix, Integer toffset) {
         if (self == null || prefix == null || toffset == null) {
@@ -165,19 +165,19 @@ public class StringLibrary {
         return Boolean.valueOf(self.startsWith(prefix, toffset.intValue()));
     }
 
-    public Boolean endsWith(String self, String suffix) {
-        if (self == null || suffix == null) {
-            return Boolean.FALSE;
-        }
-        return Boolean.valueOf(self.endsWith(suffix));
-    }
+//    public Boolean endsWith(String self, String suffix) {
+//        if (self == null || suffix == null) {
+//            return Boolean.FALSE;
+//        }
+//        return Boolean.valueOf(self.endsWith(suffix));
+//    }
 
-    public Integer indexOf(String self, String str) {
-        if (self == null || str == null) {
-            return INDEX_NOT_FOUND;
-        }
-        return new Integer(self.indexOf(str));
-    }
+//    public Integer indexOf(String self, String str) {
+//        if (self == null || str == null) {
+//            return INDEX_NOT_FOUND;
+//        }
+//        return new Integer(self.indexOf(str));
+//    }
 
     public Integer indexOf(String self, String str, Integer fromIndex) {
         if (self == null || str == null || fromIndex == null) {
@@ -186,12 +186,12 @@ public class StringLibrary {
         return new Integer(self.indexOf(str, fromIndex.intValue()));
     }
 
-    public Integer lastIndexOf(String self, String str) {
-        if (self == null || str == null) {
-            return INDEX_NOT_FOUND;
-        }
-        return new Integer(self.lastIndexOf(str)+1);
-    }
+//    public Integer lastIndexOf(String self, String str) {
+//        if (self == null || str == null) {
+//            return INDEX_NOT_FOUND;
+//        }
+//        return new Integer(self.lastIndexOf(str)+1);
+//    }
 
     public Integer lastIndexOf(String self, String str, Integer fromIndex) {
         if (self == null || str == null || fromIndex == null) {
@@ -200,19 +200,19 @@ public class StringLibrary {
         return new Integer(self.lastIndexOf(str, fromIndex.intValue())+1);
     }
 
-    public String trim(String self) {
-        if (self == null) {
-            return self;
-        }
-        return self.trim();
-    }
+//    public String trim(String self) {
+//        if (self == null) {
+//            return self;
+//        }
+//        return self.trim();
+//    }
 
-    public String replaceAll(String self, String regexp, String replacement) {
-        if (self == null || regexp == null || replacement == null) {
-            return self;
-        }
-        return self.replaceAll(regexp, replacement);
-    }
+//    public String replaceAll(String self, String regexp, String replacement) {
+//        if (self == null || regexp == null || replacement == null) {
+//            return self;
+//        }
+//        return self.replaceAll(regexp, replacement);
+//    }
 
     public String replace(String self, String what, String with) {
         if (self == null || what == null || with == null) {
@@ -221,19 +221,19 @@ public class StringLibrary {
         return self.replaceFirst(what, with);
     }
     
-    public String toLowerCase(String self) {
-    	if (self == null) {
-    		return null;
-    	}
-    	return self.toLowerCase();
-    }
+//    public String toLowerCase(String self) {
+//    	if (self == null) {
+//    		return null;
+//    	}
+//    	return self.toLowerCase();
+//    }
     
-    public String toUpperCase(String self) {
-    	if (self == null) {
-    		return null;
-    	}
-    	return self.toUpperCase();
-    }
+//    public String toUpperCase(String self) {
+//    	if (self == null) {
+//    		return null;
+//    	}
+//    	return self.toUpperCase();
+//    }
 
     public List<String> split(String self, String regex) {
     	if (self == null || regex == null) {
