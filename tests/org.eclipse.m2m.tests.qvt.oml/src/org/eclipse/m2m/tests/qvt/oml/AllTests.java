@@ -20,7 +20,6 @@ package org.eclipse.m2m.tests.qvt.oml;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
 import org.eclipse.m2m.tests.qvt.oml.callapi.AllCallAPITests;
 import org.eclipse.m2m.tests.qvt.oml.compile.AllCompileTests;
@@ -32,6 +31,7 @@ import org.eclipse.m2m.tests.qvt.oml.transform.TraceTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformManyModelTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.TransformTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.api.QvtoTransfHelperTests;
+import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 
 /**
@@ -45,11 +45,7 @@ public class AllTests {
 	}
 
 	public static Test suite() {
-		try {				// Workaround BUG 390479
-			IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
-			store.setValue(org.eclipse.egit.ui.UIPreferences.SHOW_GIT_PREFIX_WARNING, false);
-		}
-		catch (NoClassDefFoundError e) {}
+		TestUtil.suppressGitPrefixPopUp();
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
 		suite.addTestSuite(IntermediatePropertyCleanupTest.class);

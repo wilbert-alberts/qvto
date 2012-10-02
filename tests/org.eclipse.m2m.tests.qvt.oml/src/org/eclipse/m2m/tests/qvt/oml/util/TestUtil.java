@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +46,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -54,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 
 /**
@@ -290,4 +294,24 @@ public class TestUtil extends Assert {
 		e.printQvtStackTrace(pw);
 		pw.flush();
 	}    
+
+	public static void suppressGitPrefixPopUp() {				// Workaround BUG 390479
+		try {
+			Class<?> activatorClass = Class.forName("org.eclipse.egit.ui.Activator");
+			try {
+				Class<?> preferencesClass = Class.forName("org.eclipse.egit.ui.UIPreferences");
+				Field field = preferencesClass.getField("SHOW_GIT_PREFIX_WARNING");
+				String name = (String)field.get(null);
+				Method getDefaultMethod = activatorClass.getMethod("getDefault");
+				AbstractUIPlugin activator = (AbstractUIPlugin) getDefaultMethod.invoke(null);
+				IPreferenceStore store = activator.getPreferenceStore();
+				store.setValue(name, false);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		catch (ClassNotFoundException e) {
+		}
+	}
 }
