@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.tests.qvt.oml.ui;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.completion.CompletionTests;
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.editor.AllEditorTests;
 
@@ -27,6 +28,11 @@ public class AllTests {
 	}
 
 	public static Test suite() {
+		try {				// Workaround BUG 390479
+			IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
+			store.setValue(org.eclipse.egit.ui.UIPreferences.SHOW_GIT_PREFIX_WARNING, false);
+		}
+		catch (NoClassDefFoundError e) {}
 		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml.ui"); //$NON-NLS-1$
 		//$JUnit-BEGIN$
         suite.addTest(CompletionTests.suite());
