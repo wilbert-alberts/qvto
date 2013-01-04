@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Imperativeocl
+Bundle-SymbolicName: org.eclipse.qvto.examples.xtext.imperativeocl
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.ocl.examples.xtext.essentialocl

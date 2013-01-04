@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.eclipse.org/qvt/0.10/ImperativeOCL.xml"
+            class="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage"
+            genModel="model/ImperativeOCL.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.content_parser">
+      <parser
+            contentTypeIdentifier="org.eclipse.qvto.imperativeocl"
+            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            file-extensions="imperativeocl"
+            id="org.eclipse.qvto.imperativeocl"
+            name="%_UI_ImperativeOCL_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://www.eclipse.org/qvt/0.10/ImperativeOCL.xml"/>
+            <parameter name="kind" value="xmi"/>
+         </describer>
+      </content-type>
+   </extension>
+
+</plugin>
