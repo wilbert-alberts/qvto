@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
-    modelPluginID="org.eclipse.qvto.examples.pivot.imperativeocl" modelName="ImperativeOCL"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" language=""
-    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="&lt;copyright>&#xD;&#xA;Copyright (c) 2013 Willink Transformations, University of York, and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;  E.D.Willink - Initial API and implementation&#xD;&#xA;  Adolfo Sanchez-Barbudo (University of York) - Bug397429&#xD;&#xA;&lt;/copyright>"
+    modelDirectory="/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen" modelPluginID="org.eclipse.qvto.examples.pivot.imperativeocl"
+    modelName="ImperativeOCL" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" language="" usedGenPackages="../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot">
   <foreignModel>ImperativeOCL.ecore</foreignModel>
-  <genPackages prefix="ImperativeOCL" basePackage="org.eclipse.qvto.examples.pivot" disposableProviderFactory="true"
-      contentTypeIdentifier="org.eclipse.qvto.imperativeocl" ecorePackage="ImperativeOCL.ecore#ImperativeOCL">
+  <genPackages prefix="ImperativeOCL" basePackage="org.eclipse.qvto.examples.pivot"
+      disposableProviderFactory="true" contentTypeIdentifier="org.eclipse.qvto.imperativeocl"
+      ecorePackage="ImperativeOCL.ecore#ImperativeOCL">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ImperativeOCL.ecore#ImperativeOCL.SeverityKind">
       <genEnumLiterals ecoreEnumLiteral="ImperativeOCL.ecore#ImperativeOCL.SeverityKind.error"/>
       <genEnumLiterals ecoreEnumLiteral="ImperativeOCL.ecore#ImperativeOCL.SeverityKind.warning"/>
