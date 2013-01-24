@@ -39,7 +39,7 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 */
 	public static ImperativeOCLFactory init() {
 		try {
-			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/0.10/ImperativeOCL.xml"); 
+			ImperativeOCLFactory theImperativeOCLFactory = (ImperativeOCLFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCL"); 
 			if (theImperativeOCLFactory != null) {
 				return theImperativeOCLFactory;
 			}

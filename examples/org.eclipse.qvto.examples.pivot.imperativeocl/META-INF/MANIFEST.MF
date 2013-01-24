@@ -12,6 +12,7 @@ Export-Package: org.eclipse.qvto.examples.pivot.imperativeocl,
  org.eclipse.qvto.examples.pivot.imperativeocl.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.jdt.annotation;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.ocl.examples.pivot;visibility:=reexport
 Bundle-ActivationPolicy: lazy
