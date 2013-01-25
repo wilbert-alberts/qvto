@@ -13,7 +13,7 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: /org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore
+ * from: /org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore
  * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
  * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
  * invoked by: org.eclipse.ocl.examples.build.utilities.*
@@ -23,22 +23,22 @@
  *
  * $Id$
  */
-package	org.eclipse.qvto.examples.pivot.imperativeocl.util;
+package	org.eclipse.qvto.examples.pivot.qvtoperational.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  */
-public abstract class AbstractImperativeOCLVisitor<R, C>
- extends org.eclipse.ocl.examples.pivot.util.AbstractVisitor<R, C>
-	implements ImperativeOCLVisitor<R>
+public abstract class AbstractQVTOperationalVisitor<R, C>
+ extends org.eclipse.qvto.examples.pivot.imperativeocl.util.AbstractImperativeOCLVisitor<R, C>
+	implements QVTOperationalVisitor<R>
 {
 	/**
 	 * Initializes me with an initial value for my result.
 	 * 
 	 * @param context my initial result value
 	 */
-	protected AbstractImperativeOCLVisitor(@NonNull C context) {
+	protected AbstractQVTOperationalVisitor(@NonNull C context) {
 	    super(context);
 	}
 }

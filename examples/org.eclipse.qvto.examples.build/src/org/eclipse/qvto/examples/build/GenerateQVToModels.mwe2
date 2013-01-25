@@ -19,7 +19,7 @@
 module GenerateQVToModels
 
 import org.eclipse.ocl.examples.build.utilities.*
-import org.eclipse.qvtd.build.utilities.*
+import org.eclipse.ocl.examples.build.extenders.utilities.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
@@ -44,7 +44,7 @@ Workflow {
     }
 
 
-    component = QVTVisitorCodeGenerator { resourceSet = resourceSet
+    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet
     	
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
@@ -54,7 +54,7 @@ Workflow {
     	visitorBasePackageName = "org.eclipse.ocl.examples.pivot.util"
     	visitorBaseClassName = "Visitor"
     }
-    component = QVTVisitorCodeGenerator { resourceSet = resourceSet
+    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.qvtoperational/emf-gen"
     	javaPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
