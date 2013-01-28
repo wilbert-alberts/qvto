@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.pivot.TypedElement;
 import org.eclipse.ocl.examples.pivot.util.Nameable;
 import org.eclipse.ocl.examples.pivot.util.Visitable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.*;
 
 /**
@@ -513,6 +514,13 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ImperativeOCLPackage.IMPERATIVE_OCL_VISITOR: {
+				ImperativeOCLVisitor<?> imperativeOCLVisitor = (ImperativeOCLVisitor<?>)theEObject;
+				T result = caseImperativeOCLVisitor(imperativeOCLVisitor);
+				if (result == null) result = caseVisitor(imperativeOCLVisitor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -983,6 +991,21 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <R> T caseImperativeOCLVisitor(ImperativeOCLVisitor<R> object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Visitable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1264,6 +1287,21 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOperationCallExp(OperationCallExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <R> T caseVisitor(Visitor<R> object) {
 		return null;
 	}
 

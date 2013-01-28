@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.pivot.Property;
 import org.eclipse.ocl.examples.pivot.TemplateableElement;
 import org.eclipse.ocl.examples.pivot.Variable;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -179,5 +180,14 @@ public interface Module extends EObject, org.eclipse.ocl.examples.pivot.Class, o
 	 * @generated
 	 */
 	EList<ModelType> getUsedModelType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitModule(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // Module

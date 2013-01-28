@@ -13,6 +13,8 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational;
 
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -25,4 +27,13 @@ package org.eclipse.qvto.examples.pivot.qvtoperational;
  * @generated
  */
 public interface Library extends Module {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitLibrary(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 } // Library

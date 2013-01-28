@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.Parameter;
 import org.eclipse.ocl.examples.pivot.Variable;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -121,5 +122,14 @@ public interface VarParameter extends EObject, Variable, Parameter {
 	 * @generated
 	 */
 	void setResOwner(ImperativeOperation value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitVarParameter(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // VarParameter

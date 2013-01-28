@@ -13,10 +13,14 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody;
+import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,6 +49,46 @@ public class ConstructorBodyImpl extends OperationBodyImpl implements Constructo
 	@Override
 	protected EClass eStaticClass() {
 		return QVTOperationalPackage.Literals.CONSTRUCTOR_BODY;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitConstructorBody(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == OperationBody.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //ConstructorBodyImpl

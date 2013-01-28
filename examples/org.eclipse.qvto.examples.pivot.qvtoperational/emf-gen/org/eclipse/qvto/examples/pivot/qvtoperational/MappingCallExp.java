@@ -13,6 +13,8 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational;
 
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -56,5 +58,14 @@ public interface MappingCallExp extends ImperativeCallExp {
 	 * @generated
 	 */
 	void setIsStrict(boolean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitMappingCallExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // MappingCallExp

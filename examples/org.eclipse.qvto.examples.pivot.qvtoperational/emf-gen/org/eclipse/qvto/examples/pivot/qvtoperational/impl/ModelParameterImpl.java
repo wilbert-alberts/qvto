@@ -13,10 +13,14 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,6 +49,46 @@ public class ModelParameterImpl extends VarParameterImpl implements ModelParamet
 	@Override
 	protected EClass eStaticClass() {
 		return QVTOperationalPackage.Literals.MODEL_PARAMETER;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitModelParameter(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VarParameter.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MODEL_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.MODEL_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //ModelParameterImpl

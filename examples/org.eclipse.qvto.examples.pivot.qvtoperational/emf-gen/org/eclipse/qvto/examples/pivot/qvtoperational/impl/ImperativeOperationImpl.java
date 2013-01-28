@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -34,6 +35,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -294,6 +296,15 @@ public class ImperativeOperationImpl extends OperationImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitImperativeOperation(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -429,6 +440,21 @@ public class ImperativeOperationImpl extends OperationImpl implements Imperative
 				return result != null && !result.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.IMPERATIVE_OPERATION___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

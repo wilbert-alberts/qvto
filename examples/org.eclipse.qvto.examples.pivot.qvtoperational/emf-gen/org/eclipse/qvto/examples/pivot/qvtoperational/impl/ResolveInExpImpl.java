@@ -13,8 +13,10 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -22,7 +24,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ResolveInExp;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -110,6 +114,15 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitResolveInExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -162,6 +175,37 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 				return inMapping != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == ResolveExp.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.RESOLVE_EXP___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //ResolveInExpImpl

@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,6 +31,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.TryExp;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -107,6 +109,15 @@ public class TryExpImpl extends ImperativeExpressionImpl implements TryExp {
 			tryBody = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ImperativeOCLPackage.TRY_EXP__TRY_BODY);
 		}
 		return tryBody;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitTryExp(this);
 	}
 
 	/**
@@ -194,6 +205,21 @@ public class TryExpImpl extends ImperativeExpressionImpl implements TryExp {
 				return tryBody != null && !tryBody.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.TRY_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //TryExpImpl

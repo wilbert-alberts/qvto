@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeExpression;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -169,5 +170,14 @@ public interface ResolveExp extends CallExp, ImperativeExpression {
 	 * @generated
 	 */
 	void setTarget(Variable value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitResolveExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // ResolveExp

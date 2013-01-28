@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -87,5 +88,14 @@ public interface Typedef extends EObject, org.eclipse.ocl.examples.pivot.Class {
 	 * @generated
 	 */
 	void setCondition(OCLExpression value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitTypedef(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 
 } // Typedef

@@ -13,9 +13,11 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -27,6 +29,7 @@ import org.eclipse.ocl.examples.pivot.internal.impl.OperationCallExpImpl;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.LogExp;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -119,6 +122,15 @@ public class LogExpImpl extends OperationCallExpImpl implements LogExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitLogExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -184,6 +196,21 @@ public class LogExpImpl extends OperationCallExpImpl implements LogExp {
 				return condition != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.LOG_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //LogExpImpl

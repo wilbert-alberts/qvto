@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -61,5 +62,14 @@ public interface OrderedTupleLiteralPart extends EObject, Element {
 	 * @generated
 	 */
 	void setValue(OCLExpression value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitOrderedTupleLiteralPart(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 
 } // OrderedTupleLiteralPart

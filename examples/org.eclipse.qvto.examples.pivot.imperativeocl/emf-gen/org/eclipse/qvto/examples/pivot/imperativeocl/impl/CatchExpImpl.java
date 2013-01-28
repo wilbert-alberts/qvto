@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,6 +32,7 @@ import org.eclipse.ocl.examples.pivot.Type;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,6 +110,15 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 			exception = new EObjectResolvingEList<Type>(Type.class, this, ImperativeOCLPackage.CATCH_EXP__EXCEPTION);
 		}
 		return exception;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitCatchExp(this);
 	}
 
 	/**
@@ -193,6 +204,21 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 				return exception != null && !exception.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.CATCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //CatchExpImpl

@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -31,6 +32,7 @@ import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Tag;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -176,6 +178,15 @@ public class TagImpl extends ElementImpl implements Tag {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitTag(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -249,6 +260,21 @@ public class TagImpl extends ElementImpl implements Tag {
 				return elements != null && !elements.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.TAG___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

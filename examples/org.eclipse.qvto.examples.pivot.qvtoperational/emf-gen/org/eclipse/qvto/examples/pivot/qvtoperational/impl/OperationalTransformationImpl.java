@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -34,8 +35,10 @@ import org.eclipse.ocl.examples.pivot.Property;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter;
+import org.eclipse.qvto.examples.pivot.qvtoperational.Module;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -215,6 +218,15 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitOperationalTransformation(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -328,6 +340,37 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 				return relation != null && !relation.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Module.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.MODULE___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //OperationalTransformationImpl

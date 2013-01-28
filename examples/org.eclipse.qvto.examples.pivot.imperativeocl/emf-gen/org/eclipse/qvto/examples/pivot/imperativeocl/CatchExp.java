@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,5 +68,14 @@ public interface CatchExp extends ImperativeExpression {
 	 * @generated
 	 */
 	EList<Type> getException();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitCatchExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 
 } // CatchExp

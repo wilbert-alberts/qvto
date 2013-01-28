@@ -13,10 +13,14 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation;
+import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,6 +49,46 @@ public class EntryOperationImpl extends ImperativeOperationImpl implements Entry
 	@Override
 	protected EClass eStaticClass() {
 		return QVTOperationalPackage.Literals.ENTRY_OPERATION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitEntryOperation(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == ImperativeOperation.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.IMPERATIVE_OPERATION___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.ENTRY_OPERATION___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.ENTRY_OPERATION___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //EntryOperationImpl

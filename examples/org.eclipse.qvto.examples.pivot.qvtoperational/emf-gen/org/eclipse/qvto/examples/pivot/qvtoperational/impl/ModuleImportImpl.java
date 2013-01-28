@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -35,6 +36,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Module;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModuleImport;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -229,6 +231,15 @@ public class ModuleImportImpl extends ElementImpl implements ModuleImport {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitModuleImport(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -357,6 +368,21 @@ public class ModuleImportImpl extends ElementImpl implements ModuleImport {
 				return getModule() != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.MODULE_IMPORT___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

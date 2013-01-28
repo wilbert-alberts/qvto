@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.LiteralExp;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -53,5 +54,14 @@ public interface ListLiteralExp extends EObject, LiteralExp {
 	 * @generated
 	 */
 	EList<OCLExpression> getElement();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitListLiteralExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 
 } // ListLiteralExp

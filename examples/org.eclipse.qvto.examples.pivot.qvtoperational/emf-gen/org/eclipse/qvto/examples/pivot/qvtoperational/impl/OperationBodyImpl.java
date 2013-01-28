@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -37,6 +38,7 @@ import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -156,6 +158,15 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 			variable = new EObjectContainmentEList<Variable>(Variable.class, this, QVTOperationalPackage.OPERATION_BODY__VARIABLE);
 		}
 		return variable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitOperationBody(this);
 	}
 
 	/**
@@ -285,6 +296,21 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 				return variable != null && !variable.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //OperationBodyImpl

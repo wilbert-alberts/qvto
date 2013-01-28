@@ -13,8 +13,10 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -27,6 +29,7 @@ import org.eclipse.ocl.examples.pivot.internal.impl.CollectionTypeImpl;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.DictionaryType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -114,6 +117,15 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitDictionaryType(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -166,6 +178,21 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 				return keyType != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.DICTIONARY_TYPE___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //DictionaryTypeImpl

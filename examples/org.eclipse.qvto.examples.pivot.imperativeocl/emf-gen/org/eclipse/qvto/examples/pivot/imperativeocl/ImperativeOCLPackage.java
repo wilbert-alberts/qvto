@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.pivot.imperativeocl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -323,13 +324,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ALT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ALT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Alt Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ALT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int ALT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.AssertExpImpl <em>Assert Exp</em>}' class.
@@ -468,13 +478,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSERT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Assert Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSERT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int ASSERT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.AssignExpImpl <em>Assign Exp</em>}' class.
@@ -622,13 +641,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSIGN_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Assign Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int ASSIGN_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.BlockExpImpl <em>Block Exp</em>}' class.
@@ -749,13 +777,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BLOCK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Block Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int BLOCK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.BreakExpImpl <em>Break Exp</em>}' class.
@@ -867,13 +904,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BREAK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Break Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREAK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int BREAK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.CatchExpImpl <em>Catch Exp</em>}' class.
@@ -1003,13 +1049,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CATCH_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Catch Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int CATCH_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ComputeExpImpl <em>Compute Exp</em>}' class.
@@ -1139,13 +1194,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int COMPUTE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Compute Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPUTE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int COMPUTE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ContinueExpImpl <em>Continue Exp</em>}' class.
@@ -1257,13 +1321,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CONTINUE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Continue Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTINUE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int CONTINUE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralExpImpl <em>Dict Literal Exp</em>}' class.
@@ -1384,13 +1457,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICT_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Dict Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+	int DICT_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralPartImpl <em>Dict Literal Part</em>}' class.
@@ -1475,13 +1557,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_PART___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICT_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Dict Literal Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
+	int DICT_LITERAL_PART_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictionaryTypeImpl <em>Dictionary Type</em>}' class.
@@ -1791,13 +1882,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICTIONARY_TYPE___RESOLVE_SELF_TYPE__TYPE = PivotPackage.COLLECTION_TYPE___RESOLVE_SELF_TYPE__TYPE;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Dictionary Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DICTIONARY_TYPE_OPERATION_COUNT = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 0;
+	int DICTIONARY_TYPE_OPERATION_COUNT = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeLoopExpImpl <em>Imperative Loop Exp</em>}' class.
@@ -2171,13 +2271,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int FOR_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>For Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FOR_EXP_OPERATION_COUNT = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 0;
+	int FOR_EXP_OPERATION_COUNT = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeIterateExpImpl <em>Imperative Iterate Exp</em>}' class.
@@ -2370,13 +2479,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_ITERATE_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Imperative Iterate Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_ITERATE_EXP_OPERATION_COUNT = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 0;
+	int IMPERATIVE_ITERATE_EXP_OPERATION_COUNT = IMPERATIVE_LOOP_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl <em>Instantiation Exp</em>}' class.
@@ -2515,13 +2633,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int INSTANTIATION_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANTIATION_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Instantiation Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INSTANTIATION_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int INSTANTIATION_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ListLiteralExpImpl <em>List Literal Exp</em>}' class.
@@ -2642,13 +2769,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>List Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+	int LIST_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ListTypeImpl <em>List Type</em>}' class.
@@ -2949,13 +3085,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_TYPE___RESOLVE_SELF_TYPE__TYPE = PivotPackage.COLLECTION_TYPE___RESOLVE_SELF_TYPE__TYPE;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>List Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_OPERATION_COUNT = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 0;
+	int LIST_TYPE_OPERATION_COUNT = PivotPackage.COLLECTION_TYPE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.LogExpImpl <em>Log Exp</em>}' class.
@@ -3139,13 +3284,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Log Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_OPERATION_COUNT = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 0;
+	int LOG_EXP_OPERATION_COUNT = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl <em>Ordered Tuple Literal Exp</em>}' class.
@@ -3266,13 +3420,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Ordered Tuple Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ORDERED_TUPLE_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
+	int ORDERED_TUPLE_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl <em>Ordered Tuple Literal Part</em>}' class.
@@ -3348,13 +3511,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_LITERAL_PART___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Ordered Tuple Literal Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ORDERED_TUPLE_LITERAL_PART_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
+	int ORDERED_TUPLE_LITERAL_PART_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
@@ -3619,13 +3791,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_TYPE___RESOLVE_SELF_TYPE__TYPE = PivotPackage.CLASS___RESOLVE_SELF_TYPE__TYPE;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.CLASS_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Ordered Tuple Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ORDERED_TUPLE_TYPE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 0;
+	int ORDERED_TUPLE_TYPE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.RaiseExpImpl <em>Raise Exp</em>}' class.
@@ -3755,13 +3936,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RAISE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Raise Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RAISE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int RAISE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ReturnExpImpl <em>Return Exp</em>}' class.
@@ -3882,13 +4072,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RETURN_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Return Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int RETURN_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
@@ -4018,13 +4217,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int SWITCH_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Switch Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int SWITCH_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.TryExpImpl <em>Try Exp</em>}' class.
@@ -4154,13 +4362,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TRY_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Try Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRY_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int TRY_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.TypedefImpl <em>Typedef</em>}' class.
@@ -4434,13 +4651,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TYPEDEF___RESOLVE_SELF_TYPE__TYPE = PivotPackage.CLASS___RESOLVE_SELF_TYPE__TYPE;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.CLASS_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Typedef</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPEDEF_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 0;
+	int TYPEDEF_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnlinkExpImpl <em>Unlink Exp</em>}' class.
@@ -4570,13 +4796,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNLINK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLINK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Unlink Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNLINK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int UNLINK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl <em>Unpack Exp</em>}' class.
@@ -4706,13 +4941,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNPACK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNPACK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Unpack Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNPACK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int UNPACK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.VariableInitExpImpl <em>Variable Init Exp</em>}' class.
@@ -4842,13 +5086,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int VARIABLE_INIT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_INIT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Variable Init Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_INIT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int VARIABLE_INIT_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.WhileExpImpl <em>While Exp</em>}' class.
@@ -4978,13 +5231,50 @@ public interface ImperativeOCLPackage extends EPackage {
 	int WHILE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>While Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WHILE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
+	int WHILE_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor <em>Visitor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getImperativeOCLVisitor()
+	 * @generated
+	 */
+	int IMPERATIVE_OCL_VISITOR = 31;
+
+	/**
+	 * The number of structural features of the '<em>Visitor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OCL_VISITOR_FEATURE_COUNT = PivotPackage.VISITOR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Visitor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OCL_VISITOR_OPERATION_COUNT = PivotPackage.VISITOR_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.SeverityKind <em>Severity Kind</em>}' enum.
@@ -4994,7 +5284,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 31;
+	int SEVERITY_KIND = 32;
 
 
 	/**
@@ -5028,6 +5318,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAltExp_Condition();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.AltExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.AltExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getAltExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.AssertExp <em>Assert Exp</em>}'.
@@ -5071,6 +5371,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAssertExp_Severity();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.AssertExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.AssertExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getAssertExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.AssignExp <em>Assign Exp</em>}'.
@@ -5127,6 +5437,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getAssignExp_Value();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.AssignExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.AssignExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getAssignExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.BlockExp <em>Block Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5148,6 +5468,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getBlockExp_Body();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.BlockExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.BlockExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getBlockExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.BreakExp <em>Break Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5156,6 +5486,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getBreakExp();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.BreakExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.BreakExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getBreakExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp <em>Catch Exp</em>}'.
@@ -5190,6 +5530,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getCatchExp_Exception();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getCatchExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ComputeExp <em>Compute Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5222,6 +5572,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getComputeExp_ReturnedElement();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ComputeExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ComputeExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getComputeExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ContinueExp <em>Continue Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5230,6 +5590,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getContinueExp();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ContinueExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ContinueExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getContinueExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp <em>Dict Literal Exp</em>}'.
@@ -5251,6 +5621,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDictLiteralExp_Part();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getDictLiteralExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart <em>Dict Literal Part</em>}'.
@@ -5285,6 +5665,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getDictLiteralPart_Value();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getDictLiteralPart__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictionaryType <em>Dictionary Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5306,6 +5696,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getDictionaryType_KeyType();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictionaryType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictionaryType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getDictionaryType__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ForExp <em>For Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5314,6 +5714,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getForExp();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ForExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ForExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getForExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeExpression <em>Imperative Expression</em>}'.
@@ -5345,6 +5755,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getImperativeIterateExp_Target();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeIterateExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeIterateExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getImperativeIterateExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeLoopExp <em>Imperative Loop Exp</em>}'.
@@ -5411,6 +5831,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getInstantiationExp_InstantiatedClass();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getInstantiationExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp <em>List Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5432,6 +5862,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getListLiteralExp_Element();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getListLiteralExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ListType <em>List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5440,6 +5880,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getListType();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ListType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ListType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getListType__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.LogExp <em>Log Exp</em>}'.
@@ -5463,6 +5913,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getLogExp_Condition();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.LogExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.LogExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getLogExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp <em>Ordered Tuple Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5482,6 +5942,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getOrderedTupleLiteralExp_Part();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart <em>Ordered Tuple Literal Part</em>}'.
@@ -5505,6 +5975,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getOrderedTupleLiteralPart_Value();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType <em>Ordered Tuple Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5524,6 +6004,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getOrderedTupleType_ElementType();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getOrderedTupleType__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp <em>Raise Exp</em>}'.
@@ -5558,6 +6048,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getRaiseExp_Exception();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getRaiseExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp <em>Return Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5577,6 +6077,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getReturnExp_Value();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getReturnExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.SwitchExp <em>Switch Exp</em>}'.
@@ -5611,6 +6121,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getSwitchExp_ElsePart();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.SwitchExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.SwitchExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getSwitchExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.TryExp <em>Try Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5641,6 +6161,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTryExp_TryBody();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.TryExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.TryExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getTryExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.Typedef <em>Typedef</em>}'.
@@ -5675,6 +6205,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getTypedef_Condition();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.Typedef#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.Typedef#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getTypedef__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp <em>Unlink Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5705,6 +6245,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getUnlinkExp_Target();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getUnlinkExp__Accept__ImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp <em>Unpack Exp</em>}'.
@@ -5739,6 +6289,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getUnpackExp_TargetVariable();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getUnpackExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp <em>Variable Init Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5771,6 +6331,16 @@ public interface ImperativeOCLPackage extends EPackage {
 	EAttribute getVariableInitExp_WithResult();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getVariableInitExp__Accept__ImperativeOCLVisitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.WhileExp <em>While Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5801,6 +6371,27 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWhileExp_Condition();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.WhileExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.WhileExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
+	 * @generated
+	 */
+	EOperation getWhileExp__Accept__ImperativeOCLVisitor();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor <em>Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Visitor</em>'.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor
+	 * @model instanceClass="org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor" typeParameters="R" superTypes="org.eclipse.ocl.examples.pivot.Visitor<R>"
+	 * @generated
+	 */
+	EClass getImperativeOCLVisitor();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.qvto.examples.pivot.imperativeocl.SeverityKind <em>Severity Kind</em>}'.
@@ -5861,6 +6452,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference ALT_EXP__CONDITION = eINSTANCE.getAltExp_Condition();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ALT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getAltExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.AssertExpImpl <em>Assert Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5893,6 +6492,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ASSERT_EXP__SEVERITY = eINSTANCE.getAssertExp_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ASSERT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getAssertExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.AssignExpImpl <em>Assign Exp</em>}' class.
@@ -5937,6 +6544,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference ASSIGN_EXP__VALUE = eINSTANCE.getAssignExp_Value();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ASSIGN_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getAssignExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.BlockExpImpl <em>Block Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5955,6 +6570,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference BLOCK_EXP__BODY = eINSTANCE.getBlockExp_Body();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getBlockExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.BreakExpImpl <em>Break Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5963,6 +6586,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EClass BREAK_EXP = eINSTANCE.getBreakExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BREAK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getBreakExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.CatchExpImpl <em>Catch Exp</em>}' class.
@@ -5991,6 +6622,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference CATCH_EXP__EXCEPTION = eINSTANCE.getCatchExp_Exception();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CATCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getCatchExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ComputeExpImpl <em>Compute Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6017,6 +6656,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference COMPUTE_EXP__RETURNED_ELEMENT = eINSTANCE.getComputeExp_ReturnedElement();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMPUTE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getComputeExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ContinueExpImpl <em>Continue Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6025,6 +6672,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONTINUE_EXP = eINSTANCE.getContinueExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTINUE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getContinueExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralExpImpl <em>Dict Literal Exp</em>}' class.
@@ -6043,6 +6698,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DICT_LITERAL_EXP__PART = eINSTANCE.getDictLiteralExp_Part();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DICT_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getDictLiteralExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralPartImpl <em>Dict Literal Part</em>}' class.
@@ -6071,6 +6734,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference DICT_LITERAL_PART__VALUE = eINSTANCE.getDictLiteralPart_Value();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DICT_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getDictLiteralPart__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictionaryTypeImpl <em>Dictionary Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6089,6 +6760,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference DICTIONARY_TYPE__KEY_TYPE = eINSTANCE.getDictionaryType_KeyType();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DICTIONARY_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getDictionaryType__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ForExpImpl <em>For Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6097,6 +6776,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FOR_EXP = eINSTANCE.getForExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FOR_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getForExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeExpressionImpl <em>Imperative Expression</em>}' class.
@@ -6125,6 +6812,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference IMPERATIVE_ITERATE_EXP__TARGET = eINSTANCE.getImperativeIterateExp_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMPERATIVE_ITERATE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getImperativeIterateExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeLoopExpImpl <em>Imperative Loop Exp</em>}' class.
@@ -6179,6 +6874,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference INSTANTIATION_EXP__INSTANTIATED_CLASS = eINSTANCE.getInstantiationExp_InstantiatedClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation INSTANTIATION_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getInstantiationExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ListLiteralExpImpl <em>List Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6197,6 +6900,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference LIST_LITERAL_EXP__ELEMENT = eINSTANCE.getListLiteralExp_Element();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LIST_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getListLiteralExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ListTypeImpl <em>List Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6205,6 +6916,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LIST_TYPE = eINSTANCE.getListType();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LIST_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getListType__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.LogExpImpl <em>Log Exp</em>}' class.
@@ -6225,6 +6944,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference LOG_EXP__CONDITION = eINSTANCE.getLogExp_Condition();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getLogExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl <em>Ordered Tuple Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6241,6 +6968,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ORDERED_TUPLE_LITERAL_EXP__PART = eINSTANCE.getOrderedTupleLiteralExp_Part();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl <em>Ordered Tuple Literal Part</em>}' class.
@@ -6261,6 +6996,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference ORDERED_TUPLE_LITERAL_PART__VALUE = eINSTANCE.getOrderedTupleLiteralPart_Value();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6277,6 +7020,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ORDERED_TUPLE_TYPE__ELEMENT_TYPE = eINSTANCE.getOrderedTupleType_ElementType();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleType__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.RaiseExpImpl <em>Raise Exp</em>}' class.
@@ -6305,6 +7056,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference RAISE_EXP__EXCEPTION = eINSTANCE.getRaiseExp_Exception();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RAISE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getRaiseExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.ReturnExpImpl <em>Return Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6321,6 +7080,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RETURN_EXP__VALUE = eINSTANCE.getReturnExp_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RETURN_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getReturnExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.SwitchExpImpl <em>Switch Exp</em>}' class.
@@ -6349,6 +7116,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference SWITCH_EXP__ELSE_PART = eINSTANCE.getSwitchExp_ElsePart();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SWITCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getSwitchExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.TryExpImpl <em>Try Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6373,6 +7148,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TRY_EXP__TRY_BODY = eINSTANCE.getTryExp_TryBody();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRY_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getTryExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.TypedefImpl <em>Typedef</em>}' class.
@@ -6401,6 +7184,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference TYPEDEF__CONDITION = eINSTANCE.getTypedef_Condition();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPEDEF___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getTypedef__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnlinkExpImpl <em>Unlink Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6425,6 +7216,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UNLINK_EXP__TARGET = eINSTANCE.getUnlinkExp_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation UNLINK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getUnlinkExp__Accept__ImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl <em>Unpack Exp</em>}' class.
@@ -6453,6 +7252,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference UNPACK_EXP__TARGET_VARIABLE = eINSTANCE.getUnpackExp_TargetVariable();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation UNPACK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getUnpackExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.VariableInitExpImpl <em>Variable Init Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6479,6 +7286,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EAttribute VARIABLE_INIT_EXP__WITH_RESULT = eINSTANCE.getVariableInitExp_WithResult();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VARIABLE_INIT_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getVariableInitExp__Accept__ImperativeOCLVisitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.WhileExpImpl <em>While Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6503,6 +7318,24 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WHILE_EXP__CONDITION = eINSTANCE.getWhileExp_Condition();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WHILE_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getWhileExp__Accept__ImperativeOCLVisitor();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor <em>Visitor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor
+		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getImperativeOCLVisitor()
+		 * @generated
+		 */
+		EClass IMPERATIVE_OCL_VISITOR = eINSTANCE.getImperativeOCLVisitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.SeverityKind <em>Severity Kind</em>}' enum.

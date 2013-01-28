@@ -13,6 +13,8 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl;
 
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -25,4 +27,13 @@ package org.eclipse.qvto.examples.pivot.imperativeocl;
  * @generated
  */
 public interface ForExp extends ImperativeLoopExp {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitForExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 } // ForExp

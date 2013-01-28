@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,6 +30,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.BlockExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,6 +85,15 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 			body = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, ImperativeOCLPackage.BLOCK_EXP__BODY);
 		}
 		return body;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitBlockExp(this);
 	}
 
 	/**
@@ -157,6 +168,21 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 				return body != null && !body.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.BLOCK_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //BlockExpImpl

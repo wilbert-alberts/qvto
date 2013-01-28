@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,7 +29,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingBody;
+import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,6 +109,15 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 			initSection = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, QVTOperationalPackage.MAPPING_BODY__INIT_SECTION);
 		}
 		return initSection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitMappingBody(this);
 	}
 
 	/**
@@ -193,6 +205,37 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 				return initSection != null && !initSection.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == OperationBody.class) {
+			switch (baseOperationID) {
+				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case QVTOperationalPackage.MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //MappingBodyImpl

@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,6 +31,7 @@ import org.eclipse.ocl.examples.pivot.internal.impl.LiteralExpImpl;
 import org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -84,6 +86,15 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 			part = new EObjectContainmentEList<DictLiteralPart>(DictLiteralPart.class, this, ImperativeOCLPackage.DICT_LITERAL_EXP__PART);
 		}
 		return part;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLVisitor<R> v) {
+		return v.visitDictLiteralExp(this);
 	}
 
 	/**
@@ -158,6 +169,21 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 				return part != null && !part.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ImperativeOCLPackage.DICT_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
+				return accept((ImperativeOCLVisitor)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //DictLiteralExpImpl

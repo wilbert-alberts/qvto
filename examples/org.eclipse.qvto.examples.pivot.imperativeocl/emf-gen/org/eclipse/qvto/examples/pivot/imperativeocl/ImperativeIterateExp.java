@@ -14,6 +14,7 @@
 package org.eclipse.qvto.examples.pivot.imperativeocl;
 
 import org.eclipse.ocl.examples.pivot.Variable;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,5 +59,14 @@ public interface ImperativeIterateExp extends ImperativeLoopExp {
 	 * @generated
 	 */
 	void setTarget(Variable value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitImperativeIterateExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 
 } // ImperativeIterateExp

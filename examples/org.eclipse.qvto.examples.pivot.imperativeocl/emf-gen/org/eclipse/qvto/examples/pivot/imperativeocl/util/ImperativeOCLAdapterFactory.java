@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.pivot.TypedElement;
 import org.eclipse.ocl.examples.pivot.util.Nameable;
 import org.eclipse.ocl.examples.pivot.util.Visitable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.*;
 
 /**
@@ -223,6 +224,10 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createWhileExpAdapter();
 			}
 			@Override
+			public <R> Adapter caseImperativeOCLVisitor(ImperativeOCLVisitor<R> object) {
+				return createImperativeOCLVisitorAdapter();
+			}
+			@Override
 			public Adapter caseVisitable(Visitable object) {
 				return createVisitableAdapter();
 			}
@@ -297,6 +302,10 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOperationCallExp(OperationCallExp object) {
 				return createOperationCallExpAdapter();
+			}
+			@Override
+			public <R> Adapter caseVisitor(Visitor<R> object) {
+				return createVisitorAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -753,6 +762,20 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor <em>Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor
+	 * @generated
+	 */
+	public Adapter createImperativeOCLVisitorAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.pivot.util.Visitable <em>Visitable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1015,6 +1038,20 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOperationCallExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.pivot.util.Visitor <em>Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.pivot.util.Visitor
+	 * @generated
+	 */
+	public Adapter createVisitorAdapter() {
 		return null;
 	}
 

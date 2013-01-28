@@ -41,9 +41,11 @@ import org.eclipse.ocl.examples.pivot.VariableDeclaration;
 import org.eclipse.ocl.examples.pivot.util.Nameable;
 import org.eclipse.ocl.examples.pivot.util.Visitable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeExpression;
 import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
 
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.*;
 
 /**
@@ -463,6 +465,14 @@ public class QVTOperationalSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case QVTOperationalPackage.QVT_OPERATIONAL_VISITOR: {
+				QVTOperationalVisitor<?> qvtOperationalVisitor = (QVTOperationalVisitor<?>)theEObject;
+				T result = caseQVTOperationalVisitor(qvtOperationalVisitor);
+				if (result == null) result = caseImperativeOCLVisitor(qvtOperationalVisitor);
+				if (result == null) result = caseVisitor(qvtOperationalVisitor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -858,6 +868,21 @@ public class QVTOperationalSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <R> T caseQVTOperationalVisitor(QVTOperationalVisitor<R> object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Visitable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1229,6 +1254,36 @@ public class QVTOperationalSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseInstantiationExp(InstantiationExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <R> T caseVisitor(Visitor<R> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <R> T caseImperativeOCLVisitor(ImperativeOCLVisitor<R> object) {
 		return null;
 	}
 

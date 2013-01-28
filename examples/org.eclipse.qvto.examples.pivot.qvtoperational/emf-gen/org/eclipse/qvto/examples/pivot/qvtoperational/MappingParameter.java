@@ -13,6 +13,8 @@
  */
 package org.eclipse.qvto.examples.pivot.qvtoperational;
 
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -83,5 +85,14 @@ public interface MappingParameter extends VarParameter {
 	 * @generated
 	 */
 	void setReferredDomain(DummyRelationDomain value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitMappingParameter(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // MappingParameter

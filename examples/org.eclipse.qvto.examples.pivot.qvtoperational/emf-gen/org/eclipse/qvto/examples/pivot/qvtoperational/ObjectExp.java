@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.pivot.qvtoperational;
 import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -87,5 +88,14 @@ public interface ObjectExp extends InstantiationExp {
 	 * @generated
 	 */
 	void setReferredObject(Variable value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitObjectExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalVisitor<R> v);
 
 } // ObjectExp

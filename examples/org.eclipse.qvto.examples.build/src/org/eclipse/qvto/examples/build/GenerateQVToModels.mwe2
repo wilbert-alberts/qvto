@@ -1,20 +1,20 @@
 /**
  * <copyright>
  *
- * Copyright (c) 2011 E.D.Willink and others.
+ * Copyright (c) 2011, 2013 Willink Transformations, University of Yok and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
- *
+ *		E.D.Willink - initial API and implementation
+ *		Adoflo Sanchez-Barbudo Herrera - bug397429
+ * 		
  * </copyright>
  *
- * $Id: GenerateXtextModels.mwe2,v 1.2 2011/01/24 20:54:27 ewillink Exp $
  * 
- * Run As->MWE2 Workflow to regenerate the Xtest CST models.
+ * Run As->MWE2 Workflow to regenerate QVTo models.
  */
 module GenerateQVToModels
 
@@ -27,25 +27,87 @@ import org.eclipse.emf.ecore.resource.impl.*
  *	Generate the Pivot-based Models.
  */
 var platformURI = ".."
+var imperativeOCLslot = "imperativeOCLslot"
+var imperativeOCLecore = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+var imperativeOCLURI = "platform:/resource${imperativeOCLecore}"
 
 Workflow {
 	bean = ResourceSetImpl : resourceSet {}
+//	bean = ProjectMapSetup { resourceSet = resourceSet }
     bean = StandaloneSetup { resourceSet = resourceSet
     	platformUri = platformURI		// A local folder to minimize workspace searching
     	scanClassPath = true		// But we do need to search the plugin-space
     }
     bean = GenModelSetup { resourceSet = resourceSet }
     bean = UMLGenModelSetup { resourceSet = resourceSet }
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-    	genModel = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
+    
+//    component = ResourceReader {
+//		resourceSet = resourceSet
+//		uri = imperativeOCLecore
+//		modelSlot = imperativeOCLslot
+//	}
+	
+    component = OCLExtenderVisitorPatternWeaverComponent {
+    	resourceSet = resourceSet
+    	uri = "/org.eclipse.qvto.examples.build/qvtoTransf/VisitorPatternTransf.qvto"
+    	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore" 
+    	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
+    	baseVisitorInterfaceName = "Visitor"
+    	derivedVisitorInterfaceName = "ImperativeOCLVisitor"
+    	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor"
     }
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-    	genModel = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel" 	
+    
+    component = OCLExtenderVisitorPatternWeaverComponent {
+    	resourceSet = resourceSet
+    	uri = "/org.eclipse.qvto.examples.build/qvtoTransf/VisitorPatternTransf.qvto"
+    	in = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore" 
+    	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+    	baseVisitorInterfaceName = "ImperativeOCLVisitor"
+    	derivedVisitorInterfaceName = "QVTOperationalVisitor"
+    	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor"
     }
+    
+//    component = OCLExtenderVisitableAcceptGenerator {
+//		resourceSet = resourceSet
+//		targetEcoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+//		visitorEcoreFile = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
+//		derivedVisitorInterfaceName = "ImperativeOCLVisitor"
+//	}
+	
+//	component = ResourceWriter {
+//		resourceSet = resourceSet
+//		modelSlot = imperativeOCLslot	
+//	}
 
+	
+	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+		genModel = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
+	}
+	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+		genModel = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel" 	
+	}
 
-    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet
-    	
+//    component = OCLExtenderVisitableAcceptGenerator { resourceSet = resourceSet skipOnErrors = true
+//    	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+//    }
+//    
+//    component = OCLExtenderVisitableAcceptGenerator { resourceSet = resourceSet skipOnErrors = true
+//    	ecoreFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore"
+//    }
+
+	
+//	component = ResourceReader { resourceSet = resourceSet skipOnErrors = true
+//		modelSlot = "${slot}"
+//		uri = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+//	}
+	
+	
+	
+//	component = ResourceWriter {
+//		modelSlot = "${slot}"		
+//	}
+    
+    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet	
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
     	javaPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"

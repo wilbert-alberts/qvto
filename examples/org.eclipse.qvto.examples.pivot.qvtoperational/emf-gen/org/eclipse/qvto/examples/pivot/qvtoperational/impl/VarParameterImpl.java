@@ -43,6 +43,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
+import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -284,6 +285,15 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.VAR_PARAMETER__RES_OWNER, newResOwner, newResOwner));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalVisitor<R> v) {
+		return v.visitVarParameter(this);
 	}
 
 	/**
@@ -564,8 +574,11 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings({"rawtypes", "unchecked" })
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR:
+				return accept((QVTOperationalVisitor)arguments.get(0));
 			case QVTOperationalPackage.VAR_PARAMETER___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case QVTOperationalPackage.VAR_PARAMETER___MAKE_PARAMETER:

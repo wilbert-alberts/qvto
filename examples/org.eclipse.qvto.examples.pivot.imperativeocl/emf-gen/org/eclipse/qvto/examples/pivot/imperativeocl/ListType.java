@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.pivot.imperativeocl;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.CollectionType;
+import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,4 +29,13 @@ import org.eclipse.ocl.examples.pivot.CollectionType;
  * @generated
  */
 public interface ListType extends EObject, CollectionType {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitListType(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLVisitor<R> v);
 } // ListType
