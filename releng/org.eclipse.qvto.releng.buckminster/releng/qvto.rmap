@@ -3,8 +3,6 @@
   <rm:property key="checkout.location" value="${workspace.root}"/>
   <rm:property key="eclipse.download" value="http://download.eclipse.org"/>
   <rm:property key="git.qvto.local.repository.location" value="C:\GIT\org.eclipse.qvto"/>
-  <!--rm:property key="cvs.modeling.repository.location" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling"/>
-  <rm:property key="cvs.eclipse.repository.location" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse"/-->
   <rm:property key="resolve.target.platform" value="false"/>
   <rm:property key="build.type" value="I"/>
   <rm:property key="build.type" mutable="false" value="I"/>
@@ -13,8 +11,6 @@
   <rm:locator pattern="^org\.eclipse\.qvto.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.ocl.*" searchPathRef="ocl"/>
   <rm:locator pattern="^org\.eclipse\.emf.*" searchPathRef="emf"/>
-  <!--rm:locator pattern="^org\.eclipse\.test$" searchPathRef="eclipse-tests-source-code"/>
-  <rm:locator pattern="^org\.eclipse\.ant\.optional\.junit$" searchPathRef="eclipse-tests-source-code"/-->
   <rm:locator searchPathRef="eclipse-platform" failOnError="false"/>
   <rm:locator searchPathRef="orbit"/>
   <rm:searchPath name="qvto-source-code">
@@ -103,34 +99,39 @@
       </rm:uri>
     </rm:provider>
   </rm:searchPath>
-  <!--rm:searchPath name="eclipse-tests-source-code">
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs" mutable="false">
-      <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="{0},{1}">
-        <bc:propertyRef key="cvs.eclipse.repository.location"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-  </rm:searchPath-->
   <rm:searchPath name="emf">
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(resolve.target.platform=true)(|(build.type=I)(build.type=N)))" readerType="p2" source="false" mutable="false">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(build.type=N)(resolve.target.platform=true))" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="{0}/modeling/emf/emf/updates/2.9-I-builds">
+      <rm:uri format="{0}/modeling/emf/emf/updates/nightly">
+        <bc:propertyRef key="eclipse.download"/>
+      </rm:uri>
+    </rm:provider>
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(build.type=I)(resolve.target.platform=true))" readerType="p2" source="false" mutable="false">
+      <rm:property key="buckminster.source" value="false"/>
+      <rm:property key="buckminster.mutable" value="false"/>
+      <rm:uri format="{0}/modeling/emf/emf/updates/interim">
         <bc:propertyRef key="eclipse.download"/>
       </rm:uri>
     </rm:provider>
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(build.type=S)(resolve.target.platform=true))" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="{0}/modeling/emf/emf/updates/2.9milestones">
+      <rm:uri format="{0}/modeling/emf/emf/updates/milestones">
         <bc:propertyRef key="eclipse.download"/>
       </rm:uri>
     </rm:provider>
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(resolve.target.platform=true)(|(build.type=M)(build.type=R)))" readerType="p2" source="false" mutable="false">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(build.type=R)(resolve.target.platform=true))" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="{0}/modeling/emf/emf/updates/2.9">
+      <rm:uri format="{0}/modeling/emf/emf/updates/releases">
+        <bc:propertyRef key="eclipse.download"/>
+      </rm:uri>
+    </rm:provider>
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(&amp;(build.type=M)(resolve.target.platform=true))" readerType="p2" source="false" mutable="false">
+      <rm:property key="buckminster.mutable" value="false"/>
+      <rm:property key="buckminster.source" value="false"/>
+      <rm:uri format="{0}/modeling/emf/emf/updates/2.9.x">
         <bc:propertyRef key="eclipse.download"/>
       </rm:uri>
     </rm:provider>
