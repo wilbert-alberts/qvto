@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.ocl.examples.pivot.Variable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -171,6 +172,15 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitVariableInitExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -259,6 +269,8 @@ public class VariableInitExpImpl extends ImperativeExpressionImpl implements Var
 		switch (operationID) {
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.VARIABLE_INIT_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.pivot.Property;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.PropertyImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ContextualProperty;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
@@ -231,6 +232,15 @@ public class ContextualPropertyImpl extends PropertyImpl implements ContextualPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitContextualProperty(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -331,6 +341,8 @@ public class ContextualPropertyImpl extends PropertyImpl implements ContextualPr
 		switch (operationID) {
 			case QVTOperationalPackage.CONTEXTUAL_PROPERTY___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.CONTEXTUAL_PROPERTY___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

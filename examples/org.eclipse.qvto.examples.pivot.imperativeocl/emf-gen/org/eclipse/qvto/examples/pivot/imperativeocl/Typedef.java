@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
@@ -97,5 +98,14 @@ public interface Typedef extends EObject, org.eclipse.ocl.examples.pivot.Class {
 	 * @generated
 	 */
 	<R> R accept(ImperativeOCLVisitor<R> v);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.pivot.Visitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLVisitor<R>)v).visitTypedef(this);'"
+	 * @generated
+	 */
+	<R> R accept(Visitor<R> v);
 
 } // Typedef

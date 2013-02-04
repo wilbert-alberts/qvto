@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -46,6 +47,7 @@ import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ClassImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Module;
@@ -253,7 +255,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<org.eclipse.ocl.examples.pivot.Package> getNestedPackage() {
+	public List<org.eclipse.ocl.examples.pivot.Package> getNestedPackage() {
 		if (nestedPackage == null) {
 			nestedPackage = new EObjectContainmentWithInverseEList<org.eclipse.ocl.examples.pivot.Package>(org.eclipse.ocl.examples.pivot.Package.class, this, QVTOperationalPackage.MODULE__NESTED_PACKAGE, PivotPackage.PACKAGE__NESTING_PACKAGE);
 		}
@@ -348,7 +350,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<org.eclipse.ocl.examples.pivot.Package> getImportedPackage() {
+	public List<org.eclipse.ocl.examples.pivot.Package> getImportedPackage() {
 		if (importedPackage == null) {
 			importedPackage = new EObjectResolvingEList<org.eclipse.ocl.examples.pivot.Package>(org.eclipse.ocl.examples.pivot.Package.class, this, QVTOperationalPackage.MODULE__IMPORTED_PACKAGE);
 		}
@@ -360,7 +362,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Type> getOwnedType() {
+	public List<Type> getOwnedType() {
 		if (ownedType == null) {
 			ownedType = new EObjectContainmentWithInverseEList<Type>(Type.class, this, QVTOperationalPackage.MODULE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE);
 		}
@@ -493,6 +495,15 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 */
 	public <R> R accept(final QVTOperationalVisitor<R> v) {
 		return v.visitModule(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitModule(this);
 	}
 
 	/**
@@ -797,6 +808,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 		switch (operationID) {
 			case QVTOperationalPackage.MODULE___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MODULE___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

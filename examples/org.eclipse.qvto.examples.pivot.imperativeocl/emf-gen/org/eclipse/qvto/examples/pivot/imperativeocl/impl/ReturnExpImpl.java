@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -129,6 +130,15 @@ public class ReturnExpImpl extends ImperativeExpressionImpl implements ReturnExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitReturnExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -207,6 +217,8 @@ public class ReturnExpImpl extends ImperativeExpressionImpl implements ReturnExp
 		switch (operationID) {
 			case ImperativeOCLPackage.RETURN_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.RETURN_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

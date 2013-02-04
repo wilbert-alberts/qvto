@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.BlockExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -94,6 +95,15 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitBlockExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitBlockExp(this);
 	}
 
 	/**
@@ -181,6 +191,8 @@ public class BlockExpImpl extends ImperativeExpressionImpl implements BlockExp {
 		switch (operationID) {
 			case ImperativeOCLPackage.BLOCK_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.BLOCK_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

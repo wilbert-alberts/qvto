@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
@@ -308,6 +309,15 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitMappingOperation(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -442,6 +452,7 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 		if (baseClass == ImperativeOperation.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.IMPERATIVE_OPERATION___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MAPPING_OPERATION___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.IMPERATIVE_OPERATION___ACCEPT__VISITOR: return QVTOperationalPackage.MAPPING_OPERATION___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -459,6 +470,8 @@ public class MappingOperationImpl extends ImperativeOperationImpl implements Map
 		switch (operationID) {
 			case QVTOperationalPackage.MAPPING_OPERATION___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MAPPING_OPERATION___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

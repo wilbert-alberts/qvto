@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 /**
@@ -70,5 +71,14 @@ public interface DictionaryType extends EObject, CollectionType {
 	 * @generated
 	 */
 	<R> R accept(ImperativeOCLVisitor<R> v);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.pivot.Visitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLVisitor<R>)v).visitDictionaryType(this);'"
+	 * @generated
+	 */
+	<R> R accept(Visitor<R> v);
 
 } // DictionaryType

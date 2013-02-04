@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.Property;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter;
@@ -227,6 +228,15 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitOperationalTransformation(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -352,6 +362,7 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 		if (baseClass == Module.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.MODULE___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.MODULE___ACCEPT__VISITOR: return QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -369,6 +380,8 @@ public class OperationalTransformationImpl extends ModuleImpl implements Operati
 		switch (operationID) {
 			case QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.OPERATIONAL_TRANSFORMATION___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

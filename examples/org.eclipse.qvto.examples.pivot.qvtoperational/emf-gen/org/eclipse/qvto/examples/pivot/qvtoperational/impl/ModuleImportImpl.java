@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImportKind;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Module;
@@ -240,6 +241,15 @@ public class ModuleImportImpl extends ElementImpl implements ModuleImport {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitModuleImport(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -381,6 +391,8 @@ public class ModuleImportImpl extends ElementImpl implements ModuleImport {
 		switch (operationID) {
 			case QVTOperationalPackage.MODULE_IMPORT___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MODULE_IMPORT___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

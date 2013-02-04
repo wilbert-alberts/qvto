@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Variable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -204,6 +205,15 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitInstantiationExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -306,6 +316,8 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 		switch (operationID) {
 			case ImperativeOCLPackage.INSTANTIATION_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.INSTANTIATION_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

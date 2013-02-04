@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationDomain;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingParameter;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter;
@@ -173,6 +174,15 @@ public class MappingParameterImpl extends VarParameterImpl implements MappingPar
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitMappingParameter(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -248,6 +258,7 @@ public class MappingParameterImpl extends VarParameterImpl implements MappingPar
 		if (baseClass == VarParameter.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MAPPING_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__VISITOR: return QVTOperationalPackage.MAPPING_PARAMETER___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -265,6 +276,8 @@ public class MappingParameterImpl extends VarParameterImpl implements MappingPar
 		switch (operationID) {
 			case QVTOperationalPackage.MAPPING_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MAPPING_PARAMETER___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

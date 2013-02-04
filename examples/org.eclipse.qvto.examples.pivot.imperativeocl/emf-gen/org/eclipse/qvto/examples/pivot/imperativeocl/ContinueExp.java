@@ -13,6 +13,7 @@
  */
 package org.eclipse.qvto.examples.pivot.imperativeocl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
 
 
@@ -36,4 +37,13 @@ public interface ContinueExp extends ImperativeExpression {
 	 * @generated
 	 */
 	<R> R accept(ImperativeOCLVisitor<R> v);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.pivot.Visitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLVisitor<R>)v).visitContinueExp(this);'"
+	 * @generated
+	 */
+	<R> R accept(Visitor<R> v);
 } // ContinueExp

@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.pivot.ValueSpecification;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.VariableImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
@@ -52,7 +53,6 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl#isRequired <em>Is Required</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl#getCtxOwner <em>Ctx Owner</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl#getKind <em>Kind</em>}</li>
@@ -63,26 +63,6 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor
  * @generated
  */
 public class VarParameterImpl extends VariableImpl implements VarParameter {
-	/**
-	 * The default value of the '{@link #isRequired() <em>Is Required</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isRequired()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean IS_REQUIRED_EDEFAULT = true;
-
-	/**
-	 * The cached value of the '{@link #isRequired() <em>Is Required</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isRequired()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isRequired = IS_REQUIRED_EDEFAULT;
-
 	/**
 	 * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -120,27 +100,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	@Override
 	protected EClass eStaticClass() {
 		return QVTOperationalPackage.Literals.VAR_PARAMETER;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isRequired() {
-		return isRequired;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsRequired(boolean newIsRequired) {
-		boolean oldIsRequired = isRequired;
-		isRequired = newIsRequired;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED, oldIsRequired, isRequired));
 	}
 
 	/**
@@ -297,6 +256,15 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitVarParameter(this);
+	}
+
+	/**
 	 * The cached invocation delegate for the '{@link #CompatibleBody(org.eclipse.ocl.examples.pivot.ValueSpecification) <em>Compatible Body</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -412,8 +380,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED:
-				return isRequired();
 			case QVTOperationalPackage.VAR_PARAMETER__OPERATION:
 				return getOperation();
 			case QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER:
@@ -434,9 +400,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED:
-				setIsRequired((Boolean)newValue);
-				return;
 			case QVTOperationalPackage.VAR_PARAMETER__OPERATION:
 				setOperation((Operation)newValue);
 				return;
@@ -461,9 +424,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED:
-				setIsRequired(IS_REQUIRED_EDEFAULT);
-				return;
 			case QVTOperationalPackage.VAR_PARAMETER__OPERATION:
 				setOperation((Operation)null);
 				return;
@@ -488,8 +448,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED:
-				return isRequired != IS_REQUIRED_EDEFAULT;
 			case QVTOperationalPackage.VAR_PARAMETER__OPERATION:
 				return getOperation() != null;
 			case QVTOperationalPackage.VAR_PARAMETER__CTX_OWNER:
@@ -511,7 +469,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == TypedMultiplicityElement.class) {
 			switch (derivedFeatureID) {
-				case QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED: return PivotPackage.TYPED_MULTIPLICITY_ELEMENT__IS_REQUIRED;
 				default: return -1;
 			}
 		}
@@ -533,7 +490,6 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == TypedMultiplicityElement.class) {
 			switch (baseFeatureID) {
-				case PivotPackage.TYPED_MULTIPLICITY_ELEMENT__IS_REQUIRED: return QVTOperationalPackage.VAR_PARAMETER__IS_REQUIRED;
 				default: return -1;
 			}
 		}
@@ -579,6 +535,8 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 		switch (operationID) {
 			case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.VAR_PARAMETER___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 			case QVTOperationalPackage.VAR_PARAMETER___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case QVTOperationalPackage.VAR_PARAMETER___MAKE_PARAMETER:
@@ -597,9 +555,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isRequired: ");
-		result.append(isRequired);
-		result.append(", kind: ");
+		result.append(" (kind: ");
 		result.append(kind);
 		result.append(')');
 		return result.toString();

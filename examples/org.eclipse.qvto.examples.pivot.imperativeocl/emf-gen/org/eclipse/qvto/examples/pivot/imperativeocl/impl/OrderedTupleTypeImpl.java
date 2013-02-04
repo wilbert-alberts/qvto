@@ -26,6 +26,7 @@ import org.eclipse.ocl.examples.pivot.Type;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ClassImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -99,6 +100,15 @@ public class OrderedTupleTypeImpl extends ClassImpl implements OrderedTupleType 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitOrderedTupleType(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -165,6 +175,8 @@ public class OrderedTupleTypeImpl extends ClassImpl implements OrderedTupleType 
 		switch (operationID) {
 			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

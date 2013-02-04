@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.pivot.Type;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.CollectionTypeImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.DictionaryType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -126,6 +127,15 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitDictionaryType(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -191,6 +201,8 @@ public class DictionaryTypeImpl extends CollectionTypeImpl implements Dictionary
 		switch (operationID) {
 			case ImperativeOCLPackage.DICTIONARY_TYPE___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.DICTIONARY_TYPE___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

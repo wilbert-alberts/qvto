@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.ocl.examples.pivot.Variable;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
+import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
+import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl;
 
 import org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody;
@@ -182,6 +185,15 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitObjectExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -266,11 +278,29 @@ public class ObjectExpImpl extends InstantiationExpImpl implements ObjectExp {
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == InstantiationExp.class) {
+			switch (baseOperationID) {
+				case ImperativeOCLPackage.INSTANTIATION_EXP___ACCEPT__VISITOR: return QVTOperationalPackage.OBJECT_EXP___ACCEPT__VISITOR;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case QVTOperationalPackage.OBJECT_EXP___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.OBJECT_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
