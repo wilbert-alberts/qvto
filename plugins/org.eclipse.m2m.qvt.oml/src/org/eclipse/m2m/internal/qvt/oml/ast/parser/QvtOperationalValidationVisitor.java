@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2007, 2011 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -212,7 +212,7 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		}
 		else if (false == breakContinueExp.eContainer() instanceof ImperativeExpression
 				&& false == breakContinueExp.eContainer() instanceof IfExp) {
-			// QVT language also defines an imperative “if-then-else” construct that is less constrained 
+			// QVT language also defines an imperative ï¿½if-then-elseï¿½ construct that is less constrained 
 			// as the corresponding OCL construct
 	    	QvtOperationalUtil.reportError(fEnv, 
 	    			NLS.bind(ValidationMessages.BreakContinue_InvalidExpressionOwner, breakContinueExp.eClass().getName()),
