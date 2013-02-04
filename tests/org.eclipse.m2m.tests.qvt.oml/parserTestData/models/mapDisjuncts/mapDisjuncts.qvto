@@ -7,14 +7,14 @@ main() {
 
 	var a := object EAttribute {  name := 'aSrc'; };
 	var aResult := a.map disjunctMapping('aSrc_disjunctMapping');	
-	-- disjuncted should never into trace	
-	assert fatal (null = a.resolveoneIn(ENamedElement::disjunctMapping, ETypedElement));
+	-- trace records for disjuncting mappings explicitly enabled for bug 377882 	
+	assert fatal (null <> a.resolveoneIn(ENamedElement::disjunctMapping, ETypedElement));
 	assert fatal (null <> a.resolveoneIn(EAttribute::disjunctedMapping1, ETypedElement));	
 		
 	var p := object EParameter {  name := 'pSrc'; };
 	var pResult := p.map disjunctMapping('pSrc_disjunctMapping');
-	-- no trace for the disjuncting mapping exists
-	assert fatal (null = p.resolveoneIn(ENamedElement::disjunctMapping, ETypedElement));	
+	-- trace records for disjuncting mappings explicitly enabled for bug 377882
+	assert fatal (null <> p.resolveoneIn(ENamedElement::disjunctMapping, ETypedElement));	
 	assert fatal (null <> p.resolveoneIn(EParameter::disjunctedMapping2, ETypedElement));
 	
 	var container := object EAnnotation {
@@ -51,9 +51,12 @@ main() {
 	var redirectedMappingResult := wrongSrc.map chainedDisjunctMapping('c1_chained');
 	assert fatal (redirectedMappingResult.oclIsKindOf(EAnnotation));
 	container.contents += redirectedMappingResult.oclAsType(EObject);
-	-- just correcting the precondition should make it work
-	-- new result will be created as previously, null was returned and no trace created
-	object wrongSrc: { name := 'x'; };
+	-- just correcting the precondition should make it work	
+	-- check succeeded pre-condition (when clause)
+	wrongSrc := object EClass { 
+		name := 'x'; -- causing precondition to succeed 
+	};
+	container.contents += wrongSrc.oclAsType(EObject);
 	var wrongSrcCorrectedResult := wrongSrc.map chainedDisjunctMapping('c1_chained');
 	assert fatal (wrongSrcCorrectedResult <> null);
 	wrongSrc.eStructuralFeatures += wrongSrcCorrectedResult.oclAsType(EReference);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Eclipse Modeling Project and others.
+ * Copyright (c) 2009,2012 Eclipse Modeling Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - bug 394498
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.debug.core.vm;
 
@@ -115,8 +116,6 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 	protected QvtOperationalEvaluationVisitorImpl createNestedEvaluationVisitor(
 			QvtOperationalEvaluationVisitorImpl parent,
 			QvtOperationalEvaluationEnv nestedEvalEnv) {
-		// FIXME - need to use interceptor to otherwise explicit transf instance
-		// are not debuggable
 		return new QVTODebugEvaluator(parent, nestedEvalEnv);
 	}
 	
@@ -472,6 +471,11 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 			return "<null>"; //$NON-NLS-1$
 		}
 		return mainUnit.getModules().get(0).getName();
+	}
+	
+	@Override
+	protected InternalEvaluator createInterruptibleVisitor() {
+		return (DebugInterceptor)createDebugInterceptor();
 	}
 	
 	private final class DebugInterceptor extends QvtGenericEvaluationVisitor implements InternalEvaluator {

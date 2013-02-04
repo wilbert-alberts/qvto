@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 310991
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -2529,11 +2530,19 @@ public class QvtOperationalVisitorCS
 			} else {
 				//eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
 				eFeature = prop;				
-				//QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);				
-		        if (env.lookupProperty(module, prop.getName()) != null) {
-		        	HiddenElementAdapter.markAsHidden(eFeature);
-		            env.reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
-		        }
+				//QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);
+				
+				EStructuralFeature feature = env.lookupProperty(module, prop.getName());
+								
+		        if (feature != null) {
+		        	EClassifier owner = getOCLEnvironment().getUMLReflection().getOwningClassifier(feature);
+		        	
+		        	// report error only if the existing feature is defined for the same module, i.e. if its owner is an explicit supertype of the module
+		        	if((getOCLEnvironment().getUMLReflection().getRelationship(owner, module) & UMLReflection.SUPERTYPE) != 0) {
+		        		HiddenElementAdapter.markAsHidden(eFeature);
+		        		env.reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
+		        	}
+		        }	
 				
 				if (propCS instanceof ConfigPropertyCS) {
 					module.getConfigProperty().add(eFeature);

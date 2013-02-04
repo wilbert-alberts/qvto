@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2007,2012 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,8 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
+ *                         397215, 397959
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -297,7 +299,15 @@ public class TransformTests {
         		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
         			.includeMetamodelFile("MyUnbound.ecore"), //$NON-NLS-1$
         		new FilesToFilesData("nullableEnum", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
-        			.includeMetamodelFile("NullableEnumTest.ecore") //$NON-NLS-1$
+        			.includeMetamodelFile("NullableEnumTest.ecore"), //$NON-NLS-1$
+        		new FilesToFilesData("bug302594", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("bug309762"), //$NON-NLS-1$
+        		new FilesToFilesData("bug377882", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug388325", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("bug392080"), //$NON-NLS-1$
+        		new FileToFileData("bug392153"), //$NON-NLS-1$
+        		new FileToFileData("bug397215"), //$NON-NLS-1$
+        		new FileToFileData("bug397959")  //$NON-NLS-1$
         };
     }
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation
+ * Copyright (c) 2008, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 388801
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -48,6 +49,7 @@ import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.CollectionUtil;
 
 /**
@@ -256,6 +258,30 @@ public class EvaluationUtil {
 		}
 		
 		return result;
-	}	
+	}
+	
+	public static Object createInitialValue(EClassifier classifier, OCLStandardLibrary<EClassifier> oclstdlib) {
+		
+		Object initialValue = null;
+		
+		if(classifier == oclstdlib.getString()) {
+			initialValue = "";
+		} else if(classifier == oclstdlib.getBoolean()) {
+			initialValue = Boolean.FALSE;
+		} else if(classifier == oclstdlib.getInteger()) {
+			initialValue = Integer.valueOf(0);
+		} else if(classifier == oclstdlib.getReal()) {
+			initialValue = Double.valueOf(0);
+		} else if(classifier == oclstdlib.getUnlimitedNatural()) {
+			initialValue = Integer.valueOf(0);
+		} else if(classifier instanceof CollectionType<?, ?>) {
+			@SuppressWarnings("unchecked")
+			CollectionType<EClassifier,EOperation> collType = (CollectionType<EClassifier,EOperation>) classifier;
+			initialValue = createNewCollection(collType);
+		}
+		
+		return initialValue;
+		
+	}
     
 }

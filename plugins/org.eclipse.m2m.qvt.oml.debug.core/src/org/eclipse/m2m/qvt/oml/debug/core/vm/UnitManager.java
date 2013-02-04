@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Eclipse Modeling Project and others.
+ * Copyright (c) 2009,2012 Eclipse Modeling Project and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - bug 394498
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.debug.core.vm;
 
@@ -87,7 +88,7 @@ public class UnitManager {
 		
 		for (CompiledUnit nextUnit : allUnits) {
 			// FIXME
-			IModuleSourceInfo sourceBinding = ASTBindingHelper.getModuleSourceBinding(mainUnit.getModules().get(0));
+			IModuleSourceInfo sourceBinding = ASTBindingHelper.getModuleSourceBinding(nextUnit.getModules().get(0));
 			if(sourceBinding != null) {
 				UnitEntry entry = new UnitEntry(nextUnit, sourceBinding.getLineNumberProvider());
 				file2Unit.put(nextUnit.getURI(), entry);

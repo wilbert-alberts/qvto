@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 310991, 397959
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -226,9 +227,14 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
             EClassifier owner = vdcl.getType();
             
             if (owner != null) {
-                EStructuralFeature property = safeTryLookupPropertyInternal(owner, name);
+                EStructuralFeature property = safeTryLookupPropertyInternal(owner, name);          
                 if (property != null) {
-                    return vdcl;
+                	// in case of extended modules, module properties are distributed across multiple owners without explicit supertyping
+					// => accept only if property is actually available on the owner, i.e. if the actual property owner is an explicit supertype of the owner
+                	EClassifier actualPropertyOwner = getUMLReflection().getOwningClassifier(property);
+                	if ((getUMLReflection().getRelationship(actualPropertyOwner, owner) & UMLReflection.SUPERTYPE) != 0) {
+                		return vdcl;
+                	}	
                 }
             }
 
@@ -492,6 +498,13 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 				for (EOperation nextImportedOper : importedOpers) {				
 					if(name.equals(nextImportedOper.getName()) && 
 						matchParameters(nextImportedOper, operation)) {
+						
+						// accept imported operation only if it has the same context type (fixed by bug 397959)
+						if (nextImportedOper instanceof ImperativeOperation &&
+							operation instanceof ImperativeOperation &&
+							!matchContext((ImperativeOperation) nextImportedOper, (ImperativeOperation) operation)) {
+								continue;
+						}
 					
 						return nextImportedOper;
 					}
@@ -641,7 +654,18 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 		
 		return false;
-	}	
+	}
+	
+	/**
+	 * Performs name ignoring match on given context types.
+	 */
+	private boolean matchContext(ImperativeOperation a, ImperativeOperation b) {
+		
+		return getTypeChecker().getRelationship(
+								getUMLReflection().getOCLType(a.getContext()),
+								getUMLReflection().getOCLType(b.getContext()))
+							== UMLReflection.SAME_TYPE;
+	}
 	
 	
 	private boolean isOneOfParents(EcoreEnvironment env) {

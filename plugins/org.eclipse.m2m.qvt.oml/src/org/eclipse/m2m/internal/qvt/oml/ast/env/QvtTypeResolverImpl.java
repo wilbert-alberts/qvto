@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2007,2012 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,12 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 310991
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -128,7 +127,7 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		// recurse up the extension hierarchy
 		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getAllExtendedModules()) {
 			nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
-			nextSiblingEnv.getAdditionalAttributes(owner);
+			result.addAll(nextSiblingEnv.getAdditionalAttributes(owner));
 		}
 		
 		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByAccess()) {

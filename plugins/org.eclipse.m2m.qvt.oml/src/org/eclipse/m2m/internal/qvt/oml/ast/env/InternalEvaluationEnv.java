@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation
+ * Copyright (c) 2008,2013 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 392153
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -133,5 +134,7 @@ public interface InternalEvaluationEnv {
 	 * 
 	 * @return the trace object
 	 */
-	Trace getTraces();	
+	Trace getTraces();
+	
+	void setTraces(Trace trace);
 }

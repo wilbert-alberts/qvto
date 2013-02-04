@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation
+ * Copyright (c) 2007,2012 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -93,6 +94,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
+import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
@@ -149,7 +151,6 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
@@ -425,8 +426,24 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             PropertyCallExp<EClassifier, EParameter> propertyCallExp = (PropertyCallExp<EClassifier, EParameter>) lValue;
             OCLExpression<EClassifier> sourceExp = propertyCallExp.getSource();
             Object owner = sourceExp.accept(getVisitor());
+                        
+            // obtain correct owner for features of modules, which are possibly defined in an extended module that is not an explicit supertype (fixed by bug 302594/310991)
+            if (owner instanceof ModuleInstance) {
+            	
+            	ModuleInstance moduleInstance = (ModuleInstance) owner;
+            	
+            	Object property = ((PropertyCallExp<?,?>) lValue).getReferredProperty();
+            	
+            	EClassifier containingClassifier = getUMLReflection().getOwningClassifier(property);
+            	if (containingClassifier instanceof Module) {
+            		owner = moduleInstance.getThisInstanceOf((Module) containingClassifier);
+            	}	
+            	
+            }
+           
             return owner;
         }
+               
         return null;
     }
 
@@ -560,6 +577,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		// call inherited mappings
 		if(!currentMappingCalled.getInherited().isEmpty()) {
 			for (MappingOperation extendedMapping : currentMappingCalled.getInherited()) {
+				
+				// consider overriding mapping
+	    		ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), extendedMapping);
+	    		if (overridingOper instanceof MappingOperation) {
+	    			extendedMapping = (MappingOperation) overridingOper;
+	    		}
+				
 				executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
 			}
 		}
@@ -574,9 +598,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		// call merged mappings
 		if(!currentMappingCalled.getMerged().isEmpty()) {
 			for (MappingOperation extendedMapping : currentMappingCalled.getMerged()) {
+				
+				// consider overriding mapping
+	    		ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), extendedMapping);
+	    		if (overridingOper instanceof MappingOperation) {
+	    			extendedMapping = (MappingOperation) overridingOper;
+	    		}
+				
 				executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
 			}
 		}
+		
+		// result may have changed in body, end section, or merged mappings, so retrieve it again (fixed by bug 388325)
+		result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
 
         return result;
     }
@@ -716,17 +750,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
  
         	return new MappingCallResult(null, evalEnv, MappingCallResult.PRECOND_FAILED);
         }
-        
-		if(!mappingOperation.getDisjunct().isEmpty()) {
-			return dispatchDisjuctMapping(mappingOperation);
-		}
-
+				
         // check the traces whether the relation already holds
         TraceRecord traceRecord = TraceUtil.getTraceRecord(evalEnv, mappingOperation);
         if (traceRecord != null) {
         	return new MappingCallResult(TraceUtil.fetchResultFromTrace(evalEnv, traceRecord), evalEnv, MappingCallResult.FETCHED_FROM_TRACE);
         }
-		
+        
+        if(!mappingOperation.getDisjunct().isEmpty()) {
+			return dispatchDisjunctMapping(mappingOperation);
+		}
+                        		
         return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
         				evalEnv, MappingCallResult.BODY_EXECUTED);
     }
@@ -814,6 +848,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			
 			QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
 			QvtOperationalEvaluationEnv nestedEvalEnv = envFactory.createEvaluationEnvironment(nestedContext, null);
+			
+			//bug 392153: reuse existing trace for nested environment
+			Trace trace = currentEnv.getAdapter(InternalEvaluationEnv.class).getTraces();
+			nestedEvalEnv.getAdapter(InternalEvaluationEnv.class).setTraces(trace);
+			
 			// send arguments into the entry operation
 			nestedEvalEnv.getOperationArgs().addAll(actualArguments);
 			// Use per transformation instance visitor 
@@ -947,6 +986,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	        }
     	}
     	
+    	// owner may have changed in body content, so retrieve it again (fixed by bug 388325)
+    	owner = getOutOwner(objectExp);
+    	
         if (getOperationalEnv().isTemporaryElement(objectExp.getName())) {
             getOperationalEvaluationEnv().remove(objectExp.getName());
         }
@@ -999,24 +1041,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(initExpression != null) {
 			value = initExpression.accept(getVisitor());
 		} else { 
-			OCLStandardLibrary<EClassifier> oclstdlib = getEnvironment().getOCLStandardLibrary();
-			EClassifier varDeclType = referredVariable.getType();			
-			
-			if(varDeclType == oclstdlib.getString()) {
-				value = ""; //$NON-NLS-1$
-			} else if(varDeclType == oclstdlib.getBoolean()) {
-				value = Boolean.FALSE;
-			} else if(varDeclType == oclstdlib.getInteger()) {
-				value = Integer.valueOf(0);
-			} else if(varDeclType == oclstdlib.getReal()) {
-				value = Double.valueOf(0);
-			} else if(varDeclType == oclstdlib.getUnlimitedNatural()) {
-				value = Integer.valueOf(0);
-			} else if(varDeclType instanceof CollectionType<?, ?>) {
-				@SuppressWarnings("unchecked")
-				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) varDeclType;
-				value = EvaluationUtil.createNewCollection(collectionType);
-			}
+			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary());
 		}
 		
         replaceInEnv(referredVariable.getName(), value, variableInitExp.getType());
@@ -1445,7 +1470,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			pushedStack(nestedEvalEnv);
 	        // eventually cause STO exception
 	        EvaluationUtil.checkCurrentStackDepth(currentEvalEnv);			
-    	
+	       
+	        // do initialization of model params here to ensure existing out extent for objects created during initialization of imported modules (fixed by bug 392080)
+	        doInitModelParams(moduleInstance, modelParameters);
+	        
 	    	for (ModuleImport moduleImport : type.getModuleImport()) {
 	    		Module importedModule = moduleImport.getImportedModule();	    		
 				ModuleInstance importedInstance = moduleInstance.getThisInstanceOf(importedModule);
@@ -1456,8 +1484,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					}
 	    		}
 			}
-
-	    	doInitModule(moduleInstance, modelParameters);	    	
+	    	
+	        doInitModule(moduleInstance);
+	    		    	
 	    	moduleInstance.getAdapter(ModuleInstance.Internal.class).setInitialized();   				
 	    	
 		} finally {
@@ -1466,15 +1495,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
     }
     
-    private void doInitModule(ModuleInstance moduleInstance, ModelParameterHelper modelParameters) {
+    private void doInitModelParams(ModuleInstance moduleInstance, ModelParameterHelper modelParameters) {
+    	
+    	if(modelParameters != null && moduleInstance.getModule().eClass() == ExpressionsPackage.eINSTANCE.getOperationalTransformation()) {
+			modelParameters.initModelParameters((TransformationInstance) moduleInstance);
+		}
+    	
+    }
+    
+    private void doInitModule(ModuleInstance moduleInstance) {
     	Module module = moduleInstance.getModule();
     	
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
-        
-		if(modelParameters != null && module.eClass() == ExpressionsPackage.eINSTANCE.getOperationalTransformation()) {
-			modelParameters.initModelParameters((TransformationInstance) moduleInstance);
-		}
-        
+                
 		for (EStructuralFeature feature : module.getConfigProperty()) {			
 			Object propValue = visitConfigProperty(feature);
 			env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);			
@@ -1544,7 +1577,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		static final int BODY_EXECUTED = 0;
 		static final int PRECOND_FAILED = 2;
 		static final int FETCHED_FROM_TRACE = 4;
-		static final int NO_DISJUCT_SELECTED = 8;		
+		static final int NO_DISJUNCT_SELECTED = 8;		
 		
 		int myStatus;
     	
@@ -1641,41 +1674,66 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return callResult;
     }
                 
-    private MappingCallResult dispatchDisjuctMapping(MappingOperation method) {
+    private MappingCallResult dispatchDisjunctMapping(MappingOperation method) {
     	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
     	Object source = evalEnv.getOperationSelf();
     	List<Object> args = evalEnv.getOperationArgs();
     	
     	for (MappingOperation nextDisjunct : method.getDisjunct()) {
+    		
+    		// consider overriding mapping (fixed by bug 309762)
+    		ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), nextDisjunct);
+    		if (overridingOper instanceof MappingOperation) {
+    			nextDisjunct = (MappingOperation) overridingOper;
+    		}
+    		
     		EClassifier ctxType = QvtOperationalParserUtil.getContextualType(nextDisjunct);
     		if(ctxType != null) {
     			if(!evalEnv.isKindOf(source, nextDisjunct.getContext().getEType())) {
     				continue;
     			}
-    		} 
-
-    		EList<EParameter> params = nextDisjunct.getEParameters();
-    		if(params.size() != args.size()) {
+    		}
+    		
+    		if(!dispatchDisjunctMappingArgumentsMatch(nextDisjunct)) {
     			continue;
     		}
-
-    		for (int i = 0; i < args.size(); i++) {
-    			Object nextArg = args.get(i);
-    			EClassifier nextParamType = params.get(i).getEType();    			
-    			if(!evalEnv.isKindOf(nextArg, nextParamType)) {
-    				continue;
-    			}
-			}
 
     		MappingCallResult result = (MappingCallResult)executeImperativeOperation(nextDisjunct, source, args, false);
     		if(!result.isPreconditionFailed()) {
     			// precondition holds, mapping either executed, fetched from trace, or disjuncted
     			result.myStatus = MappingCallResult.BODY_EXECUTED; // from disjuncting mapping consider as executed
+    			
+    			// add trace record for disjuncting mapping (fixed by bug 377882) 
+    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, result.myResult, method.getEType());
+    			TraceUtil.addTraceRecord(evalEnv, method);
+    			
     			return result;
     		}
 		}
     	
-    	return new MappingCallResult(null, myEvalEnv, MappingCallResult.NO_DISJUCT_SELECTED);
+    	return new MappingCallResult(null, myEvalEnv, MappingCallResult.NO_DISJUNCT_SELECTED);
+    }
+    
+    private boolean dispatchDisjunctMappingArgumentsMatch(MappingOperation disjunct) {
+    	
+    	List<EParameter> params = disjunct.getEParameters();
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+    	List<Object> args = evalEnv.getOperationArgs();
+    	    	
+    	if(params.size() != args.size()) {
+    		return false;
+    	}
+    	
+    	for (int i = 0; i < args.size(); i++) {
+			Object nextArg = args.get(i);
+			EClassifier nextParamType = params.get(i).getEType();    			
+			if(nextArg != null && !evalEnv.isKindOf(nextArg, nextParamType)) {
+				return false;
+			}
+		}
+    	
+    	return true;
+    	
     }
     
 
@@ -2059,7 +2117,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return internEnv.getCurrentIP();
     }
     
-    private InternalEvaluator createInterruptibleVisitor() {
+    protected InternalEvaluator createInterruptibleVisitor() {
     	final EvaluationMonitor monitor = getContext().getMonitor();
     	    
     	class InterruptVisitor extends QvtGenericEvaluationVisitor.Any implements InternalEvaluator {

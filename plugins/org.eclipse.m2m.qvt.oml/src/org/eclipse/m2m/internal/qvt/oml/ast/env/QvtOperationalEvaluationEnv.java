@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 392153
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -860,7 +861,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    @Override
 	    public Trace getTraces() {
 	    	return myTraces; 
-	    }	    
+	    }
+	    
+	    @Override
+	    public void setTraces(Trace trace) {
+	    	myTraces = trace; 
+	    }
 	}
 	
 	private class Internal implements InternalEvaluationEnv {
@@ -937,6 +943,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    	getRoot().internalEnv().addDeferredTask(task);
 	    }
 
+	    public void setTraces(Trace trace) {
+	    	getRoot().internalEnv().setTraces(trace);
+	    }
+	    
 	    public Trace getTraces() {
 	    	return getRoot().internalEnv().getTraces();
 	    }

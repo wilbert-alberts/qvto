@@ -1,0 +1,23 @@
+modeltype e uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation bug388325();
+
+main() {
+
+	var res : OrderedSet(EPackage) = map m1();
+			
+	assert fatal (res->notEmpty());
+
+}
+
+mapping m1() : OrderedSet(EPackage) {
+
+	result += map m2()
+
+}
+
+mapping m2() : EPackage {
+
+	name := 'pack'
+
+}
