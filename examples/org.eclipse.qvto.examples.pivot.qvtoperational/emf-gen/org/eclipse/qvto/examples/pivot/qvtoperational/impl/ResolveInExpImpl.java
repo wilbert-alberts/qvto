@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp;
@@ -123,6 +124,15 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitResolveInExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -187,6 +197,7 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 		if (baseClass == ResolveExp.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.RESOLVE_EXP___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.RESOLVE_EXP___ACCEPT__VISITOR: return QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -204,6 +215,8 @@ public class ResolveInExpImpl extends ResolveExpImpl implements ResolveInExp {
 		switch (operationID) {
 			case QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.RESOLVE_IN_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -34,6 +34,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ClassImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
@@ -172,6 +173,15 @@ public class ModelTypeImpl extends ClassImpl implements ModelType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitModelType(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -273,6 +283,8 @@ public class ModelTypeImpl extends ClassImpl implements ModelType {
 		switch (operationID) {
 			case QVTOperationalPackage.MODEL_TYPE___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MODEL_TYPE___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

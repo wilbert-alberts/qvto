@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
@@ -167,6 +168,15 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 	 */
 	public <R> R accept(final QVTOperationalVisitor<R> v) {
 		return v.visitOperationBody(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitOperationBody(this);
 	}
 
 	/**
@@ -309,6 +319,8 @@ public class OperationBodyImpl extends ElementImpl implements OperationBody {
 		switch (operationID) {
 			case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.OPERATION_BODY___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.LiteralExpImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -96,6 +97,15 @@ public class ListLiteralExpImpl extends LiteralExpImpl implements ListLiteralExp
 	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitListLiteralExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitListLiteralExp(this);
 	}
 
 	/**
@@ -183,6 +193,8 @@ public class ListLiteralExpImpl extends LiteralExpImpl implements ListLiteralExp
 		switch (operationID) {
 			case ImperativeOCLPackage.LIST_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.LIST_LITERAL_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -131,6 +132,15 @@ public class OrderedTupleLiteralPartImpl extends ElementImpl implements OrderedT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitOrderedTupleLiteralPart(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -209,6 +219,8 @@ public class OrderedTupleLiteralPartImpl extends ElementImpl implements OrderedT
 		switch (operationID) {
 			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_PART___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
@@ -118,6 +119,15 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 	 */
 	public <R> R accept(final QVTOperationalVisitor<R> v) {
 		return v.visitMappingBody(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitMappingBody(this);
 	}
 
 	/**
@@ -217,6 +227,7 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 		if (baseClass == OperationBody.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__VISITOR: return QVTOperationalPackage.MAPPING_BODY___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -234,6 +245,8 @@ public class MappingBodyImpl extends OperationBodyImpl implements MappingBody {
 		switch (operationID) {
 			case QVTOperationalPackage.MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MAPPING_BODY___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

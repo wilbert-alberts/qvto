@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.LiteralExpImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart;
@@ -95,6 +96,15 @@ public class OrderedTupleLiteralExpImpl extends LiteralExpImpl implements Ordere
 	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitOrderedTupleLiteralExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((ImperativeOCLVisitor<R>)v).visitOrderedTupleLiteralExp(this);
 	}
 
 	/**
@@ -182,6 +192,8 @@ public class OrderedTupleLiteralExpImpl extends LiteralExpImpl implements Ordere
 		switch (operationID) {
 			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR:
 				return accept((ImperativeOCLVisitor)arguments.get(0));
+			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

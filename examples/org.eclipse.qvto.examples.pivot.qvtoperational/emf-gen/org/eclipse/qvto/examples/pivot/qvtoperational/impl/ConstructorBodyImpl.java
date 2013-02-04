@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
@@ -65,11 +66,21 @@ public class ConstructorBodyImpl extends OperationBodyImpl implements Constructo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitConstructorBody(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == OperationBody.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.OPERATION_BODY___ACCEPT__VISITOR: return QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -87,6 +98,8 @@ public class ConstructorBodyImpl extends OperationBodyImpl implements Constructo
 		switch (operationID) {
 			case QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.CONSTRUCTOR_BODY___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

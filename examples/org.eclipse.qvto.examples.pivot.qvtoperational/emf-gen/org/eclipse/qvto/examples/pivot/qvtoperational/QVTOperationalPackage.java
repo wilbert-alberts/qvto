@@ -461,13 +461,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.OPERATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION___ACCEPT__VISITOR = PivotPackage.OPERATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Imperative Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_OPERATION_OPERATION_COUNT = PivotPackage.OPERATION_OPERATION_COUNT + 1;
+	int IMPERATIVE_OPERATION_OPERATION_COUNT = PivotPackage.OPERATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ConstructorImpl <em>Constructor</em>}' class.
@@ -849,13 +858,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONSTRUCTOR___ACCEPT__QVTOPERATIONALVISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR___ACCEPT__VISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Constructor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+	int CONSTRUCTOR_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.OperationBodyImpl <em>Operation Body</em>}' class.
@@ -958,13 +976,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_BODY___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Operation Body</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_BODY_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int OPERATION_BODY_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ConstructorBodyImpl <em>Constructor Body</em>}' class.
@@ -1067,13 +1094,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR = OPERATION_BODY_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR_BODY___ACCEPT__VISITOR = OPERATION_BODY_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Constructor Body</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_BODY_OPERATION_COUNT = OPERATION_BODY_OPERATION_COUNT + 1;
+	int CONSTRUCTOR_BODY_OPERATION_COUNT = OPERATION_BODY_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ContextualPropertyImpl <em>Contextual Property</em>}' class.
@@ -1482,13 +1518,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONTEXTUAL_PROPERTY___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.PROPERTY_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTEXTUAL_PROPERTY___ACCEPT__VISITOR = PivotPackage.PROPERTY_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Contextual Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTEXTUAL_PROPERTY_OPERATION_COUNT = PivotPackage.PROPERTY_OPERATION_COUNT + 1;
+	int CONTEXTUAL_PROPERTY_OPERATION_COUNT = PivotPackage.PROPERTY_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationImpl <em>Dummy Relation</em>}' class.
@@ -1564,13 +1609,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int DUMMY_RELATION___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DUMMY_RELATION___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Dummy Relation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DUMMY_RELATION_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int DUMMY_RELATION_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationDomainImpl <em>Dummy Relation Domain</em>}' class.
@@ -1646,13 +1700,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int DUMMY_RELATION_DOMAIN___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DUMMY_RELATION_DOMAIN___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Dummy Relation Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DUMMY_RELATION_DOMAIN_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int DUMMY_RELATION_DOMAIN_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationalTransformationImpl <em>Dummy Relational Transformation</em>}' class.
@@ -1728,13 +1791,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int DUMMY_RELATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DUMMY_RELATIONAL_TRANSFORMATION___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Dummy Relational Transformation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DUMMY_RELATIONAL_TRANSFORMATION_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int DUMMY_RELATIONAL_TRANSFORMATION_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.EntryOperationImpl <em>Entry Operation</em>}' class.
@@ -2116,13 +2188,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int ENTRY_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION___ACCEPT__VISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Entry Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENTRY_OPERATION_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+	int ENTRY_OPERATION_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.HelperImpl <em>Helper</em>}' class.
@@ -2513,13 +2594,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int HELPER___ACCEPT__QVTOPERATIONALVISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER___ACCEPT__VISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Helper</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HELPER_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+	int HELPER_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ImperativeCallExpImpl <em>Imperative Call Exp</em>}' class.
@@ -2593,6 +2683,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_CALL_EXP__TYPE = PivotPackage.OPERATION_CALL_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_CALL_EXP__IS_REQUIRED = PivotPackage.OPERATION_CALL_EXP__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -2712,13 +2811,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_CALL_EXP___ACCEPT__VISITOR = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Imperative Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_CALL_EXP_OPERATION_COUNT = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 1;
+	int IMPERATIVE_CALL_EXP_OPERATION_COUNT = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl <em>Module</em>}' class.
@@ -2882,6 +2990,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__IS_ABSTRACT = PivotPackage.CLASS__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Owned Behavior</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__OWNED_BEHAVIOR = PivotPackage.CLASS__OWNED_BEHAVIOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -3100,13 +3217,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.CLASS_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE___ACCEPT__VISITOR = PivotPackage.CLASS_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 1;
+	int MODULE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.LibraryImpl <em>Library</em>}' class.
@@ -3270,6 +3396,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__IS_ABSTRACT = MODULE__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Owned Behavior</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__OWNED_BEHAVIOR = MODULE__OWNED_BEHAVIOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -3488,13 +3623,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int LIBRARY___ACCEPT__QVTOPERATIONALVISITOR = MODULE_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY___ACCEPT__VISITOR = MODULE_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_OPERATION_COUNT = MODULE_OPERATION_COUNT + 1;
+	int LIBRARY_OPERATION_COUNT = MODULE_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingBodyImpl <em>Mapping Body</em>}' class.
@@ -3615,13 +3759,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR = OPERATION_BODY_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_BODY___ACCEPT__VISITOR = OPERATION_BODY_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Mapping Body</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_BODY_OPERATION_COUNT = OPERATION_BODY_OPERATION_COUNT + 1;
+	int MAPPING_BODY_OPERATION_COUNT = OPERATION_BODY_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingCallExpImpl <em>Mapping Call Exp</em>}' class.
@@ -3695,6 +3848,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_CALL_EXP__TYPE = IMPERATIVE_CALL_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_CALL_EXP__IS_REQUIRED = IMPERATIVE_CALL_EXP__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -3823,13 +3985,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR = IMPERATIVE_CALL_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_CALL_EXP___ACCEPT__VISITOR = IMPERATIVE_CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Mapping Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_CALL_EXP_OPERATION_COUNT = IMPERATIVE_CALL_EXP_OPERATION_COUNT + 1;
+	int MAPPING_CALL_EXP_OPERATION_COUNT = IMPERATIVE_CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingOperationImpl <em>Mapping Operation</em>}' class.
@@ -4265,13 +4436,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION___ACCEPT__VISITOR = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Mapping Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 1;
+	int MAPPING_OPERATION_OPERATION_COUNT = IMPERATIVE_OPERATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl <em>Var Parameter</em>}' class.
@@ -4347,6 +4527,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int VAR_PARAMETER__TYPE = PivotPackage.VARIABLE__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER__IS_REQUIRED = PivotPackage.VARIABLE__IS_REQUIRED;
+
+	/**
 	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4374,22 +4563,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int VAR_PARAMETER__IMPLICIT = PivotPackage.VARIABLE__IMPLICIT;
 
 	/**
-	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_PARAMETER__IS_REQUIRED = PivotPackage.VARIABLE_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Operation</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__OPERATION = PivotPackage.VARIABLE_FEATURE_COUNT + 1;
+	int VAR_PARAMETER__OPERATION = PivotPackage.VARIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Ctx Owner</b></em>' container reference.
@@ -4398,7 +4578,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__CTX_OWNER = PivotPackage.VARIABLE_FEATURE_COUNT + 2;
+	int VAR_PARAMETER__CTX_OWNER = PivotPackage.VARIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -4407,7 +4587,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__KIND = PivotPackage.VARIABLE_FEATURE_COUNT + 3;
+	int VAR_PARAMETER__KIND = PivotPackage.VARIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Res Owner</b></em>' container reference.
@@ -4416,7 +4596,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER__RES_OWNER = PivotPackage.VARIABLE_FEATURE_COUNT + 4;
+	int VAR_PARAMETER__RES_OWNER = PivotPackage.VARIABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Var Parameter</em>' class.
@@ -4425,7 +4605,7 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER_FEATURE_COUNT = PivotPackage.VARIABLE_FEATURE_COUNT + 5;
+	int VAR_PARAMETER_FEATURE_COUNT = PivotPackage.VARIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -4482,13 +4662,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.VARIABLE_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_PARAMETER___ACCEPT__VISITOR = PivotPackage.VARIABLE_OPERATION_COUNT + 3;
+
+	/**
 	 * The number of operations of the '<em>Var Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_PARAMETER_OPERATION_COUNT = PivotPackage.VARIABLE_OPERATION_COUNT + 3;
+	int VAR_PARAMETER_OPERATION_COUNT = PivotPackage.VARIABLE_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingParameterImpl <em>Mapping Parameter</em>}' class.
@@ -4564,6 +4753,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_PARAMETER__TYPE = VAR_PARAMETER__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER__IS_REQUIRED = VAR_PARAMETER__IS_REQUIRED;
+
+	/**
 	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4589,15 +4787,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_PARAMETER__IMPLICIT = VAR_PARAMETER__IMPLICIT;
-
-	/**
-	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_PARAMETER__IS_REQUIRED = VAR_PARAMETER__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -4717,13 +4906,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = VAR_PARAMETER_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_PARAMETER___ACCEPT__VISITOR = VAR_PARAMETER_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Mapping Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_PARAMETER_OPERATION_COUNT = VAR_PARAMETER_OPERATION_COUNT + 1;
+	int MAPPING_PARAMETER_OPERATION_COUNT = VAR_PARAMETER_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModelParameterImpl <em>Model Parameter</em>}' class.
@@ -4799,6 +4997,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_PARAMETER__TYPE = VAR_PARAMETER__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER__IS_REQUIRED = VAR_PARAMETER__IS_REQUIRED;
+
+	/**
 	 * The feature id for the '<em><b>Init Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4824,15 +5031,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_PARAMETER__IMPLICIT = VAR_PARAMETER__IMPLICIT;
-
-	/**
-	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_PARAMETER__IS_REQUIRED = VAR_PARAMETER__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -4934,13 +5132,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = VAR_PARAMETER_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_PARAMETER___ACCEPT__VISITOR = VAR_PARAMETER_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Model Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_PARAMETER_OPERATION_COUNT = VAR_PARAMETER_OPERATION_COUNT + 1;
+	int MODEL_PARAMETER_OPERATION_COUNT = VAR_PARAMETER_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModelTypeImpl <em>Model Type</em>}' class.
@@ -5106,6 +5313,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_TYPE__IS_ABSTRACT = PivotPackage.CLASS__IS_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Owned Behavior</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE__OWNED_BEHAVIOR = PivotPackage.CLASS__OWNED_BEHAVIOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5232,13 +5448,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_TYPE___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.CLASS_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE___ACCEPT__VISITOR = PivotPackage.CLASS_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Model Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_TYPE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 1;
+	int MODEL_TYPE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImportImpl <em>Module Import</em>}' class.
@@ -5350,13 +5575,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE_IMPORT___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE_IMPORT___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Module Import</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_IMPORT_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int MODULE_IMPORT_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ObjectExpImpl <em>Object Exp</em>}' class.
@@ -5430,6 +5664,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OBJECT_EXP__TYPE = ImperativeOCLPackage.INSTANTIATION_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP__IS_REQUIRED = ImperativeOCLPackage.INSTANTIATION_EXP__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
@@ -5531,13 +5774,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int OBJECT_EXP___ACCEPT__QVTOPERATIONALVISITOR = ImperativeOCLPackage.INSTANTIATION_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_EXP___ACCEPT__VISITOR = ImperativeOCLPackage.INSTANTIATION_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Object Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OBJECT_EXP_OPERATION_COUNT = ImperativeOCLPackage.INSTANTIATION_EXP_OPERATION_COUNT + 1;
+	int OBJECT_EXP_OPERATION_COUNT = ImperativeOCLPackage.INSTANTIATION_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
@@ -5701,6 +5953,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATIONAL_TRANSFORMATION__IS_ABSTRACT = MODULE__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Owned Behavior</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__OWNED_BEHAVIOR = MODULE__OWNED_BEHAVIOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -5964,13 +6225,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR = MODULE_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION___ACCEPT__VISITOR = MODULE_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Operational Transformation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATIONAL_TRANSFORMATION_OPERATION_COUNT = MODULE_OPERATION_COUNT + 1;
+	int OPERATIONAL_TRANSFORMATION_OPERATION_COUNT = MODULE_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ResolveExpImpl <em>Resolve Exp</em>}' class.
@@ -6044,6 +6314,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_EXP__TYPE = PivotPackage.CALL_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVE_EXP__IS_REQUIRED = PivotPackage.CALL_EXP__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -6154,13 +6433,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int RESOLVE_EXP___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.CALL_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVE_EXP___ACCEPT__VISITOR = PivotPackage.CALL_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Resolve Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVE_EXP_OPERATION_COUNT = PivotPackage.CALL_EXP_OPERATION_COUNT + 1;
+	int RESOLVE_EXP_OPERATION_COUNT = PivotPackage.CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ResolveInExpImpl <em>Resolve In Exp</em>}' class.
@@ -6234,6 +6522,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_IN_EXP__TYPE = RESOLVE_EXP__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVE_IN_EXP__IS_REQUIRED = RESOLVE_EXP__IS_REQUIRED;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' containment reference.
@@ -6353,13 +6650,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR = RESOLVE_EXP_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVE_IN_EXP___ACCEPT__VISITOR = RESOLVE_EXP_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Resolve In Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVE_IN_EXP_OPERATION_COUNT = RESOLVE_EXP_OPERATION_COUNT + 1;
+	int RESOLVE_IN_EXP_OPERATION_COUNT = RESOLVE_EXP_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.TagImpl <em>Tag</em>}' class.
@@ -6462,13 +6768,22 @@ public interface QVTOperationalPackage extends EPackage {
 	int TAG___ACCEPT__QVTOPERATIONALVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Accept</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Tag</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TAG_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
+	int TAG_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor <em>Visitor</em>}' class.
@@ -6540,6 +6855,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getConstructor__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Constructor#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.Constructor#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getConstructor__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody <em>Constructor Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6558,6 +6883,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getConstructorBody__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getConstructorBody__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ContextualProperty <em>Contextual Property</em>}'.
@@ -6613,6 +6948,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getContextualProperty__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ContextualProperty#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ContextualProperty#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getContextualProperty__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation <em>Dummy Relation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6631,6 +6976,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getDummyRelation__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getDummyRelation__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationDomain <em>Dummy Relation Domain</em>}'.
@@ -6653,6 +7008,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getDummyRelationDomain__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationDomain#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationDomain#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getDummyRelationDomain__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation <em>Dummy Relational Transformation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6673,6 +7038,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getDummyRelationalTransformation__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getDummyRelationalTransformation__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation <em>Entry Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6691,6 +7066,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getEntryOperation__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getEntryOperation__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Helper <em>Helper</em>}'.
@@ -6724,6 +7109,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getHelper__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Helper#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.Helper#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getHelper__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeCallExp <em>Imperative Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6753,6 +7148,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getImperativeCallExp__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeCallExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeCallExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getImperativeCallExp__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation <em>Imperative Operation</em>}'.
@@ -6830,6 +7235,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getImperativeOperation__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getImperativeOperation__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Library <em>Library</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6848,6 +7263,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getLibrary__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Library#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.Library#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getLibrary__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingBody <em>Mapping Body</em>}'.
@@ -6892,6 +7317,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getMappingBody__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.MappingBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getMappingBody__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingCallExp <em>Mapping Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6921,6 +7356,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getMappingCallExp__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingCallExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.MappingCallExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getMappingCallExp__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation <em>Mapping Operation</em>}'.
@@ -7009,6 +7454,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getMappingOperation__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getMappingOperation__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingParameter <em>Mapping Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7051,6 +7506,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getMappingParameter__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.MappingParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.MappingParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getMappingParameter__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter <em>Model Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7069,6 +7534,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getModelParameter__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getModelParameter__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModelType <em>Model Type</em>}'.
@@ -7122,6 +7597,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getModelType__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModelType#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ModelType#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getModelType__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Module <em>Module</em>}'.
@@ -7221,6 +7706,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getModule__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Module#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.Module#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getModule__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModuleImport <em>Module Import</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7285,6 +7780,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getModuleImport__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ModuleImport#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ModuleImport#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getModuleImport__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ObjectExp <em>Object Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7325,6 +7830,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getObjectExp__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ObjectExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ObjectExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getObjectExp__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody <em>Operation Body</em>}'.
@@ -7378,6 +7893,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getOperationBody__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getOperationBody__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation <em>Operational Transformation</em>}'.
@@ -7455,6 +7980,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getOperationalTransformation__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getOperationalTransformation__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp <em>Resolve Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7530,6 +8065,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getResolveExp__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getResolveExp__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ResolveInExp <em>Resolve In Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7559,6 +8104,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getResolveInExp__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.ResolveInExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.ResolveInExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getResolveInExp__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter <em>Var Parameter</em>}'.
@@ -7614,6 +8169,16 @@ public interface QVTOperationalPackage extends EPackage {
 	EOperation getVarParameter__Accept__QVTOperationalVisitor();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getVarParameter__Accept__Visitor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Tag <em>Tag</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7665,6 +8230,16 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTag__Accept__QVTOperationalVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.Tag#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Accept</em>' operation.
+	 * @see org.eclipse.qvto.examples.pivot.qvtoperational.Tag#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
+	 * @generated
+	 */
+	EOperation getTag__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor <em>Visitor</em>}'.
@@ -7739,6 +8314,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation CONSTRUCTOR___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getConstructor__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONSTRUCTOR___ACCEPT__VISITOR = eINSTANCE.getConstructor__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ConstructorBodyImpl <em>Constructor Body</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7755,6 +8338,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation CONSTRUCTOR_BODY___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getConstructorBody__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONSTRUCTOR_BODY___ACCEPT__VISITOR = eINSTANCE.getConstructorBody__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ContextualPropertyImpl <em>Contextual Property</em>}' class.
@@ -7799,6 +8390,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation CONTEXTUAL_PROPERTY___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getContextualProperty__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTEXTUAL_PROPERTY___ACCEPT__VISITOR = eINSTANCE.getContextualProperty__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationImpl <em>Dummy Relation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7815,6 +8414,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation DUMMY_RELATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getDummyRelation__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DUMMY_RELATION___ACCEPT__VISITOR = eINSTANCE.getDummyRelation__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationDomainImpl <em>Dummy Relation Domain</em>}' class.
@@ -7835,6 +8442,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation DUMMY_RELATION_DOMAIN___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getDummyRelationDomain__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DUMMY_RELATION_DOMAIN___ACCEPT__VISITOR = eINSTANCE.getDummyRelationDomain__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.DummyRelationalTransformationImpl <em>Dummy Relational Transformation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7853,6 +8468,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation DUMMY_RELATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getDummyRelationalTransformation__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DUMMY_RELATIONAL_TRANSFORMATION___ACCEPT__VISITOR = eINSTANCE.getDummyRelationalTransformation__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.EntryOperationImpl <em>Entry Operation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7869,6 +8492,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation ENTRY_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getEntryOperation__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ENTRY_OPERATION___ACCEPT__VISITOR = eINSTANCE.getEntryOperation__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.HelperImpl <em>Helper</em>}' class.
@@ -7897,6 +8528,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation HELPER___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getHelper__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation HELPER___ACCEPT__VISITOR = eINSTANCE.getHelper__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ImperativeCallExpImpl <em>Imperative Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7921,6 +8560,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation IMPERATIVE_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getImperativeCallExp__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMPERATIVE_CALL_EXP___ACCEPT__VISITOR = eINSTANCE.getImperativeCallExp__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ImperativeOperationImpl <em>Imperative Operation</em>}' class.
@@ -7981,6 +8628,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation IMPERATIVE_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getImperativeOperation__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMPERATIVE_OPERATION___ACCEPT__VISITOR = eINSTANCE.getImperativeOperation__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.LibraryImpl <em>Library</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7997,6 +8652,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation LIBRARY___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getLibrary__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LIBRARY___ACCEPT__VISITOR = eINSTANCE.getLibrary__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingBodyImpl <em>Mapping Body</em>}' class.
@@ -8033,6 +8696,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation MAPPING_BODY___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getMappingBody__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MAPPING_BODY___ACCEPT__VISITOR = eINSTANCE.getMappingBody__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingCallExpImpl <em>Mapping Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8057,6 +8728,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation MAPPING_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getMappingCallExp__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MAPPING_CALL_EXP___ACCEPT__VISITOR = eINSTANCE.getMappingCallExp__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingOperationImpl <em>Mapping Operation</em>}' class.
@@ -8125,6 +8804,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation MAPPING_OPERATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getMappingOperation__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MAPPING_OPERATION___ACCEPT__VISITOR = eINSTANCE.getMappingOperation__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.MappingParameterImpl <em>Mapping Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8159,6 +8846,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation MAPPING_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getMappingParameter__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MAPPING_PARAMETER___ACCEPT__VISITOR = eINSTANCE.getMappingParameter__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModelParameterImpl <em>Model Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8175,6 +8870,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation MODEL_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getModelParameter__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MODEL_PARAMETER___ACCEPT__VISITOR = eINSTANCE.getModelParameter__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModelTypeImpl <em>Model Type</em>}' class.
@@ -8217,6 +8920,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation MODEL_TYPE___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getModelType__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MODEL_TYPE___ACCEPT__VISITOR = eINSTANCE.getModelType__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl <em>Module</em>}' class.
@@ -8293,6 +9004,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation MODULE___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getModule__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MODULE___ACCEPT__VISITOR = eINSTANCE.getModule__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImportImpl <em>Module Import</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8343,6 +9062,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation MODULE_IMPORT___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getModuleImport__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MODULE_IMPORT___ACCEPT__VISITOR = eINSTANCE.getModuleImport__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ObjectExpImpl <em>Object Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8375,6 +9102,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation OBJECT_EXP___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getObjectExp__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OBJECT_EXP___ACCEPT__VISITOR = eINSTANCE.getObjectExp__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.OperationBodyImpl <em>Operation Body</em>}' class.
@@ -8417,6 +9152,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation OPERATION_BODY___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getOperationBody__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION_BODY___ACCEPT__VISITOR = eINSTANCE.getOperationBody__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.OperationalTransformationImpl <em>Operational Transformation</em>}' class.
@@ -8477,6 +9220,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation OPERATIONAL_TRANSFORMATION___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getOperationalTransformation__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATIONAL_TRANSFORMATION___ACCEPT__VISITOR = eINSTANCE.getOperationalTransformation__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ResolveExpImpl <em>Resolve Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8535,6 +9286,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation RESOLVE_EXP___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getResolveExp__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVE_EXP___ACCEPT__VISITOR = eINSTANCE.getResolveExp__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ResolveInExpImpl <em>Resolve In Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8559,6 +9318,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation RESOLVE_IN_EXP___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getResolveInExp__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVE_IN_EXP___ACCEPT__VISITOR = eINSTANCE.getResolveInExp__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.VarParameterImpl <em>Var Parameter</em>}' class.
@@ -8603,6 +9370,14 @@ public interface QVTOperationalPackage extends EPackage {
 		EOperation VAR_PARAMETER___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getVarParameter__Accept__QVTOperationalVisitor();
 
 		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VAR_PARAMETER___ACCEPT__VISITOR = eINSTANCE.getVarParameter__Accept__Visitor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.TagImpl <em>Tag</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8643,6 +9418,14 @@ public interface QVTOperationalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TAG___ACCEPT__QVTOPERATIONALVISITOR = eINSTANCE.getTag__Accept__QVTOperationalVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TAG___ACCEPT__VISITOR = eINSTANCE.getTag__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor <em>Visitor</em>}' class.

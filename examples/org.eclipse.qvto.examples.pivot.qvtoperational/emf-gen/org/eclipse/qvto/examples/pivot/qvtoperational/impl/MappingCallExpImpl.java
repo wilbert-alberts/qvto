@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeCallExp;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingCallExp;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
@@ -114,6 +115,15 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public <R> R accept(final Visitor<R> v) {
+		return ((QVTOperationalVisitor<R>)v).visitMappingCallExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -177,6 +187,7 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 		if (baseClass == ImperativeCallExp.class) {
 			switch (baseOperationID) {
 				case QVTOperationalPackage.IMPERATIVE_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR: return QVTOperationalPackage.MAPPING_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR;
+				case QVTOperationalPackage.IMPERATIVE_CALL_EXP___ACCEPT__VISITOR: return QVTOperationalPackage.MAPPING_CALL_EXP___ACCEPT__VISITOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -194,6 +205,8 @@ public class MappingCallExpImpl extends ImperativeCallExpImpl implements Mapping
 		switch (operationID) {
 			case QVTOperationalPackage.MAPPING_CALL_EXP___ACCEPT__QVTOPERATIONALVISITOR:
 				return accept((QVTOperationalVisitor)arguments.get(0));
+			case QVTOperationalPackage.MAPPING_CALL_EXP___ACCEPT__VISITOR:
+				return accept((Visitor)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
