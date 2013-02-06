@@ -39,7 +39,7 @@ public class QVTOperationalFactoryImpl extends EFactoryImpl implements QVTOperat
 	 */
 	public static QVTOperationalFactory init() {
 		try {
-			QVTOperationalFactory theQVTOperationalFactory = (QVTOperationalFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/qvt/pivot/1.0/QVTOperational"); 
+			QVTOperationalFactory theQVTOperationalFactory = (QVTOperationalFactory)EPackage.Registry.INSTANCE.getEFactory(QVTOperationalPackage.eNS_URI);
 			if (theQVTOperationalFactory != null) {
 				return theQVTOperationalFactory;
 			}

@@ -88,9 +88,12 @@ Workflow {
 	
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
 		genModel = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
+		clearResourceSet = false
+
 	}
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-		genModel = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel" 	
+		genModel = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
+		clearResourceSet = false
 	}
 
 //    component = OCLExtenderVisitableAcceptGenerator { resourceSet = resourceSet skipOnErrors = true
