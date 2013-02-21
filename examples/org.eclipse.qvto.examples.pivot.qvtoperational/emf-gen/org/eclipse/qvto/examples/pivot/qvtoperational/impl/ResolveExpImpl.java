@@ -468,11 +468,4 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 		result.append(')');
 		return result.toString();
 	}
-
-	@Override
-	public Feature getReferredFeature() {
-		// FIXME See Bug398955
-		throw new UnsupportedOperationException(); 
-	}
-
 } //ResolveExpImpl
