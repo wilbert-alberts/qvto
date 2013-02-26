@@ -17,6 +17,7 @@ import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
 
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Entry Operation</b></em>'.

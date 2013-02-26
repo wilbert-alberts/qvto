@@ -37,10 +37,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import org.eclipse.ocl.examples.domain.ids.IdManager;
 import org.eclipse.ocl.examples.domain.ids.PackageId;
 import org.eclipse.ocl.examples.pivot.Package;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
 import org.eclipse.ocl.examples.pivot.Property;
+import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.pivot.TemplateableElement;
 import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.pivot.Variable;
@@ -857,17 +859,41 @@ public class ModuleImpl extends ClassImpl implements Module {
 		throw new UnsupportedOperationException(); 
 
 	}
-
-	@Nullable
-	public EPackage getEPackage() {
-		// FIXME See Bug398955
-		throw new UnsupportedOperationException(); 
+	
+	// *********************************************
+	// FIXME Pending of being automated. See Bug398955
+	// Copy-paste from org.eclipse.ocl.examples.pivot.internal.impl.PackageImpl
+	private PackageId packageId = null;
+	
+	public @Nullable EPackage getEPackage() {
+		EObject eTarget = getETarget();
+		return eTarget instanceof EPackage ? (EPackage) eTarget : null;
 	}
-
-	@NonNull
-	public PackageId getPackageId() {
-		// FIXME See Bug398955
-		throw new UnsupportedOperationException(); 
+	
+	public @NonNull PackageId getPackageId() {
+		PackageId packageId2 = packageId;
+		if (packageId2 == null) {
+			synchronized (this) {
+				packageId2 = packageId;
+				if (packageId2 == null) {
+					synchronized (this) {
+						EObject eContainer2 = eContainer();
+						String externalURI = eContainer2 instanceof Root ? ((Root)eContainer2).getExternalURI() : null;
+						@NonNull String nsUri = PivotPackage.eNS_URI;
+						if (nsUri.equals(externalURI)) {
+							packageId2 = IdManager.INSTANCE.getNsURIPackageId(nsUri, PivotPackage.eINSTANCE);
+						}
+						else {
+							packageId2 = IdManager.INSTANCE.getPackageId(this);
+						}
+						packageId = packageId2;
+					}
+				}
+			}
+		}
+		return packageId2;
 	}
+	// END OF Copy-Paste
+	//*********************************************
 
 } //ModuleImpl

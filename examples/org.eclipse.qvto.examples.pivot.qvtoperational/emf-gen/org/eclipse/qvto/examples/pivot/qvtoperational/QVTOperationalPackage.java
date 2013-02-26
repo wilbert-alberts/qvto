@@ -3199,13 +3199,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT = PivotPackage.CLASS___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT;
 
 	/**
-	 * The operation id for the '<em>Resolve Self Type</em>' operation.
+	 * The operation id for the '<em>Specialize In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE___RESOLVE_SELF_TYPE__TYPE = PivotPackage.CLASS___RESOLVE_SELF_TYPE__TYPE;
+	int MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3605,13 +3605,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int LIBRARY___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT = MODULE___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT;
 
 	/**
-	 * The operation id for the '<em>Resolve Self Type</em>' operation.
+	 * The operation id for the '<em>Specialize In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY___RESOLVE_SELF_TYPE__TYPE = MODULE___RESOLVE_SELF_TYPE__TYPE;
+	int LIBRARY___SPECIALIZE_IN__OCLEXPRESSION_TYPE = MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -5430,13 +5430,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_TYPE___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT = PivotPackage.CLASS___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT;
 
 	/**
-	 * The operation id for the '<em>Resolve Self Type</em>' operation.
+	 * The operation id for the '<em>Specialize In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_TYPE___RESOLVE_SELF_TYPE__TYPE = PivotPackage.CLASS___RESOLVE_SELF_TYPE__TYPE;
+	int MODEL_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -6207,13 +6207,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT = MODULE___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT;
 
 	/**
-	 * The operation id for the '<em>Resolve Self Type</em>' operation.
+	 * The operation id for the '<em>Specialize In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATIONAL_TRANSFORMATION___RESOLVE_SELF_TYPE__TYPE = MODULE___RESOLVE_SELF_TYPE__TYPE;
+	int OPERATIONAL_TRANSFORMATION___SPECIALIZE_IN__OCLEXPRESSION_TYPE = MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
