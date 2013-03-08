@@ -150,6 +150,7 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
 	}
     
     private int updateCategoryIndex(QvtCompletionData data) {
+    	System.out.println(Thread.currentThread().getName() + " updateCategoryIndex " + myCategoryIndex + " @" + Integer.toHexString(hashCode()));
     	if (myCategoryIndex == INITIAL_CATEGORY_INDEX) { /* -1 */
     		myCategories = new ArrayList<CategoryDescriptor>();
     		CategoryDescriptor[] allCategories = CollectorRegistry.getCategories();
@@ -182,6 +183,7 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
     }
     
     public CategoryDescriptor getCurrentCategory() {
+    	System.out.println(Thread.currentThread().getName() + " getCurrentCategory @" + Integer.toHexString(hashCode()));
     	if (myCategories.isEmpty()) {
     		return null;
     	}
