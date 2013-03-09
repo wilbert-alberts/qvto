@@ -131,16 +131,16 @@ public class CompletionTest extends AbstractCompletionTest {
 	
 	protected void initializeProposalProvider() throws Exception {
 		startTime = System.currentTimeMillis();
+    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " start '" + myFolder + "'");
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile transformationFile = getTransformationFile();
-    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " start " + transformationFile);
 		QvtEditor editor = (QvtEditor) IDE.openEditor(page, transformationFile);
 		QvtConfiguration qvtConfiguration = editor.getQvtConfiguration();
 		ISourceViewer sourceViewer = editor.getEditorSourceViewer();
 		IContentAssistant contentAssistant = qvtConfiguration.getContentAssistant(sourceViewer);
 		QvtCompletionProcessor processor = (QvtCompletionProcessor) contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE);
 		do {
-	    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " request proposals");
+//	    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " request proposals");
 			ICompletionProposal[] proposals = processor.computeCompletionProposals((ITextViewer) sourceViewer, myOffset);
 	    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " got " + (proposals != null ? proposals.length : "null") + " proposals");
 			if(proposals != null) {

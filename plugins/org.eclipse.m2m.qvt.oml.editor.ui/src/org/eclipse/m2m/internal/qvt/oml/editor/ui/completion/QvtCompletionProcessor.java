@@ -109,20 +109,20 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
         try {
         	UnitProxy unitProxy = (UnitProxy) myEditor.getAdapter(UnitProxy.class);
         	if(unitProxy == null) {
-            	System.out.println(Thread.currentThread().getName() + " updateCategoryIndex - no unitProxy");
+            	System.out.println(Thread.currentThread().getName() + " computeCompletionProposals - no unitProxy");
         		return null;
         	}
         	
             QvtCompletionData data = new QvtCompletionData(myEditor, viewer, unitProxy, offset);
             if (!data.isValid()) {
-            	System.out.println(Thread.currentThread().getName() + " updateCategoryIndex - data not valid");
+            	System.out.println(Thread.currentThread().getName() + " computeCompletionProposals - data not valid");
                 return disableNextCodeCompletionPage();
             }
             if ((myCategoryIndex == INITIAL_CATEGORY_INDEX) 
                     || (myOffset == offset)) { // Ctrl + Space pressed again
                 int categoryIndex = updateCategoryIndex(data);
                 if (categoryIndex == NO_CATEGORY_INDEX) {
-                	System.out.println(Thread.currentThread().getName() + " updateCategoryIndex - no category index");
+                	System.out.println(Thread.currentThread().getName() + " computeCompletionProposals - no category index");
                     return disableNextCodeCompletionPage();
                 }
                 CategoryDescriptor nextCategory = getNextCategory();
@@ -170,7 +170,24 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
     				}
     			}
 				if (isApplicable) {
+			    	System.out.println("  '" + categoryDescriptor.getLabel() + "' is applicable");
 					myCategories.add(categoryDescriptor);
+				}
+				else {
+			    	System.out.println("  '" + categoryDescriptor.getLabel() + "' is not applicable");
+	    			if (collectorDescriptors != null) {
+	    				for (CollectorDescriptor collectorDescriptor : collectorDescriptors) {
+	    					ICollector collector = collectorDescriptor.getCollector();
+	    					if (collector.isApplicable(data)) {
+	    						isApplicable = true;
+	    				    	System.out.println("    '" + collector.toString() + "' is applicable");	    						
+	    						break;
+	    					}
+	    					else {
+	    				    	System.out.println("    '" + collector.toString() + "' is not applicable");	    						
+	    					}
+	    				}
+	    			}
 				}
 			}
     	}
