@@ -127,16 +127,22 @@ public class CompletionTest extends AbstractCompletionTest {
 		myTestProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
 	}
 	
+	private static long startTime;
+	
 	protected void initializeProposalProvider() throws Exception {
+		startTime = System.currentTimeMillis();
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile transformationFile = getTransformationFile();
+    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " start " + transformationFile);
 		QvtEditor editor = (QvtEditor) IDE.openEditor(page, transformationFile);
 		QvtConfiguration qvtConfiguration = editor.getQvtConfiguration();
 		ISourceViewer sourceViewer = editor.getEditorSourceViewer();
 		IContentAssistant contentAssistant = qvtConfiguration.getContentAssistant(sourceViewer);
 		QvtCompletionProcessor processor = (QvtCompletionProcessor) contentAssistant.getContentAssistProcessor(IDocument.DEFAULT_CONTENT_TYPE);
 		do {
+	    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " request proposals");
 			ICompletionProposal[] proposals = processor.computeCompletionProposals((ITextViewer) sourceViewer, myOffset);
+	    	System.out.println(((System.currentTimeMillis() - startTime) / 1000.0) + " " + Thread.currentThread().getName() + " got " + (proposals != null ? proposals.length : "null") + " proposals");
 			if(proposals != null) {
 				for (ICompletionProposal completionProposal : proposals) {
 					if (completionProposal instanceof QvtCompletionProposal) {
@@ -144,6 +150,9 @@ public class CompletionTest extends AbstractCompletionTest {
 						myActualProposalStrings.add(completionProposalStringPresentation);
 					}
 				}
+			}
+			else {
+				break;		// Avoid the NPE from a null QvtCompletionProcessor.myCategories 
 			}
 		} while(processor.getCurrentCategory() != processor.getLastCategory());
 	}
