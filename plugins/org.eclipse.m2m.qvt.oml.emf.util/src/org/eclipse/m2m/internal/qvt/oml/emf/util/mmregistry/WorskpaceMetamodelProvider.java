@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 376274
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry;
 
@@ -126,12 +127,24 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 		}
 		
 		private EPackage loadPackage() {
-			Resource res = rs.getResource(uri, true);
-			if(!res.getContents().isEmpty()) {
-				EObject eObject = res.getContents().get(0);
-				if(eObject instanceof EPackage) {
-					return (EPackage)eObject;
+			
+			// bug 376274: support URI fragments that refer to nested packages
+			
+			EObject eObject = null;
+			if (uri.hasFragment()) {
+				eObject = rs.getEObject(uri, true);
+			}
+			if (eObject == null) {
+				Resource res = rs.getResource(uri, true);
+				if(!res.getContents().isEmpty()) {
+									
+					eObject = res.getContents().get(0);
+				
 				}
+			}	
+					
+			if(eObject instanceof EPackage) {
+				return (EPackage)eObject;
 			}			
 			throw new WrappedException(new RuntimeException(NLS.bind(Messages.WorskpaceMetamodelProvider_URINotReferringMetamodel, uri)));
 		}

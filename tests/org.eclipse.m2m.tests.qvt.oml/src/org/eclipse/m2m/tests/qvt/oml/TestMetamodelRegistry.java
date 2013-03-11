@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 376274
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
@@ -38,6 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 public class TestMetamodelRegistry extends TestCase {
 	private static final String METAMODEL_ID = "qvt.tests.metamodelID"; //$NON-NLS-1$
 	private static final URI platformTestModelURI = URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/models/javaless.ecore", false); //$NON-NLS-1$
+	private static final String NESTED_PACKAGE_NAME = "nested"; //$NON-NLS-1$
 	
 	private TestProject myProject;
     private URI testEcoreFileURI;
@@ -53,10 +55,15 @@ public class TestMetamodelRegistry extends TestCase {
         URIMapping uriMapping = MModelURIMapFactory.eINSTANCE.createURIMapping();
         uriMapping.setSourceURI(METAMODEL_ID);
         
+        URIMapping nestedUriMapping = MModelURIMapFactory.eINSTANCE.createURIMapping();
+        nestedUriMapping.setSourceURI(METAMODEL_ID + "." + NESTED_PACKAGE_NAME);
+                
         testEcoreFileURI = prepareTestMetamodel();
         uriMapping.setTargetURI(testEcoreFileURI.toString());
+        nestedUriMapping.setTargetURI(platformTestModelURI.appendFragment("//" + NESTED_PACKAGE_NAME).toString());
         
         allMappings.getMapping().add(uriMapping);
+        allMappings.getMapping().add(nestedUriMapping);
         
         mappingResource.save(null);
         // TODO - sould rather be MetamodelURIMappingHelper operation
@@ -97,6 +104,18 @@ public class TestMetamodelRegistry extends TestCase {
         IMetamodelDesc metamodelDesc = metamodelRegistry.getMetamodelDesc(knownID);
         assertNotNull(metamodelDesc);
         assertSame(EcorePackage.eINSTANCE, metamodelDesc.getModel());
+    }
+	
+	public void testNestedPackageRegistration() throws Exception {
+		IMetamodelRegistryProvider.IRepositoryContext ctx = createContext();
+		
+        IMetamodelDesc metamodelDesc = new WorkspaceMetamodelRegistryProvider()
+        	.getRegistry(ctx).getMetamodelDesc(METAMODEL_ID + "." + NESTED_PACKAGE_NAME);
+        assertNotNull(metamodelDesc);
+        
+        EPackage ePackage = metamodelDesc.getModel();
+                
+        assertEquals(ePackage.getName(), NESTED_PACKAGE_NAME);
     }
 	
 	private URI prepareTestMetamodel() throws IOException {
