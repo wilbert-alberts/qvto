@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,17 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 388329 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.controls;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.m2m.internal.qvt.oml.common.project.IRegistryConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
+import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry.Filter;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.dialogs.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -61,7 +65,15 @@ public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog
 		createMessageArea(composite);
         
         myControl = new UniSelectTransformationControl(parent, myResourceFilter,
-        		myLabelProvider, myRegistry, TransformationRegistry.EMPTY_FILTER);
+        		myLabelProvider, myRegistry, new Filter() {
+					
+        			public boolean accept(IConfigurationElement element) {
+        				
+        				// bug 388329: accept only transformations
+        				return IRegistryConstants.TRANSFORMATION.equals(element.getName());
+            	
+        			}
+				});
         myControl.addSelectionListener(new UniSelectTransformationControl.ISelectionListener() {
             public void selectionChanged(URI uri) {
             	IStatus selStatus = mySelectionListener.selectionChanged(uri);
