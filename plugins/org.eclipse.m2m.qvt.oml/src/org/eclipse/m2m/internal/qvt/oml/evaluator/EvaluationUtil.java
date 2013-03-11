@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 388801
+ *     Christopher Gerking - bugs 388801, 358709
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -214,7 +214,7 @@ public class EvaluationUtil {
 		return evalEnv.getContext().getSessionData().getValue(AGGREGATING_ROOT_ENV);
 	}
 
-	static ImperativeOperation getOverridingOperation(QvtOperationalEvaluationEnv evalEnv, ImperativeOperation operation) {
+	public static ImperativeOperation getOverridingOperation(QvtOperationalEvaluationEnv evalEnv, ImperativeOperation operation) {
         InternalEvaluationEnv internEvalEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
         assert internEvalEnv != null : "must adapt to internal env"; //$NON-NLS-1$
         

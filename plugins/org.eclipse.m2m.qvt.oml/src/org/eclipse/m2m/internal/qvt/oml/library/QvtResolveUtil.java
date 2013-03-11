@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 358709
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.library;
 
@@ -24,8 +25,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
@@ -290,6 +293,13 @@ public class QvtResolveUtil {
         if (source == null) {
             List<TraceRecord> traceRecords = new ArrayList<TraceRecord>();
             MappingOperation inMapping = resolveInExp.getInMapping();
+            
+            // bug 358709: consider overriding mapping
+            ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(env, inMapping);
+            if (overridingOper instanceof MappingOperation) {
+            	inMapping = (MappingOperation) overridingOper;
+            }
+            
             EList<TraceRecord> inMappingTraceRecords = trace.getTraceRecordMap().get(inMapping);
             if (inMappingTraceRecords != null) {
                 traceRecords.addAll(inMappingTraceRecords);
