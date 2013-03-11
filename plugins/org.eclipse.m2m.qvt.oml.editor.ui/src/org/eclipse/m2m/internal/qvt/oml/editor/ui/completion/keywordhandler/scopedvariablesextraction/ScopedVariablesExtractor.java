@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,7 +7,6 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - Bug 296630
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.keywordhandler.scopedvariablesextraction;
 
@@ -24,18 +23,14 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 public class ScopedVariablesExtractor {
     private static final int NOT_A_TOKEN = -1;
     
-    // starting from ')' or result type identifier
+    // starting from ')'
     public String extractVariables(IToken startToken, QvtCompletionData data) {
         Scope scope = new Scope(null);
         IToken currentToken = startToken;
         if (QvtCompletionData.isKindOf(data.getParentImperativeOperation(), QVTOParsersym.TK_mapping)) {
-            IToken nextToken;
-        	while ((nextToken = getNextToken(currentToken, data)) != null) {
-                if (QvtCompletionData.isKindOf(nextToken, QVTOParsersym.TK_LBRACE)) {
+            while ((currentToken = getNextToken(currentToken, data)) != null) {
+                if (QvtCompletionData.isKindOf(currentToken, QVTOParsersym.TK_LBRACE)) {
                     break;
-                }
-                else {
-                	currentToken = nextToken;
                 }
             }
         }
