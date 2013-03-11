@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 388331
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
@@ -96,11 +97,11 @@ public class ColonColonCollector extends AbstractCollector {
 	            if (QvtCompletionData.isKindOf(prevToken, QVTOParsersym.TK_LPAREN)) {
 	                IToken resolveToken = LightweightParserUtil.getPreviousToken(prevToken);
 	                if ((resolveToken != null) && (QvtCompletionData.isKindOf(resolveToken, LightweightParserUtil.RESOLVE_FAMILY_TERMINALS))) {
-	                    CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, true);
+	                    CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, true, true);
 	                }
 	            }
 	            if (MappingExtrasMappingNameCollector.isCollectorApplicable(prevToken)) {
-	                CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, false);
+	                CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, classifier, false, false, false);
 	            }
 		    }
 		}

@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 388331 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
@@ -563,22 +564,26 @@ public class CompletionProposalUtil {
     }
     
     public static final void addAllMappingNamesProposals(Collection<ICompletionProposal> proposals, QvtCompletionData data, 
-            EClassifier owner, boolean longForm, boolean withContextAndResultOnly) {
-        List<String> mappingNames = CompletionProposalUtil.getAllMappingNames(data, owner, longForm, withContextAndResultOnly);
+            EClassifier owner, boolean longForm, boolean withContextOnly, boolean withResultOnly) {
+        List<String> mappingNames = CompletionProposalUtil.getAllMappingNames(data, owner, longForm, withContextOnly, withResultOnly);
         for (String mapping : mappingNames) {
             QvtCompletionProposal info = CompletionProposalUtil.createCompletionProposal(mapping, CategoryImageConstants.MAPPING, data);
             CompletionProposalUtil.addProposalIfNecessary(proposals, info, data);
         }
     }
 
-    public static final List<String> getAllMappingNames(QvtCompletionData data, EClassifier owner, boolean longForm, boolean withContextAndResultOnly) {
+    public static final List<String> getAllMappingNames(QvtCompletionData data, EClassifier owner, boolean longForm, boolean withContextOnly, boolean withResultOnly) {
         EClassifier resolvedOwner = (owner == null) ? null : TypeUtil.resolveType(data.getEnvironment(), owner);
         List<String> mappingNames = new ArrayList<String>();
         for (MappingMethodCS methodCS : data.getAllImperativeOperationsCS()) {
             if (methodCS instanceof MappingRuleCS) {
                 MappingDeclarationCS declarationCS = methodCS.getMappingDeclarationCS();
-                if (withContextAndResultOnly 
-                        && ((declarationCS.getContextType() == null) || (declarationCS.getResult().isEmpty()))) {
+                if (withContextOnly 
+                        && (declarationCS.getContextType() == null)) {
+                    continue;
+                }
+                if (withResultOnly 
+                        && (declarationCS.getResult().isEmpty())) {
                     continue;
                 }
                 TypeCS contextTypeCS = declarationCS.getContextType();

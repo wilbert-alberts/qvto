@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 388331
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.collectors;
 
@@ -39,6 +40,6 @@ public class ResolveInMappingNameCollector extends AbstractCollector {
 	}
 
     public void addPropoposals(Collection<ICompletionProposal> proposals, QvtCompletionData data) {
-        CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, null, true, true);
+        CompletionProposalUtil.addAllMappingNamesProposals(proposals, data, null, true, false, true);
     }
 }
