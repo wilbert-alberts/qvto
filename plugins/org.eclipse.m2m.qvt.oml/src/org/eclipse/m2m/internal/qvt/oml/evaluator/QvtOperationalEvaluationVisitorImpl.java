@@ -1268,7 +1268,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				logger.log(EvaluationMessages.TerminatingExecution);
 			}
 				
-			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {				
+			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
 				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
 			}		
 				

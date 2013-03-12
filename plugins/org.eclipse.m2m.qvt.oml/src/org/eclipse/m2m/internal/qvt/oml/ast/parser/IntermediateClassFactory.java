@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,16 +8,14 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 388801
  *******************************************************************************/
 
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +30,7 @@ import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
@@ -219,9 +218,8 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void doInstancePropertyInit(Object instance,
-			QvtOperationalEvaluationVisitor evalEnv) {
+			QvtOperationalEvaluationVisitor evalVisitor) {
 		if (false == instance instanceof EObject) {
 			return;
 		}
@@ -229,47 +227,41 @@ public class IntermediateClassFactory extends EFactoryImpl {
 
 		try {
 			myIsInitInProgress++;
-
-			List<EClass> allSuperClasses = new ArrayList<EClass>(2);
-			allSuperClasses.add(eInstance.eClass());
-			allSuperClasses.addAll(eInstance.eClass().getEAllSuperTypes());
-
-			for (EClass nextClass : allSuperClasses) {
-				Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations
-						.get(nextClass);
-				if (clsFeatures == null) {
+			
+			EClass intermediateClass = eInstance.eClass();
+			
+			Map<EStructuralFeature, OCLExpression<EClassifier>> clsFeatures = myClassifierInitializations
+					.get(intermediateClass);
+			if (clsFeatures == null) {
+				return;
+			}
+			for (EStructuralFeature eFeature : intermediateClass.getEAllStructuralFeatures()) {
+				IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
+						.getAdapter(eFeature.eAdapters(),
+								IntermediateStaticFieldAdapter.class);
+				if (adapter != null && adapter.isInitialized()) {
 					continue;
 				}
-				for (EStructuralFeature eFeature : clsFeatures.keySet()) {
-					IntermediateStaticFieldAdapter adapter = (IntermediateStaticFieldAdapter) EcoreUtil
-							.getAdapter(eFeature.eAdapters(),
-									IntermediateStaticFieldAdapter.class);
-					if (adapter != null && adapter.isInitialized()) {
-						continue;
-					}
 
-					OCLExpression<EClassifier> expression = clsFeatures
-							.get(eFeature);
-					Object evalResult = evalEnv.visitExpression(expression);
-
-					// temporary switch off read-only property
-					boolean isChangeable = eFeature.isChangeable();
-					eFeature.setChangeable(true);
-
-					Object eValue = eInstance.eGet(eFeature);
-					if (eValue instanceof Collection) {
-						if (evalResult instanceof Collection) {
-							((Collection<Object>) eValue)
-									.addAll((Collection<Object>) evalResult);
-						} else {
-							((Collection<Object>) eValue).add(evalResult);
-						}
-					} else {
-						eInstance.eSet(eFeature, evalResult);
-					}
-
-					eFeature.setChangeable(isChangeable);
+				OCLExpression<EClassifier> expression = clsFeatures
+						.get(eFeature);
+				
+				Object evalResult = expression != null ? evalVisitor.visitExpression(expression) : null;
+								
+				if (evalResult == null) {
+					// no init expression specified, or init expression evaluated to null 
+					EClassifier featureType = eFeature.getEType();
+					evalResult = EvaluationUtil.createInitialValue(featureType, evalVisitor.getEnvironment().getOCLStandardLibrary());
 				}
+
+				// temporary switch off read-only property
+				boolean isChangeable = eFeature.isChangeable();
+				eFeature.setChangeable(true);
+				
+				boolean isUndefined = QvtOperationalUtil.isUndefined(evalResult, evalVisitor.getEvaluationEnvironment());
+				evalVisitor.getOperationalEvaluationEnv().callSetter(eInstance, eFeature, evalResult, isUndefined, false);
+				
+				eFeature.setChangeable(isChangeable);
 			}
 		} finally {
 			myIsInitInProgress--;
