@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation
+ * Copyright (c) 2008, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug394188
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.ocl2qvt;
 
@@ -76,14 +77,14 @@ public class ExtOCLEnvironmentWithQVTAccessTest extends OCLEnvironmentWithQVTAcc
 				List<QVTStackTraceElement> stackElements = e.getQvtStackTrace();
 				assertEquals(stackElements.size(), 2);
 				QVTStackTraceElement e1 = stackElements.get(0);
-				assertEquals(e1.getModuleName(), "q1");
-				assertEquals(e1.getOperationName(), "throwingException");
-				assertEquals(e1.getLineNumber(), 37);
+				assertEquals("q1", e1.getModuleName());
+				assertEquals("throwingException", e1.getOperationName());
+				assertEquals(37, e1.getLineNumber());
 				
 				QVTStackTraceElement e2 = stackElements.get(1);
-				assertEquals(e2.getModuleName(), "q2");
-				assertEquals(e2.getOperationName(), "callQueryThrowingException");
-				assertEquals(e2.getLineNumber(), 28);
+				assertEquals("q2", e2.getModuleName());
+				assertEquals("callQueryThrowingException", e2.getOperationName());
+				assertEquals(28, e2.getLineNumber());
 			}
 		} catch (ParserException e) {
 			assertNotNull(helper.getProblems() != null);			

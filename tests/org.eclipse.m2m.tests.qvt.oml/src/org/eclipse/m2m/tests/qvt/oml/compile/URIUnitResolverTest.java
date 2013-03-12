@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 R.Dvorak and others.
+ * Copyright (c) 2009, 2013 R.Dvorak and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - Bug394188
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.compile;
 
@@ -129,7 +130,7 @@ public class URIUnitResolverTest extends TestCase {
 		UnitProxy unitByURI = URIUnitResolver.getUnit(unit.getURI());		
 		assertNotNull(unitByURI);		
 		assertContents(unitByURI);
-		assertEquals(unitByURI.getURI(), unit.getURI());		
+		assertEquals(unit.getURI(), unitByURI.getURI());		
 		
 		// expect default namespace as we had no knowledge about
 		assertNull(unitByURI.getNamespace());

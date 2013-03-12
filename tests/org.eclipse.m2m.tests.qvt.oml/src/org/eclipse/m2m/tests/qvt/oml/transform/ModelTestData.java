@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug394188
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -68,16 +69,16 @@ public abstract class ModelTestData {
         return myName;
     }
     
-    public void compareWithExpected(List<EObject> out, List<EObject> expected) {
+    public void compareWithExpected(List<EObject> expected, List<EObject> out) {
     	TestCase.assertEquals("transf output differs in size to expected result", //$NON-NLS-1$ 
-    			out.size(), expected.size());
+    			expected.size(), out.size());
     	for(int i = 0; i < out.size(); i++) {
-    		compareWithExpected(out.get(i), expected.get(i));
+    		compareWithExpected(expected.get(i), out.get(i));
     	}
     }
     
-    public void compareWithExpected(EObject out, EObject expected) {        
-        TestCase.assertNotSame("Actual output and expected output must not be the same instances", out, expected); //$NON-NLS-1$
+    public void compareWithExpected(EObject expected, EObject out) {        
+        TestCase.assertNotSame("Actual output and expected output must not be the same instances", expected, out); //$NON-NLS-1$
         TestCase.assertFalse("Actual output and expected output must be at distinct location", //$NON-NLS-1$ 
         		out.eResource().getURI().toString().equals(expected.eResource().getURI().toString())); 
         

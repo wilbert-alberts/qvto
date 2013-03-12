@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation
+ * Copyright (c) 2008, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug394188
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.ant;
 
@@ -71,7 +72,7 @@ public class TestQvtAntScript extends TestCase {
     	
             URI expectedURI = myData.getExpected(getProject()).get(index);
             EObject expectedObject = loadObj.eResource().getResourceSet().getResource(expectedURI, true).getContents().get(0);
-			myData.compareWithExpected(loadObj, expectedObject);
+			myData.compareWithExpected(expectedObject, loadObj);
             index++;
     	}
     }
