@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation
+ * Copyright (c) 2008, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,18 +8,28 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 254962
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import java.util.HashSet;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.TypeUtil;
 
@@ -81,10 +91,13 @@ public class ElementOperations extends AbstractContextualOperations {
 	}
 
 	private static final CallHandler DEEP_CLONE = new CallHandler() {
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, final QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
-				EObject result = EcoreUtil.copy(eObject);
+				EcoreUtil.Copier copier = new IntermediatePropertyCopier(evalEnv);
+			    
+			    EObject result = copier.copy(eObject);
+			    copier.copyReferences();
 
 				ModelParameterExtent extent = evalEnv.getDefaultInstantiationExtent(eObject.eClass());
 				if(extent != null) {
@@ -100,17 +113,17 @@ public class ElementOperations extends AbstractContextualOperations {
 	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
-	
+		
 	private static final CallHandler CLONE = new CallHandler() {
 		@SuppressWarnings("serial")
-		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+		public Object invoke(ModuleInstance module, Object source, Object[] args, final QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof EObject) {
 				EObject eObject = (EObject) source;
-			    EcoreUtil.Copier copier = new EcoreUtil.Copier() {			    	
+			    EcoreUtil.Copier copier = new IntermediatePropertyCopier(evalEnv) {			    	
 			    	@Override
 					protected void copyContainment(org.eclipse.emf.ecore.EReference arg0, EObject arg1, EObject arg2) {
 			    		// make a shallow copy
-			    	}
+			    	}			    	
 			    };
 			    
 			    EObject result = copier.copy(eObject);
@@ -130,6 +143,71 @@ public class ElementOperations extends AbstractContextualOperations {
 	        return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};
+	
+	private static class IntermediatePropertyCopier extends EcoreUtil.Copier {
+		
+		private QvtOperationalEvaluationEnv evalEnv;
+		
+		public IntermediatePropertyCopier(QvtOperationalEvaluationEnv evalEnv) {
+			this.evalEnv = evalEnv;
+		}
+		
+		@Override
+    	public void copyReferences() {
+    		
+    		super.copyReferences();
+    		
+    		Module rootModule = evalEnv.getRoot().getAdapter(InternalEvaluationEnv.class).getCurrentModule().getModule();
+    		
+    		// bug 254962: clone intermediate properties
+    		for (Map.Entry<EObject, EObject> entry  : entrySet()) {
+    			EObject eObject = entry.getKey();
+    	        EObject copyEObject = entry.getValue();
+    	        										    	        
+    	        cloneIntermediateProperties(eObject, copyEObject, rootModule);
+    		}
+    	}
+		
+		private void cloneIntermediateProperties(EObject source, EObject target, Module module) {
+			
+			for (EStructuralFeature feature : module.getEAllStructuralFeatures()) {
+				
+				if (feature instanceof ContextualProperty) {
+					
+					ContextualProperty property = (ContextualProperty) feature;
+					
+					if (property.getContext().isSuperTypeOf(source.eClass())) {
+									
+						Object value = evalEnv.navigateProperty(property, null, source);
+						Object result = get(value);
+						
+						if (useOriginalReferences && result == null) {
+							result = value;
+						}
+										
+						evalEnv.callSetter(target, property, result, QvtOperationalUtil.isUndefined(result, evalEnv), true);
+					
+					}
+					
+				}	
+				
+			}
+			
+			for (ModuleImport moduleImport : module.getModuleImport()) {
+				
+				Module importedModule = moduleImport.getImportedModule();
+				
+				if (moduleImport.getKind() == ImportKind.EXTENSION || importedModule instanceof Library) {
+					
+					cloneIntermediateProperties(source, target, importedModule);
+					
+				}
+				
+			}
+			
+		}
+		
+	}
 
 	private static final String CONTAINER_NAME = "container"; //$NON-NLS-1$  
 	private static final CallHandler CONTAINER = new CallHandler() {
