@@ -88,9 +88,9 @@ public class OCLEnvironmentWithQVTAccessByURITest extends OCLEnvironmentWithQVTA
 	@Override
 	protected OCLEnvironmentWithQVTAccessFactory createOCLEnvFactory() {
 		List<URI> uris = Arrays.asList(
-				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/FooLib.qvto?ns=.", false),
-				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/org/q1.qvto?ns=org", false),
-				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/org/q2.qvto?ns=org", false),
+				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/FooLib.qvto", false).appendQuery("ns=."),
+				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/org/q1.qvto", false).appendQuery("ns=org"),
+				URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/externlib/org/q2.qvto", false).appendQuery("ns=org"),
 				URI.createURI("qvto://blackbox/Strings", false)
 		);
 		
