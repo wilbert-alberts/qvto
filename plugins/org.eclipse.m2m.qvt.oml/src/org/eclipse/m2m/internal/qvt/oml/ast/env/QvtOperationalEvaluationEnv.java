@@ -167,7 +167,12 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		if(target instanceof ModuleInstance) {
 			ModuleInstance moduleTarget = (ModuleInstance) target;
-			target = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
+			if (property.getEContainingClass() instanceof Module) {
+				target = moduleTarget.getThisInstanceOf((Module) property.getEContainingClass());
+			}
+			else {
+				target = moduleTarget.getThisInstanceOf(moduleTarget.getModule());
+			}
 		}
 
 		EStructuralFeature resolvedProperty = property;		
@@ -212,7 +217,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
             }
 		}
 		
-		return super.navigateProperty(resolvedProperty, qualifiers, target);
+		try {
+			return super.navigateProperty(resolvedProperty, qualifiers, target);
+		}
+		catch (IllegalArgumentException e) {
+            internalEnv().throwQVTException(
+                	new QvtRuntimeException("Unknown property '" + property.getName() + "'")); //$NON-NLS-1$ //$NON-NLS-2$
+			return getInvalidResult();
+		}
 	}
 	
 	@Override
