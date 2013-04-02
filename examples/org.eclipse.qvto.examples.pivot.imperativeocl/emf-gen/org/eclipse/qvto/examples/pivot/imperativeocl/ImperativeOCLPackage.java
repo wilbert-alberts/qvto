@@ -3581,6 +3581,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
 
 	/**
+	 * The operation id for the '<em>Validate Argument Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP___VALIDATE_ARGUMENT_TYPE__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
