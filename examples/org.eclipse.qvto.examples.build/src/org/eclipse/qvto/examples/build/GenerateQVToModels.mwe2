@@ -9,7 +9,7 @@
  *
  * Contributors:
  *		E.D.Willink - initial API and implementation
- *		Adoflo Sanchez-Barbudo Herrera - bug397429
+ *		Adolfo Sanchez-Barbudo Herrera - bug397429
  * 		
  * </copyright>
  *
@@ -116,23 +116,27 @@ Workflow {
 //		modelSlot = "${slot}"		
 //	}
     
-    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet	
+    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet	
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
-    	javaPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
+    	visitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
     	visitorClassName = "ImperativeOCLVisitor"
     	visitorBasePackageName = "org.eclipse.ocl.examples.pivot.util"
     	visitorBaseClassName = "Visitor"
+    	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
+    	visitableClassName = "Visitable"
     }
-    component = OCLExtenderVisitorsCodeGenerator { resourceSet = resourceSet
+    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.qvtoperational/emf-gen"
-    	javaPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
+    	visitorPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational.util"
     	visitorClassName = "QVTOperationalVisitor"
     	visitorBasePackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
     	visitorBaseClassName = "ImperativeOCLVisitor"
+    	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
+    	visitableClassName = "Visitable"
     }
 }
 
