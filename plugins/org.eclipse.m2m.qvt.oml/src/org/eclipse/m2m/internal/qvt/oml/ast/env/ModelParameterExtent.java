@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation
+ * Copyright (c) 2007, 2013 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alan McMorran - bug 316793
  *******************************************************************************/
 
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
@@ -17,7 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,14 +76,12 @@ public class ModelParameterExtent {
 		// we need to track its original container as in [inout] extents the container my change during 
 		// transformation execution. If the container of an initial object changes, it's not a root object
 		Map<EObject, EObject> containerMap = null;
-		if(myInitialEObjects != null && !myInitialEObjects.isEmpty()) {
-			for (EObject nextInitialRoot : myInitialEObjects) {
-				if(nextInitialRoot.eContainer() != null) {
-					if(containerMap == null) {
-						containerMap = new HashMap<EObject, EObject>();
-					}
-					containerMap.put(nextInitialRoot, nextInitialRoot.eContainer());
+		for (EObject nextInitialRoot : myInitialEObjects) {
+			if(nextInitialRoot.eContainer() != null) {
+				if(containerMap == null) {
+					containerMap = new HashMap<EObject, EObject>();
 				}
+				containerMap.put(nextInitialRoot, nextInitialRoot.eContainer());
 			}
 		}
 		
@@ -192,15 +191,15 @@ public class ModelParameterExtent {
 	
 	public ModelExtentContents getContents() {
 		purgeContents();		
-		List<EObject> initialObjects = new ArrayList<EObject>(myInitialEObjects);		
-		List<EObject> allRootObjects = new ArrayList<EObject>(myAdditionalEObjects);
+		Set<EObject> initialObjects = new LinkedHashSet<EObject>(myInitialEObjects);		
+		Set<EObject> allRootObjects = new LinkedHashSet<EObject>(myAdditionalEObjects);
 		allRootObjects.addAll(initialObjects);
 		
 		Resource inMemoryResource = getInMemoryResource(false);
 		if (inMemoryResource != null) {
 			for (EObject obj : inMemoryResource.getContents()) {
 				// don't forget about UML stereotype applications which are the root objects
-				if (obj.eContainer() == null && allRootObjects.contains(obj) == false) {
+				if (obj.eContainer() == null) {
 					allRootObjects.add(obj);
 				}
 			}
@@ -216,7 +215,7 @@ public class ModelParameterExtent {
 			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);			
 		}
 		
-		return new ExtentContents(initialObjects, allRootObjects);
+		return new ExtentContents(new ArrayList<EObject>(initialObjects), new ArrayList<EObject>(allRootObjects));
 	}
 		
 	public boolean removeElement(EObject element) {
@@ -257,8 +256,7 @@ public class ModelParameterExtent {
 	
 	private void purgeContents(List<EObject> elements, boolean isResetResource) {
 		ArrayList<EObject> result = null;		
-		for (Iterator<EObject> it = elements.iterator(); it.hasNext();) {
-			EObject nextElement = (EObject) it.next();
+		for (EObject nextElement : elements) {
 			EObject eContainer = nextElement.eContainer();			
 			if(eContainer == null || 
 				(elements == myInitialEObjects && eContainer == myInitialObj2ContainerMap.get(nextElement))) {
