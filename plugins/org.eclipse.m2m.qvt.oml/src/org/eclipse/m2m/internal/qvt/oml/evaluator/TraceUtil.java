@@ -49,7 +49,7 @@ import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.PredefinedType;
 
-class TraceUtil {
+public class TraceUtil {
 	
 	private TraceUtil() {
 		super();
@@ -251,7 +251,7 @@ class TraceUtil {
     }
 
     @SuppressWarnings("unchecked")
-    private static EValue createEValue(Object oclObject) {
+    public static EValue createEValue(Object oclObject) {
         EValue value = TraceFactory.eINSTANCE.createEValue();
         value.setOclObject(oclObject);
         if (oclObject != null) {

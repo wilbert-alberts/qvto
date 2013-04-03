@@ -4,13 +4,13 @@ transformation bug388325();
 
 main() {
 
-	var res : OrderedSet(EPackage) = map m1();
+	var res : List(EPackage) = map m1();
 			
 	assert fatal (res->notEmpty());
 
 }
 
-mapping m1() : OrderedSet(EPackage) {
+mapping m1() : List(EPackage) {
 
 	result += map m2()
 

@@ -20,7 +20,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
@@ -32,6 +31,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TraceUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
@@ -89,13 +89,20 @@ public class TraceSerializer {
                 patch(param.getValue());
             }
             for (VarParameterValue result : traceRecord.getResult().getResult()) {
+            	updateResult(result);
                 patch(result.getValue());
             }
         }
         return trace;
     }
 
-    private void patch(EValue eValue) {
+    private void updateResult(VarParameterValue varParamValue) {
+		if (varParamValue.getValue() != null) {
+			varParamValue.setValue(TraceUtil.createEValue(varParamValue.getValue().getOclObject()));
+		}
+	}
+
+	private void patch(EValue eValue) {
         if (eValue != null) {
             EObject modelElement = eValue.getModelElement();
             if (modelElement != null) {
@@ -107,12 +114,9 @@ public class TraceSerializer {
                     }
                 }
             } else {
-            	EList<EValue> collection = eValue.getCollection();
-            	if (!collection.isEmpty()) {
-            		for (EValue collectionElement : collection) {
-						patch(collectionElement);
-					}
-            	}
+        		for (EValue collectionElement : eValue.getCollection()) {
+					patch(collectionElement);
+				}
             }
         }
     }
