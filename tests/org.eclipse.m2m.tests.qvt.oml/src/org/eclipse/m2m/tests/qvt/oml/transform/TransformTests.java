@@ -310,7 +310,8 @@ public class TransformTests {
         		new FileToFileData("bug397959"),  //$NON-NLS-1$
         		new FileToFileData("bug358709"), //$NON-NLS-1$
         		new FilesToFilesData("bug388801", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FileToFileData("bug254962")
+        		new FileToFileData("bug254962"),
+        		new FilesToFilesData("bug325192", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         };
     }
 

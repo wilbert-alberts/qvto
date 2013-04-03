@@ -89,10 +89,13 @@ public class DictionaryImpl<KeyT, T> implements Dictionary<KeyT, T> {
 		if(c instanceof DictionaryImpl) {
 			DictionaryImpl<KeyT, T> anotherDict = (DictionaryImpl<KeyT, T>) c;
 			fMap.putAll(anotherDict.fMap);
-			return true;
 		}
-		
-		throw new IllegalArgumentException();
+		else {
+			for (T o : c) {
+				add(o);
+			}
+		}
+		return true;
 	}	
 	
 	public boolean add(T o) {

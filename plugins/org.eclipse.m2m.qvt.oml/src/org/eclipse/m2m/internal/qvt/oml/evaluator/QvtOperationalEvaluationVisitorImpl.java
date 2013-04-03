@@ -127,6 +127,7 @@ import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.Log;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
@@ -365,15 +366,20 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 String varName = referredVariable.getName();
                 Object oldValue = getRuntimeValue(varName);
                 EClassifier variableType = lValue.getType();
-                if ((variableType instanceof CollectionType) && (oldValue instanceof Collection)) {
-                    Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
-                    Collection<Object> leftOclCollection;
-                    if (assignExp.isIsReset()) {
-                        leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind(oldOclCollection);
-                    } else {
-                        leftOclCollection = oldOclCollection;
-                    }
-
+                if (variableType instanceof CollectionType) {
+                    Collection<Object> leftOclCollection = null;
+                	if (oldValue instanceof Collection) {
+	                    Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
+	                    if (assignExp.isIsReset()) {
+	                        leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind(oldOclCollection);
+	                    } else {
+	                        leftOclCollection = oldOclCollection;
+	                    }
+                	}
+                	else {
+                		leftOclCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) variableType);
+                	}
+                	
                     final CollectionKind leftCollectionKind = getCollectionKind(leftOclCollection);
 					if (exprValue instanceof Collection) {
                         if(leftCollectionKind == CollectionKind.ORDERED_SET_LITERAL) {
@@ -1996,6 +2002,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private static CollectionKind getCollectionKind(Collection<?> collection) {
+    	if (collection instanceof MutableList<?>) {
+    		return null;
+    	}
+    	if (collection instanceof Dictionary<?,?>) {
+    		return null;
+    	}
         if (collection instanceof ArrayList<?>) {
             return CollectionKind.SEQUENCE_LITERAL;
         }

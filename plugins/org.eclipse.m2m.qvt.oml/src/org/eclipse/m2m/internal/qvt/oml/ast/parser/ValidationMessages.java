@@ -98,6 +98,8 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_SeeErrorLogForDetails;
 	public static String QvtOperationalVisitorCS_unsupportedQualifierOnOperation;
     public static String QvtOperationalVisitorCS_WrongImperativeIteratorConditionType;
+    public static String QvtOperationalVisitorCS_incrementalAssignmentResultNotAllowed;
+    public static String QvtOperationalVisitorCS_assignmentResultNotAllowed;
     
 	public static String readOnlyPropertyModificationError;
 	public static String StringTypeMessageLogArgumentError;

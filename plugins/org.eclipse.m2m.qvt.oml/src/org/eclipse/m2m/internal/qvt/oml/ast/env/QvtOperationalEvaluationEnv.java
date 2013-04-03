@@ -167,8 +167,9 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		if(target instanceof ModuleInstance) {
 			ModuleInstance moduleTarget = (ModuleInstance) target;
-			if (property.getEContainingClass() instanceof Module) {
-				target = moduleTarget.getThisInstanceOf((Module) property.getEContainingClass());
+			EClassifier owningClassifier = QvtOperationalStdLibrary.INSTANCE.getEnvironment().getUMLReflection().getOwningClassifier(property);			
+			if (owningClassifier instanceof Module) {
+				target = moduleTarget.getThisInstanceOf((Module) owningClassifier);
 			}
 			else {
 				target = moduleTarget.getThisInstanceOf(moduleTarget.getModule());

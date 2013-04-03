@@ -22,6 +22,7 @@ import junit.framework.TestSuite;
 
 import org.eclipse.m2m.tests.qvt.oml.ant.QvtAntScriptTests;
 import org.eclipse.m2m.tests.qvt.oml.callapi.AllCallAPITests;
+import org.eclipse.m2m.tests.qvt.oml.callapi.SourceContainerTests;
 import org.eclipse.m2m.tests.qvt.oml.compile.AllCompileTests;
 import org.eclipse.m2m.tests.qvt.oml.emf.AllEmfTests;
 import org.eclipse.m2m.tests.qvt.oml.env.QVTOperationalEnvTest;
@@ -78,6 +79,7 @@ public class AllTests {
         suite.addTestSuite(TestOCLAnnotationSupport.class);     
                 
         suite.addTest(QvtAntScriptTests.suite());
+        suite.addTest(SourceContainerTests.suite());
         
 		suite.addTestSuite(ExecutionTimeGuardTest.class);
 

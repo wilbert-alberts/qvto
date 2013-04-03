@@ -202,5 +202,6 @@ public class ParserTests {
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
         new TestData("resolveIn_ambiguity", 1), //$NON-NLS-1$
         new TestData("bug205303_2", 3), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug325192", 8, 0), //$NON-NLS-1$
     };
 }

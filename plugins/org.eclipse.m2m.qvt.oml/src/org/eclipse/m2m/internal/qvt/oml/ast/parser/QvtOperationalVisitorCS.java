@@ -3465,22 +3465,38 @@ public class QvtOperationalVisitorCS
 	    if (lValue instanceof VariableExp<?, ?>) {
 	    	VariableExp<EClassifier, EParameter> variableExp = (VariableExp<EClassifier, EParameter>) lValue;
 		    String referredVariableName = variableExp.getName();
-		    if (Environment.SELF_VARIABLE_NAME.equals(referredVariableName)) {
-		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToSelf, lValueCS);
-		        return null;
-		    }
-
-
-		    if (QvtOperationalEnv.THIS.equals(referredVariableName)) {
-		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToThis, lValueCS);
-		        return null;
-		    }
+		    
 		    Variable<EClassifier, EParameter> variable = variableExp.getReferredVariable();
 	        if (variable == null) { // We mustn't be here. Must have been detected by OCL
 	            QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.unresolvedNameError, new Object[] { referredVariableName }),
 	                    lValueCS);
 	            return null;
 	        }
+		    
+		    if (Environment.RESULT_VARIABLE_NAME.equals(referredVariableName)) {
+		    	if (!isInsideMappintInitSection(expressionCS)) {
+		    		if (expressionCS.isIncremental()) {
+		    			if (false == variable.getType() instanceof ListType
+		    					&& false == variable.getType() instanceof DictionaryType) {
+			    			QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_incrementalAssignmentResultNotAllowed, lValueCS);
+			    			return null;
+		    			}
+		    		}
+		    		else {
+		    			QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_assignmentResultNotAllowed, lValueCS);
+		    			return null;
+		    		}
+		    	}
+		    }
+		    if (Environment.SELF_VARIABLE_NAME.equals(referredVariableName)) {
+		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToSelf, lValueCS);
+		        return null;
+		    }
+		    if (QvtOperationalEnv.THIS.equals(referredVariableName)) {
+		        QvtOperationalUtil.reportError(env, ValidationMessages.CantAssignToThis, lValueCS);
+		        return null;
+		    }
+		    
 	        QvtOperationalParserUtil.validateVariableModification(variable, lValueCS, null, env, true);         
 	        QvtOperationalParserUtil.validateAssignment(false, variable.getName(), variable.getType(), rightExpr.getType(),
 	        		expressionCS.isIncremental(), lValueCS, env);
@@ -3524,7 +3540,18 @@ public class QvtOperationalVisitorCS
 	    return result;
 	}
 	
-    private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
+    private boolean isInsideMappintInitSection(AssignStatementCS expressionCS) {
+    	EObject eContainer = expressionCS.eContainer();
+		while (eContainer != null) {
+			if (eContainer instanceof MappingInitCS) {
+				return true;
+			}
+			eContainer = eContainer.eContainer();
+		}
+		return false;
+	}
+
+	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
 			QvtOperationalModuleEnv env, boolean isOutAllowed) throws SemanticException {
 		DirectionKindEnum directionKindEnum = paramCS.getDirectionKind();
 		if (directionKindEnum == DirectionKindEnum.DEFAULT) {
