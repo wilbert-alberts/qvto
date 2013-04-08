@@ -1,7 +1,7 @@
 /**
  * <copyright>
  *
- * Copyright (c) 2011, 2013 Willink Transformations, University of Yok and others.
+ * Copyright (c) 2011, 2013 Willink Transformations, University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,7 +49,7 @@ Workflow {
 	
     component = OCLExtenderVisitorPatternWeaverComponent {
     	resourceSet = resourceSet
-    	uri = "/org.eclipse.ocl.examples.build/qvtoTransf/DerivedVisitorPatternTransf.qvto"
+    	uri = "/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/qvto/DerivedVisitorPatternTransf.qvto"
     	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore" 
     	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
     	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
@@ -61,7 +61,7 @@ Workflow {
     
     component = OCLExtenderVisitorPatternWeaverComponent {
     	resourceSet = resourceSet
-    	uri = "/org.eclipse.ocl.examples.build/qvtoTransf/DerivedVisitorPatternTransf.qvto"
+    	uri = "/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/qvto/DerivedVisitorPatternTransf.qvto"
     	in = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore" 
     	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
     	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
