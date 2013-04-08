@@ -19,7 +19,7 @@
 module GenerateQVToModels
 
 import org.eclipse.ocl.examples.build.utilities.*
-import org.eclipse.ocl.examples.build.extenders.utilities.*
+// import org.eclipse.ocl.examples.build.extenders.utilities.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
@@ -37,84 +37,51 @@ Workflow {
     bean = StandaloneSetup { resourceSet = resourceSet
     	platformUri = platformURI		// A local folder to minimize workspace searching
     	scanClassPath = true		// But we do need to search the plugin-space
+    	
+    	// In case that the build.ocl plugin only resides in the workspace
+    	// as might be the case for the *.build projects 
+    	uriMap = Mapping {
+    		from = "platform:/plugin/org.eclipse.ocl.examples.build/"
+    		to = "platform:/resource/org.eclipse.ocl.examples.build/"
+    	}
     }
     bean = GenModelSetup { resourceSet = resourceSet }
     bean = UMLGenModelSetup { resourceSet = resourceSet }
     
-//    component = ResourceReader {
-//		resourceSet = resourceSet
-//		uri = imperativeOCLecore
-//		modelSlot = imperativeOCLslot
-//	}
 	
-    component = OCLExtenderVisitorPatternWeaverComponent {
+    component = DerivedVisitorPatternWeaver {
     	resourceSet = resourceSet
-    	uri = "/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/qvto/DerivedVisitorPatternTransf.qvto"
-    	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore" 
-    	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-    	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
+    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore" 
+    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
+    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
     	superVisitorInterfaceName = "Visitor"
     	superVisitorInterfaceQualifiedName = "org.eclipse.ocl.examples.pivot.util.Visitor"
     	derivedVisitorInterfaceName = "ImperativeOCLVisitor"
     	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor"
-    }
+    }    
     
-    component = OCLExtenderVisitorPatternWeaverComponent {
+    component = DerivedVisitorPatternWeaver {
     	resourceSet = resourceSet
-    	uri = "/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/qvto/DerivedVisitorPatternTransf.qvto"
-    	in = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore" 
-    	in = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-    	in = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-    	baseVisitorInterfaceName = "Visitor"
-    	baseVisitorInterfaceQualifiedName = "org.eclipse.ocl.examples.pivot.util.Visitor"
+    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore" 
+    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
+    	rootVisitorInterfaceName = "Visitor"
+    	rootVisitorInterfaceQualifiedName = "org.eclipse.ocl.examples.pivot.util.Visitor"
     	superVisitorInterfaceName = "ImperativeOCLVisitor"
     	superVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor"
     	derivedVisitorInterfaceName = "QVTOperationalVisitor"
     	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor"
     }
     
-//    component = OCLExtenderVisitableAcceptGenerator {
-//		resourceSet = resourceSet
-//		targetEcoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-//		visitorEcoreFile = "/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-//		derivedVisitorInterfaceName = "ImperativeOCLVisitor"
-//	}
-	
-//	component = ResourceWriter {
-//		resourceSet = resourceSet
-//		modelSlot = imperativeOCLslot	
-//	}
-
-	
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
 		genModel = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
 		clearResourceSet = false
-
 	}
+	
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
 		genModel = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
 		clearResourceSet = false
 	}
-
-//    component = OCLExtenderVisitableAcceptGenerator { resourceSet = resourceSet skipOnErrors = true
-//    	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-//    }
-//    
-//    component = OCLExtenderVisitableAcceptGenerator { resourceSet = resourceSet skipOnErrors = true
-//    	ecoreFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore"
-//    }
-
-	
-//	component = ResourceReader { resourceSet = resourceSet skipOnErrors = true
-//		modelSlot = "${slot}"
-//		uri = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-//	}
-	
-	
-	
-//	component = ResourceWriter {
-//		modelSlot = "${slot}"		
-//	}
     
     component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet	
     	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
@@ -122,8 +89,8 @@ Workflow {
     	modelPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
     	visitorClassName = "ImperativeOCLVisitor"
-    	visitorBasePackageName = "org.eclipse.ocl.examples.pivot.util"
-    	visitorBaseClassName = "Visitor"
+    	superVisitorPackageName = "org.eclipse.ocl.examples.pivot.util"
+    	superVisitorClassName = "Visitor"
     	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
     	visitableClassName = "Visitable"
     }
@@ -133,8 +100,8 @@ Workflow {
     	modelPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational.util"
     	visitorClassName = "QVTOperationalVisitor"
-    	visitorBasePackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
-    	visitorBaseClassName = "ImperativeOCLVisitor"
+    	superVisitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
+    	superVisitorClassName = "ImperativeOCLVisitor"
     	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
     	visitableClassName = "Visitable"
     }
