@@ -19,12 +19,11 @@
 module GenerateQVToModels
 
 import org.eclipse.ocl.examples.build.utilities.*
-// import org.eclipse.ocl.examples.build.extenders.utilities.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
 /**
- *	Generate the Pivot-based Models.
+ *	Generate the Pivot-based QVTo Models.
  */
 var platformURI = ".."
 var imperativeOCLslot = "imperativeOCLslot"
@@ -84,7 +83,7 @@ Workflow {
 	}
     
     component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet	
-    	ecoreFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
+    	genModelFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
@@ -95,7 +94,7 @@ Workflow {
     	visitableClassName = "Visitable"
     }
     component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
-    	ecoreFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore"
+    	genModelFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
     	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.qvtoperational/emf-gen"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational.util"
