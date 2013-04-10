@@ -12,6 +12,7 @@ package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class QvtCompletionProcessor implements IContentAssistProcessor {
 
 	private final ContentAssistant myContentAssistant;
 
-	private List<CategoryDescriptor> myCategories;
+	private List<CategoryDescriptor> myCategories = Collections.emptyList();
     private int myCategoryIndex = INITIAL_CATEGORY_INDEX;
 
     private final ITextEditor myEditor;
