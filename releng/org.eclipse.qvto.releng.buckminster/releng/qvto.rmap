@@ -8,6 +8,7 @@
   <rm:property key="build.type" mutable="false" value="I"/>
   <rm:locator pattern="^org\.eclipse\.m2m\.qvt\.oml.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.m2m\.tests\.qvt\.oml.*$" searchPathRef="qvto-source-code"/>
+  <rm:locator pattern="^org\.eclipse\.m2m\.tests\.qvto.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.qvto.*$" searchPathRef="qvto-source-code"/>
   <rm:locator pattern="^org\.eclipse\.ocl.*" searchPathRef="ocl"/>
   <rm:locator pattern="^org\.eclipse\.emf.*" searchPathRef="emf"/>
