@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
+
 
 public class QvtInterpretedTransformationFactory implements QvtTransformationInterpreterFactory {
 	
@@ -18,7 +21,7 @@ public class QvtInterpretedTransformationFactory implements QvtTransformationInt
 		super();
 	}
 	
-	public QvtTransformation create(String moduleID) {	
-		return new QvtInterpretedTransformation(new DeployedQvtModule(moduleID));
+	public QvtTransformation create(String moduleID) throws MdaException {	
+		return new QvtInterpretedTransformation(new DeployedQvtModule(URI.createURI(moduleID)));
 	}
 }

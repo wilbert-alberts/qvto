@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -86,12 +85,6 @@ public class DeployedImportResolver extends DelegatingUnitResolver implements Le
 		IPath fullPath = new Path(importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
 		
 		for (BundleModuleRegistry nextRegistry : bundleModules) {
-			if (importedUnitName.indexOf(nextRegistry.getBundleSymbolicName()) == 1) {
-				fullPath = new Path(importedUnitName.substring(nextRegistry.getBundleSymbolicName().length()+2));
-			}
-			else if (importedUnitName.startsWith("/")) { //$NON-NLS-1$
-				fullPath = new Path(importedUnitName.substring(1).replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
-			}
 			if (nextRegistry.fileExists(fullPath)) {
 				return new BundleFile(fullPath, nextRegistry);
 			}
@@ -100,39 +93,6 @@ public class DeployedImportResolver extends DelegatingUnitResolver implements Le
 		return resolveResourcePluginPath(importedUnitName);
 	}
 	
-	public CFile resolveImport(CFile parentFile, String importedUnitName) {
-		if (parentFile == null) {
-			return resolveImport(importedUnitName);
-		}
-		String importedFileName = importedUnitName.replace('.', '/') + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
-		URI uri = URI.createURI(parentFile.toString()).trimFileExtension().trimSegments(1);
-		CFile resolvedFile = null;
-		while (resolvedFile == null) {
-			String resolvedImportName = uri.toPlatformString(true) + '/' + importedFileName;
-			resolvedFile = resolveImport(resolvedImportName);
-			if (resolvedFile != null) {
-				InputStream contents = null;
-				try {
-					contents = resolvedFile.getContents();
-					if (contents.available() == 0) {
-						resolvedFile = null;
-					}
-				} catch (Exception e) {
-					resolvedFile = null;
-				}
-			}
-			if (resolvedFile == null) {
-				if (uri.segmentCount() > 1) {
-					uri = uri.trimSegments(1);
-				}
-				else {
-					break;
-				}
-			}
-		}
-		return resolvedFile;
-	}
-
 	private CFile resolveResourcePluginPath(String importedUnitName) {
 		try {
 			URI uri = URI.createURI(importedUnitName);
@@ -214,19 +174,40 @@ public class DeployedImportResolver extends DelegatingUnitResolver implements Le
 	 */
 	public UnitProxy resolveUnit(UnitProxy fromUnit, String qualifiedName) {
 		ExtensibleURIConverterImpl uriConverter = new ExtensibleURIConverterImpl();		
+		
+		/**
+		 * Resolving algorithm is unified with the workspace resolver. So the following steps are performed:
+		 * 
+		 *   1. Try resolving against source container (which is plug-in's root in case of deployed resolver)
+		 *   
+		 * In case passed name is "short" then additionally do:
+		 * 
+		 *   2. Try same folder as parent unit
+		 *   
+		 */
+		
 		URI parentURI = fromUnit.getURI().trimSegments(1);
+		if (parentURI.isPlatform()) {
+			parentURI = parentURI.trimSegments(parentURI.segmentCount()-2);
+		}
+
+		{
+			IPath path = new Path(parentURI.toPlatformString(true)).append(qualifiedName.replace('.', '/'));
+			URI uri = URI.createPlatformPluginURI(path.toString(), false).appendFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
+			
+			if(uriConverter.exists(uri, Collections.emptyMap())) {
+				return createUnit(qualifiedName, uri);
+			}
+		}
 		
-		IPath path = new Path(parentURI.toPlatformString(true)).append(qualifiedName.replace('.', '/'));
-		URI uri = URI.createPlatformPluginURI(path.toString(), false).appendFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
-		
-		while (uri.segmentCount() > 1) {
-			if(!uriConverter.exists(uri, Collections.emptyMap())) {
-				if (uri.segmentCount() > 1) {
-					uri = uri.trimSegments(1);
-				} else {
-					break;
-				}
-			} else {
+		String namespace = fromUnit.getNamespace();
+		if (namespace != null && qualifiedName.contains(String.valueOf(UnitProxy.NAMESPACE_SEP)) == false) {
+			qualifiedName = namespace + String.valueOf(UnitProxy.NAMESPACE_SEP) + qualifiedName;
+			
+			IPath path = new Path(parentURI.toPlatformString(true)).append(qualifiedName.replace('.', '/'));
+			URI uri = URI.createPlatformPluginURI(path.toString(), false).appendFileExtension(MDAConstants.QVTO_FILE_EXTENSION);
+			
+			if(uriConverter.exists(uri, Collections.emptyMap())) {
 				return createUnit(qualifiedName, uri);
 			}
 		}

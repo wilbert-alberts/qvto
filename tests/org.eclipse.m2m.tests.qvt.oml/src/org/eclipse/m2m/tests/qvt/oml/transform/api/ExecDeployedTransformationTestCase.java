@@ -67,8 +67,7 @@ public class ExecDeployedTransformationTestCase extends ExecTransformationTestCa
 					+ "/" + scriptName + "/" + scriptName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, false); //$NON-NLS-1$ //$NON-NLS-2$
     	} 
     	
-		return URI.createPlatformPluginURI("/" + ROOT_DIR_NAME //$NON-NLS-1$
-				+ "." + scriptName + "." + scriptName, false); //$NON-NLS-1$ //$NON-NLS-2$
+		return URI.createURI(ROOT_DIR_NAME + "." + scriptName + "." + scriptName, false); //$NON-NLS-1$ //$NON-NLS-2$
 	}
     
     protected boolean myUseFilename;

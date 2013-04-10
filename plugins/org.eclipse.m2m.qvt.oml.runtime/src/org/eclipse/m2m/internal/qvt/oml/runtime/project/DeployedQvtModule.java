@@ -12,6 +12,7 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -19,6 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.osgi.util.NLS;
@@ -28,11 +30,12 @@ public class DeployedQvtModule extends QvtModule {
 	private Module myModule;
 	private CompiledUnit myUnit;
     private QVTOCompiler myCompiler;
-	private String moduleID;
+	private URI moduleID;
 	
-	public DeployedQvtModule(String qvtModuleID) {
-		if(qvtModuleID == null || qvtModuleID.length() == 0) {
-			throw new IllegalArgumentException("Invalid QVT module ID"); //$NON-NLS-1$
+	public DeployedQvtModule(URI qvtModuleID) throws MdaException {
+		if(qvtModuleID == null || qvtModuleID.segmentCount() == 0) {
+			throw new MdaException(NLS.bind(Messages.TransformationUtil_InvalidUri, 
+					qvtModuleID == null ? String.valueOf(null) : qvtModuleID.toString()));
 		}
 		this.moduleID = qvtModuleID;
     }
@@ -44,14 +47,12 @@ public class DeployedQvtModule extends QvtModule {
     @Override
 	public Module getModule() throws MdaException {
         if (myModule == null) {
-        	DeployedImportResolver unitResolver = DeployedImportResolver.INSTANCE;
-        	UnitProxy srcUnit = unitResolver.resolveDeployedUnitOnly(moduleID);
+        	UnitProxy srcUnit = UnitResolverFactory.Registry.INSTANCE.getUnit(moduleID);
         	if (srcUnit == null) {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
-
         	
-            QVTOCompiler qvtCompiler = new QVTOCompiler(unitResolver, creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(srcUnit.getResolver(), creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {

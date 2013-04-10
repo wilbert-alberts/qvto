@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 
 public interface QvtTransformationInterpreterFactory {
@@ -20,5 +21,5 @@ public interface QvtTransformationInterpreterFactory {
 		String CLASS_ATTR = "class"; //$NON-NLS-1$
 	}
 	
-	QvtTransformation create(String moduleID);
+	QvtTransformation create(String moduleID) throws MdaException;
 }

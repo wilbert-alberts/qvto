@@ -55,16 +55,12 @@ public class TransformationUtil {
 			throw new MdaException(NLS.bind(Messages.TransformationUtil_InvalidUri, uriTransf));
 		}
 
-		if (uriTransf.isPlatformPlugin()) {
-			return new DeployedQvtModule(uriTransf.toPlatformString(false));
-		}
-		else {
-			IFile ifile = WorkspaceUtils.getWorkspaceFile(uriTransf);
-			if (ifile == null || !ifile.exists()) {
-				throw new MdaException(NLS.bind(Messages.TransformationUtil_InvalidUri, uriTransf));
-			}
+		IFile ifile = WorkspaceUtils.getWorkspaceFile(uriTransf);
+		if (ifile != null && ifile.exists()) {
 			return new WorkspaceQvtModule(ifile);
 		}
+		
+		return new DeployedQvtModule(uriTransf);
 	}
 
 }

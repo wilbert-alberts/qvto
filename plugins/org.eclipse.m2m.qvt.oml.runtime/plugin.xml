@@ -2,7 +2,8 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-    <extension-point id="qvtTransformation" name="%qvtTransformation" schema="schema/qvt-transformation.exsd"/>
+    <extension-point id="qvtTransformation" name="%qvtTransformation" schema="schema/qvtTransformation.exsd"/>
+    <extension-point id="qvtTransformationContainer" name="%qvtTransformationContainer" schema="schema/qvtTransformationContainer.exsd"/>
     <extension-point id="qvtTransformationImplFactory" name="%qvtTransformationImplFactory" schema="schema/qvtTransformationImplFactory.exsd"/>
                     
 	<extension point="org.eclipse.core.resources.markers"

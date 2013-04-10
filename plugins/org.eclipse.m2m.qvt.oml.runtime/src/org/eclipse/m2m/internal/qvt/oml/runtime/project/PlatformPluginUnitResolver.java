@@ -18,8 +18,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -37,12 +43,17 @@ import org.osgi.framework.Bundle;
  * @author dvorak
  */
 public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
-
-	private Bundle fBundle;
-	private List<IPath> fSrcContainers;
+	
+    private static final String SOURCE_CONTAINER_POINT = "org.eclipse.m2m.qvt.oml.runtime.qvtTransformationContainer"; //$NON-NLS-1$
+    private static final String SOURCE_CONTAINER = "sourceContainer"; //$NON-NLS-1$
+    private static final String CONTAINER_PATH = "path"; //$NON-NLS-1$
+	
+	private final Bundle fBundle;
+	private final List<IPath> fSrcContainers;
+    private static final Map<String, Set<IPath>> ourPluginSourceContainers = loadPluginSourceContainers();
 
 	public PlatformPluginUnitResolver(Bundle bundle) {
-		this(bundle, new Path("/")); //$NON-NLS-1$
+		this(bundle, getSourceContainers(bundle));
 	}
 	
 	public PlatformPluginUnitResolver(Bundle bundle, IPath... sourceContainers) {
@@ -72,7 +83,7 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 			
 			URL unitURL = fBundle.getEntry(unitBundleRelativePath.toString());
 			if (unitURL == null) {
-				return null;
+				continue;
 			}
 		
 			IPath unitAbsolutePath = new Path(fBundle.getSymbolicName()).append(unitBundleRelativePath);
@@ -123,13 +134,56 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 			qualifiedName = new Path(uri.deresolve(sourceFolderURI).trimFileExtension().trimQuery().toString());
 		} else {
 			resolver = new PlatformPluginUnitResolver(bundle);
-			qualifiedName = path.removeFirstSegments(1).removeFileExtension();			
+			qualifiedName = path.removeFirstSegments(1).removeFileExtension();
+			
+			/**
+			 * In case passed URI contains full path then truncate it related to specified source container.
+			 */
+			for (IPath sourceContainer : getSourceContainers(bundle)) {
+				int matchCount = qualifiedName.matchingFirstSegments(sourceContainer);
+				if (matchCount > 0) {
+					qualifiedName = qualifiedName.removeFirstSegments(matchCount);
+					break;
+				}
+			}
 		}
 		
 		PlatformPluginUnitResolver.setupResolver(resolver, true, true);
 		return resolver.resolveUnit(ResolverUtils.toQualifiedName(qualifiedName));
 	}
 
+	private static Map<String, Set<IPath>> loadPluginSourceContainers() {
+		Map<String, Set<IPath>> sourceContainers = new HashMap<String, Set<IPath>>();
+	    IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(SOURCE_CONTAINER_POINT);
+	    for (int i = 0; i < configurationElements.length; i++) {
+	        IConfigurationElement element = configurationElements[i];
+	        
+	        if (SOURCE_CONTAINER.equals(element.getName())) {
+		        String namespace = element.getNamespaceIdentifier();
+		        String containerPath = element.getAttribute(CONTAINER_PATH);
+		        if (containerPath == null || containerPath.trim().isEmpty()) {
+		        	continue;
+		        }
+		        Set<IPath> containers = sourceContainers.get(namespace);
+		        if (containers == null) {
+		        	containers = new HashSet<IPath>();
+		        	sourceContainers.put(namespace, containers);
+		        	containers.add(new Path(containerPath));
+		        }
+	        }
+	    }
+	    return Collections.unmodifiableMap(sourceContainers);
+	}
+	
+	private static IPath[] getSourceContainers(Bundle bundle) {
+		Set<IPath> containers = ourPluginSourceContainers.get(bundle.getSymbolicName());
+		if (containers != null) {
+			return containers.toArray(new IPath[containers.size()]);
+		}
+		return new IPath[] { new Path("/") }; //$NON-NLS-1$
+	}
+
+   
 	// FIXME - make shared unit class with BundleUnitResolver.BundleUnit
 	private final class BundleUnit extends UnitProxy {
 
