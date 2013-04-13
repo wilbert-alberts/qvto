@@ -82,9 +82,10 @@ Workflow {
 		clearResourceSet = false
 	}
     
-    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet	
-    	genModelFile = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel"
-    	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen"
+    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
+    	projectName = "org.eclipse.qvto.examples.pivot.imperativeocl"
+    	genModelFile = "model/ImperativeOCL.genmodel"
+    	javaFolder = "emf-gen"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
     	visitorClassName = "ImperativeOCLVisitor"
@@ -93,9 +94,11 @@ Workflow {
     	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
     	visitableClassName = "Visitable"
     }
+    
     component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
-    	genModelFile = "/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
-    	javaFolder = "${platformURI}/org.eclipse.qvto.examples.pivot.qvtoperational/emf-gen"
+    	projectName = "org.eclipse.qvto.examples.pivot.qvtoperational"
+    	genModelFile = "model/QVTOperational.genmodel"
+    	javaFolder = "emf-gen"
     	modelPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
     	visitorPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational.util"
     	visitorClassName = "QVTOperationalVisitor"
@@ -105,4 +108,3 @@ Workflow {
     	visitableClassName = "Visitable"
     }
 }
-
