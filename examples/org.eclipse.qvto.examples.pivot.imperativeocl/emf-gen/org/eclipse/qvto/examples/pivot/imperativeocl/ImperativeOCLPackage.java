@@ -3581,13 +3581,13 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
 
 	/**
-	 * The operation id for the '<em>Validate Argument Type</em>' operation.
+	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP___VALIDATE_ARGUMENT_TYPE__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE__DIAGNOSTICCHAIN_MAP;
+	int LOG_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
@@ -3597,6 +3597,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Non Static Source Is Conformant</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.

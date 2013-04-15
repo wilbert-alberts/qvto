@@ -12,7 +12,7 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: /org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel
+ * from: model/ImperativeOCL.genmodel
  * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
  * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
  * invoked by: org.eclipse.ocl.examples.build.utilities.*

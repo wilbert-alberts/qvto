@@ -12,7 +12,7 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: /org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel
+ * from: model/QVTOperational.genmodel
  * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
  * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
  * invoked by: org.eclipse.ocl.examples.build.utilities.*
