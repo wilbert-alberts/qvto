@@ -1,0 +1,9 @@
+grammar org.eclipse.qvto.examples.xtext.QVTOperational with org.eclipse.xtext.common.Terminals
+
+generate qVTOperational "http://www.eclipse.org/qvto/examples/xtext/QVTOperational"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
