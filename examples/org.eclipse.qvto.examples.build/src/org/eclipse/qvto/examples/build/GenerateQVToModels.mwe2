@@ -26,9 +26,45 @@ import org.eclipse.emf.ecore.resource.impl.*
  *	Generate the Pivot-based QVTo Models.
  */
 var platformURI = ".."
-var imperativeOCLslot = "imperativeOCLslot"
-var imperativeOCLecore = "/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-var imperativeOCLURI = "platform:/resource${imperativeOCLecore}"
+var javaSrcFolder = "emf-gen"
+/*
+ * OCL related configuration variables
+ */
+var oclProjectName = "org.eclipse.ocl.examples.pivot"
+var oclProjectURI = "platform:/resource/${oclProjectName}"
+var oclEcorePath = "model/Pivot.ecore"
+var oclEcoreURI = "${oclProjectURI}/${oclEcorePath}"
+var oclVisitorPackage = "${oclProjectName}.util"
+var oclVisitorName = "Visitor"
+var oclVisitorQualifiedName = "${oclVisitorPackage}.${oclVisitorName}"
+var oclVisitablePackage = "${oclVisitorPackage}"
+var oclVisitableName = "Visitable"
+
+/*
+ * ImperativeOCL related configuration variables
+ */
+var imperativeOclProjectName = "org.eclipse.qvto.examples.pivot.imperativeocl"
+var imperativeOclProjectURI = "platform:/resource/${imperativeOclProjectName}"
+var imperativeOclEcorePath = "model/ImperativeOCL.ecore"
+var imperativeOclEcoreURI = "${imperativeOclProjectURI}/${imperativeOclEcorePath}"
+var imperativeOclGenModelPath = "model/ImperativeOCL.genmodel"
+var imperativeOclModelPackage = "${imperativeOclProjectName}"
+var imperativeOclVisitorPackage = "${imperativeOclProjectName}.util"
+var imperativeOclVisitorName = "ImperativeOCLVisitor"
+var imperativeOclVisitorQualifiedName = "${imperativeOclVisitorPackage}.${imperativeOclVisitorName}"
+
+/*
+ * QVTOperational related configuration variables
+ */
+var qvtOperationalProjectName = "org.eclipse.qvto.examples.pivot.qvtoperational"
+var qvtOperationalProjectURI = "platform:/resource/${qvtOperationalProjectName}"
+var qvtOperationalEcorePath = "model/QVTOperational.ecore"
+var qvtOperationalEcoreURI = "${qvtOperationalProjectURI}/${qvtOperationalEcorePath}"
+var qvtOperationalGenModelPath = "model/QVTOperational.genmodel"
+var qvtOperationalModelPackage = "${qvtOperationalProjectName}"
+var qvtOperationalVisitorPackage = "${qvtOperationalProjectName}.util"
+var qvtOperationalVisitorName = "QVTOperationalVisitor"
+var qvtOperationalVisitorQualifiedName = "${qvtOperationalVisitorPackage}.${qvtOperationalVisitorName}"
 
 Workflow {
 	bean = ResourceSetImpl : resourceSet {}
@@ -50,26 +86,26 @@ Workflow {
 	
     component = DerivedVisitorPatternWeaver {
     	resourceSet = resourceSet
-    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore" 
-    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-    	superVisitorInterfaceName = "Visitor"
-    	superVisitorInterfaceQualifiedName = "org.eclipse.ocl.examples.pivot.util.Visitor"
-    	derivedVisitorInterfaceName = "ImperativeOCLVisitor"
-    	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor"
+    	in = imperativeOclEcoreURI
+    	in = oclEcoreURI
+    	in = oclEcoreURI
+    	superVisitorInterfaceName = oclVisitorName
+    	superVisitorInterfaceQualifiedName = oclVisitorQualifiedName
+    	derivedVisitorInterfaceName = imperativeOclVisitorName
+    	derivedVisitorInterfaceQualifiedName = imperativeOclVisitorQualifiedName
     }    
     
     component = DerivedVisitorPatternWeaver {
     	resourceSet = resourceSet
-    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore" 
-    	in = "platform:/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore"
-    	in = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore"
-    	rootVisitorInterfaceName = "Visitor"
-    	rootVisitorInterfaceQualifiedName = "org.eclipse.ocl.examples.pivot.util.Visitor"
-    	superVisitorInterfaceName = "ImperativeOCLVisitor"
-    	superVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor"
-    	derivedVisitorInterfaceName = "QVTOperationalVisitor"
-    	derivedVisitorInterfaceQualifiedName = "org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor"
+    	in = qvtOperationalEcoreURI 
+    	in = imperativeOclEcoreURI
+    	in = oclEcoreURI
+    	rootVisitorInterfaceName = oclVisitorName
+    	rootVisitorInterfaceQualifiedName = oclVisitorQualifiedName
+    	superVisitorInterfaceName = imperativeOclVisitorName
+    	superVisitorInterfaceQualifiedName = imperativeOclVisitorQualifiedName
+    	derivedVisitorInterfaceName = qvtOperationalVisitorName
+    	derivedVisitorInterfaceQualifiedName = qvtOperationalVisitorQualifiedName
     }
     
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
@@ -82,29 +118,31 @@ Workflow {
 		clearResourceSet = false
 	}
     
-    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
-    	projectName = "org.eclipse.qvto.examples.pivot.imperativeocl"
-    	genModelFile = "model/ImperativeOCL.genmodel"
-    	javaFolder = "emf-gen"
-    	modelPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl"
-    	visitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
-    	visitorClassName = "ImperativeOCLVisitor"
-    	superVisitorPackageName = "org.eclipse.ocl.examples.pivot.util"
-    	superVisitorClassName = "Visitor"
-    	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
-    	visitableClassName = "Visitable"
+    component = DerivedModelVisitorCodeGenerator { 
+    	resourceSet = resourceSet
+    	projectName = imperativeOclProjectName
+    	genModelFile = imperativeOclGenModelPath
+    	javaFolder = javaSrcFolder
+    	modelPackageName = imperativeOclModelPackage
+    	visitorPackageName = imperativeOclVisitorPackage
+    	visitorClassName = imperativeOclVisitorName
+    	superVisitorPackageName = oclVisitorPackage
+    	superVisitorClassName = oclVisitorName
+    	visitablePackageName = oclVisitablePackage
+    	visitableClassName = oclVisitableName
     }
     
-    component = DerivedModelVisitorCodeGenerator { resourceSet = resourceSet
-    	projectName = "org.eclipse.qvto.examples.pivot.qvtoperational"
-    	genModelFile = "model/QVTOperational.genmodel"
-    	javaFolder = "emf-gen"
-    	modelPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational"
-    	visitorPackageName = "org.eclipse.qvto.examples.pivot.qvtoperational.util"
-    	visitorClassName = "QVTOperationalVisitor"
-    	superVisitorPackageName = "org.eclipse.qvto.examples.pivot.imperativeocl.util"
-    	superVisitorClassName = "ImperativeOCLVisitor"
-    	visitablePackageName = "org.eclipse.ocl.examples.pivot.util"
-    	visitableClassName = "Visitable"
+    component = DerivedModelVisitorCodeGenerator { 
+    	resourceSet = resourceSet
+    	projectName = qvtOperationalProjectName
+    	genModelFile = qvtOperationalGenModelPath
+    	javaFolder = javaSrcFolder
+    	modelPackageName = qvtOperationalModelPackage
+    	visitorPackageName = qvtOperationalVisitorPackage
+    	visitorClassName = qvtOperationalVisitorName
+    	superVisitorPackageName = imperativeOclVisitorPackage
+    	superVisitorClassName = imperativeOclVisitorName
+    	visitablePackageName = oclVisitablePackage
+    	visitableClassName = oclVisitableName
     }
 }
