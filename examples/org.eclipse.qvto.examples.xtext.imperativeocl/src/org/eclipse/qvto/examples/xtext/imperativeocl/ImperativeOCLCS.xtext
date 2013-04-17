@@ -107,8 +107,8 @@ PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most reject
 | 	PrimitiveLiteralExpCS
 | 	TupleLiteralExpCS
 | 	CollectionLiteralExpCS
-|   ListLiteralExpCS
-|   DictLiteralExpCS
+| ListLiteralExpCS
+| DictLiteralExpCS
 | 	TypeLiteralExpCS
 | ReturnExpCS
 | 	({NameExpCS} pathName=PathNameCS
@@ -149,7 +149,7 @@ DictLiteralExpCS :
 ;
 
 DictLiteralPartCS :
-	keyExpCS = PrimitiveLiteralExpCS '=' valueExpCS = ExpCS
+	key = PrimitiveLiteralExpCS '=' value = ExpCS
 ;
  	
 ReturnExpCS : 
