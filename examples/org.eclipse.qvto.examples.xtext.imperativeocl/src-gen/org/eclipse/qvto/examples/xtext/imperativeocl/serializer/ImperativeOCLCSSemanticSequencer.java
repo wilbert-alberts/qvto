@@ -50,6 +50,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationE
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLCSGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
@@ -543,9 +544,9 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 				}
 				else break;
 			case ImperativeoclcsPackage.NAME_EXP_CS:
-				if(context == grammarAccess.getPrimaryExpCSAccess().getConstructorExpCSNameExpAction_9_2_1_0() ||
-				   context == grammarAccess.getPrimaryExpCSAccess().getIndexExpCSNameExpAction_9_2_0_0()) {
-					sequence_PrimaryExpCS_ConstructorExpCS_9_2_1_0_IndexExpCS_9_2_0_0(context, (NameExpCS) semanticObject); 
+				if(context == grammarAccess.getPrimaryExpCSAccess().getConstructorExpCSNameExpAction_10_2_1_0() ||
+				   context == grammarAccess.getPrimaryExpCSAccess().getIndexExpCSNameExpAction_10_2_0_0()) {
+					sequence_PrimaryExpCS_ConstructorExpCS_10_2_1_0_IndexExpCS_10_2_0_0(context, (NameExpCS) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getExpCSRule() ||
@@ -555,8 +556,21 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
 				   context == grammarAccess.getPrimaryExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSAccess().getInvocationExpCSNameExpAction_9_2_2_1_0()) {
+				   context == grammarAccess.getPrimaryExpCSAccess().getInvocationExpCSNameExpAction_10_2_2_1_0()) {
 					sequence_PrimaryExpCS(context, (NameExpCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case ImperativeoclcsPackage.RETURN_EXP_CS:
+				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
+				   context == grammarAccess.getImperativeOCLExpCSRule() ||
+				   context == grammarAccess.getNavigatingArgExpCSRule() ||
+				   context == grammarAccess.getPrefixedExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSRule() ||
+				   context == grammarAccess.getReturnExpCSRule()) {
+					sequence_ReturnExpCS(context, (ReturnExpCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -657,7 +671,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (nameExp=PrimaryExpCS_ConstructorExpCS_9_2_1_0 ((ownedParts+=ConstructorPartCS ownedParts+=ConstructorPartCS*) | value=StringLiteral))
+	 *     (nameExp=PrimaryExpCS_ConstructorExpCS_10_2_1_0 ((ownedParts+=ConstructorPartCS ownedParts+=ConstructorPartCS*) | value=StringLiteral))
 	 */
 	protected void sequence_PrimaryExpCS(EObject context, ConstructorExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -668,14 +682,14 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	 * Constraint:
 	 *     pathName=PathNameCS
 	 */
-	protected void sequence_PrimaryExpCS_ConstructorExpCS_9_2_1_0_IndexExpCS_9_2_0_0(EObject context, NameExpCS semanticObject) {
+	protected void sequence_PrimaryExpCS_ConstructorExpCS_10_2_1_0_IndexExpCS_10_2_0_0(EObject context, NameExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (nameExp=PrimaryExpCS_IndexExpCS_9_2_0_0 firstIndexes+=ExpCS firstIndexes+=ExpCS* (secondIndexes+=ExpCS secondIndexes+=ExpCS*)? atPre?='@'?)
+	 *     (nameExp=PrimaryExpCS_IndexExpCS_10_2_0_0 firstIndexes+=ExpCS firstIndexes+=ExpCS* (secondIndexes+=ExpCS secondIndexes+=ExpCS*)? atPre?='@'?)
 	 */
 	protected void sequence_PrimaryExpCS(EObject context, IndexExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -686,7 +700,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             nameExp=PrimaryExpCS_InvocationExpCS_9_2_2_1_0 
+	 *             nameExp=PrimaryExpCS_InvocationExpCS_10_2_2_1_0 
 	 *             (
 	 *                 argument+=NavigatingArgCS 
 	 *                 argument+=NavigatingCommaArgCS* 
@@ -694,7 +708,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	 *                 (argument+=NavigatingBarArgCS argument+=NavigatingCommaArgCS*)?
 	 *             )?
 	 *         ) | 
-	 *         nameExp=PrimaryExpCS_InvocationExpCS_9_2_2_1_0
+	 *         nameExp=PrimaryExpCS_InvocationExpCS_10_2_2_1_0
 	 *     )
 	 */
 	protected void sequence_PrimaryExpCS(EObject context, InvocationExpCS semanticObject) {
@@ -707,6 +721,15 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	 *     (pathName=PathNameCS atPre?='@'?)
 	 */
 	protected void sequence_PrimaryExpCS(EObject context, NameExpCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (value=ExpCS?)
+	 */
+	protected void sequence_ReturnExpCS(EObject context, ReturnExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

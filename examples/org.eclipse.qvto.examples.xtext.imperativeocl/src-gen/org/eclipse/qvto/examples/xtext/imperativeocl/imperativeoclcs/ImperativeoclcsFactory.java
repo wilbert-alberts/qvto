@@ -68,6 +68,15 @@ public interface ImperativeoclcsFactory extends EFactory
   DictLiteralPartCS createDictLiteralPartCS();
 
   /**
+   * Returns a new object of class '<em>Return Exp CS</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Return Exp CS</em>'.
+   * @generated
+   */
+  ReturnExpCS createReturnExpCS();
+
+  /**
    * Returns a new object of class '<em>Name Exp CS</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

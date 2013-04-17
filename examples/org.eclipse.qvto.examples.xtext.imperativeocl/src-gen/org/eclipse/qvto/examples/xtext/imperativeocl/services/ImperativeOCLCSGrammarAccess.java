@@ -276,73 +276,77 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cListLiteralExpCSParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cDictLiteralExpCSParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cTypeLiteralExpCSParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
-		private final Action cNameExpCSAction_9_0 = (Action)cGroup_9.eContents().get(0);
-		private final Assignment cPathNameAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cPathNamePathNameCSParserRuleCall_9_1_0 = (RuleCall)cPathNameAssignment_9_1.eContents().get(0);
-		private final Alternatives cAlternatives_9_2 = (Alternatives)cGroup_9.eContents().get(2);
-		private final Group cGroup_9_2_0 = (Group)cAlternatives_9_2.eContents().get(0);
-		private final Action cIndexExpCSNameExpAction_9_2_0_0 = (Action)cGroup_9_2_0.eContents().get(0);
-		private final Keyword cLeftSquareBracketKeyword_9_2_0_1 = (Keyword)cGroup_9_2_0.eContents().get(1);
-		private final Assignment cFirstIndexesAssignment_9_2_0_2 = (Assignment)cGroup_9_2_0.eContents().get(2);
-		private final RuleCall cFirstIndexesExpCSParserRuleCall_9_2_0_2_0 = (RuleCall)cFirstIndexesAssignment_9_2_0_2.eContents().get(0);
-		private final Group cGroup_9_2_0_3 = (Group)cGroup_9_2_0.eContents().get(3);
-		private final Keyword cCommaKeyword_9_2_0_3_0 = (Keyword)cGroup_9_2_0_3.eContents().get(0);
-		private final Assignment cFirstIndexesAssignment_9_2_0_3_1 = (Assignment)cGroup_9_2_0_3.eContents().get(1);
-		private final RuleCall cFirstIndexesExpCSParserRuleCall_9_2_0_3_1_0 = (RuleCall)cFirstIndexesAssignment_9_2_0_3_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_9_2_0_4 = (Keyword)cGroup_9_2_0.eContents().get(4);
-		private final Group cGroup_9_2_0_5 = (Group)cGroup_9_2_0.eContents().get(5);
-		private final Keyword cLeftSquareBracketKeyword_9_2_0_5_0 = (Keyword)cGroup_9_2_0_5.eContents().get(0);
-		private final Assignment cSecondIndexesAssignment_9_2_0_5_1 = (Assignment)cGroup_9_2_0_5.eContents().get(1);
-		private final RuleCall cSecondIndexesExpCSParserRuleCall_9_2_0_5_1_0 = (RuleCall)cSecondIndexesAssignment_9_2_0_5_1.eContents().get(0);
-		private final Group cGroup_9_2_0_5_2 = (Group)cGroup_9_2_0_5.eContents().get(2);
-		private final Keyword cCommaKeyword_9_2_0_5_2_0 = (Keyword)cGroup_9_2_0_5_2.eContents().get(0);
-		private final Assignment cSecondIndexesAssignment_9_2_0_5_2_1 = (Assignment)cGroup_9_2_0_5_2.eContents().get(1);
-		private final RuleCall cSecondIndexesExpCSParserRuleCall_9_2_0_5_2_1_0 = (RuleCall)cSecondIndexesAssignment_9_2_0_5_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_9_2_0_5_3 = (Keyword)cGroup_9_2_0_5.eContents().get(3);
-		private final Group cGroup_9_2_0_6 = (Group)cGroup_9_2_0.eContents().get(6);
-		private final Assignment cAtPreAssignment_9_2_0_6_0 = (Assignment)cGroup_9_2_0_6.eContents().get(0);
-		private final Keyword cAtPreCommercialAtKeyword_9_2_0_6_0_0 = (Keyword)cAtPreAssignment_9_2_0_6_0.eContents().get(0);
-		private final Keyword cPreKeyword_9_2_0_6_1 = (Keyword)cGroup_9_2_0_6.eContents().get(1);
-		private final Group cGroup_9_2_1 = (Group)cAlternatives_9_2.eContents().get(1);
-		private final Action cConstructorExpCSNameExpAction_9_2_1_0 = (Action)cGroup_9_2_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_9_2_1_1 = (Keyword)cGroup_9_2_1.eContents().get(1);
-		private final Alternatives cAlternatives_9_2_1_2 = (Alternatives)cGroup_9_2_1.eContents().get(2);
-		private final Group cGroup_9_2_1_2_0 = (Group)cAlternatives_9_2_1_2.eContents().get(0);
-		private final Assignment cOwnedPartsAssignment_9_2_1_2_0_0 = (Assignment)cGroup_9_2_1_2_0.eContents().get(0);
-		private final RuleCall cOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_0_0 = (RuleCall)cOwnedPartsAssignment_9_2_1_2_0_0.eContents().get(0);
-		private final Group cGroup_9_2_1_2_0_1 = (Group)cGroup_9_2_1_2_0.eContents().get(1);
-		private final Keyword cCommaKeyword_9_2_1_2_0_1_0 = (Keyword)cGroup_9_2_1_2_0_1.eContents().get(0);
-		private final Assignment cOwnedPartsAssignment_9_2_1_2_0_1_1 = (Assignment)cGroup_9_2_1_2_0_1.eContents().get(1);
-		private final RuleCall cOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_1_1_0 = (RuleCall)cOwnedPartsAssignment_9_2_1_2_0_1_1.eContents().get(0);
-		private final Assignment cValueAssignment_9_2_1_2_1 = (Assignment)cAlternatives_9_2_1_2.eContents().get(1);
-		private final RuleCall cValueStringLiteralParserRuleCall_9_2_1_2_1_0 = (RuleCall)cValueAssignment_9_2_1_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_9_2_1_3 = (Keyword)cGroup_9_2_1.eContents().get(3);
-		private final Group cGroup_9_2_2 = (Group)cAlternatives_9_2.eContents().get(2);
-		private final Group cGroup_9_2_2_0 = (Group)cGroup_9_2_2.eContents().get(0);
-		private final Assignment cAtPreAssignment_9_2_2_0_0 = (Assignment)cGroup_9_2_2_0.eContents().get(0);
-		private final Keyword cAtPreCommercialAtKeyword_9_2_2_0_0_0 = (Keyword)cAtPreAssignment_9_2_2_0_0.eContents().get(0);
-		private final Keyword cPreKeyword_9_2_2_0_1 = (Keyword)cGroup_9_2_2_0.eContents().get(1);
-		private final Group cGroup_9_2_2_1 = (Group)cGroup_9_2_2.eContents().get(1);
-		private final Action cInvocationExpCSNameExpAction_9_2_2_1_0 = (Action)cGroup_9_2_2_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_9_2_2_1_1 = (Keyword)cGroup_9_2_2_1.eContents().get(1);
-		private final Group cGroup_9_2_2_1_2 = (Group)cGroup_9_2_2_1.eContents().get(2);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_0 = (Assignment)cGroup_9_2_2_1_2.eContents().get(0);
-		private final RuleCall cArgumentNavigatingArgCSParserRuleCall_9_2_2_1_2_0_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_0.eContents().get(0);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_1 = (Assignment)cGroup_9_2_2_1_2.eContents().get(1);
-		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_1_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_1.eContents().get(0);
-		private final Group cGroup_9_2_2_1_2_2 = (Group)cGroup_9_2_2_1_2.eContents().get(2);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_2_0 = (Assignment)cGroup_9_2_2_1_2_2.eContents().get(0);
-		private final RuleCall cArgumentNavigatingSemiArgCSParserRuleCall_9_2_2_1_2_2_0_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_2_0.eContents().get(0);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_2_1 = (Assignment)cGroup_9_2_2_1_2_2.eContents().get(1);
-		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_2_1_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_2_1.eContents().get(0);
-		private final Group cGroup_9_2_2_1_2_3 = (Group)cGroup_9_2_2_1_2.eContents().get(3);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_3_0 = (Assignment)cGroup_9_2_2_1_2_3.eContents().get(0);
-		private final RuleCall cArgumentNavigatingBarArgCSParserRuleCall_9_2_2_1_2_3_0_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_3_0.eContents().get(0);
-		private final Assignment cArgumentAssignment_9_2_2_1_2_3_1 = (Assignment)cGroup_9_2_2_1_2_3.eContents().get(1);
-		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_3_1_0 = (RuleCall)cArgumentAssignment_9_2_2_1_2_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_9_2_2_1_3 = (Keyword)cGroup_9_2_2_1.eContents().get(3);
+		private final RuleCall cReturnExpCSParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
+		private final Action cNameExpCSAction_10_0 = (Action)cGroup_10.eContents().get(0);
+		private final Assignment cPathNameAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final RuleCall cPathNamePathNameCSParserRuleCall_10_1_0 = (RuleCall)cPathNameAssignment_10_1.eContents().get(0);
+		private final Alternatives cAlternatives_10_2 = (Alternatives)cGroup_10.eContents().get(2);
+		private final Group cGroup_10_2_0 = (Group)cAlternatives_10_2.eContents().get(0);
+		private final Action cIndexExpCSNameExpAction_10_2_0_0 = (Action)cGroup_10_2_0.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_10_2_0_1 = (Keyword)cGroup_10_2_0.eContents().get(1);
+		private final Assignment cFirstIndexesAssignment_10_2_0_2 = (Assignment)cGroup_10_2_0.eContents().get(2);
+		private final RuleCall cFirstIndexesExpCSParserRuleCall_10_2_0_2_0 = (RuleCall)cFirstIndexesAssignment_10_2_0_2.eContents().get(0);
+		private final Group cGroup_10_2_0_3 = (Group)cGroup_10_2_0.eContents().get(3);
+		private final Keyword cCommaKeyword_10_2_0_3_0 = (Keyword)cGroup_10_2_0_3.eContents().get(0);
+		private final Assignment cFirstIndexesAssignment_10_2_0_3_1 = (Assignment)cGroup_10_2_0_3.eContents().get(1);
+		private final RuleCall cFirstIndexesExpCSParserRuleCall_10_2_0_3_1_0 = (RuleCall)cFirstIndexesAssignment_10_2_0_3_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_10_2_0_4 = (Keyword)cGroup_10_2_0.eContents().get(4);
+		private final Group cGroup_10_2_0_5 = (Group)cGroup_10_2_0.eContents().get(5);
+		private final Keyword cLeftSquareBracketKeyword_10_2_0_5_0 = (Keyword)cGroup_10_2_0_5.eContents().get(0);
+		private final Assignment cSecondIndexesAssignment_10_2_0_5_1 = (Assignment)cGroup_10_2_0_5.eContents().get(1);
+		private final RuleCall cSecondIndexesExpCSParserRuleCall_10_2_0_5_1_0 = (RuleCall)cSecondIndexesAssignment_10_2_0_5_1.eContents().get(0);
+		private final Group cGroup_10_2_0_5_2 = (Group)cGroup_10_2_0_5.eContents().get(2);
+		private final Keyword cCommaKeyword_10_2_0_5_2_0 = (Keyword)cGroup_10_2_0_5_2.eContents().get(0);
+		private final Assignment cSecondIndexesAssignment_10_2_0_5_2_1 = (Assignment)cGroup_10_2_0_5_2.eContents().get(1);
+		private final RuleCall cSecondIndexesExpCSParserRuleCall_10_2_0_5_2_1_0 = (RuleCall)cSecondIndexesAssignment_10_2_0_5_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_10_2_0_5_3 = (Keyword)cGroup_10_2_0_5.eContents().get(3);
+		private final Group cGroup_10_2_0_6 = (Group)cGroup_10_2_0.eContents().get(6);
+		private final Assignment cAtPreAssignment_10_2_0_6_0 = (Assignment)cGroup_10_2_0_6.eContents().get(0);
+		private final Keyword cAtPreCommercialAtKeyword_10_2_0_6_0_0 = (Keyword)cAtPreAssignment_10_2_0_6_0.eContents().get(0);
+		private final Keyword cPreKeyword_10_2_0_6_1 = (Keyword)cGroup_10_2_0_6.eContents().get(1);
+		private final Group cGroup_10_2_1 = (Group)cAlternatives_10_2.eContents().get(1);
+		private final Action cConstructorExpCSNameExpAction_10_2_1_0 = (Action)cGroup_10_2_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_10_2_1_1 = (Keyword)cGroup_10_2_1.eContents().get(1);
+		private final Alternatives cAlternatives_10_2_1_2 = (Alternatives)cGroup_10_2_1.eContents().get(2);
+		private final Group cGroup_10_2_1_2_0 = (Group)cAlternatives_10_2_1_2.eContents().get(0);
+		private final Assignment cOwnedPartsAssignment_10_2_1_2_0_0 = (Assignment)cGroup_10_2_1_2_0.eContents().get(0);
+		private final RuleCall cOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_0_0 = (RuleCall)cOwnedPartsAssignment_10_2_1_2_0_0.eContents().get(0);
+		private final Group cGroup_10_2_1_2_0_1 = (Group)cGroup_10_2_1_2_0.eContents().get(1);
+		private final Keyword cCommaKeyword_10_2_1_2_0_1_0 = (Keyword)cGroup_10_2_1_2_0_1.eContents().get(0);
+		private final Assignment cOwnedPartsAssignment_10_2_1_2_0_1_1 = (Assignment)cGroup_10_2_1_2_0_1.eContents().get(1);
+		private final RuleCall cOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_1_1_0 = (RuleCall)cOwnedPartsAssignment_10_2_1_2_0_1_1.eContents().get(0);
+		private final Assignment cValueAssignment_10_2_1_2_1 = (Assignment)cAlternatives_10_2_1_2.eContents().get(1);
+		private final RuleCall cValueStringLiteralParserRuleCall_10_2_1_2_1_0 = (RuleCall)cValueAssignment_10_2_1_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_10_2_1_3 = (Keyword)cGroup_10_2_1.eContents().get(3);
+		private final Group cGroup_10_2_2 = (Group)cAlternatives_10_2.eContents().get(2);
+		private final Group cGroup_10_2_2_0 = (Group)cGroup_10_2_2.eContents().get(0);
+		private final Assignment cAtPreAssignment_10_2_2_0_0 = (Assignment)cGroup_10_2_2_0.eContents().get(0);
+		private final Keyword cAtPreCommercialAtKeyword_10_2_2_0_0_0 = (Keyword)cAtPreAssignment_10_2_2_0_0.eContents().get(0);
+		private final Keyword cPreKeyword_10_2_2_0_1 = (Keyword)cGroup_10_2_2_0.eContents().get(1);
+		private final Group cGroup_10_2_2_1 = (Group)cGroup_10_2_2.eContents().get(1);
+		private final Action cInvocationExpCSNameExpAction_10_2_2_1_0 = (Action)cGroup_10_2_2_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_10_2_2_1_1 = (Keyword)cGroup_10_2_2_1.eContents().get(1);
+		private final Group cGroup_10_2_2_1_2 = (Group)cGroup_10_2_2_1.eContents().get(2);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_0 = (Assignment)cGroup_10_2_2_1_2.eContents().get(0);
+		private final RuleCall cArgumentNavigatingArgCSParserRuleCall_10_2_2_1_2_0_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_0.eContents().get(0);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_1 = (Assignment)cGroup_10_2_2_1_2.eContents().get(1);
+		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_1_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_1.eContents().get(0);
+		private final Group cGroup_10_2_2_1_2_2 = (Group)cGroup_10_2_2_1_2.eContents().get(2);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_2_0 = (Assignment)cGroup_10_2_2_1_2_2.eContents().get(0);
+		private final RuleCall cArgumentNavigatingSemiArgCSParserRuleCall_10_2_2_1_2_2_0_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_2_0.eContents().get(0);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_2_1 = (Assignment)cGroup_10_2_2_1_2_2.eContents().get(1);
+		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_2_1_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_2_1.eContents().get(0);
+		private final Group cGroup_10_2_2_1_2_3 = (Group)cGroup_10_2_2_1_2.eContents().get(3);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_3_0 = (Assignment)cGroup_10_2_2_1_2_3.eContents().get(0);
+		private final RuleCall cArgumentNavigatingBarArgCSParserRuleCall_10_2_2_1_2_3_0_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_3_0.eContents().get(0);
+		private final Assignment cArgumentAssignment_10_2_2_1_2_3_1 = (Assignment)cGroup_10_2_2_1_2_3.eContents().get(1);
+		private final RuleCall cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_3_1_0 = (RuleCall)cArgumentAssignment_10_2_2_1_2_3_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_10_2_2_1_3 = (Keyword)cGroup_10_2_2_1.eContents().get(3);
 		
+		//// ********* ImperativeOCL Expressions *********
+		//
+		//
 		//// PrimaryExpCS redefined to include the new List and Dict literal expressions
 		//
 		//
@@ -354,7 +358,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 		//
-		//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | {NameExpCS} pathName=PathNameCS
+		//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
 		//
 		//	({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
 		//
@@ -371,17 +375,19 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 
 		//NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 		//
-		//ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | {NameExpCS} pathName=PathNameCS ({IndexExpCS.nameExp=current}
+		//ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
 		//
-		//"[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")?
+		//({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
 		//
-		//(atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
+		//secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{"
 		//
-		//ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")? ({InvocationExpCS.nameExp=current}
+		//(ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
 		//
-		//"(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS* (argument+=NavigatingSemiArgCS
+		//({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
-		//argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS argument+=NavigatingCommaArgCS*)?)? ")")?)
+		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
+		//
+		//argument+=NavigatingCommaArgCS*)?)? ")")?)
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NestedExpCS
@@ -411,6 +417,9 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeLiteralExpCS
 		public RuleCall getTypeLiteralExpCSParserRuleCall_8() { return cTypeLiteralExpCSParserRuleCall_8; }
 
+		//ReturnExpCS
+		public RuleCall getReturnExpCSParserRuleCall_9() { return cReturnExpCSParserRuleCall_9; }
+
 		//{NameExpCS} pathName=PathNameCS ({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]"
 		//
 		//("[" secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current}
@@ -422,16 +431,16 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?)
-		public Group getGroup_9() { return cGroup_9; }
+		public Group getGroup_10() { return cGroup_10; }
 
 		//{NameExpCS}
-		public Action getNameExpCSAction_9_0() { return cNameExpCSAction_9_0; }
+		public Action getNameExpCSAction_10_0() { return cNameExpCSAction_10_0; }
 
 		//pathName=PathNameCS
-		public Assignment getPathNameAssignment_9_1() { return cPathNameAssignment_9_1; }
+		public Assignment getPathNameAssignment_10_1() { return cPathNameAssignment_10_1; }
 
 		//PathNameCS
-		public RuleCall getPathNamePathNameCSParserRuleCall_9_1_0() { return cPathNamePathNameCSParserRuleCall_9_1_0; }
+		public RuleCall getPathNamePathNameCSParserRuleCall_10_1_0() { return cPathNamePathNameCSParserRuleCall_10_1_0; }
 
 		//{IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
 		//
@@ -444,204 +453,204 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?
-		public Alternatives getAlternatives_9_2() { return cAlternatives_9_2; }
+		public Alternatives getAlternatives_10_2() { return cAlternatives_10_2; }
 
 		//{IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
 		//
 		//secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")?
-		public Group getGroup_9_2_0() { return cGroup_9_2_0; }
+		public Group getGroup_10_2_0() { return cGroup_10_2_0; }
 
 		//{IndexExpCS.nameExp=current}
-		public Action getIndexExpCSNameExpAction_9_2_0_0() { return cIndexExpCSNameExpAction_9_2_0_0; }
+		public Action getIndexExpCSNameExpAction_10_2_0_0() { return cIndexExpCSNameExpAction_10_2_0_0; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_9_2_0_1() { return cLeftSquareBracketKeyword_9_2_0_1; }
+		public Keyword getLeftSquareBracketKeyword_10_2_0_1() { return cLeftSquareBracketKeyword_10_2_0_1; }
 
 		//firstIndexes+=ExpCS
-		public Assignment getFirstIndexesAssignment_9_2_0_2() { return cFirstIndexesAssignment_9_2_0_2; }
+		public Assignment getFirstIndexesAssignment_10_2_0_2() { return cFirstIndexesAssignment_10_2_0_2; }
 
 		//ExpCS
-		public RuleCall getFirstIndexesExpCSParserRuleCall_9_2_0_2_0() { return cFirstIndexesExpCSParserRuleCall_9_2_0_2_0; }
+		public RuleCall getFirstIndexesExpCSParserRuleCall_10_2_0_2_0() { return cFirstIndexesExpCSParserRuleCall_10_2_0_2_0; }
 
 		//("," firstIndexes+=ExpCS)*
-		public Group getGroup_9_2_0_3() { return cGroup_9_2_0_3; }
+		public Group getGroup_10_2_0_3() { return cGroup_10_2_0_3; }
 
 		//","
-		public Keyword getCommaKeyword_9_2_0_3_0() { return cCommaKeyword_9_2_0_3_0; }
+		public Keyword getCommaKeyword_10_2_0_3_0() { return cCommaKeyword_10_2_0_3_0; }
 
 		//firstIndexes+=ExpCS
-		public Assignment getFirstIndexesAssignment_9_2_0_3_1() { return cFirstIndexesAssignment_9_2_0_3_1; }
+		public Assignment getFirstIndexesAssignment_10_2_0_3_1() { return cFirstIndexesAssignment_10_2_0_3_1; }
 
 		//ExpCS
-		public RuleCall getFirstIndexesExpCSParserRuleCall_9_2_0_3_1_0() { return cFirstIndexesExpCSParserRuleCall_9_2_0_3_1_0; }
+		public RuleCall getFirstIndexesExpCSParserRuleCall_10_2_0_3_1_0() { return cFirstIndexesExpCSParserRuleCall_10_2_0_3_1_0; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_9_2_0_4() { return cRightSquareBracketKeyword_9_2_0_4; }
+		public Keyword getRightSquareBracketKeyword_10_2_0_4() { return cRightSquareBracketKeyword_10_2_0_4; }
 
 		//("[" secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")?
-		public Group getGroup_9_2_0_5() { return cGroup_9_2_0_5; }
+		public Group getGroup_10_2_0_5() { return cGroup_10_2_0_5; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_9_2_0_5_0() { return cLeftSquareBracketKeyword_9_2_0_5_0; }
+		public Keyword getLeftSquareBracketKeyword_10_2_0_5_0() { return cLeftSquareBracketKeyword_10_2_0_5_0; }
 
 		//secondIndexes+=ExpCS
-		public Assignment getSecondIndexesAssignment_9_2_0_5_1() { return cSecondIndexesAssignment_9_2_0_5_1; }
+		public Assignment getSecondIndexesAssignment_10_2_0_5_1() { return cSecondIndexesAssignment_10_2_0_5_1; }
 
 		//ExpCS
-		public RuleCall getSecondIndexesExpCSParserRuleCall_9_2_0_5_1_0() { return cSecondIndexesExpCSParserRuleCall_9_2_0_5_1_0; }
+		public RuleCall getSecondIndexesExpCSParserRuleCall_10_2_0_5_1_0() { return cSecondIndexesExpCSParserRuleCall_10_2_0_5_1_0; }
 
 		//("," secondIndexes+=ExpCS)*
-		public Group getGroup_9_2_0_5_2() { return cGroup_9_2_0_5_2; }
+		public Group getGroup_10_2_0_5_2() { return cGroup_10_2_0_5_2; }
 
 		//","
-		public Keyword getCommaKeyword_9_2_0_5_2_0() { return cCommaKeyword_9_2_0_5_2_0; }
+		public Keyword getCommaKeyword_10_2_0_5_2_0() { return cCommaKeyword_10_2_0_5_2_0; }
 
 		//secondIndexes+=ExpCS
-		public Assignment getSecondIndexesAssignment_9_2_0_5_2_1() { return cSecondIndexesAssignment_9_2_0_5_2_1; }
+		public Assignment getSecondIndexesAssignment_10_2_0_5_2_1() { return cSecondIndexesAssignment_10_2_0_5_2_1; }
 
 		//ExpCS
-		public RuleCall getSecondIndexesExpCSParserRuleCall_9_2_0_5_2_1_0() { return cSecondIndexesExpCSParserRuleCall_9_2_0_5_2_1_0; }
+		public RuleCall getSecondIndexesExpCSParserRuleCall_10_2_0_5_2_1_0() { return cSecondIndexesExpCSParserRuleCall_10_2_0_5_2_1_0; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_9_2_0_5_3() { return cRightSquareBracketKeyword_9_2_0_5_3; }
+		public Keyword getRightSquareBracketKeyword_10_2_0_5_3() { return cRightSquareBracketKeyword_10_2_0_5_3; }
 
 		//(atPre?="@" "pre")?
-		public Group getGroup_9_2_0_6() { return cGroup_9_2_0_6; }
+		public Group getGroup_10_2_0_6() { return cGroup_10_2_0_6; }
 
 		//atPre?="@"
-		public Assignment getAtPreAssignment_9_2_0_6_0() { return cAtPreAssignment_9_2_0_6_0; }
+		public Assignment getAtPreAssignment_10_2_0_6_0() { return cAtPreAssignment_10_2_0_6_0; }
 
 		//"@"
-		public Keyword getAtPreCommercialAtKeyword_9_2_0_6_0_0() { return cAtPreCommercialAtKeyword_9_2_0_6_0_0; }
+		public Keyword getAtPreCommercialAtKeyword_10_2_0_6_0_0() { return cAtPreCommercialAtKeyword_10_2_0_6_0_0; }
 
 		//"pre"
-		public Keyword getPreKeyword_9_2_0_6_1() { return cPreKeyword_9_2_0_6_1; }
+		public Keyword getPreKeyword_10_2_0_6_1() { return cPreKeyword_10_2_0_6_1; }
 
 		//{ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* |
 		//
 		//value=StringLiteral) "}"
-		public Group getGroup_9_2_1() { return cGroup_9_2_1; }
+		public Group getGroup_10_2_1() { return cGroup_10_2_1; }
 
 		//{ConstructorExpCS.nameExp=current}
-		public Action getConstructorExpCSNameExpAction_9_2_1_0() { return cConstructorExpCSNameExpAction_9_2_1_0; }
+		public Action getConstructorExpCSNameExpAction_10_2_1_0() { return cConstructorExpCSNameExpAction_10_2_1_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_9_2_1_1() { return cLeftCurlyBracketKeyword_9_2_1_1; }
+		public Keyword getLeftCurlyBracketKeyword_10_2_1_1() { return cLeftCurlyBracketKeyword_10_2_1_1; }
 
 		//ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral
-		public Alternatives getAlternatives_9_2_1_2() { return cAlternatives_9_2_1_2; }
+		public Alternatives getAlternatives_10_2_1_2() { return cAlternatives_10_2_1_2; }
 
 		//ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)*
-		public Group getGroup_9_2_1_2_0() { return cGroup_9_2_1_2_0; }
+		public Group getGroup_10_2_1_2_0() { return cGroup_10_2_1_2_0; }
 
 		//ownedParts+=ConstructorPartCS
-		public Assignment getOwnedPartsAssignment_9_2_1_2_0_0() { return cOwnedPartsAssignment_9_2_1_2_0_0; }
+		public Assignment getOwnedPartsAssignment_10_2_1_2_0_0() { return cOwnedPartsAssignment_10_2_1_2_0_0; }
 
 		//ConstructorPartCS
-		public RuleCall getOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_0_0() { return cOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_0_0; }
+		public RuleCall getOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_0_0() { return cOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_0_0; }
 
 		//("," ownedParts+=ConstructorPartCS)*
-		public Group getGroup_9_2_1_2_0_1() { return cGroup_9_2_1_2_0_1; }
+		public Group getGroup_10_2_1_2_0_1() { return cGroup_10_2_1_2_0_1; }
 
 		//","
-		public Keyword getCommaKeyword_9_2_1_2_0_1_0() { return cCommaKeyword_9_2_1_2_0_1_0; }
+		public Keyword getCommaKeyword_10_2_1_2_0_1_0() { return cCommaKeyword_10_2_1_2_0_1_0; }
 
 		//ownedParts+=ConstructorPartCS
-		public Assignment getOwnedPartsAssignment_9_2_1_2_0_1_1() { return cOwnedPartsAssignment_9_2_1_2_0_1_1; }
+		public Assignment getOwnedPartsAssignment_10_2_1_2_0_1_1() { return cOwnedPartsAssignment_10_2_1_2_0_1_1; }
 
 		//ConstructorPartCS
-		public RuleCall getOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_1_1_0() { return cOwnedPartsConstructorPartCSParserRuleCall_9_2_1_2_0_1_1_0; }
+		public RuleCall getOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_1_1_0() { return cOwnedPartsConstructorPartCSParserRuleCall_10_2_1_2_0_1_1_0; }
 
 		//value=StringLiteral
-		public Assignment getValueAssignment_9_2_1_2_1() { return cValueAssignment_9_2_1_2_1; }
+		public Assignment getValueAssignment_10_2_1_2_1() { return cValueAssignment_10_2_1_2_1; }
 
 		//StringLiteral
-		public RuleCall getValueStringLiteralParserRuleCall_9_2_1_2_1_0() { return cValueStringLiteralParserRuleCall_9_2_1_2_1_0; }
+		public RuleCall getValueStringLiteralParserRuleCall_10_2_1_2_1_0() { return cValueStringLiteralParserRuleCall_10_2_1_2_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_9_2_1_3() { return cRightCurlyBracketKeyword_9_2_1_3; }
+		public Keyword getRightCurlyBracketKeyword_10_2_1_3() { return cRightCurlyBracketKeyword_10_2_1_3; }
 
 		//(atPre?="@" "pre")? ({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?
-		public Group getGroup_9_2_2() { return cGroup_9_2_2; }
+		public Group getGroup_10_2_2() { return cGroup_10_2_2; }
 
 		//(atPre?="@" "pre")?
-		public Group getGroup_9_2_2_0() { return cGroup_9_2_2_0; }
+		public Group getGroup_10_2_2_0() { return cGroup_10_2_2_0; }
 
 		//atPre?="@"
-		public Assignment getAtPreAssignment_9_2_2_0_0() { return cAtPreAssignment_9_2_2_0_0; }
+		public Assignment getAtPreAssignment_10_2_2_0_0() { return cAtPreAssignment_10_2_2_0_0; }
 
 		//"@"
-		public Keyword getAtPreCommercialAtKeyword_9_2_2_0_0_0() { return cAtPreCommercialAtKeyword_9_2_2_0_0_0; }
+		public Keyword getAtPreCommercialAtKeyword_10_2_2_0_0_0() { return cAtPreCommercialAtKeyword_10_2_2_0_0_0; }
 
 		//"pre"
-		public Keyword getPreKeyword_9_2_2_0_1() { return cPreKeyword_9_2_2_0_1; }
+		public Keyword getPreKeyword_10_2_2_0_1() { return cPreKeyword_10_2_2_0_1; }
 
 		//({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?
-		public Group getGroup_9_2_2_1() { return cGroup_9_2_2_1; }
+		public Group getGroup_10_2_2_1() { return cGroup_10_2_2_1; }
 
 		//{InvocationExpCS.nameExp=current}
-		public Action getInvocationExpCSNameExpAction_9_2_2_1_0() { return cInvocationExpCSNameExpAction_9_2_2_1_0; }
+		public Action getInvocationExpCSNameExpAction_10_2_2_1_0() { return cInvocationExpCSNameExpAction_10_2_2_1_0; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_9_2_2_1_1() { return cLeftParenthesisKeyword_9_2_2_1_1; }
+		public Keyword getLeftParenthesisKeyword_10_2_2_1_1() { return cLeftParenthesisKeyword_10_2_2_1_1; }
 
 		//(argument+=NavigatingArgCS argument+=NavigatingCommaArgCS* (argument+=NavigatingSemiArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS argument+=NavigatingCommaArgCS*)?)?
-		public Group getGroup_9_2_2_1_2() { return cGroup_9_2_2_1_2; }
+		public Group getGroup_10_2_2_1_2() { return cGroup_10_2_2_1_2; }
 
 		//argument+=NavigatingArgCS
-		public Assignment getArgumentAssignment_9_2_2_1_2_0() { return cArgumentAssignment_9_2_2_1_2_0; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_0() { return cArgumentAssignment_10_2_2_1_2_0; }
 
 		//NavigatingArgCS
-		public RuleCall getArgumentNavigatingArgCSParserRuleCall_9_2_2_1_2_0_0() { return cArgumentNavigatingArgCSParserRuleCall_9_2_2_1_2_0_0; }
+		public RuleCall getArgumentNavigatingArgCSParserRuleCall_10_2_2_1_2_0_0() { return cArgumentNavigatingArgCSParserRuleCall_10_2_2_1_2_0_0; }
 
 		//argument+=NavigatingCommaArgCS*
-		public Assignment getArgumentAssignment_9_2_2_1_2_1() { return cArgumentAssignment_9_2_2_1_2_1; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_1() { return cArgumentAssignment_10_2_2_1_2_1; }
 
 		//NavigatingCommaArgCS
-		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_1_0; }
+		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_1_0; }
 
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)?
-		public Group getGroup_9_2_2_1_2_2() { return cGroup_9_2_2_1_2_2; }
+		public Group getGroup_10_2_2_1_2_2() { return cGroup_10_2_2_1_2_2; }
 
 		//argument+=NavigatingSemiArgCS
-		public Assignment getArgumentAssignment_9_2_2_1_2_2_0() { return cArgumentAssignment_9_2_2_1_2_2_0; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_2_0() { return cArgumentAssignment_10_2_2_1_2_2_0; }
 
 		//NavigatingSemiArgCS
-		public RuleCall getArgumentNavigatingSemiArgCSParserRuleCall_9_2_2_1_2_2_0_0() { return cArgumentNavigatingSemiArgCSParserRuleCall_9_2_2_1_2_2_0_0; }
+		public RuleCall getArgumentNavigatingSemiArgCSParserRuleCall_10_2_2_1_2_2_0_0() { return cArgumentNavigatingSemiArgCSParserRuleCall_10_2_2_1_2_2_0_0; }
 
 		//argument+=NavigatingCommaArgCS*
-		public Assignment getArgumentAssignment_9_2_2_1_2_2_1() { return cArgumentAssignment_9_2_2_1_2_2_1; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_2_1() { return cArgumentAssignment_10_2_2_1_2_2_1; }
 
 		//NavigatingCommaArgCS
-		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_2_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_2_1_0; }
+		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_2_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_2_1_0; }
 
 		//(argument+=NavigatingBarArgCS argument+=NavigatingCommaArgCS*)?
-		public Group getGroup_9_2_2_1_2_3() { return cGroup_9_2_2_1_2_3; }
+		public Group getGroup_10_2_2_1_2_3() { return cGroup_10_2_2_1_2_3; }
 
 		//argument+=NavigatingBarArgCS
-		public Assignment getArgumentAssignment_9_2_2_1_2_3_0() { return cArgumentAssignment_9_2_2_1_2_3_0; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_3_0() { return cArgumentAssignment_10_2_2_1_2_3_0; }
 
 		//NavigatingBarArgCS
-		public RuleCall getArgumentNavigatingBarArgCSParserRuleCall_9_2_2_1_2_3_0_0() { return cArgumentNavigatingBarArgCSParserRuleCall_9_2_2_1_2_3_0_0; }
+		public RuleCall getArgumentNavigatingBarArgCSParserRuleCall_10_2_2_1_2_3_0_0() { return cArgumentNavigatingBarArgCSParserRuleCall_10_2_2_1_2_3_0_0; }
 
 		//argument+=NavigatingCommaArgCS*
-		public Assignment getArgumentAssignment_9_2_2_1_2_3_1() { return cArgumentAssignment_9_2_2_1_2_3_1; }
+		public Assignment getArgumentAssignment_10_2_2_1_2_3_1() { return cArgumentAssignment_10_2_2_1_2_3_1; }
 
 		//NavigatingCommaArgCS
-		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_3_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_9_2_2_1_2_3_1_0; }
+		public RuleCall getArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_3_1_0() { return cArgumentNavigatingCommaArgCSParserRuleCall_10_2_2_1_2_3_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_9_2_2_1_3() { return cRightParenthesisKeyword_9_2_2_1_3; }
+		public Keyword getRightParenthesisKeyword_10_2_2_1_3() { return cRightParenthesisKeyword_10_2_2_1_3; }
 	}
 
 	public class ListLiteralExpCSElements extends AbstractParserRuleElementFinder {
@@ -790,6 +799,35 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getValueExpCSExpCSParserRuleCall_2_0() { return cValueExpCSExpCSParserRuleCall_2_0; }
 	}
+
+	public class ReturnExpCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReturnExpCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cReturnKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Action cReturnExpCSAction_1 = (Action)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueExpCSParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//ReturnExpCS:
+		//
+		//	"return" {ReturnExpCS} value=ExpCS?;
+		public ParserRule getRule() { return rule; }
+
+		//"return" {ReturnExpCS} value=ExpCS?
+		public Group getGroup() { return cGroup; }
+
+		//"return"
+		public Keyword getReturnKeyword_0() { return cReturnKeyword_0; }
+
+		//{ReturnExpCS}
+		public Action getReturnExpCSAction_1() { return cReturnExpCSAction_1; }
+
+		//value=ExpCS?
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//ExpCS
+		public RuleCall getValueExpCSParserRuleCall_2_0() { return cValueExpCSParserRuleCall_2_0; }
+	}
 	
 	
 	private GrammmarCSElements pGrammmarCS;
@@ -814,6 +852,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 	private ListLiteralExpCSElements pListLiteralExpCS;
 	private DictLiteralExpCSElements pDictLiteralExpCS;
 	private DictLiteralPartCSElements pDictLiteralPartCS;
+	private ReturnExpCSElements pReturnExpCS;
 	
 	private final Grammar grammar;
 
@@ -1036,6 +1075,9 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		return getDictTypeCSAccess().getRule();
 	}
 
+	//// ********* ImperativeOCL Expressions *********
+	//
+	//
 	//// PrimaryExpCS redefined to include the new List and Dict literal expressions
 	//
 	//
@@ -1047,7 +1089,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 	//
-	//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | {NameExpCS} pathName=PathNameCS
+	//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
 	//
 	//	({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
 	//
@@ -1099,6 +1141,17 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDictLiteralPartCSRule() {
 		return getDictLiteralPartCSAccess().getRule();
+	}
+
+	//ReturnExpCS:
+	//
+	//	"return" {ReturnExpCS} value=ExpCS?;
+	public ReturnExpCSElements getReturnExpCSAccess() {
+		return (pReturnExpCS != null) ? pReturnExpCS : (pReturnExpCS = new ReturnExpCSElements());
+	}
+	
+	public ParserRule getReturnExpCSRule() {
+		return getReturnExpCSAccess().getRule();
 	}
 
 	////generate essentialOCLCST "http://www.eclipse.org/ocl/3.0.0/EssentialOCLCST"

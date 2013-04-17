@@ -69,6 +69,7 @@ public class ImperativeoclcsFactoryImpl extends EFactoryImpl implements Imperati
       case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS: return createListLiteralExpCS();
       case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
       case ImperativeoclcsPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
+      case ImperativeoclcsPackage.RETURN_EXP_CS: return createReturnExpCS();
       case ImperativeoclcsPackage.NAME_EXP_CS: return createNameExpCS();
       case ImperativeoclcsPackage.INDEX_EXP_CS: return createIndexExpCS();
       case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS: return createConstructorExpCS();
@@ -131,6 +132,17 @@ public class ImperativeoclcsFactoryImpl extends EFactoryImpl implements Imperati
   {
     DictLiteralPartCSImpl dictLiteralPartCS = new DictLiteralPartCSImpl();
     return dictLiteralPartCS;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ReturnExpCS createReturnExpCS()
+  {
+    ReturnExpCSImpl returnExpCS = new ReturnExpCSImpl();
+    return returnExpCS;
   }
 
   /**

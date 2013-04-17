@@ -68,6 +68,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
     public static final int RULE_SINGLE_QUOTED_STRING=5;
     public static final int RULE_ACCESS_OP=8;
     public static final int RULE_MULTI_ITERATOR_OP=12;
+    public static final int T__84=84;
     public static final int RULE_SL_COMMENT=22;
     public static final int RULE_LETTER_CHARACTER=18;
     public static final int RULE_ML_COMMENT=21;
@@ -978,10 +979,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:53:7: ( '::' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:53:9: '::'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:53:7: ( 'return' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:53:9: 'return'
             {
-            match("::"); 
+            match("return"); 
 
 
             }
@@ -999,10 +1000,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:54:7: ( '..' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:54:9: '..'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:54:7: ( '::' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:54:9: '::'
             {
-            match(".."); 
+            match("::"); 
 
 
             }
@@ -1020,10 +1021,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:55:7: ( ':' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:55:9: ':'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:55:7: ( '..' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:55:9: '..'
             {
-            match(':'); 
+            match(".."); 
+
 
             }
 
@@ -1040,11 +1042,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:56:7: ( 'invalid' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:56:9: 'invalid'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:56:7: ( ':' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:56:9: ':'
             {
-            match("invalid"); 
-
+            match(':'); 
 
             }
 
@@ -1061,10 +1062,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:57:7: ( 'null' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:57:9: 'null'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:57:7: ( 'invalid' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:57:9: 'invalid'
             {
-            match("null"); 
+            match("invalid"); 
 
 
             }
@@ -1082,10 +1083,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__72;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:58:7: ( 'if' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:58:9: 'if'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:58:7: ( 'null' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:58:9: 'null'
             {
-            match("if"); 
+            match("null"); 
 
 
             }
@@ -1103,10 +1104,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:59:7: ( 'then' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:59:9: 'then'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:59:7: ( 'if' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:59:9: 'if'
             {
-            match("then"); 
+            match("if"); 
 
 
             }
@@ -1124,10 +1125,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:60:7: ( 'else' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:60:9: 'else'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:60:7: ( 'then' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:60:9: 'then'
             {
-            match("else"); 
+            match("then"); 
 
 
             }
@@ -1145,10 +1146,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:61:7: ( 'endif' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:61:9: 'endif'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:61:7: ( 'else' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:61:9: 'else'
             {
-            match("endif"); 
+            match("else"); 
 
 
             }
@@ -1166,10 +1167,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__76;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:62:7: ( 'let' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:62:9: 'let'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:62:7: ( 'endif' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:62:9: 'endif'
             {
-            match("let"); 
+            match("endif"); 
 
 
             }
@@ -1187,10 +1188,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__77;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:63:7: ( 'in' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:63:9: 'in'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:63:7: ( 'let' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:63:9: 'let'
             {
-            match("in"); 
+            match("let"); 
 
 
             }
@@ -1208,10 +1209,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__78;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:64:7: ( 'self' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:64:9: 'self'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:64:7: ( 'in' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:64:9: 'in'
             {
-            match("self"); 
+            match("in"); 
 
 
             }
@@ -1229,10 +1230,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__79;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:65:7: ( '@' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:65:9: '@'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:65:7: ( 'self' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:65:9: 'self'
             {
-            match('@'); 
+            match("self"); 
+
 
             }
 
@@ -1249,11 +1251,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__80;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:66:7: ( 'true' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:66:9: 'true'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:66:7: ( '@' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:66:9: '@'
             {
-            match("true"); 
-
+            match('@'); 
 
             }
 
@@ -1270,10 +1271,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__81;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:67:7: ( 'false' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:67:9: 'false'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:67:7: ( 'true' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:67:9: 'true'
             {
-            match("false"); 
+            match("true"); 
 
 
             }
@@ -1291,10 +1292,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__82;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:68:7: ( '|' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:68:9: '|'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:68:7: ( 'false' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:68:9: 'false'
             {
-            match('|'); 
+            match("false"); 
+
 
             }
 
@@ -1311,10 +1313,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = T__83;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:69:7: ( ';' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:69:9: ';'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:69:7: ( '|' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:69:9: '|'
             {
-            match(';'); 
+            match('|'); 
 
             }
 
@@ -1326,15 +1328,35 @@ public class InternalImperativeOCLCSLexer extends Lexer {
     }
     // $ANTLR end "T__83"
 
+    // $ANTLR start "T__84"
+    public final void mT__84() throws RecognitionException {
+        try {
+            int _type = T__84;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:70:7: ( ';' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:70:9: ';'
+            {
+            match(';'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__84"
+
     // $ANTLR start "RULE_ACCESS_OP"
     public final void mRULE_ACCESS_OP() throws RecognitionException {
         try {
             int _type = RULE_ACCESS_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:16: ( ( '.' | '->' | '!->' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:18: ( '.' | '->' | '!->' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:16: ( ( '.' | '->' | '!->' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:18: ( '.' | '->' | '!->' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:18: ( '.' | '->' | '!->' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:18: ( '.' | '->' | '!->' )
             int alt1=3;
             switch ( input.LA(1) ) {
             case '.':
@@ -1361,14 +1383,14 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
             switch (alt1) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:19: '.'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:19: '.'
                     {
                     match('.'); 
 
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:23: '->'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:23: '->'
                     {
                     match("->"); 
 
@@ -1376,7 +1398,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11241:28: '!->'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11386:28: '!->'
                     {
                     match("!->"); 
 
@@ -1402,10 +1424,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_ASSIGN_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:16: ( ( ':=' | '::=' | '+=' | '-=' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:18: ( ':=' | '::=' | '+=' | '-=' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:16: ( ( ':=' | '::=' | '+=' | '-=' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:18: ( ':=' | '::=' | '+=' | '-=' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:18: ( ':=' | '::=' | '+=' | '-=' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:18: ( ':=' | '::=' | '+=' | '-=' )
             int alt2=4;
             switch ( input.LA(1) ) {
             case ':':
@@ -1445,7 +1467,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
             switch (alt2) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:19: ':='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:19: ':='
                     {
                     match(":="); 
 
@@ -1453,7 +1475,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:24: '::='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:24: '::='
                     {
                     match("::="); 
 
@@ -1461,7 +1483,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:30: '+='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:30: '+='
                     {
                     match("+="); 
 
@@ -1469,7 +1491,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11243:35: '-='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11388:35: '-='
                     {
                     match("-="); 
 
@@ -1495,22 +1517,22 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_CMP_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:13: ( ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:13: ( ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )
             int alt3=7;
             alt3 = dfa3.predict(input);
             switch (alt3) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:16: '='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:16: '='
                     {
                     match('='); 
 
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:20: '=='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:20: '=='
                     {
                     match("=="); 
 
@@ -1518,7 +1540,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:25: '<>'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:25: '<>'
                     {
                     match("<>"); 
 
@@ -1526,21 +1548,21 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:30: '<'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:30: '<'
                     {
                     match('<'); 
 
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:34: '>'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:34: '>'
                     {
                     match('>'); 
 
                     }
                     break;
                 case 6 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:38: '<='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:38: '<='
                     {
                     match("<="); 
 
@@ -1548,7 +1570,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11245:43: '>='
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11390:43: '>='
                     {
                     match(">="); 
 
@@ -1574,8 +1596,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_MULT_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11247:14: ( ( '*' | '/' | '%' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11247:16: ( '*' | '/' | '%' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11392:14: ( ( '*' | '/' | '%' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11392:16: ( '*' | '/' | '%' )
             {
             if ( input.LA(1)=='%'||input.LA(1)=='*'||input.LA(1)=='/' ) {
                 input.consume();
@@ -1602,8 +1624,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_MULTI_ITERATOR_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11249:24: ( 'forAll' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11249:26: 'forAll'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11394:24: ( 'forAll' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11394:26: 'forAll'
             {
             match("forAll"); 
 
@@ -1623,15 +1645,15 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_RESOLVE_IN_KIND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:22: ( ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:22: ( ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )
             int alt4=4;
             alt4 = dfa4.predict(input);
             switch (alt4) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:25: 'resolveIn'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:25: 'resolveIn'
                     {
                     match("resolveIn"); 
 
@@ -1639,7 +1661,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:37: 'resolveoneIn'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:37: 'resolveoneIn'
                     {
                     match("resolveoneIn"); 
 
@@ -1647,7 +1669,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:52: 'invresolveIn'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:52: 'invresolveIn'
                     {
                     match("invresolveIn"); 
 
@@ -1655,7 +1677,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11251:67: 'invresolveoneIn'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11396:67: 'invresolveoneIn'
                     {
                     match("invresolveoneIn"); 
 
@@ -1681,15 +1703,15 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_RESOLVE_KIND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:19: ( ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:19: ( ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )
             int alt5=4;
             alt5 = dfa5.predict(input);
             switch (alt5) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:22: 'resolve'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:22: 'resolve'
                     {
                     match("resolve"); 
 
@@ -1697,7 +1719,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:32: 'resolveone'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:32: 'resolveone'
                     {
                     match("resolveone"); 
 
@@ -1705,7 +1727,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:45: 'invresolve'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:45: 'invresolve'
                     {
                     match("invresolve"); 
 
@@ -1713,7 +1735,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11253:58: 'invresolveone'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11398:58: 'invresolveone'
                     {
                     match("invresolveone"); 
 
@@ -1739,15 +1761,15 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_SIMPLE_ITERATOR_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:25: ( ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:25: ( ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )
             int alt6=15;
             alt6 = dfa6.predict(input);
             switch (alt6) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:28: 'reject'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:28: 'reject'
                     {
                     match("reject"); 
 
@@ -1755,7 +1777,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:37: 'select'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:37: 'select'
                     {
                     match("select"); 
 
@@ -1763,7 +1785,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:46: 'collect'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:46: 'collect'
                     {
                     match("collect"); 
 
@@ -1771,7 +1793,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:56: 'exists'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:56: 'exists'
                     {
                     match("exists"); 
 
@@ -1779,7 +1801,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:65: 'one'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:65: 'one'
                     {
                     match("one"); 
 
@@ -1787,7 +1809,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:71: 'any'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:71: 'any'
                     {
                     match("any"); 
 
@@ -1795,7 +1817,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:77: 'isUnique'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:77: 'isUnique'
                     {
                     match("isUnique"); 
 
@@ -1803,7 +1825,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 8 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:88: 'collectNested'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:88: 'collectNested'
                     {
                     match("collectNested"); 
 
@@ -1811,7 +1833,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 9 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:104: 'sortedBy'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:104: 'sortedBy'
                     {
                     match("sortedBy"); 
 
@@ -1819,7 +1841,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 10 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:115: 'xselect'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:115: 'xselect'
                     {
                     match("xselect"); 
 
@@ -1827,7 +1849,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 11 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:125: 'xcollect'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:125: 'xcollect'
                     {
                     match("xcollect"); 
 
@@ -1835,7 +1857,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 12 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:136: 'selectOne'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:136: 'selectOne'
                     {
                     match("selectOne"); 
 
@@ -1843,7 +1865,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 13 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:148: 'collectOne'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:148: 'collectOne'
                     {
                     match("collectOne"); 
 
@@ -1851,7 +1873,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 14 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:161: 'collectselect'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:161: 'collectselect'
                     {
                     match("collectselect"); 
 
@@ -1859,7 +1881,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 15 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11255:177: 'collectselectOne'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11400:177: 'collectselectOne'
                     {
                     match("collectselectOne"); 
 
@@ -1885,10 +1907,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_UNARY_OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:15: ( ( '-' | 'not' | '#' | '##' | '*' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:17: ( '-' | 'not' | '#' | '##' | '*' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:15: ( ( '-' | 'not' | '#' | '##' | '*' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:17: ( '-' | 'not' | '#' | '##' | '*' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:17: ( '-' | 'not' | '#' | '##' | '*' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:17: ( '-' | 'not' | '#' | '##' | '*' )
             int alt7=5;
             switch ( input.LA(1) ) {
             case '-':
@@ -1926,14 +1948,14 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
             switch (alt7) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:18: '-'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:18: '-'
                     {
                     match('-'); 
 
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:22: 'not'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:22: 'not'
                     {
                     match("not"); 
 
@@ -1941,14 +1963,14 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:28: '#'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:28: '#'
                     {
                     match('#'); 
 
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:32: '##'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:32: '##'
                     {
                     match("##"); 
 
@@ -1956,7 +1978,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11257:37: '*'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11402:37: '*'
                     {
                     match('*'); 
 
@@ -1979,8 +2001,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
     // $ANTLR start "RULE_ESCAPED_CHARACTER"
     public final void mRULE_ESCAPED_CHARACTER() throws RecognitionException {
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11259:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11259:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11404:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11404:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
             match('\\'); 
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2004,8 +2026,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
     // $ANTLR start "RULE_LETTER_CHARACTER"
     public final void mRULE_LETTER_CHARACTER() throws RecognitionException {
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11261:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11261:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11406:32: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11406:34: ( 'a' .. 'z' | 'A' .. 'Z' | '_' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -2030,11 +2052,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_DOUBLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11263:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11263:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11408:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11408:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11263:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11408:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop8:
             do {
                 int alt8=3;
@@ -2050,14 +2072,14 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11263:34: RULE_ESCAPED_CHARACTER
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11408:34: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11263:57: ~ ( ( '\\\\' | '\"' ) )
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11408:57: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2094,11 +2116,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11265:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11265:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11410:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11410:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11265:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11410:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop9:
             do {
                 int alt9=3;
@@ -2114,14 +2136,14 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11265:35: RULE_ESCAPED_CHARACTER
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11410:35: RULE_ESCAPED_CHARACTER
             	    {
             	    mRULE_ESCAPED_CHARACTER(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11265:58: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11410:58: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2158,12 +2180,12 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_ML_SINGLE_QUOTED_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11267:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11267:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11412:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11412:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
             match("/'"); 
 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11267:38: ( options {greedy=false; } : . )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11412:38: ( options {greedy=false; } : . )*
             loop10:
             do {
                 int alt10=2;
@@ -2188,7 +2210,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11267:66: .
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11412:66: .
             	    {
             	    matchAny(); 
 
@@ -2218,11 +2240,11 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_SIMPLE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11269:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11269:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11414:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11414:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
             mRULE_LETTER_CHARACTER(); 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11269:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11414:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop11:
             do {
                 int alt11=2;
@@ -2271,8 +2293,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_ESCAPED_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11271:17: ( '_' RULE_SINGLE_QUOTED_STRING )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11271:19: '_' RULE_SINGLE_QUOTED_STRING
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11416:17: ( '_' RULE_SINGLE_QUOTED_STRING )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11416:19: '_' RULE_SINGLE_QUOTED_STRING
             {
             match('_'); 
             mRULE_SINGLE_QUOTED_STRING(); 
@@ -2292,10 +2314,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11273:10: ( ( '0' .. '9' )+ )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11273:12: ( '0' .. '9' )+
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11418:10: ( ( '0' .. '9' )+ )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11418:12: ( '0' .. '9' )+
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11273:12: ( '0' .. '9' )+
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11418:12: ( '0' .. '9' )+
             int cnt12=0;
             loop12:
             do {
@@ -2309,7 +2331,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11273:13: '0' .. '9'
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11418:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2341,12 +2363,12 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11275:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11275:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11420:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11420:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11275:24: ( options {greedy=false; } : . )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11420:24: ( options {greedy=false; } : . )*
             loop13:
             do {
                 int alt13=2;
@@ -2371,7 +2393,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11275:52: .
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11420:52: .
             	    {
             	    matchAny(); 
 
@@ -2401,12 +2423,12 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--"); 
 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop14:
             do {
                 int alt14=2;
@@ -2419,7 +2441,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2439,7 +2461,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:40: ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:40: ( ( '\\r' )? '\\n' )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -2448,9 +2470,9 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:41: ( '\\r' )? '\\n'
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:41: ( '\\r' )?
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:41: ( '\\r' )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
@@ -2459,7 +2481,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                     }
                     switch (alt15) {
                         case 1 :
-                            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11277:41: '\\r'
+                            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11422:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2491,10 +2513,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11279:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11279:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11424:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11424:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11279:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11424:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt17=0;
             loop17:
             do {
@@ -2548,8 +2570,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11281:16: ( . )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11281:18: .
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11426:16: ( . )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:11426:18: .
             {
             matchAny(); 
 
@@ -2564,8 +2586,8 @@ public class InternalImperativeOCLCSLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:8: ( T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | RULE_ACCESS_OP | RULE_ASSIGN_OP | RULE_CMP_OP | RULE_MULT_OP | RULE_MULTI_ITERATOR_OP | RULE_RESOLVE_IN_KIND | RULE_RESOLVE_KIND | RULE_SIMPLE_ITERATOR_OP | RULE_UNARY_OP | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt18=78;
+        // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:8: ( T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | RULE_ACCESS_OP | RULE_ASSIGN_OP | RULE_CMP_OP | RULE_MULT_OP | RULE_MULTI_ITERATOR_OP | RULE_RESOLVE_IN_KIND | RULE_RESOLVE_KIND | RULE_SIMPLE_ITERATOR_OP | RULE_UNARY_OP | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt18=79;
         alt18 = dfa18.predict(input);
         switch (alt18) {
             case 1 :
@@ -2982,133 +3004,140 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                 }
                 break;
             case 60 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:364: RULE_ACCESS_OP
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:364: T__84
+                {
+                mT__84(); 
+
+                }
+                break;
+            case 61 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:370: RULE_ACCESS_OP
                 {
                 mRULE_ACCESS_OP(); 
 
                 }
                 break;
-            case 61 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:379: RULE_ASSIGN_OP
+            case 62 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:385: RULE_ASSIGN_OP
                 {
                 mRULE_ASSIGN_OP(); 
 
                 }
                 break;
-            case 62 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:394: RULE_CMP_OP
+            case 63 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:400: RULE_CMP_OP
                 {
                 mRULE_CMP_OP(); 
 
                 }
                 break;
-            case 63 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:406: RULE_MULT_OP
+            case 64 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:412: RULE_MULT_OP
                 {
                 mRULE_MULT_OP(); 
 
                 }
                 break;
-            case 64 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:419: RULE_MULTI_ITERATOR_OP
+            case 65 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:425: RULE_MULTI_ITERATOR_OP
                 {
                 mRULE_MULTI_ITERATOR_OP(); 
 
                 }
                 break;
-            case 65 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:442: RULE_RESOLVE_IN_KIND
+            case 66 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:448: RULE_RESOLVE_IN_KIND
                 {
                 mRULE_RESOLVE_IN_KIND(); 
 
                 }
                 break;
-            case 66 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:463: RULE_RESOLVE_KIND
+            case 67 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:469: RULE_RESOLVE_KIND
                 {
                 mRULE_RESOLVE_KIND(); 
 
                 }
                 break;
-            case 67 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:481: RULE_SIMPLE_ITERATOR_OP
+            case 68 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:487: RULE_SIMPLE_ITERATOR_OP
                 {
                 mRULE_SIMPLE_ITERATOR_OP(); 
 
                 }
                 break;
-            case 68 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:505: RULE_UNARY_OP
+            case 69 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:511: RULE_UNARY_OP
                 {
                 mRULE_UNARY_OP(); 
 
                 }
                 break;
-            case 69 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:519: RULE_DOUBLE_QUOTED_STRING
+            case 70 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:525: RULE_DOUBLE_QUOTED_STRING
                 {
                 mRULE_DOUBLE_QUOTED_STRING(); 
 
                 }
                 break;
-            case 70 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:545: RULE_SINGLE_QUOTED_STRING
+            case 71 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:551: RULE_SINGLE_QUOTED_STRING
                 {
                 mRULE_SINGLE_QUOTED_STRING(); 
 
                 }
                 break;
-            case 71 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:571: RULE_ML_SINGLE_QUOTED_STRING
+            case 72 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:577: RULE_ML_SINGLE_QUOTED_STRING
                 {
                 mRULE_ML_SINGLE_QUOTED_STRING(); 
 
                 }
                 break;
-            case 72 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:600: RULE_SIMPLE_ID
+            case 73 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:606: RULE_SIMPLE_ID
                 {
                 mRULE_SIMPLE_ID(); 
 
                 }
                 break;
-            case 73 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:615: RULE_ESCAPED_ID
+            case 74 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:621: RULE_ESCAPED_ID
                 {
                 mRULE_ESCAPED_ID(); 
 
                 }
                 break;
-            case 74 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:631: RULE_INT
+            case 75 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:637: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 75 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:640: RULE_ML_COMMENT
+            case 76 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:646: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 76 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:656: RULE_SL_COMMENT
+            case 77 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:662: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 77 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:672: RULE_WS
+            case 78 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:678: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 78 :
-                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:680: RULE_ANY_OTHER
+            case 79 :
+                // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:1:686: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -3181,7 +3210,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             this.transition = DFA3_transition;
         }
         public String getDescription() {
-            return "11245:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )";
+            return "11390:15: ( '=' | '==' | '<>' | '<' | '>' | '<=' | '>=' )";
         }
     }
     static final String DFA4_eotS =
@@ -3253,7 +3282,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             this.transition = DFA4_transition;
         }
         public String getDescription() {
-            return "11251:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )";
+            return "11396:24: ( 'resolveIn' | 'resolveoneIn' | 'invresolveIn' | 'invresolveoneIn' )";
         }
     }
     static final String DFA5_eotS =
@@ -3325,7 +3354,7 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             this.transition = DFA5_transition;
         }
         public String getDescription() {
-            return "11253:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )";
+            return "11398:21: ( 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone' )";
         }
     }
     static final String DFA6_eotS =
@@ -3416,116 +3445,117 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             this.transition = DFA6_transition;
         }
         public String getDescription() {
-            return "11255:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )";
+            return "11400:27: ( 'reject' | 'select' | 'collect' | 'exists' | 'one' | 'any' | 'isUnique' | 'collectNested' | 'sortedBy' | 'xselect' | 'xcollect' | 'selectOne' | 'collectOne' | 'collectselect' | 'collectselectOne' )";
         }
     }
     static final String DFA18_eotS =
         "\2\uffff\1\72\1\75\1\100\1\101\1\103\1\106\1\110\4\75\1\124\10"+
-        "\75\1\uffff\1\75\2\uffff\1\75\3\uffff\1\75\2\uffff\1\154\4\75\1"+
-        "\uffff\1\75\2\uffff\1\65\1\uffff\2\75\1\uffff\2\65\1\75\11\uffff"+
-        "\2\75\14\uffff\1\75\1\u008c\5\75\1\u0093\1\u0094\1\75\2\uffff\13"+
-        "\75\1\uffff\1\75\2\uffff\1\75\3\uffff\1\75\2\uffff\1\u00a5\1\uffff"+
-        "\10\75\1\uffff\2\75\4\uffff\2\75\7\uffff\1\u00b3\1\75\3\uffff\1"+
-        "\u00b5\1\u00b6\1\uffff\1\u00b6\1\u00b7\4\75\2\uffff\3\75\1\u00c0"+
-        "\3\75\1\u00c4\7\75\1\u00ce\1\uffff\5\75\1\u00d4\7\75\1\uffff\1\u00dd"+
-        "\3\uffff\10\75\1\uffff\1\75\1\u00e7\1\75\1\uffff\7\75\1\u00f0\1"+
-        "\u00f1\1\uffff\1\u00f2\1\u00f3\1\u00f4\2\75\1\uffff\1\u00f7\7\75"+
-        "\1\uffff\6\75\1\u0105\2\75\1\uffff\10\75\5\uffff\1\u0110\1\75\1"+
-        "\uffff\2\75\1\u0114\12\75\1\uffff\2\75\1\u0121\2\75\1\u0124\4\75"+
-        "\1\uffff\2\u00b6\1\75\1\uffff\1\u012b\1\75\1\u00b6\1\75\1\u00b6"+
-        "\1\75\1\u012f\1\u0130\2\75\1\u0133\1\u0134\1\uffff\2\75\1\uffff"+
-        "\1\75\1\u0138\4\75\1\uffff\1\u013f\2\u00b6\2\uffff\1\75\1\u00b6"+
-        "\2\uffff\1\u0144\2\75\1\uffff\3\75\1\u00b6\2\75\1\uffff\4\75\1\uffff"+
-        "\4\75\1\u00b6\1\u0154\4\75\1\u013f\1\75\1\u015c\1\u015d\1\u015e"+
-        "\1\uffff\1\u013f\1\75\1\u00b6\4\75\3\uffff\3\75\1\u0154\2\75\1\u0154"+
-        "\2\75\1\u013f\1\75\2\u00b6\3\75\1\u0154\2\75\1\u0174\1\u00b6\1\uffff";
+        "\75\1\uffff\1\75\2\uffff\1\75\3\uffff\1\75\2\uffff\1\75\1\155\4"+
+        "\75\1\uffff\1\75\2\uffff\1\65\1\uffff\1\75\1\uffff\2\65\1\75\11"+
+        "\uffff\2\75\14\uffff\1\75\1\u008c\5\75\1\u0093\1\u0094\1\75\2\uffff"+
+        "\13\75\1\uffff\1\75\2\uffff\1\75\3\uffff\1\75\2\uffff\1\75\1\u00a8"+
+        "\1\uffff\10\75\1\uffff\2\75\4\uffff\1\75\7\uffff\1\u00b4\1\75\3"+
+        "\uffff\1\u00b6\1\u00b7\1\uffff\1\u00b7\1\u00b8\4\75\2\uffff\3\75"+
+        "\1\u00c1\3\75\1\u00c5\7\75\1\u00cf\3\75\1\uffff\5\75\1\u00d8\5\75"+
+        "\1\uffff\1\u00df\3\uffff\10\75\1\uffff\1\75\1\u00e9\1\75\1\uffff"+
+        "\7\75\1\u00f2\1\u00f3\1\uffff\3\75\1\u00f7\1\u00f8\1\u00f9\2\75"+
+        "\1\uffff\1\u00fc\5\75\1\uffff\6\75\1\u0108\2\75\1\uffff\10\75\2"+
+        "\uffff\3\75\3\uffff\1\u0116\1\75\1\uffff\2\75\1\u011a\10\75\1\uffff"+
+        "\2\75\1\u0125\2\75\1\u0128\4\75\1\u012d\1\75\1\u00b7\1\uffff\2\u00b7"+
+        "\1\75\1\uffff\1\u0131\1\75\1\u00b7\1\75\1\u0134\1\u0135\2\75\1\u0138"+
+        "\1\u0139\1\uffff\2\75\1\uffff\1\75\1\u013d\2\75\1\uffff\1\u0142"+
+        "\2\75\1\uffff\2\u00b7\2\uffff\1\75\1\u00b7\2\uffff\1\u0149\2\75"+
+        "\1\uffff\4\75\1\uffff\1\75\1\u00b7\4\75\1\uffff\4\75\1\u0159\1\75"+
+        "\1\u00b7\3\75\1\u0142\1\75\1\u0161\1\u0162\1\u0163\1\uffff\1\u0142"+
+        "\1\75\1\u00b7\4\75\3\uffff\3\75\1\u0159\2\75\1\u0159\2\75\1\u0142"+
+        "\1\75\2\u00b7\3\75\1\u0159\2\75\1\u0179\1\u00b7\1\uffff";
     static final String DFA18_eofS =
-        "\u0175\uffff";
+        "\u017a\uffff";
     static final String DFA18_minS =
         "\1\0\1\uffff\1\55\1\157\1\47\4\75\2\156\1\143\1\146\1\56\1\165"+
         "\1\141\1\156\2\145\1\156\1\143\1\157\1\uffff\1\151\2\uffff\1\151"+
-        "\3\uffff\1\162\2\uffff\1\72\1\150\1\154\2\145\1\uffff\1\141\2\uffff"+
-        "\1\55\1\uffff\1\145\1\157\1\uffff\2\0\1\47\11\uffff\1\164\1\154"+
+        "\3\uffff\1\162\2\uffff\1\145\1\72\1\150\1\154\2\145\1\uffff\1\141"+
+        "\2\uffff\1\55\1\uffff\1\157\1\uffff\2\0\1\47\11\uffff\1\164\1\154"+
         "\14\uffff\1\144\1\60\1\145\1\162\1\145\1\157\1\160\2\60\1\125\2"+
         "\uffff\1\160\1\157\1\147\1\164\1\141\1\162\1\161\2\154\1\144\1\154"+
-        "\1\uffff\1\163\2\uffff\1\143\3\uffff\1\145\2\uffff\1\75\1\uffff"+
-        "\1\145\1\165\1\163\1\144\1\151\1\164\1\154\1\162\1\uffff\1\154\1"+
-        "\162\4\uffff\1\152\1\154\7\uffff\1\60\1\154\3\uffff\2\60\1\uffff"+
+        "\1\uffff\1\163\2\uffff\1\143\3\uffff\1\145\2\uffff\1\152\1\75\1"+
+        "\uffff\1\145\1\165\1\163\1\144\1\151\1\164\1\154\1\162\1\uffff\1"+
+        "\154\1\162\4\uffff\1\154\7\uffff\1\60\1\154\3\uffff\2\60\1\uffff"+
         "\2\60\3\154\1\141\2\uffff\1\156\2\154\1\60\1\145\1\154\1\151\1\60"+
-        "\1\165\1\151\1\101\1\145\1\154\2\164\1\60\1\uffff\1\156\2\145\1"+
-        "\151\1\163\1\60\1\145\1\164\1\163\1\101\1\157\1\145\1\154\1\uffff"+
+        "\1\165\1\151\1\101\1\145\1\154\2\164\1\60\1\165\1\157\1\145\1\uffff"+
+        "\1\156\2\145\1\151\1\163\1\60\1\145\1\164\1\163\1\101\1\154\1\uffff"+
         "\1\60\3\uffff\1\145\1\154\1\151\1\154\1\145\1\151\2\145\1\uffff"+
         "\1\147\1\60\1\156\1\uffff\1\145\1\155\2\156\1\157\1\162\1\145\2"+
-        "\60\1\uffff\3\60\1\146\1\164\1\uffff\1\60\1\143\2\145\2\154\1\143"+
-        "\1\145\1\uffff\1\143\2\145\1\151\1\163\1\161\1\60\1\141\1\145\1"+
-        "\uffff\1\147\1\156\1\151\1\171\1\166\1\151\1\145\1\143\5\uffff\1"+
-        "\60\1\163\1\uffff\1\164\1\144\1\60\1\154\1\166\1\164\1\143\1\164"+
-        "\1\143\1\163\1\144\1\157\1\165\1\uffff\1\156\1\162\1\60\1\143\1"+
-        "\164\1\60\1\141\2\144\1\164\1\uffff\2\60\1\102\1\uffff\1\60\1\145"+
-        "\1\60\1\164\1\60\1\164\2\60\1\154\1\145\2\60\1\uffff\2\145\1\uffff"+
-        "\1\154\1\60\1\123\1\151\1\156\1\171\1\uffff\3\60\2\uffff\1\166\1"+
-        "\60\2\uffff\1\60\1\144\1\151\1\uffff\1\145\1\157\1\145\1\60\2\156"+
-        "\1\uffff\1\145\1\156\2\145\1\uffff\1\116\1\144\1\164\1\156\2\60"+
-        "\1\145\1\163\1\145\1\154\1\60\1\141\3\60\1\uffff\1\60\1\164\1\60"+
-        "\1\145\2\156\1\164\3\uffff\1\156\1\145\1\143\1\60\1\145\1\165\1"+
-        "\60\1\144\1\164\1\60\1\162\2\60\1\156\1\141\1\156\1\60\1\154\1\145"+
-        "\2\60\1\uffff";
+        "\60\1\uffff\1\162\1\154\1\143\3\60\1\146\1\164\1\uffff\1\60\1\143"+
+        "\2\145\1\154\1\145\1\uffff\1\143\2\145\1\151\1\163\1\161\1\60\1"+
+        "\141\1\145\1\uffff\1\147\1\156\1\151\1\171\1\166\1\151\1\145\1\143"+
+        "\2\uffff\1\156\1\166\1\164\3\uffff\1\60\1\163\1\uffff\1\164\1\144"+
+        "\1\60\1\154\1\143\1\164\1\143\1\163\1\144\1\157\1\165\1\uffff\1"+
+        "\156\1\162\1\60\1\143\1\164\1\60\1\141\2\144\1\164\1\60\1\145\1"+
+        "\60\1\uffff\2\60\1\102\1\uffff\1\60\1\164\1\60\1\164\2\60\1\154"+
+        "\1\145\2\60\1\uffff\2\145\1\uffff\1\154\1\60\1\123\1\151\1\uffff"+
+        "\1\60\1\156\1\171\1\uffff\2\60\2\uffff\1\166\1\60\2\uffff\1\60\1"+
+        "\144\1\151\1\uffff\1\145\1\157\2\156\1\uffff\1\145\1\60\1\145\1"+
+        "\156\2\145\1\uffff\1\116\1\144\1\164\1\156\1\60\1\145\1\60\1\163"+
+        "\1\145\1\154\1\60\1\141\3\60\1\uffff\1\60\1\164\1\60\1\145\2\156"+
+        "\1\164\3\uffff\1\156\1\145\1\143\1\60\1\145\1\165\1\60\1\144\1\164"+
+        "\1\60\1\162\2\60\1\156\1\141\1\156\1\60\1\154\1\145\2\60\1\uffff";
     static final String DFA18_maxS =
         "\1\uffff\1\uffff\1\76\1\165\1\52\2\75\1\76\1\75\1\156\1\162\2\163"+
         "\1\56\1\165\1\157\1\156\1\145\1\164\1\156\1\162\1\157\1\uffff\1"+
-        "\151\2\uffff\1\151\3\uffff\1\162\2\uffff\1\75\1\162\1\170\1\145"+
-        "\1\157\1\uffff\1\157\2\uffff\1\55\1\uffff\1\145\1\157\1\uffff\2"+
+        "\151\2\uffff\1\151\3\uffff\1\162\2\uffff\1\145\1\75\1\162\1\170"+
+        "\1\145\1\157\1\uffff\1\157\2\uffff\1\55\1\uffff\1\157\1\uffff\2"+
         "\uffff\1\47\11\uffff\1\164\1\154\14\uffff\1\171\1\172\1\145\1\162"+
         "\1\145\1\157\1\160\2\172\1\125\2\uffff\1\160\1\157\1\147\1\164\1"+
         "\141\1\162\1\164\2\154\1\144\1\154\1\uffff\1\163\2\uffff\1\143\3"+
-        "\uffff\1\145\2\uffff\1\75\1\uffff\1\145\1\165\1\163\1\144\1\151"+
-        "\1\164\1\154\1\162\1\uffff\1\154\1\162\4\uffff\1\163\1\154\7\uffff"+
+        "\uffff\1\145\2\uffff\1\164\1\75\1\uffff\1\145\1\165\1\163\1\144"+
+        "\1\151\1\164\1\154\1\162\1\uffff\1\154\1\162\4\uffff\1\154\7\uffff"+
         "\1\172\1\154\3\uffff\2\172\1\uffff\2\172\3\154\1\162\2\uffff\1\156"+
         "\2\154\1\172\1\145\1\154\1\151\1\172\1\165\1\151\1\126\1\145\1\154"+
-        "\2\164\1\172\1\uffff\1\156\2\145\1\151\1\163\1\172\1\146\1\164\1"+
-        "\163\1\101\1\157\1\145\1\154\1\uffff\1\172\3\uffff\1\145\1\154\1"+
-        "\151\1\154\1\145\1\151\2\145\1\uffff\1\147\1\172\1\156\1\uffff\1"+
-        "\145\1\155\2\156\1\157\1\162\1\145\2\172\1\uffff\3\172\1\146\1\164"+
-        "\1\uffff\1\172\1\143\2\145\2\154\1\143\1\145\1\uffff\1\143\2\145"+
-        "\1\151\1\163\1\161\1\172\1\141\1\145\1\uffff\1\147\1\156\1\151\1"+
-        "\171\1\166\1\151\1\145\1\143\5\uffff\1\172\1\163\1\uffff\1\164\1"+
-        "\144\1\172\1\154\1\166\1\164\1\143\1\164\1\143\1\163\1\144\1\157"+
-        "\1\165\1\uffff\1\156\1\162\1\172\1\143\1\164\1\172\1\141\2\144\1"+
-        "\164\1\uffff\2\172\1\102\1\uffff\1\172\1\145\1\172\1\164\1\172\1"+
-        "\164\2\172\1\154\1\145\2\172\1\uffff\2\145\1\uffff\1\154\1\172\1"+
-        "\123\1\151\1\156\1\171\1\uffff\3\172\2\uffff\1\166\1\172\2\uffff"+
-        "\1\172\1\144\1\151\1\uffff\1\145\1\157\1\145\1\172\2\156\1\uffff"+
-        "\1\145\1\156\2\145\1\uffff\1\116\1\144\1\164\1\156\2\172\1\145\1"+
-        "\163\1\145\1\154\1\172\1\141\3\172\1\uffff\1\172\1\164\1\172\1\145"+
-        "\2\156\1\164\3\uffff\1\156\1\145\1\143\1\172\1\145\1\165\1\172\1"+
-        "\144\1\164\1\172\1\162\2\172\1\156\1\141\1\156\1\172\1\154\1\145"+
-        "\2\172\1\uffff";
+        "\2\164\1\172\1\165\1\157\1\145\1\uffff\1\156\2\145\1\151\1\163\1"+
+        "\172\1\146\1\164\1\163\1\101\1\154\1\uffff\1\172\3\uffff\1\145\1"+
+        "\154\1\151\1\154\1\145\1\151\2\145\1\uffff\1\147\1\172\1\156\1\uffff"+
+        "\1\145\1\155\2\156\1\157\1\162\1\145\2\172\1\uffff\1\162\1\154\1"+
+        "\143\3\172\1\146\1\164\1\uffff\1\172\1\143\2\145\1\154\1\145\1\uffff"+
+        "\1\143\2\145\1\151\1\163\1\161\1\172\1\141\1\145\1\uffff\1\147\1"+
+        "\156\1\151\1\171\1\166\1\151\1\145\1\143\2\uffff\1\156\1\166\1\164"+
+        "\3\uffff\1\172\1\163\1\uffff\1\164\1\144\1\172\1\154\1\143\1\164"+
+        "\1\143\1\163\1\144\1\157\1\165\1\uffff\1\156\1\162\1\172\1\143\1"+
+        "\164\1\172\1\141\2\144\1\164\1\172\1\145\1\172\1\uffff\2\172\1\102"+
+        "\1\uffff\1\172\1\164\1\172\1\164\2\172\1\154\1\145\2\172\1\uffff"+
+        "\2\145\1\uffff\1\154\1\172\1\123\1\151\1\uffff\1\172\1\156\1\171"+
+        "\1\uffff\2\172\2\uffff\1\166\1\172\2\uffff\1\172\1\144\1\151\1\uffff"+
+        "\1\145\1\157\2\156\1\uffff\1\145\1\172\1\145\1\156\2\145\1\uffff"+
+        "\1\116\1\144\1\164\1\156\1\172\1\145\1\172\1\163\1\145\1\154\1\172"+
+        "\1\141\3\172\1\uffff\1\172\1\164\1\172\1\145\2\156\1\164\3\uffff"+
+        "\1\156\1\145\1\143\1\172\1\145\1\165\1\172\1\144\1\164\1\172\1\162"+
+        "\2\172\1\156\1\141\1\156\1\172\1\154\1\145\2\172\1\uffff";
     static final String DFA18_acceptS =
         "\1\uffff\1\1\24\uffff\1\40\1\uffff\1\42\1\43\1\uffff\1\45\1\46"+
-        "\1\47\1\uffff\1\51\1\52\5\uffff\1\67\1\uffff\1\72\1\73\1\uffff\1"+
-        "\77\2\uffff\1\104\3\uffff\1\110\1\112\1\115\1\116\1\1\1\21\1\75"+
-        "\1\114\1\2\2\uffff\1\110\1\107\1\113\1\4\1\5\1\10\1\6\1\11\1\13"+
-        "\1\7\1\76\1\12\12\uffff\1\54\1\20\13\uffff\1\40\1\uffff\1\42\1\43"+
-        "\1\uffff\1\45\1\46\1\47\1\uffff\1\51\1\52\1\uffff\1\55\10\uffff"+
-        "\1\67\2\uffff\1\72\1\73\1\74\1\77\2\uffff\1\104\1\105\1\106\1\111"+
-        "\1\112\1\115\1\21\2\uffff\1\10\1\11\1\13\2\uffff\1\15\6\uffff\1"+
-        "\65\1\60\20\uffff\1\53\15\uffff\1\3\1\uffff\1\14\1\103\1\16\10\uffff"+
-        "\1\34\3\uffff\1\33\11\uffff\1\50\5\uffff\1\64\10\uffff\1\57\11\uffff"+
-        "\1\25\10\uffff\1\41\1\44\1\61\1\70\1\62\2\uffff\1\66\15\uffff\1"+
-        "\22\12\uffff\1\63\3\uffff\1\71\14\uffff\1\26\2\uffff\1\30\6\uffff"+
-        "\1\100\3\uffff\1\17\1\56\2\uffff\1\23\1\24\3\uffff\1\32\6\uffff"+
-        "\1\102\4\uffff\1\35\17\uffff\1\101\7\uffff\1\31\1\37\1\36\25\uffff"+
-        "\1\27";
+        "\1\47\1\uffff\1\51\1\52\6\uffff\1\70\1\uffff\1\73\1\74\1\uffff\1"+
+        "\100\1\uffff\1\105\3\uffff\1\111\1\113\1\116\1\117\1\1\1\21\1\76"+
+        "\1\115\1\2\2\uffff\1\111\1\110\1\114\1\4\1\5\1\10\1\6\1\11\1\13"+
+        "\1\7\1\77\1\12\12\uffff\1\55\1\20\13\uffff\1\40\1\uffff\1\42\1\43"+
+        "\1\uffff\1\45\1\46\1\47\1\uffff\1\51\1\52\2\uffff\1\56\10\uffff"+
+        "\1\70\2\uffff\1\73\1\74\1\75\1\100\1\uffff\1\105\1\106\1\107\1\112"+
+        "\1\113\1\116\1\21\2\uffff\1\10\1\11\1\13\2\uffff\1\15\6\uffff\1"+
+        "\66\1\61\23\uffff\1\54\13\uffff\1\3\1\uffff\1\14\1\104\1\16\10\uffff"+
+        "\1\34\3\uffff\1\33\11\uffff\1\50\10\uffff\1\65\6\uffff\1\60\11\uffff"+
+        "\1\25\10\uffff\1\41\1\44\3\uffff\1\62\1\71\1\63\2\uffff\1\67\13"+
+        "\uffff\1\22\15\uffff\1\64\3\uffff\1\72\12\uffff\1\26\2\uffff\1\30"+
+        "\4\uffff\1\53\3\uffff\1\101\2\uffff\1\17\1\57\2\uffff\1\23\1\24"+
+        "\3\uffff\1\32\4\uffff\1\103\6\uffff\1\35\17\uffff\1\102\7\uffff"+
+        "\1\31\1\37\1\36\25\uffff\1\27";
     static final String DFA18_specialS =
-        "\1\1\56\uffff\1\0\1\2\u0144\uffff}>";
+        "\1\1\56\uffff\1\2\1\0\u0149\uffff}>";
     static final String[] DFA18_transitionS = {
-            "\11\65\2\64\2\65\1\64\22\65\1\64\1\52\1\57\1\56\1\65\1\53\1"+
-            "\65\1\60\1\30\1\31\1\1\1\5\1\33\1\2\1\15\1\4\12\63\1\41\1\51"+
-            "\1\7\1\10\1\6\1\26\1\46\1\62\1\17\1\25\1\32\4\62\1\20\2\62\1"+
+            "\11\65\2\64\2\65\1\64\22\65\1\64\1\53\1\57\1\56\1\65\1\54\1"+
+            "\65\1\60\1\30\1\31\1\1\1\5\1\33\1\2\1\15\1\4\12\63\1\42\1\52"+
+            "\1\7\1\10\1\6\1\26\1\47\1\62\1\17\1\25\1\32\4\62\1\20\2\62\1"+
             "\27\2\62\1\24\2\62\1\21\1\22\1\16\1\23\5\62\1\34\1\65\1\35\1"+
-            "\65\1\61\1\65\1\11\1\62\1\55\1\62\1\43\1\47\2\62\1\14\2\62\1"+
-            "\44\1\62\1\3\1\12\1\36\1\62\1\54\1\45\1\42\3\62\1\13\2\62\1"+
-            "\37\1\50\1\40\uff82\65",
+            "\65\1\61\1\65\1\11\1\62\1\55\1\62\1\44\1\50\2\62\1\14\2\62\1"+
+            "\45\1\62\1\3\1\12\1\36\1\62\1\41\1\46\1\43\3\62\1\13\2\62\1"+
+            "\37\1\51\1\40\uff82\65",
             "",
             "\1\71\17\uffff\1\70\1\67",
             "\1\73\5\uffff\1\74",
@@ -3558,18 +3588,18 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             "\1\150",
             "",
             "",
-            "\1\153\2\uffff\1\70",
-            "\1\155\11\uffff\1\156",
-            "\1\157\1\uffff\1\160\11\uffff\1\161",
-            "\1\162",
-            "\1\163\11\uffff\1\164",
+            "\1\153",
+            "\1\154\2\uffff\1\70",
+            "\1\156\11\uffff\1\157",
+            "\1\160\1\uffff\1\161\11\uffff\1\162",
+            "\1\163",
+            "\1\164\11\uffff\1\165",
             "",
-            "\1\166\15\uffff\1\167",
+            "\1\167\15\uffff\1\170",
             "",
             "",
-            "\1\172",
+            "\1\173",
             "",
-            "\1\174",
             "\1\175",
             "",
             "\0\177",
@@ -3633,218 +3663,216 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             "\1\u00a4",
             "",
             "",
+            "\1\u00a7\10\uffff\1\u00a6\1\u00a5",
             "\1\70",
             "",
-            "\1\u00a6",
-            "\1\u00a7",
-            "\1\u00a8",
             "\1\u00a9",
             "\1\u00aa",
             "\1\u00ab",
             "\1\u00ac",
             "\1\u00ad",
-            "",
             "\1\u00ae",
             "\1\u00af",
+            "\1\u00b0",
             "",
-            "",
-            "",
-            "",
-            "\1\u00b1\10\uffff\1\u00b0",
+            "\1\u00b1",
             "\1\u00b2",
             "",
             "",
             "",
             "",
+            "\1\u00b3",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00b5",
             "",
             "",
             "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00b4",
-            "",
-            "",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00b8",
             "\1\u00b9",
             "\1\u00ba",
-            "\1\u00bb\20\uffff\1\u00bc",
+            "\1\u00bb",
+            "\1\u00bc\20\uffff\1\u00bd",
             "",
             "",
-            "\1\u00bd",
             "\1\u00be",
             "\1\u00bf",
+            "\1\u00c0",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00c1",
             "\1\u00c2",
             "\1\u00c3",
+            "\1\u00c4",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00c5",
             "\1\u00c6",
-            "\1\u00c7\7\uffff\1\u00c8\14\uffff\1\u00c9",
-            "\1\u00ca",
+            "\1\u00c7",
+            "\1\u00c8\7\uffff\1\u00c9\14\uffff\1\u00ca",
             "\1\u00cb",
             "\1\u00cc",
             "\1\u00cd",
+            "\1\u00ce",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\1\u00cf",
             "\1\u00d0",
             "\1\u00d1",
             "\1\u00d2",
+            "",
             "\1\u00d3",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00d6\1\u00d5",
+            "\1\u00d4",
+            "\1\u00d5",
+            "\1\u00d6",
             "\1\u00d7",
-            "\1\u00d8",
-            "\1\u00d9",
-            "\1\u00da",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00da\1\u00d9",
             "\1\u00db",
             "\1\u00dc",
+            "\1\u00dd",
+            "\1\u00de",
             "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
             "",
             "",
-            "\1\u00de",
-            "\1\u00df",
             "\1\u00e0",
             "\1\u00e1",
             "\1\u00e2",
             "\1\u00e3",
             "\1\u00e4",
             "\1\u00e5",
-            "",
             "\1\u00e6",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00e8",
+            "\1\u00e7",
             "",
-            "\1\u00e9",
+            "\1\u00e8",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00ea",
+            "",
             "\1\u00eb",
             "\1\u00ec",
             "\1\u00ed",
             "\1\u00ee",
             "\1\u00ef",
+            "\1\u00f0",
+            "\1\u00f1",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00f4",
             "\1\u00f5",
             "\1\u00f6",
-            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00f8",
-            "\1\u00f9",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00fa",
             "\1\u00fb",
-            "\1\u00fc",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00fd",
             "\1\u00fe",
-            "",
             "\1\u00ff",
             "\1\u0100",
             "\1\u0101",
+            "",
             "\1\u0102",
             "\1\u0103",
             "\1\u0104",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0105",
             "\1\u0106",
             "\1\u0107",
-            "",
-            "\1\u0108",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0109",
             "\1\u010a",
+            "",
             "\1\u010b",
             "\1\u010c",
             "\1\u010d",
             "\1\u010e",
             "\1\u010f",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0110",
             "\1\u0111",
-            "",
             "\1\u0112",
+            "",
+            "",
             "\1\u0113",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0114",
             "\1\u0115",
-            "\1\u0116",
+            "",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0117",
+            "",
             "\1\u0118",
             "\1\u0119",
-            "\1\u011a",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u011b",
             "\1\u011c",
             "\1\u011d",
             "\1\u011e",
-            "",
             "\1\u011f",
             "\1\u0120",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0121",
             "\1\u0122",
+            "",
             "\1\u0123",
+            "\1\u0124",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0125",
             "\1\u0126",
             "\1\u0127",
-            "\1\u0128",
-            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\16\75\1\u0129\13\75\4\uffff\1\75\1\uffff\32"+
-            "\75",
+            "\1\u0129",
             "\1\u012a",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u012b",
             "\1\u012c",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u012d",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u012e",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0131",
+            "\12\75\7\uffff\16\75\1\u012f\13\75\4\uffff\1\75\1\uffff\32"+
+            "\75",
+            "\1\u0130",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0132",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0133",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\1\u0135",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0136",
-            "",
             "\1\u0137",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0139",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
             "\1\u013a",
             "\1\u013b",
+            "",
             "\1\u013c",
-            "",
-            "\12\75\7\uffff\10\75\1\u013d\21\75\4\uffff\1\75\1\uffff\16"+
-            "\75\1\u013e\13\75",
-            "\12\75\7\uffff\15\75\1\u0140\1\u0141\13\75\4\uffff\1\75\1"+
-            "\uffff\22\75\1\u0142\7\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u013e",
+            "\1\u013f",
             "",
-            "",
+            "\12\75\7\uffff\10\75\1\u0140\21\75\4\uffff\1\75\1\uffff\16"+
+            "\75\1\u0141\13\75",
             "\1\u0143",
+            "\1\u0144",
+            "",
+            "\12\75\7\uffff\15\75\1\u0145\1\u0146\13\75\4\uffff\1\75\1"+
+            "\uffff\22\75\1\u0147\7\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
             "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0145",
-            "\1\u0146",
-            "",
-            "\1\u0147",
             "\1\u0148",
-            "\1\u0149",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u014a",
             "\1\u014b",
@@ -3855,54 +3883,61 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             "\1\u014f",
             "",
             "\1\u0150",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0151",
             "\1\u0152",
             "\1\u0153",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0154",
+            "",
             "\1\u0155",
             "\1\u0156",
             "\1\u0157",
             "\1\u0158",
-            "\12\75\7\uffff\10\75\1\u0159\21\75\4\uffff\1\75\1\uffff\16"+
-            "\75\1\u015a\13\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u015a",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u015b",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\12\75\7\uffff\10\75\1\u015f\21\75\4\uffff\1\75\1\uffff\32"+
-            "\75",
+            "\1\u015c",
+            "\1\u015d",
+            "\12\75\7\uffff\10\75\1\u015e\21\75\4\uffff\1\75\1\uffff\16"+
+            "\75\1\u015f\13\75",
             "\1\u0160",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0161",
-            "\1\u0162",
-            "\1\u0163",
-            "\1\u0164",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
-            "",
-            "",
+            "\12\75\7\uffff\10\75\1\u0164\21\75\4\uffff\1\75\1\uffff\32"+
+            "\75",
             "\1\u0165",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0166",
             "\1\u0167",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0168",
             "\1\u0169",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "",
             "\1\u016a",
             "\1\u016b",
-            "\12\75\7\uffff\10\75\1\u016c\21\75\4\uffff\1\75\1\uffff\32"+
-            "\75",
-            "\1\u016d",
+            "\1\u016c",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\16\75\1\u016e\13\75\4\uffff\1\75\1\uffff\32"+
-            "\75",
+            "\1\u016d",
+            "\1\u016e",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u016f",
             "\1\u0170",
-            "\1\u0171",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\10\75\1\u0171\21\75\4\uffff\1\75\1\uffff\32"+
+            "\75",
             "\1\u0172",
-            "\1\u0173",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\16\75\1\u0173\13\75\4\uffff\1\75\1\uffff\32"+
+            "\75",
+            "\1\u0174",
+            "\1\u0175",
+            "\1\u0176",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0177",
+            "\1\u0178",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             ""
@@ -3938,17 +3973,17 @@ public class InternalImperativeOCLCSLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | RULE_ACCESS_OP | RULE_ASSIGN_OP | RULE_CMP_OP | RULE_MULT_OP | RULE_MULTI_ITERATOR_OP | RULE_RESOLVE_IN_KIND | RULE_RESOLVE_KIND | RULE_SIMPLE_ITERATOR_OP | RULE_UNARY_OP | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | RULE_ACCESS_OP | RULE_ASSIGN_OP | RULE_CMP_OP | RULE_MULT_OP | RULE_MULTI_ITERATOR_OP | RULE_RESOLVE_IN_KIND | RULE_RESOLVE_KIND | RULE_SIMPLE_ITERATOR_OP | RULE_UNARY_OP | RULE_DOUBLE_QUOTED_STRING | RULE_SINGLE_QUOTED_STRING | RULE_ML_SINGLE_QUOTED_STRING | RULE_SIMPLE_ID | RULE_ESCAPED_ID | RULE_INT | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA18_47 = input.LA(1);
+                        int LA18_48 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA18_47>='\u0000' && LA18_47<='\uFFFF')) ) {s = 127;}
+                        if ( ((LA18_48>='\u0000' && LA18_48<='\uFFFF')) ) {s = 128;}
 
                         else s = 53;
 
@@ -4022,29 +4057,29 @@ public class InternalImperativeOCLCSLexer extends Lexer {
 
                         else if ( (LA18_0=='}') ) {s = 32;}
 
-                        else if ( (LA18_0==':') ) {s = 33;}
+                        else if ( (LA18_0=='r') ) {s = 33;}
 
-                        else if ( (LA18_0=='t') ) {s = 34;}
+                        else if ( (LA18_0==':') ) {s = 34;}
 
-                        else if ( (LA18_0=='e') ) {s = 35;}
+                        else if ( (LA18_0=='t') ) {s = 35;}
 
-                        else if ( (LA18_0=='l') ) {s = 36;}
+                        else if ( (LA18_0=='e') ) {s = 36;}
 
-                        else if ( (LA18_0=='s') ) {s = 37;}
+                        else if ( (LA18_0=='l') ) {s = 37;}
 
-                        else if ( (LA18_0=='@') ) {s = 38;}
+                        else if ( (LA18_0=='s') ) {s = 38;}
 
-                        else if ( (LA18_0=='f') ) {s = 39;}
+                        else if ( (LA18_0=='@') ) {s = 39;}
 
-                        else if ( (LA18_0=='|') ) {s = 40;}
+                        else if ( (LA18_0=='f') ) {s = 40;}
 
-                        else if ( (LA18_0==';') ) {s = 41;}
+                        else if ( (LA18_0=='|') ) {s = 41;}
 
-                        else if ( (LA18_0=='!') ) {s = 42;}
+                        else if ( (LA18_0==';') ) {s = 42;}
 
-                        else if ( (LA18_0=='%') ) {s = 43;}
+                        else if ( (LA18_0=='!') ) {s = 43;}
 
-                        else if ( (LA18_0=='r') ) {s = 44;}
+                        else if ( (LA18_0=='%') ) {s = 44;}
 
                         else if ( (LA18_0=='c') ) {s = 45;}
 
@@ -4067,10 +4102,10 @@ public class InternalImperativeOCLCSLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA18_48 = input.LA(1);
+                        int LA18_47 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA18_48>='\u0000' && LA18_48<='\uFFFF')) ) {s = 128;}
+                        if ( ((LA18_47>='\u0000' && LA18_47<='\uFFFF')) ) {s = 127;}
 
                         else s = 53;
 

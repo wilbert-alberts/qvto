@@ -97,6 +97,7 @@ DictTypeCS :
 	'Dict' '(' ownedKeyTypeCS=TypeExpCS ',' ownedElementTypeCS=TypeExpCS ')'
 ;
 
+// ********* ImperativeOCL Expressions *********
 // PrimaryExpCS redefined to include the new List and Dict literal expressions
 // FIXME refactor its definition in EssentialOCL to allow extension
 PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most rejectable first
@@ -109,6 +110,7 @@ PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most reject
 |   ListLiteralExpCS
 |   DictLiteralExpCS
 | 	TypeLiteralExpCS
+| ReturnExpCS
 | 	({NameExpCS} pathName=PathNameCS
 		(
 			(({IndexExpCS.nameExp=current} '[' firstIndexes+=ExpCS (',' firstIndexes+=ExpCS)* ']'
@@ -132,18 +134,24 @@ PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most reject
 		)
 	);
 	
-ListLiteralExpCS : 'List' '{'{ListLiteralExpCS} 
-	(ownedParts+=CollectionLiteralExpCS
-	(',' ownedParts+=CollectionLiteralPartCS)*)? 
+ListLiteralExpCS : 
+	'List' '{' {ListLiteralExpCS} 
+		(ownedParts+=CollectionLiteralExpCS
+		(',' ownedParts+=CollectionLiteralPartCS)*)? 
 	'}'
 ;
 
-DictLiteralExpCS : 'Dict' '{' {DictLiteralExpCS}
-	(ownedParts+=DictLiteralPartCS
-	(',' ownedParts+=DictLiteralPartCS)*)? 
+DictLiteralExpCS : 
+	'Dict' '{' {DictLiteralExpCS}
+		(ownedParts+=DictLiteralPartCS
+		(',' ownedParts+=DictLiteralPartCS)*)? 
 	'}'
 ;
 
 DictLiteralPartCS :
-		keyExpCS = PrimitiveLiteralExpCS '=' valueExpCS = ExpCS
+	keyExpCS = PrimitiveLiteralExpCS '=' valueExpCS = ExpCS
+;
+ 	
+ReturnExpCS : 
+	'return' {ReturnExpCS} (value = ExpCS)?
 ;

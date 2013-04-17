@@ -113,6 +113,11 @@ public class ImperativeoclcsAdapterFactory extends AdapterFactoryImpl
         return createDictLiteralPartCSAdapter();
       }
       @Override
+      public Adapter caseReturnExpCS(ReturnExpCS object)
+      {
+        return createReturnExpCSAdapter();
+      }
+      @Override
       public Adapter caseNameExpCS(NameExpCS object)
       {
         return createNameExpCSAdapter();
@@ -270,6 +275,21 @@ public class ImperativeoclcsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDictLiteralPartCSAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS <em>Return Exp CS</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS
+   * @generated
+   */
+  public Adapter createReturnExpCSAdapter()
   {
     return null;
   }

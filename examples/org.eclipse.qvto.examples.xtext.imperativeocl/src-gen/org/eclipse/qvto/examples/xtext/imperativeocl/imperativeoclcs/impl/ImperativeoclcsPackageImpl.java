@@ -24,6 +24,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationE
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,6 +68,13 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * @generated
    */
   private EClass dictLiteralPartCSEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass returnExpCSEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -287,6 +295,26 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getReturnExpCS()
+  {
+    return returnExpCSEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReturnExpCS_Value()
+  {
+    return (EReference)returnExpCSEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getNameExpCS()
   {
     return nameExpCSEClass;
@@ -479,6 +507,9 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
     createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__KEY_EXP_CS);
     createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__VALUE_EXP_CS);
 
+    returnExpCSEClass = createEClass(RETURN_EXP_CS);
+    createEReference(returnExpCSEClass, RETURN_EXP_CS__VALUE);
+
     nameExpCSEClass = createEClass(NAME_EXP_CS);
     createEReference(nameExpCSEClass, NAME_EXP_CS__PATH_NAME);
     createEAttribute(nameExpCSEClass, NAME_EXP_CS__AT_PRE);
@@ -536,6 +567,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
     dictTypeCSEClass.getESuperTypes().add(theBaseCSTPackage.getTypedRefCS());
     listLiteralExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
     dictLiteralExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
+    returnExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
     nameExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
     indexExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
     constructorExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
@@ -558,6 +590,9 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
     initEClass(dictLiteralPartCSEClass, DictLiteralPartCS.class, "DictLiteralPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDictLiteralPartCS_KeyExpCS(), theEssentialOCLCSTPackage.getPrimitiveLiteralExpCS(), null, "keyExpCS", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDictLiteralPartCS_ValueExpCS(), theEssentialOCLCSTPackage.getExpCS(), null, "valueExpCS", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReturnExpCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(nameExpCSEClass, NameExpCS.class, "NameExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNameExpCS_PathName(), theBaseCSTPackage.getPathNameCS(), null, "pathName", null, 0, 1, NameExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

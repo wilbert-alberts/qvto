@@ -381,6 +381,88 @@ public interface ImperativeoclcsPackage extends EPackage
   int DICT_LITERAL_PART_CS_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ReturnExpCSImpl
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getReturnExpCS()
+   * @generated
+   */
+  int RETURN_EXP_CS = 5;
+
+  /**
+   * The feature id for the '<em><b>Logical Parent</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+
+  /**
+   * The feature id for the '<em><b>Pivot</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+
+  /**
+   * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+
+  /**
+   * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+
+  /**
+   * The feature id for the '<em><b>Csi</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS__VALUE = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Return Exp CS</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.NameExpCSImpl <em>Name Exp CS</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -388,7 +470,7 @@ public interface ImperativeoclcsPackage extends EPackage
    * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getNameExpCS()
    * @generated
    */
-  int NAME_EXP_CS = 5;
+  int NAME_EXP_CS = 6;
 
   /**
    * The feature id for the '<em><b>Logical Parent</b></em>' reference.
@@ -479,7 +561,7 @@ public interface ImperativeoclcsPackage extends EPackage
    * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getIndexExpCS()
    * @generated
    */
-  int INDEX_EXP_CS = 6;
+  int INDEX_EXP_CS = 7;
 
   /**
    * The feature id for the '<em><b>Logical Parent</b></em>' reference.
@@ -588,7 +670,7 @@ public interface ImperativeoclcsPackage extends EPackage
    * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getConstructorExpCS()
    * @generated
    */
-  int CONSTRUCTOR_EXP_CS = 7;
+  int CONSTRUCTOR_EXP_CS = 8;
 
   /**
    * The feature id for the '<em><b>Logical Parent</b></em>' reference.
@@ -688,7 +770,7 @@ public interface ImperativeoclcsPackage extends EPackage
    * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getInvocationExpCS()
    * @generated
    */
-  int INVOCATION_EXP_CS = 8;
+  int INVOCATION_EXP_CS = 9;
 
   /**
    * The feature id for the '<em><b>Logical Parent</b></em>' reference.
@@ -898,6 +980,27 @@ public interface ImperativeoclcsPackage extends EPackage
    * @generated
    */
   EReference getDictLiteralPartCS_ValueExpCS();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS <em>Return Exp CS</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Return Exp CS</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS
+   * @generated
+   */
+  EClass getReturnExpCS();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS#getValue()
+   * @see #getReturnExpCS()
+   * @generated
+   */
+  EReference getReturnExpCS_Value();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS <em>Name Exp CS</em>}'.
@@ -1188,6 +1291,24 @@ public interface ImperativeoclcsPackage extends EPackage
      * @generated
      */
     EReference DICT_LITERAL_PART_CS__VALUE_EXP_CS = eINSTANCE.getDictLiteralPartCS_ValueExpCS();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ReturnExpCSImpl
+     * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getReturnExpCS()
+     * @generated
+     */
+    EClass RETURN_EXP_CS = eINSTANCE.getReturnExpCS();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RETURN_EXP_CS__VALUE = eINSTANCE.getReturnExpCS_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.NameExpCSImpl <em>Name Exp CS</em>}' class.

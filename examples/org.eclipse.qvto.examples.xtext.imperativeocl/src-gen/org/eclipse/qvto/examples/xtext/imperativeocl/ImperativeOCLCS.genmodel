@@ -26,6 +26,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/keyExpCS"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/valueExpCS"/>
     </genClasses>
+    <genClasses ecoreClass="ImperativeOCLCS.ecore#//ReturnExpCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//ReturnExpCS/value"/>
+    </genClasses>
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//NameExpCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//NameExpCS/pathName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ImperativeOCLCS.ecore#//NameExpCS/atPre"/>

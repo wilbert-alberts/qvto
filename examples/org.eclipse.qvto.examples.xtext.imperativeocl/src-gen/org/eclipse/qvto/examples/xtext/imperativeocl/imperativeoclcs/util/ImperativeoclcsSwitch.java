@@ -146,6 +146,19 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ImperativeoclcsPackage.RETURN_EXP_CS:
+      {
+        ReturnExpCS returnExpCS = (ReturnExpCS)theEObject;
+        T result = caseReturnExpCS(returnExpCS);
+        if (result == null) result = caseExpCS(returnExpCS);
+        if (result == null) result = caseModelElementCS(returnExpCS);
+        if (result == null) result = casePivotableElementCS(returnExpCS);
+        if (result == null) result = caseElementCS(returnExpCS);
+        if (result == null) result = casePivotable(returnExpCS);
+        if (result == null) result = caseVisitableCS(returnExpCS);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case ImperativeoclcsPackage.NAME_EXP_CS:
       {
         NameExpCS nameExpCS = (NameExpCS)theEObject;
@@ -278,6 +291,22 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDictLiteralPartCS(DictLiteralPartCS object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Return Exp CS</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Return Exp CS</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseReturnExpCS(ReturnExpCS object)
   {
     return null;
   }
