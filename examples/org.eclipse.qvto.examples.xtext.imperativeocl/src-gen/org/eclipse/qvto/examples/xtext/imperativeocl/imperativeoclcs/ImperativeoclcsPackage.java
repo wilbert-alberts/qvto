@@ -42,7 +42,7 @@ public interface ImperativeoclcsPackage extends EPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  String eNS_URI = "http://toBeDefined";
+  String eNS_URI = "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS";
 
   /**
    * The package namespace name.

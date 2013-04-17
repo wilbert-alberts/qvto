@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="iocl"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            name="ImperativeOCL Editor">
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            name="ImperativeOCLCS Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.validate">
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.validate">
          <activeWhen>
             <reference
-                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened" />
+				<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.XtextEditor.opened" />
+            		<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+        <definition id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL" 
+                        value="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.XtextEditor.opened">
+        <definition id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL" 
+                        value="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            name="ImperativeOCL">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            name="ImperativeOCLCS">
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
         </page>
         <page
-            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.coloring"
+            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.coloring"
             name="Syntax Coloring">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
         </page>
         <page
-            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.templates"
+            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.templates"
             name="Templates">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            name="ImperativeOCL">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            name="ImperativeOCLCS">
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"
-            label="ImperativeOCL"/>
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"
+            label="ImperativeOCLCS"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.validate"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.validate"
+                 commandId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened" />
+                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened" />
+                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.XtextEditor.opened" />
+	            		<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                	<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                    definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,36 +212,36 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="iocl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="iocl">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL -->
+    <!-- marker definitions for org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS -->
     <extension
-            id="imperativeocl.check.fast"
-            name="ImperativeOCL Problem"
+            id="imperativeoclcs.check.fast"
+            name="ImperativeOCLCS Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="imperativeocl.check.normal"
-            name="ImperativeOCL Problem"
+            id="imperativeoclcs.check.normal"
+            name="ImperativeOCLCS Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="imperativeocl.check.expensive"
-            name="ImperativeOCL Problem"
+            id="imperativeoclcs.check.expensive"
+            name="ImperativeOCLCS Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -250,27 +250,27 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.compiler.preferencePage"
+            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.compiler.propertyPage"
+            category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+            <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -282,11 +282,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+					definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -306,33 +306,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened"/>
+					<reference definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL -->
+    <!-- quickfix marker resolution generator for org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeocl.check.fast">
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeoclcs.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeocl.check.normal">
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeoclcs.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeocl.check.expensive">
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.qvto.examples.xtext.imperativeocl.ui.imperativeoclcs.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -342,11 +342,11 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+					definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -358,7 +358,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.Editor.opened">
+                     definitionId="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -366,29 +366,29 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL"
-	        class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.refactoring"
+	        category="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS"
+	        class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCL"/>
+	        <keywordReference id="org.eclipse.qvto.examples.xtext.imperativeocl.ui.keyword_ImperativeOCLCS"/>
 	    </page>
 	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.compare.contentViewers"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.compare.contentViewers"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="iocl">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.compare.contentMergeViewers"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="iocl" label="ImperativeOCL Compare">
+    <viewer id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.compare.contentMergeViewers"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="iocl" label="ImperativeOCLCS Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL.editors.documentProviders"
-            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLCS.editors.documentProviders"
+            class="org.eclipse.qvto.examples.xtext.imperativeocl.ui.ImperativeOCLCSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="iocl">
     </provider>
   </extension>
