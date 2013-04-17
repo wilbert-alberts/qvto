@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="imperativeoclcs" nsURI="http://toBeDefined" nsPrefix="imperativeoclcs">
+  <eClassifiers xsi:type="ecore:EClass" name="ListTypeCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedType" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DictTypeCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedKeyTypeCS" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedElementTypeCS" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListLiteralExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ModelElementCS"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DictLiteralExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
+        eType="#//DictLiteralPartCS" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DictLiteralPartCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyExpCS" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//PrimitiveLiteralExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueExpCS" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NameExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathName" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PathNameCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="atPre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndexExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameExp" eType="#//NameExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="firstIndexes" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secondIndexes" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="atPre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConstructorExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameExp" eType="#//NameExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ConstructorPartCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InvocationExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameExp" eType="#//NameExpCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argument" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//NavigatingArgCS"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
