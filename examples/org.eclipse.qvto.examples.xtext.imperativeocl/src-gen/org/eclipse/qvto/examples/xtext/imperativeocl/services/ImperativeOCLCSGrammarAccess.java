@@ -191,16 +191,16 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cListKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cOwnedTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_0 = (RuleCall)cOwnedTypeAssignment_2.eContents().get(0);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeTypeExpCSParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//ListTypeCS:
 		//
-		//	"List" "(" ownedType=TypeExpCS ")";
+		//	"List" "(" type=TypeExpCS ")";
 		public ParserRule getRule() { return rule; }
 
-		//"List" "(" ownedType=TypeExpCS ")"
+		//"List" "(" type=TypeExpCS ")"
 		public Group getGroup() { return cGroup; }
 
 		//"List"
@@ -209,11 +209,11 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//ownedType=TypeExpCS
-		public Assignment getOwnedTypeAssignment_2() { return cOwnedTypeAssignment_2; }
+		//type=TypeExpCS
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
 
 		//TypeExpCS
-		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_0; }
+		public RuleCall getTypeTypeExpCSParserRuleCall_2_0() { return cTypeTypeExpCSParserRuleCall_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
@@ -224,19 +224,19 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cDictKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cOwnedKeyTypeCSAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0 = (RuleCall)cOwnedKeyTypeCSAssignment_2.eContents().get(0);
+		private final Assignment cKeyTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cKeyTypeTypeExpCSParserRuleCall_2_0 = (RuleCall)cKeyTypeAssignment_2.eContents().get(0);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cOwnedElementTypeCSAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cOwnedElementTypeCSTypeExpCSParserRuleCall_4_0 = (RuleCall)cOwnedElementTypeCSAssignment_4.eContents().get(0);
+		private final Assignment cValueTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cValueTypeTypeExpCSParserRuleCall_4_0 = (RuleCall)cValueTypeAssignment_4.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DictTypeCS:
 		//
-		//	"Dict" "(" ownedKeyTypeCS=TypeExpCS "," ownedElementTypeCS=TypeExpCS ")";
+		//	"Dict" "(" keyType=TypeExpCS "," valueType=TypeExpCS ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Dict" "(" ownedKeyTypeCS=TypeExpCS "," ownedElementTypeCS=TypeExpCS ")"
+		//"Dict" "(" keyType=TypeExpCS "," valueType=TypeExpCS ")"
 		public Group getGroup() { return cGroup; }
 
 		//"Dict"
@@ -245,20 +245,20 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//ownedKeyTypeCS=TypeExpCS
-		public Assignment getOwnedKeyTypeCSAssignment_2() { return cOwnedKeyTypeCSAssignment_2; }
+		//keyType=TypeExpCS
+		public Assignment getKeyTypeAssignment_2() { return cKeyTypeAssignment_2; }
 
 		//TypeExpCS
-		public RuleCall getOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0() { return cOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0; }
+		public RuleCall getKeyTypeTypeExpCSParserRuleCall_2_0() { return cKeyTypeTypeExpCSParserRuleCall_2_0; }
 
 		//","
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 
-		//ownedElementTypeCS=TypeExpCS
-		public Assignment getOwnedElementTypeCSAssignment_4() { return cOwnedElementTypeCSAssignment_4; }
+		//valueType=TypeExpCS
+		public Assignment getValueTypeAssignment_4() { return cValueTypeAssignment_4; }
 
 		//TypeExpCS
-		public RuleCall getOwnedElementTypeCSTypeExpCSParserRuleCall_4_0() { return cOwnedElementTypeCSTypeExpCSParserRuleCall_4_0; }
+		public RuleCall getValueTypeTypeExpCSParserRuleCall_4_0() { return cValueTypeTypeExpCSParserRuleCall_4_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
@@ -770,34 +770,34 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 	public class DictLiteralPartCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DictLiteralPartCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cKeyExpCSAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0 = (RuleCall)cKeyExpCSAssignment_0.eContents().get(0);
+		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cKeyPrimitiveLiteralExpCSParserRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueExpCSAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueExpCSExpCSParserRuleCall_2_0 = (RuleCall)cValueExpCSAssignment_2.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueExpCSParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
 		//DictLiteralPartCS:
 		//
-		//	keyExpCS=PrimitiveLiteralExpCS "=" valueExpCS=ExpCS;
+		//	key=PrimitiveLiteralExpCS "=" value=ExpCS;
 		public ParserRule getRule() { return rule; }
 
-		//keyExpCS=PrimitiveLiteralExpCS "=" valueExpCS=ExpCS
+		//key=PrimitiveLiteralExpCS "=" value=ExpCS
 		public Group getGroup() { return cGroup; }
 
-		//keyExpCS=PrimitiveLiteralExpCS
-		public Assignment getKeyExpCSAssignment_0() { return cKeyExpCSAssignment_0; }
+		//key=PrimitiveLiteralExpCS
+		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
 
 		//PrimitiveLiteralExpCS
-		public RuleCall getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0() { return cKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0; }
+		public RuleCall getKeyPrimitiveLiteralExpCSParserRuleCall_0_0() { return cKeyPrimitiveLiteralExpCSParserRuleCall_0_0; }
 
 		//"="
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
 
-		//valueExpCS=ExpCS
-		public Assignment getValueExpCSAssignment_2() { return cValueExpCSAssignment_2; }
+		//value=ExpCS
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
 		//ExpCS
-		public RuleCall getValueExpCSExpCSParserRuleCall_2_0() { return cValueExpCSExpCSParserRuleCall_2_0; }
+		public RuleCall getValueExpCSParserRuleCall_2_0() { return cValueExpCSParserRuleCall_2_0; }
 	}
 
 	public class ReturnExpCSElements extends AbstractParserRuleElementFinder {
@@ -1055,7 +1055,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ListTypeCS:
 	//
-	//	"List" "(" ownedType=TypeExpCS ")";
+	//	"List" "(" type=TypeExpCS ")";
 	public ListTypeCSElements getListTypeCSAccess() {
 		return (pListTypeCS != null) ? pListTypeCS : (pListTypeCS = new ListTypeCSElements());
 	}
@@ -1066,7 +1066,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DictTypeCS:
 	//
-	//	"Dict" "(" ownedKeyTypeCS=TypeExpCS "," ownedElementTypeCS=TypeExpCS ")";
+	//	"Dict" "(" keyType=TypeExpCS "," valueType=TypeExpCS ")";
 	public DictTypeCSElements getDictTypeCSAccess() {
 		return (pDictTypeCS != null) ? pDictTypeCS : (pDictTypeCS = new DictTypeCSElements());
 	}
@@ -1134,7 +1134,7 @@ public class ImperativeOCLCSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DictLiteralPartCS:
 	//
-	//	keyExpCS=PrimitiveLiteralExpCS "=" valueExpCS=ExpCS;
+	//	key=PrimitiveLiteralExpCS "=" value=ExpCS;
 	public DictLiteralPartCSElements getDictLiteralPartCSAccess() {
 		return (pDictLiteralPartCS != null) ? pDictLiteralPartCS : (pDictLiteralPartCS = new DictLiteralPartCSElements());
 	}

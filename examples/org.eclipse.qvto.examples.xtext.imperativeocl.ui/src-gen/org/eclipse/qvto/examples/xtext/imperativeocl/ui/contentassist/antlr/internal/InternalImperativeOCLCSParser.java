@@ -9208,26 +9208,26 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ListTypeCS__Group__2__Impl"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2902:1: rule__ListTypeCS__Group__2__Impl : ( ( rule__ListTypeCS__OwnedTypeAssignment_2 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2902:1: rule__ListTypeCS__Group__2__Impl : ( ( rule__ListTypeCS__TypeAssignment_2 ) ) ;
     public final void rule__ListTypeCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2906:1: ( ( ( rule__ListTypeCS__OwnedTypeAssignment_2 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2907:1: ( ( rule__ListTypeCS__OwnedTypeAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2906:1: ( ( ( rule__ListTypeCS__TypeAssignment_2 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2907:1: ( ( rule__ListTypeCS__TypeAssignment_2 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2907:1: ( ( rule__ListTypeCS__OwnedTypeAssignment_2 ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2908:1: ( rule__ListTypeCS__OwnedTypeAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2907:1: ( ( rule__ListTypeCS__TypeAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2908:1: ( rule__ListTypeCS__TypeAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getListTypeCSAccess().getOwnedTypeAssignment_2()); 
+               before(grammarAccess.getListTypeCSAccess().getTypeAssignment_2()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2909:1: ( rule__ListTypeCS__OwnedTypeAssignment_2 )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2909:2: rule__ListTypeCS__OwnedTypeAssignment_2
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2909:1: ( rule__ListTypeCS__TypeAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:2909:2: rule__ListTypeCS__TypeAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ListTypeCS__OwnedTypeAssignment_2_in_rule__ListTypeCS__Group__2__Impl6304);
-            rule__ListTypeCS__OwnedTypeAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__ListTypeCS__TypeAssignment_2_in_rule__ListTypeCS__Group__2__Impl6304);
+            rule__ListTypeCS__TypeAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9235,7 +9235,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getListTypeCSAccess().getOwnedTypeAssignment_2()); 
+               after(grammarAccess.getListTypeCSAccess().getTypeAssignment_2()); 
             }
 
             }
@@ -9529,26 +9529,26 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__DictTypeCS__Group__2__Impl"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3031:1: rule__DictTypeCS__Group__2__Impl : ( ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3031:1: rule__DictTypeCS__Group__2__Impl : ( ( rule__DictTypeCS__KeyTypeAssignment_2 ) ) ;
     public final void rule__DictTypeCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3035:1: ( ( ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3036:1: ( ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3035:1: ( ( ( rule__DictTypeCS__KeyTypeAssignment_2 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3036:1: ( ( rule__DictTypeCS__KeyTypeAssignment_2 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3036:1: ( ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3037:1: ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3036:1: ( ( rule__DictTypeCS__KeyTypeAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3037:1: ( rule__DictTypeCS__KeyTypeAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSAssignment_2()); 
+               before(grammarAccess.getDictTypeCSAccess().getKeyTypeAssignment_2()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3038:1: ( rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3038:2: rule__DictTypeCS__OwnedKeyTypeCSAssignment_2
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3038:1: ( rule__DictTypeCS__KeyTypeAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3038:2: rule__DictTypeCS__KeyTypeAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DictTypeCS__OwnedKeyTypeCSAssignment_2_in_rule__DictTypeCS__Group__2__Impl6555);
-            rule__DictTypeCS__OwnedKeyTypeCSAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__DictTypeCS__KeyTypeAssignment_2_in_rule__DictTypeCS__Group__2__Impl6555);
+            rule__DictTypeCS__KeyTypeAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9556,7 +9556,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSAssignment_2()); 
+               after(grammarAccess.getDictTypeCSAccess().getKeyTypeAssignment_2()); 
             }
 
             }
@@ -9697,26 +9697,26 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__DictTypeCS__Group__4__Impl"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3091:1: rule__DictTypeCS__Group__4__Impl : ( ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3091:1: rule__DictTypeCS__Group__4__Impl : ( ( rule__DictTypeCS__ValueTypeAssignment_4 ) ) ;
     public final void rule__DictTypeCS__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3095:1: ( ( ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3096:1: ( ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3095:1: ( ( ( rule__DictTypeCS__ValueTypeAssignment_4 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3096:1: ( ( rule__DictTypeCS__ValueTypeAssignment_4 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3096:1: ( ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3097:1: ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3096:1: ( ( rule__DictTypeCS__ValueTypeAssignment_4 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3097:1: ( rule__DictTypeCS__ValueTypeAssignment_4 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSAssignment_4()); 
+               before(grammarAccess.getDictTypeCSAccess().getValueTypeAssignment_4()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3098:1: ( rule__DictTypeCS__OwnedElementTypeCSAssignment_4 )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3098:2: rule__DictTypeCS__OwnedElementTypeCSAssignment_4
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3098:1: ( rule__DictTypeCS__ValueTypeAssignment_4 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:3098:2: rule__DictTypeCS__ValueTypeAssignment_4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DictTypeCS__OwnedElementTypeCSAssignment_4_in_rule__DictTypeCS__Group__4__Impl6677);
-            rule__DictTypeCS__OwnedElementTypeCSAssignment_4();
+            pushFollow(FollowSets000.FOLLOW_rule__DictTypeCS__ValueTypeAssignment_4_in_rule__DictTypeCS__Group__4__Impl6677);
+            rule__DictTypeCS__ValueTypeAssignment_4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9724,7 +9724,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSAssignment_4()); 
+               after(grammarAccess.getDictTypeCSAccess().getValueTypeAssignment_4()); 
             }
 
             }
@@ -15246,26 +15246,26 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__DictLiteralPartCS__Group__0__Impl"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5117:1: rule__DictLiteralPartCS__Group__0__Impl : ( ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5117:1: rule__DictLiteralPartCS__Group__0__Impl : ( ( rule__DictLiteralPartCS__KeyAssignment_0 ) ) ;
     public final void rule__DictLiteralPartCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5121:1: ( ( ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5122:1: ( ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5121:1: ( ( ( rule__DictLiteralPartCS__KeyAssignment_0 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5122:1: ( ( rule__DictLiteralPartCS__KeyAssignment_0 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5122:1: ( ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5123:1: ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5122:1: ( ( rule__DictLiteralPartCS__KeyAssignment_0 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5123:1: ( rule__DictLiteralPartCS__KeyAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSAssignment_0()); 
+               before(grammarAccess.getDictLiteralPartCSAccess().getKeyAssignment_0()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5124:1: ( rule__DictLiteralPartCS__KeyExpCSAssignment_0 )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5124:2: rule__DictLiteralPartCS__KeyExpCSAssignment_0
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5124:1: ( rule__DictLiteralPartCS__KeyAssignment_0 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5124:2: rule__DictLiteralPartCS__KeyAssignment_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DictLiteralPartCS__KeyExpCSAssignment_0_in_rule__DictLiteralPartCS__Group__0__Impl10654);
-            rule__DictLiteralPartCS__KeyExpCSAssignment_0();
+            pushFollow(FollowSets000.FOLLOW_rule__DictLiteralPartCS__KeyAssignment_0_in_rule__DictLiteralPartCS__Group__0__Impl10654);
+            rule__DictLiteralPartCS__KeyAssignment_0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -15273,7 +15273,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSAssignment_0()); 
+               after(grammarAccess.getDictLiteralPartCSAccess().getKeyAssignment_0()); 
             }
 
             }
@@ -15409,26 +15409,26 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__DictLiteralPartCS__Group__2__Impl"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5176:1: rule__DictLiteralPartCS__Group__2__Impl : ( ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5176:1: rule__DictLiteralPartCS__Group__2__Impl : ( ( rule__DictLiteralPartCS__ValueAssignment_2 ) ) ;
     public final void rule__DictLiteralPartCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5180:1: ( ( ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5181:1: ( ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5180:1: ( ( ( rule__DictLiteralPartCS__ValueAssignment_2 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5181:1: ( ( rule__DictLiteralPartCS__ValueAssignment_2 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5181:1: ( ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5182:1: ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5181:1: ( ( rule__DictLiteralPartCS__ValueAssignment_2 ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5182:1: ( rule__DictLiteralPartCS__ValueAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSAssignment_2()); 
+               before(grammarAccess.getDictLiteralPartCSAccess().getValueAssignment_2()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5183:1: ( rule__DictLiteralPartCS__ValueExpCSAssignment_2 )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5183:2: rule__DictLiteralPartCS__ValueExpCSAssignment_2
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5183:1: ( rule__DictLiteralPartCS__ValueAssignment_2 )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:5183:2: rule__DictLiteralPartCS__ValueAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DictLiteralPartCS__ValueExpCSAssignment_2_in_rule__DictLiteralPartCS__Group__2__Impl10773);
-            rule__DictLiteralPartCS__ValueExpCSAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__DictLiteralPartCS__ValueAssignment_2_in_rule__DictLiteralPartCS__Group__2__Impl10773);
+            rule__DictLiteralPartCS__ValueAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -15436,7 +15436,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSAssignment_2()); 
+               after(grammarAccess.getDictLiteralPartCSAccess().getValueAssignment_2()); 
             }
 
             }
@@ -27952,9 +27952,9 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__SelfExpCS__Group__1__Impl"
 
 
-    // $ANTLR start "rule__ListTypeCS__OwnedTypeAssignment_2"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9764:1: rule__ListTypeCS__OwnedTypeAssignment_2 : ( ruleTypeExpCS ) ;
-    public final void rule__ListTypeCS__OwnedTypeAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__ListTypeCS__TypeAssignment_2"
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9764:1: rule__ListTypeCS__TypeAssignment_2 : ( ruleTypeExpCS ) ;
+    public final void rule__ListTypeCS__TypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27966,15 +27966,15 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9770:1: ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getListTypeCSAccess().getOwnedTypeTypeExpCSParserRuleCall_2_0()); 
+               before(grammarAccess.getListTypeCSAccess().getTypeTypeExpCSParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__ListTypeCS__OwnedTypeAssignment_219799);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__ListTypeCS__TypeAssignment_219799);
             ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getListTypeCSAccess().getOwnedTypeTypeExpCSParserRuleCall_2_0()); 
+               after(grammarAccess.getListTypeCSAccess().getTypeTypeExpCSParserRuleCall_2_0()); 
             }
 
             }
@@ -27994,12 +27994,12 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__ListTypeCS__OwnedTypeAssignment_2"
+    // $ANTLR end "rule__ListTypeCS__TypeAssignment_2"
 
 
-    // $ANTLR start "rule__DictTypeCS__OwnedKeyTypeCSAssignment_2"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9779:1: rule__DictTypeCS__OwnedKeyTypeCSAssignment_2 : ( ruleTypeExpCS ) ;
-    public final void rule__DictTypeCS__OwnedKeyTypeCSAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__DictTypeCS__KeyTypeAssignment_2"
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9779:1: rule__DictTypeCS__KeyTypeAssignment_2 : ( ruleTypeExpCS ) ;
+    public final void rule__DictTypeCS__KeyTypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28011,15 +28011,15 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9785:1: ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0()); 
+               before(grammarAccess.getDictTypeCSAccess().getKeyTypeTypeExpCSParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__OwnedKeyTypeCSAssignment_219830);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__KeyTypeAssignment_219830);
             ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0()); 
+               after(grammarAccess.getDictTypeCSAccess().getKeyTypeTypeExpCSParserRuleCall_2_0()); 
             }
 
             }
@@ -28039,12 +28039,12 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__DictTypeCS__OwnedKeyTypeCSAssignment_2"
+    // $ANTLR end "rule__DictTypeCS__KeyTypeAssignment_2"
 
 
-    // $ANTLR start "rule__DictTypeCS__OwnedElementTypeCSAssignment_4"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9794:1: rule__DictTypeCS__OwnedElementTypeCSAssignment_4 : ( ruleTypeExpCS ) ;
-    public final void rule__DictTypeCS__OwnedElementTypeCSAssignment_4() throws RecognitionException {
+    // $ANTLR start "rule__DictTypeCS__ValueTypeAssignment_4"
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9794:1: rule__DictTypeCS__ValueTypeAssignment_4 : ( ruleTypeExpCS ) ;
+    public final void rule__DictTypeCS__ValueTypeAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28056,15 +28056,15 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:9800:1: ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSTypeExpCSParserRuleCall_4_0()); 
+               before(grammarAccess.getDictTypeCSAccess().getValueTypeTypeExpCSParserRuleCall_4_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__OwnedElementTypeCSAssignment_419861);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__ValueTypeAssignment_419861);
             ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSTypeExpCSParserRuleCall_4_0()); 
+               after(grammarAccess.getDictTypeCSAccess().getValueTypeTypeExpCSParserRuleCall_4_0()); 
             }
 
             }
@@ -28084,7 +28084,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__DictTypeCS__OwnedElementTypeCSAssignment_4"
+    // $ANTLR end "rule__DictTypeCS__ValueTypeAssignment_4"
 
 
     // $ANTLR start "rule__PrimaryExpCS__PathNameAssignment_10_1"
@@ -29003,9 +29003,9 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__DictLiteralExpCS__OwnedPartsAssignment_3_1_1"
 
 
-    // $ANTLR start "rule__DictLiteralPartCS__KeyExpCSAssignment_0"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10125:1: rule__DictLiteralPartCS__KeyExpCSAssignment_0 : ( rulePrimitiveLiteralExpCS ) ;
-    public final void rule__DictLiteralPartCS__KeyExpCSAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__DictLiteralPartCS__KeyAssignment_0"
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10125:1: rule__DictLiteralPartCS__KeyAssignment_0 : ( rulePrimitiveLiteralExpCS ) ;
+    public final void rule__DictLiteralPartCS__KeyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -29017,15 +29017,15 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10131:1: rulePrimitiveLiteralExpCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0()); 
+               before(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_rulePrimitiveLiteralExpCS_in_rule__DictLiteralPartCS__KeyExpCSAssignment_020538);
+            pushFollow(FollowSets000.FOLLOW_rulePrimitiveLiteralExpCS_in_rule__DictLiteralPartCS__KeyAssignment_020538);
             rulePrimitiveLiteralExpCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0()); 
+               after(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0()); 
             }
 
             }
@@ -29045,12 +29045,12 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__DictLiteralPartCS__KeyExpCSAssignment_0"
+    // $ANTLR end "rule__DictLiteralPartCS__KeyAssignment_0"
 
 
-    // $ANTLR start "rule__DictLiteralPartCS__ValueExpCSAssignment_2"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10140:1: rule__DictLiteralPartCS__ValueExpCSAssignment_2 : ( ruleExpCS ) ;
-    public final void rule__DictLiteralPartCS__ValueExpCSAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__DictLiteralPartCS__ValueAssignment_2"
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10140:1: rule__DictLiteralPartCS__ValueAssignment_2 : ( ruleExpCS ) ;
+    public final void rule__DictLiteralPartCS__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -29062,15 +29062,15 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
             // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCLCS.g:10146:1: ruleExpCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSExpCSParserRuleCall_2_0()); 
+               before(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExpCS_in_rule__DictLiteralPartCS__ValueExpCSAssignment_220569);
+            pushFollow(FollowSets000.FOLLOW_ruleExpCS_in_rule__DictLiteralPartCS__ValueAssignment_220569);
             ruleExpCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSExpCSParserRuleCall_2_0()); 
+               after(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0()); 
             }
 
             }
@@ -29090,7 +29090,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__DictLiteralPartCS__ValueExpCSAssignment_2"
+    // $ANTLR end "rule__DictLiteralPartCS__ValueAssignment_2"
 
 
     // $ANTLR start "rule__ReturnExpCS__ValueAssignment_2"
@@ -34710,7 +34710,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         public static final BitSet FOLLOW_58_in_rule__ListTypeCS__Group__1__Impl6243 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ListTypeCS__Group__2__Impl_in_rule__ListTypeCS__Group__26274 = new BitSet(new long[]{0x0800000000000000L});
         public static final BitSet FOLLOW_rule__ListTypeCS__Group__3_in_rule__ListTypeCS__Group__26277 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ListTypeCS__OwnedTypeAssignment_2_in_rule__ListTypeCS__Group__2__Impl6304 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ListTypeCS__TypeAssignment_2_in_rule__ListTypeCS__Group__2__Impl6304 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ListTypeCS__Group__3__Impl_in_rule__ListTypeCS__Group__36334 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_59_in_rule__ListTypeCS__Group__3__Impl6362 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__0__Impl_in_rule__DictTypeCS__Group__06401 = new BitSet(new long[]{0x0400000000000000L});
@@ -34721,13 +34721,13 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         public static final BitSet FOLLOW_58_in_rule__DictTypeCS__Group__1__Impl6494 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__2__Impl_in_rule__DictTypeCS__Group__26525 = new BitSet(new long[]{0x2000000000000000L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__3_in_rule__DictTypeCS__Group__26528 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DictTypeCS__OwnedKeyTypeCSAssignment_2_in_rule__DictTypeCS__Group__2__Impl6555 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DictTypeCS__KeyTypeAssignment_2_in_rule__DictTypeCS__Group__2__Impl6555 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__3__Impl_in_rule__DictTypeCS__Group__36585 = new BitSet(new long[]{0x12FFFC00000000C0L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__4_in_rule__DictTypeCS__Group__36588 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_61_in_rule__DictTypeCS__Group__3__Impl6616 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__4__Impl_in_rule__DictTypeCS__Group__46647 = new BitSet(new long[]{0x0800000000000000L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__5_in_rule__DictTypeCS__Group__46650 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DictTypeCS__OwnedElementTypeCSAssignment_4_in_rule__DictTypeCS__Group__4__Impl6677 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DictTypeCS__ValueTypeAssignment_4_in_rule__DictTypeCS__Group__4__Impl6677 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictTypeCS__Group__5__Impl_in_rule__DictTypeCS__Group__56707 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_59_in_rule__DictTypeCS__Group__5__Impl6735 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__PrimaryExpCS__Group_10__0__Impl_in_rule__PrimaryExpCS__Group_10__06778 = new BitSet(new long[]{0x00000000000000C0L});
@@ -34891,12 +34891,12 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         public static final BitSet FOLLOW_rule__DictLiteralExpCS__OwnedPartsAssignment_3_1_1_in_rule__DictLiteralExpCS__Group_3_1__1__Impl10590 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictLiteralPartCS__Group__0__Impl_in_rule__DictLiteralPartCS__Group__010624 = new BitSet(new long[]{0x0000000400000000L});
         public static final BitSet FOLLOW_rule__DictLiteralPartCS__Group__1_in_rule__DictLiteralPartCS__Group__010627 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DictLiteralPartCS__KeyExpCSAssignment_0_in_rule__DictLiteralPartCS__Group__0__Impl10654 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DictLiteralPartCS__KeyAssignment_0_in_rule__DictLiteralPartCS__Group__0__Impl10654 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictLiteralPartCS__Group__1__Impl_in_rule__DictLiteralPartCS__Group__110684 = new BitSet(new long[]{0x16FFFC000E0000F0L,0x000000000006A388L});
         public static final BitSet FOLLOW_rule__DictLiteralPartCS__Group__2_in_rule__DictLiteralPartCS__Group__110687 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_34_in_rule__DictLiteralPartCS__Group__1__Impl10715 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__DictLiteralPartCS__Group__2__Impl_in_rule__DictLiteralPartCS__Group__210746 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DictLiteralPartCS__ValueExpCSAssignment_2_in_rule__DictLiteralPartCS__Group__2__Impl10773 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DictLiteralPartCS__ValueAssignment_2_in_rule__DictLiteralPartCS__Group__2__Impl10773 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReturnExpCS__Group__0__Impl_in_rule__ReturnExpCS__Group__010809 = new BitSet(new long[]{0x16FFFC000E0000F0L,0x000000000006A388L});
         public static final BitSet FOLLOW_rule__ReturnExpCS__Group__1_in_rule__ReturnExpCS__Group__010812 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_67_in_rule__ReturnExpCS__Group__0__Impl10840 = new BitSet(new long[]{0x0000000000000002L});
@@ -35270,9 +35270,9 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         public static final BitSet FOLLOW_rule__SelfExpCS__Group__1_in_rule__SelfExpCS__Group__019673 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SelfExpCS__Group__1__Impl_in_rule__SelfExpCS__Group__119731 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_79_in_rule__SelfExpCS__Group__1__Impl19759 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__ListTypeCS__OwnedTypeAssignment_219799 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__OwnedKeyTypeCSAssignment_219830 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__OwnedElementTypeCSAssignment_419861 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__ListTypeCS__TypeAssignment_219799 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__KeyTypeAssignment_219830 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeExpCS_in_rule__DictTypeCS__ValueTypeAssignment_419861 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rulePathNameCS_in_rule__PrimaryExpCS__PathNameAssignment_10_119892 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExpCS_in_rule__PrimaryExpCS__FirstIndexesAssignment_10_2_0_219923 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExpCS_in_rule__PrimaryExpCS__FirstIndexesAssignment_10_2_0_3_119954 = new BitSet(new long[]{0x0000000000000002L});
@@ -35293,8 +35293,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalContentAssist
         public static final BitSet FOLLOW_ruleCollectionLiteralPartCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_1_120445 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDictLiteralPartCS_in_rule__DictLiteralExpCS__OwnedPartsAssignment_3_020476 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDictLiteralPartCS_in_rule__DictLiteralExpCS__OwnedPartsAssignment_3_1_120507 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rulePrimitiveLiteralExpCS_in_rule__DictLiteralPartCS__KeyExpCSAssignment_020538 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpCS_in_rule__DictLiteralPartCS__ValueExpCSAssignment_220569 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rulePrimitiveLiteralExpCS_in_rule__DictLiteralPartCS__KeyAssignment_020538 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpCS_in_rule__DictLiteralPartCS__ValueAssignment_220569 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExpCS_in_rule__ReturnExpCS__ValueAssignment_220600 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__EssentialOCLUnaryOperatorCS__NameAlternatives_0_in_rule__EssentialOCLUnaryOperatorCS__NameAssignment20632 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__EssentialOCLInfixOperatorCS__NameAlternatives_0_in_rule__EssentialOCLInfixOperatorCS__NameAssignment20665 = new BitSet(new long[]{0x0000000000000002L});

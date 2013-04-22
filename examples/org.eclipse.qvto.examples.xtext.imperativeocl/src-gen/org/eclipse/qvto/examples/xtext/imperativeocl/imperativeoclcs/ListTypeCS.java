@@ -12,7 +12,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getOwnedType <em>Owned Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,29 +23,29 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 public interface ListTypeCS extends TypedRefCS
 {
   /**
-   * Returns the value of the '<em><b>Owned Type</b></em>' containment reference.
+   * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Owned Type</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Type</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Owned Type</em>' containment reference.
-   * @see #setOwnedType(TypedRefCS)
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getListTypeCS_OwnedType()
+   * @return the value of the '<em>Type</em>' containment reference.
+   * @see #setType(TypedRefCS)
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getListTypeCS_Type()
    * @model containment="true"
    * @generated
    */
-  TypedRefCS getOwnedType();
+  TypedRefCS getType();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getOwnedType <em>Owned Type</em>}' containment reference.
+   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getType <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Owned Type</em>' containment reference.
-   * @see #getOwnedType()
+   * @param value the new value of the '<em>Type</em>' containment reference.
+   * @see #getType()
    * @generated
    */
-  void setOwnedType(TypedRefCS value);
+  void setType(TypedRefCS value);
 
 } // ListTypeCS

@@ -24,8 +24,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictLiteralPartCSImpl#getKeyExpCS <em>Key Exp CS</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictLiteralPartCSImpl#getValueExpCS <em>Value Exp CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictLiteralPartCSImpl#getKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictLiteralPartCSImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,24 +34,24 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implements DictLiteralPartCS
 {
   /**
-   * The cached value of the '{@link #getKeyExpCS() <em>Key Exp CS</em>}' containment reference.
+   * The cached value of the '{@link #getKey() <em>Key</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getKeyExpCS()
+   * @see #getKey()
    * @generated
    * @ordered
    */
-  protected PrimitiveLiteralExpCS keyExpCS;
+  protected PrimitiveLiteralExpCS key;
 
   /**
-   * The cached value of the '{@link #getValueExpCS() <em>Value Exp CS</em>}' containment reference.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValueExpCS()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected ExpCS valueExpCS;
+  protected ExpCS value;
 
   /**
    * <!-- begin-user-doc -->
@@ -79,9 +79,9 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public PrimitiveLiteralExpCS getKeyExpCS()
+  public PrimitiveLiteralExpCS getKey()
   {
-    return keyExpCS;
+    return key;
   }
 
   /**
@@ -89,13 +89,13 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetKeyExpCS(PrimitiveLiteralExpCS newKeyExpCS, NotificationChain msgs)
+  public NotificationChain basicSetKey(PrimitiveLiteralExpCS newKey, NotificationChain msgs)
   {
-    PrimitiveLiteralExpCS oldKeyExpCS = keyExpCS;
-    keyExpCS = newKeyExpCS;
+    PrimitiveLiteralExpCS oldKey = key;
+    key = newKey;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS, oldKeyExpCS, newKeyExpCS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY, oldKey, newKey);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -106,20 +106,20 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setKeyExpCS(PrimitiveLiteralExpCS newKeyExpCS)
+  public void setKey(PrimitiveLiteralExpCS newKey)
   {
-    if (newKeyExpCS != keyExpCS)
+    if (newKey != key)
     {
       NotificationChain msgs = null;
-      if (keyExpCS != null)
-        msgs = ((InternalEObject)keyExpCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS, null, msgs);
-      if (newKeyExpCS != null)
-        msgs = ((InternalEObject)newKeyExpCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS, null, msgs);
-      msgs = basicSetKeyExpCS(newKeyExpCS, msgs);
+      if (key != null)
+        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY, null, msgs);
+      if (newKey != null)
+        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY, null, msgs);
+      msgs = basicSetKey(newKey, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS, newKeyExpCS, newKeyExpCS));
+      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY, newKey, newKey));
   }
 
   /**
@@ -127,9 +127,9 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExpCS getValueExpCS()
+  public ExpCS getValue()
   {
-    return valueExpCS;
+    return value;
   }
 
   /**
@@ -137,13 +137,13 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValueExpCS(ExpCS newValueExpCS, NotificationChain msgs)
+  public NotificationChain basicSetValue(ExpCS newValue, NotificationChain msgs)
   {
-    ExpCS oldValueExpCS = valueExpCS;
-    valueExpCS = newValueExpCS;
+    ExpCS oldValue = value;
+    value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS, oldValueExpCS, newValueExpCS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -154,20 +154,20 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValueExpCS(ExpCS newValueExpCS)
+  public void setValue(ExpCS newValue)
   {
-    if (newValueExpCS != valueExpCS)
+    if (newValue != value)
     {
       NotificationChain msgs = null;
-      if (valueExpCS != null)
-        msgs = ((InternalEObject)valueExpCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS, null, msgs);
-      if (newValueExpCS != null)
-        msgs = ((InternalEObject)newValueExpCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS, null, msgs);
-      msgs = basicSetValueExpCS(newValueExpCS, msgs);
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS, newValueExpCS, newValueExpCS));
+      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE, newValue, newValue));
   }
 
   /**
@@ -180,10 +180,10 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS:
-        return basicSetKeyExpCS(null, msgs);
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS:
-        return basicSetValueExpCS(null, msgs);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
+        return basicSetKey(null, msgs);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE:
+        return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -198,10 +198,10 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS:
-        return getKeyExpCS();
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS:
-        return getValueExpCS();
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
+        return getKey();
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -216,11 +216,11 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS:
-        setKeyExpCS((PrimitiveLiteralExpCS)newValue);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
+        setKey((PrimitiveLiteralExpCS)newValue);
         return;
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS:
-        setValueExpCS((ExpCS)newValue);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE:
+        setValue((ExpCS)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,11 +236,11 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS:
-        setKeyExpCS((PrimitiveLiteralExpCS)null);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
+        setKey((PrimitiveLiteralExpCS)null);
         return;
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS:
-        setValueExpCS((ExpCS)null);
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE:
+        setValue((ExpCS)null);
         return;
     }
     super.eUnset(featureID);
@@ -256,10 +256,10 @@ public class DictLiteralPartCSImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY_EXP_CS:
-        return keyExpCS != null;
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE_EXP_CS:
-        return valueExpCS != null;
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
+        return key != null;
+      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE:
+        return value != null;
     }
     return super.eIsSet(featureID);
   }

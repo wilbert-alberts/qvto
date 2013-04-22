@@ -646,24 +646,24 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleListTypeCS"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:241:1: ruleListTypeCS returns [EObject current=null] : (otherlv_0= 'List' otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpCS ) ) otherlv_3= ')' ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:241:1: ruleListTypeCS returns [EObject current=null] : (otherlv_0= 'List' otherlv_1= '(' ( (lv_type_2_0= ruleTypeExpCS ) ) otherlv_3= ')' ) ;
     public final EObject ruleListTypeCS() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
         Token otherlv_3=null;
-        EObject lv_ownedType_2_0 = null;
+        EObject lv_type_2_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:244:28: ( (otherlv_0= 'List' otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpCS ) ) otherlv_3= ')' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:1: (otherlv_0= 'List' otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpCS ) ) otherlv_3= ')' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:244:28: ( (otherlv_0= 'List' otherlv_1= '(' ( (lv_type_2_0= ruleTypeExpCS ) ) otherlv_3= ')' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:1: (otherlv_0= 'List' otherlv_1= '(' ( (lv_type_2_0= ruleTypeExpCS ) ) otherlv_3= ')' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:1: (otherlv_0= 'List' otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpCS ) ) otherlv_3= ')' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:3: otherlv_0= 'List' otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpCS ) ) otherlv_3= ')'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:1: (otherlv_0= 'List' otherlv_1= '(' ( (lv_type_2_0= ruleTypeExpCS ) ) otherlv_3= ')' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:245:3: otherlv_0= 'List' otherlv_1= '(' ( (lv_type_2_0= ruleTypeExpCS ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleListTypeCS537); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -677,19 +677,19 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getListTypeCSAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:253:1: ( (lv_ownedType_2_0= ruleTypeExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:254:1: (lv_ownedType_2_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:253:1: ( (lv_type_2_0= ruleTypeExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:254:1: (lv_type_2_0= ruleTypeExpCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:254:1: (lv_ownedType_2_0= ruleTypeExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:255:3: lv_ownedType_2_0= ruleTypeExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:254:1: (lv_type_2_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:255:3: lv_type_2_0= ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getListTypeCSAccess().getOwnedTypeTypeExpCSParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getListTypeCSAccess().getTypeTypeExpCSParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_ruleListTypeCS570);
-            lv_ownedType_2_0=ruleTypeExpCS();
+            lv_type_2_0=ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return current;
@@ -700,8 +700,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"ownedType",
-                      		lv_ownedType_2_0, 
+                     			"type",
+                      		lv_type_2_0, 
                       		"TypeExpCS");
               	        afterParserOrEnumRuleCall();
               	    
@@ -781,7 +781,7 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDictTypeCS"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:292:1: ruleDictTypeCS returns [EObject current=null] : (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) ) otherlv_5= ')' ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:292:1: ruleDictTypeCS returns [EObject current=null] : (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_keyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_valueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')' ) ;
     public final EObject ruleDictTypeCS() throws RecognitionException {
         EObject current = null;
 
@@ -789,19 +789,19 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
         Token otherlv_1=null;
         Token otherlv_3=null;
         Token otherlv_5=null;
-        EObject lv_ownedKeyTypeCS_2_0 = null;
+        EObject lv_keyType_2_0 = null;
 
-        EObject lv_ownedElementTypeCS_4_0 = null;
+        EObject lv_valueType_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:295:28: ( (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) ) otherlv_5= ')' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:1: (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) ) otherlv_5= ')' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:295:28: ( (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_keyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_valueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:1: (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_keyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_valueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:1: (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) ) otherlv_5= ')' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:3: otherlv_0= 'Dict' otherlv_1= '(' ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) ) otherlv_5= ')'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:1: (otherlv_0= 'Dict' otherlv_1= '(' ( (lv_keyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_valueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:296:3: otherlv_0= 'Dict' otherlv_1= '(' ( (lv_keyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_valueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')'
             {
             otherlv_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleDictTypeCS665); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -815,19 +815,19 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getDictTypeCSAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:304:1: ( (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:305:1: (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:304:1: ( (lv_keyType_2_0= ruleTypeExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:305:1: (lv_keyType_2_0= ruleTypeExpCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:305:1: (lv_ownedKeyTypeCS_2_0= ruleTypeExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:306:3: lv_ownedKeyTypeCS_2_0= ruleTypeExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:305:1: (lv_keyType_2_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:306:3: lv_keyType_2_0= ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getKeyTypeTypeExpCSParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_ruleDictTypeCS698);
-            lv_ownedKeyTypeCS_2_0=ruleTypeExpCS();
+            lv_keyType_2_0=ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return current;
@@ -838,8 +838,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"ownedKeyTypeCS",
-                      		lv_ownedKeyTypeCS_2_0, 
+                     			"keyType",
+                      		lv_keyType_2_0, 
                       		"TypeExpCS");
               	        afterParserOrEnumRuleCall();
               	    
@@ -856,19 +856,19 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getDictTypeCSAccess().getCommaKeyword_3());
                   
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:326:1: ( (lv_ownedElementTypeCS_4_0= ruleTypeExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:327:1: (lv_ownedElementTypeCS_4_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:326:1: ( (lv_valueType_4_0= ruleTypeExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:327:1: (lv_valueType_4_0= ruleTypeExpCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:327:1: (lv_ownedElementTypeCS_4_0= ruleTypeExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:328:3: lv_ownedElementTypeCS_4_0= ruleTypeExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:327:1: (lv_valueType_4_0= ruleTypeExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:328:3: lv_valueType_4_0= ruleTypeExpCS
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSTypeExpCSParserRuleCall_4_0()); 
+              	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getValueTypeTypeExpCSParserRuleCall_4_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleTypeExpCS_in_ruleDictTypeCS731);
-            lv_ownedElementTypeCS_4_0=ruleTypeExpCS();
+            lv_valueType_4_0=ruleTypeExpCS();
 
             state._fsp--;
             if (state.failed) return current;
@@ -879,8 +879,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"ownedElementTypeCS",
-                      		lv_ownedElementTypeCS_4_0, 
+                     			"valueType",
+                      		lv_valueType_4_0, 
                       		"TypeExpCS");
               	        afterParserOrEnumRuleCall();
               	    
@@ -2931,38 +2931,38 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDictLiteralPartCS"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1053:1: ruleDictLiteralPartCS returns [EObject current=null] : ( ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_valueExpCS_2_0= ruleExpCS ) ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1053:1: ruleDictLiteralPartCS returns [EObject current=null] : ( ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_value_2_0= ruleExpCS ) ) ) ;
     public final EObject ruleDictLiteralPartCS() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
-        EObject lv_keyExpCS_0_0 = null;
+        EObject lv_key_0_0 = null;
 
-        EObject lv_valueExpCS_2_0 = null;
+        EObject lv_value_2_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1056:28: ( ( ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_valueExpCS_2_0= ruleExpCS ) ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:1: ( ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_valueExpCS_2_0= ruleExpCS ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1056:28: ( ( ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_value_2_0= ruleExpCS ) ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:1: ( ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_value_2_0= ruleExpCS ) ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:1: ( ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_valueExpCS_2_0= ruleExpCS ) ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:2: ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_valueExpCS_2_0= ruleExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:1: ( ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_value_2_0= ruleExpCS ) ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:2: ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) ) otherlv_1= '=' ( (lv_value_2_0= ruleExpCS ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:2: ( (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1058:1: (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1057:2: ( (lv_key_0_0= rulePrimitiveLiteralExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1058:1: (lv_key_0_0= rulePrimitiveLiteralExpCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1058:1: (lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1059:3: lv_keyExpCS_0_0= rulePrimitiveLiteralExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1058:1: (lv_key_0_0= rulePrimitiveLiteralExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1059:3: lv_key_0_0= rulePrimitiveLiteralExpCS
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0()); 
+              	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_rulePrimitiveLiteralExpCS_in_ruleDictLiteralPartCS2189);
-            lv_keyExpCS_0_0=rulePrimitiveLiteralExpCS();
+            lv_key_0_0=rulePrimitiveLiteralExpCS();
 
             state._fsp--;
             if (state.failed) return current;
@@ -2973,8 +2973,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"keyExpCS",
-                      		lv_keyExpCS_0_0, 
+                     			"key",
+                      		lv_key_0_0, 
                       		"PrimitiveLiteralExpCS");
               	        afterParserOrEnumRuleCall();
               	    
@@ -2991,19 +2991,19 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getDictLiteralPartCSAccess().getEqualsSignKeyword_1());
                   
             }
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1079:1: ( (lv_valueExpCS_2_0= ruleExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1080:1: (lv_valueExpCS_2_0= ruleExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1079:1: ( (lv_value_2_0= ruleExpCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1080:1: (lv_value_2_0= ruleExpCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1080:1: (lv_valueExpCS_2_0= ruleExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1081:3: lv_valueExpCS_2_0= ruleExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1080:1: (lv_value_2_0= ruleExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCLCS.g:1081:3: lv_value_2_0= ruleExpCS
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSExpCSParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_ruleExpCS_in_ruleDictLiteralPartCS2222);
-            lv_valueExpCS_2_0=ruleExpCS();
+            lv_value_2_0=ruleExpCS();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3014,8 +3014,8 @@ public class InternalImperativeOCLCSParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"valueExpCS",
-                      		lv_valueExpCS_2_0, 
+                     			"value",
+                      		lv_value_2_0, 
                       		"ExpCS");
               	        afterParserOrEnumRuleCall();
               	    

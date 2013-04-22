@@ -188,7 +188,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="List"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="ownedType" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.62"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
@@ -201,11 +201,11 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="Dict"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="ownedKeyTypeCS" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="keyType" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.62"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=","/>
-        <elements xsi:type="xtext:Assignment" feature="ownedElementTypeCS" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="valueType" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.62"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
@@ -400,11 +400,11 @@
         <classifier xsi:type="ecore:EClass" href="http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS#//DictLiteralPartCS"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="keyExpCS" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="key" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.49"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="="/>
-        <elements xsi:type="xtext:Assignment" feature="valueExpCS" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.63"/>
         </elements>
       </alternatives>

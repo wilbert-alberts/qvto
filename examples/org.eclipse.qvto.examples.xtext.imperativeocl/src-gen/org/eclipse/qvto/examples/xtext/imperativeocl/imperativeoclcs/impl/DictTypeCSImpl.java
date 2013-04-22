@@ -24,8 +24,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl#getOwnedKeyTypeCS <em>Owned Key Type CS</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl#getOwnedElementTypeCS <em>Owned Element Type CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl#getKeyType <em>Key Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl#getValueType <em>Value Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,24 +34,24 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 {
   /**
-   * The cached value of the '{@link #getOwnedKeyTypeCS() <em>Owned Key Type CS</em>}' containment reference.
+   * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOwnedKeyTypeCS()
+   * @see #getKeyType()
    * @generated
    * @ordered
    */
-  protected TypedRefCS ownedKeyTypeCS;
+  protected TypedRefCS keyType;
 
   /**
-   * The cached value of the '{@link #getOwnedElementTypeCS() <em>Owned Element Type CS</em>}' containment reference.
+   * The cached value of the '{@link #getValueType() <em>Value Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOwnedElementTypeCS()
+   * @see #getValueType()
    * @generated
    * @ordered
    */
-  protected TypedRefCS ownedElementTypeCS;
+  protected TypedRefCS valueType;
 
   /**
    * <!-- begin-user-doc -->
@@ -79,9 +79,9 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public TypedRefCS getOwnedKeyTypeCS()
+  public TypedRefCS getKeyType()
   {
-    return ownedKeyTypeCS;
+    return keyType;
   }
 
   /**
@@ -89,13 +89,13 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetOwnedKeyTypeCS(TypedRefCS newOwnedKeyTypeCS, NotificationChain msgs)
+  public NotificationChain basicSetKeyType(TypedRefCS newKeyType, NotificationChain msgs)
   {
-    TypedRefCS oldOwnedKeyTypeCS = ownedKeyTypeCS;
-    ownedKeyTypeCS = newOwnedKeyTypeCS;
+    TypedRefCS oldKeyType = keyType;
+    keyType = newKeyType;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS, oldOwnedKeyTypeCS, newOwnedKeyTypeCS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, oldKeyType, newKeyType);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -106,20 +106,20 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOwnedKeyTypeCS(TypedRefCS newOwnedKeyTypeCS)
+  public void setKeyType(TypedRefCS newKeyType)
   {
-    if (newOwnedKeyTypeCS != ownedKeyTypeCS)
+    if (newKeyType != keyType)
     {
       NotificationChain msgs = null;
-      if (ownedKeyTypeCS != null)
-        msgs = ((InternalEObject)ownedKeyTypeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS, null, msgs);
-      if (newOwnedKeyTypeCS != null)
-        msgs = ((InternalEObject)newOwnedKeyTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS, null, msgs);
-      msgs = basicSetOwnedKeyTypeCS(newOwnedKeyTypeCS, msgs);
+      if (keyType != null)
+        msgs = ((InternalEObject)keyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+      if (newKeyType != null)
+        msgs = ((InternalEObject)newKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+      msgs = basicSetKeyType(newKeyType, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS, newOwnedKeyTypeCS, newOwnedKeyTypeCS));
+      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
   }
 
   /**
@@ -127,9 +127,9 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public TypedRefCS getOwnedElementTypeCS()
+  public TypedRefCS getValueType()
   {
-    return ownedElementTypeCS;
+    return valueType;
   }
 
   /**
@@ -137,13 +137,13 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetOwnedElementTypeCS(TypedRefCS newOwnedElementTypeCS, NotificationChain msgs)
+  public NotificationChain basicSetValueType(TypedRefCS newValueType, NotificationChain msgs)
   {
-    TypedRefCS oldOwnedElementTypeCS = ownedElementTypeCS;
-    ownedElementTypeCS = newOwnedElementTypeCS;
+    TypedRefCS oldValueType = valueType;
+    valueType = newValueType;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS, oldOwnedElementTypeCS, newOwnedElementTypeCS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, oldValueType, newValueType);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -154,20 +154,20 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOwnedElementTypeCS(TypedRefCS newOwnedElementTypeCS)
+  public void setValueType(TypedRefCS newValueType)
   {
-    if (newOwnedElementTypeCS != ownedElementTypeCS)
+    if (newValueType != valueType)
     {
       NotificationChain msgs = null;
-      if (ownedElementTypeCS != null)
-        msgs = ((InternalEObject)ownedElementTypeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS, null, msgs);
-      if (newOwnedElementTypeCS != null)
-        msgs = ((InternalEObject)newOwnedElementTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS, null, msgs);
-      msgs = basicSetOwnedElementTypeCS(newOwnedElementTypeCS, msgs);
+      if (valueType != null)
+        msgs = ((InternalEObject)valueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+      if (newValueType != null)
+        msgs = ((InternalEObject)newValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+      msgs = basicSetValueType(newValueType, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS, newOwnedElementTypeCS, newOwnedElementTypeCS));
+      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
   }
 
   /**
@@ -180,10 +180,10 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS:
-        return basicSetOwnedKeyTypeCS(null, msgs);
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS:
-        return basicSetOwnedElementTypeCS(null, msgs);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+        return basicSetKeyType(null, msgs);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+        return basicSetValueType(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -198,10 +198,10 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS:
-        return getOwnedKeyTypeCS();
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS:
-        return getOwnedElementTypeCS();
+      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+        return getKeyType();
+      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+        return getValueType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -216,11 +216,11 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS:
-        setOwnedKeyTypeCS((TypedRefCS)newValue);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+        setKeyType((TypedRefCS)newValue);
         return;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS:
-        setOwnedElementTypeCS((TypedRefCS)newValue);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+        setValueType((TypedRefCS)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,11 +236,11 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS:
-        setOwnedKeyTypeCS((TypedRefCS)null);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+        setKeyType((TypedRefCS)null);
         return;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS:
-        setOwnedElementTypeCS((TypedRefCS)null);
+      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+        setValueType((TypedRefCS)null);
         return;
     }
     super.eUnset(featureID);
@@ -256,10 +256,10 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_KEY_TYPE_CS:
-        return ownedKeyTypeCS != null;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS:
-        return ownedElementTypeCS != null;
+      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+        return keyType != null;
+      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+        return valueType != null;
     }
     return super.eIsSet(featureID);
   }

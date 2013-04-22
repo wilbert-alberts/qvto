@@ -589,26 +589,26 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (keyExpCS=PrimitiveLiteralExpCS valueExpCS=ExpCS)
+	 *     (key=PrimitiveLiteralExpCS value=ExpCS)
 	 */
 	protected void sequence_DictLiteralPartCS(EObject context, DictLiteralPartCS semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY_EXP_CS) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY_EXP_CS));
-			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE_EXP_CS) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE_EXP_CS));
+			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY));
+			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0(), semanticObject.getKeyExpCS());
-		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSExpCSParserRuleCall_2_0(), semanticObject.getValueExpCS());
+		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (ownedKeyTypeCS=TypeExpCS ownedElementTypeCS=TypeExpCS)
+	 *     (keyType=TypeExpCS valueType=TypeExpCS)
 	 */
 	protected void sequence_DictTypeCS(EObject context, DictTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -617,7 +617,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (ownedKeyTypeCS=TypeExpCS ownedElementTypeCS=TypeExpCS multiplicity=MultiplicityCS?)
+	 *     (keyType=TypeExpCS valueType=TypeExpCS multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_DictTypeCS_TypeExpCS(EObject context, DictTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -626,7 +626,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (ownedKeyTypeCS=TypeExpCS ownedElementTypeCS=TypeExpCS multiplicity=MultiplicityCS?)
+	 *     (keyType=TypeExpCS valueType=TypeExpCS multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_DictTypeCS_TypeLiteralWithMultiplicityCS(EObject context, DictTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -644,7 +644,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ownedType=TypeExpCS
+	 *     type=TypeExpCS
 	 */
 	protected void sequence_ListTypeCS(EObject context, ListTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -653,7 +653,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (ownedType=TypeExpCS multiplicity=MultiplicityCS?)
+	 *     (type=TypeExpCS multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_ListTypeCS_TypeExpCS(EObject context, ListTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -662,7 +662,7 @@ public class ImperativeOCLCSSemanticSequencer extends EssentialOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (ownedType=TypeExpCS multiplicity=MultiplicityCS?)
+	 *     (type=TypeExpCS multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_ListTypeCS_TypeLiteralWithMultiplicityCS(EObject context, ListTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

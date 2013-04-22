@@ -253,16 +253,16 @@ ruleListTypeCS returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getListTypeCSAccess().getOwnedTypeTypeExpCSParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getListTypeCSAccess().getTypeTypeExpCSParserRuleCall_2_0()); 
 	    }
-		lv_ownedType_2_0=ruleTypeExpCS		{
+		lv_type_2_0=ruleTypeExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getListTypeCSRule());
 	        }
        		set(
        			$current, 
-       			"ownedType",
-        		lv_ownedType_2_0, 
+       			"type",
+        		lv_type_2_0, 
         		"TypeExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -304,16 +304,16 @@ ruleDictTypeCS returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSTypeExpCSParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getKeyTypeTypeExpCSParserRuleCall_2_0()); 
 	    }
-		lv_ownedKeyTypeCS_2_0=ruleTypeExpCS		{
+		lv_keyType_2_0=ruleTypeExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDictTypeCSRule());
 	        }
        		set(
        			$current, 
-       			"ownedKeyTypeCS",
-        		lv_ownedKeyTypeCS_2_0, 
+       			"keyType",
+        		lv_keyType_2_0, 
         		"TypeExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -326,16 +326,16 @@ ruleDictTypeCS returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSTypeExpCSParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getDictTypeCSAccess().getValueTypeTypeExpCSParserRuleCall_4_0()); 
 	    }
-		lv_ownedElementTypeCS_4_0=ruleTypeExpCS		{
+		lv_valueType_4_0=ruleTypeExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDictTypeCSRule());
 	        }
        		set(
        			$current, 
-       			"ownedElementTypeCS",
-        		lv_ownedElementTypeCS_4_0, 
+       			"valueType",
+        		lv_valueType_4_0, 
         		"TypeExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1057,16 +1057,16 @@ ruleDictLiteralPartCS returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSPrimitiveLiteralExpCSParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0()); 
 	    }
-		lv_keyExpCS_0_0=rulePrimitiveLiteralExpCS		{
+		lv_key_0_0=rulePrimitiveLiteralExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDictLiteralPartCSRule());
 	        }
        		set(
        			$current, 
-       			"keyExpCS",
-        		lv_keyExpCS_0_0, 
+       			"key",
+        		lv_key_0_0, 
         		"PrimitiveLiteralExpCS");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1079,16 +1079,16 @@ ruleDictLiteralPartCS returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSExpCSParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0()); 
 	    }
-		lv_valueExpCS_2_0=ruleExpCS		{
+		lv_value_2_0=ruleExpCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDictLiteralPartCSRule());
 	        }
        		set(
        			$current, 
-       			"valueExpCS",
-        		lv_valueExpCS_2_0, 
+       			"value",
+        		lv_value_2_0, 
         		"ExpCS");
 	        afterParserOrEnumRuleCall();
 	    }

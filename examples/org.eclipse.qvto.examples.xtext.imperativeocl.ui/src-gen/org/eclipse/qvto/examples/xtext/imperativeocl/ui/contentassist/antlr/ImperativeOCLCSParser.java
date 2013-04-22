@@ -144,9 +144,9 @@ public class ImperativeOCLCSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLetVariableCSAccess().getGroup_1(), "rule__LetVariableCS__Group_1__0");
 					put(grammarAccess.getNestedExpCSAccess().getGroup(), "rule__NestedExpCS__Group__0");
 					put(grammarAccess.getSelfExpCSAccess().getGroup(), "rule__SelfExpCS__Group__0");
-					put(grammarAccess.getListTypeCSAccess().getOwnedTypeAssignment_2(), "rule__ListTypeCS__OwnedTypeAssignment_2");
-					put(grammarAccess.getDictTypeCSAccess().getOwnedKeyTypeCSAssignment_2(), "rule__DictTypeCS__OwnedKeyTypeCSAssignment_2");
-					put(grammarAccess.getDictTypeCSAccess().getOwnedElementTypeCSAssignment_4(), "rule__DictTypeCS__OwnedElementTypeCSAssignment_4");
+					put(grammarAccess.getListTypeCSAccess().getTypeAssignment_2(), "rule__ListTypeCS__TypeAssignment_2");
+					put(grammarAccess.getDictTypeCSAccess().getKeyTypeAssignment_2(), "rule__DictTypeCS__KeyTypeAssignment_2");
+					put(grammarAccess.getDictTypeCSAccess().getValueTypeAssignment_4(), "rule__DictTypeCS__ValueTypeAssignment_4");
 					put(grammarAccess.getPrimaryExpCSAccess().getPathNameAssignment_10_1(), "rule__PrimaryExpCS__PathNameAssignment_10_1");
 					put(grammarAccess.getPrimaryExpCSAccess().getFirstIndexesAssignment_10_2_0_2(), "rule__PrimaryExpCS__FirstIndexesAssignment_10_2_0_2");
 					put(grammarAccess.getPrimaryExpCSAccess().getFirstIndexesAssignment_10_2_0_3_1(), "rule__PrimaryExpCS__FirstIndexesAssignment_10_2_0_3_1");
@@ -167,8 +167,8 @@ public class ImperativeOCLCSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsAssignment_3_1_1(), "rule__ListLiteralExpCS__OwnedPartsAssignment_3_1_1");
 					put(grammarAccess.getDictLiteralExpCSAccess().getOwnedPartsAssignment_3_0(), "rule__DictLiteralExpCS__OwnedPartsAssignment_3_0");
 					put(grammarAccess.getDictLiteralExpCSAccess().getOwnedPartsAssignment_3_1_1(), "rule__DictLiteralExpCS__OwnedPartsAssignment_3_1_1");
-					put(grammarAccess.getDictLiteralPartCSAccess().getKeyExpCSAssignment_0(), "rule__DictLiteralPartCS__KeyExpCSAssignment_0");
-					put(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSAssignment_2(), "rule__DictLiteralPartCS__ValueExpCSAssignment_2");
+					put(grammarAccess.getDictLiteralPartCSAccess().getKeyAssignment_0(), "rule__DictLiteralPartCS__KeyAssignment_0");
+					put(grammarAccess.getDictLiteralPartCSAccess().getValueAssignment_2(), "rule__DictLiteralPartCS__ValueAssignment_2");
 					put(grammarAccess.getReturnExpCSAccess().getValueAssignment_2(), "rule__ReturnExpCS__ValueAssignment_2");
 					put(grammarAccess.getModelAccess().getOwnedExpressionAssignment(), "rule__Model__OwnedExpressionAssignment");
 					put(grammarAccess.getEssentialOCLUnaryOperatorCSAccess().getNameAssignment(), "rule__EssentialOCLUnaryOperatorCS__NameAssignment");

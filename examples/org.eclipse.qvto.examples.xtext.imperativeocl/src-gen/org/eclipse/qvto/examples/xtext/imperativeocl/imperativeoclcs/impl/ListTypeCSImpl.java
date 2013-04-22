@@ -24,7 +24,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ListTypeCSImpl#getOwnedType <em>Owned Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ListTypeCSImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,14 +33,14 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 {
   /**
-   * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference.
+   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOwnedType()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected TypedRefCS ownedType;
+  protected TypedRefCS type;
 
   /**
    * <!-- begin-user-doc -->
@@ -68,9 +68,9 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public TypedRefCS getOwnedType()
+  public TypedRefCS getType()
   {
-    return ownedType;
+    return type;
   }
 
   /**
@@ -78,13 +78,13 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetOwnedType(TypedRefCS newOwnedType, NotificationChain msgs)
+  public NotificationChain basicSetType(TypedRefCS newType, NotificationChain msgs)
   {
-    TypedRefCS oldOwnedType = ownedType;
-    ownedType = newOwnedType;
+    TypedRefCS oldType = type;
+    type = newType;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, oldType, newType);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -95,20 +95,20 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOwnedType(TypedRefCS newOwnedType)
+  public void setType(TypedRefCS newType)
   {
-    if (newOwnedType != ownedType)
+    if (newType != type)
     {
       NotificationChain msgs = null;
-      if (ownedType != null)
-        msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE, null, msgs);
-      if (newOwnedType != null)
-        msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE, null, msgs);
-      msgs = basicSetOwnedType(newOwnedType, msgs);
+      if (type != null)
+        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, null, msgs);
+      if (newType != null)
+        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, null, msgs);
+      msgs = basicSetType(newType, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE, newOwnedType, newOwnedType));
+      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, newType, newType));
   }
 
   /**
@@ -121,8 +121,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE:
-        return basicSetOwnedType(null, msgs);
+      case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+        return basicSetType(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -137,8 +137,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE:
-        return getOwnedType();
+      case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+        return getType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -153,8 +153,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE:
-        setOwnedType((TypedRefCS)newValue);
+      case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+        setType((TypedRefCS)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -170,8 +170,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE:
-        setOwnedType((TypedRefCS)null);
+      case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+        setType((TypedRefCS)null);
         return;
     }
     super.eUnset(featureID);
@@ -187,8 +187,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   {
     switch (featureID)
     {
-      case ImperativeoclcsPackage.LIST_TYPE_CS__OWNED_TYPE:
-        return ownedType != null;
+      case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+        return type != null;
     }
     return super.eIsSet(featureID);
   }

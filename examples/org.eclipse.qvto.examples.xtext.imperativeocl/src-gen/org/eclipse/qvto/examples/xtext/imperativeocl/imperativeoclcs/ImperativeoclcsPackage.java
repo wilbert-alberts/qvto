@@ -98,13 +98,13 @@ public interface ImperativeoclcsPackage extends EPackage
   int LIST_TYPE_CS__MULTIPLICITY = BaseCSTPackage.TYPED_REF_CS__MULTIPLICITY;
 
   /**
-   * The feature id for the '<em><b>Owned Type</b></em>' containment reference.
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LIST_TYPE_CS__OWNED_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
+  int LIST_TYPE_CS__TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>List Type CS</em>' class.
@@ -153,22 +153,22 @@ public interface ImperativeoclcsPackage extends EPackage
   int DICT_TYPE_CS__MULTIPLICITY = BaseCSTPackage.TYPED_REF_CS__MULTIPLICITY;
 
   /**
-   * The feature id for the '<em><b>Owned Key Type CS</b></em>' containment reference.
+   * The feature id for the '<em><b>Key Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DICT_TYPE_CS__OWNED_KEY_TYPE_CS = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
+  int DICT_TYPE_CS__KEY_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Owned Element Type CS</b></em>' containment reference.
+   * The feature id for the '<em><b>Value Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
+  int DICT_TYPE_CS__VALUE_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Dict Type CS</em>' class.
@@ -354,22 +354,22 @@ public interface ImperativeoclcsPackage extends EPackage
   int DICT_LITERAL_PART_CS = 4;
 
   /**
-   * The feature id for the '<em><b>Key Exp CS</b></em>' containment reference.
+   * The feature id for the '<em><b>Key</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DICT_LITERAL_PART_CS__KEY_EXP_CS = 0;
+  int DICT_LITERAL_PART_CS__KEY = 0;
 
   /**
-   * The feature id for the '<em><b>Value Exp CS</b></em>' containment reference.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DICT_LITERAL_PART_CS__VALUE_EXP_CS = 1;
+  int DICT_LITERAL_PART_CS__VALUE = 1;
 
   /**
    * The number of structural features of the '<em>Dict Literal Part CS</em>' class.
@@ -865,15 +865,15 @@ public interface ImperativeoclcsPackage extends EPackage
   EClass getListTypeCS();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getOwnedType <em>Owned Type</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Owned Type</em>'.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getOwnedType()
+   * @return the meta object for the containment reference '<em>Type</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS#getType()
    * @see #getListTypeCS()
    * @generated
    */
-  EReference getListTypeCS_OwnedType();
+  EReference getListTypeCS_Type();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS <em>Dict Type CS</em>}'.
@@ -886,26 +886,26 @@ public interface ImperativeoclcsPackage extends EPackage
   EClass getDictTypeCS();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getOwnedKeyTypeCS <em>Owned Key Type CS</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getKeyType <em>Key Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Owned Key Type CS</em>'.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getOwnedKeyTypeCS()
+   * @return the meta object for the containment reference '<em>Key Type</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getKeyType()
    * @see #getDictTypeCS()
    * @generated
    */
-  EReference getDictTypeCS_OwnedKeyTypeCS();
+  EReference getDictTypeCS_KeyType();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getOwnedElementTypeCS <em>Owned Element Type CS</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getValueType <em>Value Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Owned Element Type CS</em>'.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getOwnedElementTypeCS()
+   * @return the meta object for the containment reference '<em>Value Type</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS#getValueType()
    * @see #getDictTypeCS()
    * @generated
    */
-  EReference getDictTypeCS_OwnedElementTypeCS();
+  EReference getDictTypeCS_ValueType();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS <em>List Literal Exp CS</em>}'.
@@ -960,26 +960,26 @@ public interface ImperativeoclcsPackage extends EPackage
   EClass getDictLiteralPartCS();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getKeyExpCS <em>Key Exp CS</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getKey <em>Key</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Key Exp CS</em>'.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getKeyExpCS()
+   * @return the meta object for the containment reference '<em>Key</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getKey()
    * @see #getDictLiteralPartCS()
    * @generated
    */
-  EReference getDictLiteralPartCS_KeyExpCS();
+  EReference getDictLiteralPartCS_Key();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getValueExpCS <em>Value Exp CS</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value Exp CS</em>'.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getValueExpCS()
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getValue()
    * @see #getDictLiteralPartCS()
    * @generated
    */
-  EReference getDictLiteralPartCS_ValueExpCS();
+  EReference getDictLiteralPartCS_Value();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS <em>Return Exp CS</em>}'.
@@ -1197,12 +1197,12 @@ public interface ImperativeoclcsPackage extends EPackage
     EClass LIST_TYPE_CS = eINSTANCE.getListTypeCS();
 
     /**
-     * The meta object literal for the '<em><b>Owned Type</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LIST_TYPE_CS__OWNED_TYPE = eINSTANCE.getListTypeCS_OwnedType();
+    EReference LIST_TYPE_CS__TYPE = eINSTANCE.getListTypeCS_Type();
 
     /**
      * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl <em>Dict Type CS</em>}' class.
@@ -1215,20 +1215,20 @@ public interface ImperativeoclcsPackage extends EPackage
     EClass DICT_TYPE_CS = eINSTANCE.getDictTypeCS();
 
     /**
-     * The meta object literal for the '<em><b>Owned Key Type CS</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Key Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DICT_TYPE_CS__OWNED_KEY_TYPE_CS = eINSTANCE.getDictTypeCS_OwnedKeyTypeCS();
+    EReference DICT_TYPE_CS__KEY_TYPE = eINSTANCE.getDictTypeCS_KeyType();
 
     /**
-     * The meta object literal for the '<em><b>Owned Element Type CS</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Value Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS = eINSTANCE.getDictTypeCS_OwnedElementTypeCS();
+    EReference DICT_TYPE_CS__VALUE_TYPE = eINSTANCE.getDictTypeCS_ValueType();
 
     /**
      * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ListLiteralExpCSImpl <em>List Literal Exp CS</em>}' class.
@@ -1277,20 +1277,20 @@ public interface ImperativeoclcsPackage extends EPackage
     EClass DICT_LITERAL_PART_CS = eINSTANCE.getDictLiteralPartCS();
 
     /**
-     * The meta object literal for the '<em><b>Key Exp CS</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Key</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DICT_LITERAL_PART_CS__KEY_EXP_CS = eINSTANCE.getDictLiteralPartCS_KeyExpCS();
+    EReference DICT_LITERAL_PART_CS__KEY = eINSTANCE.getDictLiteralPartCS_Key();
 
     /**
-     * The meta object literal for the '<em><b>Value Exp CS</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DICT_LITERAL_PART_CS__VALUE_EXP_CS = eINSTANCE.getDictLiteralPartCS_ValueExpCS();
+    EReference DICT_LITERAL_PART_CS__VALUE = eINSTANCE.getDictLiteralPartCS_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ReturnExpCSImpl <em>Return Exp CS</em>}' class.

@@ -10,11 +10,11 @@
   <genPackages prefix="Imperativeoclcs" basePackage="org.eclipse.qvto.examples.xtext.imperativeocl"
       disposableProviderFactory="true" fileExtensions="iocl" ecorePackage="ImperativeOCLCS.ecore#/">
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//ListTypeCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//ListTypeCS/ownedType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//ListTypeCS/type"/>
     </genClasses>
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//DictTypeCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictTypeCS/ownedKeyTypeCS"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictTypeCS/ownedElementTypeCS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictTypeCS/keyType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictTypeCS/valueType"/>
     </genClasses>
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//ListLiteralExpCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//ListLiteralExpCS/ownedParts"/>
@@ -23,8 +23,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralExpCS/ownedParts"/>
     </genClasses>
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//DictLiteralPartCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/keyExpCS"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/valueExpCS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//DictLiteralPartCS/value"/>
     </genClasses>
     <genClasses ecoreClass="ImperativeOCLCS.ecore#//ReturnExpCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCLCS.ecore#//ReturnExpCS/value"/>

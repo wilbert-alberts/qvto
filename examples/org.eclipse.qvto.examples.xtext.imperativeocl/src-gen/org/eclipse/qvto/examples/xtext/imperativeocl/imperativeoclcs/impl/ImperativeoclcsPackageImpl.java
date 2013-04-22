@@ -185,7 +185,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getListTypeCS_OwnedType()
+  public EReference getListTypeCS_Type()
   {
     return (EReference)listTypeCSEClass.getEStructuralFeatures().get(0);
   }
@@ -205,7 +205,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDictTypeCS_OwnedKeyTypeCS()
+  public EReference getDictTypeCS_KeyType()
   {
     return (EReference)dictTypeCSEClass.getEStructuralFeatures().get(0);
   }
@@ -215,7 +215,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDictTypeCS_OwnedElementTypeCS()
+  public EReference getDictTypeCS_ValueType()
   {
     return (EReference)dictTypeCSEClass.getEStructuralFeatures().get(1);
   }
@@ -275,7 +275,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDictLiteralPartCS_KeyExpCS()
+  public EReference getDictLiteralPartCS_Key()
   {
     return (EReference)dictLiteralPartCSEClass.getEStructuralFeatures().get(0);
   }
@@ -285,7 +285,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDictLiteralPartCS_ValueExpCS()
+  public EReference getDictLiteralPartCS_Value()
   {
     return (EReference)dictLiteralPartCSEClass.getEStructuralFeatures().get(1);
   }
@@ -491,11 +491,11 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 
     // Create classes and their features
     listTypeCSEClass = createEClass(LIST_TYPE_CS);
-    createEReference(listTypeCSEClass, LIST_TYPE_CS__OWNED_TYPE);
+    createEReference(listTypeCSEClass, LIST_TYPE_CS__TYPE);
 
     dictTypeCSEClass = createEClass(DICT_TYPE_CS);
-    createEReference(dictTypeCSEClass, DICT_TYPE_CS__OWNED_KEY_TYPE_CS);
-    createEReference(dictTypeCSEClass, DICT_TYPE_CS__OWNED_ELEMENT_TYPE_CS);
+    createEReference(dictTypeCSEClass, DICT_TYPE_CS__KEY_TYPE);
+    createEReference(dictTypeCSEClass, DICT_TYPE_CS__VALUE_TYPE);
 
     listLiteralExpCSEClass = createEClass(LIST_LITERAL_EXP_CS);
     createEReference(listLiteralExpCSEClass, LIST_LITERAL_EXP_CS__OWNED_PARTS);
@@ -504,8 +504,8 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
     createEReference(dictLiteralExpCSEClass, DICT_LITERAL_EXP_CS__OWNED_PARTS);
 
     dictLiteralPartCSEClass = createEClass(DICT_LITERAL_PART_CS);
-    createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__KEY_EXP_CS);
-    createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__VALUE_EXP_CS);
+    createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__KEY);
+    createEReference(dictLiteralPartCSEClass, DICT_LITERAL_PART_CS__VALUE);
 
     returnExpCSEClass = createEClass(RETURN_EXP_CS);
     createEReference(returnExpCSEClass, RETURN_EXP_CS__VALUE);
@@ -575,11 +575,11 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 
     // Initialize classes and features; add operations and parameters
     initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getListTypeCS_OwnedType(), theBaseCSTPackage.getTypedRefCS(), null, "ownedType", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getListTypeCS_Type(), theBaseCSTPackage.getTypedRefCS(), null, "type", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dictTypeCSEClass, DictTypeCS.class, "DictTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDictTypeCS_OwnedKeyTypeCS(), theBaseCSTPackage.getTypedRefCS(), null, "ownedKeyTypeCS", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDictTypeCS_OwnedElementTypeCS(), theBaseCSTPackage.getTypedRefCS(), null, "ownedElementTypeCS", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDictTypeCS_KeyType(), theBaseCSTPackage.getTypedRefCS(), null, "keyType", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDictTypeCS_ValueType(), theBaseCSTPackage.getTypedRefCS(), null, "valueType", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(listLiteralExpCSEClass, ListLiteralExpCS.class, "ListLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getListLiteralExpCS_OwnedParts(), theBaseCSTPackage.getModelElementCS(), null, "ownedParts", null, 0, -1, ListLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -588,8 +588,8 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
     initEReference(getDictLiteralExpCS_OwnedParts(), this.getDictLiteralPartCS(), null, "ownedParts", null, 0, -1, DictLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dictLiteralPartCSEClass, DictLiteralPartCS.class, "DictLiteralPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDictLiteralPartCS_KeyExpCS(), theEssentialOCLCSTPackage.getPrimitiveLiteralExpCS(), null, "keyExpCS", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDictLiteralPartCS_ValueExpCS(), theEssentialOCLCSTPackage.getExpCS(), null, "valueExpCS", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDictLiteralPartCS_Key(), theEssentialOCLCSTPackage.getPrimitiveLiteralExpCS(), null, "key", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDictLiteralPartCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReturnExpCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
