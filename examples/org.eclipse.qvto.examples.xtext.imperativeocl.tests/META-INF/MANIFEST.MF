@@ -1,16 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.qvto.examples.xtext.scaverok.tests
+Bundle-Name: org.eclipse.qvto.examples.xtext.imperativeocl.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.eclipse.qvto.examples.xtext.imperativeocl.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.qvto.examples.xtext.scaverok,
+Require-Bundle: org.eclipse.ui.workbench;resolution:=optional,
  org.eclipse.qvto.examples.xtext.imperativeocl.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtext.junit4,
- org.eclipse.ui.workbench;resolution:=optional,
- org.eclipse.qvto.examples.xtext.imperativeocl
+ com.google.inject;bundle-version="3.0.0"
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",
