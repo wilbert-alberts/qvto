@@ -89,12 +89,12 @@ TypeLiteralCS returns base::TypedRefCS:
 	| DictTypeCS;	
 
 ListTypeCS : 
-	'List' '(' ownedType=TypeExpCS ')'
+	'List' '(' type=TypeExpCS ')'
 ;
 
 
 DictTypeCS : 
-	'Dict' '(' ownedKeyTypeCS=TypeExpCS ',' ownedElementTypeCS=TypeExpCS ')'
+	'Dict' '(' keyType=TypeExpCS ',' valueType=TypeExpCS ')'
 ;
 
 // ********* ImperativeOCL Expressions *********
