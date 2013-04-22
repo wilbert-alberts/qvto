@@ -1,0 +1,112 @@
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2013 Willink Transformations, University of York and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *		Adolfo Sanchez-Barbudo Herrera (University of York) - initial API and implementation
+ * 		
+ * </copyright>
+ *
+ *
+ */
+module GenerateQVToXtextModels
+
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+/**
+ *	Generate the Concrete Syntax Models used by the Xtext editors.
+ */
+var platformURI = ".."
+var javaSrcFolder = "src-gen"
+
+/*
+ * OCL Xtext models related configuration variables
+ */
+var oclXtextBaseProjectName = "org.eclipse.ocl.examples.xtext.base"
+var oclXtextBaseProjectURI = "platform:/resource/${oclXtextBaseProjectName}"
+var oclXtextBaseEcoreProjectPath = "model/BaseCST.ecore"
+var oclXtextBaseEcoreURI = "${oclXtextBaseProjectURI}/${oclXtextBaseEcoreProjectPath}"
+var oclXtextBaseVisitorPackage = "${oclXtextBaseProjectName}.util"
+var oclXtextBaseVisitorName = "BaseCSVisitor"
+var oclXtextBaseVisitorQualifiedName = "${oclXtextBaseVisitorPackage}.${oclXtextBaseVisitorName}"
+var oclXtextBaseVisitablePackage = "${oclXtextBaseVisitorPackage}"
+var oclXtextBaseVisitableName = "VisitableCS"
+
+var essentialOclXtextProjectName = "org.eclipse.ocl.examples.xtext.essentialocl"
+var essentialOclXtextProjectURI = "platform:/resource/${essentialOclXtextProjectName}"
+var essentialOclXtextEcoreProjectPath = "model/EssentialOCLCST.ecore"
+var essentialOclXtextEcoreURI = "${essentialOclXtextProjectURI}/${essentialOclXtextEcoreProjectPath}"
+var essentialOclXtextVisitorPackage = "${essentialOclXtextProjectName}.util"
+var essentialOclXtextVisitorName = "EssentialOCLCSVisitor"
+var essentialOclXtextVisitorQualifiedName = "${essentialOclXtextVisitorPackage}.${essentialOclXtextVisitorName}"
+
+/*
+ * ImperativeOCL Xtext models related configuration variables
+ */
+var imperativeOclXtextProjectName = "org.eclipse.qvto.examples.xtext.imperativeocl"
+var imperativeOclXtextProjectURI = "platform:/resource/${imperativeOclXtextProjectName}"
+var imperativeOclXtextEcoreProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.ecore"
+var imperativeOclXtextEcoreURI = "${imperativeOclXtextProjectURI}/${imperativeOclXtextEcoreProjectPath}"
+var imperativeOclXtextGenModelProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
+var imperativeOclXtextGenModelPath = "${imperativeOclXtextProjectName}/${imperativeOclXtextGenModelProjectPath}"
+var imperativeOclXtextModelPackage = "${imperativeOclXtextProjectName}.imperativeoclcs"
+var imperativeOclXtextVisitorPackage = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
+var imperativeOclXtextVisitorName = "ImperativeOCLCSVisitor"
+var imperativeOclXtextVisitorQualifiedName = "${imperativeOclXtextVisitorPackage}.${imperativeOclXtextVisitorName}"
+
+
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+    	platformUri = platformURI	// Common path from which...
+    	scanClassPath = true		// ... a scan finds all classes
+    	    	
+    	uriMap = Mapping {
+    		from = "platform:/plugin/org.eclipse.ocl.examples.build/"
+    		to = "platform:/resource/org.eclipse.ocl.examples.build/"
+    	}
+    }
+    bean = GenModelSetup { resourceSet = resourceSet }
+    bean = UMLGenModelSetup { resourceSet = resourceSet }
+    
+    
+    component = DerivedVisitorPatternWeaver {
+    	resourceSet = resourceSet
+    	in = imperativeOclXtextEcoreURI
+    	in = essentialOclXtextEcoreURI
+    	in = oclXtextBaseEcoreURI
+    	rootVisitorInterfaceName = oclXtextBaseVisitorName
+    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
+    	superVisitorInterfaceName = essentialOclXtextVisitorName
+    	superVisitorInterfaceQualifiedName = essentialOclXtextVisitorQualifiedName
+    	derivedVisitorInterfaceName = imperativeOclXtextVisitorName
+    	derivedVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
+    }    
+    
+    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+		genModel = imperativeOclXtextGenModelPath
+		clearResourceSet = false 	
+    }
+    
+    component = XtextVisitorCodeGenerator { resourceSet = resourceSet
+    	resourceSet = resourceSet
+    	projectName = imperativeOclXtextProjectName
+    	genModelFile = imperativeOclXtextGenModelProjectPath
+    	javaFolder = javaSrcFolder
+    	modelPackageName = imperativeOclXtextModelPackage
+    	visitorPackageName = imperativeOclXtextVisitorPackage
+    	visitorClassName = imperativeOclXtextVisitorName
+    	superVisitorPackageName = essentialOclXtextVisitorPackage
+    	superVisitorClassName = essentialOclXtextVisitorName
+    	visitablePackageName = oclXtextBaseVisitablePackage
+    	visitableClassName = oclXtextBaseVisitableName
+    }
+}
