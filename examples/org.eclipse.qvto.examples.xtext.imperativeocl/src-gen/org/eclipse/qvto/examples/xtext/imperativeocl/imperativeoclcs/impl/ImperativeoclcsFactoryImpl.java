@@ -21,194 +21,190 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
 public class ImperativeoclcsFactoryImpl extends EFactoryImpl implements ImperativeoclcsFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static ImperativeoclcsFactory init()
   {
-    try
-    {
-      ImperativeoclcsFactory theImperativeoclcsFactory = (ImperativeoclcsFactory)EPackage.Registry.INSTANCE.getEFactory(ImperativeoclcsPackage.eNS_URI);
-      if (theImperativeoclcsFactory != null)
-      {
-        return theImperativeoclcsFactory;
-      }
-    }
-    catch (Exception exception)
-    {
-      EcorePlugin.INSTANCE.log(exception);
-    }
-    return new ImperativeoclcsFactoryImpl();
-  }
+		try {
+			ImperativeoclcsFactory theImperativeoclcsFactory = (ImperativeoclcsFactory)EPackage.Registry.INSTANCE.getEFactory(ImperativeoclcsPackage.eNS_URI);
+			if (theImperativeoclcsFactory != null) {
+				return theImperativeoclcsFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new ImperativeoclcsFactoryImpl();
+	}
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ImperativeoclcsFactoryImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public EObject create(EClass eClass)
   {
-    switch (eClass.getClassifierID())
-    {
-      case ImperativeoclcsPackage.LIST_TYPE_CS: return createListTypeCS();
-      case ImperativeoclcsPackage.DICT_TYPE_CS: return createDictTypeCS();
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS: return createListLiteralExpCS();
-      case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
-      case ImperativeoclcsPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
-      case ImperativeoclcsPackage.RETURN_EXP_CS: return createReturnExpCS();
-      case ImperativeoclcsPackage.NAME_EXP_CS: return createNameExpCS();
-      case ImperativeoclcsPackage.INDEX_EXP_CS: return createIndexExpCS();
-      case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS: return createConstructorExpCS();
-      case ImperativeoclcsPackage.INVOCATION_EXP_CS: return createInvocationExpCS();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-    }
-  }
+		switch (eClass.getClassifierID()) {
+			case ImperativeoclcsPackage.LIST_TYPE_CS: return createListTypeCS();
+			case ImperativeoclcsPackage.DICT_TYPE_CS: return createDictTypeCS();
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS: return createListLiteralExpCS();
+			case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
+			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
+			case ImperativeoclcsPackage.RETURN_EXP_CS: return createReturnExpCS();
+			case ImperativeoclcsPackage.NAME_EXP_CS: return createNameExpCS();
+			case ImperativeoclcsPackage.INDEX_EXP_CS: return createIndexExpCS();
+			case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS: return createConstructorExpCS();
+			case ImperativeoclcsPackage.INVOCATION_EXP_CS: return createInvocationExpCS();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ListTypeCS createListTypeCS()
   {
-    ListTypeCSImpl listTypeCS = new ListTypeCSImpl();
-    return listTypeCS;
-  }
+		ListTypeCSImpl listTypeCS = new ListTypeCSImpl();
+		return listTypeCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public DictTypeCS createDictTypeCS()
   {
-    DictTypeCSImpl dictTypeCS = new DictTypeCSImpl();
-    return dictTypeCS;
-  }
+		DictTypeCSImpl dictTypeCS = new DictTypeCSImpl();
+		return dictTypeCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ListLiteralExpCS createListLiteralExpCS()
   {
-    ListLiteralExpCSImpl listLiteralExpCS = new ListLiteralExpCSImpl();
-    return listLiteralExpCS;
-  }
+		ListLiteralExpCSImpl listLiteralExpCS = new ListLiteralExpCSImpl();
+		return listLiteralExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public DictLiteralExpCS createDictLiteralExpCS()
   {
-    DictLiteralExpCSImpl dictLiteralExpCS = new DictLiteralExpCSImpl();
-    return dictLiteralExpCS;
-  }
+		DictLiteralExpCSImpl dictLiteralExpCS = new DictLiteralExpCSImpl();
+		return dictLiteralExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public DictLiteralPartCS createDictLiteralPartCS()
   {
-    DictLiteralPartCSImpl dictLiteralPartCS = new DictLiteralPartCSImpl();
-    return dictLiteralPartCS;
-  }
+		DictLiteralPartCSImpl dictLiteralPartCS = new DictLiteralPartCSImpl();
+		return dictLiteralPartCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ReturnExpCS createReturnExpCS()
   {
-    ReturnExpCSImpl returnExpCS = new ReturnExpCSImpl();
-    return returnExpCS;
-  }
+		ReturnExpCSImpl returnExpCS = new ReturnExpCSImpl();
+		return returnExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NameExpCS createNameExpCS()
   {
-    NameExpCSImpl nameExpCS = new NameExpCSImpl();
-    return nameExpCS;
-  }
+		NameExpCSImpl nameExpCS = new NameExpCSImpl();
+		return nameExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public IndexExpCS createIndexExpCS()
   {
-    IndexExpCSImpl indexExpCS = new IndexExpCSImpl();
-    return indexExpCS;
-  }
+		IndexExpCSImpl indexExpCS = new IndexExpCSImpl();
+		return indexExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ConstructorExpCS createConstructorExpCS()
   {
-    ConstructorExpCSImpl constructorExpCS = new ConstructorExpCSImpl();
-    return constructorExpCS;
-  }
+		ConstructorExpCSImpl constructorExpCS = new ConstructorExpCSImpl();
+		return constructorExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public InvocationExpCS createInvocationExpCS()
   {
-    InvocationExpCSImpl invocationExpCS = new InvocationExpCSImpl();
-    return invocationExpCS;
-  }
+		InvocationExpCSImpl invocationExpCS = new InvocationExpCSImpl();
+		return invocationExpCS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ImperativeoclcsPackage getImperativeoclcsPackage()
   {
-    return (ImperativeoclcsPackage)getEPackage();
-  }
+		return (ImperativeoclcsPackage)getEPackage();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @deprecated
-   * @generated
-   */
+	 * @deprecated
+	 * @generated
+	 */
   @Deprecated
   public static ImperativeoclcsPackage getPackage()
   {
-    return ImperativeoclcsPackage.eINSTANCE;
-  }
+		return ImperativeoclcsPackage.eINSTANCE;
+	}
 
 } //ImperativeoclcsFactoryImpl

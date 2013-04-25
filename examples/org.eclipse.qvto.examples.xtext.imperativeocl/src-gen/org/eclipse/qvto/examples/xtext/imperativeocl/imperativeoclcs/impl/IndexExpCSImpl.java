@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImp
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,309 +46,318 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 public class IndexExpCSImpl extends ExpCSImpl implements IndexExpCS
 {
   /**
-   * The cached value of the '{@link #getNameExp() <em>Name Exp</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getNameExp() <em>Name Exp</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNameExp()
-   * @generated
-   * @ordered
-   */
+	 * @see #getNameExp()
+	 * @generated
+	 * @ordered
+	 */
   protected NameExpCS nameExp;
 
   /**
-   * The cached value of the '{@link #getFirstIndexes() <em>First Indexes</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getFirstIndexes() <em>First Indexes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFirstIndexes()
-   * @generated
-   * @ordered
-   */
+	 * @see #getFirstIndexes()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<ExpCS> firstIndexes;
 
   /**
-   * The cached value of the '{@link #getSecondIndexes() <em>Second Indexes</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSecondIndexes() <em>Second Indexes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSecondIndexes()
-   * @generated
-   * @ordered
-   */
+	 * @see #getSecondIndexes()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<ExpCS> secondIndexes;
 
   /**
-   * The default value of the '{@link #isAtPre() <em>At Pre</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isAtPre() <em>At Pre</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAtPre()
-   * @generated
-   * @ordered
-   */
+	 * @see #isAtPre()
+	 * @generated
+	 * @ordered
+	 */
   protected static final boolean AT_PRE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isAtPre() <em>At Pre</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isAtPre() <em>At Pre</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAtPre()
-   * @generated
-   * @ordered
-   */
+	 * @see #isAtPre()
+	 * @generated
+	 * @ordered
+	 */
   protected boolean atPre = AT_PRE_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected IndexExpCSImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return ImperativeoclcsPackage.Literals.INDEX_EXP_CS;
-  }
+		return ImperativeoclcsPackage.Literals.INDEX_EXP_CS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NameExpCS getNameExp()
   {
-    return nameExp;
-  }
+		return nameExp;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NotificationChain basicSetNameExp(NameExpCS newNameExp, NotificationChain msgs)
   {
-    NameExpCS oldNameExp = nameExp;
-    nameExp = newNameExp;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, oldNameExp, newNameExp);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+		NameExpCS oldNameExp = nameExp;
+		nameExp = newNameExp;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, oldNameExp, newNameExp);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setNameExp(NameExpCS newNameExp)
   {
-    if (newNameExp != nameExp)
-    {
-      NotificationChain msgs = null;
-      if (nameExp != null)
-        msgs = ((InternalEObject)nameExp).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, null, msgs);
-      if (newNameExp != null)
-        msgs = ((InternalEObject)newNameExp).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, null, msgs);
-      msgs = basicSetNameExp(newNameExp, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, newNameExp, newNameExp));
-  }
+		if (newNameExp != nameExp) {
+			NotificationChain msgs = null;
+			if (nameExp != null)
+				msgs = ((InternalEObject)nameExp).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, null, msgs);
+			if (newNameExp != null)
+				msgs = ((InternalEObject)newNameExp).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, null, msgs);
+			msgs = basicSetNameExp(newNameExp, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP, newNameExp, newNameExp));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<ExpCS> getFirstIndexes()
   {
-    if (firstIndexes == null)
-    {
-      firstIndexes = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES);
-    }
-    return firstIndexes;
-  }
+		if (firstIndexes == null) {
+			firstIndexes = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES);
+		}
+		return firstIndexes;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<ExpCS> getSecondIndexes()
   {
-    if (secondIndexes == null)
-    {
-      secondIndexes = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES);
-    }
-    return secondIndexes;
-  }
+		if (secondIndexes == null) {
+			secondIndexes = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES);
+		}
+		return secondIndexes;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public boolean isAtPre()
   {
-    return atPre;
-  }
+		return atPre;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setAtPre(boolean newAtPre)
   {
-    boolean oldAtPre = atPre;
-    atPre = newAtPre;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE, oldAtPre, atPre));
-  }
+		boolean oldAtPre = atPre;
+		atPre = newAtPre;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE, oldAtPre, atPre));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
+		return v.visitIndexExpCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((ImperativeOCLCSVisitor<R>)v).visitIndexExpCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
-        return basicSetNameExp(null, msgs);
-      case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
-        return ((InternalEList<?>)getFirstIndexes()).basicRemove(otherEnd, msgs);
-      case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
-        return ((InternalEList<?>)getSecondIndexes()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
+				return basicSetNameExp(null, msgs);
+			case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
+				return ((InternalEList<?>)getFirstIndexes()).basicRemove(otherEnd, msgs);
+			case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
+				return ((InternalEList<?>)getSecondIndexes()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
-        return getNameExp();
-      case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
-        return getFirstIndexes();
-      case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
-        return getSecondIndexes();
-      case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
-        return isAtPre();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
+				return getNameExp();
+			case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
+				return getFirstIndexes();
+			case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
+				return getSecondIndexes();
+			case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
+				return isAtPre();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
-        setNameExp((NameExpCS)newValue);
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
-        getFirstIndexes().clear();
-        getFirstIndexes().addAll((Collection<? extends ExpCS>)newValue);
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
-        getSecondIndexes().clear();
-        getSecondIndexes().addAll((Collection<? extends ExpCS>)newValue);
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
-        setAtPre((Boolean)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
+				setNameExp((NameExpCS)newValue);
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
+				getFirstIndexes().clear();
+				getFirstIndexes().addAll((Collection<? extends ExpCS>)newValue);
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
+				getSecondIndexes().clear();
+				getSecondIndexes().addAll((Collection<? extends ExpCS>)newValue);
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
+				setAtPre((Boolean)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
-        setNameExp((NameExpCS)null);
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
-        getFirstIndexes().clear();
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
-        getSecondIndexes().clear();
-        return;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
-        setAtPre(AT_PRE_EDEFAULT);
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
+				setNameExp((NameExpCS)null);
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
+				getFirstIndexes().clear();
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
+				getSecondIndexes().clear();
+				return;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
+				setAtPre(AT_PRE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
-        return nameExp != null;
-      case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
-        return firstIndexes != null && !firstIndexes.isEmpty();
-      case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
-        return secondIndexes != null && !secondIndexes.isEmpty();
-      case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
-        return atPre != AT_PRE_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.INDEX_EXP_CS__NAME_EXP:
+				return nameExp != null;
+			case ImperativeoclcsPackage.INDEX_EXP_CS__FIRST_INDEXES:
+				return firstIndexes != null && !firstIndexes.isEmpty();
+			case ImperativeoclcsPackage.INDEX_EXP_CS__SECOND_INDEXES:
+				return secondIndexes != null && !secondIndexes.isEmpty();
+			case ImperativeoclcsPackage.INDEX_EXP_CS__AT_PRE:
+				return atPre != AT_PRE_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (atPre: ");
-    result.append(atPre);
-    result.append(')');
-    return result.toString();
-  }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (atPre: ");
+		result.append(atPre);
+		result.append(')');
+		return result.toString();
+	}
 
 } //IndexExpCSImpl

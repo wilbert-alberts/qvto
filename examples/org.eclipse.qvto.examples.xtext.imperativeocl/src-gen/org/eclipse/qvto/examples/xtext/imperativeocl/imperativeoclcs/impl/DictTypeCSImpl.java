@@ -14,8 +14,10 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.TypedRefCSImpl;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,234 +36,243 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 {
   /**
-   * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getKeyType()
-   * @generated
-   * @ordered
-   */
+	 * @see #getKeyType()
+	 * @generated
+	 * @ordered
+	 */
   protected TypedRefCS keyType;
 
   /**
-   * The cached value of the '{@link #getValueType() <em>Value Type</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getValueType() <em>Value Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValueType()
-   * @generated
-   * @ordered
-   */
+	 * @see #getValueType()
+	 * @generated
+	 * @ordered
+	 */
   protected TypedRefCS valueType;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected DictTypeCSImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return ImperativeoclcsPackage.Literals.DICT_TYPE_CS;
-  }
+		return ImperativeoclcsPackage.Literals.DICT_TYPE_CS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public TypedRefCS getKeyType()
   {
-    return keyType;
-  }
+		return keyType;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NotificationChain basicSetKeyType(TypedRefCS newKeyType, NotificationChain msgs)
   {
-    TypedRefCS oldKeyType = keyType;
-    keyType = newKeyType;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, oldKeyType, newKeyType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+		TypedRefCS oldKeyType = keyType;
+		keyType = newKeyType;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, oldKeyType, newKeyType);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setKeyType(TypedRefCS newKeyType)
   {
-    if (newKeyType != keyType)
-    {
-      NotificationChain msgs = null;
-      if (keyType != null)
-        msgs = ((InternalEObject)keyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
-      if (newKeyType != null)
-        msgs = ((InternalEObject)newKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
-      msgs = basicSetKeyType(newKeyType, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
-  }
+		if (newKeyType != keyType) {
+			NotificationChain msgs = null;
+			if (keyType != null)
+				msgs = ((InternalEObject)keyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+			if (newKeyType != null)
+				msgs = ((InternalEObject)newKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+			msgs = basicSetKeyType(newKeyType, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public TypedRefCS getValueType()
   {
-    return valueType;
-  }
+		return valueType;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NotificationChain basicSetValueType(TypedRefCS newValueType, NotificationChain msgs)
   {
-    TypedRefCS oldValueType = valueType;
-    valueType = newValueType;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, oldValueType, newValueType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+		TypedRefCS oldValueType = valueType;
+		valueType = newValueType;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, oldValueType, newValueType);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setValueType(TypedRefCS newValueType)
   {
-    if (newValueType != valueType)
-    {
-      NotificationChain msgs = null;
-      if (valueType != null)
-        msgs = ((InternalEObject)valueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
-      if (newValueType != null)
-        msgs = ((InternalEObject)newValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
-      msgs = basicSetValueType(newValueType, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
-  }
+		if (newValueType != valueType) {
+			NotificationChain msgs = null;
+			if (valueType != null)
+				msgs = ((InternalEObject)valueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+			if (newValueType != null)
+				msgs = ((InternalEObject)newValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+			msgs = basicSetValueType(newValueType, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
+		return v.visitDictTypeCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((ImperativeOCLCSVisitor<R>)v).visitDictTypeCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
-        return basicSetKeyType(null, msgs);
-      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
-        return basicSetValueType(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+				return basicSetKeyType(null, msgs);
+			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+				return basicSetValueType(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
-        return getKeyType();
-      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
-        return getValueType();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+				return getKeyType();
+			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+				return getValueType();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
-        setKeyType((TypedRefCS)newValue);
-        return;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
-        setValueType((TypedRefCS)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+				setKeyType((TypedRefCS)newValue);
+				return;
+			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+				setValueType((TypedRefCS)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
-        setKeyType((TypedRefCS)null);
-        return;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
-        setValueType((TypedRefCS)null);
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+				setKeyType((TypedRefCS)null);
+				return;
+			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+				setValueType((TypedRefCS)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
-        return keyType != null;
-      case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
-        return valueType != null;
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+				return keyType != null;
+			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+				return valueType != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //DictTypeCSImpl

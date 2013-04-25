@@ -4,7 +4,9 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,19 +27,37 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 public interface DictLiteralExpCS extends ExpCS
 {
   /**
-   * Returns the value of the '<em><b>Owned Parts</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS}.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Owned Parts</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS}.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Owned Parts</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Owned Parts</em>' containment reference list.
-   * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictLiteralExpCS_OwnedParts()
-   * @model containment="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Owned Parts</em>' containment reference list.
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictLiteralExpCS_OwnedParts()
+	 * @model containment="true"
+	 * @generated
+	 */
   EList<DictLiteralPartCS> getOwnedParts();
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitDictLiteralExpCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(ImperativeOCLCSVisitor<R> v);
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLCSVisitor<R>)v).visitDictLiteralExpCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(BaseCSVisitor<R> v);
 
 } // DictLiteralExpCS

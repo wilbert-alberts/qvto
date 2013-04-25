@@ -16,10 +16,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
 
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,132 +39,144 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteral
 public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 {
   /**
-   * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOwnedParts()
-   * @generated
-   * @ordered
-   */
+	 * @see #getOwnedParts()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<ModelElementCS> ownedParts;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected ListLiteralExpCSImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return ImperativeoclcsPackage.Literals.LIST_LITERAL_EXP_CS;
-  }
+		return ImperativeoclcsPackage.Literals.LIST_LITERAL_EXP_CS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<ModelElementCS> getOwnedParts()
   {
-    if (ownedParts == null)
-    {
-      ownedParts = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
-    }
-    return ownedParts;
-  }
+		if (ownedParts == null) {
+			ownedParts = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
+		}
+		return ownedParts;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
+		return v.visitListLiteralExpCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((ImperativeOCLCSVisitor<R>)v).visitListLiteralExpCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
-        return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
-        return getOwnedParts();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+				return getOwnedParts();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
-        getOwnedParts().clear();
-        getOwnedParts().addAll((Collection<? extends ModelElementCS>)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+				getOwnedParts().clear();
+				getOwnedParts().addAll((Collection<? extends ModelElementCS>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
-        getOwnedParts().clear();
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+				getOwnedParts().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
-        return ownedParts != null && !ownedParts.isEmpty();
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+				return ownedParts != null && !ownedParts.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ListLiteralExpCSImpl
