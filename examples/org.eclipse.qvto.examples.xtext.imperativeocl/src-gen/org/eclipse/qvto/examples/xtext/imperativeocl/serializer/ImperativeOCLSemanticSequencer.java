@@ -635,7 +635,7 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     ((ownedParts+=CollectionLiteralExpCS ownedParts+=CollectionLiteralPartCS*)?)
+	 *     ((ownedParts+=CollectionLiteralPartCS ownedParts+=CollectionLiteralPartCS*)?)
 	 */
 	protected void sequence_ListLiteralExpCS(EObject context, ListLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

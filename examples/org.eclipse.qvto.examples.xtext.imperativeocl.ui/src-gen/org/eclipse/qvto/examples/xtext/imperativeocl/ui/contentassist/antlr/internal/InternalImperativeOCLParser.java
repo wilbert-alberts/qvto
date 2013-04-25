@@ -13972,7 +13972,7 @@ public class InternalImperativeOCLParser extends AbstractInternalContentAssistPa
             int alt37=2;
             int LA37_0 = input.LA(1);
 
-            if ( ((LA37_0>=51 && LA37_0<=55)) ) {
+            if ( ((LA37_0>=RULE_INT && LA37_0<=RULE_ESCAPED_ID)||(LA37_0>=25 && LA37_0<=27)||(LA37_0>=42 && LA37_0<=55)||(LA37_0>=57 && LA37_0<=58)||LA37_0==60||LA37_0==67||(LA37_0>=71 && LA37_0<=73)||LA37_0==77||LA37_0==79||(LA37_0>=81 && LA37_0<=82)) ) {
                 alt37=1;
             }
             switch (alt37) {
@@ -28824,28 +28824,28 @@ public class InternalImperativeOCLParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ListLiteralExpCS__OwnedPartsAssignment_3_0"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10065:1: rule__ListLiteralExpCS__OwnedPartsAssignment_3_0 : ( ruleCollectionLiteralExpCS ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10065:1: rule__ListLiteralExpCS__OwnedPartsAssignment_3_0 : ( ruleCollectionLiteralPartCS ) ;
     public final void rule__ListLiteralExpCS__OwnedPartsAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10069:1: ( ( ruleCollectionLiteralExpCS ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10070:1: ( ruleCollectionLiteralExpCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10069:1: ( ( ruleCollectionLiteralPartCS ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10070:1: ( ruleCollectionLiteralPartCS )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10070:1: ( ruleCollectionLiteralExpCS )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10071:1: ruleCollectionLiteralExpCS
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10070:1: ( ruleCollectionLiteralPartCS )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl.ui/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ui/contentassist/antlr/internal/InternalImperativeOCL.g:10071:1: ruleCollectionLiteralPartCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); 
+               before(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleCollectionLiteralExpCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_020414);
-            ruleCollectionLiteralExpCS();
+            pushFollow(FollowSets000.FOLLOW_ruleCollectionLiteralPartCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_020414);
+            ruleCollectionLiteralPartCS();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); 
+               after(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); 
             }
 
             }
@@ -34846,12 +34846,12 @@ public class InternalImperativeOCLParser extends AbstractInternalContentAssistPa
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__0__Impl_in_rule__ListLiteralExpCS__Group__09504 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__1_in_rule__ListLiteralExpCS__Group__09507 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_57_in_rule__ListLiteralExpCS__Group__0__Impl9535 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__1__Impl_in_rule__ListLiteralExpCS__Group__19566 = new BitSet(new long[]{0x00F8000000000000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__1__Impl_in_rule__ListLiteralExpCS__Group__19566 = new BitSet(new long[]{0x16FFFC000E0000F0L,0x000000000006A38CL});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__2_in_rule__ListLiteralExpCS__Group__19569 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_65_in_rule__ListLiteralExpCS__Group__1__Impl9597 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__2__Impl_in_rule__ListLiteralExpCS__Group__29628 = new BitSet(new long[]{0x00F8000000000000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__2__Impl_in_rule__ListLiteralExpCS__Group__29628 = new BitSet(new long[]{0x16FFFC000E0000F0L,0x000000000006A38CL});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__3_in_rule__ListLiteralExpCS__Group__29631 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__3__Impl_in_rule__ListLiteralExpCS__Group__39689 = new BitSet(new long[]{0x00F8000000000000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__3__Impl_in_rule__ListLiteralExpCS__Group__39689 = new BitSet(new long[]{0x16FFFC000E0000F0L,0x000000000006A38CL});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__4_in_rule__ListLiteralExpCS__Group__39692 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group_3__0_in_rule__ListLiteralExpCS__Group__3__Impl9719 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ListLiteralExpCS__Group__4__Impl_in_rule__ListLiteralExpCS__Group__49750 = new BitSet(new long[]{0x0000000000000002L});
@@ -35289,7 +35289,7 @@ public class InternalImperativeOCLParser extends AbstractInternalContentAssistPa
         public static final BitSet FOLLOW_ruleNavigatingCommaArgCS_in_rule__PrimaryExpCS__ArgumentAssignment_10_2_2_1_2_2_120321 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNavigatingBarArgCS_in_rule__PrimaryExpCS__ArgumentAssignment_10_2_2_1_2_3_020352 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNavigatingCommaArgCS_in_rule__PrimaryExpCS__ArgumentAssignment_10_2_2_1_2_3_120383 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCollectionLiteralExpCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_020414 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCollectionLiteralPartCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_020414 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleCollectionLiteralPartCS_in_rule__ListLiteralExpCS__OwnedPartsAssignment_3_1_120445 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDictLiteralPartCS_in_rule__DictLiteralExpCS__OwnedPartsAssignment_3_020476 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDictLiteralPartCS_in_rule__DictLiteralExpCS__OwnedPartsAssignment_3_1_120507 = new BitSet(new long[]{0x0000000000000002L});

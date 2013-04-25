@@ -2455,7 +2455,7 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleListLiteralExpCS"
-    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:889:1: ruleListLiteralExpCS returns [EObject current=null] : (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:889:1: ruleListLiteralExpCS returns [EObject current=null] : (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleListLiteralExpCS() throws RecognitionException {
         EObject current = null;
 
@@ -2471,11 +2471,11 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:892:28: ( (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:1: (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:892:28: ( (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:1: (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:1: (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:3: otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:1: (otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:893:3: otherlv_0= 'List' otherlv_1= '{' () ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )? otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleListLiteralExpCS1822); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -2507,30 +2507,30 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:2: ( ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )?
+            // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:2: ( ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )* )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( ((LA19_0>=64 && LA19_0<=68)) ) {
+            if ( ((LA19_0>=RULE_SIMPLE_ID && LA19_0<=RULE_SINGLE_QUOTED_STRING)||(LA19_0>=25 && LA19_0<=26)||LA19_0==28||(LA19_0>=37 && LA19_0<=40)||LA19_0==54||(LA19_0>=56 && LA19_0<=68)||(LA19_0>=72 && LA19_0<=75)||LA19_0==78||LA19_0==82||LA19_0==84) ) {
                 alt19=1;
             }
             switch (alt19) {
                 case 1 :
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:3: ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )*
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:3: ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) ) (otherlv_4= ',' ( (lv_ownedParts_5_0= ruleCollectionLiteralPartCS ) ) )*
                     {
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:3: ( (lv_ownedParts_3_0= ruleCollectionLiteralExpCS ) )
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:911:1: (lv_ownedParts_3_0= ruleCollectionLiteralExpCS )
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:910:3: ( (lv_ownedParts_3_0= ruleCollectionLiteralPartCS ) )
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:911:1: (lv_ownedParts_3_0= ruleCollectionLiteralPartCS )
                     {
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:911:1: (lv_ownedParts_3_0= ruleCollectionLiteralExpCS )
-                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:912:3: lv_ownedParts_3_0= ruleCollectionLiteralExpCS
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:911:1: (lv_ownedParts_3_0= ruleCollectionLiteralPartCS )
+                    // ../org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/parser/antlr/internal/InternalImperativeOCL.g:912:3: lv_ownedParts_3_0= ruleCollectionLiteralPartCS
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); 
+                      	        newCompositeNode(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); 
                       	    
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleCollectionLiteralExpCS_in_ruleListLiteralExpCS1868);
-                    lv_ownedParts_3_0=ruleCollectionLiteralExpCS();
+                    pushFollow(FollowSets000.FOLLOW_ruleCollectionLiteralPartCS_in_ruleListLiteralExpCS1868);
+                    lv_ownedParts_3_0=ruleCollectionLiteralPartCS();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -2543,7 +2543,7 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"ownedParts",
                               		lv_ownedParts_3_0, 
-                              		"CollectionLiteralExpCS");
+                              		"CollectionLiteralPartCS");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -15487,8 +15487,8 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleListLiteralExpCS_in_entryRuleListLiteralExpCS1775 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleListLiteralExpCS1785 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_25_in_ruleListLiteralExpCS1822 = new BitSet(new long[]{0x0000000400000000L});
-        public static final BitSet FOLLOW_34_in_ruleListLiteralExpCS1834 = new BitSet(new long[]{0x0000000800000000L,0x000000000000001FL});
-        public static final BitSet FOLLOW_ruleCollectionLiteralExpCS_in_ruleListLiteralExpCS1868 = new BitSet(new long[]{0x0000000820000000L});
+        public static final BitSet FOLLOW_34_in_ruleListLiteralExpCS1834 = new BitSet(new long[]{0xFF4001E8160000F0L,0x0000000000144F1FL});
+        public static final BitSet FOLLOW_ruleCollectionLiteralPartCS_in_ruleListLiteralExpCS1868 = new BitSet(new long[]{0x0000000820000000L});
         public static final BitSet FOLLOW_29_in_ruleListLiteralExpCS1881 = new BitSet(new long[]{0xFF4001E0160000F0L,0x0000000000144F1FL});
         public static final BitSet FOLLOW_ruleCollectionLiteralPartCS_in_ruleListLiteralExpCS1902 = new BitSet(new long[]{0x0000000820000000L});
         public static final BitSet FOLLOW_35_in_ruleListLiteralExpCS1918 = new BitSet(new long[]{0x0000000000000002L});

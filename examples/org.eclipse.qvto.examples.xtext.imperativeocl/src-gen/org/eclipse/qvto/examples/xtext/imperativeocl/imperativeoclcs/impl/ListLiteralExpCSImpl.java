@@ -14,9 +14,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS;
+
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
 
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
@@ -46,7 +46,7 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 	 * @generated
 	 * @ordered
 	 */
-  protected EList<ModelElementCS> ownedParts;
+  protected EList<CollectionLiteralPartCS> ownedParts;
 
   /**
 	 * <!-- begin-user-doc -->
@@ -74,10 +74,10 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
    * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList<ModelElementCS> getOwnedParts()
+  public EList<CollectionLiteralPartCS> getOwnedParts()
   {
 		if (ownedParts == null) {
-			ownedParts = new EObjectContainmentEList<ModelElementCS>(ModelElementCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
 		}
 		return ownedParts;
 	}
@@ -142,7 +142,7 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				getOwnedParts().clear();
-				getOwnedParts().addAll((Collection<? extends ModelElementCS>)newValue);
+				getOwnedParts().addAll((Collection<? extends CollectionLiteralPartCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

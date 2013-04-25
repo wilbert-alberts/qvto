@@ -661,7 +661,7 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cListLiteralExpCSAction_2 = (Action)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Assignment cOwnedPartsAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final RuleCall cOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0 = (RuleCall)cOwnedPartsAssignment_3_0.eContents().get(0);
+		private final RuleCall cOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0 = (RuleCall)cOwnedPartsAssignment_3_0.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
 		private final Keyword cCommaKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
 		private final Assignment cOwnedPartsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
@@ -670,10 +670,10 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ListLiteralExpCS:
 		//
-		//	"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralExpCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}";
+		//	"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralPartCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralExpCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}"
+		//"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralPartCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"List"
@@ -685,14 +685,14 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//{ListLiteralExpCS}
 		public Action getListLiteralExpCSAction_2() { return cListLiteralExpCSAction_2; }
 
-		//(ownedParts+=CollectionLiteralExpCS ("," ownedParts+=CollectionLiteralPartCS)*)?
+		//(ownedParts+=CollectionLiteralPartCS ("," ownedParts+=CollectionLiteralPartCS)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//ownedParts+=CollectionLiteralExpCS
+		//ownedParts+=CollectionLiteralPartCS
 		public Assignment getOwnedPartsAssignment_3_0() { return cOwnedPartsAssignment_3_0; }
 
-		//CollectionLiteralExpCS
-		public RuleCall getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0() { return cOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0; }
+		//CollectionLiteralPartCS
+		public RuleCall getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0() { return cOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0; }
 
 		//("," ownedParts+=CollectionLiteralPartCS)*
 		public Group getGroup_3_1() { return cGroup_3_1; }
@@ -1112,7 +1112,7 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ListLiteralExpCS:
 	//
-	//	"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralExpCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}";
+	//	"List" "{" {ListLiteralExpCS} (ownedParts+=CollectionLiteralPartCS ("," ownedParts+=CollectionLiteralPartCS)*)? "}";
 	public ListLiteralExpCSElements getListLiteralExpCSAccess() {
 		return (pListLiteralExpCS != null) ? pListLiteralExpCS : (pListLiteralExpCS = new ListLiteralExpCSElements());
 	}

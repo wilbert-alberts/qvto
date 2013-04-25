@@ -4,9 +4,8 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -30,7 +29,7 @@ public interface ListLiteralExpCS extends ExpCS
 {
   /**
 	 * Returns the value of the '<em><b>Owned Parts</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS}.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS}.
 	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Owned Parts</em>' containment reference list isn't clear,
@@ -42,7 +41,7 @@ public interface ListLiteralExpCS extends ExpCS
 	 * @model containment="true"
 	 * @generated
 	 */
-  EList<ModelElementCS> getOwnedParts();
+  EList<CollectionLiteralPartCS> getOwnedParts();
 
 		/**
 	 * <!-- begin-user-doc -->

@@ -14,7 +14,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListLiteralExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ModelElementCS"
+        eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//CollectionLiteralPartCS"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DictLiteralExpCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS">

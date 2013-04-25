@@ -10068,8 +10068,8 @@ rule__ListLiteralExpCS__OwnedPartsAssignment_3_0
     }
 :
 (
-{ before(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); }
-	ruleCollectionLiteralExpCS{ after(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); }
+{ before(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); }
+	ruleCollectionLiteralPartCS{ after(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); }
 )
 
 ;

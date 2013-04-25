@@ -136,7 +136,7 @@ PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most reject
 	
 ListLiteralExpCS : 
 	'List' '{' {ListLiteralExpCS} 
-		(ownedParts+=CollectionLiteralExpCS
+		(ownedParts+=CollectionLiteralPartCS
 		(',' ownedParts+=CollectionLiteralPartCS)*)? 
 	'}'
 ;

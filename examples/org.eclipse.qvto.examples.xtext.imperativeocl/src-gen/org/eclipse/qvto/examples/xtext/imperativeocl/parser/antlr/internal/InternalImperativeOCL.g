@@ -910,9 +910,9 @@ ruleListLiteralExpCS returns [EObject current=null]
 )((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralExpCSParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getListLiteralExpCSAccess().getOwnedPartsCollectionLiteralPartCSParserRuleCall_3_0_0()); 
 	    }
-		lv_ownedParts_3_0=ruleCollectionLiteralExpCS		{
+		lv_ownedParts_3_0=ruleCollectionLiteralPartCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getListLiteralExpCSRule());
 	        }
@@ -920,7 +920,7 @@ ruleListLiteralExpCS returns [EObject current=null]
        			$current, 
        			"ownedParts",
         		lv_ownedParts_3_0, 
-        		"CollectionLiteralExpCS");
+        		"CollectionLiteralPartCS");
 	        afterParserOrEnumRuleCall();
 	    }
 

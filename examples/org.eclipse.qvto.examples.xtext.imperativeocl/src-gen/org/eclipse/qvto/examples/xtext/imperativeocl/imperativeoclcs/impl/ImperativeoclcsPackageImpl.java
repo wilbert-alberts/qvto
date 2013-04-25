@@ -646,7 +646,7 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		initEOperation(op, g1);
 
 		initEClass(listLiteralExpCSEClass, ListLiteralExpCS.class, "ListLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getListLiteralExpCS_OwnedParts(), theBaseCSTPackage.getModelElementCS(), null, "ownedParts", null, 0, -1, ListLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getListLiteralExpCS_OwnedParts(), theEssentialOCLCSTPackage.getCollectionLiteralPartCS(), null, "ownedParts", null, 0, -1, ListLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(listLiteralExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
