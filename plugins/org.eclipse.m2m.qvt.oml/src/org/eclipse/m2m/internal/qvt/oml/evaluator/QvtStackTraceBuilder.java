@@ -26,6 +26,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ecore.FeatureCallExp;
@@ -37,7 +38,6 @@ import org.eclipse.ocl.utilities.ASTNode;
  */
 public class QvtStackTraceBuilder {
 	
-	private static final String NAME_SEPARATOR = "::"; //$NON-NLS-1$
 	private static final String UNKNOWN_NAME = "<Unknown>"; //$NON-NLS-1$
 	private static final int UNKNOWN_LINE_NUM = -1;
 	
@@ -130,7 +130,7 @@ public class QvtStackTraceBuilder {
     		operName = operation.getName();	    		
     		EClassifier contextType = QvtOperationalParserUtil.getContextualType(operation);
     		if(contextType != null) {
-    			operName = contextType.getName() + NAME_SEPARATOR + operName;
+    			operName = contextType.getName() + EmfUtil.PATH_SEPARATOR + operName;
     		}
 		}
 

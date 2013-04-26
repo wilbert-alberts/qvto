@@ -52,7 +52,7 @@ public class ResourceDestinationChooser extends ChooserAdapter implements IDesti
     }
     
     public void setInitialSelection(String uriString) {
-        URI uri = URI.createURI(uriString);
+        URI uri = uriString.trim().isEmpty() ? null : URI.createURI(uriString);
         if(uri == null) {
             return;
         }

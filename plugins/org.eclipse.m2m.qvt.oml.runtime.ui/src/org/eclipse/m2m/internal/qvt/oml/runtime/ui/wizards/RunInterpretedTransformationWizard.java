@@ -19,9 +19,6 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -39,9 +36,9 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.MetamodelHandlerMan
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimePluginImages;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtRuntimeUIPlugin;
 import org.eclipse.osgi.util.NLS;
@@ -62,11 +59,10 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         setDefaultPageImageDescriptor(desc);
         
         myTransformationData = new ApplyTransformationData();
-        myValidationRS = new ResourceSetImpl();
 		
 		mySelectTransformationPage = new SelectInterpretedTransformationPage("SelectTransfromationPageId"); //$NON-NLS-1$
         mySelectTransformationPage.setTitle(Messages.SelectWorkspaceTransformationPage_Title);
-        myTransformationParametersPage = new TransformationParametersPage("TransformationParametersPageId", paramUris, myValidationRS); //$NON-NLS-1$
+        myTransformationParametersPage = new TransformationParametersPage("TransformationParametersPageId", paramUris); //$NON-NLS-1$
         myTransformationParametersPage.setTitle(Messages.TransformationParametersPage_Title);
         myQvtTransformationConfigurationPage = new QvtTransformationConfigurationPage("QvtTransformationConfigurationPage", myTransformationData); //$NON-NLS-1$
         myQvtTransformationConfigurationPage.setTitle(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.ApplyTransformationWizard_ConfigProperties);
@@ -108,8 +104,11 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
 	@Override
 	public void dispose() {
 		super.dispose();
-		for (Resource res : myValidationRS.getResources()) {
-			res.unload();
+		try {
+			if (myTransformation != null) {
+				myTransformation.cleanup();
+			}
+		} catch (MdaException e) {
 		}
 	}
 	
@@ -213,5 +212,4 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
     private final ApplyTransformationData myTransformationData;
     private final URI myTransfUri;
     private QvtTransformation myTransformation;
-    private final ResourceSet myValidationRS;
 }

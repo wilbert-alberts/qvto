@@ -16,13 +16,13 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.Messages;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -41,23 +41,15 @@ public class ExtendedEmfUtil {
 		}
     }
     
-    public static void saveModel(EObject eObject, CFile file, Map<?,?> options) throws MdaException {
+    public static void saveModel(EObject eObject, URI uri, Map<?,?> options) throws MdaException {
         try {
-        	URI uri = URI.createURI(file.getFileStore().toURI().toString());
 			EmfUtil.saveModel(eObject, uri, options);
 		} catch (EmfException e) {
 			throw new MdaException(e);
-		} catch (IOException e) {
-			throw new MdaException(e);
 		} catch (Exception e) {
-			throw new MdaException(NLS.bind(Messages.InvalidFilePath, new Object[] {file}), e);
+			throw new MdaException(NLS.bind(Messages.InvalidFilePath, new Object[] {uri}), e);
 		}
         
-        try {
-            file.refresh();
-        } 
-        catch (Exception e) {
-        	throw new MdaException(NLS.bind(Messages.InvalidFilePath, new Object[] {file}), e);
-        }
+       	URIUtils.refresh(uri);
     }
 }

@@ -25,7 +25,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
@@ -35,14 +34,18 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -53,10 +56,8 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class TransformationSignatureLaunchControl extends ScrolledComposite {
 
-	public TransformationSignatureLaunchControl(Composite parent, int style, ResourceSet validationRS) {
+	public TransformationSignatureLaunchControl(Composite parent, int style) {
 		super(parent, style|SWT.V_SCROLL);
-		
-		myValidationRS = validationRS;
 		
 		setExpandHorizontal(true);
 		setExpandVertical(true);
@@ -99,7 +100,7 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		getParent().layout();
 	}
 
-	public IStatus validate(String moduleName, Shell shell, String traceFilePath, boolean useTrace) {
+	public IStatus validate(String moduleName, Shell shell, String traceFilePath, boolean useTrace, ValidationType validationType) {
 		for (Map.Entry<ModelParameterInfo, IUriGroup> entry : myParamGroups.entrySet()) {
 			entry.getValue().update(moduleName, entry.getKey(), shell);
 		}
@@ -110,16 +111,12 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		}
 
 		try {
-			IStatus status = QvtValidator.validateTransformation(myTransformation, targetUris,
-					traceFilePath, useTrace);
-	        if (StatusUtil.isError(status)) {
-	        	return status;
-	        }
+			return QvtValidator.validateTransformation(myTransformation, targetUris,
+					traceFilePath, useTrace, validationType);
 		}
 		catch (Exception e) {
 	        return StatusUtil.makeErrorStatus(e.getMessage(), e);
 		}
-		return StatusUtil.makeOkStatus();
 	}
 
 	public void initializeFrom(ILaunchConfiguration configuration) throws CoreException {
@@ -166,11 +163,16 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		return ""; //$NON-NLS-1$
 	}
 	
-	private void createContents(Composite parent, List<IUriGroup.IModifyListener> listeners) {
-        try {
+	private void createContents(Composite parent, final List<IUriGroup.IModifyListener> listeners) {
+		try {
+			List<ModelParameterInfo> transfParameters = getTransfParameters();
+			if (transfParameters.size() > 0) {
+				createValidationButton(parent, listeners);
+			}
+		
         	myParamGroups = new LinkedHashMap<ModelParameterInfo, IUriGroup>();
-			for (ModelParameterInfo paramInfo : getTransfParameters()) {
-				IUriGroup uriGroup = TransformationControls.createUriGroup(parent, paramInfo, myValidationRS);
+			for (ModelParameterInfo paramInfo : transfParameters) {
+				IUriGroup uriGroup = TransformationControls.createUriGroup(parent, paramInfo, myTransformation.getResourceSet());
 				myParamGroups.put(paramInfo, uriGroup);
 				for (IUriGroup.IModifyListener listener : listeners) {
 					uriGroup.addModifyListener(listener);
@@ -179,6 +181,25 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 		} catch (MdaException e) {
 			myParamGroups = Collections.emptyMap();
 		}
+	}
+
+	private void createValidationButton(Composite parent, final List<IUriGroup.IModifyListener> listeners) {
+		Button validateModelsButton = new Button(parent, SWT.PUSH);
+		validateModelsButton.setText(Messages.QvtLauncherTab_ValidateModels);
+		validateModelsButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				for (IUriGroup.IModifyListener listener : listeners) {
+					listener.performValidation(false);
+				}
+			}
+		});
+		
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = 1;
+		gridData.horizontalIndent = 3;
+		gridData.verticalIndent = 3;
+		validateModelsButton.setLayoutData(gridData);
 	}
 	
 	private void setCompositeLayout(Composite cm) {
@@ -212,10 +233,6 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	private static class ModelParameterInfo implements IModelParameterInfo {
 		ModelParameterInfo(TransformationParameter transfParam) {
 			myTransfParam = transfParam;
-		}
-		
-		TransformationParameter getTransfParam() {
-			return myTransfParam;
 		}
 		
 		public Direction getDirection() {
@@ -265,7 +282,6 @@ public class TransformationSignatureLaunchControl extends ScrolledComposite {
 	}
 	
 	private QvtTransformation myTransformation;
-	private final ResourceSet myValidationRS;
 	private Map<ModelParameterInfo, IUriGroup> myParamGroups = Collections.emptyMap();
 
 }

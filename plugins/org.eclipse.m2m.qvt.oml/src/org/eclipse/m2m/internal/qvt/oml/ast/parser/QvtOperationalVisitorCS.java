@@ -117,6 +117,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ConstructorBody;
@@ -2750,7 +2751,7 @@ public class QvtOperationalVisitorCS
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
 			if (pathNameCS != null && !pathNameCS.getSimpleNames().isEmpty()) {
 				String metamodelName = QvtOperationalParserUtil.getStringRepresentation(
-						pathNameCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR); 
+						pathNameCS, EmfUtil.PATH_SEPARATOR); 
 
 				if (resolvedMetamodel == null) {
 					resolvedMetamodel = resolveMetamodel(env, null, pathNameCS.getSimpleNames(), pathNameCS);
@@ -4060,7 +4061,7 @@ public class QvtOperationalVisitorCS
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
         } else {
-            String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR; //$NON-NLS-1$
+            String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + EmfUtil.PATH_SEPARATOR; //$NON-NLS-1$
             mappingFQName += mappingName;
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {

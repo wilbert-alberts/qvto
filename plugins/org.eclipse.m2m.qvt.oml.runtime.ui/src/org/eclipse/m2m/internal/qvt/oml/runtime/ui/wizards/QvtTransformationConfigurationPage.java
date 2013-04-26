@@ -15,8 +15,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationP
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfigurationUI;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.QvtTransformationConfigurationUI.PropertyChangeListener;
 import org.eclipse.swt.widgets.Composite;
-
-import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.AbstractCompositeWizardPage;
 
 /**
@@ -26,15 +25,18 @@ public class QvtTransformationConfigurationPage extends AbstractCompositeWizardP
     public QvtTransformationConfigurationPage(String pageName,
             ApplyTransformationData data) {
         super(pageName);
-        myUI = new QvtTransformationConfigurationUI(data, new ISetMessage() {
+        myUI = new QvtTransformationConfigurationUI(data, new ISetMessageEx() {
             public void setErrorMessage(String message) {
-                QvtTransformationConfigurationPage.this
-                        .setErrorMessage(message);
+                QvtTransformationConfigurationPage.this.setErrorMessage(message);
             }
 
             public void setMessage(String message) {
                 QvtTransformationConfigurationPage.this.setMessage(message, WARNING);
             }
+
+			public void setWarningMessage(String message) {
+                QvtTransformationConfigurationPage.this.setMessage(message, WARNING);
+			}
         });
         myUI.addPropertyChangeListener(new PropertyChangeListener() {
             public void changePerformed(QvtConfigurationProperty property) {

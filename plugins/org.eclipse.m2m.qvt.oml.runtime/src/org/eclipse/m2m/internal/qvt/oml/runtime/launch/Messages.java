@@ -41,6 +41,7 @@ public class Messages extends NLS {
 	public static String QvtValidator_InvalidUri;
 	public static String QvtValidator_UriNotFile;
 	public static String QvtValidator_UriCorrupted;
+	public static String QvtValidator_InplaceConfigNotSupported;
 	
 	public static String InMemoryQvtLaunchConfigurationDelegate_TransformationJobName;
 	public static String InMemoryQvtLaunchConfigurationDelegate_RunningTaskName;

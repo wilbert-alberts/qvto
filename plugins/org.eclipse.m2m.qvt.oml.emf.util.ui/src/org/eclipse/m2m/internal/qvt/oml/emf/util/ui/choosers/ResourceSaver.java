@@ -17,19 +17,24 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.EmfUtilUiPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorDescriptor;
@@ -43,8 +48,7 @@ import org.eclipse.ui.ide.IGotoMarker;
 
 public class ResourceSaver implements IResultSaver{
     public IStatus canSave(EClassifier cls, URI destUri) {
-        ResourceSet outputRS = EmfUtil.getOutputResourceSet();
-		URI converted = outputRS.getURIConverter().normalize(destUri);
+		URI converted = URIConverter.INSTANCE.normalize(destUri);
 		
 		IStatus okStatus = new Status(IStatus.OK, EmfUtilUiPlugin.ID, IStatus.OK, "", null);//$NON-NLS-1$
 		String scheme = converted.scheme();
@@ -92,24 +96,40 @@ public class ResourceSaver implements IResultSaver{
         if(resource == null) {
             return false;
         }
+        URIConverter uriConverter = resource.getResourceSet() != null ? resource.getResourceSet().getURIConverter() : URIConverter.INSTANCE;
+        URI uri = uriConverter.normalize(resource.getURI());
         
-        IFile file = getFile(resource);
+        IEditorDescriptor defaultEditorDescriptor = null;
+        IFile file = URIUtils.getFile(uri);
         if(file == null || !file.exists()) {
-            return false;
-        }
-        
-        IEditorPart part = null;
-        
-        IEditorDescriptor defaultEditorDescriptor = IDE.getDefaultEditor(file);
+        	try {
+        		defaultEditorDescriptor = IDE.getEditorDescriptor(uri.toFileString());
+        	} catch (RuntimeException e) {
+        	}
+            file = null;
+        } else {
+            defaultEditorDescriptor = IDE.getDefaultEditor(file);
+			resource.setURI(URI.createPlatformResourceURI(file.getFullPath().toString(), true));
+        }        
         if (defaultEditorDescriptor == null) {
         	return false;
         }
+
+        IEditorPart part = null;
         String defaultID = defaultEditorDescriptor.getId();
 		if (EditorsUI.DEFAULT_TEXT_EDITOR_ID.equals(defaultID)) {
-			part = openEditor(page, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID"); //$NON-NLS-1$
+			if (file == null) {
+				part = openInEditor(page, uri);
+			} else {
+				part = openEditor(page, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID"); //$NON-NLS-1$
+			}
         }
 		if (part == null) {
-			part = openEditor(page, file, defaultID);
+			if (file == null) {
+				part = openInEditor(page, uri);
+			} else {
+				part = openEditor(page, file, defaultID);
+			}
 		}
 		if (part == null) {
 			return false;
@@ -140,37 +160,138 @@ public class ResourceSaver implements IResultSaver{
 		return null;
 	}
     
+	private IEditorPart openInEditor(IWorkbenchPage page, URI uri) {
+		IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(uri.toFileString()));
+		if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
+			try {
+				return IDE.openEditorOnFileStore(page, fileStore);
+			} catch (PartInitException e) {
+			}
+		}
+		return null;
+	}
+
     public URI getUri(EObject obj) {
         return obj == null ? null : EcoreUtil.getURI(obj);
     }
     
-    public static IFile getFile(EObject obj) {
-        URI uri = EcoreUtil.getURI(obj);
-        return org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
-    }
-    
-    public static IFile getFile(Resource resource) {
-        ResourceSet set = resource.getResourceSet();
-        URI uri;
-        if(set != null) {
-            uri = set.getURIConverter().normalize(resource.getURI());
-        }
-        else {
-            uri = resource.getURI();
-        }
-         
-        return org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
-    }
-
     private IMarker makeMarker(EObject obj, IFile file) throws CoreException {
         URI uri = EcoreUtil.getURI(obj);
         Map<String, String> attributes = new HashMap<String, String>();
         attributes.put(EValidator.URI_ATTRIBUTE, String.valueOf(uri));
         
-        IMarker marker = file.createMarker(EValidator.MARKER);
-        marker.setAttributes(attributes);
-        
+        IMarker marker = (file == null ? new ShallowMarker(EValidator.MARKER) : file.createMarker(EValidator.MARKER));
+        marker.setAttributes(attributes);        
         return marker;
+    }
+    
+    
+    private static class ShallowMarker implements IMarker {
+    	
+    	private final Map<String, Object> myAttributes = new HashMap<String, Object>();
+    	private final long myCreationTime;
+    	private final String myType;
+    	
+    	public ShallowMarker(String type) {
+    		myCreationTime = System.currentTimeMillis();
+    		myType = type;
+		}
+
+		public Object getAdapter(Class adapter) {
+			return null;
+		}
+
+		public void delete() throws CoreException {
+		}
+
+		public boolean exists() {
+			return false;
+		}
+
+		public Object getAttribute(String attributeName) throws CoreException {
+			return myAttributes.get(attributeName);
+		}
+
+		public int getAttribute(String attributeName, int defaultValue) {
+			Object object = myAttributes.get(attributeName);
+			if (object instanceof Integer) {
+				return ((Integer) object).intValue();
+			}
+			return defaultValue;
+		}
+
+		public String getAttribute(String attributeName, String defaultValue) {
+			Object object = myAttributes.get(attributeName);
+			if (object instanceof String) {
+				return (String) object;
+			}
+			return defaultValue;
+		}
+
+		public boolean getAttribute(String attributeName, boolean defaultValue) {
+			Object object = myAttributes.get(attributeName);
+			if (object instanceof Boolean) {
+				return (Boolean) object;
+			}
+			return defaultValue;
+		}
+
+		public Map<String, Object> getAttributes() throws CoreException {
+			return myAttributes;
+		}
+
+		public Object[] getAttributes(String[] attributeNames) throws CoreException {
+			Object[] result = new Object[attributeNames.length];
+			for (int i = 0; i < attributeNames.length; i++) {
+				result[i] = getAttribute(attributeNames[i]);
+			}
+			return result;
+		}
+
+		public long getCreationTime() throws CoreException {
+			return myCreationTime;
+		}
+
+		public long getId() {
+			return myCreationTime;
+		}
+
+		public IResource getResource() {
+			return null;
+		}
+
+		public String getType() throws CoreException {
+			return IMarker.MARKER;
+		}
+
+		public boolean isSubtypeOf(String superType) throws CoreException {
+			return myType.equals(superType);
+		}
+
+		public void setAttribute(String attributeName, int value) throws CoreException {
+			myAttributes.put(attributeName, value);
+		}
+
+		public void setAttribute(String attributeName, Object value) throws CoreException {
+			myAttributes.put(attributeName, value);
+		}
+
+		public void setAttribute(String attributeName, boolean value) throws CoreException {
+			myAttributes.put(attributeName, value);
+		}
+
+		public void setAttributes(String[] attributeNames, Object[] values) throws CoreException {
+			Assert.isTrue(attributeNames.length == values.length);
+			for (int i = 0; i < attributeNames.length; i++) {
+				setAttribute(attributeNames[i], values[i]);
+			}
+		}
+
+		public void setAttributes(Map<String, ? extends Object> attributes) throws CoreException {
+			myAttributes.clear();
+			myAttributes.putAll(attributes);
+		}
+		
     }
 
 }

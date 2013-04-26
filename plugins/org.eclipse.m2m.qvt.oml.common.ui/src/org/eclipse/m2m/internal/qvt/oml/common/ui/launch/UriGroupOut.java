@@ -11,7 +11,6 @@
  *******************************************************************************/
  package org.eclipse.m2m.internal.qvt.oml.common.ui.launch;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -24,7 +23,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.IModelParameterInfo;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IChooser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IDestinationChooser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.choosers.IMetamodelHandler;
@@ -85,7 +83,12 @@ public class UriGroupOut extends BaseUriGroup {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (myObject == null) {
-						throw new RuntimeException("No object"); //$NON-NLS-1$
+						TargetUriData oldData = new TargetUriData(myData);
+						EObject oldObject = myObject;
+						myObject = getEObject(oldData.getUriString(), oldObject);
+					}
+					if (myObject == null) {
+						return;
 					}
 
 					EStructuralFeature feature = myObject.eClass().getEStructuralFeature(myData.getFeature());
@@ -94,6 +97,9 @@ public class UriGroupOut extends BaseUriGroup {
 					if (dialog.open() == Window.OK) {
 						EReference ref = dialog.getReference();
 						myFeatureText.setText(ref.getName());
+					}
+					else {
+						updateData();
 					}
 				}
 			});
@@ -171,15 +177,9 @@ public class UriGroupOut extends BaseUriGroup {
 		}
 		
 		try {
-            TargetUriData oldData = new TargetUriData(myData);
-			EObject oldObject = myObject;
-			
-			myObject = null;
-
 	        URI destUri = EmfUtil.makeUri(getText());
-            IFile file = destUri != null ? WorkspaceUtils.getWorkspaceFile(destUri) : null;
 			
-			TargetType targetType = (file != null && file.exists()) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
+			TargetType targetType = (destUri != null && EmfUtil.isUriExists(destUri, myValidationRS)) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
 			myData = new TargetUriData(targetType,
 					myUriText.getText().trim(),
 					myFeatureText.getText(),
@@ -196,23 +196,24 @@ public class UriGroupOut extends BaseUriGroup {
 				}
 				
 				case EXISTING_CONTAINER: {
-					try {
-						myObject = getEObject(oldData.getUriString(), oldObject);
-					}
-					finally {
-						myFeatureText.setEnabled(myObject != null);
-						myFeatureButton.setEnabled(myObject != null);
+					myFeatureText.setEnabled(myObject != null);
+					myFeatureButton.setEnabled(true);
 
-						if (myObject != null) {
-				        	EStructuralFeature feature = myObject.eClass().getEStructuralFeature(myFeatureText.getText());
-							myClearContentsCheckbox.setEnabled(feature instanceof EReference);
-			        	}
-			        	else {
-			        		myClearContentsCheckbox.setEnabled(false);
-			        	}
-					}
+					if (myObject != null) {
+			        	EStructuralFeature feature = myObject.eClass().getEStructuralFeature(myFeatureText.getText());
+						myClearContentsCheckbox.setEnabled(feature instanceof EReference);
+		        	}
+		        	else {
+		        		myClearContentsCheckbox.setEnabled(false);
+		        	}
 					break;
 				}
+				
+				case INPLACE:
+					myFeatureText.setEnabled(false);
+					myFeatureButton.setEnabled(false);
+	        		myClearContentsCheckbox.setEnabled(false);
+	        		break;
 			}
 		}
 		finally {

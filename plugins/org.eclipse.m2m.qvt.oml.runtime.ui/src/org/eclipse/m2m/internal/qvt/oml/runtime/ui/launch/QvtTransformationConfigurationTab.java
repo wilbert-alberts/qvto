@@ -22,7 +22,7 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
@@ -44,15 +44,18 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
     public QvtTransformationConfigurationTab(ITransformationMaker transformationMaker) {
         myTransformationMaker = transformationMaker;
         myData = new ApplyTransformationData();
-        myUI = new QvtTransformationConfigurationUI(myData, new ISetMessage() {
+        myUI = new QvtTransformationConfigurationUI(myData, new ISetMessageEx() {
             public void setErrorMessage(String message) {
-                QvtTransformationConfigurationTab.this
-                        .setErrorMessage(message);
+                QvtTransformationConfigurationTab.this.setErrorMessage(message);
             }
 
             public void setMessage(String message) {
                 QvtTransformationConfigurationTab.this.setMessage(message);
             }
+
+			public void setWarningMessage(String message) {
+                QvtTransformationConfigurationTab.this.setWarningMessage(message);
+			}
         });
         myUI.addPropertyChangeListener(new PropertyChangeListener() {
             public void changePerformed(QvtConfigurationProperty property) {

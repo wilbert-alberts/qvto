@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -37,6 +36,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
@@ -56,18 +56,20 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class TransformationParametersPage extends WizardPage {
 	
-	public TransformationParametersPage(String pageId, List<URI> paramUris, ResourceSet validationRS) {
+	public TransformationParametersPage(String pageId, List<URI> paramUris) {
 		super(pageId);
         setDescription(org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.Messages.TransformationParametersPage_Description);
 
         myInitialParamUris = paramUris != null ? paramUris : Collections.<URI>emptyList();
-        myValidationRS = validationRS;
         
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
         myUriListeners.add(new IUriGroup.IModifyListener() {
 			public void modified() {
 				initTraceFileText();
-				setPageComplete(validatePage());
+				setPageComplete(validatePage(ValidationType.LIGHTWEIGHT_VALIDATION));
+			}
+			public void performValidation(boolean isLightweight) {
+				validatePage(ValidationType.FULL_VALIDATION);
 			}
 		});
 	}
@@ -104,7 +106,7 @@ public class TransformationParametersPage extends WizardPage {
         setControl(composite);
         Dialog.applyDialogFont(composite);
         
-        setPageComplete(validatePage());
+        setPageComplete(validatePage(ValidationType.LIGHTWEIGHT_VALIDATION));
 	}
 
 	protected void createTransformationSection(Composite parent) {
@@ -116,7 +118,7 @@ public class TransformationParametersPage extends WizardPage {
             }});
 
         TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
-        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER, myValidationRS);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
         setTransformation(myTransformation);
 
         TransformationControls.createLabel(parent, "", TransformationControls.GRID); //$NON-NLS-1$
@@ -127,7 +129,7 @@ public class TransformationParametersPage extends WizardPage {
         myOpenEditor.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                setPageComplete(validatePage());
+                setPageComplete(validatePage(ValidationType.LIGHTWEIGHT_VALIDATION));
             }
         });
         myOpenEditor.setLayoutData(new GridData());
@@ -212,7 +214,7 @@ public class TransformationParametersPage extends WizardPage {
 		return myOpenEditor.getSelection();
 	}
     
-	protected boolean validatePage() {
+	protected boolean validatePage(ValidationType validationType) {
         if (myTransformation == null) {
             return false;
         }
@@ -230,7 +232,7 @@ public class TransformationParametersPage extends WizardPage {
         if (myTraceFile.getText().length() == 0) {
         	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
         }
-        IStatus status = myTransfSignatureControl.validate(moduleName, getShell(), myTraceFile.getText(), myTraceFile.getUseFileFlag());
+        IStatus status = myTransfSignatureControl.validate(moduleName, getShell(), myTraceFile.getText(), myTraceFile.getUseFileFlag(), validationType);
         return TransformationControls.statusToTab(status, SET_MESSAGE);
     }
 
@@ -267,7 +269,6 @@ public class TransformationParametersPage extends WizardPage {
     };
     
     private QvtTransformation myTransformation;
-	private final ResourceSet myValidationRS;
     private final List<IUriGroup.IModifyListener> myUriListeners;
     private OptionalFileGroup myTraceFile;
     private boolean myTraceNameNonChanged;

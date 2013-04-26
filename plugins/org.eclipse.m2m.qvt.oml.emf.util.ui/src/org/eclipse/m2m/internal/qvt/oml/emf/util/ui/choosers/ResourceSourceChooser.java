@@ -61,7 +61,7 @@ public class ResourceSourceChooser extends ChooserAdapter implements ISourceChoo
 	}
 
 	public void setInitialSelection(String uriString) {
-    	URI uri = URI.createURI(uriString);
+    	URI uri = uriString.trim().isEmpty() ? null : URI.createURI(uriString);
         if(uri == null) {
             return;
         }

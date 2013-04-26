@@ -51,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ModulePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
@@ -120,7 +121,7 @@ public class QvtOperationalParserUtil {
 			StringBuilder buf = new StringBuilder();
 			if(mappingDeclarationCS.getContextType() != null) {
 				buf.append(QvtOperationalParserUtil.getStringRepresentation(mappingDeclarationCS.getContextType()));
-				buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+				buf.append(EmfUtil.PATH_SEPARATOR);
 			}
 			if(mappingDeclarationCS.getSimpleNameCS() != null) {				
 				buf.append(mappingDeclarationCS.getSimpleNameCS().getValue());
@@ -136,7 +137,7 @@ public class QvtOperationalParserUtil {
 	}
 	
 	public static String getStringRepresentation(PathNameCS pathName) {
-		return getStringRepresentation(pathName.getSimpleNames(), "::"); //$NON-NLS-1$
+		return getStringRepresentation(pathName.getSimpleNames(), EmfUtil.PATH_SEPARATOR);
 	}
 	
 	
@@ -157,7 +158,7 @@ public class QvtOperationalParserUtil {
 		StringBuilder buf = new StringBuilder();
 		if(scopedNameCS.getTypeCS() != null) {
 			buf.append(getStringRepresentation(scopedNameCS.getTypeCS()));
-			buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+			buf.append(EmfUtil.PATH_SEPARATOR);
 		}
 		
 		if(scopedNameCS.getName() != null) {			
@@ -171,7 +172,7 @@ public class QvtOperationalParserUtil {
 			return ((PrimitiveTypeCS) typeCS).getValue();
 		}
 		else if (typeCS instanceof PathNameCS) {
-			return getStringRepresentation((PathNameCS) typeCS, QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+			return getStringRepresentation((PathNameCS) typeCS, EmfUtil.PATH_SEPARATOR);
 		}
 		else if (typeCS instanceof CollectionTypeCS) {
 			return ((CollectionTypeCS) typeCS).getCollectionTypeIdentifier().getName() 
@@ -406,16 +407,15 @@ public class QvtOperationalParserUtil {
 	}
 
 	// FIXME - to be removed => use getRelationShip(t1, t2) operation
-	@SuppressWarnings("unchecked")
 	public static boolean isIncorrectCast(final EClassifier sourceType, final EClassifier targetType) {
 		if (sourceType == null || targetType == null) {
 			return false; // error should be reported in this case, not
 			// warning
 		}
 		if (sourceType instanceof PrimitiveType
-				&& PrimitiveType.REAL_NAME.equals(((PrimitiveType) sourceType).getName())) {
+				&& PrimitiveType.REAL_NAME.equals(((PrimitiveType<?>) sourceType).getName())) {
 			return targetType instanceof PrimitiveType
-					&& PrimitiveType.INTEGER_NAME.equals(((PrimitiveType) targetType).getName());
+					&& PrimitiveType.INTEGER_NAME.equals(((PrimitiveType<?>) targetType).getName());
 		}
 		if (sourceType instanceof SetType) {
 			return !(targetType instanceof SetType);
@@ -564,7 +564,7 @@ public class QvtOperationalParserUtil {
 			
 			if(ctxType != null) {
 				buf.append(safeGetQualifiedName(env, ctxType));
-				buf.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+				buf.append(EmfUtil.PATH_SEPARATOR);
 			}
 			
 			if(mappingOperation.getName() != null) {

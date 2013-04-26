@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.qvt.oml.ExecutionStackTraceElement;
 
 
@@ -74,7 +75,7 @@ public final class QVTStackTraceElement implements ExecutionStackTraceElement  {
     @Override
 	public String toString() {
     	StringBuilder buf = new StringBuilder();
-    	buf.append(getModuleName()).append("::").append(getOperationName()); //$NON-NLS-1$
+    	buf.append(getModuleName()).append(EmfUtil.PATH_SEPARATOR).append(getOperationName());
     	if(fUnitName != null) {
     		buf.append('(').append(fUnitName).append(':');    		
     		if(fLineNum > 0) {

@@ -34,22 +34,22 @@ public class ComplexClassifierProvider extends AbstractClassifierProvider implem
 	protected String normalizeQuery(final String query) {
 		StringBuffer result = new StringBuffer();
 		
-		String[] parts = query.split(PATH_SEPARATOR);
+		String[] parts = query.split(EmfUtil.PATH_SEPARATOR);
 		for (int i = 0; i < parts.length; i++) {
 			result.append(parts[i].trim());
 			if (i != parts.length - 1) {
-				result.append(PATH_SEPARATOR);
+				result.append(EmfUtil.PATH_SEPARATOR);
 			}
 		}
 		
 		// check if first part is empty and add a separator after it
-		if (query.startsWith(PATH_SEPARATOR)) {
-			result.insert(0, PATH_SEPARATOR);
+		if (query.startsWith(EmfUtil.PATH_SEPARATOR)) {
+			result.insert(0, EmfUtil.PATH_SEPARATOR);
 		}
 		
 		// check if last part is empty and add a separator before it
-		if (query.endsWith(PATH_SEPARATOR)) {
-			result.append(PATH_SEPARATOR);
+		if (query.endsWith(EmfUtil.PATH_SEPARATOR)) {
+			result.append(EmfUtil.PATH_SEPARATOR);
 		}
 		
 		return result.toString();
@@ -57,7 +57,7 @@ public class ComplexClassifierProvider extends AbstractClassifierProvider implem
 	
 	@Override
 	protected boolean isMatching(final EClassifier classifier, final String query) {
-		final int index = query.lastIndexOf(PATH_SEPARATOR);
+		final int index = query.lastIndexOf(EmfUtil.PATH_SEPARATOR);
 		
 		// no package part
 		if (index == -1) {
@@ -65,14 +65,14 @@ public class ComplexClassifierProvider extends AbstractClassifierProvider implem
 		}
 		
 		String packageQuery = query.substring(0, index);
-		String classifierQuery = query.substring(index + PATH_SEPARATOR.length());
+		String classifierQuery = query.substring(index + EmfUtil.PATH_SEPARATOR.length());
 		
 		return isMatchingClassifier(classifier, classifierQuery) 
 			&& isMatchingPackage(classifier.getEPackage(), packageQuery);
 	}
 
 	protected boolean isMatchingPackage(final EPackage ePackage, final String packageQuery) {
-		return matches(EmfUtil.getFullName(ePackage, PATH_SEPARATOR), packageQuery, false);
+		return matches(EmfUtil.getFullName(ePackage), packageQuery, false);
 	}
 
 	protected boolean isMatchingClassifier(final EClassifier classifier, final String classifierQuery) {

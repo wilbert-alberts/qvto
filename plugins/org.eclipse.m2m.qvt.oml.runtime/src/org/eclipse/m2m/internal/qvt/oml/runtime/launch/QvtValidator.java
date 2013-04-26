@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -24,8 +23,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
@@ -39,12 +38,17 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.Transf
 import org.eclipse.osgi.util.NLS;
 
 public class QvtValidator {
+	
+	public static enum ValidationType {
+		FULL_VALIDATION,
+		LIGHTWEIGHT_VALIDATION
+	}
 
 	private QvtValidator() {		
 	}
 
 	public static IStatus validateTransformation(QvtTransformation transformation, List<TargetUriData> targetUris, String traceFilePath,
-			boolean useTrace) throws MdaException {
+			boolean useTrace, ValidationType validationType) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
         
         if (!transformation.hasEntryOperation()) {
@@ -58,20 +62,22 @@ public class QvtValidator {
 	            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
 	            		transfParam.getName()));
 			}
-			IStatus nextStatus = validateTransformationParameter(transfParam, itrTargetData.next(), transformation.getResourceSet());
+			IStatus nextStatus = validateTransformationParameter(transfParam, itrTargetData.next(), transformation.getResourceSet(), validationType);
             if (nextStatus.getSeverity() > result.getSeverity()) {
         		result = nextStatus;
         	}
 		}
 
-    	IStatus traceStatus = validateTrace(traceFilePath, useTrace); 
-        if (StatusUtil.isError(traceStatus)) {
-        	return traceStatus;
-        }
-        if (traceStatus.getSeverity() > result.getSeverity()) {
-    		result = traceStatus;
-    	}
-
+		if (useTrace) {
+	    	IStatus traceStatus = validateTrace(traceFilePath, transformation.getResourceSet()); 
+	        if (StatusUtil.isError(traceStatus)) {
+	        	return traceStatus;
+	        }
+	        if (traceStatus.getSeverity() > result.getSeverity()) {
+	    		result = traceStatus;
+	    	}
+		}
+		
         return result;
 	}
 	
@@ -114,63 +120,67 @@ public class QvtValidator {
 			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_SuperfluousInputTransfParam, superfluousParams.toString()));
 		}
 
-    	IStatus traceStatus = validateTrace(traceFileName, traceFileName != null); 
-        if (StatusUtil.isError(traceStatus)) {
-        	return traceStatus;
-        }
-        if (traceStatus.getSeverity() > result.getSeverity()) {
-    		result = traceStatus;
-    	}
+		if (traceFileName != null) {
+	    	IStatus traceStatus = validateTrace(traceFileName, transformation.getResourceSet()); 
+	        if (StatusUtil.isError(traceStatus)) {
+	        	return traceStatus;
+	        }
+	        if (traceStatus.getSeverity() > result.getSeverity()) {
+	    		result = traceStatus;
+	    	}
+		}
 		
         return result;
 	}
 	
-	private static IStatus validateTransformationParameter(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
+	private static IStatus validateTransformationParameter(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS,
+			final ValidationType validationType) {
+		if (transfParam.getMetamodels().isEmpty()) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
+            		transfParam.getName()));
+		}
+
 		if (transfParam.getDirectionKind() == DirectionKind.IN) {
-			return validateTransformationParameterIn(transfParam, targetData, validationRS);
+			if (validationType == ValidationType.LIGHTWEIGHT_VALIDATION) {
+				return validateTransformationParameterInLightweight(transfParam, targetData, validationRS);
+			} else {
+				return validateTransformationParameterIn(transfParam, targetData, validationRS);
+			}
 		}
 		if (transfParam.getDirectionKind() == DirectionKind.INOUT) {
-			return validateTransformationParameterInOut(transfParam, targetData, validationRS);
+			if (validationType == ValidationType.LIGHTWEIGHT_VALIDATION) {
+				return validateTransformationParameterInOutLightweight(transfParam, targetData, validationRS);
+			} else {
+				return validateTransformationParameterInOut(transfParam, targetData, validationRS);
+			}
 		}
-		return validateTransformationParameterOut(transfParam, targetData, validationRS);
+		
+		if (validationType == ValidationType.LIGHTWEIGHT_VALIDATION) {
+			return validateTransformationParameterOutLightweight(transfParam, targetData, validationRS);
+		} else {
+			return validateTransformationParameterOut(transfParam, targetData, validationRS);
+		}
 	}
 	
-	private static IStatus validateTrace(String traceFilePath, boolean useTrace) {
+	private static IStatus validateTrace(String traceFilePath, ResourceSet validationRS) {
 	    try {
-	        IStatus result = StatusUtil.makeOkStatus();
-	        if (useTrace) {
-	            if (traceFilePath == null || traceFilePath.length() == 0) {
-	                return StatusUtil.makeErrorStatus(Messages.QvtValidator_NoTraceFile);
-	            }
-	            else {
-	            	IFile workspaceFile = null;
-	            	try {
-	            		URI traceUri = URI.createURI(traceFilePath);
-	            		workspaceFile = WorkspaceUtils.getWorkspaceFile(traceUri);
-	            	} catch (RuntimeException ex) {
-                        IStatus status = StatusUtil.makeErrorStatus("internal_error", ex); //$NON-NLS-1$
-                        return status;
-	            	}
-	            	if (workspaceFile == null) {
-	            	    IStatus status = StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TraceNotInWorkspace, traceFilePath));
-	            	    return status;
-	            	} else {
-	            	    IProject project = workspaceFile.getProject();
-	            	    if ((project == null) || !project.isOpen()) {
-	                        String name = (project == null) ? "" : project.getName(); //$NON-NLS-1$
-	                        IStatus status = StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TraceProjectNotOpen, name));
-	                        return status;
-	            	    }
-	            	}
-	            		            	
-	                if (!traceFilePath.endsWith(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT)) {
-	                    if (result.getSeverity() < IStatus.WARNING) {
-	                        result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NoTraceFileExtension, MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT));
-	                    }
-	                }
-	            }
-	        }
-	        return result;
+            if (traceFilePath == null || traceFilePath.length() == 0) {
+                return StatusUtil.makeErrorStatus(Messages.QvtValidator_NoTraceFile);
+            }
+            else {
+        		URI traceUri = URI.createURI(traceFilePath);
+        		IStatus result = canSaveEx(StatusUtil.makeOkStatus(), traceUri, validationRS);
+                if (StatusUtil.isError(result)) {
+                	return result;
+                }
+            	
+                if (!traceFilePath.endsWith(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT)) {
+                	if (result.getSeverity() < IStatus.WARNING) {
+                		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NoTraceFileExtension, MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT));
+                	}
+                }
+                return result;
+            }	        
 	    }
 	    catch (Exception e) {
 	        return StatusUtil.makeErrorStatus(e.getMessage(), e);
@@ -178,11 +188,6 @@ public class QvtValidator {
 	}
 
 	private static IStatus validateTransformationParameterIn(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
-		if (transfParam.getMetamodels().isEmpty()) {
-            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
-            		transfParam.getName()));
-		}
-
 		if (transfParam.getEntryType() != null) {
 			EClassifier classifier = transfParam.getEntryType();
 
@@ -216,9 +221,7 @@ public class QvtValidator {
 	        }
 	        finally {
 	        	if (inputRs != null) {
-	        		for (Resource res : inputRs.getResources()) {
-	        			res.unload();
-	        		}
+	        		EmfUtil.cleanupResourceSet(inputRs);
 	        	}
 	        }
 		}
@@ -245,9 +248,7 @@ public class QvtValidator {
 	        }
 	        finally {
 	        	if (inputRs != null) {
-	        		for (Resource res : inputRs.getResources()) {
-	        			res.unload();
-	        		}
+	        		EmfUtil.cleanupResourceSet(inputRs);
 	        	}
 	        }
 	        
@@ -261,6 +262,19 @@ public class QvtValidator {
 	            		));
 	        }
 	        */
+		}
+		
+		return StatusUtil.makeOkStatus();
+	}
+
+	private static IStatus validateTransformationParameterInLightweight(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
+		URI sourceUri = EmfUtil.makeUri(targetData.getUriString());
+		if (sourceUri == null) {
+			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
+		}
+		
+		if (!EmfUtil.isUriExists(sourceUri, validationRS)) {
+			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 		}
 		
 		return StatusUtil.makeOkStatus();
@@ -310,37 +324,22 @@ public class QvtValidator {
 		}
 
 		URI sourceUri = URI.createURI(targetData.getUriString());
-    	IFile file = WorkspaceUtils.getWorkspaceFile(sourceUri);
-    	if (file != null && file.exists() && file.isReadOnly()) {
-            if (result.getSeverity() < IStatus.WARNING) {
-            	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, sourceUri));
-            }
-    	}
-		
-		EClassifier classifier = transfParam.getEntryType();
-		if (classifier == null) {
-			classifier = transfParam.getMetamodels().get(0).eClass();
+    	result = canSaveEx(result, sourceUri, validationRS);
+		return result;
+	}
+
+	private static IStatus validateTransformationParameterInOutLightweight(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
+		IStatus result = validateTransformationParameterInLightweight(transfParam, targetData, validationRS);
+		if (result.getSeverity() >= IStatus.WARNING) {
+			return result;
 		}
 
-        IStatus canSave = canSave(classifier, sourceUri); 
-        if (StatusUtil.isError(canSave)) {
-        	return canSave;
-        }
-    	
+		URI sourceUri = URI.createURI(targetData.getUriString());
+    	result = canSaveEx(result, sourceUri, validationRS);
 		return result;
 	}
 
 	private static IStatus validateTransformationParameterOut(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
-		if (transfParam.getMetamodels().isEmpty()) {
-            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
-            		transfParam.getName()));
-		}
-
-		EClassifier classifier = transfParam.getEntryType();
-		if (classifier == null) {
-			classifier = transfParam.getMetamodels().get(0).eClass();
-		}
-
         URI destUri = EmfUtil.makeUri(targetData.getUriString());
         if (destUri == null) {
             return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, targetData.getUriString()));
@@ -349,10 +348,9 @@ public class QvtValidator {
         IStatus result = StatusUtil.makeOkStatus();
         switch(targetData.getTargetType()) {
         case NEW_MODEL: {
-            IFile file = WorkspaceUtils.getWorkspaceFile(destUri);
-            if (file != null && file.exists()) {
+        	if (EmfUtil.isUriExists(destUri, validationRS)) {
                 if (result.getSeverity() < IStatus.WARNING) {
-                	if (EmfUtil.isUriExisted(targetData.getUriString(), validationRS)) {
+                	if (EmfUtil.isUriExistsAsEObject(targetData.getUriString(), validationRS)) {
                 		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists, destUri));
                 	}
                 	else {
@@ -361,7 +359,7 @@ public class QvtValidator {
                 }
             }
             
-        	IStatus canSave = canSave(classifier, destUri); 
+        	IStatus canSave = canSave(destUri, validationRS); 
             if (StatusUtil.isError(canSave)) {
             	return canSave;
             }
@@ -384,16 +382,9 @@ public class QvtValidator {
                 return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, destUri));
         	}
         	
-        	IFile file = WorkspaceUtils.getWorkspaceFile(destUri);
-        	if (file != null && file.exists() && file.isReadOnly()) {
-                if (result.getSeverity() < IStatus.WARNING) {
-                	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, destUri));
-                }
-        	}
-        	
-        	IStatus canSave = canSave(classifier, destUri); 
-            if (StatusUtil.isError(canSave)) {
-            	return canSave;
+        	result = canSaveEx(result, destUri, validationRS);
+            if (StatusUtil.isError(result)) {
+            	return result;
             }
         	
         	String feature = targetData.getFeature();
@@ -423,14 +414,71 @@ public class QvtValidator {
         	
             break;
         }
+        
+        case INPLACE:
+        	return StatusUtil.makeErrorStatus(Messages.QvtValidator_InplaceConfigNotSupported);
         }
         
 		return result;
 	}
 
-    private static IStatus canSave(EClassifier cls, URI destUri) {
-        ResourceSet outputRS = EmfUtil.getOutputResourceSet();
-		URI converted = outputRS.getURIConverter().normalize(destUri);
+	private static IStatus validateTransformationParameterOutLightweight(TransformationParameter transfParam, TargetUriData targetData, ResourceSet validationRS) {
+        URI destUri = EmfUtil.makeUri(targetData.getUriString());
+        if (destUri == null) {
+            return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidTargetUri, targetData.getUriString()));
+        }
+        
+        IStatus result = StatusUtil.makeOkStatus();
+        switch(targetData.getTargetType()) {
+        case NEW_MODEL: {
+        	if (EmfUtil.isUriExists(destUri, validationRS)) {
+                if (result.getSeverity() < IStatus.WARNING) {
+               		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists, destUri));
+                }
+            }
+            
+        	IStatus canSave = canSave(destUri, validationRS); 
+            if (StatusUtil.isError(canSave)) {
+            	return canSave;
+            }
+            if (canSave.getSeverity() > result.getSeverity()) {
+        		result = canSave;
+        	}
+            
+            if (destUri.hasFragment()) {
+                if (result.getSeverity() < IStatus.WARNING) {
+                    result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_NewDestinationHasFragment, destUri.fragment()));
+                }
+            }
+            break;
+        }
+
+        case EXISTING_CONTAINER: {
+        	result = canSaveEx(result, destUri, validationRS);
+            if (StatusUtil.isError(result)) {
+            	return result;
+            }
+        	
+        	String feature = targetData.getFeature();
+        	if (feature == null || feature.trim().length() == 0) {
+                if (result.getSeverity() < IStatus.WARNING) {
+                	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists, destUri));
+                }
+        	}
+        	
+            break;
+        }
+        
+        case INPLACE:
+        	return StatusUtil.makeErrorStatus(Messages.QvtValidator_InplaceConfigNotSupported);
+        }
+        
+		return result;
+	}
+
+	private static IStatus canSave(URI destUri, ResourceSet validationRS) {
+		URIConverter uriConverter = (validationRS != null ? validationRS.getURIConverter() : URIConverter.INSTANCE);
+		URI converted = uriConverter.normalize(destUri);
 		
 		IStatus okStatus = StatusUtil.makeOkStatus();
 		String scheme = converted.scheme();
@@ -440,31 +488,21 @@ public class QvtValidator {
 			}
 		}
 		return okStatus;
-		/*
-		else {
-			if ("archive".equals(scheme)) { //$NON-NLS-1$
-				return okStatus;  
-			}
-			else if (converted.isPlatformResource()) {
-				return okStatus;
-			}
-//			else if (isEFSScheme(scheme)) {
-//				return true;
-//			}
-			else {
-				try	{
-					URL url = new URL(destUri.toString());
-					url.openConnection();
-					return okStatus;
-				}
-				catch (MalformedURLException e) {
-				}
-				catch (IOException e) {
-				}
-			}
-		}
-		return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_UriCorrupted, destUri));
-		*/
+    }
+	
+	private static IStatus canSaveEx(IStatus result, URI destUri, ResourceSet validationRS) {
+    	IFile file = WorkspaceUtils.getWorkspaceFile(destUri);
+    	if (file != null && file.exists() && file.isReadOnly()) {
+            if (result.getSeverity() < IStatus.WARNING) {
+            	result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationReadonly, destUri));
+            }
+    	}
+
+    	IStatus canSave = canSave(destUri, validationRS); 
+        if (StatusUtil.isError(canSave)) {
+        	return canSave;
+        }
+		return result;
     }
 	
 }

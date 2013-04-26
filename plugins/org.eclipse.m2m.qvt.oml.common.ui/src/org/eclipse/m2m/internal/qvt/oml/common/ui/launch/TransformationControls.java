@@ -41,6 +41,7 @@ public class TransformationControls {
 
     	GridData data = new GridData(GridData.FILL_HORIZONTAL);
         data.horizontalSpan = GRID;
+        data.verticalIndent = 2;
         group.setLayoutData(data);
     	
         if (paramInfo.isInParameter()) {

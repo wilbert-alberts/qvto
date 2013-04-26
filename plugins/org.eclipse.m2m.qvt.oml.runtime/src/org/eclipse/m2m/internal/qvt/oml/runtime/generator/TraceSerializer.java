@@ -29,8 +29,8 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TraceUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.EValue;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
@@ -48,13 +48,17 @@ public class TraceSerializer {
 		patch(myTrace);
 	}
 
-    public void saveTraceModel(CFile file) throws MdaException {
+    public void saveTraceModel(URI traceUri) throws MdaException {
         Map<String, String> options = new HashMap<String, String>();
         options.put(XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD);
-        ExtendedEmfUtil.saveModel(myTrace, file, options);
+        ExtendedEmfUtil.saveModel(myTrace, traceUri, options);
     }
     
-    public void markUnboundObjects(IFile ifile) throws CoreException {
+    public void markUnboundObjects(URI traceUri) throws CoreException {
+    	IFile ifile = URIUtils.getFile(traceUri);
+	    if (ifile == null) {
+	    	return;
+	    }
     	ifile.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 		for (EObject eObj : myUnboundObjects) {
     		createQvtMarker(ifile, eObj);

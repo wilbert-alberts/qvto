@@ -16,7 +16,6 @@ import lpg.runtime.IToken;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS;
@@ -26,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalU
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.LightweightParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.ocl.cst.SimpleNameCS;
 import org.eclipse.ocl.cst.TypeCS;
 
@@ -48,7 +48,7 @@ public class MappingExtrasMappingNameCollector extends AbstractCollector {
                 TypeCS contextType = mappingDeclarationCS.getContextType();
                 if (contextType != null) {
                     stringBuilder.append(QvtOperationalParserUtil.getStringRepresentation(contextType));
-                    stringBuilder.append(QvtOperationalTypesUtil.TYPE_NAME_SEPARATOR);
+                    stringBuilder.append(EmfUtil.PATH_SEPARATOR);
                 }
                 SimpleNameCS mappingName = mappingDeclarationCS.getSimpleNameCS();
                 if(mappingName != null) {                

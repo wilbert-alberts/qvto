@@ -35,7 +35,7 @@ public class ResourceSourceDestChooser extends ResourceSourceChooser implements 
 	public void setInitialSelection(String uriString) {
     	myFileName = myDefaultFileName;
     	
-    	URI uri = URI.createURI(uriString);
+    	URI uri = uriString.trim().isEmpty() ? null : URI.createURI(uriString);
         if(uri == null) {
             return;
         }

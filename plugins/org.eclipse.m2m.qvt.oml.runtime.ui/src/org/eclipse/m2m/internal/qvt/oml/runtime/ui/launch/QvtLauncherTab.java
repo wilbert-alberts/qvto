@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -31,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessage;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.BrowseInterpretedTransformationDialog;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.UniSelectTransformationControl;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.IUriGroup;
@@ -38,8 +38,8 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.MdaLaunchTab;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.OptionalFileGroup;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.StatusUtil;
@@ -48,12 +48,13 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -70,13 +71,15 @@ import org.eclipse.ui.PlatformUI;
 public class QvtLauncherTab extends MdaLaunchTab {
 	public QvtLauncherTab(ITransformationMaker transformationMaker, ResourceSet validationRS) {
 		myTransformationMaker = transformationMaker;
-		myValidationRS = validationRS;
 
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
         myUriListeners.add(new IUriGroup.IModifyListener() {
 			public void modified() {
 				initTraceFileText();
 				updateLaunchConfigurationDialog();
+			}
+			public void performValidation(boolean isLightweight) {
+				validateTab(isLightweight ? ValidationType.LIGHTWEIGHT_VALIDATION : ValidationType.FULL_VALIDATION);
 			}
 		});
 	}
@@ -99,8 +102,11 @@ public class QvtLauncherTab extends MdaLaunchTab {
 	@Override
 	public void dispose() {
 		super.dispose();
-		for (Resource res : myValidationRS.getResources()) {
-			res.unload();
+		try {
+			if (myTransformation != null) {
+				myTransformation.cleanup();
+			}
+		} catch (MdaException e) {
 		}
 	}
     
@@ -163,7 +169,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
             }});
 
         TransformationControls.createLabel(parent, Messages.QvtLauncherTab_ParametersLabel, TransformationControls.GRID);
-        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER, myValidationRS);
+        myTransfSignatureControl = new TransformationSignatureLaunchControl(parent, SWT.NONE|SWT.BORDER);
 
 	}
 
@@ -268,6 +274,11 @@ public class QvtLauncherTab extends MdaLaunchTab {
     
     @Override
 	public boolean isValid(ILaunchConfiguration unused) {
+    	return validateTab(ValidationType.LIGHTWEIGHT_VALIDATION);
+    }
+    
+    private boolean validateTab(ValidationType validationType) {
+    	
 /*        
     	if (!LicenseClient.isAvailable()) {
             return true;
@@ -278,6 +289,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
         else{
             setMessage(null);
+            setWarningMessage(null);
             setErrorMessage(null);
             String moduleName;
             try {
@@ -290,13 +302,19 @@ public class QvtLauncherTab extends MdaLaunchTab {
             if (myTraceFile.getText().length() == 0) {
             	myTraceFile.update(moduleName, MDAConstants.QVTO_TRACEFILE_EXTENSION);
             }
-            IStatus status = myTransfSignatureControl.validate(moduleName, getShell(), myTraceFile.getText(), myTraceFile.getUseFileFlag());
+            IStatus status = myTransfSignatureControl.validate(moduleName, getShell(), myTraceFile.getText(), myTraceFile.getUseFileFlag(), validationType);
             return TransformationControls.statusToTab(status, SET_MESSAGE);
         }
     }
     
     private boolean validateQvtFile() {
-        myTransformation = null;
+        if (myTransformation != null) {
+        	try {
+				myTransformation.cleanup();
+			} catch (MdaException e) {
+			}
+        	myTransformation = null;
+        }
 
         String fileName = myQvtFile.getText();
         if (fileName == null || fileName.length() == 0) {
@@ -329,7 +347,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
     };
     
-    private final ISetMessage SET_MESSAGE = new ISetMessage() {
+    private final ISetMessage SET_MESSAGE = new ISetMessageEx() {
+		
         public void setErrorMessage(String message) {
             QvtLauncherTab.this.setErrorMessage(message);
         }
@@ -337,10 +356,13 @@ public class QvtLauncherTab extends MdaLaunchTab {
         public void setMessage(String message) {
             QvtLauncherTab.this.setMessage(message);
         }
+
+		public void setWarningMessage(String message) {
+            QvtLauncherTab.this.setWarningMessage(message);
+		}
     };
     
     private final ITransformationMaker myTransformationMaker; 
-	private final ResourceSet myValidationRS;
     private Text myQvtFile;
     private QvtTransformation myTransformation;
     private OptionalFileGroup myTraceFile;

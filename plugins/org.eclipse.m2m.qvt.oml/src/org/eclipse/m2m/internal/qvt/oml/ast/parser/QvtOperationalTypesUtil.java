@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.ocl.ecore.CollectionType;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.OrderedSetType;
@@ -27,7 +28,6 @@ import org.eclipse.ocl.types.VoidType;
  */
 
 public class QvtOperationalTypesUtil {
-    public static final String TYPE_NAME_SEPARATOR = "::"; //$NON-NLS-1$
     private static final String UNKNOWN_TYPE_NAME = "unknown"; //$NON-NLS-1$
 
     public static String getTypeFullName(EClassifier type) {
@@ -38,7 +38,7 @@ public class QvtOperationalTypesUtil {
         EObject parent = type.eContainer();
         while (parent != null) {
             if (parent instanceof ENamedElement) {
-                fullName = ((ENamedElement) parent).getName() + TYPE_NAME_SEPARATOR + fullName;
+                fullName = ((ENamedElement) parent).getName() + EmfUtil.PATH_SEPARATOR + fullName;
             }
             parent = parent.eContainer();
         }

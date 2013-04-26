@@ -27,8 +27,6 @@ import org.eclipse.emf.ecore.EPackage;
  */
 public abstract class AbstractClassifierProvider implements IClassifierProvider {
 
-	protected static final String PATH_SEPARATOR = "::"; //$NON-NLS-1$
-	
 	protected AbstractClassifierProvider(final List<EPackage> rootPackages) {
 		for (Iterator<EPackage> iter = rootPackages.iterator(); iter.hasNext();) {
 			EPackage pack = iter.next();
@@ -66,14 +64,9 @@ public abstract class AbstractClassifierProvider implements IClassifierProvider 
 		});
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void collectClassifiers(final EPackage current, final Set<EClassifier> classifiers) {
-		for (Iterator<EClassifier> iter = current.getEClassifiers().iterator(); iter.hasNext();) {
-			EClassifier classifier = iter.next();
-			classifiers.add(classifier);
-		}
-		for (Iterator iter = current.getESubpackages().iterator(); iter.hasNext();) {
-			EPackage pack = (EPackage) iter.next();
+		classifiers.addAll(current.getEClassifiers());
+		for (EPackage pack : current.getESubpackages()) {
 			collectClassifiers(pack, classifiers);
 		}
 	}

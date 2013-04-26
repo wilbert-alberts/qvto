@@ -23,6 +23,7 @@ public interface IUriGroup {
 
     public interface IModifyListener {
         void modified();
+        void performValidation(boolean isLightweight);
     }
     
     void addModifyListener(IModifyListener listener);
