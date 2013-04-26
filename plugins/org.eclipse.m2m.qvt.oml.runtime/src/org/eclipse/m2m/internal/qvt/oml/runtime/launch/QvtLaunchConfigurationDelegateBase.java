@@ -27,6 +27,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
+import org.eclipse.emf.common.util.AbstractEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -36,12 +39,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
+import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess.IRunnable;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.SafeRunner;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess.IRunnable;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
@@ -51,11 +53,12 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TraceSerializer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.generator.TransformationRunner;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.qvt.oml.util.IContext;
@@ -101,7 +104,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         boolean useTraceFile = configuration.getAttribute(IQvtLaunchConstants.USE_TRACE_FILE, false); 
         
         try {
-        	return QvtValidator.validateTransformation(transformation, targetUris, traceFile, useTraceFile);
+        	return QvtValidator.validateTransformation(transformation, targetUris, traceFile, useTraceFile, ValidationType.FULL_VALIDATION);
         }
         catch (MdaException ex) {
         	throw new CoreException(StatusUtil.makeErrorStatus(ex.getMessage(), ex));
@@ -183,7 +186,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     	
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
-        
+
         ResourceSet resSet = null;
         for (ModelContent inModel : inObjs) {
 			resSet = inModel.getResourceSet();
@@ -194,7 +197,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         if(resSet == null) {
         	resSet = EmfUtil.getOutputResourceSet();
         }
-        
+
         Iterator<ModelExtentContents> itrExtent = out.getExtents().iterator();
         for (TargetUriData outUriData : targetData) {
         	if (!itrExtent.hasNext()) {
@@ -215,13 +218,10 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         
         if(traceFileName != null && out.getTrace() != null) {
         	URI traceUri = EmfUtil.makeUri(traceFileName);
-            IFile traceFile = traceUri != null ? WorkspaceUtils.getWorkspaceFile(traceUri) : null;
-            if(traceFile != null) {
-            	TraceSerializer traceSerializer = new TraceSerializer(out.getTrace());
-            	traceSerializer.saveTraceModel(new EclipseFile(traceFile));
-            	traceSerializer.markUnboundObjects(traceFile);
-            }
-        }        
+           	TraceSerializer traceSerializer = new TraceSerializer(out.getTrace());
+           	traceSerializer.saveTraceModel(traceUri);
+           	traceSerializer.markUnboundObjects(traceUri);
+        }
         
         return result;
     }
@@ -238,24 +238,33 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
            	    	if(outExtent == null) {
            	    		outExtent = EmfUtil.createResource(modelUri, resSet);       	    	
                			resSet.getResources().add(outExtent);
-               			outExtent.getContents().addAll(extent.getAllRootElements());
-           	    	} else {
-           	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
-
-           	    		if (essentialRootElements.isEmpty()) {
-           	    			outExtent.getContents().clear();
-           	    		}
-           	    		else if (outExtent.getContents().isEmpty()) {
-               	    		outExtent.getContents().addAll(essentialRootElements);
-           	    		}
-           	    		else {
-           	    			Set<EObject> resolvedRootElements = getResolvedContent(essentialRootElements, outExtent.getContents().get(0));
-           	    			
-               	    		outExtent.getContents().retainAll(resolvedRootElements);
-               	    		resolvedRootElements.removeAll(outExtent.getContents());
-               	    		outExtent.getContents().addAll(resolvedRootElements);
-           	    		}
            	    	}
+
+       	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
+       	    		if (essentialRootElements.isEmpty()) {
+	       	 			for (TreeIterator<EObject> it = outExtent.getAllContents(); it.hasNext();) {
+	       					EObject eObject = it.next();
+       						eObject.eAdapters().clear();
+	       				}
+       	    			outExtent.getContents().clear();
+       	    		}
+       	    		else if (outExtent.getContents().isEmpty()) {
+       	    			addAllContents(outExtent.getContents(), essentialRootElements);
+       	    		}
+       	    		else {
+       	    			Set<EObject> resolvedRootElements = getResolvedContent(essentialRootElements, outExtent.getContents().get(0));
+       	    			
+	       	 			for (TreeIterator<EObject> it = outExtent.getAllContents(); it.hasNext();) {
+	       					EObject eObject = it.next();
+	       					if (!resolvedRootElements.contains(eObject)) {
+	       						eObject.eAdapters().clear();
+	       					}
+	       				}
+       	    			
+           	    		outExtent.getContents().retainAll(resolvedRootElements);
+           	    		resolvedRootElements.removeAll(outExtent.getContents());
+      	    			addAllContents(outExtent.getContents(), resolvedRootElements);
+       	    		}
            	    	
         			EmfUtil.saveModel(outExtent, modelUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
         		}
@@ -311,7 +320,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         	}
         	
         	case INPLACE: {
-       			throw new MdaException("Inplace run configuration type is not supported"); //$NON-NLS-1$
+       			throw new MdaException(Messages.QvtValidator_InplaceConfigNotSupported);
         	}
         }
         
@@ -319,11 +328,12 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
 
 	private static Set<EObject> getResolvedContent(Collection<EObject> content, EObject metamodel) {
+		ResourceSet rs = (metamodel != null && metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
 		Set<EObject> resolvedObjs = new LinkedHashSet<EObject>(content.size());
 		for (EObject obj : content) {
 			EObject resolved = null;
 			try {
-				resolved = EmfUtil.resolveSource(obj, metamodel);
+				resolved = EmfUtil.resolveSource(obj, rs);
 			}
 			catch (Exception ex) {				
 			}
@@ -361,5 +371,15 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
         
         return uri;
-    }    
+    }
+    
+    private static void addAllContents(EList<EObject> contents, Set<EObject> elements) {
+   		if (contents instanceof AbstractEList<?>) {
+   			((AbstractEList<EObject>) contents).addAllUnique(elements);
+   		}
+   		else {
+   			contents.addAll(elements);
+   		}
+    }
+    
 }

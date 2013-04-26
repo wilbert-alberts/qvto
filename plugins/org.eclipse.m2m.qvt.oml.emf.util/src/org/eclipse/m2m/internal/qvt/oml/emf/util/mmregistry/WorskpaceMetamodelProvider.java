@@ -64,19 +64,6 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 		return metamodels.toArray(new IMetamodelDesc[metamodels.size()]);
 	}
 
-	
-	public static IMetamodelProvider getAllWorkspaceMetamodelProvider() {
-        WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());
-
-        List<IResource> wsModels = collectWorkspaceMetamodels();        
-        for (IResource res : wsModels) {
-			URI resURI = URI.createPlatformResourceURI(res.getFullPath().toString(), false);
-			ws.addMetamodel(resURI.toString(), resURI);					
-		}
-        
-		return ws;
-	}
-	
     public static List<IResource> collectWorkspaceMetamodels() {
     	final List<IResource> result = new ArrayList<IResource>();
     

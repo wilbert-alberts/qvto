@@ -18,14 +18,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -46,7 +46,9 @@ import org.eclipse.osgi.util.NLS;
 @SuppressWarnings("unchecked")
 public class EmfUtil {
     private EmfUtil() {}
-        
+
+    public static final String PATH_SEPARATOR = "::"; //$NON-NLS-1$
+    
     public static ModelContent loadModel(URI uri) {
     	return loadModel(uri, getDefaultLoadOptions(), null);
     }
@@ -55,7 +57,7 @@ public class EmfUtil {
     	return loadModel(uri, getDefaultLoadOptions(), rs);
     }    
     
-    public static ModelContent loadModel(URI uri, Map options, ResourceSet rs) {
+    private static ModelContent loadModel(URI uri, Map options, ResourceSet rs) {
         if(uri == null) {
             return null;
         }
@@ -79,7 +81,7 @@ public class EmfUtil {
     	return safeLoadModel(uri, getDefaultLoadOptions(), rs);
     }
     
-    public static ModelContent safeLoadModel(URI uri, Map options, ResourceSet rs) {
+    private static ModelContent safeLoadModel(URI uri, Map options, ResourceSet rs) {
         try {
             return loadModel(uri, options, rs);
         }
@@ -89,13 +91,9 @@ public class EmfUtil {
     }
     
     public static Resource loadResource(URI uri) {
-    	return loadResource(uri, getDefaultLoadOptions());
+        return createResourceSet(getDefaultLoadOptions()).getResource(uri, true);
     }
     
-    public static Resource loadResource(URI uri, Map options) {
-        return createResourceSet(options).getResource(uri, true);
-    }
-
 	private static ResourceSet createResourceSet(Map options) {
 		ResourceSet resourceSet = new ResourceSetImpl() {
 			
@@ -128,20 +126,23 @@ public class EmfUtil {
 		if (inputType == null || inputType.eResource() == null) {
 			return in;
 		}
-        if (EmfUtil.isDynamic(in)) {
+        return resolveSource(in, inputType.eResource().getResourceSet());
+    }
+	
+	public static EObject resolveSource(EObject in, ResourceSet rs) {
+        if (rs != null && EmfUtil.isDynamic(in)) {
         	ResourceSet inRS = in.eResource() != null ? in.eResource().getResourceSet() : null;
-        	if (inputType.eResource().getResourceSet() != inRS
-        			&& inputType.eResource().getResourceSet() != null) {
+        	if (rs != inRS) {
         		URI uri = EcoreUtil.getURI(in);
         		if (uri != null && !"#//".equals(uri.toString())) { //$NON-NLS-1$
-        			return inputType.eResource().getResourceSet().getEObject(uri, true);
+        			return rs.getEObject(uri, true);
         		}
         	}
         }
         return in;
     }
 	
-	public static boolean isUriExisted(String textUri, ResourceSet rs) {
+	public static boolean isUriExistsAsEObject(String textUri, ResourceSet rs) {
         URI destUri = makeUri(textUri);
         if (destUri != null) {
         	ModelContent loadModel = null;
@@ -217,10 +218,10 @@ public class EmfUtil {
     }
     
     public static String getFullName(EClassifier cls) {
-        return getFullName(cls, "::"); //$NON-NLS-1$
+        return getFullName(cls, PATH_SEPARATOR);
     }
 
-    public static String getFullName(EClassifier cls, String delim) {
+    private static String getFullName(EClassifier cls, String delim) {
     	if(cls.getEPackage() == null) {
     		return cls.getName();
     	}
@@ -228,10 +229,10 @@ public class EmfUtil {
     }
 
     public static String getFullName(EPackage pack) {
-        return getFullName(pack, "::"); //$NON-NLS-1$
+        return getFullName(pack, PATH_SEPARATOR);
     }    
     
-    public static String getFullName(EPackage pack, String delim) {
+    private static String getFullName(EPackage pack, String delim) {
         if(pack.getESuperPackage() != null) {
             return getFullName(pack.getESuperPackage(), delim) + delim + pack.getName();
         } else {
@@ -254,21 +255,20 @@ public class EmfUtil {
 	 *            returned.
 	 */    
     public static String getFullNameRelativeToPackage(EPackage ePackage, EPackage baseQwningPackage) {
-    	String delim = "::"; //$NON-NLS-1$
         if(ePackage.getESuperPackage() != null && ePackage.getESuperPackage() != baseQwningPackage) {
         	StringBuilder buf = new StringBuilder();        	
         	
         	EPackage nextPackage = ePackage;        	
         	for(int i = 0; nextPackage != null && nextPackage != baseQwningPackage ; i++) {
         		if(i > 0) {
-        			buf.insert(0, delim);
+        			buf.insert(0, PATH_SEPARATOR);
         		}
         		buf.insert(0, nextPackage.getName());        		
         		
         		nextPackage = nextPackage.getESuperPackage(); 
         	}
         	
-            return getFullNameRelativeToPackage(ePackage.getESuperPackage(), baseQwningPackage) + delim + ePackage.getName();
+            return getFullNameRelativeToPackage(ePackage.getESuperPackage(), baseQwningPackage) + PATH_SEPARATOR + ePackage.getName();
         } else {
             return ePackage.getName();
         }
@@ -292,20 +292,11 @@ public class EmfUtil {
 		EPackage immediateOwner = eClassifier.getEPackage();		
 		if(baseOwningPackage != null && immediateOwner != null && baseOwningPackage != immediateOwner) {
 			String parentName = EmfUtil.getFullNameRelativeToPackage(immediateOwner, baseOwningPackage);
-			return parentName + "::" + eClassifier.getName(); //$NON-NLS-1$ 
+			return parentName + PATH_SEPARATOR + eClassifier.getName(); 
 		}
 		return eClassifier.getName();		
 	}
 
-    public static String getMetamodelName(EPackage pack) {
-    	String name = pack.getName();
-    	String nsURI = pack.getNsURI();
-    	if (nsURI != null && nsURI.length() > 0) {
-    		name += " (" + nsURI + ")";  //$NON-NLS-1$//$NON-NLS-2$
-    	}
-    	return name;
-    }
-    
     public static EClass getEClass(EPackage root, String[] fullName) throws EmfException {
         EClassifier classifier = getEClassifier(root, fullName);
         if(classifier instanceof EClass == false) {
@@ -315,7 +306,7 @@ public class EmfUtil {
         return (EClass)classifier;
      }
 
-    public static EClassifier getEClassifier(EPackage root, String[] fullName) throws EmfException {
+    private static EClassifier getEClassifier(EPackage root, String[] fullName) throws EmfException {
         if(fullName.length < 2) {
             throw new EmfException(NLS.bind(Messages.EmfUtil_2, Arrays.asList(fullName)));
         }
@@ -380,19 +371,6 @@ public class EmfUtil {
     	return options;
     }
     
-    public static String getFileNameForResult(String moduleName, EClass cls) {
-        return moduleName + "." + getExtensionForResult(cls); //$NON-NLS-1$
-    }
-    
-    public static String getExtensionForResult(final EClassifier cls) {
-        if(cls == null) {
-            return XMIResource.XMI_NS;
-        }
-        
-        EPackage root = EmfUtil.getRootPackage(cls.getEPackage());
-        return root.getName();
-    }
-
 	public static Resource createResource(URI uri, ResourceSet outResourceSet) {
 		Resource resource = outResourceSet.createResource(uri);
 		if(resource != null) {
@@ -415,16 +393,7 @@ public class EmfUtil {
 		return factory.createResource(uri);
 	}    
     
-	public static boolean isContainmentReference(EStructuralFeature feature) {
-		if (feature.eClass() == EcorePackage.eINSTANCE.getEReference()) {
-			EReference ref = (EReference) feature;
-			return ref.isContainment();			
-		}
-		
-		return false;
-	}
-	
-	public static final boolean isUriMapped(ResourceSet resourceSet, URI uri) {
+	public static boolean isUriMapped(ResourceSet resourceSet, URI uri) {
 	    if (uri != null) {
 	        URIConverter converter = resourceSet.getURIConverter();
 	        if (converter != null) {
@@ -436,6 +405,38 @@ public class EmfUtil {
 	    }
 	    return false;
 	}
+	
+	public static void cleanupResourceSet(ResourceSet rs) {
+		for (Resource res : rs.getResources()) {
+			//res.unload();
+
+			for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
+				EObject eObject = it.next();
+				eObject.eAdapters().clear();				
+			}
+			res.eAdapters().clear();			
+		}
+		rs.getResources().clear();
+		rs.eAdapters().clear();
+	}
+	
+	public static boolean isUriExists(URI uri, ResourceSet rs) {
+		URIConverter uriConverter = (rs != null ? rs.getURIConverter() : URIConverter.INSTANCE);
+		if (uriConverter.exists(uri, Collections.emptyMap())) {
+			return true;
+		}
+		
+		ResourceSet checkRs = (rs != null ? rs : createResourceSet(Collections.emptyMap()));
+		Resource checkedResource = checkRs.getResource(uri, false);
+		if (checkedResource == null) {
+			checkedResource = checkRs.getResource(uri.trimFragment(), false);
+		}
+		if (checkedResource == null) {
+			checkedResource = checkRs.createResource(uri, ContentHandler.UNSPECIFIED_CONTENT_TYPE);
+		}
+		return checkedResource != null;
+	}
+	
 	
     public static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
     static {

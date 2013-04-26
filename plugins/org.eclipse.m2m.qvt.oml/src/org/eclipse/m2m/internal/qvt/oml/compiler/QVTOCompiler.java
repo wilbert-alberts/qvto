@@ -61,6 +61,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
@@ -574,9 +575,7 @@ public class QVTOCompiler {
 	}
 	
 	public void cleanup() {
-		for (Resource res : getResourceSet().getResources()) {
-			res.unload();
-		}
+		EmfUtil.cleanupResourceSet(getResourceSet());
 	}
 	
 	private void addSourceLineNumberInfo(AbstractQVTParser parser, CSTAnalysisResult analysisResult, UnitProxy source) {
@@ -807,7 +806,7 @@ public class QVTOCompiler {
 
 	private static IMetamodelRegistryProvider createMetamodelRegistryProvider(final EPackage.Registry packageRegistry, ResourceSet metamodelResourceSet) {
 		if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
-			Eclipse.createMetamodelRegistryProvider(packageRegistry, metamodelResourceSet);
+			return Eclipse.createMetamodelRegistryProvider(packageRegistry, metamodelResourceSet);
 		}
 		
 		return new IMetamodelRegistryProvider() {

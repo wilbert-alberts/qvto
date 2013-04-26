@@ -137,9 +137,10 @@ public class ModelParameterExtent {
 			myAdditionalEObjects.add(eObject);
 			getInMemoryResource(true).getContents().add(eObject);
 			
-			if(++myCountAddedAfterPurge == PURGE_LIMIT_SIZE) {
-				purgeContents();
-				myCountAddedAfterPurge = 0;				
+			if(++myCountAddedAfterPurge >= myPurgeLimitSize) {
+				purgeContents(myAdditionalEObjects, true);
+				myCountAddedAfterPurge = 0;
+				myPurgeLimitSize = Math.max(myAdditionalEObjects.size(), INITIAL_EXTENT_SIZE);
 			}
 		}
 	}
@@ -212,7 +213,7 @@ public class ModelParameterExtent {
 		}
 		
 		if (myInMemoryResource != null && myInMemoryResource.getResourceSet() != null) {
-			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);			
+			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);
 		}
 		
 		return new ExtentContents(new ArrayList<EObject>(initialObjects), new ArrayList<EObject>(allRootObjects));
@@ -224,6 +225,7 @@ public class ModelParameterExtent {
 		delete(getRootObjects(), element);
 		if(!myInitialEObjects.remove(element)) {
 			myAdditionalEObjects.remove(element);
+			myPurgeLimitSize = Math.max(myAdditionalEObjects.size(), INITIAL_EXTENT_SIZE);
 		}
 		
 		return true;
@@ -319,8 +321,8 @@ public class ModelParameterExtent {
 	
 	
 	private static final int INITIAL_EXTENT_SIZE = 150;
-	private static final int PURGE_LIMIT_SIZE = 300;
 	private int myCountAddedAfterPurge = 0;
+	private int myPurgeLimitSize = INITIAL_EXTENT_SIZE;
 	
 	
 	private final List<EObject> myInitialEObjects;
