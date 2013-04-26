@@ -294,7 +294,7 @@ public abstract class TestTransformation extends TestCase {
 			inoutExtentCount = inObjects.get(0).getResourceSet().getResources().size();
 		}
 		
-		URI traceURI = URI.createFileURI(((EclipseResource) getTraceFile(eclipseFile)).getResource().getFullPath().toString());
+		URI traceURI = URI.createFileURI(((EclipseResource) getTraceFile(eclipseFile)).getResource().getLocation().toString());
 		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, traceURI.toString(), qvtContext);
 		
 		if (!inObjects.isEmpty()) {
