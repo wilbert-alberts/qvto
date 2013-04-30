@@ -29,13 +29,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.QvtMessage;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
@@ -73,8 +73,10 @@ public abstract class QvtModule {
      */
     public abstract Module getModule() throws MdaException;
     
-    public abstract QVTOCompiler getCompiler() throws MdaException;
+    public abstract ResourceSet getResourceSet() throws MdaException;
 
+	public abstract void cleanup();
+    
     public List<TransformationParameter> getParameters() throws MdaException {
         Module module = getModule();
         if(module instanceof OperationalTransformation == false) {
@@ -318,4 +320,5 @@ public abstract class QvtModule {
                 }
         }
     }
+
 }

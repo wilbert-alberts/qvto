@@ -285,6 +285,10 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 			fInterpreter = evaluator;
 		}
 		
+		public boolean isSessionStarted() {
+			return fInterpreter != null;
+		}
+		
 		public void handleVMEvent(VMEvent event) {
 			if(event instanceof VMStartEvent) {
 				// first start event

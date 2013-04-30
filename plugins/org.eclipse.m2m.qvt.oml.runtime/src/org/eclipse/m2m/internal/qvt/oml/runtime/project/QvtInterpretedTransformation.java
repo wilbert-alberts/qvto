@@ -39,7 +39,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
@@ -77,7 +76,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	}
 	
     public ModelContent loadInput(URI inputObjectURI) throws MdaException {
-    	return EmfUtil.loadModel(inputObjectURI, myModule.getCompiler().getResourceSet());
+    	return EmfUtil.loadModel(inputObjectURI, myModule.getResourceSet());
     }
     
     public void setQvtCompilerOptions(QvtCompilerOptions options) {
@@ -115,7 +114,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
             }
         }
         
-        return evaluate(myModule.getCompiler(), module, inputs, in.getContext());
+        return evaluate(myModule.getResourceSet(), module, inputs, in.getContext());
     }
 	
 	public String getModuleName() throws MdaException {
@@ -135,11 +134,11 @@ public class QvtInterpretedTransformation implements QvtTransformation {
     }
     
 	public ResourceSet getResourceSet() throws MdaException {
-		return myModule.getCompiler().getResourceSet();
+		return myModule.getResourceSet();
 	}
 
 	public void cleanup() throws MdaException {
-		myModule.getCompiler().cleanup();
+		myModule.cleanup();
 	}
 
 	protected QvtOperationalEnvFactory getEnvironmentFactory() {
@@ -153,12 +152,12 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 		myEnvFactory = factory;
 	}
     
-	private Out evaluate(QVTOCompiler compiler, Module module, List<ModelContent> args, IContext context) {
+	private Out evaluate(ResourceSet rs, Module module, List<ModelContent> args, IContext context) {
 		QvtOperationalEnvFactory factory = getEnvironmentFactory();
 
 		QvtOperationalEvaluationEnv evaluationEnv = factory.createEvaluationEnvironment(context, null);
 		// FIXME
-		setArguments(evaluationEnv, (OperationalTransformation) module, args, compiler.getResourceSet());
+		setArguments(evaluationEnv, (OperationalTransformation) module, args, rs);
 		
 		CompiledUnit unit;
 		try {

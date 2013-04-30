@@ -69,6 +69,10 @@ public final class DebugEnvironmentFactory extends QvtOperationalEnvFactory {
 		if ((env instanceof QvtOperationalEnv == false) || (evalEnv instanceof QvtOperationalEvaluationEnv == false)) {
 			return super.createEvaluationVisitor(env, evalEnv, extentMap);
 		}
+		
+		if (debuggerShell.isSessionStarted()) {
+			return super.createEvaluationVisitor(env, evalEnv, extentMap);
+		}
 
 	    // ADD SYNC mechanism, for this point being a QVTO VM started, as from here we have access to the 
 	    // evaluator => DBG creation event?

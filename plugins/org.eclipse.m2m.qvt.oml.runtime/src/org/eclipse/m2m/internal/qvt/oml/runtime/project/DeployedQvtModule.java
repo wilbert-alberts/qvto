@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.MetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -21,6 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.osgi.util.NLS;
@@ -29,7 +31,7 @@ public class DeployedQvtModule extends QvtModule {
     
 	private Module myModule;
 	private CompiledUnit myUnit;
-    private QVTOCompiler myCompiler;
+    private ResourceSet myResourceSet;
 	private URI moduleID;
 	
 	public DeployedQvtModule(URI qvtModuleID) throws MdaException {
@@ -66,18 +68,25 @@ public class DeployedQvtModule extends QvtModule {
             	checkModuleErrors(myUnit);
             }
             
-            // FIXME - we should add support of uri fragment, being the name of the refered module
+            // FIXME - we should add support of uri fragment, being the name of the referred module
             myModule = myUnit.getModules().get(0);
-            myCompiler = qvtCompiler;
+            myResourceSet = qvtCompiler.getResourceSet();
         }
         
         return myModule;
     }
     
 	@Override
-	public QVTOCompiler getCompiler() throws MdaException {
+	public ResourceSet getResourceSet() throws MdaException {
 		getModule();
-		return myCompiler;
+		return myResourceSet;
+	}
+	
+	@Override
+	public void cleanup() {
+		if (myResourceSet != null) {
+			EmfUtil.cleanupResourceSet(myResourceSet);
+		}
 	}
 	
     @Override

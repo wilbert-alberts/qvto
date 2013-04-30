@@ -49,7 +49,8 @@ public class TransformationRunner  {
 		protected void handleExecutionTraces(Trace traces) {				
 			super.handleExecutionTraces(traces);
 			fTraces = traces;
-		};
+		}
+
 	}
 		
 	private final URI fTransformationURI;	
@@ -60,7 +61,6 @@ public class TransformationRunner  {
 	private BasicDiagnostic fDiagnostic;
 	private List<ModelExtent> fModelParams;		
 	private ModelExtentHelper fExtentHelper;
-	private EPackage.Registry fPackageRegistry;
 	
 	
 	public TransformationRunner(URI transformationURI, 
@@ -73,7 +73,6 @@ public class TransformationRunner  {
 		}
 
 		fExecutor = new Executor(transformationURI, packageRegistry);
-		fPackageRegistry = packageRegistry;
 		fTransformationURI = transformationURI;
 		fModelParamURIs = modelParamURIs;
 	}
@@ -81,10 +80,6 @@ public class TransformationRunner  {
 	protected InternalTransformationExecutor getExecutor() {
 		return fExecutor;
 	};
-	
-	public void setPackageRegistry(EPackage.Registry registry) {
-		fPackageRegistry = registry;
-	}
 	
 	public URI getTransformationURI() {
 		return fTransformationURI;
@@ -118,8 +113,7 @@ public class TransformationRunner  {
 		}
 		
 		// Note: initialized here already loaded transformation is required
-		fExtentHelper = new ModelExtentHelper(transformation, fModelParamURIs,
-				createResourceSet(fPackageRegistry));
+		fExtentHelper = new ModelExtentHelper(transformation, fModelParamURIs, fExecutor.getResourceSet());
 		
 		Diagnostic extentsDiagnostic = Diagnostic.OK_INSTANCE; 
 		try {
@@ -199,7 +193,7 @@ public class TransformationRunner  {
 
 			return execDiagnostic;
 		} finally {
-			fExecutor.setEnvironmentFactory(null);
+			fExecutor.cleanup();
 		}			
 	}
 	
@@ -220,22 +214,6 @@ public class TransformationRunner  {
 		
 		return Diagnostic.OK_INSTANCE;
 	}
-	
-	private static ResourceSetImpl createResourceSet(EPackage.Registry registry) {
-		Map<URI, Resource> resourceMap = new HashMap<URI, Resource>();
-		for (String key : registry.keySet()) {
-			Object value = registry.get(key);
-			if(value instanceof EPackage) {
-				EPackage ePackage = (EPackage) value;
-				Resource res = ePackage.eResource();
-				if(res != null && res.getURI() != null) {
-					resourceMap.put(res.getURI(), res);
-				}
-			}
-		}
-		
-		return new ResourceSetImpl();
-	}	
 	
 	/**
 	 * Successfully finished execution, no errors and user interruption 

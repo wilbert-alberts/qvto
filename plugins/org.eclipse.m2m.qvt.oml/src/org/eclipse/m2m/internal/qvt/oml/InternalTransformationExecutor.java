@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -38,6 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
@@ -70,6 +72,7 @@ public class InternalTransformationExecutor {
 	private URI fURI;
 	private EPackage.Registry fPackageRegistry;
 	private CompiledUnit fCompiledUnit;
+	private ResourceSet fCompilationRs;
 	private ExecutionDiagnosticImpl fLoadDiagnostic;
 	private OperationalTransformation fTransformation;
 	private QvtOperationalEnvFactory fEnvFactory;
@@ -92,6 +95,10 @@ public class InternalTransformationExecutor {
 	
 	public URI getURI() {
 		return fURI;
+	}
+	
+	public ResourceSet getResourceSet() {
+		return fCompilationRs;
 	}
 		
 	public InternalTransformationExecutor(URI uri, EPackage.Registry registry) {
@@ -239,6 +246,7 @@ public class InternalTransformationExecutor {
 		QVTOCompiler compiler = createCompiler(unit.getResolver());
 		try {
 			fCompiledUnit = compiler.compile(unit, null, null);
+			fCompilationRs = compiler.getResourceSet();
 		//	fCompilerKernel = compiler.getKernel();
 
 			fLoadDiagnostic = createCompilationDiagnostic(fCompiledUnit);
@@ -347,6 +355,13 @@ public class InternalTransformationExecutor {
 		return fEnvFactory != null ? fEnvFactory : new QvtOperationalEnvFactory();
 	}
 	
+	public void cleanup() {
+		setEnvironmentFactory(null);
+		if (fCompilationRs != null) {
+			EmfUtil.cleanupResourceSet(fCompilationRs);
+		}
+	}
+
 
 	private static ExecutionDiagnostic createExecutionFailure(
 			QvtRuntimeException qvtRuntimeException) {

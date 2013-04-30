@@ -162,7 +162,7 @@ public class MetamodelURIMappingHelper {
 				return null;
 			}
 			
-			result = new EPackageRegistryImpl();
+			result = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
 			
 			for (URIMapping next : container.getMapping()) {
 				String nsURI = next.getSourceURI();

@@ -13,10 +13,11 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtCompilerFacade.CompilationResult;
 
@@ -24,8 +25,6 @@ public class WorkspaceQvtModule extends QvtModule {
     
 	public WorkspaceQvtModule(IFile transformationFile) {
         myTransformationFile = transformationFile;
-        myModule = null;
-        myCompiler = null;
     }
 	    
     protected CompiledUnit loadModule() throws MdaException {
@@ -35,8 +34,12 @@ public class WorkspaceQvtModule extends QvtModule {
         }
         
     	CompilationResult result = QvtCompilerFacade.getCompiledModule(myTransformationFile, options, null);  
-        myCompiler = result.getCompiler();
+        myResourceSet = result.getCompiler().getResourceSet();
     	return result.getCompiledModule();
+    }
+    
+    protected ResourceSet getResourceSetImpl() {
+    	return myResourceSet;
     }
 	
     @Override
@@ -64,9 +67,16 @@ public class WorkspaceQvtModule extends QvtModule {
     }
     
 	@Override
-	public QVTOCompiler getCompiler() throws MdaException {
+	public ResourceSet getResourceSet() throws MdaException {
 		getModule();
-		return myCompiler;
+		return getResourceSetImpl();
+	}
+	
+	@Override
+	public void cleanup() {
+		if (getResourceSetImpl() != null) {
+			EmfUtil.cleanupResourceSet(getResourceSetImpl());
+		}
 	}
 	
     public IFile getTransformationFile() {
@@ -81,5 +91,5 @@ public class WorkspaceQvtModule extends QvtModule {
     private final IFile myTransformationFile;
     private Module myModule;
     private CompiledUnit myUnit;    
-    protected QVTOCompiler myCompiler;
+    private ResourceSet myResourceSet;
 }
