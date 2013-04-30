@@ -20,4 +20,5 @@ Export-Package: org.eclipse.m2m.qvt.oml.debug.core,
  org.eclipse.m2m.qvt.oml.debug.core.app,
  org.eclipse.m2m.qvt.oml.debug.core.launch,
  org.eclipse.m2m.qvt.oml.debug.core.vm,
- org.eclipse.m2m.qvt.oml.debug.core.vm.protocol
+ org.eclipse.m2m.qvt.oml.debug.core.vm.protocol,
+ org.eclipse.m2m.qvt.oml.debug.core.srclookup

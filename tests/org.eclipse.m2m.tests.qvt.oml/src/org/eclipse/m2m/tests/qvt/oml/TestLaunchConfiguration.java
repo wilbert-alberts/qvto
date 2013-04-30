@@ -20,6 +20,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
+import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 
 public class TestLaunchConfiguration extends TestCase {
@@ -61,7 +62,7 @@ public class TestLaunchConfiguration extends TestCase {
     }
 
     private void performTest(String in, String out, TargetType targetType) throws CoreException {
-        ILaunchConfigurationType type = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType("org.eclipse.m2m.qvt.oml.QvtTransformation"); //$NON-NLS-1$
+        ILaunchConfigurationType type = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(QvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID);
         ILaunchConfigurationWorkingCopy copy = type.newInstance(null, "testOne"); //$NON-NLS-1$
         copy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, 2);
         copy.setAttribute(IQvtLaunchConstants.TARGET_MODEL+"1", in); //$NON-NLS-1$

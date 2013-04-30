@@ -205,10 +205,6 @@ public class TestUtil extends Assert {
         return getPluginRelativeFile(BUNDLE, folderName);
 	}
 	
-	public static File getPluginRelativeFile(final String file) throws IOException {
-        return getPluginRelativeFile(BUNDLE, file);
-	}
-    
     public static File getPluginRelativeFile(String plugin, String folderName) throws IOException {
         Bundle bundle = Platform.getBundle(plugin);
         

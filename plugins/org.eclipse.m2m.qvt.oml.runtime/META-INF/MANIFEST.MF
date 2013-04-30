@@ -8,7 +8,11 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: org.eclipse.m2m.internal.qvt.oml.runtime;x-internal:=true,
  org.eclipse.m2m.internal.qvt.oml.runtime.generator;x-friends:="org.eclipse.m2m.tests.qvt.oml",
- org.eclipse.m2m.internal.qvt.oml.runtime.launch;x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,org.eclipse.m2m.tests.qvt.oml,org.eclipse.m2m.qvt.oml.debug.core",
+ org.eclipse.m2m.internal.qvt.oml.runtime.launch;
+  x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,
+   org.eclipse.m2m.tests.qvt.oml,
+   org.eclipse.m2m.tests.qvt.oml.ui,
+   org.eclipse.m2m.qvt.oml.debug.core",
  org.eclipse.m2m.internal.qvt.oml.runtime.project;
   x-friends:="org.eclipse.m2m.qvt.oml.runtime.ui,
    org.eclipse.m2m.qvt.oml.editor.ui,

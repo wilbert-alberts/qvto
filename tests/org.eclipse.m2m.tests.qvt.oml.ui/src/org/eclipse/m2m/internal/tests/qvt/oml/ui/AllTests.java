@@ -14,6 +14,7 @@ package org.eclipse.m2m.internal.tests.qvt.oml.ui;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.internal.tests.qvt.oml.debugger.DebuggerTests;
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.completion.CompletionTests;
 import org.eclipse.m2m.internal.tests.qvt.oml.ui.editor.AllEditorTests;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -33,6 +34,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
         suite.addTest(CompletionTests.suite());
 		suite.addTest(AllEditorTests.suite());
+        suite.addTest(DebuggerTests.transformSuite());
 		//$JUnit-END$
 		return suite;
 	}

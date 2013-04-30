@@ -99,7 +99,6 @@ public abstract class TestTransformation extends TestCase {
     		ICommand buildCommand = NatureUtils.findCommand(buildSpec, QVTOProjectPlugin.BUILDER_ID);
     		
     		assertNotNull(buildCommand);		
-    		@SuppressWarnings("unchecked")
     		Map<String, String> arguments = buildCommand.getArguments();
     		// Remark: internal option for saving xmi, used for testing at the moment
     		//temporarily commented out for [290002] "Adopt QVT CST to latest OCL 3.0.0 CST "
@@ -228,7 +227,7 @@ public abstract class TestTransformation extends TestCase {
     }
     
     private void copyModelData() throws Exception {
-        File srcFolder = TestUtil.getPluginRelativeFolder("parserTestData/models/" + myData.getName()); //$NON-NLS-1$
+        File srcFolder = TestUtil.getPluginRelativeFile(myData.getBundle(), myData.getTestDataFolder() + "/models/" + myData.getName()); //$NON-NLS-1$
         myDestFolder = new File(getProject().getLocation().toString() + "/models/" + myData.getName()); //$NON-NLS-1$
         myDestFolder.mkdirs();
         FileUtil.copyFolder(srcFolder, myDestFolder);

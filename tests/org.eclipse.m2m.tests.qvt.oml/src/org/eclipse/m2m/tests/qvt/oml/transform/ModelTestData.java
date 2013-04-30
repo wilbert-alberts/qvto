@@ -193,8 +193,8 @@ public abstract class ModelTestData {
         }
     }
     
-    private static File getDestFolder(String name, IProject project) throws IOException {
-        File srcRootFolder = TestUtil.getPluginRelativeFolder("parserTestData/models"); //$NON-NLS-1$
+    private File getDestFolder(String name, IProject project) throws IOException {
+        File srcRootFolder = TestUtil.getPluginRelativeFile(getBundle(), getTestDataFolder() + "/models"); //$NON-NLS-1$
         File srcFolder = getFolder(srcRootFolder, name);
         File destFolder = getFolder(new File(project.getLocation().toString() + "/models/"), srcFolder.getName()); //$NON-NLS-1$
         return destFolder;
@@ -245,6 +245,13 @@ public abstract class ModelTestData {
         return context;
     }
     
+    public String getTestDataFolder() {
+    	return "parserTestData"; //$NON-NLS-1$
+    }
+    
+    public String getBundle() {
+    	return TestUtil.BUNDLE;
+    }
     
     private final String myName;
     private final IContext myContext;
