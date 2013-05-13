@@ -14,7 +14,9 @@ package org.eclipse.m2m.internal.tests.qvt.oml.ui.completion;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,21 +32,30 @@ public class CompletionTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Operational QVT code completion"); //$NON-NLS-1$
 		try {
-			loadTestCases(suite, TestUtil.getPluginRelativeFile(CompletionTest.BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER));
+			TestSuite generalSuite = new TestSuite("general"); //$NON-NLS-1$
+			TestSuite detachedSuite = new TestSuite("detached"); //$NON-NLS-1$
+			
+			loadTestCases(generalSuite, detachedSuite, TestUtil.getPluginRelativeFile(CompletionTest.BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER));
+			
+			suite.addTest(generalSuite);
+			suite.addTest(detachedSuite);			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//$JUnit-BEGIN$
-		
-		//$JUnit-END$
 		return suite;
 	}
 	
-	private static void loadTestCases(final TestSuite suite, final File folder) {
+	private static void loadTestCases(final TestSuite generalSuite, final TestSuite detachedSuite, final File folder) {
 		File[] contents = folder.listFiles();
 		for (int i = 0; i < contents.length; i++) {
 			if (isCompletionTestFolder(contents[i])) {
-				suite.addTest(new CompletionTest(contents[i].getName()));
+				String testName = contents[i].getName();
+				if (ourDetachedTests.contains(testName)) {
+					detachedSuite.addTest(new DetachedCompletionTest(testName));
+				}
+				else {
+					generalSuite.addTest(new CompletionTest(testName));
+				}
 			}
 		}
 	}
@@ -56,5 +67,10 @@ public class CompletionTests {
 		}
 		return false;
 	}
+	
+	private static final Set<String> ourDetachedTests = new HashSet<String>(Arrays.asList(
+			"bugzilla1978", //$NON-NLS-1$
+			"mixedImportItems" //$NON-NLS-1$
+			));
 
 }

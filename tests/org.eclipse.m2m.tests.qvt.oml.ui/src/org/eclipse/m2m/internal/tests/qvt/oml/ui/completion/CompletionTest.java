@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -42,7 +43,6 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtConfiguration;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProcessor;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
-import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilder;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.ReaderInputStream;
@@ -76,11 +76,10 @@ public class CompletionTest extends AbstractCompletionTest {
 	
     @Override
 	protected void setUp() throws Exception {
-		super.setUp();
-		
-		initializeWorkspace();
-		
-		initializeProject();
+		if (myTestProject == null) {
+			initializeWorkspace();		
+			initializeProject();
+		}
         
 		createTransformation();
 		
@@ -101,8 +100,6 @@ public class CompletionTest extends AbstractCompletionTest {
                 }
             }
         }
-        myTestProject.getProject().close(null);
-        super.tearDown();
     }
 
     @Override
@@ -120,10 +117,9 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected void initializeProject() throws Exception {
-		myTestProject = new TestProject("CompletionTest", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
-        File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER
-                + "/" + myFolder); //$NON-NLS-1$
-        FileUtil.copyFolder(srcFolder, myTestProject.getQVTSourceContainer().getLocation().toFile());
+		myTestProject = new TestProject("CompletionTest", new String[] {}); //$NON-NLS-1$
+        File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ICompletionTestConstants.COMPLETION_TEST_FOLDER);
+        FileUtil.copyFolder(srcFolder, myTestProject.getProject().getLocation().toFile());
 		myTestProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
 	}
 	
@@ -191,6 +187,7 @@ public class CompletionTest extends AbstractCompletionTest {
 					myExpectedProposalStrings.add(line);
 				}
 			}
+			reader.close();
 		} finally {
 			try {
 				if (contents != null) {
@@ -224,13 +221,14 @@ public class CompletionTest extends AbstractCompletionTest {
 			while ((read = reader.read(buffer)) > 0) {
                 contents.append(buffer, 0, read);
             }
+			reader.close();
 			
 			// get completion offset and remove annotation
             myOffset = contents.indexOf(ICompletionTestConstants.COMPLETION_ANNOTATION);
             contents.replace(myOffset, myOffset + ICompletionTestConstants.COMPLETION_ANNOTATION.length(), ""); //$NON-NLS-1$
             
             // create transformation file with updated contents 
-            IFile transformation = myTestProject.getQVTSourceContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
+            IFile transformation = getTransfromationContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
             transformation.create(new ReaderInputStream(contents.toString()), true, null);
 		} finally {
 			try {
@@ -242,7 +240,11 @@ public class CompletionTest extends AbstractCompletionTest {
 	}
 	
 	protected IFile getTransformationFile() throws CoreException {
-		return myTestProject.getQVTSourceContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
+		return getTransfromationContainer().getFile(new Path(ICompletionTestConstants.TRANSFORMATION_FILE));
+	}
+	
+	protected IContainer getTransfromationContainer() throws CoreException {
+		return myTestProject.getProject().getFolder(myFolder);
 	}
 	
 	protected String getTransformationContents() throws CoreException {
@@ -307,8 +309,8 @@ public class CompletionTest extends AbstractCompletionTest {
     }
 
 	private int myOffset;
-	private final String myFolder;
-	private TestProject myTestProject;
+	protected final String myFolder;
+	protected static TestProject myTestProject;
 	private boolean isModeStrict = true;
 	private final Set<String> myActualProposalStrings = new LinkedHashSet<String>();
 	private final Set<String> myExpectedProposalStrings = new LinkedHashSet<String>();
