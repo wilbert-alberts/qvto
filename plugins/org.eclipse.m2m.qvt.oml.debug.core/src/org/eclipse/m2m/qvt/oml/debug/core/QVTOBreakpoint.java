@@ -30,6 +30,11 @@ import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.NewBreakpointData;
 
 
 public class QVTOBreakpoint extends LineBreakpoint {
+	
+	/**
+	 * Family for breakpoint validation job (@see QVTOToggleBreakpointAdapter::toggleLineBreakpoints())
+	 */
+	public static final Object QVTO_BREAKPOINT_JOBFAMILY = new Object();
 
 	protected static final String HIT_COUNT = QVTODebugCore.PLUGIN_ID + ".hitCount"; //$NON-NLS-1$
 	

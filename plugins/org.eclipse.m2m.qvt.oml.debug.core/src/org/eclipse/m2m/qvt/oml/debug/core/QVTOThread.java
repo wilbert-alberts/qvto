@@ -200,7 +200,9 @@ public class QVTOThread extends QVTODebugElement implements IThread, VMEventList
 			
 			setStepping(false);
 
-	        fireSuspendEvent(suspendEvent.detail);
+			DebugEvent debugEvent = new DebugEvent(this, DebugEvent.SUSPEND, suspendEvent.detail);
+			debugEvent.setData(suspendEvent.location);
+	        fireEvent(debugEvent);
 		}
 	}
 

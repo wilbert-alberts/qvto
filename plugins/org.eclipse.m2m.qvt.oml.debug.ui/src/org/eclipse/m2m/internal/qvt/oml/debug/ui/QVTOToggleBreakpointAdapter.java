@@ -32,7 +32,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 
 public class QVTOToggleBreakpointAdapter implements IToggleBreakpointsTarget {
-
+	
 	public QVTOToggleBreakpointAdapter() {
 		super();
 	}
@@ -74,6 +74,11 @@ public class QVTOToggleBreakpointAdapter implements IToggleBreakpointsTarget {
 			protected IStatus run(IProgressMonitor monitor) {
 				return new BreakpointLocationVerifier(qvtEditor, lineBreakpoint,
 						DebugUIMessages.QVTOToggleBreakpointAdapter_CannotSetBreakpoint).run();
+            }
+            
+            @Override
+            public boolean belongsTo(Object family) {
+            	return QVTOBreakpoint.QVTO_BREAKPOINT_JOBFAMILY == family;
             }
         };
         

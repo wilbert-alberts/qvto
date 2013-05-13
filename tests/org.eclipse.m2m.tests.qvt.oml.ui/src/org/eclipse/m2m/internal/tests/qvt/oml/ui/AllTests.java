@@ -34,7 +34,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
         suite.addTest(CompletionTests.suite());
 		suite.addTest(AllEditorTests.suite());
-        suite.addTest(DebuggerTests.transformSuite());
+        suite.addTest(DebuggerTests.suite());
 		//$JUnit-END$
 		return suite;
 	}
