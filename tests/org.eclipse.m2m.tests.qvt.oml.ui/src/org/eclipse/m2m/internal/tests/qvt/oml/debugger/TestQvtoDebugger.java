@@ -34,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
+import org.eclipse.m2m.internal.qvt.oml.debug.ui.RetargettableActionAdapterFactory;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
@@ -147,7 +148,8 @@ public class TestQvtoDebugger extends TestCase {
      * @throws OperationCanceledException 
      */
     private void addBreakpoint(QvtEditor qvtEditor, final int line) throws CoreException, OperationCanceledException, InterruptedException {
-		IToggleBreakpointsTarget breakpointAdapter = (IToggleBreakpointsTarget) qvtEditor.getAdapter(IToggleBreakpointsTarget.class);
+		//IToggleBreakpointsTarget breakpointAdapter = (IToggleBreakpointsTarget) qvtEditor.getAdapter(IToggleBreakpointsTarget.class);
+    	IToggleBreakpointsTarget breakpointAdapter = (IToggleBreakpointsTarget)  new RetargettableActionAdapterFactory().getAdapter(qvtEditor, IToggleBreakpointsTarget.class);
 		breakpointAdapter.toggleLineBreakpoints(qvtEditor, new ITextSelection() {
 			public boolean isEmpty() {
 				return false;
