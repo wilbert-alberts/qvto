@@ -1144,7 +1144,7 @@ public class QvtOperationalVisitorCS
 			EClassifier resultType = null;
 
 			int opcode = 0;
-			if (TypeUtil.isStandardLibraryFeature(env, operationSourceType, oper)) {
+			if (TypeUtil.isStandardLibraryFeature(env, env.getUMLReflection().getOCLType(operationSourceType), oper)) {
 				// the operations defined intrinsically by the standard library
 				// are the only ones that may have opcodes
 				opcode = OCLStandardLibraryUtil.getOperationCode(resolvedName);

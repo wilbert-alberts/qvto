@@ -87,6 +87,7 @@ public class TransformTests {
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
         		new FileToFileData("virtual_contextVsOverride"), //$NON-NLS-1$
                 new FileToFileData("numconversion", "in.xmi", "expected.pack").includeMetamodelFile("mm.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                new FilesToFilesData("bug329971", Arrays.asList("Class1.xmi"), Collections.<String>emptyList()).includeMetamodelFile("test1.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         		new FileToFileData("overload_205062"), //$NON-NLS-1$
         		new FileToFileData("overload_singleParam"), //$NON-NLS-1$   
         		new FileToFileData("overload_multipleParams"), //$NON-NLS-1$        		        		

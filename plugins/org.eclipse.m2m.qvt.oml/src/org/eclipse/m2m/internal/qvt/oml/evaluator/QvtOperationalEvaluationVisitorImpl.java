@@ -1046,6 +1046,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         Object value = null;
 		if(initExpression != null) {
 			value = initExpression.accept(getVisitor());
+			// check that collection is initialized to empty collection in case of 'null' 
+			if(value == null && referredVariable.getType() instanceof CollectionType<?, ?>) {
+				value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary());
+			}
 		} else { 
 			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary());
 		}
@@ -1243,7 +1247,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public Object visitAssertExp(AssertExp assertExp) {		
 		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
 		
-		if(Boolean.FALSE.equals(assertionValue)) {	
+		if(Boolean.FALSE.equals(assertionValue) || assertionValue == getInvalid()) {	
 			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
 			Module currentModule = internEvalEnv.getCurrentModule().getModule();
 			IModuleSourceInfo moduleSource = ASTBindingHelper.getModuleSourceBinding(currentModule);

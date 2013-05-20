@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
+import org.eclipse.ocl.ecore.OperationCallExp;
 
 /**
  * This helper class solves the problem of serialization/deserialization of 
@@ -44,6 +45,8 @@ public class ExecutableXMIHelper {
 	private static final String VIRTUAL_TABLE_SOURCE = SOURCE_URI_BASE + "/VTable"; //$NON-NLS-1$
 	private static final String CONSTRUCTOR_SOURCE = SOURCE_URI_BASE + "/constructor"; //$NON-NLS-1$
 	private static final String STATIC_SOURCE = SOURCE_URI_BASE + "/static"; //$NON-NLS-1$
+	private static final String OPERATION_CALL_SOURCE = SOURCE_URI_BASE + "/opCall"; //$NON-NLS-1$
+	private static final String OPERATION_CALL_DETAILS_OPCODE = "opCode"; //$NON-NLS-1$
 
 	public static void fixResourceOnLoad(Resource resource) {
 		TreeIterator<EObject> it = resource.getAllContents();
@@ -63,6 +66,8 @@ public class ExecutableXMIHelper {
 				}
 			} else if(nextObj instanceof EStructuralFeature) {
 				loadStaticFeatureFromAnnotation((EStructuralFeature) nextObj);
+			} else if(nextObj instanceof OperationCallExp) {
+				loadOperationCallDetails((OperationCallExp) nextObj);
 			}
 		}
 	}
@@ -77,6 +82,8 @@ public class ExecutableXMIHelper {
 				saveConstructorReference((InstantiationExp) nextObj);
 			} else if(nextObj instanceof EStructuralFeature) {
 				saveStaticFeature((EStructuralFeature) nextObj);
+			} else if(nextObj instanceof OperationCallExp) {
+				saveOperationCallDetails((OperationCallExp) nextObj);
 			}
 		}
 	}	
@@ -146,4 +153,28 @@ public class ExecutableXMIHelper {
 			IntermediateClassFactory.markFeatureAsStatic(feature);
 		}
 	}
+	
+	private static void saveOperationCallDetails(OperationCallExp opCallExp) {
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(OPERATION_CALL_SOURCE);
+		annotation.getDetails().put(OPERATION_CALL_DETAILS_OPCODE, String.valueOf(opCallExp.getOperationCode()));
+		opCallExp.getEAnnotations().add(annotation);
+	}
+
+	private static void loadOperationCallDetails(OperationCallExp opCallExp) {
+		EAnnotation annotation = opCallExp.getEAnnotation(OPERATION_CALL_SOURCE);
+		if (annotation == null) {
+			return;
+		}
+		String opCodeString = annotation.getDetails().get(OPERATION_CALL_DETAILS_OPCODE);
+		if (opCodeString == null) {
+			return;
+		}
+		try {
+			opCallExp.setOperationCode(Integer.valueOf(opCodeString));
+		}
+		catch (NumberFormatException e) {
+		}
+	}
+
 }
