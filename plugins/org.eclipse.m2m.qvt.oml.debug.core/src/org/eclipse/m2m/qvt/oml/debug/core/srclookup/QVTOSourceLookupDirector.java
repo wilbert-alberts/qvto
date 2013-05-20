@@ -18,6 +18,9 @@ import org.eclipse.debug.core.sourcelookup.ISourceLookupDirector;
 import org.eclipse.debug.core.sourcelookup.ISourceLookupParticipant;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 
+/**
+ * @since 1.3
+ */
 public class QVTOSourceLookupDirector extends AbstractSourceLookupDirector {	
 	
 	private static final String PDE_SOURCE_LOOKUP_DIRECTOR_ID = "org.eclipse.pde.ui.launcher.PDESourceLookupDirector";

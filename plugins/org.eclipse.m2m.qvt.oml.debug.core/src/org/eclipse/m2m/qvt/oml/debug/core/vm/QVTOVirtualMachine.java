@@ -275,7 +275,7 @@ public class QVTOVirtualMachine implements IQVTOVirtualMachineShell {
 	}	
 	
 	
-	private class DebuggerShell implements IQVTODebuggerShell {
+	private class DebuggerShell implements IQVTODebuggerShellExtension {
 		
 		public VMBreakpointManager getBreakPointManager() {
 			return QVTOVirtualMachine.this.fBreakpointManager;

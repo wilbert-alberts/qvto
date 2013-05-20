@@ -70,7 +70,7 @@ public final class DebugEnvironmentFactory extends QvtOperationalEnvFactory {
 			return super.createEvaluationVisitor(env, evalEnv, extentMap);
 		}
 		
-		if (debuggerShell.isSessionStarted()) {
+		if ((debuggerShell instanceof IQVTODebuggerShellExtension) && ((IQVTODebuggerShellExtension)debuggerShell).isSessionStarted()) {
 			return super.createEvaluationVisitor(env, evalEnv, extentMap);
 		}
 

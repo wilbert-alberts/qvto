@@ -18,8 +18,6 @@ public interface IQVTODebuggerShell {
 
 	void sessionStarted(QVTODebugEvaluator evaluator);
 	
-	boolean isSessionStarted();
-	
 	VMRequest popRequest();
 
 	VMRequest waitAndPopRequest(VMEvent suspend) throws InterruptedException;

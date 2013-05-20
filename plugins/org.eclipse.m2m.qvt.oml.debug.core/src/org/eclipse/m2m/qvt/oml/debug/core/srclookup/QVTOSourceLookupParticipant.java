@@ -18,6 +18,9 @@ import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTOStackFrame;
 
 
+/**
+ * @since 1.3
+ */
 public class QVTOSourceLookupParticipant extends AbstractSourceLookupParticipant {
 		
 	

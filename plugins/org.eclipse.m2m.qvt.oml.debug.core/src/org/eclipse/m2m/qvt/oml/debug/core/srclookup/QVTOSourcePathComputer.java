@@ -26,6 +26,9 @@ import org.eclipse.debug.core.sourcelookup.containers.WorkspaceSourceContainer;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDelegateBase;
 
 
+/**
+ * @since 1.3
+ */
 public class QVTOSourcePathComputer implements ISourcePathComputer {
 		
 	public static final String ID = "org.eclipse.m2m.qvt.oml.debug.srclookup.QVTOSourcePathComputer";  //$NON-NLS-1$

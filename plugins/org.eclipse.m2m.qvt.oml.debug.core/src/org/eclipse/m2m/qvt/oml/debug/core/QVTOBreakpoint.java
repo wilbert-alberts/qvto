@@ -33,6 +33,7 @@ public class QVTOBreakpoint extends LineBreakpoint {
 	
 	/**
 	 * Family for breakpoint validation job (@see QVTOToggleBreakpointAdapter::toggleLineBreakpoints())
+	 * @since 1.3
 	 */
 	public static final Object QVTO_BREAKPOINT_JOBFAMILY = new Object();
 
