@@ -274,6 +274,11 @@ public class TraceUtil {
                     tuplePartValue.setValue(partEValue);
                     value.getCollection().add(tuplePartValue);
                 }
+            } else if (oclObject instanceof ModelInstance) {
+                value.setCollectionType("ModelType"); //$NON-NLS-1$
+                for (Object collectionElement : ((ModelInstance) oclObject).getExtent().getInitialObjects()) {
+                    value.getCollection().add(createEValue(collectionElement));
+                }
             } else if (oclObject instanceof EObject) {
                 value.setModelElement((EObject) oclObject);
             } else {

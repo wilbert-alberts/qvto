@@ -47,14 +47,17 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
         myUI = new QvtTransformationConfigurationUI(myData, new ISetMessageEx() {
             public void setErrorMessage(String message) {
                 QvtTransformationConfigurationTab.this.setErrorMessage(message);
+                QvtTransformationConfigurationTab.this.getLaunchConfigurationDialog().updateMessage();
             }
 
             public void setMessage(String message) {
                 QvtTransformationConfigurationTab.this.setMessage(message);
+                QvtTransformationConfigurationTab.this.getLaunchConfigurationDialog().updateMessage();
             }
 
 			public void setWarningMessage(String message) {
                 QvtTransformationConfigurationTab.this.setWarningMessage(message);
+                QvtTransformationConfigurationTab.this.getLaunchConfigurationDialog().updateMessage();
 			}
         });
         myUI.addPropertyChangeListener(new PropertyChangeListener() {

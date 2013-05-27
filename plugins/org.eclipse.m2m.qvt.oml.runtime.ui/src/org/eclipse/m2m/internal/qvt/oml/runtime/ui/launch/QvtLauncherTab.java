@@ -351,14 +351,17 @@ public class QvtLauncherTab extends MdaLaunchTab {
 		
         public void setErrorMessage(String message) {
             QvtLauncherTab.this.setErrorMessage(message);
+            QvtLauncherTab.this.getLaunchConfigurationDialog().updateMessage();
         }
 
         public void setMessage(String message) {
             QvtLauncherTab.this.setMessage(message);
+            QvtLauncherTab.this.getLaunchConfigurationDialog().updateMessage();
         }
 
 		public void setWarningMessage(String message) {
             QvtLauncherTab.this.setWarningMessage(message);
+            QvtLauncherTab.this.getLaunchConfigurationDialog().updateMessage();
 		}
     };
     
