@@ -116,15 +116,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_EXPRESSION__NAME = PivotPackage.OCL_EXPRESSION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_EXPRESSION__OWNED_RULE = PivotPackage.OCL_EXPRESSION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -188,15 +179,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING = PivotPackage.OCL_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.OCL_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The number of operations of the '<em>Imperative Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -241,15 +223,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ALT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ALT_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -333,15 +306,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ALT_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ALT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -404,15 +368,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ASSERT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -505,15 +460,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSERT_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -576,15 +522,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ASSIGN_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -686,15 +623,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSIGN_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -757,15 +685,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int BLOCK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -840,15 +759,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BLOCK_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -911,15 +821,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREAK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREAK_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -985,15 +886,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BREAK_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREAK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1056,15 +948,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATCH_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATCH_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1148,15 +1031,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CATCH_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATCH_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1219,15 +1093,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPUTE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1311,15 +1176,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int COMPUTE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1382,15 +1238,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTINUE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTINUE_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1456,15 +1303,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CONTINUE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTINUE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1527,15 +1365,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICT_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP__OWNED_RULE = PivotPackage.LITERAL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1608,15 +1437,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICT_LITERAL_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LITERAL_EXP___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -1719,15 +1539,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_PART___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_PART___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1790,15 +1601,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE__NAME = PivotPackage.COLLECTION_TYPE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE__OWNED_RULE = PivotPackage.COLLECTION_TYPE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1900,6 +1702,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICTIONARY_TYPE__SUPER_CLASS = PivotPackage.COLLECTION_TYPE__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE__OWNED_INVARIANT = PivotPackage.COLLECTION_TYPE__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1907,6 +1718,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE__INSTANCE_CLASS_NAME = PivotPackage.COLLECTION_TYPE__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE__OWNED_RULE = PivotPackage.COLLECTION_TYPE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -2017,15 +1837,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICTIONARY_TYPE___GET_VALUE__TYPE_STRING = PivotPackage.COLLECTION_TYPE___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.COLLECTION_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2069,6 +1880,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.COLLECTION_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.COLLECTION_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -2133,15 +1953,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_LOOP_EXP__NAME = PivotPackage.LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP__OWNED_RULE = PivotPackage.LOOP_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2261,15 +2072,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LOOP_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2332,15 +2134,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int FOR_EXP__NAME = IMPERATIVE_LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP__OWNED_RULE = IMPERATIVE_LOOP_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2460,15 +2253,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int FOR_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2549,15 +2333,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_ITERATE_EXP__NAME = IMPERATIVE_LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP__OWNED_RULE = IMPERATIVE_LOOP_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2686,15 +2461,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_ITERATE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2775,15 +2541,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int INSTANTIATION_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSTANTIATION_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2876,15 +2633,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int INSTANTIATION_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSTANTIATION_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2947,15 +2695,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_LITERAL_EXP__OWNED_RULE = PivotPackage.LITERAL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3030,15 +2769,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_LITERAL_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LITERAL_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3101,15 +2831,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE__NAME = PivotPackage.COLLECTION_TYPE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE__OWNED_RULE = PivotPackage.COLLECTION_TYPE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3211,6 +2932,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_TYPE__SUPER_CLASS = PivotPackage.COLLECTION_TYPE__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__OWNED_INVARIANT = PivotPackage.COLLECTION_TYPE__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3218,6 +2948,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE__INSTANCE_CLASS_NAME = PivotPackage.COLLECTION_TYPE__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__OWNED_RULE = PivotPackage.COLLECTION_TYPE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -3319,15 +3058,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_TYPE___GET_VALUE__TYPE_STRING = PivotPackage.COLLECTION_TYPE___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.COLLECTION_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3371,6 +3101,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.COLLECTION_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.COLLECTION_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3435,15 +3174,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP__NAME = PivotPackage.OPERATION_CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP__OWNED_RULE = PivotPackage.OPERATION_CALL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3563,15 +3293,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___GET_VALUE__TYPE_STRING = PivotPackage.OPERATION_CALL_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3579,15 +3300,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
-
-	/**
-	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
@@ -3599,13 +3311,13 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
-	 * The operation id for the '<em>Validate Non Static Source Is Conformant</em>' operation.
+	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+	int LOG_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3670,15 +3382,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__OWNED_RULE = PivotPackage.LITERAL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3751,15 +3454,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_LITERAL_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LITERAL_EXP___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.LITERAL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3853,15 +3547,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_LITERAL_PART___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3924,15 +3609,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4034,6 +3710,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_TYPE__SUPER_CLASS = PivotPackage.CLASS__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__OWNED_INVARIANT = PivotPackage.CLASS__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4041,6 +3726,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE__INSTANCE_CLASS_NAME = PivotPackage.CLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -4106,15 +3800,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_TYPE___GET_VALUE__TYPE_STRING = PivotPackage.CLASS___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4158,6 +3843,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -4222,15 +3916,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int RAISE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAISE_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4314,15 +3999,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RAISE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAISE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4385,15 +4061,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int RETURN_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4468,15 +4135,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RETURN_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4539,15 +4197,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4631,15 +4280,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int SWITCH_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4702,15 +4342,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRY_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRY_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4794,15 +4425,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TRY_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRY_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4865,15 +4487,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPEDEF__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4975,6 +4588,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TYPEDEF__SUPER_CLASS = PivotPackage.CLASS__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF__OWNED_INVARIANT = PivotPackage.CLASS__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4982,6 +4604,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF__INSTANCE_CLASS_NAME = PivotPackage.CLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -5056,15 +4687,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TYPEDEF___GET_VALUE__TYPE_STRING = PivotPackage.CLASS___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPEDEF___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5108,6 +4730,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -5172,15 +4803,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNLINK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNLINK_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5264,15 +4886,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNLINK_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNLINK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5335,15 +4948,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNPACK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5427,15 +5031,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNPACK_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5498,15 +5093,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_INIT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INIT_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5590,15 +5176,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int VARIABLE_INIT_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INIT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5661,15 +5238,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int WHILE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP__OWNED_RULE = IMPERATIVE_EXPRESSION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5751,15 +5319,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int WHILE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_EXPRESSION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.

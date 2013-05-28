@@ -119,15 +119,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_OPERATION__NAME = PivotPackage.OPERATION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_OPERATION__OWNED_RULE = PivotPackage.OPERATION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -180,6 +171,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_OPERATION__IMPLEMENTATION = PivotPackage.OPERATION__IMPLEMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION__OWNED_RULE = PivotPackage.OPERATION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
@@ -252,6 +252,33 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_OPERATION__OWNING_TYPE = PivotPackage.OPERATION__OWNING_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Precondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION__PRECONDITION = PivotPackage.OPERATION__PRECONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Postcondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION__POSTCONDITION = PivotPackage.OPERATION__POSTCONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Body Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION__BODY_EXPRESSION = PivotPackage.OPERATION__BODY_EXPRESSION;
 
 	/**
 	 * The feature id for the '<em><b>Is Invalidating</b></em>' attribute.
@@ -371,15 +398,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_OPERATION___GET_VALUE__TYPE_STRING = PivotPackage.OPERATION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -452,6 +470,24 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Unique Precondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Postcondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -516,15 +552,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONSTRUCTOR__NAME = IMPERATIVE_OPERATION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONSTRUCTOR__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -577,6 +604,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONSTRUCTOR__IMPLEMENTATION = IMPERATIVE_OPERATION__IMPLEMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
@@ -649,6 +685,33 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONSTRUCTOR__OWNING_TYPE = IMPERATIVE_OPERATION__OWNING_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Precondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR__PRECONDITION = IMPERATIVE_OPERATION__PRECONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Postcondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR__POSTCONDITION = IMPERATIVE_OPERATION__POSTCONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Body Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR__BODY_EXPRESSION = IMPERATIVE_OPERATION__BODY_EXPRESSION;
 
 	/**
 	 * The feature id for the '<em><b>Is Invalidating</b></em>' attribute.
@@ -768,15 +831,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONSTRUCTOR___GET_VALUE__TYPE_STRING = IMPERATIVE_OPERATION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONSTRUCTOR___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -847,6 +901,24 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONSTRUCTOR___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Precondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Postcondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRUCTOR___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -958,15 +1030,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATION_BODY___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPERATION_BODY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1076,15 +1139,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONSTRUCTOR_BODY___GET_VALUE__TYPE_STRING = OPERATION_BODY___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONSTRUCTOR_BODY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = OPERATION_BODY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1147,15 +1201,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTEXTUAL_PROPERTY__NAME = PivotPackage.PROPERTY__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTEXTUAL_PROPERTY__OWNED_RULE = PivotPackage.PROPERTY__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -1302,6 +1347,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONTEXTUAL_PROPERTY__IMPLICIT = PivotPackage.PROPERTY__IMPLICIT;
 
 	/**
+	 * The feature id for the '<em><b>Default Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTEXTUAL_PROPERTY__DEFAULT_EXPRESSION = PivotPackage.PROPERTY__DEFAULT_EXPRESSION;
+
+	/**
 	 * The feature id for the '<em><b>Is ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1446,15 +1500,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONTEXTUAL_PROPERTY___GET_VALUE__TYPE_STRING = PivotPackage.PROPERTY___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTEXTUAL_PROPERTY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.PROPERTY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1500,13 +1545,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int CONTEXTUAL_PROPERTY___IS_ATTRIBUTE__PROPERTY = PivotPackage.PROPERTY___IS_ATTRIBUTE__PROPERTY;
 
 	/**
-	 * The operation id for the '<em>Validate Compatible Initialiser</em>' operation.
+	 * The operation id for the '<em>Validate Compatible Default Expression</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTEXTUAL_PROPERTY___VALIDATE_COMPATIBLE_INITIALISER__DIAGNOSTICCHAIN_MAP = PivotPackage.PROPERTY___VALIDATE_COMPATIBLE_INITIALISER__DIAGNOSTICCHAIN_MAP;
+	int CONTEXTUAL_PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP = PivotPackage.PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -1591,15 +1636,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int DUMMY_RELATION___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DUMMY_RELATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1680,15 +1716,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int DUMMY_RELATION_DOMAIN___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DUMMY_RELATION_DOMAIN___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -1773,15 +1800,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int DUMMY_RELATIONAL_TRANSFORMATION___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DUMMY_RELATIONAL_TRANSFORMATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1846,15 +1864,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int ENTRY_OPERATION__NAME = IMPERATIVE_OPERATION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENTRY_OPERATION__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1907,6 +1916,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENTRY_OPERATION__IMPLEMENTATION = IMPERATIVE_OPERATION__IMPLEMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
@@ -1979,6 +1997,33 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENTRY_OPERATION__OWNING_TYPE = IMPERATIVE_OPERATION__OWNING_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Precondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__PRECONDITION = IMPERATIVE_OPERATION__PRECONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Postcondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__POSTCONDITION = IMPERATIVE_OPERATION__POSTCONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Body Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION__BODY_EXPRESSION = IMPERATIVE_OPERATION__BODY_EXPRESSION;
 
 	/**
 	 * The feature id for the '<em><b>Is Invalidating</b></em>' attribute.
@@ -2098,15 +2143,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int ENTRY_OPERATION___GET_VALUE__TYPE_STRING = IMPERATIVE_OPERATION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENTRY_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2179,6 +2215,24 @@ public interface QVTOperationalPackage extends EPackage {
 	int ENTRY_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Unique Precondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Postcondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2243,15 +2297,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int HELPER__NAME = IMPERATIVE_OPERATION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HELPER__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2304,6 +2349,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int HELPER__IMPLEMENTATION = IMPERATIVE_OPERATION__IMPLEMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
@@ -2376,6 +2430,33 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int HELPER__OWNING_TYPE = IMPERATIVE_OPERATION__OWNING_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Precondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER__PRECONDITION = IMPERATIVE_OPERATION__PRECONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Postcondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER__POSTCONDITION = IMPERATIVE_OPERATION__POSTCONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Body Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER__BODY_EXPRESSION = IMPERATIVE_OPERATION__BODY_EXPRESSION;
 
 	/**
 	 * The feature id for the '<em><b>Is Invalidating</b></em>' attribute.
@@ -2504,15 +2585,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int HELPER___GET_VALUE__TYPE_STRING = IMPERATIVE_OPERATION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HELPER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2585,6 +2657,24 @@ public interface QVTOperationalPackage extends EPackage {
 	int HELPER___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Unique Precondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Postcondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HELPER___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2647,15 +2737,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_CALL_EXP__NAME = PivotPackage.OPERATION_CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_CALL_EXP__OWNED_RULE = PivotPackage.OPERATION_CALL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2775,15 +2856,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_CALL_EXP___GET_VALUE__TYPE_STRING = PivotPackage.OPERATION_CALL_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2791,15 +2863,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_CALL_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
-
-	/**
-	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
@@ -2811,13 +2874,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
-	 * The operation id for the '<em>Validate Non Static Source Is Conformant</em>' operation.
+	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -2882,15 +2945,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -2992,6 +3046,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE__SUPER_CLASS = PivotPackage.CLASS__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__OWNED_INVARIANT = PivotPackage.CLASS__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2999,6 +3062,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__INSTANCE_CLASS_NAME = PivotPackage.CLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -3172,15 +3244,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE___GET_VALUE__TYPE_STRING = PivotPackage.CLASS___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3224,6 +3287,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3288,15 +3360,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__NAME = MODULE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__OWNED_RULE = MODULE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3398,6 +3461,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int LIBRARY__SUPER_CLASS = MODULE__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__OWNED_INVARIANT = MODULE__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3405,6 +3477,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY__INSTANCE_CLASS_NAME = MODULE__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__OWNED_RULE = MODULE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -3578,15 +3659,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int LIBRARY___GET_VALUE__TYPE_STRING = MODULE___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = MODULE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3630,6 +3702,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIBRARY___SPECIALIZE_IN__OCLEXPRESSION_TYPE = MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = MODULE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3759,15 +3840,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_BODY___GET_VALUE__TYPE_STRING = OPERATION_BODY___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_BODY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = OPERATION_BODY___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3830,15 +3902,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_CALL_EXP__NAME = IMPERATIVE_CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP__OWNED_RULE = IMPERATIVE_CALL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -3967,15 +4030,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_CALL_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_CALL_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3983,15 +4037,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_CALL_EXP___GET_REFERRED_ELEMENT = IMPERATIVE_CALL_EXP___GET_REFERRED_ELEMENT;
-
-	/**
-	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Argument Count</em>' operation.
@@ -4003,13 +4048,13 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
-	 * The operation id for the '<em>Validate Non Static Source Is Conformant</em>' operation.
+	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -4076,15 +4121,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_OPERATION__NAME = IMPERATIVE_OPERATION__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_OPERATION__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
-
-	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4137,6 +4173,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_OPERATION__IMPLEMENTATION = IMPERATIVE_OPERATION__IMPLEMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__OWNED_RULE = IMPERATIVE_OPERATION__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
@@ -4209,6 +4254,33 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_OPERATION__OWNING_TYPE = IMPERATIVE_OPERATION__OWNING_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Precondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__PRECONDITION = IMPERATIVE_OPERATION__PRECONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Postcondition</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__POSTCONDITION = IMPERATIVE_OPERATION__POSTCONDITION;
+
+	/**
+	 * The feature id for the '<em><b>Body Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION__BODY_EXPRESSION = IMPERATIVE_OPERATION__BODY_EXPRESSION;
 
 	/**
 	 * The feature id for the '<em><b>Is Invalidating</b></em>' attribute.
@@ -4382,15 +4454,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_OPERATION___GET_VALUE__TYPE_STRING = IMPERATIVE_OPERATION___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4463,6 +4526,24 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Unique Precondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Postcondition Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP = IMPERATIVE_OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4525,15 +4606,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int VAR_PARAMETER__NAME = PivotPackage.VARIABLE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_PARAMETER__OWNED_RULE = PivotPackage.VARIABLE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4662,15 +4734,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int VAR_PARAMETER___GET_VALUE__TYPE_STRING = PivotPackage.VARIABLE___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_PARAMETER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.VARIABLE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4751,15 +4814,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_PARAMETER__NAME = VAR_PARAMETER__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_PARAMETER__OWNED_RULE = VAR_PARAMETER__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -4906,15 +4960,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_PARAMETER___GET_VALUE__TYPE_STRING = VAR_PARAMETER___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_PARAMETER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = VAR_PARAMETER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4995,15 +5040,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_PARAMETER__NAME = VAR_PARAMETER__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_PARAMETER__OWNED_RULE = VAR_PARAMETER__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5132,15 +5168,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_PARAMETER___GET_VALUE__TYPE_STRING = VAR_PARAMETER___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_PARAMETER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = VAR_PARAMETER___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Compatible Body</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5221,15 +5248,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_TYPE__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5331,6 +5349,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_TYPE__SUPER_CLASS = PivotPackage.CLASS__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE__OWNED_INVARIANT = PivotPackage.CLASS__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5338,6 +5365,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_TYPE__INSTANCE_CLASS_NAME = PivotPackage.CLASS__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -5421,15 +5457,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODEL_TYPE___GET_VALUE__TYPE_STRING = PivotPackage.CLASS___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_TYPE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5473,6 +5500,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -5593,15 +5629,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MODULE_IMPORT___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE_IMPORT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5664,15 +5691,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OBJECT_EXP__NAME = ImperativeOCLPackage.INSTANTIATION_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_EXP__OWNED_RULE = ImperativeOCLPackage.INSTANTIATION_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5783,15 +5801,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int OBJECT_EXP___GET_VALUE__TYPE_STRING = ImperativeOCLPackage.INSTANTIATION_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = ImperativeOCLPackage.INSTANTIATION_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5863,15 +5872,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATIONAL_TRANSFORMATION__NAME = MODULE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPERATIONAL_TRANSFORMATION__OWNED_RULE = MODULE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -5973,6 +5973,15 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION__SUPER_CLASS = MODULE__SUPER_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__OWNED_INVARIANT = MODULE__OWNED_INVARIANT;
+
+	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5980,6 +5989,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATIONAL_TRANSFORMATION__INSTANCE_CLASS_NAME = MODULE__INSTANCE_CLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION__OWNED_RULE = MODULE__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
@@ -6198,15 +6216,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int OPERATIONAL_TRANSFORMATION___GET_VALUE__TYPE_STRING = MODULE___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPERATIONAL_TRANSFORMATION___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = MODULE___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Parameterable Elements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6250,6 +6259,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPERATIONAL_TRANSFORMATION___SPECIALIZE_IN__OCLEXPRESSION_TYPE = MODULE___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATIONAL_TRANSFORMATION___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = MODULE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -6314,15 +6332,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_EXP__NAME = PivotPackage.CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_EXP__OWNED_RULE = PivotPackage.CALL_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -6451,15 +6460,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int RESOLVE_EXP___GET_VALUE__TYPE_STRING = PivotPackage.CALL_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.CALL_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6522,15 +6522,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESOLVE_IN_EXP__NAME = RESOLVE_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_IN_EXP__OWNED_RULE = RESOLVE_EXP__OWNED_RULE;
 
 	/**
 	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -6668,15 +6659,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int RESOLVE_IN_EXP___GET_VALUE__TYPE_STRING = RESOLVE_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESOLVE_IN_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = RESOLVE_EXP___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Accept</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6784,15 +6766,6 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int TAG___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Validate Not Own Self</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TAG___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP = PivotPackage.ELEMENT___VALIDATE_NOT_OWN_SELF__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
