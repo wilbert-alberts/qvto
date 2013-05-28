@@ -560,7 +560,7 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 	
 	// FIXME copied from TypedMultiplicityElementImpl. See bug 409268
 	public boolean isMany() {
-		Type type = getType();,
+		Type type = getType();
 		if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
 			IntegerValue upperValue = collectionType.getUpperValue();
