@@ -17,28 +17,25 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.WrappedException;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
+import org.eclipse.ocl.examples.domain.values.IntegerValue;
+import org.eclipse.ocl.examples.domain.values.UnlimitedValue;
+import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.Operation;
 import org.eclipse.ocl.examples.pivot.Parameter;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
+import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.pivot.TypedMultiplicityElement;
 import org.eclipse.ocl.examples.pivot.ValueSpecification;
-
 import org.eclipse.ocl.examples.pivot.internal.impl.VariableImpl;
-
 import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeOperation;
@@ -559,6 +556,17 @@ public class VarParameterImpl extends VariableImpl implements VarParameter {
 		result.append(kind);
 		result.append(')');
 		return result.toString();
+	}
+	
+	// FIXME copied from TypedMultiplicityElementImpl. See bug 409268
+	public boolean isMany() {
+		Type type = getType();,
+		if (type instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)type;
+			IntegerValue upperValue = collectionType.getUpperValue();
+			return !(upperValue instanceof UnlimitedValue) && (upperValue.intValue() > 1);
+		}
+		return false;
 	}
 
 } //VarParameterImpl
