@@ -17,6 +17,7 @@
 module GenerateQVToXtextModels
 
 import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
@@ -78,25 +79,25 @@ Workflow {
     bean = UMLGenModelSetup { resourceSet = resourceSet }
     
     
-    component = DerivedVisitorPatternWeaver {
-    	resourceSet = resourceSet
-    	in = imperativeOclXtextEcoreURI
-    	in = essentialOclXtextEcoreURI
-    	in = oclXtextBaseEcoreURI
-    	rootVisitorInterfaceName = oclXtextBaseVisitorName
-    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
-    	superVisitorInterfaceName = essentialOclXtextVisitorName
-    	superVisitorInterfaceQualifiedName = essentialOclXtextVisitorQualifiedName
-    	derivedVisitorInterfaceName = imperativeOclXtextVisitorName
-    	derivedVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
-    }    
+//    component = DerivedVisitorPatternWeaver {
+//    	resourceSet = resourceSet
+//    	in = imperativeOclXtextEcoreURI
+//    	in = essentialOclXtextEcoreURI
+//    	in = oclXtextBaseEcoreURI
+//    	rootVisitorInterfaceName = oclXtextBaseVisitorName
+//    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
+//    	superVisitorInterfaceName = essentialOclXtextVisitorName
+//    	superVisitorInterfaceQualifiedName = essentialOclXtextVisitorQualifiedName
+//    	derivedVisitorInterfaceName = imperativeOclXtextVisitorName
+//    	derivedVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
+//    }    
     
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
 		genModel = imperativeOclXtextGenModelPath
 		clearResourceSet = false 	
     }
     
-    component = XtextVisitorCodeGenerator { resourceSet = resourceSet
+    component = GenerateXtextVisitors { resourceSet = resourceSet
     	resourceSet = resourceSet
     	projectName = imperativeOclXtextProjectName
     	genModelFile = imperativeOclXtextGenModelProjectPath

@@ -19,6 +19,7 @@
 module GenerateQVToModels
 
 import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.* 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
@@ -95,7 +96,7 @@ Workflow {
     	superVisitorInterfaceQualifiedName = oclVisitorQualifiedName
     	derivedVisitorInterfaceName = imperativeOclVisitorName
     	derivedVisitorInterfaceQualifiedName = imperativeOclVisitorQualifiedName
-    }    
+    }
     
     component = DerivedVisitorPatternWeaver {
     	resourceSet = resourceSet
@@ -120,7 +121,7 @@ Workflow {
 		clearResourceSet = false
 	}
     
-    component = DerivedModelVisitorCodeGenerator { 
+    component = GeneratePivotVisitors { 
     	resourceSet = resourceSet
     	projectName = imperativeOclProjectName
     	genModelFile = imperativeOclGenModelProjectPath
@@ -134,7 +135,7 @@ Workflow {
     	visitableClassName = oclVisitableName
     }
     
-    component = DerivedModelVisitorCodeGenerator { 
+    component = GeneratePivotVisitors { 
     	resourceSet = resourceSet
     	projectName = qvtOperationalProjectName
     	genModelFile = qvtOperationalGenModelProjectPath
