@@ -1,10 +1,26 @@
-module org.eclipse.qvto.examples.xtext.GenerateQVTOperational
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2013 Willink Transformations, University of York and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - initial API and implementation
+ *
+ * </copyright>
+ *
+ */
+module GenerateImperativeOCLEditor
 
 import org.eclipse.emf.mwe.utils.*
+import org.eclipse.ocl.examples.build.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/eclipse/qvto/examples/xtext/QVTOperational.xtext"
+var grammarURI = "classpath:/org/eclipse/qvto/examples/xtext/qvtoperational/QVTOperational.xtext"
 var fileExtensions = "qvto"
 var projectName = "org.eclipse.qvto.examples.xtext.qvtoperational"
 var runtimeProject = "../${projectName}"
@@ -14,9 +30,13 @@ Workflow {
     bean = StandaloneSetup {
     	scanClassPath = true
     	platformUri = "${runtimeProject}/.."
-    	// The following two lines can be removed, if Xbase is not used.
-    	registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
-    	registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
+    	registerGeneratedEPackage = "org.eclipse.uml2.uml.UMLPackage"
+    	registerGeneratedEPackage = "org.eclipse.ocl.examples.pivot.PivotPackage"
+    	registerGeneratedEPackage = "org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage"
+    	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
     }
     
     component = DirectoryCleaner {
@@ -41,10 +61,6 @@ Workflow {
     
     		// generates Java API for the generated EPackages
     		fragment = ecore.EcoreGeneratorFragment auto-inject {
-    		// referencedGenModels = "
-    		//  platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel,
-    		//  platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel
-    		// "
     		}
     
     		// the old serialization component
@@ -60,14 +76,15 @@ Workflow {
     
     		// The antlr parser generator fragment.
     		fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {
-    		//  options = {
-    		//      backtrack = true
-    		//  }
+				options = { backtrack = true classSplitting = true }			
+				antlrParam = "-Xconversiontimeout" antlrParam = "10000"
     		}
     
     		// Xtend-based API for validation
-    		fragment = validation.ValidatorFragment auto-inject {
-    		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+    		// fragment = validation.ValidatorFragment auto-inject {
+    		// FIXME need to align with JavaValidator used by OCL, otherwise compiler errors
+			fragment = validation.JavaValidatorFragment auto-inject {    			
+				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
     		//    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
     		}
     
@@ -99,8 +116,14 @@ Workflow {
     		// content assist API
     		fragment = contentAssist.ContentAssistFragment auto-inject {}
     
+//			fragment = de.itemis.xtext.antlr.XtextAntlrGeneratorFragment {
+//				options = { backtrack = true classSplitting = true}
+//			}
     		// generates a more lightweight Antlr parser and lexer tailored for content assist
-    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {
+				options = { backtrack = true classSplitting = true}			
+				antlrParam = "-Xconversiontimeout" antlrParam = "10000"
+			}
     
     		// generates junit test support classes into Generator#pathTestProject
     		fragment = junit.Junit4Fragment auto-inject {}
@@ -113,11 +136,10 @@ Workflow {
     		// rename refactoring
     		fragment = refactoring.RefactorElementNameFragment auto-inject {}
     
-    		// provides the necessary bindings for java types integration
-    		fragment = types.TypesGeneratorFragment auto-inject {}
-    
-    		// generates the required bindings only if the grammar inherits from Xbase
-    		fragment = xbase.XbaseGeneratorFragment auto-inject {}
+			// EssentialOCL bindings 
+			fragment = fragments.EssentialOCLFragment auto-inject{}
+			// Support Markup in Hover text 
+			fragment = fragments.MarkupHoverFragment auto-inject{}
     
     		// provides a preference page for template proposals
     		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}

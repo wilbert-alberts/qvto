@@ -133,15 +133,15 @@ ParamCS: direction=ParamDirection? (pathName=PathNameCS ':') typespec=TypespecCS
 
 //DeclaratorCS: (pathName=PathNameCS ':') typespec=TypespecCS initPart=InitPartCS?;
 
-InitPartCS: initOp=InitOp expression=ExpressionCS;
+InitPartCS: initOp=InitOp expression= ExpCS;
 
 TypespecCS: type=TypeReferenceCS ('@' extentLocation=Identifier)?;
 
 TypeReferenceCS returns base::TypedRefCS: TypeNameExpCS | TypeLiteralCS;
 
-ExpressionBlockCS: {ExpressionBlockCS} '{' (expression+=ExpressionCS (';' expression+=ExpressionCS)* ';'?)? '}';
+ExpressionBlockCS: {ExpressionBlockCS} '{' (expression+=ExpCS (';' expression+=ExpCS)* ';'?)? '}';
 
-//ExpressionStatementCS: (expression=ExpressionCS ';') | (expressionBlock=ExpressionBlockCS ';'?);
+//ExpressionStatementCS: (expression=ExpCS ';') | (expressionBlock=ExpressionBlockCS ';'?);
 
 // model types compliance and metamodel declarations
 
@@ -188,10 +188,10 @@ EnumerationCS: 'enum' name=Identifier
 	)
 ;
 
-TagCS: 'tag' id=StringLiteral pathName=PathNameCS ('=' expression=ExpressionCS)? ';';
+TagCS: 'tag' id=StringLiteral pathName=PathNameCS ('=' expression=ExpCS)? ';';
 
 // typedefs
-TypedefCS: 'typedef' name=Identifier '=' typespec=TypespecCS ('[' condition=ExpressionCS ']')? ';';
+TypedefCS: 'typedef' name=Identifier '=' typespec=TypespecCS ('[' condition=ExpCS ']')? ';';
 
 // Properties in transformation
 PropertyCS: intermediate?='intermediate'? propertyKey+=PropertyKey+
@@ -201,7 +201,7 @@ PropertyCS: intermediate?='intermediate'? propertyKey+=PropertyKey+
 // Syntax for helper operations
 HelperCS: qualifier+=Qualifier* helperKind=HelperKind pathName=PathNameCS signature=CompleteSignatureCS
 	( ';'
-	| ('=' expression=ExpressionCS ';')
+	| ('=' expression=ExpCS ';')
 	| (expressionBlock=ExpressionBlockCS ';'?)
 	)
 ;
@@ -232,7 +232,7 @@ MappingCS: qualifier+=Qualifier* 'mapping' paramDirection=ParamDirection? pathNa
 	('where' where=ExpressionBlockCS)?
 	( ';'
 	| ('{' ('init' init=ExpressionBlockCS)?
-		   ( (expression+=ExpressionCS (';' expression+=ExpressionCS)* ';'?)
+		   ( (expression+=ExpCS (';' expression+=ExpCS)* ';'?)
 		   | 'population' expressionBlock=ExpressionBlockCS
 		   )?
 		   ('end' end=ExpressionBlockCS)?
@@ -243,11 +243,11 @@ MappingCS: qualifier+=Qualifier* 'mapping' paramDirection=ParamDirection? pathNa
 	
 /*
 // Expressions
-ExpressionCS: SCassign_expCS
+ExpCS: SCassign_expCS
 | SClet_expCS
 | SCvar_init_expCS
 SCassign_expCS: SCimplies_expCS
-| SCunary_expCS SCassign_opCS ExpressionCS SCdefault_valCS?
+| SCunary_expCS SCassign_opCS ExpCS SCdefault_valCS?
 | SCunary_expCS SCassign_opCS ExpressionBlockCS SCdefault_valCS?
 |
 SCassign_opCS := ':=' | '::=' | '+=' | '-='
@@ -273,7 +273,7 @@ SCunary_expCS: SCpostfix_expCS
 SCunary_opCS: '-' | 'not' | '#' | '##' | '*'
 SCpostfix_expCS: SCprimary_expCS
 | SCpostfix_expCS '(' SCarg_listCS? ')'
-| SCpostfix_expCS '!'? '[' SCdeclarator_vsepCS? ExpressionCS ']'
+| SCpostfix_expCS '!'? '[' SCdeclarator_vsepCS? ExpCS ']'
 | SCpostfix_expCS SCaccess_opCS
 (PathNameCS | SCiterator_expCS | SCblock_expCS
 | SCcontrol_expCS | SCrule_call_expCS
@@ -281,7 +281,7 @@ SCpostfix_expCS: SCprimary_expCS
 SCdeclarator_vsepCS: SimpleDeclaratorCS '|'
 SCmulti_declarator_vsepCS: (declarator+=SimpleDeclaratorCS (',' declarator+=SimpleDeclaratorCS)*) '|'
 SCresolve_expCS: SCresolve_keyCS '(' SCresolve_conditionCS? ')'
-SCresolve_conditionCS: DeclaratorCS ('|' ExpressionCS)?
+SCresolve_conditionCS: DeclaratorCS ('|' ExpCS)?
 SCresolve_keyCS: 'late'? SCresolve_kindCS
 SCresolve_kindCS: 'resolve' | 'resolveone' | 'invresolve' | 'invresolveone'
 SCresolve_in_expCS: SCresolve_in_keyCS '(' PathNameCS
@@ -300,7 +300,7 @@ SCprimary_expCS: SCliteralCS
 | SCraise_expCS
 | SCassert_expCS
 | SClog_expCS
-| '(' ExpressionCS ')'
+| '(' ExpCS ')'
 SCliteralCS: SCliteral_simpleCS
 | SCliteral_complexCS
 SCliteral_simpleCS: INTEGER | SCFLOATCS | STRING
@@ -311,18 +311,18 @@ SCliteral_complexCS: SCliteral_collectionCS
 SCliteral_collectionCS: SCcollection_keyCS '{' SCcollection_item_listCS? '}'
 SCliteral_tupleCS: 'Tuple' '{' SCtuple_item_listCS? '}'
 SCliteral_dictCS: 'Dict' '{' SCdict_item_listCS? '}'
-SCcollection_item_listCS: (ExpressionCS (',' ExpressionCS)*)
+SCcollection_item_listCS: (ExpCS (',' ExpCS)*)
 SCtuple_item_listCS: (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*)
 SCdict_item_listCS: SCdict_itemCS (',' SCdict_itemCS)*
-SCdict_itemCS: SCliteral_simpleCS '=' ExpressionCS
-SCif_expCS: 'if' ExpressionCS SCthen_partCS
+SCdict_itemCS: SCliteral_simpleCS '=' ExpCS
+SCif_expCS: 'if' ExpCS SCthen_partCS
 SCelif_partCS* SCelse_partCS? 'endif'
 SCthen_partCS: 'then' SCif_bodyCS
 SCelif_partCS: 'elif' SCif_bodyCS
 SCelse_partCS: 'else' SCif_bodyCS
-SCif_bodyCS: ExpressionCS | ExpressionBlockCS
-SCiterator_expCS: SCsimple_iterator_opCS '(' SCdeclarator_vsepCS? ExpressionCS ')'
-| SCmulti_iterator_opCS '(' SCmulti_declarator_vsepCS? ExpressionCS ')'
+SCif_bodyCS: ExpCS | ExpressionBlockCS
+SCiterator_expCS: SCsimple_iterator_opCS '(' SCdeclarator_vsepCS? ExpCS ')'
+| SCmulti_iterator_opCS '(' SCmulti_declarator_vsepCS? ExpCS ')'
 | SCiterate_expCS
 SCsimple_iterator_opCS: 'reject' | 'select' | 'collect' | 'exists'
 | 'one' | 'any' | 'isUnique' | 'collectNested'
@@ -331,7 +331,7 @@ SCsimple_iterator_opCS: 'reject' | 'select' | 'collect' | 'exists'
 | 'collectselect' | 'collectselectOne'
 SCmulti_iterator_opCS: 'forAll'
 SCiterate_expCS: 'iterate' '(' (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*) ';'
-DeclaratorCS '|' ExpressionCS ')'
+DeclaratorCS '|' ExpCS ')'
 SCiter_declaratorCS: DeclaratorCS
 SCiter_declarator_listCS: (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*)
 SCblock_expCS: (SCobject_expCS | SCdo_expCS | SCswitch_expCS)
@@ -341,25 +341,25 @@ SCobject_declaratorCS: TypespecCS | IdentifierCS ':' TypespecCS?
 SCdo_expCS: 'do' ExpressionBlockCS
 SCswitch_expCS: 'switch' ('(' SCiter_declaratorCS ')')? SCswitch_bodyCS
 SCswitch_bodyCS: '{' SCswitch_altCS+ SCswitch_elseCS? '}'
-SCswitch_altCS: 'case' '(' ExpressionCS ')' ExpressionStatementCS
+SCswitch_altCS: 'case' '(' ExpCS ')' ExpressionStatementCS
 SCswitch_elseCS: 'else' ExpressionStatementCS
 SCcontrol_expCS: (SCwhile_expCS | SCcompute_expCS | SCfor_expCS)
-SCwhile_expCS: 'while' '(' (DeclaratorCS ';')? ExpressionCS ')'
+SCwhile_expCS: 'while' '(' (DeclaratorCS ';')? ExpCS ')'
 ExpressionBlockCS
 SCcompute_expCS: 'compute' '(' DeclaratorCS ')' ExpressionBlockCS
 SCfor_expCS: ('forEach' | 'forOne') '(' SCiter_declarator_listCS
-(';' DeclaratorCS)? ('|' ExpressionCS)? ')' ExpressionBlockCS
+(';' DeclaratorCS)? ('|' ExpCS)? ')' ExpressionBlockCS
 SCrule_call_expCS: ('map' | 'xmap' | 'new' )
 ('(' DeclaratorCS ')')? PathNameCS
-SClet_expCS: 'let' (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*) 'in' ExpressionCS
+SClet_expCS: 'let' (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*) 'in' ExpCS
 SCvar_init_expCS: 'var' (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*)
 | 'var' '(' (declarator+=DeclaratorCS (',' declarator+=DeclaratorCS)*) ')'
 SCquit_expCS: 'break' | 'continue' | SCreturn_expCS)
-SCreturn_expCS: 'return' ExpressionCS?
+SCreturn_expCS: 'return' ExpCS?
 SCtry_expCS: 'try' ExpressionBlockCS SCexceptCS+
 SCexceptCS: 'except' '(' (scopedIdentifier+=PathNameCS (',' scopedIdentifier+=PathNameCS)*) ')' ExpressionBlockCS
 SCraise_expCS: 'raise' PathNameCS ('(' SCarg_listCS? ')')?
-SCarg_listCS: (ExpressionCS (',' ExpressionCS)*)
-SCassert_expCS: 'assert' IdentifierCS? '(' ExpressionCS ')'
+SCarg_listCS: (ExpCS (',' ExpCS)*)
+SCassert_expCS: 'assert' IdentifierCS? '(' ExpCS ')'
 ( 'with' SClog_expCS )?
-SClog_expCS: 'log' '(' SCarg_listCS ')' ('when' ExpressionCS)? */
+SClog_expCS: 'log' '(' SCarg_listCS ')' ('when' ExpCS)? */

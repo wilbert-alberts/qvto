@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.qvto.examples.xtext.qvtoperational/src-gen"
+    editDirectory="/org.eclipse.qvto.examples.xtext.qvtoperational.edit/src" editorDirectory="/org.eclipse.qvto.examples.xtext.qvtoperational.editor/src"
+    modelPluginID="org.eclipse.qvto.examples.xtext.qvtoperational" forceOverwrite="true"
+    modelName="QVTOperational" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.qvto.examples.xtext.qvtoperational.edit"
+    editorPluginID="org.eclipse.qvto.examples.xtext.qvtoperational.editor" runtimeVersion="2.9"
+    usedGenPackages="../../../../../../../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST">
+  <genPackages prefix="Qvtoperationalcs" basePackage="org.eclipse.qvto.examples.xtext.qvtoperational"
+      disposableProviderFactory="true" fileExtensions="qvto" ecorePackage="QVTOperational.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//ClassifierKind">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ClassifierKind/DATATYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ClassifierKind/PRIMITIVE"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ClassifierKind/EXCEPTION"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ClassifierKind/CLASS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//FeatureKey">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//FeatureKey/COMPOSES"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//FeatureKey/REFERRENCES"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//FeatureKey/READONLY"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//FeatureKey/DERIVED"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//FeatureKey/STATIC"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//InitOp">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//InitOp/EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//InitOp/COLON_EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//InitOp/COLON_COLON_EQUALS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//MetamodelKind">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//MetamodelKind/METAMODEL"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//MetamodelKind/PACKAGE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//ParamDirection">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ParamDirection/IN"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ParamDirection/INOUT"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//ParamDirection/OUT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//Qualifier">
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//Qualifier/BLACKBOX"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//Qualifier/ABSTRACT"/>
+      <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#//Qualifier/STATIC"/>
+    </genEnums>
+    <genClasses ecoreClass="QVTOperational.ecore#//TopLevelCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TopLevelCS/import"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TopLevelCS/unit"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//ImportCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ImportCS/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ImportCS/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ImportCS/all"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//UnitCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//UnitCS/segment"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//UnitElementCS"/>
+    <genClasses ecoreClass="QVTOperational.ecore#//CompleteSignatureCS"/>
+    <genClasses ecoreClass="QVTOperational.ecore#//SimpleSignatureCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//SimpleSignatureCS/param"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//ParamCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ParamCS/direction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ParamCS/pathName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ParamCS/typespec"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ParamCS/initPart"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//InitPartCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//InitPartCS/initOp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//InitPartCS/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//MetamodelCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//MetamodelCS/keyword"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//MetamodelCS/pathName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//MetamodelCS/element"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//MetamodelElementCS"/>
+    <genClasses ecoreClass="QVTOperational.ecore#//ClassifierCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierCS/intermediate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierCS/qualifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierCS/keyword"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierCS/pathName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierCS/extends"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierCS/feature"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//ClassifierFeatureCS"/>
+    <genClasses ecoreClass="QVTOperational.ecore#//ClassifierPropertyCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierPropertyCS/stereotype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierPropertyCS/featureKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierPropertyCS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierPropertyCS/typespec"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierPropertyCS/initPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierPropertyCS/multiplicity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierPropertyCS/tilde"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierPropertyCS/oppositeIdentifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierPropertyCS/oppositeMultiplicity"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//MultiplicityCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//MultiplicityCS/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//MultiplicityCS/upper"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//ClassifierOperationCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierOperationCS/stereotype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierOperationCS/featureKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//ClassifierOperationCS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierOperationCS/typespec"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//ClassifierOperationCS/signature"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//EnumerationCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//EnumerationCS/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//EnumerationCS/literal"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//TagCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//TagCS/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TagCS/pathName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TagCS/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperational.ecore#//TypedefCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperational.ecore#//TypedefCS/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TypedefCS/typespec"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperational.ecore#//TypedefCS/condition"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

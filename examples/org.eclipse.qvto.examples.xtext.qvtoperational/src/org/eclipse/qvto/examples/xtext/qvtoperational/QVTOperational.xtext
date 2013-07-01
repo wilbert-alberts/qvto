@@ -1,0 +1,98 @@
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2011 E.D.Willink and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *
+ * </copyright>
+ *
+ */
+grammar org.eclipse.qvto.examples.xtext.qvtoperational.QVTOperational with org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL
+
+generate qvtoperationalcs "http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/ocl/3.1.0/BaseCST" as base
+import "http://www.eclipse.org/ocl/3.1.0/EssentialOCLCST" as essentialocl
+import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
+
+TopLevelCS: ^import+=ImportCS* unit+=UnitElementCS*;
+
+enum ClassifierKind: DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
+enum FeatureKey: COMPOSES='composes' | REFERRENCES='references' | READONLY='readonly' | DERIVED='derived' | STATIC='static';
+enum InitOp: EQUALS='=' | COLON_EQUALS=':=' | COLON_COLON_EQUALS='::=';
+enum MetamodelKind: METAMODEL= 'metamodel' | PACKAGE='package';
+enum ParamDirection: IN='in' | INOUT='inout' | OUT='out';
+enum Qualifier: BLACKBOX='blackbox' | ABSTRACT='abstract' | STATIC='static';
+
+// ****** Imports ******
+ImportCS: ('import' unit=UnitCS ';')
+	| ('from' unit=UnitCS 'import' ((name+=Identifier (',' name+=Identifier)*) | all?='*') ';')
+;
+
+UnitCS: segment+=Identifier ('.' segment+=Identifier)*;
+	
+// ****** definitions in a compilation unit *******
+UnitElementCS:
+	MetamodelCS
+;
+
+// ****** General rules ******
+CompleteSignatureCS: SimpleSignatureCS (':' (param+=ParamCS (',' param+=ParamCS)*))?;
+
+SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParamCS (',' param+=ParamCS)*)? ')';
+
+ParamCS: direction=ParamDirection? (pathName=PathNameCS ':') typespec=TypeExpCS initPart=InitPartCS?;
+
+InitPartCS: initOp=InitOp expression= ExpCS;
+// General rules END
+
+
+// ****** Syntax for defining explicitly metamodel contents ******
+
+MetamodelCS: keyword=MetamodelKind pathName=PathNameCS
+	( ';'
+	| ('{' element+=MetamodelElementCS* '}' ';'?)
+	)
+;
+
+
+MetamodelElementCS: ClassifierCS | EnumerationCS | TagCS;
+
+ClassifierCS: intermediate?='intermediate'? qualifier+=Qualifier*
+	keyword=ClassifierKind pathName=PathNameCS
+	('extends' (extends+=PathNameCS (',' extends+=PathNameCS)*))?
+	( ';'
+	| ('{' (feature+=ClassifierFeatureCS (';' feature+=ClassifierFeatureCS)* ';'?)? '}' ';'?)
+	)
+;
+
+ClassifierFeatureCS: ClassifierPropertyCS | ClassifierOperationCS | TagCS;
+
+ClassifierPropertyCS: ('<<' (stereotype+=Identifier (',' stereotype+=Identifier)*) '>>')? featureKey+=FeatureKey*
+	name=Identifier ':' typespec=TypeExpCS initPart=InitPartCS? multiplicity=MultiplicityCS?
+	('opposites' tilde?='~'? oppositeIdentifier=Identifier oppositeMultiplicity=MultiplicityCS?)?
+;
+
+MultiplicityCS: '[' (lower=LOWER '...')? upper=UPPER ']';
+
+ClassifierOperationCS: ('<<' (stereotype+=Identifier (',' stereotype+=Identifier)*) '>>')? featureKey+=FeatureKey*
+	name=Identifier ':' typespec=TypeExpCS signature= CompleteSignatureCS
+;
+
+EnumerationCS: 'enum' name=Identifier
+	( ';'
+	|  ('{' (literal+=Identifier (',' literal+=Identifier)*) '}' ';'?)
+	)
+;
+
+TagCS: 'tag' id=StringLiteral pathName=PathNameCS ('=' expression=ExpCS)? ';';
+
+// typedefs
+TypedefCS: 'typedef' name=Identifier '=' typespec=TypeExpCS ('[' condition=ExpCS ']')? ';';
