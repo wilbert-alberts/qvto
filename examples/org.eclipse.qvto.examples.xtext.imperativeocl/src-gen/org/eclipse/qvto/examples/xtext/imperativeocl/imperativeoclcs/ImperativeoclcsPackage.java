@@ -6,9 +6,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
-
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
 
 /**
@@ -864,26 +862,6 @@ public interface ImperativeoclcsPackage extends EPackage
 
 
   /**
-	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor <em>Imperative OCLCS Visitor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getImperativeOCLCSVisitor()
-	 * @generated
-	 */
-	int IMPERATIVE_OCLCS_VISITOR = 10;
-
-		/**
-	 * The number of structural features of the '<em>Imperative OCLCS Visitor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_OCLCS_VISITOR_FEATURE_COUNT = EssentialOCLCSTPackage.ESSENTIAL_OCLCS_VISITOR_FEATURE_COUNT + 0;
-
-
-		/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS <em>List Type CS</em>}'.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1193,17 +1171,6 @@ public interface ImperativeoclcsPackage extends EPackage
   EReference getInvocationExpCS_Argument();
 
   /**
-	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor <em>Imperative OCLCS Visitor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Imperative OCLCS Visitor</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor
-	 * @model instanceClass="org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor" typeParameters="R" superTypes="org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSVisitor<R>"
-	 * @generated
-	 */
-	EClass getImperativeOCLCSVisitor();
-
-		/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1477,16 +1444,6 @@ public interface ImperativeoclcsPackage extends EPackage
 		 * @generated
 		 */
     EReference INVOCATION_EXP_CS__ARGUMENT = eINSTANCE.getInvocationExpCS_Argument();
-
-				/**
-		 * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor <em>Imperative OCLCS Visitor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor
-		 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeoclcsPackageImpl#getImperativeOCLCSVisitor()
-		 * @generated
-		 */
-		EClass IMPERATIVE_OCLCS_VISITOR = eINSTANCE.getImperativeOCLCSVisitor();
 
   }
 

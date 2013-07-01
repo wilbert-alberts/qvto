@@ -1,5 +1,7 @@
 /**
+ * <copyright>
  * 
+ * </copyright>
  *
  * This code is auto-generated
  * from: src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel
@@ -24,9 +26,9 @@ public abstract class AbstractDelegatingImperativeOCLCSVisitor<R, C, D extends I
 	extends org.eclipse.ocl.examples.xtext.essentialocl.util.AbstractDelegatingEssentialOCLCSVisitor<R, C, D>
 	implements ImperativeOCLCSVisitor<R>
 {
-    protected AbstractDelegatingImperativeOCLCSVisitor(@NonNull D delegate, @NonNull C context) {
-        super(delegate, context);
-    }
+	protected AbstractDelegatingImperativeOCLCSVisitor(@NonNull D delegate, @NonNull C context) {
+		super(delegate, context);
+	}
 
 	@Override
 	public @Nullable R visiting(@NonNull org.eclipse.ocl.examples.xtext.base.util.VisitableCS visitable) {

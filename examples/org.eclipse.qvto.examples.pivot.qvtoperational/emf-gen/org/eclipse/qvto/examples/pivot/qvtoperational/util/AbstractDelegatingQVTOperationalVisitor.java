@@ -34,9 +34,9 @@ public abstract class AbstractDelegatingQVTOperationalVisitor<R, C, D extends QV
 	extends org.eclipse.qvto.examples.pivot.imperativeocl.util.AbstractDelegatingImperativeOCLVisitor<R, C, D>
 	implements QVTOperationalVisitor<R>
 {
-    protected AbstractDelegatingQVTOperationalVisitor(@NonNull D delegate, @NonNull C context) {
-        super(delegate, context);
-    }
+	protected AbstractDelegatingQVTOperationalVisitor(@NonNull D delegate, @NonNull C context) {
+		super(delegate, context);
+	}
 
 	@Override
 	public @Nullable R visiting(@NonNull org.eclipse.ocl.examples.pivot.util.Visitable visitable) {

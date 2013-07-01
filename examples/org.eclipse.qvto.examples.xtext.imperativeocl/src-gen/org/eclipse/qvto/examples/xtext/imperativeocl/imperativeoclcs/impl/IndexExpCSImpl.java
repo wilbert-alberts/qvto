@@ -214,7 +214,8 @@ public class IndexExpCSImpl extends ExpCSImpl implements IndexExpCS
   /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
 		return v.visitIndexExpCS(this);
@@ -223,7 +224,8 @@ public class IndexExpCSImpl extends ExpCSImpl implements IndexExpCS
 		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
 		return ((ImperativeOCLCSVisitor<R>)v).visitIndexExpCS(this);

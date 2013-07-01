@@ -40,7 +40,7 @@ public abstract class AbstractNullImperativeOCLVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractNullImperativeOCLVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}	
 
 	public @Nullable R visitAltExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.AltExp object) {

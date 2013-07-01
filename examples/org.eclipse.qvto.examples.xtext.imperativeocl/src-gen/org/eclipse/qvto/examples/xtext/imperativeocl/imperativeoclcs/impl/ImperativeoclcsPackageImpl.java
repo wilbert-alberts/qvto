@@ -4,18 +4,11 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
-
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
-
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
@@ -28,7 +21,6 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteral
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -109,13 +101,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
   private EClass invocationExpCSEClass = null;
 
   /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass imperativeOCLCSVisitorEClass = null;
-
-		/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -473,15 +458,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 
   /**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getImperativeOCLCSVisitor() {
-		return imperativeOCLCSVisitorEClass;
-	}
-
-		/**
-	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -548,8 +524,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		invocationExpCSEClass = createEClass(INVOCATION_EXP_CS);
 		createEReference(invocationExpCSEClass, INVOCATION_EXP_CS__NAME_EXP);
 		createEReference(invocationExpCSEClass, INVOCATION_EXP_CS__ARGUMENT);
-
-		imperativeOCLCSVisitorEClass = createEClass(IMPERATIVE_OCLCS_VISITOR);
 	}
 
   /**
@@ -581,7 +555,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		EssentialOCLCSTPackage theEssentialOCLCSTPackage = (EssentialOCLCSTPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSTPackage.eNS_URI);
 
 		// Create type parameters
-		ETypeParameter imperativeOCLCSVisitorEClass_R = addETypeParameter(imperativeOCLCSVisitorEClass, "R");
 
 		// Set bounds for type parameters
 
@@ -596,161 +569,31 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		indexExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
 		constructorExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
 		invocationExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
-		EGenericType g1 = createEGenericType(theEssentialOCLCSTPackage.getEssentialOCLCSVisitor());
-		EGenericType g2 = createEGenericType(imperativeOCLCSVisitorEClass_R);
-		g1.getETypeArguments().add(g2);
-		imperativeOCLCSVisitorEClass.getEGenericSuperTypes().add(g1);
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getListTypeCS_Type(), theBaseCSTPackage.getTypedRefCS(), null, "type", null, 0, 1, ListTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = addEOperation(listTypeCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		ETypeParameter t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(listTypeCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(dictTypeCSEClass, DictTypeCS.class, "DictTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDictTypeCS_KeyType(), theBaseCSTPackage.getTypedRefCS(), null, "keyType", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDictTypeCS_ValueType(), theBaseCSTPackage.getTypedRefCS(), null, "valueType", null, 0, 1, DictTypeCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(dictTypeCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(dictTypeCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(listLiteralExpCSEClass, ListLiteralExpCS.class, "ListLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getListLiteralExpCS_OwnedParts(), theEssentialOCLCSTPackage.getCollectionLiteralPartCS(), null, "ownedParts", null, 0, -1, ListLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(listLiteralExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(listLiteralExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(dictLiteralExpCSEClass, DictLiteralExpCS.class, "DictLiteralExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDictLiteralExpCS_OwnedParts(), this.getDictLiteralPartCS(), null, "ownedParts", null, 0, -1, DictLiteralExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(dictLiteralExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(dictLiteralExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
 
 		initEClass(dictLiteralPartCSEClass, DictLiteralPartCS.class, "DictLiteralPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDictLiteralPartCS_Key(), theEssentialOCLCSTPackage.getPrimitiveLiteralExpCS(), null, "key", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDictLiteralPartCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, DictLiteralPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(dictLiteralPartCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(dictLiteralPartCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReturnExpCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(returnExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(returnExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
 
 		initEClass(nameExpCSEClass, NameExpCS.class, "NameExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNameExpCS_PathName(), theBaseCSTPackage.getPathNameCS(), null, "pathName", null, 0, 1, NameExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNameExpCS_AtPre(), ecorePackage.getEBoolean(), "atPre", null, 0, 1, NameExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(nameExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(nameExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
 
 		initEClass(indexExpCSEClass, IndexExpCS.class, "IndexExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getIndexExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -758,70 +601,14 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		initEReference(getIndexExpCS_SecondIndexes(), theEssentialOCLCSTPackage.getExpCS(), null, "secondIndexes", null, 0, -1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getIndexExpCS_AtPre(), ecorePackage.getEBoolean(), "atPre", null, 0, 1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(indexExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(indexExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(constructorExpCSEClass, ConstructorExpCS.class, "ConstructorExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConstructorExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConstructorExpCS_OwnedParts(), theEssentialOCLCSTPackage.getConstructorPartCS(), null, "ownedParts", null, 0, -1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConstructorExpCS_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(constructorExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(constructorExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(invocationExpCSEClass, InvocationExpCS.class, "InvocationExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInvocationExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, InvocationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInvocationExpCS_Argument(), theEssentialOCLCSTPackage.getNavigatingArgCS(), null, "argument", null, 0, -1, InvocationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(invocationExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = addEOperation(invocationExpCSEClass, null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(theBaseCSTPackage.getBaseCSVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		initEClass(imperativeOCLCSVisitorEClass, ImperativeOCLCSVisitor.class, "ImperativeOCLCSVisitor", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

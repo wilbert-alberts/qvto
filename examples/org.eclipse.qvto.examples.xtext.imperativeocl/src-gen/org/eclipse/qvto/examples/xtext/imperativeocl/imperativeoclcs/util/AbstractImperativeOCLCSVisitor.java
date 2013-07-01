@@ -1,5 +1,7 @@
 /**
+ * <copyright>
  * 
+ * </copyright>
  *
  * This code is auto-generated
  * from: src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel
@@ -16,10 +18,12 @@ package	org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
+/*
+ * An AbstractImperativeOCLCSVisitor provides a default implementation of the visitor framework
+ * but n implementations of the visitXXX methods..
  */
 public abstract class AbstractImperativeOCLCSVisitor<R, C>
- extends org.eclipse.ocl.examples.xtext.essentialocl.util.AbstractEssentialOCLCSVisitor<R, C>
+	extends org.eclipse.ocl.examples.xtext.essentialocl.util.AbstractEssentialOCLCSVisitor<R, C>
 	implements ImperativeOCLCSVisitor<R>
 {
 	/**
@@ -28,6 +32,6 @@ public abstract class AbstractImperativeOCLCSVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractImperativeOCLCSVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}
 }

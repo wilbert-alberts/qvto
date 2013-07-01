@@ -3,8 +3,6 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -76,23 +74,5 @@ public interface DictTypeCS extends TypedRefCS
 	 * @generated
 	 */
   void setValueType(TypedRefCS value);
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitDictTypeCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(ImperativeOCLCSVisitor<R> v);
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLCSVisitor<R>)v).visitDictTypeCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(BaseCSVisitor<R> v);
 
 } // DictTypeCS

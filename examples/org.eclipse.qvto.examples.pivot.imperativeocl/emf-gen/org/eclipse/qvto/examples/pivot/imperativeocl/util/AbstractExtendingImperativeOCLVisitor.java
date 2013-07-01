@@ -44,7 +44,7 @@ public abstract class AbstractExtendingImperativeOCLVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractExtendingImperativeOCLVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}	
 
 	public @Nullable R visitAltExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.AltExp object) {

@@ -6,22 +6,15 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ConstructorPartCS;
-
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
@@ -190,7 +183,8 @@ public class ConstructorExpCSImpl extends ExpCSImpl implements ConstructorExpCS
   /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
 		return v.visitConstructorExpCS(this);
@@ -199,7 +193,8 @@ public class ConstructorExpCSImpl extends ExpCSImpl implements ConstructorExpCS
 		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
 		return ((ImperativeOCLCSVisitor<R>)v).visitConstructorExpCS(this);

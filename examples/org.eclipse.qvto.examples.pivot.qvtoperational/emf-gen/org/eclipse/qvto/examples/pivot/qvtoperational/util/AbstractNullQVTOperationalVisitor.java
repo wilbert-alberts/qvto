@@ -40,7 +40,7 @@ public abstract class AbstractNullQVTOperationalVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractNullQVTOperationalVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}	
 
 	public @Nullable R visitConstructor(@NonNull org.eclipse.qvto.examples.pivot.qvtoperational.Constructor object) {

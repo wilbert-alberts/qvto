@@ -26,10 +26,12 @@ package	org.eclipse.qvto.examples.pivot.imperativeocl.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
+/*
+ * An AbstractImperativeOCLVisitor provides a default implementation of the visitor framework
+ * but n implementations of the visitXXX methods..
  */
 public abstract class AbstractImperativeOCLVisitor<R, C>
- extends org.eclipse.ocl.examples.pivot.util.AbstractVisitor<R, C>
+	extends org.eclipse.ocl.examples.pivot.util.AbstractVisitor<R, C>
 	implements ImperativeOCLVisitor<R>
 {
 	/**
@@ -38,6 +40,6 @@ public abstract class AbstractImperativeOCLVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractImperativeOCLVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}
 }

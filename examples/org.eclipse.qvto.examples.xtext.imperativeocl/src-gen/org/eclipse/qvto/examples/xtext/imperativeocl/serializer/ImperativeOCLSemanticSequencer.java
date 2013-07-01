@@ -1,7 +1,5 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.serializer;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityBoundsCS;
@@ -52,15 +50,11 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLGrammarAccess;
-import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
-import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
-import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
+
+import com.google.inject.Inject;
 
 @SuppressWarnings("all")
 public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequencer {

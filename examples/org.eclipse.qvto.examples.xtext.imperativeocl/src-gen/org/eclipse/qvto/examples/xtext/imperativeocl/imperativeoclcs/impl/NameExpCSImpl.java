@@ -4,17 +4,12 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
@@ -158,7 +153,8 @@ public class NameExpCSImpl extends ExpCSImpl implements NameExpCS
   /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
 		return v.visitNameExpCS(this);
@@ -167,7 +163,8 @@ public class NameExpCSImpl extends ExpCSImpl implements NameExpCS
 		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
 		return ((ImperativeOCLCSVisitor<R>)v).visitNameExpCS(this);

@@ -3,11 +3,8 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,23 +39,5 @@ public interface ListLiteralExpCS extends ExpCS
 	 * @generated
 	 */
   EList<CollectionLiteralPartCS> getOwnedParts();
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitListLiteralExpCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(ImperativeOCLCSVisitor<R> v);
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLCSVisitor<R>)v).visitListLiteralExpCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(BaseCSVisitor<R> v);
 
 } // ListLiteralExpCS

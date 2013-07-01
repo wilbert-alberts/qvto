@@ -5,12 +5,20 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsFactory;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
  * <!-- begin-user-doc -->

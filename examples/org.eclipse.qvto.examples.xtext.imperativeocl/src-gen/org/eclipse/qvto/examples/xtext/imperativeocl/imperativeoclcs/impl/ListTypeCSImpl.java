@@ -4,16 +4,11 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.TypedRefCSImpl;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
@@ -114,7 +109,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
   /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
 		return v.visitListTypeCS(this);
@@ -123,7 +119,8 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
 		return ((ImperativeOCLCSVisitor<R>)v).visitListTypeCS(this);

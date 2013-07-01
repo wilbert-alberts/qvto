@@ -5,18 +5,13 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
@@ -84,7 +79,8 @@ public class DictLiteralExpCSImpl extends ExpCSImpl implements DictLiteralExpCS
   /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final ImperativeOCLCSVisitor<R> v) {
 		return v.visitDictLiteralExpCS(this);
@@ -93,7 +89,8 @@ public class DictLiteralExpCSImpl extends ExpCSImpl implements DictLiteralExpCS
 		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
+     * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
 		return ((ImperativeOCLCSVisitor<R>)v).visitDictLiteralExpCS(this);

@@ -2,9 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
-import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,23 +47,5 @@ public interface ReturnExpCS extends ExpCS
 	 * @generated
 	 */
   void setValue(ExpCS value);
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitReturnExpCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(ImperativeOCLCSVisitor<R> v);
-
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((ImperativeOCLCSVisitor<R>)v).visitReturnExpCS(this);'"
-	 * @generated
-	 */
-	<R> R accept(BaseCSVisitor<R> v);
 
 } // ReturnExpCS

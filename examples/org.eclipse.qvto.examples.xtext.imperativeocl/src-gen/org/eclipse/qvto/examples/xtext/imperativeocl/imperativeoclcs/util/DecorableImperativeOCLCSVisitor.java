@@ -1,5 +1,7 @@
 /**
+ * <copyright>
  * 
+ * </copyright>
  *
  * This code is auto-generated
  * from: src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel

@@ -4,24 +4,27 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.ocl.examples.pivot.util.Pivotable;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-
 import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
-
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-
-import org.eclipse.ocl.examples.xtext.essentialocl.util.EssentialOCLCSVisitor;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -202,13 +205,6 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ImperativeoclcsPackage.IMPERATIVE_OCLCS_VISITOR: {
-				ImperativeOCLCSVisitor<?> imperativeOCLCSVisitor = (ImperativeOCLCSVisitor<?>)theEObject;
-				T result = caseImperativeOCLCSVisitor(imperativeOCLCSVisitor);
-				if (result == null) result = caseEssentialOCLCSVisitor(imperativeOCLCSVisitor);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -374,21 +370,6 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
 	}
 
   /**
-	 * Returns the result of interpreting the object as an instance of '<em>Imperative OCLCS Visitor</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Imperative OCLCS Visitor</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <R> T caseImperativeOCLCSVisitor(ImperativeOCLCSVisitor<R> object) {
-		return null;
-	}
-
-		/**
 	 * Returns the result of interpreting the object as an instance of '<em>Visitable CS</em>'.
 	 * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -533,21 +514,6 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
 	}
 
   /**
-	 * Returns the result of interpreting the object as an instance of '<em>Essential OCLCS Visitor</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Essential OCLCS Visitor</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <R> T caseEssentialOCLCSVisitor(EssentialOCLCSVisitor<R> object) {
-		return null;
-	}
-
-		/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
    * This implementation returns null;

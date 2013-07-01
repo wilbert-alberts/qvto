@@ -26,10 +26,12 @@ package	org.eclipse.qvto.examples.pivot.qvtoperational.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
+/*
+ * An AbstractQVTOperationalVisitor provides a default implementation of the visitor framework
+ * but n implementations of the visitXXX methods..
  */
 public abstract class AbstractQVTOperationalVisitor<R, C>
- extends org.eclipse.qvto.examples.pivot.imperativeocl.util.AbstractImperativeOCLVisitor<R, C>
+	extends org.eclipse.qvto.examples.pivot.imperativeocl.util.AbstractImperativeOCLVisitor<R, C>
 	implements QVTOperationalVisitor<R>
 {
 	/**
@@ -38,6 +40,6 @@ public abstract class AbstractQVTOperationalVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractQVTOperationalVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}
 }

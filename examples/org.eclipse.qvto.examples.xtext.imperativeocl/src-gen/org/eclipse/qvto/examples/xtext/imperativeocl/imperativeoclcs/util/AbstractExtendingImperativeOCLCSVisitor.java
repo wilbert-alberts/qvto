@@ -1,5 +1,7 @@
 /**
+ * <copyright>
  * 
+ * </copyright>
  *
  * This code is auto-generated
  * from: src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel
@@ -34,7 +36,7 @@ public abstract class AbstractExtendingImperativeOCLCSVisitor<R, C>
 	 * @param context my initial result value
 	 */
 	protected AbstractExtendingImperativeOCLCSVisitor(@NonNull C context) {
-	    super(context);
+		super(context);
 	}	
 
 	public @Nullable R visitConstructorExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS object) {
