@@ -3,24 +3,16 @@
 */
 package org.eclipse.qvto.examples.xtext.imperativeocl.services;
 
+import com.google.inject.Singleton;
+import com.google.inject.Inject;
+
 import java.util.List;
 
-import org.eclipse.ocl.examples.xtext.essentialocl.services.EssentialOCLGrammarAccess;
-import org.eclipse.xtext.Action;
-import org.eclipse.xtext.Alternatives;
-import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.GrammarUtil;
-import org.eclipse.xtext.Group;
-import org.eclipse.xtext.Keyword;
-import org.eclipse.xtext.ParserRule;
-import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.TerminalRule;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
+import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.eclipse.ocl.examples.xtext.essentialocl.services.EssentialOCLGrammarAccess;
 
 @Singleton
 public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
@@ -366,15 +358,17 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 		//
-		//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
+		//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {essentialocl::NameExpCS} pathName=PathNameCS
 		//
-		//	({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
+		//	({essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("["
 		//
-		//	secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{"
+		//	secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? |
 		//
-		//	(ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//	{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
 		//
-		//	({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//	ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//
+		//	({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//	(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
@@ -383,15 +377,17 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 		//
-		//ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
+		//ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {essentialocl::NameExpCS} pathName=PathNameCS
 		//
-		//({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
+		//({essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("["
 		//
-		//secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{"
+		//secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? |
 		//
-		//(ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
 		//
-		//({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//
+		//({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
@@ -428,20 +424,22 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ReturnExpCS
 		public RuleCall getReturnExpCSParserRuleCall_9() { return cReturnExpCSParserRuleCall_9; }
 
-		//{NameExpCS} pathName=PathNameCS ({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]"
+		//{essentialocl::NameExpCS} pathName=PathNameCS ({essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS (","
 		//
-		//("[" secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current}
+		//firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? |
 		//
-		//"{" (ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@"
+		//{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
 		//
-		//"pre")? ({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//
+		//({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?)
 		public Group getGroup_10() { return cGroup_10; }
 
-		//{NameExpCS}
+		//{essentialocl::NameExpCS}
 		public Action getNameExpCSAction_10_0() { return cNameExpCSAction_10_0; }
 
 		//pathName=PathNameCS
@@ -450,25 +448,27 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//PathNameCS
 		public RuleCall getPathNamePathNameCSParserRuleCall_10_1_0() { return cPathNamePathNameCSParserRuleCall_10_1_0; }
 
-		//{IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
+		//{essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("["
 		//
-		//secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{"
+		//secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? |
 		//
-		//(ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
 		//
-		//({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+		//
+		//({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?
 		public Alternatives getAlternatives_10_2() { return cAlternatives_10_2; }
 
-		//{IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
+		//{essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("["
 		//
-		//secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")?
+		//secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")?
 		public Group getGroup_10_2_0() { return cGroup_10_2_0; }
 
-		//{IndexExpCS.nameExp=current}
+		//{essentialocl::IndexExpCS.nameExp=current}
 		public Action getIndexExpCSNameExpAction_10_2_0_0() { return cIndexExpCSNameExpAction_10_2_0_0; }
 
 		//"["
@@ -534,12 +534,12 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"pre"
 		public Keyword getPreKeyword_10_2_0_6_1() { return cPreKeyword_10_2_0_6_1; }
 
-		//{ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* |
+		//{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)*
 		//
-		//value=StringLiteral) "}"
+		//| value=StringLiteral) "}"
 		public Group getGroup_10_2_1() { return cGroup_10_2_1; }
 
-		//{ConstructorExpCS.nameExp=current}
+		//{essentialocl::ConstructorExpCS.nameExp=current}
 		public Action getConstructorExpCSNameExpAction_10_2_1_0() { return cConstructorExpCSNameExpAction_10_2_1_0; }
 
 		//"{"
@@ -578,11 +578,11 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_10_2_1_3() { return cRightCurlyBracketKeyword_10_2_1_3; }
 
-		//(atPre?="@" "pre")? ({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//(atPre?="@" "pre")? ({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS
 		//
-		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
+		//argument+=NavigatingCommaArgCS* (argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)?
 		//
-		//argument+=NavigatingCommaArgCS*)?)? ")")?
+		//(argument+=NavigatingBarArgCS argument+=NavigatingCommaArgCS*)?)? ")")?
 		public Group getGroup_10_2_2() { return cGroup_10_2_2; }
 
 		//(atPre?="@" "pre")?
@@ -597,14 +597,14 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"pre"
 		public Keyword getPreKeyword_10_2_2_0_1() { return cPreKeyword_10_2_2_0_1; }
 
-		//({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+		//({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 		//
 		//(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 		//
 		//argument+=NavigatingCommaArgCS*)?)? ")")?
 		public Group getGroup_10_2_2_1() { return cGroup_10_2_2_1; }
 
-		//{InvocationExpCS.nameExp=current}
+		//{essentialocl::InvocationExpCS.nameExp=current}
 		public Action getInvocationExpCSNameExpAction_10_2_2_1_0() { return cInvocationExpCSNameExpAction_10_2_2_1_0; }
 
 		//"("
@@ -1097,15 +1097,17 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	NestedExpCS | IfExpCS | SelfExpCS | PrimitiveLiteralExpCS | TupleLiteralExpCS | CollectionLiteralExpCS |
 	//
-	//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {NameExpCS} pathName=PathNameCS
+	//	ListLiteralExpCS | DictLiteralExpCS | TypeLiteralExpCS | ReturnExpCS | {essentialocl::NameExpCS} pathName=PathNameCS
 	//
-	//	({IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("[" secondIndexes+=ExpCS (","
+	//	({essentialocl::IndexExpCS.nameExp=current} "[" firstIndexes+=ExpCS ("," firstIndexes+=ExpCS)* "]" ("["
 	//
-	//	secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? | {ConstructorExpCS.nameExp=current} "{"
+	//	secondIndexes+=ExpCS ("," secondIndexes+=ExpCS)* "]")? (atPre?="@" "pre")? |
 	//
-	//	(ownedParts+=ConstructorPartCS ("," ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+	//	{essentialocl::ConstructorExpCS.nameExp=current} "{" (ownedParts+=ConstructorPartCS (","
 	//
-	//	({InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
+	//	ownedParts+=ConstructorPartCS)* | value=StringLiteral) "}" | (atPre?="@" "pre")?
+	//
+	//	({essentialocl::InvocationExpCS.nameExp=current} "(" (argument+=NavigatingArgCS argument+=NavigatingCommaArgCS*
 	//
 	//	(argument+=NavigatingSemiArgCS argument+=NavigatingCommaArgCS*)? (argument+=NavigatingBarArgCS
 	//

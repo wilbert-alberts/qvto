@@ -4,27 +4,23 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
+
 import org.eclipse.ocl.examples.pivot.util.Pivotable;
+
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
+
 import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
+
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
+
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -157,54 +153,6 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ImperativeoclcsPackage.NAME_EXP_CS: {
-				NameExpCS nameExpCS = (NameExpCS)theEObject;
-				T result = caseNameExpCS(nameExpCS);
-				if (result == null) result = caseExpCS(nameExpCS);
-				if (result == null) result = caseModelElementCS(nameExpCS);
-				if (result == null) result = casePivotableElementCS(nameExpCS);
-				if (result == null) result = caseElementCS(nameExpCS);
-				if (result == null) result = casePivotable(nameExpCS);
-				if (result == null) result = caseVisitableCS(nameExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeoclcsPackage.INDEX_EXP_CS: {
-				IndexExpCS indexExpCS = (IndexExpCS)theEObject;
-				T result = caseIndexExpCS(indexExpCS);
-				if (result == null) result = caseExpCS(indexExpCS);
-				if (result == null) result = caseModelElementCS(indexExpCS);
-				if (result == null) result = casePivotableElementCS(indexExpCS);
-				if (result == null) result = caseElementCS(indexExpCS);
-				if (result == null) result = casePivotable(indexExpCS);
-				if (result == null) result = caseVisitableCS(indexExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS: {
-				ConstructorExpCS constructorExpCS = (ConstructorExpCS)theEObject;
-				T result = caseConstructorExpCS(constructorExpCS);
-				if (result == null) result = caseExpCS(constructorExpCS);
-				if (result == null) result = caseModelElementCS(constructorExpCS);
-				if (result == null) result = casePivotableElementCS(constructorExpCS);
-				if (result == null) result = caseElementCS(constructorExpCS);
-				if (result == null) result = casePivotable(constructorExpCS);
-				if (result == null) result = caseVisitableCS(constructorExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeoclcsPackage.INVOCATION_EXP_CS: {
-				InvocationExpCS invocationExpCS = (InvocationExpCS)theEObject;
-				T result = caseInvocationExpCS(invocationExpCS);
-				if (result == null) result = caseExpCS(invocationExpCS);
-				if (result == null) result = caseModelElementCS(invocationExpCS);
-				if (result == null) result = casePivotableElementCS(invocationExpCS);
-				if (result == null) result = caseElementCS(invocationExpCS);
-				if (result == null) result = casePivotable(invocationExpCS);
-				if (result == null) result = caseVisitableCS(invocationExpCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -301,70 +249,6 @@ public class ImperativeoclcsSwitch<T> extends Switch<T>
 	 * @generated
 	 */
   public T caseReturnExpCS(ReturnExpCS object)
-  {
-		return null;
-	}
-
-  /**
-	 * Returns the result of interpreting the object as an instance of '<em>Name Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Name Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-  public T caseNameExpCS(NameExpCS object)
-  {
-		return null;
-	}
-
-  /**
-	 * Returns the result of interpreting the object as an instance of '<em>Index Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Index Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-  public T caseIndexExpCS(IndexExpCS object)
-  {
-		return null;
-	}
-
-  /**
-	 * Returns the result of interpreting the object as an instance of '<em>Constructor Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Constructor Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-  public T caseConstructorExpCS(ConstructorExpCS object)
-  {
-		return null;
-	}
-
-  /**
-	 * Returns the result of interpreting the object as an instance of '<em>Invocation Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Invocation Exp CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-  public T caseInvocationExpCS(InvocationExpCS object)
   {
 		return null;
 	}

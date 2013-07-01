@@ -4,7 +4,6 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.parser.antlr;
 
 import java.io.InputStream;
-
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class ImperativeOCLAntlrTokenFileProvider implements IAntlrTokenFileProvider {

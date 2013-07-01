@@ -111,20 +111,20 @@ PrimaryExpCS returns essentialocl::ExpCS:	// These rules are ordered most reject
 | DictLiteralExpCS
 | 	TypeLiteralExpCS
 | ReturnExpCS
-| 	({NameExpCS} pathName=PathNameCS
+| 	({essentialocl::NameExpCS} pathName=PathNameCS
 		(
-			(({IndexExpCS.nameExp=current} '[' firstIndexes+=ExpCS (',' firstIndexes+=ExpCS)* ']'
+			(({essentialocl::IndexExpCS.nameExp=current} '[' firstIndexes+=ExpCS (',' firstIndexes+=ExpCS)* ']'
 										('[' secondIndexes+=ExpCS (',' secondIndexes+=ExpCS)* ']')?
 										(atPre?='@' 'pre')?
 			))
 		|
-			({ConstructorExpCS.nameExp=current} '{'
+			({essentialocl::ConstructorExpCS.nameExp=current} '{'
 				( (ownedParts+=ConstructorPartCS (',' ownedParts+=ConstructorPartCS)*)
 				| (value=StringLiteral)
 				) '}'
 			)
 		|	( (atPre?='@' 'pre')?
-				({InvocationExpCS.nameExp=current} '(' (
+				({essentialocl::InvocationExpCS.nameExp=current} '(' (
 					argument+=NavigatingArgCS (argument+=NavigatingCommaArgCS)*
 					(argument+=NavigatingSemiArgCS (argument+=NavigatingCommaArgCS)*)?
 					(argument+=NavigatingBarArgCS (argument+=NavigatingCommaArgCS)*)?

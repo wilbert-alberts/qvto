@@ -7,17 +7,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsFactory;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
@@ -74,10 +70,6 @@ public class ImperativeoclcsFactoryImpl extends EFactoryImpl implements Imperati
 			case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS: return createDictLiteralExpCS();
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS: return createDictLiteralPartCS();
 			case ImperativeoclcsPackage.RETURN_EXP_CS: return createReturnExpCS();
-			case ImperativeoclcsPackage.NAME_EXP_CS: return createNameExpCS();
-			case ImperativeoclcsPackage.INDEX_EXP_CS: return createIndexExpCS();
-			case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS: return createConstructorExpCS();
-			case ImperativeoclcsPackage.INVOCATION_EXP_CS: return createInvocationExpCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -147,50 +139,6 @@ public class ImperativeoclcsFactoryImpl extends EFactoryImpl implements Imperati
   {
 		ReturnExpCSImpl returnExpCS = new ReturnExpCSImpl();
 		return returnExpCS;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public NameExpCS createNameExpCS()
-  {
-		NameExpCSImpl nameExpCS = new NameExpCSImpl();
-		return nameExpCS;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public IndexExpCS createIndexExpCS()
-  {
-		IndexExpCSImpl indexExpCS = new IndexExpCSImpl();
-		return indexExpCS;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public ConstructorExpCS createConstructorExpCS()
-  {
-		ConstructorExpCSImpl constructorExpCS = new ConstructorExpCSImpl();
-		return constructorExpCS;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public InvocationExpCS createInvocationExpCS()
-  {
-		InvocationExpCSImpl invocationExpCS = new InvocationExpCSImpl();
-		return invocationExpCS;
 	}
 
   /**

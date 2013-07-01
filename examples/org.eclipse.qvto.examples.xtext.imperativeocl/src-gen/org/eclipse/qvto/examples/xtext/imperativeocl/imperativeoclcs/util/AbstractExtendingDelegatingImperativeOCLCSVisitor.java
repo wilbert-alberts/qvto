@@ -37,10 +37,6 @@ public abstract class AbstractExtendingDelegatingImperativeOCLCSVisitor<R, C, D 
 		return delegate.visiting(visitable);
 	}
 
-	public @Nullable R visitConstructorExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS object) {
-		return delegate.visitExpCS(object);
-	}
-
 	public @Nullable R visitDictLiteralExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS object) {
 		return delegate.visitExpCS(object);
 	}
@@ -53,24 +49,12 @@ public abstract class AbstractExtendingDelegatingImperativeOCLCSVisitor<R, C, D 
 		return delegate.visitTypedRefCS(object);
 	}
 
-	public @Nullable R visitIndexExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS object) {
-		return delegate.visitExpCS(object);
-	}
-
-	public @Nullable R visitInvocationExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS object) {
-		return delegate.visitExpCS(object);
-	}
-
 	public @Nullable R visitListLiteralExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS object) {
 		return delegate.visitExpCS(object);
 	}
 
 	public @Nullable R visitListTypeCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS object) {
 		return delegate.visitTypedRefCS(object);
-	}
-
-	public @Nullable R visitNameExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS object) {
-		return delegate.visitExpCS(object);
 	}
 
 	public @Nullable R visitReturnExpCS(@NonNull org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS object) {

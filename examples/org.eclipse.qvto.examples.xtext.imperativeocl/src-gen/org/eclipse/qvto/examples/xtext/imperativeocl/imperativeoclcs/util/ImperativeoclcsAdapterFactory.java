@@ -4,28 +4,25 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.ocl.examples.pivot.util.Pivotable;
+
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
+
 import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
+
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
+
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -109,22 +106,6 @@ public class ImperativeoclcsAdapterFactory extends AdapterFactoryImpl
 			@Override
 			public Adapter caseReturnExpCS(ReturnExpCS object) {
 				return createReturnExpCSAdapter();
-			}
-			@Override
-			public Adapter caseNameExpCS(NameExpCS object) {
-				return createNameExpCSAdapter();
-			}
-			@Override
-			public Adapter caseIndexExpCS(IndexExpCS object) {
-				return createIndexExpCSAdapter();
-			}
-			@Override
-			public Adapter caseConstructorExpCS(ConstructorExpCS object) {
-				return createConstructorExpCSAdapter();
-			}
-			@Override
-			public Adapter caseInvocationExpCS(InvocationExpCS object) {
-				return createInvocationExpCSAdapter();
 			}
 			@Override
 			public Adapter caseVisitableCS(VisitableCS object) {
@@ -269,66 +250,6 @@ public class ImperativeoclcsAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
   public Adapter createReturnExpCSAdapter()
-  {
-		return null;
-	}
-
-  /**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS <em>Name Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS
-	 * @generated
-	 */
-  public Adapter createNameExpCSAdapter()
-  {
-		return null;
-	}
-
-  /**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS <em>Index Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS
-	 * @generated
-	 */
-  public Adapter createIndexExpCSAdapter()
-  {
-		return null;
-	}
-
-  /**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS <em>Constructor Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS
-	 * @generated
-	 */
-  public Adapter createConstructorExpCSAdapter()
-  {
-		return null;
-	}
-
-  /**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS <em>Invocation Exp CS</em>}'.
-	 * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS
-	 * @generated
-	 */
-  public Adapter createInvocationExpCSAdapter()
   {
 		return null;
 	}

@@ -4,15 +4,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLLeft2RightVisitor;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -23,11 +19,6 @@ public abstract class AbstractImperativeOCLLeft2RightVisitor extends EssentialOC
 		super(context);
 	}
 
-	@Nullable
-	public Element visitConstructorExpCS(ConstructorExpCS object) {
-		return visitExpCS(object);
-	}
-	
 	@Nullable
 	public Element visitDictLiteralExpCS(DictLiteralExpCS object) {
 		return visitExpCS(object);
@@ -44,16 +35,6 @@ public abstract class AbstractImperativeOCLLeft2RightVisitor extends EssentialOC
 	}
 	
 	@Nullable
-	public Element visitIndexExpCS(IndexExpCS object) {
-		return visitExpCS(object);
-	}
-	
-	@Nullable
-	public Element visitInvocationExpCS(InvocationExpCS object) {
-		return visitExpCS(object);
-	}
-	
-	@Nullable
 	public Element visitListLiteralExpCS(ListLiteralExpCS object) {
 		return visitExpCS(object);
 	}
@@ -61,11 +42,6 @@ public abstract class AbstractImperativeOCLLeft2RightVisitor extends EssentialOC
 	@Nullable
 	public Element visitListTypeCS(ListTypeCS object) {
 		return visitTypedRefCS(object);
-	}
-	
-	@Nullable
-	public Element visitNameExpCS(NameExpCS object) {
-		return visitExpCS(object);
 	}
 	
 	@Nullable

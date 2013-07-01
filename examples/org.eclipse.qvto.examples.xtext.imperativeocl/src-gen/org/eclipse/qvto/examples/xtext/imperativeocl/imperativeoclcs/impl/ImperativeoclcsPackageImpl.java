@@ -2,24 +2,19 @@
  */
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsFactory;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
@@ -71,34 +66,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 	 * @generated
 	 */
   private EClass returnExpCSEClass = null;
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  private EClass nameExpCSEClass = null;
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  private EClass indexExpCSEClass = null;
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  private EClass constructorExpCSEClass = null;
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  private EClass invocationExpCSEClass = null;
 
   /**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -311,156 +278,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
    * <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EClass getNameExpCS()
-  {
-		return nameExpCSEClass;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getNameExpCS_PathName()
-  {
-		return (EReference)nameExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getNameExpCS_AtPre()
-  {
-		return (EAttribute)nameExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EClass getIndexExpCS()
-  {
-		return indexExpCSEClass;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getIndexExpCS_NameExp()
-  {
-		return (EReference)indexExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getIndexExpCS_FirstIndexes()
-  {
-		return (EReference)indexExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getIndexExpCS_SecondIndexes()
-  {
-		return (EReference)indexExpCSEClass.getEStructuralFeatures().get(2);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getIndexExpCS_AtPre()
-  {
-		return (EAttribute)indexExpCSEClass.getEStructuralFeatures().get(3);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EClass getConstructorExpCS()
-  {
-		return constructorExpCSEClass;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getConstructorExpCS_NameExp()
-  {
-		return (EReference)constructorExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getConstructorExpCS_OwnedParts()
-  {
-		return (EReference)constructorExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EAttribute getConstructorExpCS_Value()
-  {
-		return (EAttribute)constructorExpCSEClass.getEStructuralFeatures().get(2);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EClass getInvocationExpCS()
-  {
-		return invocationExpCSEClass;
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getInvocationExpCS_NameExp()
-  {
-		return (EReference)invocationExpCSEClass.getEStructuralFeatures().get(0);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public EReference getInvocationExpCS_Argument()
-  {
-		return (EReference)invocationExpCSEClass.getEStructuralFeatures().get(1);
-	}
-
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
   public ImperativeoclcsFactory getImperativeoclcsFactory()
   {
 		return (ImperativeoclcsFactory)getEFactoryInstance();
@@ -505,25 +322,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 
 		returnExpCSEClass = createEClass(RETURN_EXP_CS);
 		createEReference(returnExpCSEClass, RETURN_EXP_CS__VALUE);
-
-		nameExpCSEClass = createEClass(NAME_EXP_CS);
-		createEReference(nameExpCSEClass, NAME_EXP_CS__PATH_NAME);
-		createEAttribute(nameExpCSEClass, NAME_EXP_CS__AT_PRE);
-
-		indexExpCSEClass = createEClass(INDEX_EXP_CS);
-		createEReference(indexExpCSEClass, INDEX_EXP_CS__NAME_EXP);
-		createEReference(indexExpCSEClass, INDEX_EXP_CS__FIRST_INDEXES);
-		createEReference(indexExpCSEClass, INDEX_EXP_CS__SECOND_INDEXES);
-		createEAttribute(indexExpCSEClass, INDEX_EXP_CS__AT_PRE);
-
-		constructorExpCSEClass = createEClass(CONSTRUCTOR_EXP_CS);
-		createEReference(constructorExpCSEClass, CONSTRUCTOR_EXP_CS__NAME_EXP);
-		createEReference(constructorExpCSEClass, CONSTRUCTOR_EXP_CS__OWNED_PARTS);
-		createEAttribute(constructorExpCSEClass, CONSTRUCTOR_EXP_CS__VALUE);
-
-		invocationExpCSEClass = createEClass(INVOCATION_EXP_CS);
-		createEReference(invocationExpCSEClass, INVOCATION_EXP_CS__NAME_EXP);
-		createEReference(invocationExpCSEClass, INVOCATION_EXP_CS__ARGUMENT);
 	}
 
   /**
@@ -565,10 +363,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 		dictLiteralExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
 		dictLiteralPartCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		returnExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
-		nameExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
-		indexExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
-		constructorExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
-		invocationExpCSEClass.getESuperTypes().add(theEssentialOCLCSTPackage.getExpCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(listTypeCSEClass, ListTypeCS.class, "ListTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -590,25 +384,6 @@ public class ImperativeoclcsPackageImpl extends EPackageImpl implements Imperati
 
 		initEClass(returnExpCSEClass, ReturnExpCS.class, "ReturnExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReturnExpCS_Value(), theEssentialOCLCSTPackage.getExpCS(), null, "value", null, 0, 1, ReturnExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(nameExpCSEClass, NameExpCS.class, "NameExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNameExpCS_PathName(), theBaseCSTPackage.getPathNameCS(), null, "pathName", null, 0, 1, NameExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNameExpCS_AtPre(), ecorePackage.getEBoolean(), "atPre", null, 0, 1, NameExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(indexExpCSEClass, IndexExpCS.class, "IndexExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getIndexExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIndexExpCS_FirstIndexes(), theEssentialOCLCSTPackage.getExpCS(), null, "firstIndexes", null, 0, -1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIndexExpCS_SecondIndexes(), theEssentialOCLCSTPackage.getExpCS(), null, "secondIndexes", null, 0, -1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getIndexExpCS_AtPre(), ecorePackage.getEBoolean(), "atPre", null, 0, 1, IndexExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(constructorExpCSEClass, ConstructorExpCS.class, "ConstructorExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getConstructorExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getConstructorExpCS_OwnedParts(), theEssentialOCLCSTPackage.getConstructorPartCS(), null, "ownedParts", null, 0, -1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConstructorExpCS_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstructorExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(invocationExpCSEClass, InvocationExpCS.class, "InvocationExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInvocationExpCS_NameExp(), this.getNameExpCS(), null, "nameExp", null, 0, 1, InvocationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInvocationExpCS_Argument(), theEssentialOCLCSTPackage.getNavigatingArgCS(), null, "argument", null, 0, -1, InvocationExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

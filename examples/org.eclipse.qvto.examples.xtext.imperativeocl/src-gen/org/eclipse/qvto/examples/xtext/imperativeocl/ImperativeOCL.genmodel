@@ -29,24 +29,5 @@
     <genClasses ecoreClass="ImperativeOCL.ecore#//ReturnExpCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//ReturnExpCS/value"/>
     </genClasses>
-    <genClasses ecoreClass="ImperativeOCL.ecore#//NameExpCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//NameExpCS/pathName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ImperativeOCL.ecore#//NameExpCS/atPre"/>
-    </genClasses>
-    <genClasses ecoreClass="ImperativeOCL.ecore#//IndexExpCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//IndexExpCS/nameExp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//IndexExpCS/firstIndexes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//IndexExpCS/secondIndexes"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ImperativeOCL.ecore#//IndexExpCS/atPre"/>
-    </genClasses>
-    <genClasses ecoreClass="ImperativeOCL.ecore#//ConstructorExpCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//ConstructorExpCS/nameExp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//ConstructorExpCS/ownedParts"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ImperativeOCL.ecore#//ConstructorExpCS/value"/>
-    </genClasses>
-    <genClasses ecoreClass="ImperativeOCL.ecore#//InvocationExpCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//InvocationExpCS/nameExp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ImperativeOCL.ecore#//InvocationExpCS/argument"/>
-    </genClasses>
   </genPackages>
 </genmodel:GenModel>

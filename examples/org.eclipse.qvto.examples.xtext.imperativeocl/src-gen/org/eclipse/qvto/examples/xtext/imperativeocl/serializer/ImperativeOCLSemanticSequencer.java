@@ -1,5 +1,7 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.serializer;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityBoundsCS;
@@ -15,14 +17,18 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.BooleanLitera
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionTypeCS;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ConstructorExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ConstructorPartCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ContextCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.IfExpCS;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.IndexExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InfixExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvalidLiteralExpCS;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.LetExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.LetVariableCS;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NameExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NavigatingArgCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NavigationOperatorCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NestedExpCS;
@@ -38,23 +44,23 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.TypeNameExpCS
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.UnaryOperatorCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.UnlimitedNaturalLiteralExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.serializer.EssentialOCLSemanticSequencer;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ConstructorExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.IndexExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InvocationExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.NameExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLGrammarAccess;
+import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
+import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
+import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
+import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
-
-import com.google.inject.Inject;
 
 @SuppressWarnings("all")
 public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequencer {
@@ -202,6 +208,18 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
+			case EssentialOCLCSTPackage.CONSTRUCTOR_EXP_CS:
+				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
+				   context == grammarAccess.getImperativeOCLExpCSRule() ||
+				   context == grammarAccess.getNavigatingArgExpCSRule() ||
+				   context == grammarAccess.getPrefixedExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSRule()) {
+					sequence_PrimaryExpCS(context, (ConstructorExpCS) semanticObject); 
+					return; 
+				}
+				else break;
 			case EssentialOCLCSTPackage.CONSTRUCTOR_PART_CS:
 				if(context == grammarAccess.getConstructorPartCSRule()) {
 					sequence_ConstructorPartCS(context, (ConstructorPartCS) semanticObject); 
@@ -224,6 +242,18 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 				   context == grammarAccess.getPrefixedExpCSRule() ||
 				   context == grammarAccess.getPrimaryExpCSRule()) {
 					sequence_IfExpCS(context, (IfExpCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case EssentialOCLCSTPackage.INDEX_EXP_CS:
+				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
+				   context == grammarAccess.getImperativeOCLExpCSRule() ||
+				   context == grammarAccess.getNavigatingArgExpCSRule() ||
+				   context == grammarAccess.getPrefixedExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSRule()) {
+					sequence_PrimaryExpCS(context, (IndexExpCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -250,6 +280,18 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
+			case EssentialOCLCSTPackage.INVOCATION_EXP_CS:
+				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
+				   context == grammarAccess.getImperativeOCLExpCSRule() ||
+				   context == grammarAccess.getNavigatingArgExpCSRule() ||
+				   context == grammarAccess.getPrefixedExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSRule()) {
+					sequence_PrimaryExpCS(context, (InvocationExpCS) semanticObject); 
+					return; 
+				}
+				else break;
 			case EssentialOCLCSTPackage.LET_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getGrammmarCSRule() ||
@@ -263,6 +305,24 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 			case EssentialOCLCSTPackage.LET_VARIABLE_CS:
 				if(context == grammarAccess.getLetVariableCSRule()) {
 					sequence_LetVariableCS(context, (LetVariableCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case EssentialOCLCSTPackage.NAME_EXP_CS:
+				if(context == grammarAccess.getPrimaryExpCSAccess().getConstructorExpCSNameExpAction_10_2_1_0() ||
+				   context == grammarAccess.getPrimaryExpCSAccess().getIndexExpCSNameExpAction_10_2_0_0()) {
+					sequence_PrimaryExpCS_ConstructorExpCS_10_2_1_0_IndexExpCS_10_2_0_0(context, (NameExpCS) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
+				   context == grammarAccess.getImperativeOCLExpCSRule() ||
+				   context == grammarAccess.getNavigatingArgExpCSRule() ||
+				   context == grammarAccess.getPrefixedExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSRule() ||
+				   context == grammarAccess.getPrimaryExpCSAccess().getInvocationExpCSNameExpAction_10_2_2_1_0()) {
+					sequence_PrimaryExpCS(context, (NameExpCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -439,18 +499,6 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == ImperativeoclcsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case ImperativeoclcsPackage.CONSTRUCTOR_EXP_CS:
-				if(context == grammarAccess.getExpCSRule() ||
-				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
-				   context == grammarAccess.getGrammmarCSRule() ||
-				   context == grammarAccess.getImperativeOCLExpCSRule() ||
-				   context == grammarAccess.getNavigatingArgExpCSRule() ||
-				   context == grammarAccess.getPrefixedExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSRule()) {
-					sequence_PrimaryExpCS(context, (ConstructorExpCS) semanticObject); 
-					return; 
-				}
-				else break;
 			case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS:
 				if(context == grammarAccess.getDictLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
@@ -485,30 +533,6 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.INDEX_EXP_CS:
-				if(context == grammarAccess.getExpCSRule() ||
-				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
-				   context == grammarAccess.getGrammmarCSRule() ||
-				   context == grammarAccess.getImperativeOCLExpCSRule() ||
-				   context == grammarAccess.getNavigatingArgExpCSRule() ||
-				   context == grammarAccess.getPrefixedExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSRule()) {
-					sequence_PrimaryExpCS(context, (IndexExpCS) semanticObject); 
-					return; 
-				}
-				else break;
-			case ImperativeoclcsPackage.INVOCATION_EXP_CS:
-				if(context == grammarAccess.getExpCSRule() ||
-				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
-				   context == grammarAccess.getGrammmarCSRule() ||
-				   context == grammarAccess.getImperativeOCLExpCSRule() ||
-				   context == grammarAccess.getNavigatingArgExpCSRule() ||
-				   context == grammarAccess.getPrefixedExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSRule()) {
-					sequence_PrimaryExpCS(context, (InvocationExpCS) semanticObject); 
-					return; 
-				}
-				else break;
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
@@ -534,24 +558,6 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 				}
 				else if(context == grammarAccess.getTypeLiteralWithMultiplicityCSRule()) {
 					sequence_ListTypeCS_TypeLiteralWithMultiplicityCS(context, (ListTypeCS) semanticObject); 
-					return; 
-				}
-				else break;
-			case ImperativeoclcsPackage.NAME_EXP_CS:
-				if(context == grammarAccess.getPrimaryExpCSAccess().getConstructorExpCSNameExpAction_10_2_1_0() ||
-				   context == grammarAccess.getPrimaryExpCSAccess().getIndexExpCSNameExpAction_10_2_0_0()) {
-					sequence_PrimaryExpCS_ConstructorExpCS_10_2_1_0_IndexExpCS_10_2_0_0(context, (NameExpCS) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getExpCSRule() ||
-				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
-				   context == grammarAccess.getGrammmarCSRule() ||
-				   context == grammarAccess.getImperativeOCLExpCSRule() ||
-				   context == grammarAccess.getNavigatingArgExpCSRule() ||
-				   context == grammarAccess.getPrefixedExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSRule() ||
-				   context == grammarAccess.getPrimaryExpCSAccess().getInvocationExpCSNameExpAction_10_2_2_1_0()) {
-					sequence_PrimaryExpCS(context, (NameExpCS) semanticObject); 
 					return; 
 				}
 				else break;

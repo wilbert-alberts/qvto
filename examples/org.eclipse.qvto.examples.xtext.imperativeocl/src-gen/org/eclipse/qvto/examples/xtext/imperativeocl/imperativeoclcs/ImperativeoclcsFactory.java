@@ -77,42 +77,6 @@ public interface ImperativeoclcsFactory extends EFactory
   ReturnExpCS createReturnExpCS();
 
   /**
-	 * Returns a new object of class '<em>Name Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Name Exp CS</em>'.
-	 * @generated
-	 */
-  NameExpCS createNameExpCS();
-
-  /**
-	 * Returns a new object of class '<em>Index Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Index Exp CS</em>'.
-	 * @generated
-	 */
-  IndexExpCS createIndexExpCS();
-
-  /**
-	 * Returns a new object of class '<em>Constructor Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Constructor Exp CS</em>'.
-	 * @generated
-	 */
-  ConstructorExpCS createConstructorExpCS();
-
-  /**
-	 * Returns a new object of class '<em>Invocation Exp CS</em>'.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Invocation Exp CS</em>'.
-	 * @generated
-	 */
-  InvocationExpCS createInvocationExpCS();
-
-  /**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
