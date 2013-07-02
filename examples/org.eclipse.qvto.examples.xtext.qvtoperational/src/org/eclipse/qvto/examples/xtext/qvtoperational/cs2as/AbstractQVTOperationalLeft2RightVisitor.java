@@ -14,156 +14,150 @@
  *
  * $Id$
  */
-package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
+package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.pivot.Element;
+import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLLeft2RightVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
-/**
- * An AbstractExtendingQVTOperationalCSVisitor provides a default implementation
- * for each visitXxx method that delegates to the visitYyy method of the first
- * super class, (or transitively its first super class first super class until a
- * non-interface super-class is found). In the absence of any suitable first
- * super class, the method delegates to visiting().
- */
-public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
-		extends
-		org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.AbstractExtendingImperativeOCLCSVisitor<R, C>
-		implements QVTOperationalCSVisitor<R> {
+public abstract class AbstractQVTOperationalLeft2RightVisitor
+		extends ImperativeOCLLeft2RightVisitor
+		implements QVTOperationalCSVisitor<Element> {
 
-	/**
-	 * Initializes me with an initial value for my result.
-	 * 
-	 * @param context
-	 *            my initial result value
-	 */
-	protected AbstractExtendingQVTOperationalCSVisitor(@NonNull
-	C context) {
+	//
+	// This file is maintained by copying from
+	// AbstractExtendingQVTOperationalCSVisitor and changing R to Element.
+	//
+	protected AbstractQVTOperationalLeft2RightVisitor(@NonNull
+	CS2PivotConversion context) {
 		super(context);
 	}
 
 	public @Nullable
-	R visitClassifierCS(
+	Element visitClassifierCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS object) {
 		return visitMetamodelElementCS(object);
 	}
 
 	public @Nullable
-	R visitClassifierFeatureCS(
+	Element visitClassifierFeatureCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitClassifierOperationCS(
+	Element visitClassifierOperationCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS object) {
 		return visitClassifierFeatureCS(object);
 	}
 
 	public @Nullable
-	R visitClassifierPropertyCS(
+	Element visitClassifierPropertyCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS object) {
 		return visitClassifierFeatureCS(object);
 	}
 
 	public @Nullable
-	R visitCompleteSignatureCS(
+	Element visitCompleteSignatureCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitEnumerationCS(
+	Element visitEnumerationCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS object) {
 		return visitMetamodelElementCS(object);
 	}
 
 	public @Nullable
-	R visitImportCS(
+	Element visitImportCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitInitPartCS(
+	Element visitInitPartCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitMetamodelCS(
+	Element visitMetamodelCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS object) {
 		return visitUnitElementCS(object);
 	}
 
 	public @Nullable
-	R visitMetamodelElementCS(
+	Element visitMetamodelElementCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitMultiplicityCS(
+	Element visitMultiplicityCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS object) {
 		return visitElementCS(object);
 	}
 
 	public @Nullable
-	R visitParamCS(
+	Element visitParamCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitSimpleSignatureCS(
+	Element visitSimpleSignatureCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS object) {
 		return visitCompleteSignatureCS(object);
 	}
 
 	public @Nullable
-	R visitTagCS(@NonNull
+	Element visitTagCS(@NonNull
 	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS object) {
 		return visitMetamodelElementCS(object);
 	}
 
 	public @Nullable
-	R visitTopLevelCS(
+	Element visitTopLevelCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitTypedefCS(
+	Element visitTypedefCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitUnitCS(
+	Element visitUnitCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 
 	public @Nullable
-	R visitUnitElementCS(
+	Element visitUnitElementCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS object) {
-		return visitElementCS(object);
+		return visiting(object);
 	}
 }

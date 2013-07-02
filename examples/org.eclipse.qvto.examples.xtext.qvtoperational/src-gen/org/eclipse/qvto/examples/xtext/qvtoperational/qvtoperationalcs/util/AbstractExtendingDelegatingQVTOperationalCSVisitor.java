@@ -52,7 +52,7 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitClassifierFeatureCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
@@ -73,7 +73,7 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitCompleteSignatureCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
@@ -87,14 +87,14 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitImportCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
 	R visitInitPartCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
@@ -108,7 +108,7 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitMetamodelElementCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
@@ -122,7 +122,7 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitParamCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
@@ -142,27 +142,27 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	R visitTopLevelCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
 	R visitTypedefCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
 	R visitUnitCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 
 	public @Nullable
 	R visitUnitElementCS(
 			@NonNull
 			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS object) {
-		return visiting(object);
+		return delegate.visitElementCS(object);
 	}
 }

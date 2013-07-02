@@ -3,8 +3,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -23,11 +22,11 @@ import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
  * </p>
  * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTopLevelCS()
- * @model superTypes="org.eclipse.ocl.examples.xtext.base.baseCST.VisitableCS"
+ * @model
  * @generated
  */
 public interface TopLevelCS
-		extends EObject, VisitableCS {
+		extends ElementCS {
 
 	/**
 	 * Returns the value of the '<em><b>Import</b></em>' containment reference

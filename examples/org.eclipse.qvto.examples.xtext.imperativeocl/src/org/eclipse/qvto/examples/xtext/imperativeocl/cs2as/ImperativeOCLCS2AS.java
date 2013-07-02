@@ -7,10 +7,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
 import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLCS2Pivot;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLContainmentVisitor;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLLeft2RightVisitor;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLPostOrderVisitor;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLPreOrderVisitor;
 
 public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	
@@ -18,20 +14,20 @@ public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 		super(cs2pivotResourceMap, metaModelManager);
 	}
 		
-	public ImperativeOCLCS2AS(EssentialOCLCS2Pivot cs2pivot) {
+	public ImperativeOCLCS2AS(ImperativeOCLCS2AS cs2pivot) {
 		super(cs2pivot);
 	}
 
 	@Override
 	protected @NonNull
-	EssentialOCLContainmentVisitor createContainmentVisitor(
+	ImperativeOCLContainmentVisitor createContainmentVisitor(
 			@NonNull CS2PivotConversion converter) {
 		return new ImperativeOCLContainmentVisitor(converter);
 	}
 	
 	@Override
 	protected @NonNull
-	EssentialOCLPreOrderVisitor createPreOrderVisitor(
+	ImperativeOCLPreOrderVisitor createPreOrderVisitor(
 			@NonNull CS2PivotConversion converter) {
 	
 		return new ImperativeOCLPreOrderVisitor(converter);
@@ -39,14 +35,14 @@ public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	
 	@Override
 	protected @NonNull
-	EssentialOCLPostOrderVisitor createPostOrderVisitor(
+	ImperativeOCLPostOrderVisitor createPostOrderVisitor(
 			@NonNull CS2PivotConversion converter) {
 		return new ImperativeOCLPostOrderVisitor(converter);
 	}
 
 	@Override
 	protected @NonNull
-	EssentialOCLLeft2RightVisitor createLeft2RightVisitor(
+	ImperativeOCLLeft2RightVisitor createLeft2RightVisitor(
 			@NonNull CS2PivotConversion converter) {
 		return new ImperativeOCLLeft2RightVisitor(converter);
 	}

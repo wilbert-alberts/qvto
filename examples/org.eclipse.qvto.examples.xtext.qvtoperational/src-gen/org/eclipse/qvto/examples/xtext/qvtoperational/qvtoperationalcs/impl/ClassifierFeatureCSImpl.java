@@ -3,7 +3,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
@@ -18,7 +18,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * @generated
  */
 public class ClassifierFeatureCSImpl
-		extends MinimalEObjectImpl.Container
+		extends ElementCSImpl
 		implements ClassifierFeatureCS {
 
 	/**

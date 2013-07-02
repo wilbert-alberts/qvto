@@ -2,9 +2,8 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 
 /**
@@ -27,11 +26,11 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </p>
  * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTypedefCS()
- * @model superTypes="org.eclipse.ocl.examples.xtext.base.baseCST.VisitableCS"
+ * @model
  * @generated
  */
 public interface TypedefCS
-		extends EObject, VisitableCS {
+		extends ElementCS {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute. <!--

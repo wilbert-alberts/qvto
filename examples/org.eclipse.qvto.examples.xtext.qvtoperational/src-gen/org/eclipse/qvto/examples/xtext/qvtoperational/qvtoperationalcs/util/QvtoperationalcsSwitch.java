@@ -89,6 +89,8 @@ public class QvtoperationalcsSwitch<T>
 				TopLevelCS topLevelCS = (TopLevelCS) theEObject;
 				T result = caseTopLevelCS(topLevelCS);
 				if (result == null)
+					result = caseElementCS(topLevelCS);
+				if (result == null)
 					result = caseVisitableCS(topLevelCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -97,6 +99,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.IMPORT_CS : {
 				ImportCS importCS = (ImportCS) theEObject;
 				T result = caseImportCS(importCS);
+				if (result == null)
+					result = caseElementCS(importCS);
 				if (result == null)
 					result = caseVisitableCS(importCS);
 				if (result == null)
@@ -107,6 +111,8 @@ public class QvtoperationalcsSwitch<T>
 				UnitCS unitCS = (UnitCS) theEObject;
 				T result = caseUnitCS(unitCS);
 				if (result == null)
+					result = caseElementCS(unitCS);
+				if (result == null)
 					result = caseVisitableCS(unitCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -116,6 +122,8 @@ public class QvtoperationalcsSwitch<T>
 				UnitElementCS unitElementCS = (UnitElementCS) theEObject;
 				T result = caseUnitElementCS(unitElementCS);
 				if (result == null)
+					result = caseElementCS(unitElementCS);
+				if (result == null)
 					result = caseVisitableCS(unitElementCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -124,6 +132,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS : {
 				CompleteSignatureCS completeSignatureCS = (CompleteSignatureCS) theEObject;
 				T result = caseCompleteSignatureCS(completeSignatureCS);
+				if (result == null)
+					result = caseElementCS(completeSignatureCS);
 				if (result == null)
 					result = caseVisitableCS(completeSignatureCS);
 				if (result == null)
@@ -136,6 +146,8 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null)
 					result = caseCompleteSignatureCS(simpleSignatureCS);
 				if (result == null)
+					result = caseElementCS(simpleSignatureCS);
+				if (result == null)
 					result = caseVisitableCS(simpleSignatureCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -145,6 +157,8 @@ public class QvtoperationalcsSwitch<T>
 				ParamCS paramCS = (ParamCS) theEObject;
 				T result = caseParamCS(paramCS);
 				if (result == null)
+					result = caseElementCS(paramCS);
+				if (result == null)
 					result = caseVisitableCS(paramCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -153,6 +167,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.INIT_PART_CS : {
 				InitPartCS initPartCS = (InitPartCS) theEObject;
 				T result = caseInitPartCS(initPartCS);
+				if (result == null)
+					result = caseElementCS(initPartCS);
 				if (result == null)
 					result = caseVisitableCS(initPartCS);
 				if (result == null)
@@ -165,6 +181,8 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null)
 					result = caseUnitElementCS(metamodelCS);
 				if (result == null)
+					result = caseElementCS(metamodelCS);
+				if (result == null)
 					result = caseVisitableCS(metamodelCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -173,6 +191,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.METAMODEL_ELEMENT_CS : {
 				MetamodelElementCS metamodelElementCS = (MetamodelElementCS) theEObject;
 				T result = caseMetamodelElementCS(metamodelElementCS);
+				if (result == null)
+					result = caseElementCS(metamodelElementCS);
 				if (result == null)
 					result = caseVisitableCS(metamodelElementCS);
 				if (result == null)
@@ -185,6 +205,8 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null)
 					result = caseMetamodelElementCS(classifierCS);
 				if (result == null)
+					result = caseElementCS(classifierCS);
+				if (result == null)
 					result = caseVisitableCS(classifierCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -193,6 +215,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.CLASSIFIER_FEATURE_CS : {
 				ClassifierFeatureCS classifierFeatureCS = (ClassifierFeatureCS) theEObject;
 				T result = caseClassifierFeatureCS(classifierFeatureCS);
+				if (result == null)
+					result = caseElementCS(classifierFeatureCS);
 				if (result == null)
 					result = caseVisitableCS(classifierFeatureCS);
 				if (result == null)
@@ -204,6 +228,8 @@ public class QvtoperationalcsSwitch<T>
 				T result = caseClassifierPropertyCS(classifierPropertyCS);
 				if (result == null)
 					result = caseClassifierFeatureCS(classifierPropertyCS);
+				if (result == null)
+					result = caseElementCS(classifierPropertyCS);
 				if (result == null)
 					result = caseVisitableCS(classifierPropertyCS);
 				if (result == null)
@@ -229,6 +255,8 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null)
 					result = caseClassifierFeatureCS(classifierOperationCS);
 				if (result == null)
+					result = caseElementCS(classifierOperationCS);
+				if (result == null)
 					result = caseVisitableCS(classifierOperationCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -239,6 +267,8 @@ public class QvtoperationalcsSwitch<T>
 				T result = caseEnumerationCS(enumerationCS);
 				if (result == null)
 					result = caseMetamodelElementCS(enumerationCS);
+				if (result == null)
+					result = caseElementCS(enumerationCS);
 				if (result == null)
 					result = caseVisitableCS(enumerationCS);
 				if (result == null)
@@ -253,6 +283,8 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null)
 					result = caseClassifierFeatureCS(tagCS);
 				if (result == null)
+					result = caseElementCS(tagCS);
+				if (result == null)
 					result = caseVisitableCS(tagCS);
 				if (result == null)
 					result = defaultCase(theEObject);
@@ -261,6 +293,8 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.TYPEDEF_CS : {
 				TypedefCS typedefCS = (TypedefCS) theEObject;
 				T result = caseTypedefCS(typedefCS);
+				if (result == null)
+					result = caseElementCS(typedefCS);
 				if (result == null)
 					result = caseVisitableCS(typedefCS);
 				if (result == null)

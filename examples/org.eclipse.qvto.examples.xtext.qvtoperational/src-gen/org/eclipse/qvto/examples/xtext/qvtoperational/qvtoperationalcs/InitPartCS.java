@@ -2,8 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 
 /**
@@ -23,11 +22,11 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </p>
  * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getInitPartCS()
- * @model superTypes="org.eclipse.ocl.examples.xtext.base.baseCST.VisitableCS"
+ * @model
  * @generated
  */
 public interface InitPartCS
-		extends EObject, VisitableCS {
+		extends ElementCS {
 
 	/**
 	 * Returns the value of the '<em><b>Init Op</b></em>' attribute. The

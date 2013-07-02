@@ -125,7 +125,7 @@ public class QVTOperationalSyntacticSequencer
 	}
 
 	/**
-	 * Syntax: ('{' '}' ';'?) | ';'
+	 * Syntax: ';' | ('{' '}' ';'?)
 	 */
 	protected void emit_ClassifierCS_SemicolonKeyword_5_0_or___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2_SemicolonKeyword_5_1_3_q__(
 			EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

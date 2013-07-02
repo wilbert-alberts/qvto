@@ -1104,25 +1104,23 @@ public class QvtoperationalcsPackageImpl
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		topLevelCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
-		importCSEClass.getESuperTypes().add(theBaseCSTPackage.getVisitableCS());
-		unitCSEClass.getESuperTypes().add(theBaseCSTPackage.getVisitableCS());
+		topLevelCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		importCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		unitCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		unitElementCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
+			theBaseCSTPackage.getElementCS());
 		completeSignatureCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
+			theBaseCSTPackage.getElementCS());
 		simpleSignatureCSEClass.getESuperTypes().add(
 			this.getCompleteSignatureCS());
-		paramCSEClass.getESuperTypes().add(theBaseCSTPackage.getVisitableCS());
-		initPartCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
+		paramCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		initPartCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		metamodelCSEClass.getESuperTypes().add(this.getUnitElementCS());
 		metamodelElementCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
+			theBaseCSTPackage.getElementCS());
 		classifierCSEClass.getESuperTypes().add(this.getMetamodelElementCS());
 		classifierFeatureCSEClass.getESuperTypes().add(
-			theBaseCSTPackage.getVisitableCS());
+			theBaseCSTPackage.getElementCS());
 		classifierPropertyCSEClass.getESuperTypes().add(
 			this.getClassifierFeatureCS());
 		multiplicityCSEClass.getESuperTypes().add(
@@ -1132,8 +1130,7 @@ public class QvtoperationalcsPackageImpl
 		enumerationCSEClass.getESuperTypes().add(this.getMetamodelElementCS());
 		tagCSEClass.getESuperTypes().add(this.getMetamodelElementCS());
 		tagCSEClass.getESuperTypes().add(this.getClassifierFeatureCS());
-		typedefCSEClass.getESuperTypes()
-			.add(theBaseCSTPackage.getVisitableCS());
+		typedefCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(topLevelCSEClass, TopLevelCS.class, "TopLevelCS",

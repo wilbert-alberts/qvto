@@ -3,6 +3,9 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational;
 
+import org.eclipse.qvto.examples.xtext.qvtoperational.utilities.QVTOperationalCSResource;
+import org.eclipse.xtext.resource.XtextResource;
+
 /**
  * Use this class to register components to be used at runtime / without the
  * Equinox extension registry.
@@ -11,4 +14,8 @@ public class QVTOperationalRuntimeModule
 		extends
 		org.eclipse.qvto.examples.xtext.qvtoperational.AbstractQVTOperationalRuntimeModule {
 
+	@Override
+	public Class<? extends XtextResource> bindXtextResource() {
+		return QVTOperationalCSResource.class;
+	}
 }

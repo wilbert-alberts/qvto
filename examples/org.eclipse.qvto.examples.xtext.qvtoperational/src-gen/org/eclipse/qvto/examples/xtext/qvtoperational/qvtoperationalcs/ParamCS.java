@@ -2,10 +2,9 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -30,11 +29,11 @@ import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
  * </p>
  * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS()
- * @model superTypes="org.eclipse.ocl.examples.xtext.base.baseCST.VisitableCS"
+ * @model
  * @generated
  */
 public interface ParamCS
-		extends EObject, VisitableCS {
+		extends ElementCS {
 
 	/**
 	 * Returns the value of the '<em><b>Direction</b></em>' attribute. The

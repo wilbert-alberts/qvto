@@ -70,13 +70,22 @@ public interface QvtoperationalcsPackage
 	int TOP_LEVEL_CS = 0;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Import</b></em>' containment reference
 	 * list. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__IMPORT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int TOP_LEVEL_CS__IMPORT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Unit</b></em>' containment reference list.
@@ -85,7 +94,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__UNIT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int TOP_LEVEL_CS__UNIT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Top Level CS</em>' class.
@@ -94,7 +103,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 2;
+	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '
@@ -108,13 +117,22 @@ public interface QvtoperationalcsPackage
 	int IMPORT_CS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Unit</b></em>' containment reference. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS__UNIT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int IMPORT_CS__UNIT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute list. <!--
@@ -123,7 +141,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS__NAME = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int IMPORT_CS__NAME = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>All</b></em>' attribute. <!--
@@ -132,7 +150,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS__ALL = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 2;
+	int IMPORT_CS__ALL = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Import CS</em>' class. <!--
@@ -141,7 +159,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 3;
+	int IMPORT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '
@@ -155,13 +173,22 @@ public interface QvtoperationalcsPackage
 	int UNIT_CS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Segment</b></em>' attribute list. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_CS__SEGMENT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int UNIT_CS__SEGMENT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Unit CS</em>' class. <!--
@@ -170,7 +197,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int UNIT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '
@@ -185,13 +212,22 @@ public interface QvtoperationalcsPackage
 	int UNIT_ELEMENT_CS = 3;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT_ELEMENT_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Unit Element CS</em>'
 	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_ELEMENT_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int UNIT_ELEMENT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '
@@ -206,13 +242,22 @@ public interface QvtoperationalcsPackage
 	int COMPLETE_SIGNATURE_CS = 4;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPLETE_SIGNATURE_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Complete Signature CS</em>'
 	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETE_SIGNATURE_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int COMPLETE_SIGNATURE_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '
@@ -225,6 +270,15 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 */
 	int SIMPLE_SIGNATURE_CS = 5;
+
+	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SIGNATURE_CS__LOGICAL_PARENT = COMPLETE_SIGNATURE_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference
@@ -256,13 +310,22 @@ public interface QvtoperationalcsPackage
 	int PARAM_CS = 6;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Direction</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_CS__DIRECTION = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int PARAM_CS__DIRECTION = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Path Name</b></em>' containment reference.
@@ -271,7 +334,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_CS__PATH_NAME = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int PARAM_CS__PATH_NAME = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Typespec</b></em>' containment reference.
@@ -280,7 +343,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_CS__TYPESPEC = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 2;
+	int PARAM_CS__TYPESPEC = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Init Part</b></em>' containment reference.
@@ -289,7 +352,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_CS__INIT_PART = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 3;
+	int PARAM_CS__INIT_PART = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Param CS</em>' class. <!--
@@ -298,7 +361,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 4;
+	int PARAM_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '
@@ -313,13 +376,22 @@ public interface QvtoperationalcsPackage
 	int INIT_PART_CS = 7;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int INIT_PART_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Init Op</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int INIT_PART_CS__INIT_OP = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int INIT_PART_CS__INIT_OP = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment
@@ -328,7 +400,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INIT_PART_CS__EXPRESSION = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int INIT_PART_CS__EXPRESSION = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Init Part CS</em>' class.
@@ -337,7 +409,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INIT_PART_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 2;
+	int INIT_PART_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '
@@ -350,6 +422,15 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 */
 	int METAMODEL_CS = 8;
+
+	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_CS__LOGICAL_PARENT = UNIT_ELEMENT_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Keyword</b></em>' attribute. <!--
@@ -400,13 +481,22 @@ public interface QvtoperationalcsPackage
 	int METAMODEL_ELEMENT_CS = 9;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_ELEMENT_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Metamodel Element CS</em>'
 	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int METAMODEL_ELEMENT_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int METAMODEL_ELEMENT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '
@@ -419,6 +509,15 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 */
 	int CLASSIFIER_CS = 10;
+
+	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_CS__LOGICAL_PARENT = METAMODEL_ELEMENT_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Intermediate</b></em>' attribute. <!--
@@ -496,13 +595,22 @@ public interface QvtoperationalcsPackage
 	int CLASSIFIER_FEATURE_CS = 11;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_FEATURE_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The number of structural features of the '<em>Classifier Feature CS</em>'
 	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CLASSIFIER_FEATURE_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int CLASSIFIER_FEATURE_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '
@@ -515,6 +623,15 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 */
 	int CLASSIFIER_PROPERTY_CS = 12;
+
+	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_PROPERTY_CS__LOGICAL_PARENT = CLASSIFIER_FEATURE_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Stereotype</b></em>' attribute list. <!--
@@ -667,6 +784,15 @@ public interface QvtoperationalcsPackage
 	int CLASSIFIER_OPERATION_CS = 14;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CLASSIFIER_OPERATION_CS__LOGICAL_PARENT = CLASSIFIER_FEATURE_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Stereotype</b></em>' attribute list. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -734,6 +860,15 @@ public interface QvtoperationalcsPackage
 	int ENUMERATION_CS = 15;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_CS__LOGICAL_PARENT = METAMODEL_ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -770,6 +905,15 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 */
 	int TAG_CS = 16;
+
+	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TAG_CS__LOGICAL_PARENT = METAMODEL_ELEMENT_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute. <!--
@@ -820,13 +964,22 @@ public interface QvtoperationalcsPackage
 	int TYPEDEF_CS = 17;
 
 	/**
+	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TYPEDEF_CS__NAME = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 0;
+	int TYPEDEF_CS__NAME = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Typespec</b></em>' containment reference.
@@ -835,7 +988,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TYPEDEF_CS__TYPESPEC = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 1;
+	int TYPEDEF_CS__TYPESPEC = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -844,7 +997,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TYPEDEF_CS__CONDITION = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 2;
+	int TYPEDEF_CS__CONDITION = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Typedef CS</em>' class.
@@ -853,7 +1006,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TYPEDEF_CS_FEATURE_COUNT = BaseCSTPackage.VISITABLE_CS_FEATURE_COUNT + 3;
+	int TYPEDEF_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '
