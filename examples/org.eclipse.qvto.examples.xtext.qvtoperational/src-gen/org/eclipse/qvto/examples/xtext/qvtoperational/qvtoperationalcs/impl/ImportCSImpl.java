@@ -17,9 +17,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,272 +41,282 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 public class ImportCSImpl extends MinimalEObjectImpl.Container implements ImportCS
 {
   /**
-   * The cached value of the '{@link #getUnit() <em>Unit</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getUnit() <em>Unit</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUnit()
-   * @generated
-   * @ordered
-   */
+	 * @see #getUnit()
+	 * @generated
+	 * @ordered
+	 */
   protected UnitCS unit;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<String> name;
 
   /**
-   * The default value of the '{@link #isAll() <em>All</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isAll() <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAll()
-   * @generated
-   * @ordered
-   */
+	 * @see #isAll()
+	 * @generated
+	 * @ordered
+	 */
   protected static final boolean ALL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isAll() <em>All</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isAll() <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAll()
-   * @generated
-   * @ordered
-   */
+	 * @see #isAll()
+	 * @generated
+	 * @ordered
+	 */
   protected boolean all = ALL_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected ImportCSImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return QvtoperationalcsPackage.Literals.IMPORT_CS;
-  }
+		return QvtoperationalcsPackage.Literals.IMPORT_CS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public UnitCS getUnit()
   {
-    return unit;
-  }
+		return unit;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public NotificationChain basicSetUnit(UnitCS newUnit, NotificationChain msgs)
   {
-    UnitCS oldUnit = unit;
-    unit = newUnit;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__UNIT, oldUnit, newUnit);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+		UnitCS oldUnit = unit;
+		unit = newUnit;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__UNIT, oldUnit, newUnit);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setUnit(UnitCS newUnit)
   {
-    if (newUnit != unit)
-    {
-      NotificationChain msgs = null;
-      if (unit != null)
-        msgs = ((InternalEObject)unit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__UNIT, null, msgs);
-      if (newUnit != null)
-        msgs = ((InternalEObject)newUnit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__UNIT, null, msgs);
-      msgs = basicSetUnit(newUnit, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__UNIT, newUnit, newUnit));
-  }
+		if (newUnit != unit) {
+			NotificationChain msgs = null;
+			if (unit != null)
+				msgs = ((InternalEObject)unit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__UNIT, null, msgs);
+			if (newUnit != null)
+				msgs = ((InternalEObject)newUnit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__UNIT, null, msgs);
+			msgs = basicSetUnit(newUnit, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__UNIT, newUnit, newUnit));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<String> getName()
   {
-    if (name == null)
-    {
-      name = new EDataTypeEList<String>(String.class, this, QvtoperationalcsPackage.IMPORT_CS__NAME);
-    }
-    return name;
-  }
+		if (name == null) {
+			name = new EDataTypeEList<String>(String.class, this, QvtoperationalcsPackage.IMPORT_CS__NAME);
+		}
+		return name;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public boolean isAll()
   {
-    return all;
-  }
+		return all;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setAll(boolean newAll)
   {
-    boolean oldAll = all;
-    all = newAll;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__ALL, oldAll, all));
-  }
+		boolean oldAll = all;
+		all = newAll;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__ALL, oldAll, all));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitImportCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitImportCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-        return basicSetUnit(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
+				return basicSetUnit(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-        return getUnit();
-      case QvtoperationalcsPackage.IMPORT_CS__NAME:
-        return getName();
-      case QvtoperationalcsPackage.IMPORT_CS__ALL:
-        return isAll();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
+				return getUnit();
+			case QvtoperationalcsPackage.IMPORT_CS__NAME:
+				return getName();
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				return isAll();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-        setUnit((UnitCS)newValue);
-        return;
-      case QvtoperationalcsPackage.IMPORT_CS__NAME:
-        getName().clear();
-        getName().addAll((Collection<? extends String>)newValue);
-        return;
-      case QvtoperationalcsPackage.IMPORT_CS__ALL:
-        setAll((Boolean)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
+				setUnit((UnitCS)newValue);
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__NAME:
+				getName().clear();
+				getName().addAll((Collection<? extends String>)newValue);
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				setAll((Boolean)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-        setUnit((UnitCS)null);
-        return;
-      case QvtoperationalcsPackage.IMPORT_CS__NAME:
-        getName().clear();
-        return;
-      case QvtoperationalcsPackage.IMPORT_CS__ALL:
-        setAll(ALL_EDEFAULT);
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
+				setUnit((UnitCS)null);
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__NAME:
+				getName().clear();
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				setAll(ALL_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-        return unit != null;
-      case QvtoperationalcsPackage.IMPORT_CS__NAME:
-        return name != null && !name.isEmpty();
-      case QvtoperationalcsPackage.IMPORT_CS__ALL:
-        return all != ALL_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
+				return unit != null;
+			case QvtoperationalcsPackage.IMPORT_CS__NAME:
+				return name != null && !name.isEmpty();
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				return all != ALL_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", all: ");
-    result.append(all);
-    result.append(')');
-    return result.toString();
-  }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", all: ");
+		result.append(all);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ImportCSImpl

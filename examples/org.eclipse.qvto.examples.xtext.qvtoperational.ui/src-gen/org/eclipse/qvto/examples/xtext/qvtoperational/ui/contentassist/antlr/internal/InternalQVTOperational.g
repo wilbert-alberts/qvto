@@ -545,6 +545,34 @@ finally {
 
 
 
+// Entry rule entryRuleImperativeOCLExpCS
+entryRuleImperativeOCLExpCS 
+:
+{ before(grammarAccess.getImperativeOCLExpCSRule()); }
+	 ruleImperativeOCLExpCS
+{ after(grammarAccess.getImperativeOCLExpCSRule()); } 
+	 EOF 
+;
+
+// Rule ImperativeOCLExpCS
+ruleImperativeOCLExpCS
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getImperativeOCLExpCSAccess().getExpCSParserRuleCall()); }
+	ruleExpCS
+{ after(grammarAccess.getImperativeOCLExpCSAccess().getExpCSParserRuleCall()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleTypeLiteralCS
 entryRuleTypeLiteralCS 
 :

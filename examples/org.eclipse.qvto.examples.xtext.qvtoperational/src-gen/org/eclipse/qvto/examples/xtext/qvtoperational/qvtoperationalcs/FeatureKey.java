@@ -20,285 +20,279 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum FeatureKey implements Enumerator
 {
   /**
-   * The '<em><b>COMPOSES</b></em>' literal object.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>COMPOSES</b></em>' literal object.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #COMPOSES_VALUE
-   * @generated
-   * @ordered
-   */
+	 * @see #COMPOSES_VALUE
+	 * @generated
+	 * @ordered
+	 */
   COMPOSES(0, "COMPOSES", "composes"),
 
   /**
-   * The '<em><b>REFERRENCES</b></em>' literal object.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>REFERRENCES</b></em>' literal object.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #REFERRENCES_VALUE
-   * @generated
-   * @ordered
-   */
+	 * @see #REFERRENCES_VALUE
+	 * @generated
+	 * @ordered
+	 */
   REFERRENCES(1, "REFERRENCES", "references"),
 
   /**
-   * The '<em><b>READONLY</b></em>' literal object.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>READONLY</b></em>' literal object.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #READONLY_VALUE
-   * @generated
-   * @ordered
-   */
+	 * @see #READONLY_VALUE
+	 * @generated
+	 * @ordered
+	 */
   READONLY(2, "READONLY", "readonly"),
 
   /**
-   * The '<em><b>DERIVED</b></em>' literal object.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>DERIVED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #DERIVED_VALUE
-   * @generated
-   * @ordered
-   */
+	 * @see #DERIVED_VALUE
+	 * @generated
+	 * @ordered
+	 */
   DERIVED(3, "DERIVED", "derived"),
 
   /**
-   * The '<em><b>STATIC</b></em>' literal object.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>STATIC</b></em>' literal object.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #STATIC_VALUE
-   * @generated
-   * @ordered
-   */
+	 * @see #STATIC_VALUE
+	 * @generated
+	 * @ordered
+	 */
   STATIC(4, "STATIC", "static");
 
   /**
-   * The '<em><b>COMPOSES</b></em>' literal value.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>COMPOSES</b></em>' literal value.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>COMPOSES</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #COMPOSES
-   * @model literal="composes"
-   * @generated
-   * @ordered
-   */
+	 * @see #COMPOSES
+	 * @model literal="composes"
+	 * @generated
+	 * @ordered
+	 */
   public static final int COMPOSES_VALUE = 0;
 
   /**
-   * The '<em><b>REFERRENCES</b></em>' literal value.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>REFERRENCES</b></em>' literal value.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>REFERRENCES</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #REFERRENCES
-   * @model literal="references"
-   * @generated
-   * @ordered
-   */
+	 * @see #REFERRENCES
+	 * @model literal="references"
+	 * @generated
+	 * @ordered
+	 */
   public static final int REFERRENCES_VALUE = 1;
 
   /**
-   * The '<em><b>READONLY</b></em>' literal value.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>READONLY</b></em>' literal value.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>READONLY</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #READONLY
-   * @model literal="readonly"
-   * @generated
-   * @ordered
-   */
+	 * @see #READONLY
+	 * @model literal="readonly"
+	 * @generated
+	 * @ordered
+	 */
   public static final int READONLY_VALUE = 2;
 
   /**
-   * The '<em><b>DERIVED</b></em>' literal value.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>DERIVED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>DERIVED</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #DERIVED
-   * @model literal="derived"
-   * @generated
-   * @ordered
-   */
+	 * @see #DERIVED
+	 * @model literal="derived"
+	 * @generated
+	 * @ordered
+	 */
   public static final int DERIVED_VALUE = 3;
 
   /**
-   * The '<em><b>STATIC</b></em>' literal value.
-   * <!-- begin-user-doc -->
+	 * The '<em><b>STATIC</b></em>' literal value.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>STATIC</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #STATIC
-   * @model literal="static"
-   * @generated
-   * @ordered
-   */
+	 * @see #STATIC
+	 * @model literal="static"
+	 * @generated
+	 * @ordered
+	 */
   public static final int STATIC_VALUE = 4;
 
   /**
-   * An array of all the '<em><b>Feature Key</b></em>' enumerators.
-   * <!-- begin-user-doc -->
+	 * An array of all the '<em><b>Feature Key</b></em>' enumerators.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   private static final FeatureKey[] VALUES_ARRAY =
-    new FeatureKey[]
-    {
-      COMPOSES,
-      REFERRENCES,
-      READONLY,
-      DERIVED,
-      STATIC,
-    };
+    new FeatureKey[] {
+			COMPOSES,
+			REFERRENCES,
+			READONLY,
+			DERIVED,
+			STATIC,
+		};
 
   /**
-   * A public read-only list of all the '<em><b>Feature Key</b></em>' enumerators.
-   * <!-- begin-user-doc -->
+	 * A public read-only list of all the '<em><b>Feature Key</b></em>' enumerators.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static final List<FeatureKey> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Feature Key</b></em>' literal with the specified literal value.
-   * <!-- begin-user-doc -->
+	 * Returns the '<em><b>Feature Key</b></em>' literal with the specified literal value.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static FeatureKey get(String literal)
   {
-    for (int i = 0; i < VALUES_ARRAY.length; ++i)
-    {
-      FeatureKey result = VALUES_ARRAY[i];
-      if (result.toString().equals(literal))
-      {
-        return result;
-      }
-    }
-    return null;
-  }
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+			FeatureKey result = VALUES_ARRAY[i];
+			if (result.toString().equals(literal)) {
+				return result;
+			}
+		}
+		return null;
+	}
 
   /**
-   * Returns the '<em><b>Feature Key</b></em>' literal with the specified name.
-   * <!-- begin-user-doc -->
+	 * Returns the '<em><b>Feature Key</b></em>' literal with the specified name.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static FeatureKey getByName(String name)
   {
-    for (int i = 0; i < VALUES_ARRAY.length; ++i)
-    {
-      FeatureKey result = VALUES_ARRAY[i];
-      if (result.getName().equals(name))
-      {
-        return result;
-      }
-    }
-    return null;
-  }
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+			FeatureKey result = VALUES_ARRAY[i];
+			if (result.getName().equals(name)) {
+				return result;
+			}
+		}
+		return null;
+	}
 
   /**
-   * Returns the '<em><b>Feature Key</b></em>' literal with the specified integer value.
-   * <!-- begin-user-doc -->
+	 * Returns the '<em><b>Feature Key</b></em>' literal with the specified integer value.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static FeatureKey get(int value)
   {
-    switch (value)
-    {
-      case COMPOSES_VALUE: return COMPOSES;
-      case REFERRENCES_VALUE: return REFERRENCES;
-      case READONLY_VALUE: return READONLY;
-      case DERIVED_VALUE: return DERIVED;
-      case STATIC_VALUE: return STATIC;
-    }
-    return null;
-  }
+		switch (value) {
+			case COMPOSES_VALUE: return COMPOSES;
+			case REFERRENCES_VALUE: return REFERRENCES;
+			case READONLY_VALUE: return READONLY;
+			case DERIVED_VALUE: return DERIVED;
+			case STATIC_VALUE: return STATIC;
+		}
+		return null;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   private final int value;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   private final String name;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   private final String literal;
 
   /**
-   * Only this class can construct instances.
-   * <!-- begin-user-doc -->
+	 * Only this class can construct instances.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   private FeatureKey(int value, String name, String literal)
   {
-    this.value = value;
-    this.name = name;
-    this.literal = literal;
-  }
+		this.value = value;
+		this.name = name;
+		this.literal = literal;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public int getValue()
   {
-    return value;
-  }
+	  return value;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public String getName()
   {
-    return name;
-  }
+	  return name;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public String getLiteral()
   {
-    return literal;
-  }
+	  return literal;
+	}
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc -->
+	 * Returns the literal value of the enumerator, which is its string representation.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public String toString()
   {
-    return literal;
-  }
+		return literal;
+	}
   
 } //FeatureKey

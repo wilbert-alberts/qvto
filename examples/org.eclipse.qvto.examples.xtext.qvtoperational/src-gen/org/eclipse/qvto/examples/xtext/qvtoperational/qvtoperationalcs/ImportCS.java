@@ -5,6 +5,8 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,71 +29,89 @@ import org.eclipse.emf.ecore.EObject;
 public interface ImportCS extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Unit</b></em>' containment reference.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Unit</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unit</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Unit</em>' containment reference.
-   * @see #setUnit(UnitCS)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Unit()
-   * @model containment="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Unit</em>' containment reference.
+	 * @see #setUnit(UnitCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Unit()
+	 * @model containment="true"
+	 * @generated
+	 */
   UnitCS getUnit();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Unit</em>' containment reference.
-   * @see #getUnit()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Unit</em>' containment reference.
+	 * @see #getUnit()
+	 * @generated
+	 */
   void setUnit(UnitCS value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Name</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute list.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Name()
-   * @model unique="false"
-   * @generated
-   */
+	 * @return the value of the '<em>Name</em>' attribute list.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Name()
+	 * @model unique="false"
+	 * @generated
+	 */
   EList<String> getName();
 
   /**
-   * Returns the value of the '<em><b>All</b></em>' attribute.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>All</b></em>' attribute.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>All</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>All</em>' attribute.
-   * @see #setAll(boolean)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_All()
-   * @model
-   * @generated
-   */
+	 * @return the value of the '<em>All</em>' attribute.
+	 * @see #setAll(boolean)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_All()
+	 * @model
+	 * @generated
+	 */
   boolean isAll();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>All</em>' attribute.
-   * @see #isAll()
-   * @generated
-   */
+	 * @param value the new value of the '<em>All</em>' attribute.
+	 * @see #isAll()
+	 * @generated
+	 */
   void setAll(boolean value);
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitImportCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalCSVisitor<R> v);
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((QVTOperationalCSVisitor<R>)v).visitImportCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(BaseCSVisitor<R> v);
 
 } // ImportCS

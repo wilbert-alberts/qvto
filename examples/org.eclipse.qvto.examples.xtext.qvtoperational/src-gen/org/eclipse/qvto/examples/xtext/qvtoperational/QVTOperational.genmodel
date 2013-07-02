@@ -6,7 +6,7 @@
     modelName="QVTOperational" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.qvto.examples.xtext.qvtoperational.edit"
     editorPluginID="org.eclipse.qvto.examples.xtext.qvtoperational.editor" runtimeVersion="2.9"
-    usedGenPackages="../../../../../../../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST">
+    usedGenPackages="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST">
   <genPackages prefix="Qvtoperationalcs" basePackage="org.eclipse.qvto.examples.xtext.qvtoperational"
       disposableProviderFactory="true" fileExtensions="qvto" ecorePackage="QVTOperational.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#//ClassifierKind">

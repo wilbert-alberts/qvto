@@ -11,15 +11,17 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,172 +37,183 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitEleme
  *
  * @generated
  */
-public class TopLevelCSImpl extends ExpCSImpl implements TopLevelCS
+public class TopLevelCSImpl extends MinimalEObjectImpl.Container implements TopLevelCS
 {
   /**
-   * The cached value of the '{@link #getImport() <em>Import</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getImport() <em>Import</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getImport()
-   * @generated
-   * @ordered
-   */
+	 * @see #getImport()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<ImportCS> import_;
 
   /**
-   * The cached value of the '{@link #getUnit() <em>Unit</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getUnit() <em>Unit</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUnit()
-   * @generated
-   * @ordered
-   */
+	 * @see #getUnit()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<UnitElementCS> unit;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected TopLevelCSImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return QvtoperationalcsPackage.Literals.TOP_LEVEL_CS;
-  }
+		return QvtoperationalcsPackage.Literals.TOP_LEVEL_CS;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<ImportCS> getImport()
   {
-    if (import_ == null)
-    {
-      import_ = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT);
-    }
-    return import_;
-  }
+		if (import_ == null) {
+			import_ = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT);
+		}
+		return import_;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<UnitElementCS> getUnit()
   {
-    if (unit == null)
-    {
-      unit = new EObjectContainmentEList<UnitElementCS>(UnitElementCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT);
-    }
-    return unit;
-  }
+		if (unit == null) {
+			unit = new EObjectContainmentEList<UnitElementCS>(UnitElementCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT);
+		}
+		return unit;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitTopLevelCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitTopLevelCS(this);
+	}
+
+		/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
-        return ((InternalEList<?>)getImport()).basicRemove(otherEnd, msgs);
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
-        return ((InternalEList<?>)getUnit()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+				return ((InternalEList<?>)getImport()).basicRemove(otherEnd, msgs);
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+				return ((InternalEList<?>)getUnit()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
-        return getImport();
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
-        return getUnit();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+				return getImport();
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+				return getUnit();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
-        getImport().clear();
-        getImport().addAll((Collection<? extends ImportCS>)newValue);
-        return;
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
-        getUnit().clear();
-        getUnit().addAll((Collection<? extends UnitElementCS>)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+				getImport().clear();
+				getImport().addAll((Collection<? extends ImportCS>)newValue);
+				return;
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+				getUnit().clear();
+				getUnit().addAll((Collection<? extends UnitElementCS>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
-        getImport().clear();
-        return;
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
-        getUnit().clear();
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+				getImport().clear();
+				return;
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+				getUnit().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
-        return import_ != null && !import_.isEmpty();
-      case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
-        return unit != null && !unit.isEmpty();
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+				return import_ != null && !import_.isEmpty();
+			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+				return unit != null && !unit.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //TopLevelCSImpl

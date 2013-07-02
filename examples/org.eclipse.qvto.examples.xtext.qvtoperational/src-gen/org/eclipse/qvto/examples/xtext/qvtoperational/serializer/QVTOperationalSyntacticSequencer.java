@@ -71,7 +71,7 @@ public class QVTOperationalSyntacticSequencer extends AbstractSyntacticSequencer
 
 	/**
 	 * Syntax:
-	 *     ';' | ('{' '}' ';'?)
+	 *     ('{' '}' ';'?) | ';'
 	 */
 	protected void emit_ClassifierCS_SemicolonKeyword_5_0_or___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2_SemicolonKeyword_5_1_3_q__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -103,7 +103,7 @@ public class QVTOperationalSyntacticSequencer extends AbstractSyntacticSequencer
 	
 	/**
 	 * Syntax:
-	 *     ('{' '}' ';'?) | ';'
+	 *     ';' | ('{' '}' ';'?)
 	 */
 	protected void emit_MetamodelCS_SemicolonKeyword_2_0_or___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2_SemicolonKeyword_2_1_3_q__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

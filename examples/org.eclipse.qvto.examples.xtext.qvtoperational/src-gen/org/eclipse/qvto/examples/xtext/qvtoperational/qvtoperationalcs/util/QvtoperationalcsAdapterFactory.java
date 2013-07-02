@@ -9,16 +9,11 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.ocl.examples.pivot.util.Pivotable;
-
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
 
 import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
 
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 
 /**
@@ -32,591 +27,521 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 public class QvtoperationalcsAdapterFactory extends AdapterFactoryImpl
 {
   /**
-   * The cached model package.
-   * <!-- begin-user-doc -->
+	 * The cached model package.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected static QvtoperationalcsPackage modelPackage;
 
   /**
-   * Creates an instance of the adapter factory.
-   * <!-- begin-user-doc -->
+	 * Creates an instance of the adapter factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public QvtoperationalcsAdapterFactory()
   {
-    if (modelPackage == null)
-    {
-      modelPackage = QvtoperationalcsPackage.eINSTANCE;
-    }
-  }
+		if (modelPackage == null) {
+			modelPackage = QvtoperationalcsPackage.eINSTANCE;
+		}
+	}
 
   /**
-   * Returns whether this factory is applicable for the type of the object.
-   * <!-- begin-user-doc -->
+	 * Returns whether this factory is applicable for the type of the object.
+	 * <!-- begin-user-doc -->
    * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
    * <!-- end-user-doc -->
-   * @return whether this factory is applicable for the type of the object.
-   * @generated
-   */
+	 * @return whether this factory is applicable for the type of the object.
+	 * @generated
+	 */
   @Override
   public boolean isFactoryForType(Object object)
   {
-    if (object == modelPackage)
-    {
-      return true;
-    }
-    if (object instanceof EObject)
-    {
-      return ((EObject)object).eClass().getEPackage() == modelPackage;
-    }
-    return false;
-  }
+		if (object == modelPackage) {
+			return true;
+		}
+		if (object instanceof EObject) {
+			return ((EObject)object).eClass().getEPackage() == modelPackage;
+		}
+		return false;
+	}
 
   /**
-   * The switch that delegates to the <code>createXXX</code> methods.
-   * <!-- begin-user-doc -->
+	 * The switch that delegates to the <code>createXXX</code> methods.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected QvtoperationalcsSwitch<Adapter> modelSwitch =
-    new QvtoperationalcsSwitch<Adapter>()
-    {
-      @Override
-      public Adapter caseTopLevelCS(TopLevelCS object)
-      {
-        return createTopLevelCSAdapter();
-      }
-      @Override
-      public Adapter caseImportCS(ImportCS object)
-      {
-        return createImportCSAdapter();
-      }
-      @Override
-      public Adapter caseUnitCS(UnitCS object)
-      {
-        return createUnitCSAdapter();
-      }
-      @Override
-      public Adapter caseUnitElementCS(UnitElementCS object)
-      {
-        return createUnitElementCSAdapter();
-      }
-      @Override
-      public Adapter caseCompleteSignatureCS(CompleteSignatureCS object)
-      {
-        return createCompleteSignatureCSAdapter();
-      }
-      @Override
-      public Adapter caseSimpleSignatureCS(SimpleSignatureCS object)
-      {
-        return createSimpleSignatureCSAdapter();
-      }
-      @Override
-      public Adapter caseParamCS(ParamCS object)
-      {
-        return createParamCSAdapter();
-      }
-      @Override
-      public Adapter caseInitPartCS(InitPartCS object)
-      {
-        return createInitPartCSAdapter();
-      }
-      @Override
-      public Adapter caseMetamodelCS(MetamodelCS object)
-      {
-        return createMetamodelCSAdapter();
-      }
-      @Override
-      public Adapter caseMetamodelElementCS(MetamodelElementCS object)
-      {
-        return createMetamodelElementCSAdapter();
-      }
-      @Override
-      public Adapter caseClassifierCS(ClassifierCS object)
-      {
-        return createClassifierCSAdapter();
-      }
-      @Override
-      public Adapter caseClassifierFeatureCS(ClassifierFeatureCS object)
-      {
-        return createClassifierFeatureCSAdapter();
-      }
-      @Override
-      public Adapter caseClassifierPropertyCS(ClassifierPropertyCS object)
-      {
-        return createClassifierPropertyCSAdapter();
-      }
-      @Override
-      public Adapter caseMultiplicityCS(MultiplicityCS object)
-      {
-        return createMultiplicityCSAdapter();
-      }
-      @Override
-      public Adapter caseClassifierOperationCS(ClassifierOperationCS object)
-      {
-        return createClassifierOperationCSAdapter();
-      }
-      @Override
-      public Adapter caseEnumerationCS(EnumerationCS object)
-      {
-        return createEnumerationCSAdapter();
-      }
-      @Override
-      public Adapter caseTagCS(TagCS object)
-      {
-        return createTagCSAdapter();
-      }
-      @Override
-      public Adapter caseTypedefCS(TypedefCS object)
-      {
-        return createTypedefCSAdapter();
-      }
-      @Override
-      public Adapter caseVisitableCS(VisitableCS object)
-      {
-        return createVisitableCSAdapter();
-      }
-      @Override
-      public Adapter caseElementCS(ElementCS object)
-      {
-        return createElementCSAdapter();
-      }
-      @Override
-      public Adapter casePivotable(Pivotable object)
-      {
-        return createPivotableAdapter();
-      }
-      @Override
-      public Adapter casePivotableElementCS(PivotableElementCS object)
-      {
-        return createPivotableElementCSAdapter();
-      }
-      @Override
-      public Adapter caseModelElementCS(ModelElementCS object)
-      {
-        return createModelElementCSAdapter();
-      }
-      @Override
-      public Adapter caseExpCS(ExpCS object)
-      {
-        return createExpCSAdapter();
-      }
-      @Override
-      public Adapter caseBaseCST_MultiplicityCS(org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS object)
-      {
-        return createBaseCST_MultiplicityCSAdapter();
-      }
-      @Override
-      public Adapter defaultCase(EObject object)
-      {
-        return createEObjectAdapter();
-      }
-    };
+    new QvtoperationalcsSwitch<Adapter>() {
+			@Override
+			public Adapter caseTopLevelCS(TopLevelCS object) {
+				return createTopLevelCSAdapter();
+			}
+			@Override
+			public Adapter caseImportCS(ImportCS object) {
+				return createImportCSAdapter();
+			}
+			@Override
+			public Adapter caseUnitCS(UnitCS object) {
+				return createUnitCSAdapter();
+			}
+			@Override
+			public Adapter caseUnitElementCS(UnitElementCS object) {
+				return createUnitElementCSAdapter();
+			}
+			@Override
+			public Adapter caseCompleteSignatureCS(CompleteSignatureCS object) {
+				return createCompleteSignatureCSAdapter();
+			}
+			@Override
+			public Adapter caseSimpleSignatureCS(SimpleSignatureCS object) {
+				return createSimpleSignatureCSAdapter();
+			}
+			@Override
+			public Adapter caseParamCS(ParamCS object) {
+				return createParamCSAdapter();
+			}
+			@Override
+			public Adapter caseInitPartCS(InitPartCS object) {
+				return createInitPartCSAdapter();
+			}
+			@Override
+			public Adapter caseMetamodelCS(MetamodelCS object) {
+				return createMetamodelCSAdapter();
+			}
+			@Override
+			public Adapter caseMetamodelElementCS(MetamodelElementCS object) {
+				return createMetamodelElementCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierCS(ClassifierCS object) {
+				return createClassifierCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierFeatureCS(ClassifierFeatureCS object) {
+				return createClassifierFeatureCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierPropertyCS(ClassifierPropertyCS object) {
+				return createClassifierPropertyCSAdapter();
+			}
+			@Override
+			public Adapter caseMultiplicityCS(MultiplicityCS object) {
+				return createMultiplicityCSAdapter();
+			}
+			@Override
+			public Adapter caseClassifierOperationCS(ClassifierOperationCS object) {
+				return createClassifierOperationCSAdapter();
+			}
+			@Override
+			public Adapter caseEnumerationCS(EnumerationCS object) {
+				return createEnumerationCSAdapter();
+			}
+			@Override
+			public Adapter caseTagCS(TagCS object) {
+				return createTagCSAdapter();
+			}
+			@Override
+			public Adapter caseTypedefCS(TypedefCS object) {
+				return createTypedefCSAdapter();
+			}
+			@Override
+			public <R> Adapter caseQVTOperationalCSVisitor(QVTOperationalCSVisitor<R> object) {
+				return createQVTOperationalCSVisitorAdapter();
+			}
+			@Override
+			public Adapter caseVisitableCS(VisitableCS object) {
+				return createVisitableCSAdapter();
+			}
+			@Override
+			public Adapter caseElementCS(ElementCS object) {
+				return createElementCSAdapter();
+			}
+			@Override
+			public Adapter caseBaseCST_MultiplicityCS(org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS object) {
+				return createBaseCST_MultiplicityCSAdapter();
+			}
+			@Override
+			public <R> Adapter caseImperativeOCLCSVisitor(ImperativeOCLCSVisitor<R> object) {
+				return createImperativeOCLCSVisitorAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object) {
+				return createEObjectAdapter();
+			}
+		};
 
   /**
-   * Creates an adapter for the <code>target</code>.
-   * <!-- begin-user-doc -->
+	 * Creates an adapter for the <code>target</code>.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param target the object to adapt.
-   * @return the adapter for the <code>target</code>.
-   * @generated
-   */
+	 * @param target the object to adapt.
+	 * @return the adapter for the <code>target</code>.
+	 * @generated
+	 */
   @Override
   public Adapter createAdapter(Notifier target)
   {
-    return modelSwitch.doSwitch((EObject)target);
-  }
+		return modelSwitch.doSwitch((EObject)target);
+	}
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS <em>Top Level CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS <em>Top Level CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS
+	 * @generated
+	 */
   public Adapter createTopLevelCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS <em>Import CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS <em>Import CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS
+	 * @generated
+	 */
   public Adapter createImportCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS <em>Unit CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS <em>Unit CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS
+	 * @generated
+	 */
   public Adapter createUnitCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS <em>Unit Element CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS <em>Unit Element CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS
+	 * @generated
+	 */
   public Adapter createUnitElementCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS <em>Complete Signature CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS <em>Complete Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS
+	 * @generated
+	 */
   public Adapter createCompleteSignatureCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS <em>Simple Signature CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS <em>Simple Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS
+	 * @generated
+	 */
   public Adapter createSimpleSignatureCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS <em>Param CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS <em>Param CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS
+	 * @generated
+	 */
   public Adapter createParamCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS <em>Init Part CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS <em>Init Part CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS
+	 * @generated
+	 */
   public Adapter createInitPartCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS <em>Metamodel CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS <em>Metamodel CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS
+	 * @generated
+	 */
   public Adapter createMetamodelCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS <em>Metamodel Element CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS <em>Metamodel Element CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS
+	 * @generated
+	 */
   public Adapter createMetamodelElementCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS <em>Classifier CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS <em>Classifier CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS
+	 * @generated
+	 */
   public Adapter createClassifierCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS <em>Classifier Feature CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS <em>Classifier Feature CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS
+	 * @generated
+	 */
   public Adapter createClassifierFeatureCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS <em>Classifier Property CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS <em>Classifier Property CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS
+	 * @generated
+	 */
   public Adapter createClassifierPropertyCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS <em>Multiplicity CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS <em>Multiplicity CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS
+	 * @generated
+	 */
   public Adapter createMultiplicityCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS <em>Classifier Operation CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS <em>Classifier Operation CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS
+	 * @generated
+	 */
   public Adapter createClassifierOperationCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS <em>Enumeration CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS <em>Enumeration CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS
+	 * @generated
+	 */
   public Adapter createEnumerationCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS <em>Tag CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS <em>Tag CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS
+	 * @generated
+	 */
   public Adapter createTagCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS <em>Typedef CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS <em>Typedef CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS
+	 * @generated
+	 */
   public Adapter createTypedefCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.util.VisitableCS <em>Visitable CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor <em>QVT Operational CS Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor
+	 * @generated
+	 */
+	public Adapter createQVTOperationalCSVisitorAdapter() {
+		return null;
+	}
+
+		/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.util.VisitableCS <em>Visitable CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.base.util.VisitableCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.util.VisitableCS
+	 * @generated
+	 */
   public Adapter createVisitableCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS <em>Element CS</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS <em>Element CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS
+	 * @generated
+	 */
   public Adapter createElementCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.pivot.util.Pivotable <em>Pivotable</em>}'.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS <em>Multiplicity CS</em>}'.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.pivot.util.Pivotable
-   * @generated
-   */
-  public Adapter createPivotableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS <em>Pivotable Element CS</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS
-   * @generated
-   */
-  public Adapter createPivotableElementCSAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS <em>Model Element CS</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS
-   * @generated
-   */
-  public Adapter createModelElementCSAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS <em>Exp CS</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS
-   * @generated
-   */
-  public Adapter createExpCSAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS <em>Multiplicity CS</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.baseCST.MultiplicityCS
+	 * @generated
+	 */
   public Adapter createBaseCST_MultiplicityCSAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
   /**
-   * Creates a new adapter for the default case.
-   * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor <em>Imperative OCLCS Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor
+	 * @generated
+	 */
+	public Adapter createImperativeOCLCSVisitorAdapter() {
+		return null;
+	}
+
+		/**
+	 * Creates a new adapter for the default case.
+	 * <!-- begin-user-doc -->
    * This default implementation returns null.
    * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @generated
-   */
+	 * @return the new adapter.
+	 * @generated
+	 */
   public Adapter createEObjectAdapter()
   {
-    return null;
-  }
+		return null;
+	}
 
 } //QvtoperationalcsAdapterFactory

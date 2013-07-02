@@ -1693,6 +1693,17 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypedefCSAccess().getRule();
 	}
 
+	//GrammmarCS returns essentialocl::ExpCS:
+	//
+	//	ImperativeOCLExpCS;
+	public ImperativeOCLGrammarAccess.GrammmarCSElements getGrammmarCSAccess() {
+		return gaImperativeOCL.getGrammmarCSAccess();
+	}
+	
+	public ParserRule getGrammmarCSRule() {
+		return getGrammmarCSAccess().getRule();
+	}
+
 	//terminal ACCESS_OP:
 	//
 	//	"." | "->" | "!->";

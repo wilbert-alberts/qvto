@@ -177,6 +177,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				if(context == grammarAccess.getBooleanLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -190,6 +191,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				if(context == grammarAccess.getCollectionLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -222,6 +224,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.CONSTRUCTOR_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -245,6 +248,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.IF_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getIfExpCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
@@ -257,6 +261,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.INDEX_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -267,6 +272,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			case EssentialOCLCSTPackage.INFIX_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule()) {
 					sequence_ExpCS(context, (InfixExpCS) semanticObject); 
@@ -276,6 +282,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.INVALID_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getInvalidLiteralExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
@@ -289,6 +296,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.INVOCATION_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -299,6 +307,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			case EssentialOCLCSTPackage.LET_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getLetExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule()) {
@@ -320,6 +329,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				}
 				else if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -358,6 +368,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.NESTED_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getNestedExpCSRule() ||
@@ -370,6 +381,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.NULL_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getNullLiteralExpCSRule() ||
@@ -383,6 +395,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.NUMBER_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getNumberLiteralExpCSRule() ||
@@ -395,6 +408,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			case EssentialOCLCSTPackage.PREFIX_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule()) {
 					sequence_ExpCS_PrefixedExpCS(context, (PrefixExpCS) semanticObject); 
@@ -409,6 +423,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.SELF_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -421,6 +436,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.STRING_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -434,6 +450,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.TUPLE_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -452,6 +469,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.TYPE_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -481,6 +499,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case EssentialOCLCSTPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -497,6 +516,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				if(context == grammarAccess.getDictLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||
@@ -529,6 +549,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getListLiteralExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
@@ -556,6 +577,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 			case ImperativeoclcsPackage.RETURN_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
+				   context == grammarAccess.getGrammmarCSRule() ||
 				   context == grammarAccess.getImperativeOCLExpCSRule() ||
 				   context == grammarAccess.getNavigatingArgExpCSRule() ||
 				   context == grammarAccess.getPrefixedExpCSRule() ||

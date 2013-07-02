@@ -1700,6 +1700,39 @@ ruleTagCS returns [EObject current=null]
 
 
 
+// Entry rule entryRuleImperativeOCLExpCS
+entryRuleImperativeOCLExpCS returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getImperativeOCLExpCSRule()); }
+	 iv_ruleImperativeOCLExpCS=ruleImperativeOCLExpCS 
+	 { $current=$iv_ruleImperativeOCLExpCS.current; } 
+	 EOF 
+;
+
+// Rule ImperativeOCLExpCS
+ruleImperativeOCLExpCS returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getImperativeOCLExpCSAccess().getExpCSParserRuleCall()); 
+    }
+    this_ExpCS_0=ruleExpCS
+    { 
+        $current = $this_ExpCS_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+;
+
+
+
+
+
 // Entry rule entryRuleTypeLiteralCS
 entryRuleTypeLiteralCS returns [EObject current=null] 
 	:

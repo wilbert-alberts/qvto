@@ -6,6 +6,8 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,110 +31,128 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 public interface ParamCS extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Direction</b></em>' attribute.
-   * The literals are from the enumeration {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection}.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Direction</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection}.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Direction</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Direction</em>' attribute.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
-   * @see #setDirection(ParamDirection)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_Direction()
-   * @model
-   * @generated
-   */
+	 * @return the value of the '<em>Direction</em>' attribute.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
+	 * @see #setDirection(ParamDirection)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_Direction()
+	 * @model
+	 * @generated
+	 */
   ParamDirection getDirection();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getDirection <em>Direction</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getDirection <em>Direction</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Direction</em>' attribute.
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
-   * @see #getDirection()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Direction</em>' attribute.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
+	 * @see #getDirection()
+	 * @generated
+	 */
   void setDirection(ParamDirection value);
 
   /**
-   * Returns the value of the '<em><b>Path Name</b></em>' containment reference.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Path Name</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Path Name</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Path Name</em>' containment reference.
-   * @see #setPathName(PathNameCS)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_PathName()
-   * @model containment="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Path Name</em>' containment reference.
+	 * @see #setPathName(PathNameCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_PathName()
+	 * @model containment="true"
+	 * @generated
+	 */
   PathNameCS getPathName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getPathName <em>Path Name</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getPathName <em>Path Name</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Path Name</em>' containment reference.
-   * @see #getPathName()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Path Name</em>' containment reference.
+	 * @see #getPathName()
+	 * @generated
+	 */
   void setPathName(PathNameCS value);
 
   /**
-   * Returns the value of the '<em><b>Typespec</b></em>' containment reference.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Typespec</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Typespec</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Typespec</em>' containment reference.
-   * @see #setTypespec(TypedRefCS)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_Typespec()
-   * @model containment="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Typespec</em>' containment reference.
+	 * @see #setTypespec(TypedRefCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_Typespec()
+	 * @model containment="true"
+	 * @generated
+	 */
   TypedRefCS getTypespec();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getTypespec <em>Typespec</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getTypespec <em>Typespec</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Typespec</em>' containment reference.
-   * @see #getTypespec()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Typespec</em>' containment reference.
+	 * @see #getTypespec()
+	 * @generated
+	 */
   void setTypespec(TypedRefCS value);
 
   /**
-   * Returns the value of the '<em><b>Init Part</b></em>' containment reference.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Init Part</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Init Part</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Init Part</em>' containment reference.
-   * @see #setInitPart(InitPartCS)
-   * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_InitPart()
-   * @model containment="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Init Part</em>' containment reference.
+	 * @see #setInitPart(InitPartCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamCS_InitPart()
+	 * @model containment="true"
+	 * @generated
+	 */
   InitPartCS getInitPart();
 
   /**
-   * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getInitPart <em>Init Part</em>}' containment reference.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS#getInitPart <em>Init Part</em>}' containment reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Init Part</em>' containment reference.
-   * @see #getInitPart()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Init Part</em>' containment reference.
+	 * @see #getInitPart()
+	 * @generated
+	 */
   void setInitPart(InitPartCS value);
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return v.visitParamCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(QVTOperationalCSVisitor<R> v);
+
+		/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model vType="org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSVisitor<R>"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((QVTOperationalCSVisitor<R>)v).visitParamCS(this);'"
+	 * @generated
+	 */
+	<R> R accept(BaseCSVisitor<R> v);
 
 } // ParamCS
