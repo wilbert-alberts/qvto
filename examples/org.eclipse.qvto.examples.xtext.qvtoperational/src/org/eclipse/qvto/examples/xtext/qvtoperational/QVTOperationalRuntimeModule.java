@@ -4,8 +4,11 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational;
 
 /**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * Use this class to register components to be used at runtime / without the
+ * Equinox extension registry.
  */
-public class QVTOperationalRuntimeModule extends org.eclipse.qvto.examples.xtext.qvtoperational.AbstractQVTOperationalRuntimeModule {
+public class QVTOperationalRuntimeModule
+		extends
+		org.eclipse.qvto.examples.xtext.qvtoperational.AbstractQVTOperationalRuntimeModule {
 
 }

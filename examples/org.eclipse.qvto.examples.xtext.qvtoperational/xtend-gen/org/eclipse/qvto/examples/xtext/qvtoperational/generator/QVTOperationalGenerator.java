@@ -13,7 +13,9 @@ import org.eclipse.xtext.generator.IGenerator;
  * see http://www.eclipse.org/Xtext/documentation.html#TutorialCodeGeneration
  */
 @SuppressWarnings("all")
-public class QVTOperationalGenerator implements IGenerator {
-  public void doGenerate(final Resource resource, final IFileSystemAccess fsa) {
-  }
+public class QVTOperationalGenerator
+		implements IGenerator {
+
+	public void doGenerate(final Resource resource, final IFileSystemAccess fsa) {
+	}
 }

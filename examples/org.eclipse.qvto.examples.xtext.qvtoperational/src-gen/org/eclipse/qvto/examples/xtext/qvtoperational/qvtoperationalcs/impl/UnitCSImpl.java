@@ -5,168 +5,163 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Unit CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Unit CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.UnitCSImpl#getSegment <em>Segment</em>}</li>
+ * <li>
+ * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.UnitCSImpl#getSegment
+ * <em>Segment</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class UnitCSImpl extends MinimalEObjectImpl.Container implements UnitCS
-{
-  /**
-	 * The cached value of the '{@link #getSegment() <em>Segment</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+public class UnitCSImpl
+		extends MinimalEObjectImpl.Container
+		implements UnitCS {
+
+	/**
+	 * The cached value of the '{@link #getSegment() <em>Segment</em>}'
+	 * attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSegment()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList<String> segment;
+	protected EList<String> segment;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  protected UnitCSImpl()
-  {
+	protected UnitCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return QvtoperationalcsPackage.Literals.UNIT_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public EList<String> getSegment()
-  {
+	public EList<String> getSegment() {
 		if (segment == null) {
-			segment = new EDataTypeEList<String>(String.class, this, QvtoperationalcsPackage.UNIT_CS__SEGMENT);
+			segment = new EDataTypeEList<String>(String.class, this,
+				QvtoperationalcsPackage.UNIT_CS__SEGMENT);
 		}
 		return segment;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 * @added
 	 */
 	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
 		return v.visitUnitCS(this);
 	}
 
-		/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitUnitCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitUnitCS(this);
 	}
 
-		/**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QvtoperationalcsPackage.UNIT_CS__SEGMENT :
 				return getSegment();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QvtoperationalcsPackage.UNIT_CS__SEGMENT :
 				getSegment().clear();
-				getSegment().addAll((Collection<? extends String>)newValue);
+				getSegment().addAll((Collection<? extends String>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QvtoperationalcsPackage.UNIT_CS__SEGMENT :
 				getSegment().clear();
 				return;
 		}
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QvtoperationalcsPackage.UNIT_CS__SEGMENT :
 				return segment != null && !segment.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  @Override
-  public String toString()
-  {
-		if (eIsProxy()) return super.toString();
+	@Override
+	public String toString() {
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (segment: ");
@@ -175,4 +170,4 @@ public class UnitCSImpl extends MinimalEObjectImpl.Container implements UnitCS
 		return result.toString();
 	}
 
-} //UnitCSImpl
+} // UnitCSImpl

@@ -9,120 +9,117 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Init Op</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '
+ * <em><b>Init Op</b></em>', and utility methods for working with them. <!--
+ * end-user-doc -->
+ * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getInitOp()
  * @model
  * @generated
  */
-public enum InitOp implements Enumerator
-{
-  /**
-	 * The '<em><b>EQUALS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+public enum InitOp
+		implements Enumerator {
+	/**
+	 * The '<em><b>EQUALS</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #EQUALS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  EQUALS(0, "EQUALS", "="),
+	EQUALS(0, "EQUALS", "="),
 
-  /**
-	 * The '<em><b>COLON EQUALS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>COLON EQUALS</b></em>' literal object. <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
+	 * 
 	 * @see #COLON_EQUALS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  COLON_EQUALS(1, "COLON_EQUALS", ":="),
+	COLON_EQUALS(1, "COLON_EQUALS", ":="),
 
-  /**
-	 * The '<em><b>COLON COLON EQUALS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>COLON COLON EQUALS</b></em>' literal object. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #COLON_COLON_EQUALS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  COLON_COLON_EQUALS(2, "COLON_COLON_EQUALS", "::=");
+	COLON_COLON_EQUALS(2, "COLON_COLON_EQUALS", "::=");
 
-  /**
-	 * The '<em><b>EQUALS</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>EQUALS</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>EQUALS</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>EQUALS</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #EQUALS
 	 * @model literal="="
 	 * @generated
 	 * @ordered
 	 */
-  public static final int EQUALS_VALUE = 0;
+	public static final int EQUALS_VALUE = 0;
 
-  /**
-	 * The '<em><b>COLON EQUALS</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>COLON EQUALS</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>COLON EQUALS</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>COLON EQUALS</b></em>' literal object isn't
+	 * clear, there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #COLON_EQUALS
 	 * @model literal=":="
 	 * @generated
 	 * @ordered
 	 */
-  public static final int COLON_EQUALS_VALUE = 1;
+	public static final int COLON_EQUALS_VALUE = 1;
 
-  /**
-	 * The '<em><b>COLON COLON EQUALS</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>COLON COLON EQUALS</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>COLON COLON EQUALS</b></em>' literal value. <!--
+	 * begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>COLON COLON EQUALS</b></em>' literal object
+	 * isn't clear, there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #COLON_COLON_EQUALS
 	 * @model literal="::="
 	 * @generated
 	 * @ordered
 	 */
-  public static final int COLON_COLON_EQUALS_VALUE = 2;
+	public static final int COLON_COLON_EQUALS_VALUE = 2;
 
-  /**
-	 * An array of all the '<em><b>Init Op</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * An array of all the '<em><b>Init Op</b></em>' enumerators. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private static final InitOp[] VALUES_ARRAY =
-    new InitOp[] {
-			EQUALS,
-			COLON_EQUALS,
-			COLON_COLON_EQUALS,
-		};
+	private static final InitOp[] VALUES_ARRAY = new InitOp[]{EQUALS,
+		COLON_EQUALS, COLON_COLON_EQUALS,};
 
-  /**
+	/**
 	 * A public read-only list of all the '<em><b>Init Op</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static final List<InitOp> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<InitOp> VALUES = Collections
+		.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
-  /**
-	 * Returns the '<em><b>Init Op</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Init Op</b></em>' literal with the specified literal
+	 * value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static InitOp get(String literal)
-  {
+	public static InitOp get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			InitOp result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
@@ -132,14 +129,13 @@ public enum InitOp implements Enumerator
 		return null;
 	}
 
-  /**
+	/**
 	 * Returns the '<em><b>Init Op</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static InitOp getByName(String name)
-  {
+	public static InitOp getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			InitOp result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
@@ -149,96 +145,93 @@ public enum InitOp implements Enumerator
 		return null;
 	}
 
-  /**
-	 * Returns the '<em><b>Init Op</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Init Op</b></em>' literal with the specified integer
+	 * value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static InitOp get(int value)
-  {
+	public static InitOp get(int value) {
 		switch (value) {
-			case EQUALS_VALUE: return EQUALS;
-			case COLON_EQUALS_VALUE: return COLON_EQUALS;
-			case COLON_COLON_EQUALS_VALUE: return COLON_COLON_EQUALS;
+			case EQUALS_VALUE :
+				return EQUALS;
+			case COLON_EQUALS_VALUE :
+				return COLON_EQUALS;
+			case COLON_COLON_EQUALS_VALUE :
+				return COLON_COLON_EQUALS;
 		}
 		return null;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final int value;
+	private final int value;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String name;
+	private final String name;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String literal;
+	private final String literal;
 
-  /**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Only this class can construct instances. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private InitOp(int value, String name, String literal)
-  {
+	private InitOp(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public int getValue()
-  {
-	  return value;
+	public int getValue() {
+		return value;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getName()
-  {
-	  return name;
+	public String getName() {
+		return name;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getLiteral()
-  {
-	  return literal;
-	}
-
-  /**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  @Override
-  public String toString()
-  {
+	public String getLiteral() {
 		return literal;
 	}
-  
-} //InitOp
+
+	/**
+	 * Returns the literal value of the enumerator, which is its string
+	 * representation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		return literal;
+	}
+
+} // InitOp

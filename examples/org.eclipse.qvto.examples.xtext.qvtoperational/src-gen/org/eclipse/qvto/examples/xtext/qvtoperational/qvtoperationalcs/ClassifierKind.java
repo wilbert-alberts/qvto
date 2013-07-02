@@ -9,146 +9,141 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Classifier Kind</b></em>',
- * and utility methods for working with them.
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '
+ * <em><b>Classifier Kind</b></em>', and utility methods for working with them.
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierKind()
  * @model
  * @generated
  */
-public enum ClassifierKind implements Enumerator
-{
-  /**
-	 * The '<em><b>DATATYPE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+public enum ClassifierKind
+		implements Enumerator {
+	/**
+	 * The '<em><b>DATATYPE</b></em>' literal object. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #DATATYPE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  DATATYPE(0, "DATATYPE", "datatype"),
+	DATATYPE(0, "DATATYPE", "datatype"),
 
-  /**
-	 * The '<em><b>PRIMITIVE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>PRIMITIVE</b></em>' literal object. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #PRIMITIVE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  PRIMITIVE(1, "PRIMITIVE", "primitive"),
+	PRIMITIVE(1, "PRIMITIVE", "primitive"),
 
-  /**
-	 * The '<em><b>EXCEPTION</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>EXCEPTION</b></em>' literal object. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #EXCEPTION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  EXCEPTION(2, "EXCEPTION", "exception"),
+	EXCEPTION(2, "EXCEPTION", "exception"),
 
-  /**
-	 * The '<em><b>CLASS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>CLASS</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #CLASS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  CLASS(3, "CLASS", "class");
+	CLASS(3, "CLASS", "class");
 
-  /**
-	 * The '<em><b>DATATYPE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>DATATYPE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>DATATYPE</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>DATATYPE</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #DATATYPE
 	 * @model literal="datatype"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int DATATYPE_VALUE = 0;
+	public static final int DATATYPE_VALUE = 0;
 
-  /**
-	 * The '<em><b>PRIMITIVE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>PRIMITIVE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>PRIMITIVE</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>PRIMITIVE</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #PRIMITIVE
 	 * @model literal="primitive"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int PRIMITIVE_VALUE = 1;
+	public static final int PRIMITIVE_VALUE = 1;
 
-  /**
-	 * The '<em><b>EXCEPTION</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>EXCEPTION</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>EXCEPTION</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>EXCEPTION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #EXCEPTION
 	 * @model literal="exception"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int EXCEPTION_VALUE = 2;
+	public static final int EXCEPTION_VALUE = 2;
 
-  /**
-	 * The '<em><b>CLASS</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>CLASS</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>CLASS</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>CLASS</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #CLASS
 	 * @model literal="class"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int CLASS_VALUE = 3;
+	public static final int CLASS_VALUE = 3;
 
-  /**
-	 * An array of all the '<em><b>Classifier Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * An array of all the '<em><b>Classifier Kind</b></em>' enumerators. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private static final ClassifierKind[] VALUES_ARRAY =
-    new ClassifierKind[] {
-			DATATYPE,
-			PRIMITIVE,
-			EXCEPTION,
-			CLASS,
-		};
+	private static final ClassifierKind[] VALUES_ARRAY = new ClassifierKind[]{
+		DATATYPE, PRIMITIVE, EXCEPTION, CLASS,};
 
-  /**
-	 * A public read-only list of all the '<em><b>Classifier Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * A public read-only list of all the '<em><b>Classifier Kind</b></em>'
+	 * enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static final List<ClassifierKind> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<ClassifierKind> VALUES = Collections
+		.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
-  /**
-	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified
+	 * literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static ClassifierKind get(String literal)
-  {
+	public static ClassifierKind get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			ClassifierKind result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
@@ -158,14 +153,13 @@ public enum ClassifierKind implements Enumerator
 		return null;
 	}
 
-  /**
-	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified
+	 * name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static ClassifierKind getByName(String name)
-  {
+	public static ClassifierKind getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			ClassifierKind result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
@@ -175,97 +169,95 @@ public enum ClassifierKind implements Enumerator
 		return null;
 	}
 
-  /**
-	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified
+	 * integer value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static ClassifierKind get(int value)
-  {
+	public static ClassifierKind get(int value) {
 		switch (value) {
-			case DATATYPE_VALUE: return DATATYPE;
-			case PRIMITIVE_VALUE: return PRIMITIVE;
-			case EXCEPTION_VALUE: return EXCEPTION;
-			case CLASS_VALUE: return CLASS;
+			case DATATYPE_VALUE :
+				return DATATYPE;
+			case PRIMITIVE_VALUE :
+				return PRIMITIVE;
+			case EXCEPTION_VALUE :
+				return EXCEPTION;
+			case CLASS_VALUE :
+				return CLASS;
 		}
 		return null;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final int value;
+	private final int value;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String name;
+	private final String name;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String literal;
+	private final String literal;
 
-  /**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Only this class can construct instances. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private ClassifierKind(int value, String name, String literal)
-  {
+	private ClassifierKind(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public int getValue()
-  {
-	  return value;
+	public int getValue() {
+		return value;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getName()
-  {
-	  return name;
+	public String getName() {
+		return name;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getLiteral()
-  {
-	  return literal;
-	}
-
-  /**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  @Override
-  public String toString()
-  {
+	public String getLiteral() {
 		return literal;
 	}
-  
-} //ClassifierKind
+
+	/**
+	 * Returns the literal value of the enumerator, which is its string
+	 * representation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		return literal;
+	}
+
+} // ClassifierKind

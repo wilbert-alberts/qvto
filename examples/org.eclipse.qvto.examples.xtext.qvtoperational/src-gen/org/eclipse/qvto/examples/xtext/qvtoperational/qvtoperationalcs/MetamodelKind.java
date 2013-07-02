@@ -9,94 +9,91 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Metamodel Kind</b></em>',
- * and utility methods for working with them.
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '
+ * <em><b>Metamodel Kind</b></em>', and utility methods for working with them.
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMetamodelKind()
  * @model
  * @generated
  */
-public enum MetamodelKind implements Enumerator
-{
-  /**
-	 * The '<em><b>METAMODEL</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+public enum MetamodelKind
+		implements Enumerator {
+	/**
+	 * The '<em><b>METAMODEL</b></em>' literal object. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #METAMODEL_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  METAMODEL(0, "METAMODEL", "metamodel"),
+	METAMODEL(0, "METAMODEL", "metamodel"),
 
-  /**
-	 * The '<em><b>PACKAGE</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>PACKAGE</b></em>' literal object. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #PACKAGE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-  PACKAGE(1, "PACKAGE", "package");
+	PACKAGE(1, "PACKAGE", "package");
 
-  /**
-	 * The '<em><b>METAMODEL</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>METAMODEL</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>METAMODEL</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>METAMODEL</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #METAMODEL
 	 * @model literal="metamodel"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int METAMODEL_VALUE = 0;
+	public static final int METAMODEL_VALUE = 0;
 
-  /**
-	 * The '<em><b>PACKAGE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>PACKAGE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	/**
+	 * The '<em><b>PACKAGE</b></em>' literal value. <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>PACKAGE</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
 	 * @see #PACKAGE
 	 * @model literal="package"
 	 * @generated
 	 * @ordered
 	 */
-  public static final int PACKAGE_VALUE = 1;
+	public static final int PACKAGE_VALUE = 1;
 
-  /**
-	 * An array of all the '<em><b>Metamodel Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * An array of all the '<em><b>Metamodel Kind</b></em>' enumerators. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private static final MetamodelKind[] VALUES_ARRAY =
-    new MetamodelKind[] {
-			METAMODEL,
-			PACKAGE,
-		};
+	private static final MetamodelKind[] VALUES_ARRAY = new MetamodelKind[]{
+		METAMODEL, PACKAGE,};
 
-  /**
-	 * A public read-only list of all the '<em><b>Metamodel Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * A public read-only list of all the '<em><b>Metamodel Kind</b></em>'
+	 * enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static final List<MetamodelKind> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<MetamodelKind> VALUES = Collections
+		.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
-  /**
-	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified
+	 * literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static MetamodelKind get(String literal)
-  {
+	public static MetamodelKind get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			MetamodelKind result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
@@ -106,14 +103,13 @@ public enum MetamodelKind implements Enumerator
 		return null;
 	}
 
-  /**
-	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified
+	 * name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static MetamodelKind getByName(String name)
-  {
+	public static MetamodelKind getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			MetamodelKind result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
@@ -123,95 +119,91 @@ public enum MetamodelKind implements Enumerator
 		return null;
 	}
 
-  /**
-	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Returns the '<em><b>Metamodel Kind</b></em>' literal with the specified
+	 * integer value. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public static MetamodelKind get(int value)
-  {
+	public static MetamodelKind get(int value) {
 		switch (value) {
-			case METAMODEL_VALUE: return METAMODEL;
-			case PACKAGE_VALUE: return PACKAGE;
+			case METAMODEL_VALUE :
+				return METAMODEL;
+			case PACKAGE_VALUE :
+				return PACKAGE;
 		}
 		return null;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final int value;
+	private final int value;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String name;
+	private final String name;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private final String literal;
+	private final String literal;
 
-  /**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * Only this class can construct instances. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  private MetamodelKind(int value, String name, String literal)
-  {
+	private MetamodelKind(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public int getValue()
-  {
-	  return value;
+	public int getValue() {
+		return value;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getName()
-  {
-	  return name;
+	public String getName() {
+		return name;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-  public String getLiteral()
-  {
-	  return literal;
-	}
-
-  /**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  @Override
-  public String toString()
-  {
+	public String getLiteral() {
 		return literal;
 	}
-  
-} //MetamodelKind
+
+	/**
+	 * Returns the literal value of the enumerator, which is its string
+	 * representation. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		return literal;
+	}
+
+} // MetamodelKind

@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperationalcs" nsURI="http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
     nsPrefix="qvtoperationalcs">
-  <eClassifiers xsi:type="ecore:EClass" name="TopLevelCS">
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="import" upperBound="-1"
         eType="#//ImportCS" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="unit" upperBound="-1" eType="#//UnitElementCS"
@@ -40,24 +40,24 @@
     <eLiterals name="ABSTRACT" value="1" literal="abstract"/>
     <eLiterals name="STATIC" value="2" literal="static"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImportCS">
+  <eClassifiers xsi:type="ecore:EClass" name="ImportCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="#//UnitCS"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" unique="false" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UnitCS">
+  <eClassifiers xsi:type="ecore:EClass" name="UnitCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="segment" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UnitElementCS"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CompleteSignatureCS"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnitElementCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteSignatureCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleSignatureCS" eSuperTypes="#//CompleteSignatureCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" upperBound="-1"
         eType="#//ParamCS" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ParamCS">
+  <eClassifiers xsi:type="ecore:EClass" name="ParamCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//ParamDirection"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pathName" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PathNameCS"
         containment="true"/>
@@ -66,7 +66,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="initPart" eType="#//InitPartCS"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InitPartCS">
+  <eClassifiers xsi:type="ecore:EClass" name="InitPartCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initOp" eType="#//InitOp"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS"
         containment="true"/>
@@ -78,7 +78,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
         eType="#//MetamodelElementCS" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MetamodelElementCS"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MetamodelElementCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="ClassifierCS" eSuperTypes="#//MetamodelElementCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intermediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifier" unique="false"
@@ -92,7 +92,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="feature" upperBound="-1"
         eType="#//ClassifierFeatureCS" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ClassifierFeatureCS"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassifierFeatureCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="ClassifierPropertyCS" eSuperTypes="#//ClassifierFeatureCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stereotype" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -137,7 +137,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//ExpCS"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TypedefCS">
+  <eClassifiers xsi:type="ecore:EClass" name="TypedefCS" eSuperTypes="../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//VisitableCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="typespec" eType="ecore:EClass ../../../../../../../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypedRefCS"
         containment="true"/>

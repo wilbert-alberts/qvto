@@ -106,18 +106,18 @@ Workflow {
 //    	derivedVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
 //    }
 
-    component = DerivedVisitorPatternWeaver {
-    	resourceSet = resourceSet
-    	in = qvtOperationalXtextEcoreURI
-    	in = essentialOclXtextEcoreURI
-    	in = oclXtextBaseEcoreURI
-    	rootVisitorInterfaceName = oclXtextBaseVisitorName
-    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
-    	superVisitorInterfaceName = imperativeOclXtextVisitorName
-    	superVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
-    	derivedVisitorInterfaceName = qvtOperationalXtextVisitorName
-    	derivedVisitorInterfaceQualifiedName = qvtOperationalXtextVisitorQualifiedName
-    }   
+//    component = DerivedVisitorPatternWeaver {
+//    	resourceSet = resourceSet
+//    	in = qvtOperationalXtextEcoreURI
+//    	in = essentialOclXtextEcoreURI
+//    	in = oclXtextBaseEcoreURI
+//    	rootVisitorInterfaceName = oclXtextBaseVisitorName
+//    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
+//    	superVisitorInterfaceName = imperativeOclXtextVisitorName
+//    	superVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
+//    	derivedVisitorInterfaceName = qvtOperationalXtextVisitorName
+//    	derivedVisitorInterfaceQualifiedName = qvtOperationalXtextVisitorQualifiedName
+//    }
     
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
 		genModel = imperativeOclXtextGenModelPath
