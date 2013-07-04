@@ -1,98 +1,172 @@
 /**
  * <copyright>
  *
- * Copyright (c) 2011 E.D.Willink and others.
+ * Copyright (c) 2013 Willink Transformation Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - initial API and implementation
  *
  * </copyright>
- *
  */
 grammar org.eclipse.qvto.examples.xtext.qvtoperational.QVTOperational with org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCL
 
-generate qvtoperationalcs "http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
+// generate qvtoperationalcs "http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
+import "http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/ocl/3.1.0/Pivot" as pivot
 import "http://www.eclipse.org/ocl/3.1.0/BaseCST" as base
 import "http://www.eclipse.org/ocl/3.1.0/EssentialOCLCST" as essentialocl
 import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
 
-TopLevelCS: ^import+=ImportCS* unit+=UnitElementCS*;
+//import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+//import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+//import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
 
-enum ClassifierKind: DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
-enum FeatureKey: COMPOSES='composes' | REFERRENCES='references' | READONLY='readonly' | DERIVED='derived' | STATIC='static';
-enum InitOp: EQUALS='=' | COLON_EQUALS=':=' | COLON_COLON_EQUALS='::=';
-enum MetamodelKind: METAMODEL= 'metamodel' | PACKAGE='package';
-enum ParamDirection: IN='in' | INOUT='inout' | OUT='out';
-enum Qualifier: BLACKBOX='blackbox' | ABSTRACT='abstract' | STATIC='static';
+TopLevelCS : ^import+=ImportCS* unit+=UnitElementCS*;
+
+enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
+enum FeatureKey : COMPOSES='composes' | REFERRENCES='references' | READONLY='readonly' | DERIVED='derived' | STATIC='static';
+enum InitOp : EQUALS='=' | COLON_EQUALS=':=' | COLON_COLON_EQUALS='::=';
+enum MetamodelKind : METAMODEL= 'metamodel' | PACKAGE='package';
+enum ParamDirection : IN='in' | INOUT='inout' | OUT='out';
+
+Qualifier returns ecore::EString : 'blackbox' & 'abstract' & 'static';
+
+FeatureQualifier returns ecore::EString : 'composes' & 'references' & 'readonly' & 'derived' & 'static';
 
 // ****** Imports ******
-ImportCS: ('import' unit=UnitCS ';')
-	| ('from' unit=UnitCS 'import' ((name+=Identifier (',' name+=Identifier)*) | all?='*') ';')
+ImportCS returns ImportCS: // returns ElementCS to make it inherits ElementCS 
+	  ('import' unit=UnitCS ';')
+	|  ('from' unit=UnitCS 'import' ((name+=Identifier (',' name+=Identifier)*) | all?='*') ';')
 ;
 
-UnitCS: segment+=Identifier ('.' segment+=Identifier)*;
+UnitCS returns UnitCS :  // returns ElementCS to make it inherits ElementCS
+	segment+=Identifier ('.' segment+=Identifier)*
+;
 	
 // ****** definitions in a compilation unit *******
-UnitElementCS:
+UnitElementCS returns MetamodelCS: // returns ElementCS to make it inherits ElementCS 
 	MetamodelCS
 ;
 
 // ****** General rules ******
-CompleteSignatureCS: SimpleSignatureCS (':' (param+=ParamCS (',' param+=ParamCS)*))?;
+//CompleteSignatureCS: SimpleSignatureCS (':' (param+=ParameterCS (',' param+=ParameterCS)*))?;
+//
+//SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParameterCS (',' param+=ParameterCS)*)? ')';
 
-SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParamCS (',' param+=ParamCS)*)? ')';
+ParameterCS returns ParameterCS: 
+	direction = ParamDirection? 
+	name=UnrestrictedName
+	(':' ownedType=TypedMultiplicityRefCS)?
+	initPart=InitPartCS?
+;
 
-ParamCS: direction=ParamDirection? (pathName=PathNameCS ':') typespec=TypeExpCS initPart=InitPartCS?;
-
-InitPartCS: initOp=InitOp expression= ExpCS;
+InitPartCS returns InitPartCS:  // returns ElementCS to make it inherits ElementCS 
+	initOp=InitOp expression= ExpCS
+;
 // General rules END
 
 
 // ****** Syntax for defining explicitly metamodel contents ******
 
-MetamodelCS: keyword=MetamodelKind pathName=PathNameCS
-	( ';'
-	| ('{' element+=MetamodelElementCS* '}' ';'?)
-	)
+MetamodelCS returns MetamodelCS: // MetamodeKind provides extra semantic, we need to retain the kind 
+	metamodelKind=MetamodelKind 
+	name = UnrestrictedName
+	'{' element+=MetamodelElementCS* '}' 
+	';'?
+;
+
+MetamodelElementCS returns base::ElementCS :
+	(ClassifierCS | TagCS | EnumerationCS )
+	';'
+;
+
+ClassifierCS returns base::ClassifierCS:
+	DataTypeCS | ExceptionCS | ClassCS	
+;
+
+DataTypeCS returns base::DataTypeCS:
+	('datatype' | {PrimitiveTypeCS} 'primitive')
+	 name=UnrestrictedName
+;
+
+ExceptionCS returns base::ClassCS: // FIXME so far, exception is another class
+	'exception' 
+	name = UnrestrictedName	
+	('extends' (ownedSuperType+=TypedRefCS (',' ownedSuperType+=TypedRefCS)*))?
+;
+
+ClassCS returns ClassCS: 
+	intermediate ?= 'intermediate' ? 
+	qualifier += Qualifier*
+	'class'
+	name=UnrestrictedName
+	('extends' (ownedSuperType += TypedRefCS (',' ownedSuperType+=TypedRefCS)*))?
+	('{' ((ownedProperty += ClassifierPropertyCS | ownedOperation+=ClassifierOperationCS | ownedAnnotation+= TagCS) ';' )+
+	'}' )?	
+;
+
+TypeRefCS returns base::TypeRefCS:
+	TypedRefCS	// | WildcardTypeRefCS
+				// FIXME deviation from OCLInEcore. No templates parameter, yet
+;
+
+TypedRefCS returns base::TypedRefCS:
+	TypeLiteralCS | TypedTypeRefCS
+;
+
+TypedMultiplicityRefCS returns base::TypedRefCS:
+	TypedRefCS (multiplicity=MultiplicityCS)?
+;
+
+TypedTypeRefCS returns base::TypedTypeRefCS:
+	pathName=PathNameCS	// (ownedTemplateBinding=TemplateBindingCS)?
+						// FIXME deviation from OCLInEcore. No templates parameter, yet
 ;
 
 
-MetamodelElementCS: ClassifierCS | EnumerationCS | TagCS;
-
-ClassifierCS: intermediate?='intermediate'? qualifier+=Qualifier*
-	keyword=ClassifierKind pathName=PathNameCS
-	('extends' (extends+=PathNameCS (',' extends+=PathNameCS)*))?
-	( ';'
-	| ('{' (feature+=ClassifierFeatureCS (';' feature+=ClassifierFeatureCS)* ';'?)? '}' ';'?)
-	)
+ClassifierPropertyCS returns ClassifierPropertyCS:
+	stereotypes = StereotypeQualifierCS?
+	qualifier+= FeatureQualifier*
+	name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS
+	(default=SINGLE_QUOTED_STRING) ? // FIXME QVTO syntax define a more complex InitPartCS	
+	('opposites' '~'? opposite=Identifier)? // FIXME 
 ;
 
-ClassifierFeatureCS: ClassifierPropertyCS | ClassifierOperationCS | TagCS;
-
-ClassifierPropertyCS: ('<<' (stereotype+=Identifier (',' stereotype+=Identifier)*) '>>')? featureKey+=FeatureKey*
-	name=Identifier ':' typespec=TypeExpCS initPart=InitPartCS? multiplicity=MultiplicityCS?
-	('opposites' tilde?='~'? oppositeIdentifier=Identifier oppositeMultiplicity=MultiplicityCS?)?
+StereotypeQualifierCS returns StereotypeQualifierCS:
+	'<<' (stereotype+=Identifier (',' stereotype+=Identifier)*) '>>'	
 ;
 
-MultiplicityCS: '[' (lower=LOWER '...')? upper=UPPER ']';
+MultiplicityCS returns base::MultiplicityBoundsCS: '[' (lowerBound=LOWER '...')? upperBound=UPPER ']';
 
-ClassifierOperationCS: ('<<' (stereotype+=Identifier (',' stereotype+=Identifier)*) '>>')? featureKey+=FeatureKey*
-	name=Identifier ':' typespec=TypeExpCS signature= CompleteSignatureCS
+ClassifierOperationCS returns OperationCS: 
+	stereotypes = StereotypeQualifierCS? 
+	qualifier+= FeatureQualifier*
+	name=UnrestrictedName
+	'(' (ownedParameter+= ParameterCS (',' ownedParameter+=ParameterCS)*)? ')'
+	(':' ownedType=TypedMultiplicityRefCS)?	
 ;
 
-EnumerationCS: 'enum' name=Identifier
-	( ';'
-	|  ('{' (literal+=Identifier (',' literal+=Identifier)*) '}' ';'?)
-	)
+// FIXME Deviation from official grammar
+EnumerationCS returns base::EnumerationCS: 
+	'enum' 
+	name=Identifier
+	(  ('{' (ownedLiterals+=EnumerationLiteralCS (',' ownedLiterals+=EnumerationLiteralCS)*) '}' ))
 ;
 
-TagCS: 'tag' id=StringLiteral pathName=PathNameCS ('=' expression=ExpCS)? ';';
+EnumerationLiteralCS returns base::EnumerationLiteralCS:
+	name=UnrestrictedName
+;
+
+TagCS returns TagCS:
+	'tag' name=(UnrestrictedName|SINGLE_QUOTED_STRING)? 
+	pathName=PathNameCS ('=' expression=ExpCS)? ';'
+;
 
 // typedefs
-TypedefCS: 'typedef' name=Identifier '=' typespec=TypeExpCS ('[' condition=ExpCS ']')? ';';
+// TypedefCS: 'typedef' name=Identifier '=' typespec=TypeExpCS ('[' condition=ExpCS ']')? ';';

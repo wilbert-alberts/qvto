@@ -37,128 +37,55 @@ public abstract class AbstractQVTOperationalContainmentVisitor
 		super(context);
 	}
 
-	public @Nullable
-	Continuation<?> visitClassifierCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierCS object) {
-		return visitMetamodelElementCS(object);
+	public @Nullable Continuation<?> visitClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS object) {
+		return visitClassCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitClassifierFeatureCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierFeatureCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitClassifierPropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS object) {
+		return visitStructuralFeatureCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitClassifierOperationCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierOperationCS object) {
-		return visitClassifierFeatureCS(object);
+	public @Nullable Continuation<?> visitExceptionCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS object) {
+		return visitClassCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitClassifierPropertyCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS object) {
-		return visitClassifierFeatureCS(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitCompleteSignatureCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS object) {
-		return visiting(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitEnumerationCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.EnumerationCS object) {
-		return visitMetamodelElementCS(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitImportCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS object) {
-		return visiting(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitInitPartCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS object) {
-		return visiting(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitMetamodelCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS object) {
-		return visitUnitElementCS(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitMetamodelElementCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelElementCS object) {
-		return visiting(object);
-	}
-
-	public @Nullable
-	Continuation<?> visitMultiplicityCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityCS object) {
+	public @Nullable Continuation<?> visitImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS object) {
 		return visitElementCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitParamCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitInitPartCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS object) {
+		return visitElementCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitSimpleSignatureCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS object) {
-		return visitCompleteSignatureCS(object);
+	public @Nullable Continuation<?> visitMetamodelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS object) {
+		return visitPackageCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitTagCS(@NonNull
-	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS object) {
-		return visitMetamodelElementCS(object);
+	public @Nullable Continuation<?> visitOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS object) {
+		return visitOperationCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitTopLevelCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS object) {
+		return visitParameterCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitTypedefCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypedefCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS object) {
+		return visitDataTypeCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitUnitCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitStereotypeQualifierCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS object) {
+		return visitElementCS(object);
 	}
 
-	public @Nullable
-	Continuation<?> visitUnitElementCS(
-			@NonNull
-			org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitElementCS object) {
-		return visiting(object);
+	public @Nullable Continuation<?> visitTagCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS object) {
+		return visitAnnotationCS(object);
+	}
+
+	public @Nullable Continuation<?> visitTopLevelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS object) {
+		return visitElementCS(object);
+	}
+
+	public @Nullable Continuation<?> visitUnitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS object) {
+		return visitElementCS(object);
 	}
 }

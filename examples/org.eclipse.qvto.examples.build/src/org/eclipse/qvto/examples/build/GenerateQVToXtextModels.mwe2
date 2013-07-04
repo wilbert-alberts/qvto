@@ -68,9 +68,9 @@ var imperativeOclXtextVisitorQualifiedName = "${imperativeOclXtextVisitorPackage
  */
 var qvtOperationalXtextProjectName = "org.eclipse.qvto.examples.xtext.qvtoperational"
 var qvtOperationalXtextProjectURI = "platform:/resource/${qvtOperationalXtextProjectName}"
-var qvtOperationalXtextEcoreProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/qvtoperational/QVTOperational.ecore"
+var qvtOperationalXtextEcoreProjectPath = "model/QVTOperational.ecore"
 var qvtOperationalXtextEcoreURI = "${qvtOperationalXtextProjectURI}/${qvtOperationalXtextEcoreProjectPath}"
-var qvtOperationalXtextGenModelProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/qvtoperational/QVTOperational.genmodel"
+var qvtOperationalXtextGenModelProjectPath = "model/QVTOperational.genmodel"
 var qvtOperationalXtextGenModelPath = "${qvtOperationalXtextProjectName}/${qvtOperationalXtextGenModelProjectPath}"
 var qvtOperationalXtextModelPackage = "${qvtOperationalXtextProjectName}.qvtoperationalcs"
 var qvtOperationalXtextVisitorPackage = "${qvtOperationalXtextProjectName}.qvtoperationalcs.util"
@@ -147,7 +147,7 @@ Workflow {
     	resourceSet = resourceSet
     	projectName = qvtOperationalXtextProjectName
     	genModelFile = qvtOperationalXtextGenModelProjectPath
-    	javaFolder = javaSrcFolder
+    	javaFolder = "emf-gen"
     	modelPackageName = qvtOperationalXtextModelPackage
     	visitorPackageName = qvtOperationalXtextVisitorPackage
     	visitorClassName = qvtOperationalXtextVisitorName
