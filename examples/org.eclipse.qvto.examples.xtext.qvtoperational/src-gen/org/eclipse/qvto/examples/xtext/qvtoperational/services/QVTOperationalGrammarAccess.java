@@ -27,15 +27,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cUnitUnitElementCSParserRuleCall_1_0 = (RuleCall)cUnitAssignment_1.eContents().get(0);
 		
-		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
-		//
-		//
-		////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
-		//
-		//
-		////import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
-		//
-		//
 		//TopLevelCS:
 		//
 		//	^import+=ImportCS* unit+=UnitElementCS*;
@@ -1482,15 +1473,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
-	//
-	//
-	////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
-	//
-	//
-	////import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
-	//
-	//
 	//TopLevelCS:
 	//
 	//	^import+=ImportCS* unit+=UnitElementCS*;
@@ -1861,12 +1843,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagCSAccess().getRule();
 	}
 
-	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
-	//
-	//
-	////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
-	//
-	//
 	//GrammmarCS returns essentialocl::ExpCS:
 	//
 	//	ImperativeOCLExpCS;
@@ -2131,7 +2107,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getReturnExpCSAccess().getRule();
 	}
 
-	//Model returns ContextCS:
+	////generate essentialOCLCST "http://www.eclipse.org/ocl/3.0.0/EssentialOCLCST"
+	// Model returns ContextCS:
 	//
 	//	ownedExpression=ExpCS;
 	public EssentialOCLGrammarAccess.ModelElements getModelAccess() {
