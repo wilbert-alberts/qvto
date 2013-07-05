@@ -5,8 +5,10 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -80,6 +82,26 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 		intermediate = newIntermediate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CLASS_CS__INTERMEDIATE, oldIntermediate, intermediate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitClassCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitClassCS(this);
 	}
 
 	/**

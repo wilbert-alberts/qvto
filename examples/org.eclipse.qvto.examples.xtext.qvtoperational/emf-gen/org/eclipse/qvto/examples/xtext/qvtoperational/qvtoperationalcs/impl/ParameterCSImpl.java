@@ -8,9 +8,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -138,6 +140,26 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.PARAMETER_CS__INIT_PART, newInitPart, newInitPart));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitParameterCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitParameterCS(this);
 	}
 
 	/**

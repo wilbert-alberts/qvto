@@ -1,7 +1,5 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.serializer;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
@@ -69,12 +67,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
-import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
-import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
-import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
+
+import com.google.inject.Inject;
 
 @SuppressWarnings("all")
 public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequencer {

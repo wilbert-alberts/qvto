@@ -14,9 +14,11 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.PackageCSImpl;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelKind;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -113,6 +115,26 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 			element = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QvtoperationalcsPackage.METAMODEL_CS__ELEMENT);
 		}
 		return element;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitMetamodelCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitMetamodelCS(this);
 	}
 
 	/**

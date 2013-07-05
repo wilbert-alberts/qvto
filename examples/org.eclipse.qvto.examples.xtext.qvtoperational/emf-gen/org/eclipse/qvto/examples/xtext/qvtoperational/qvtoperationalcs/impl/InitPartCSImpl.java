@@ -8,10 +8,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitOp;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -139,6 +141,26 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION, newExpression, newExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitInitPartCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitInitPartCS(this);
 	}
 
 	/**

@@ -12,8 +12,10 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,6 +93,26 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 			unit = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT);
 		}
 		return unit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitTopLevelCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitTopLevelCS(this);
 	}
 
 	/**

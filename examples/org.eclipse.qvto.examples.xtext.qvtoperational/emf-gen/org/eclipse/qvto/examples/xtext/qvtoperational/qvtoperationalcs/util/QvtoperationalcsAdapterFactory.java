@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TemplateableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedElementCS;
 import org.eclipse.ocl.examples.xtext.base.util.VisitableCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS;
