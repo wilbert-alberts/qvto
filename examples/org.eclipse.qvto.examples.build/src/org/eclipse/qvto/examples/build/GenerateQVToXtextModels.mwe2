@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.resource.impl.*
  *	Generate the Concrete Syntax Models used by the Xtext editors.
  */
 var platformURI = ".."
-var javaSrcFolder = "src-gen"
 
 /*
  * OCL Xtext models related configuration variables
@@ -54,29 +53,28 @@ var essentialOclXtextVisitorQualifiedName = "${essentialOclXtextVisitorPackage}.
  */
 var imperativeOclXtextProjectName = "org.eclipse.qvto.examples.xtext.imperativeocl"
 var imperativeOclXtextProjectURI = "platform:/resource/${imperativeOclXtextProjectName}"
-var imperativeOclXtextEcoreProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.ecore"
+var imperativeOclXtextProjectPrefix = "ImperativeOCLCS"
+var imperativeOclXtextSuperProjectName = "${essentialOclXtextProjectName}"
+var imperativeOclXtextSuperProjectPrefix = "EssentialOCL" // FIXME Essential CS2AS visitors don't currently comply with naming convention which includes CS in their names
+var imperativeOclXtextEcoreProjectPath = "src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.ecore"
 var imperativeOclXtextEcoreURI = "${imperativeOclXtextProjectURI}/${imperativeOclXtextEcoreProjectPath}"
-var imperativeOclXtextGenModelProjectPath = "${javaSrcFolder}/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
+var imperativeOclXtextGenModelProjectPath = "src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
 var imperativeOclXtextGenModelPath = "${imperativeOclXtextProjectName}/${imperativeOclXtextGenModelProjectPath}"
-var imperativeOclXtextModelPackage = "${imperativeOclXtextProjectName}.imperativeoclcs"
-var imperativeOclXtextVisitorPackage = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
-var imperativeOclXtextVisitorName = "ImperativeOCLCSVisitor"
-var imperativeOclXtextVisitorQualifiedName = "${imperativeOclXtextVisitorPackage}.${imperativeOclXtextVisitorName}"
+var imperativeOclXtextModelJavaFolder = "src-gen"
 
 /*
  * QVTOperational Xtext models related configuration variables
  */
 var qvtOperationalXtextProjectName = "org.eclipse.qvto.examples.xtext.qvtoperational"
 var qvtOperationalXtextProjectURI = "platform:/resource/${qvtOperationalXtextProjectName}"
-var qvtOperationalXtextEcoreProjectPath = "model/QVTOperational.ecore"
+var qvtOperationalXtextProjectSufix = "QVTOperationalCS"
+var qvtOperationalXtextSuperProjectName = "${imperativeOclXtextProjectName}"
+var qvtOperationalXtextSuperProjectPrefix = "${imperativeOclXtextProjectPrefix}"
+var qvtOperationalXtextEcoreProjectPath = "model/${qvtOperationalXtextProjectSufix}.ecore"
 var qvtOperationalXtextEcoreURI = "${qvtOperationalXtextProjectURI}/${qvtOperationalXtextEcoreProjectPath}"
-var qvtOperationalXtextGenModelProjectPath = "model/QVTOperational.genmodel"
+var qvtOperationalXtextGenModelProjectPath = "model/${qvtOperationalXtextProjectSufix}.genmodel"
 var qvtOperationalXtextGenModelPath = "${qvtOperationalXtextProjectName}/${qvtOperationalXtextGenModelProjectPath}"
-var qvtOperationalXtextModelPackage = "${qvtOperationalXtextProjectName}.qvtoperationalcs"
-var qvtOperationalXtextVisitorPackage = "${qvtOperationalXtextProjectName}.qvtoperationalcs.util"
-var qvtOperationalXtextVisitorName = "QVTOperationalCSVisitor"
-var qvtOperationalXtextVisitorQualifiedName = "${qvtOperationalXtextVisitorPackage}.${qvtOperationalXtextVisitorName}"
-
+var qvtOperationalXtextModelJavaFolder = "emf-gen"
 
 Workflow {
 	bean = ResourceSetImpl : resourceSet {}
@@ -91,7 +89,6 @@ Workflow {
     }
     bean = GenModelSetup { resourceSet = resourceSet }
     bean = UMLGenModelSetup { resourceSet = resourceSet }
-    
     
 //    component = DerivedVisitorPatternWeaver {
 //    	resourceSet = resourceSet
@@ -129,30 +126,25 @@ Workflow {
 		clearResourceSet = false 	
     }
     
-    component = GenerateXtextVisitors { resourceSet = resourceSet
-    	resourceSet = resourceSet
+    component = GenerateCS2ASVisitors { resourceSet = resourceSet
+    	genModelFile = imperativeOclXtextGenModelProjectPath // FIXME change this when changing from automatically generated MM to a manual one located in /model
+    	javaFolder = imperativeOclXtextModelJavaFolder
     	projectName = imperativeOclXtextProjectName
-    	genModelFile = imperativeOclXtextGenModelProjectPath
-    	javaFolder = javaSrcFolder
-    	modelPackageName = imperativeOclXtextModelPackage
-    	visitorPackageName = imperativeOclXtextVisitorPackage
-    	visitorClassName = imperativeOclXtextVisitorName
-    	superVisitorPackageName = essentialOclXtextVisitorPackage
-    	superVisitorClassName = essentialOclXtextVisitorName
+    	projectPrefix = imperativeOclXtextProjectPrefix
+    	superProjectName = imperativeOclXtextSuperProjectName
+    	superProjectPrefix = imperativeOclXtextSuperProjectPrefix
+    	superVisitorPackageName = essentialOclXtextVisitorPackage // FIXME if Essential OCL aligns with conventions
+    	superVisitorClassName = essentialOclXtextVisitorName      // FIXME if Essential OCL aligns with conventions
     	visitablePackageName = oclXtextBaseVisitablePackage
     	visitableClassName = oclXtextBaseVisitableName
     }
     
-     component = GenerateXtextVisitors { resourceSet = resourceSet
-    	resourceSet = resourceSet
+    component = GenerateCS2ASVisitors { resourceSet = resourceSet
+    	javaFolder = qvtOperationalXtextModelJavaFolder
     	projectName = qvtOperationalXtextProjectName
-    	genModelFile = qvtOperationalXtextGenModelProjectPath
-    	javaFolder = "emf-gen"
-    	modelPackageName = qvtOperationalXtextModelPackage
-    	visitorPackageName = qvtOperationalXtextVisitorPackage
-    	visitorClassName = qvtOperationalXtextVisitorName
-    	superVisitorPackageName = imperativeOclXtextVisitorPackage
-    	superVisitorClassName = imperativeOclXtextVisitorName
+    	projectPrefix = qvtOperationalXtextProjectSufix
+    	superProjectName = qvtOperationalXtextSuperProjectName
+    	superProjectPrefix = qvtOperationalXtextSuperProjectPrefix
     	visitablePackageName = oclXtextBaseVisitablePackage
     	visitableClassName = oclXtextBaseVisitableName
     }
