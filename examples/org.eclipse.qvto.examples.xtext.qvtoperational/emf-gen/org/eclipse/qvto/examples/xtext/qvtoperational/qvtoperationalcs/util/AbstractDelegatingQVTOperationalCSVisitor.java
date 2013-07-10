@@ -4,7 +4,7 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: model/QVTOperational.genmodel
+ * from: model/QVTOperationalCS.genmodel
  * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
  * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
  * invoked by: org.eclipse.ocl.examples.build.utilities.*
