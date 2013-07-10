@@ -11,9 +11,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Class CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -23,11 +22,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.impl.ClassCSImpl implements ClassCS {
+public class ClassCSImpl
+		extends org.eclipse.ocl.examples.xtext.base.baseCST.impl.ClassCSImpl
+		implements ClassCS {
+
 	/**
 	 * The default value of the '{@link #isIntermediate() <em>Intermediate</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isIntermediate()
 	 * @generated
 	 * @ordered
@@ -36,8 +37,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 
 	/**
 	 * The cached value of the '{@link #isIntermediate() <em>Intermediate</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isIntermediate()
 	 * @generated
 	 * @ordered
@@ -45,8 +45,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	protected boolean intermediate = INTERMEDIATE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ClassCSImpl() {
@@ -54,8 +53,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -64,8 +62,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isIntermediate() {
@@ -73,8 +70,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setIntermediate(boolean newIntermediate) {
@@ -85,8 +81,8 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -95,18 +91,17 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitClassCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitClassCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -119,8 +114,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -134,8 +128,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -149,8 +142,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -163,8 +155,7 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -178,4 +169,4 @@ public class ClassCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.imp
 		return result.toString();
 	}
 
-} //ClassCSImpl
+} // ClassCSImpl

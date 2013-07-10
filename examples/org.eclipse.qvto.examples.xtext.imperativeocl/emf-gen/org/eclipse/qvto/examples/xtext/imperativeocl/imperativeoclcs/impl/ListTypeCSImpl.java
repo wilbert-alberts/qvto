@@ -13,9 +13,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>List Type CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>List Type CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -25,56 +24,50 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
  *
  * @generated
  */
-public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
-{
-  /**
+public class ListTypeCSImpl
+		extends TypedRefCSImpl
+		implements ListTypeCS {
+
+	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getType()
 	 * @generated
 	 * @ordered
 	 */
-  protected TypedRefCS type;
+	protected TypedRefCS type;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ListTypeCSImpl()
-  {
+	protected ListTypeCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return ImperativeoclcsPackage.Literals.LIST_TYPE_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TypedRefCS getType()
-  {
+	public TypedRefCS getType() {
 		return type;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetType(TypedRefCS newType, NotificationChain msgs)
-  {
+	public NotificationChain basicSetType(TypedRefCS newType,
+			NotificationChain msgs) {
 		TypedRefCS oldType = type;
 		type = newType;
 		if (eNotificationRequired()) {
@@ -84,13 +77,11 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setType(TypedRefCS newType)
-  {
+	public void setType(TypedRefCS newType) {
 		if (newType != type) {
 			NotificationChain msgs = null;
 			if (type != null)
@@ -104,14 +95,13 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, newType, newType));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
 				return basicSetType(null, msgs);
@@ -119,14 +109,12 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
 				return getType();
@@ -134,14 +122,12 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
 				setType((TypedRefCS)newValue);
@@ -150,14 +136,12 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
 				setType((TypedRefCS)null);
@@ -166,14 +150,12 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
 				return type != null;
@@ -181,4 +163,4 @@ public class ListTypeCSImpl extends TypedRefCSImpl implements ListTypeCS
 		return super.eIsSet(featureID);
 	}
 
-} //ListTypeCSImpl
+} // ListTypeCSImpl

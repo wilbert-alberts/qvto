@@ -9,19 +9,19 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Param Direction</b></em>',
- * and utility methods for working with them.
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '
+ * <em><b>Param Direction</b></em>', and utility methods for working with them.
  * <!-- end-user-doc -->
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParamDirection()
  * @model
  * @generated
  */
-public enum ParamDirection implements Enumerator {
+public enum ParamDirection
+		implements Enumerator {
 	/**
 	 * The '<em><b>IN</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #IN_VALUE
 	 * @generated
 	 * @ordered
@@ -30,8 +30,8 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * The '<em><b>INOUT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #INOUT_VALUE
 	 * @generated
 	 * @ordered
@@ -40,8 +40,8 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * The '<em><b>OUT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #OUT_VALUE
 	 * @generated
 	 * @ordered
@@ -52,8 +52,8 @@ public enum ParamDirection implements Enumerator {
 	 * The '<em><b>IN</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>IN</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>IN</b></em>' literal object isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #IN
@@ -82,8 +82,8 @@ public enum ParamDirection implements Enumerator {
 	 * The '<em><b>OUT</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>OUT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of '<em><b>OUT</b></em>' literal object isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #OUT
@@ -94,13 +94,12 @@ public enum ParamDirection implements Enumerator {
 	public static final int OUT_VALUE = 2;
 
 	/**
-	 * An array of all the '<em><b>Param Direction</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * An array of all the '<em><b>Param Direction</b></em>' enumerators. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	private static final ParamDirection[] VALUES_ARRAY =
-		new ParamDirection[] {
+	private static final ParamDirection[] VALUES_ARRAY = new ParamDirection[] {
 			IN,
 			INOUT,
 			OUT,
@@ -108,16 +107,14 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>Param Direction</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static final List<ParamDirection> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
 	 * Returns the '<em><b>Param Direction</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ParamDirection get(String literal) {
@@ -132,8 +129,7 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>Param Direction</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ParamDirection getByName(String name) {
@@ -148,8 +144,7 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>Param Direction</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ParamDirection get(int value) {
@@ -162,30 +157,27 @@ public enum ParamDirection implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	private ParamDirection(int value, String name, String literal) {
@@ -195,8 +187,7 @@ public enum ParamDirection implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -204,8 +195,7 @@ public enum ParamDirection implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -213,8 +203,7 @@ public enum ParamDirection implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -223,13 +212,12 @@ public enum ParamDirection implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
-} //ParamDirection
+
+} // ParamDirection

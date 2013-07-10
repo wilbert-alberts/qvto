@@ -13,9 +13,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Return Exp CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Return Exp CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -25,56 +24,50 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS
  *
  * @generated
  */
-public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
-{
-  /**
+public class ReturnExpCSImpl
+		extends ExpCSImpl
+		implements ReturnExpCS {
+
+	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
 	 */
-  protected ExpCS value;
+	protected ExpCS value;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ReturnExpCSImpl()
-  {
+	protected ReturnExpCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return ImperativeoclcsPackage.Literals.RETURN_EXP_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public ExpCS getValue()
-  {
+	public ExpCS getValue() {
 		return value;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetValue(ExpCS newValue, NotificationChain msgs)
-  {
+	public NotificationChain basicSetValue(ExpCS newValue,
+			NotificationChain msgs) {
 		ExpCS oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
@@ -84,13 +77,11 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setValue(ExpCS newValue)
-  {
+	public void setValue(ExpCS newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -104,14 +95,13 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.RETURN_EXP_CS__VALUE, newValue, newValue));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
 				return basicSetValue(null, msgs);
@@ -119,14 +109,12 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
 				return getValue();
@@ -134,14 +122,12 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
 				setValue((ExpCS)newValue);
@@ -150,14 +136,12 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
 				setValue((ExpCS)null);
@@ -166,14 +150,12 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
 				return value != null;
@@ -181,4 +163,4 @@ public class ReturnExpCSImpl extends ExpCSImpl implements ReturnExpCS
 		return super.eIsSet(featureID);
 	}
 
-} //ReturnExpCSImpl
+} // ReturnExpCSImpl

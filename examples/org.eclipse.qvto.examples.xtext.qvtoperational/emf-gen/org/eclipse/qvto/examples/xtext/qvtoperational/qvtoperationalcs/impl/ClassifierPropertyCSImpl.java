@@ -15,9 +15,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Classifier Property CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Classifier Property CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -28,11 +27,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements ClassifierPropertyCS {
+public class ClassifierPropertyCSImpl
+		extends StructuralFeatureCSImpl
+		implements ClassifierPropertyCS {
+
 	/**
 	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getStereotypes()
 	 * @generated
 	 * @ordered
@@ -41,8 +42,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 
 	/**
 	 * The default value of the '{@link #getOpposite() <em>Opposite</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOpposite()
 	 * @generated
 	 * @ordered
@@ -51,8 +51,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 
 	/**
 	 * The cached value of the '{@link #getOpposite() <em>Opposite</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOpposite()
 	 * @generated
 	 * @ordered
@@ -60,8 +59,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	protected String opposite = OPPOSITE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ClassifierPropertyCSImpl() {
@@ -69,8 +67,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -79,8 +76,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ElementCS getStereotypes() {
@@ -88,11 +84,11 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetStereotypes(ElementCS newStereotypes, NotificationChain msgs) {
+	public NotificationChain basicSetStereotypes(ElementCS newStereotypes,
+			NotificationChain msgs) {
 		ElementCS oldStereotypes = stereotypes;
 		stereotypes = newStereotypes;
 		if (eNotificationRequired()) {
@@ -103,8 +99,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStereotypes(ElementCS newStereotypes) {
@@ -122,8 +117,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getOpposite() {
@@ -131,8 +125,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setOpposite(String newOpposite) {
@@ -143,8 +136,8 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -153,22 +146,22 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitClassifierPropertyCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitClassifierPropertyCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.CLASSIFIER_PROPERTY_CS__STEREOTYPES:
 				return basicSetStereotypes(null, msgs);
@@ -177,8 +170,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -193,8 +185,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -211,8 +202,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -229,8 +219,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -245,8 +234,7 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -260,4 +248,4 @@ public class ClassifierPropertyCSImpl extends StructuralFeatureCSImpl implements
 		return result.toString();
 	}
 
-} //ClassifierPropertyCSImpl
+} // ClassifierPropertyCSImpl

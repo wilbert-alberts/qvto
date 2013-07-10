@@ -9,15 +9,15 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Classifier Kind</b></em>',
- * and utility methods for working with them.
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '
+ * <em><b>Classifier Kind</b></em>', and utility methods for working with them.
  * <!-- end-user-doc -->
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierKind()
  * @model
  * @generated
  */
-public enum ClassifierKind implements Enumerator {
+public enum ClassifierKind
+		implements Enumerator {
 	/**
 	 * The '<em><b>DATATYPE</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -50,8 +50,8 @@ public enum ClassifierKind implements Enumerator {
 
 	/**
 	 * The '<em><b>CLASS</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #CLASS_VALUE
 	 * @generated
 	 * @ordered
@@ -119,13 +119,12 @@ public enum ClassifierKind implements Enumerator {
 	public static final int CLASS_VALUE = 3;
 
 	/**
-	 * An array of all the '<em><b>Classifier Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * An array of all the '<em><b>Classifier Kind</b></em>' enumerators. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	private static final ClassifierKind[] VALUES_ARRAY =
-		new ClassifierKind[] {
+	private static final ClassifierKind[] VALUES_ARRAY = new ClassifierKind[] {
 			DATATYPE,
 			PRIMITIVE,
 			EXCEPTION,
@@ -134,16 +133,14 @@ public enum ClassifierKind implements Enumerator {
 
 	/**
 	 * A public read-only list of all the '<em><b>Classifier Kind</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static final List<ClassifierKind> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
 	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ClassifierKind get(String literal) {
@@ -158,8 +155,7 @@ public enum ClassifierKind implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ClassifierKind getByName(String name) {
@@ -174,8 +170,7 @@ public enum ClassifierKind implements Enumerator {
 
 	/**
 	 * Returns the '<em><b>Classifier Kind</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static ClassifierKind get(int value) {
@@ -189,30 +184,27 @@ public enum ClassifierKind implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final int value;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 */
 	private ClassifierKind(int value, String name, String literal) {
@@ -222,8 +214,7 @@ public enum ClassifierKind implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getValue() {
@@ -231,8 +222,7 @@ public enum ClassifierKind implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -240,8 +230,7 @@ public enum ClassifierKind implements Enumerator {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getLiteral() {
@@ -250,13 +239,12 @@ public enum ClassifierKind implements Enumerator {
 
 	/**
 	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public String toString() {
 		return literal;
 	}
-	
-} //ClassifierKind
+
+} // ClassifierKind

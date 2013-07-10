@@ -7,9 +7,8 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.PrimitiveLiteralExpCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Dict Literal Part CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Dict Literal Part CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -23,58 +22,59 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.PrimitiveLite
  * @model
  * @generated
  */
-public interface DictLiteralPartCS extends ElementCS
-{
-  /**
+public interface DictLiteralPartCS
+		extends ElementCS {
+
+	/**
 	 * Returns the value of the '<em><b>Key</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Key</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Key</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Key</em>' containment reference.
 	 * @see #setKey(PrimitiveLiteralExpCS)
 	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictLiteralPartCS_Key()
 	 * @model containment="true"
 	 * @generated
 	 */
-  PrimitiveLiteralExpCS getKey();
+	PrimitiveLiteralExpCS getKey();
 
-  /**
+	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getKey <em>Key</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @param value the new value of the '<em>Key</em>' containment reference.
 	 * @see #getKey()
 	 * @generated
 	 */
-  void setKey(PrimitiveLiteralExpCS value);
+	void setKey(PrimitiveLiteralExpCS value);
 
-  /**
+	/**
 	 * Returns the value of the '<em><b>Value</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Value</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' containment reference.
 	 * @see #setValue(ExpCS)
 	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictLiteralPartCS_Value()
 	 * @model containment="true"
 	 * @generated
 	 */
-  ExpCS getValue();
+	ExpCS getValue();
 
-  /**
+	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS#getValue <em>Value</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @param value the new value of the '<em>Value</em>' containment reference.
 	 * @see #getValue()
 	 * @generated
 	 */
-  void setValue(ExpCS value);
+	void setValue(ExpCS value);
 
 } // DictLiteralPartCS

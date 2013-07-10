@@ -6,9 +6,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Classifier Property CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Classifier Property CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -22,13 +21,15 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
  * @model
  * @generated
  */
-public interface ClassifierPropertyCS extends StructuralFeatureCS {
+public interface ClassifierPropertyCS
+		extends StructuralFeatureCS {
+
 	/**
 	 * Returns the value of the '<em><b>Stereotypes</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Stereotypes</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Stereotypes</em>' containment reference isn't
+	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotypes</em>' containment reference.
@@ -50,13 +51,14 @@ public interface ClassifierPropertyCS extends StructuralFeatureCS {
 	void setStereotypes(ElementCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Opposite</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Opposite</b></em>' attribute. <!--
+	 * begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Opposite</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Opposite</em>' attribute isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Opposite</em>' attribute.
 	 * @see #setOpposite(String)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierPropertyCS_Opposite()
@@ -66,10 +68,13 @@ public interface ClassifierPropertyCS extends StructuralFeatureCS {
 	String getOpposite();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS#getOpposite <em>Opposite</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Opposite</em>' attribute.
+	 * Sets the value of the '
+	 * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS#getOpposite
+	 * <em>Opposite</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Opposite</em>' attribute.
 	 * @see #getOpposite()
 	 * @generated
 	 */

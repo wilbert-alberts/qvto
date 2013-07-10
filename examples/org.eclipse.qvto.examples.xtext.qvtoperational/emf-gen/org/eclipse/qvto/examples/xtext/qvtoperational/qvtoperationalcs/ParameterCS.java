@@ -5,9 +5,8 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Parameter CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Parameter CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -21,14 +20,16 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * @model
  * @generated
  */
-public interface ParameterCS extends org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS {
+public interface ParameterCS
+		extends org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS {
+
 	/**
 	 * Returns the value of the '<em><b>Direction</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Direction</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Direction</em>' attribute isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Direction</em>' attribute.
@@ -41,10 +42,13 @@ public interface ParameterCS extends org.eclipse.ocl.examples.xtext.base.baseCST
 	ParamDirection getDirection();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS#getDirection <em>Direction</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Direction</em>' attribute.
+	 * Sets the value of the '
+	 * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS#getDirection
+	 * <em>Direction</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Direction</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
 	 * @see #getDirection()
 	 * @generated
@@ -55,8 +59,8 @@ public interface ParameterCS extends org.eclipse.ocl.examples.xtext.base.baseCST
 	 * Returns the value of the '<em><b>Init Part</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Init Part</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Init Part</em>' containment reference isn't
+	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Init Part</em>' containment reference.
@@ -69,8 +73,8 @@ public interface ParameterCS extends org.eclipse.ocl.examples.xtext.base.baseCST
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS#getInitPart <em>Init Part</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @param value the new value of the '<em>Init Part</em>' containment reference.
 	 * @see #getInitPart()
 	 * @generated

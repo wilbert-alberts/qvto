@@ -10,18 +10,19 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Primitive Type CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Primitive Type CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class PrimitiveTypeCSImpl extends DataTypeCSImpl implements PrimitiveTypeCS {
+public class PrimitiveTypeCSImpl
+		extends DataTypeCSImpl
+		implements PrimitiveTypeCS {
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected PrimitiveTypeCSImpl() {
@@ -29,8 +30,7 @@ public class PrimitiveTypeCSImpl extends DataTypeCSImpl implements PrimitiveType
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -39,8 +39,8 @@ public class PrimitiveTypeCSImpl extends DataTypeCSImpl implements PrimitiveType
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -49,13 +49,13 @@ public class PrimitiveTypeCSImpl extends DataTypeCSImpl implements PrimitiveType
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitPrimitiveTypeCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitPrimitiveTypeCS(this);
 	}
 
-} //PrimitiveTypeCSImpl
+} // PrimitiveTypeCSImpl

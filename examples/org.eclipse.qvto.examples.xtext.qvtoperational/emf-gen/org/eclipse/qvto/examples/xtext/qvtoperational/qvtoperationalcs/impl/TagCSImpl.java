@@ -16,9 +16,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Tag CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Tag CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -29,13 +28,15 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class TagCSImpl extends 
+public class TagCSImpl
+		extends
 
-AnnotationCSImpl implements TagCS {
+		AnnotationCSImpl
+		implements TagCS {
+
 	/**
 	 * The cached value of the '{@link #getPathName() <em>Path Name</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getPathName()
 	 * @generated
 	 * @ordered
@@ -44,8 +45,7 @@ AnnotationCSImpl implements TagCS {
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getExpression()
 	 * @generated
 	 * @ordered
@@ -53,8 +53,7 @@ AnnotationCSImpl implements TagCS {
 	protected ExpCS expression;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected TagCSImpl() {
@@ -62,8 +61,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -72,8 +70,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public PathNameCS getPathName() {
@@ -81,11 +78,11 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPathName(PathNameCS newPathName, NotificationChain msgs) {
+	public NotificationChain basicSetPathName(PathNameCS newPathName,
+			NotificationChain msgs) {
 		PathNameCS oldPathName = pathName;
 		pathName = newPathName;
 		if (eNotificationRequired()) {
@@ -96,8 +93,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setPathName(PathNameCS newPathName) {
@@ -115,8 +111,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ExpCS getExpression() {
@@ -124,11 +119,11 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetExpression(ExpCS newExpression, NotificationChain msgs) {
+	public NotificationChain basicSetExpression(ExpCS newExpression,
+			NotificationChain msgs) {
 		ExpCS oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
@@ -139,8 +134,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setExpression(ExpCS newExpression) {
@@ -158,8 +152,8 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -168,22 +162,22 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitTagCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitTagCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
 				return basicSetPathName(null, msgs);
@@ -194,8 +188,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -210,8 +203,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -229,8 +221,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -247,8 +238,7 @@ AnnotationCSImpl implements TagCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -262,4 +252,4 @@ AnnotationCSImpl implements TagCS {
 		return super.eIsSet(featureID);
 	}
 
-} //TagCSImpl
+} // TagCSImpl

@@ -6,9 +6,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Stereotype Qualifier CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Stereotype Qualifier CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -21,11 +20,14 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * @model
  * @generated
  */
-public interface StereotypeQualifierCS extends ElementCS {
+public interface StereotypeQualifierCS
+		extends ElementCS {
+
 	/**
 	 * Returns the value of the '<em><b>Stereotype</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc
+	 * -->
 	 * <p>
 	 * If the meaning of the '<em>Stereotype</em>' attribute list isn't clear,
 	 * there really should be more of a description here...

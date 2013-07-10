@@ -18,9 +18,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelC
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Top Level CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Top Level CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -31,11 +30,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
+public class TopLevelCSImpl
+		extends ElementCSImpl
+		implements TopLevelCS {
+
 	/**
 	 * The cached value of the '{@link #getImport() <em>Import</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getImport()
 	 * @generated
 	 * @ordered
@@ -44,8 +45,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 
 	/**
 	 * The cached value of the '{@link #getUnit() <em>Unit</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getUnit()
 	 * @generated
 	 * @ordered
@@ -53,8 +53,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	protected EList<ElementCS> unit;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected TopLevelCSImpl() {
@@ -62,8 +61,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -72,8 +70,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<ElementCS> getImport() {
@@ -84,8 +81,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<ElementCS> getUnit() {
@@ -96,8 +92,8 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -106,22 +102,22 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitTopLevelCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitTopLevelCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
 				return ((InternalEList<?>)getImport()).basicRemove(otherEnd, msgs);
@@ -132,8 +128,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -148,8 +143,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -169,8 +163,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -187,8 +180,7 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -202,4 +194,4 @@ public class TopLevelCSImpl extends ElementCSImpl implements TopLevelCS {
 		return super.eIsSet(featureID);
 	}
 
-} //TopLevelCSImpl
+} // TopLevelCSImpl

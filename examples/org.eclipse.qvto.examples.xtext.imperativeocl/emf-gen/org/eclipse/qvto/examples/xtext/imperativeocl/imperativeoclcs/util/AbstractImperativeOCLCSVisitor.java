@@ -4,7 +4,7 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel
+ * from: model/ImperativeOCLCS.genmodel
  * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
  * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
  * invoked by: org.eclipse.ocl.examples.build.utilities.*

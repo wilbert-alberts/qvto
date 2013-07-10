@@ -14,9 +14,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Stereotyp
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Stereotype Qualifier CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Stereotype Qualifier CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -26,11 +25,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class StereotypeQualifierCSImpl extends ElementCSImpl implements StereotypeQualifierCS {
+public class StereotypeQualifierCSImpl
+		extends ElementCSImpl
+		implements StereotypeQualifierCS {
+
 	/**
 	 * The cached value of the '{@link #getStereotype() <em>Stereotype</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getStereotype()
 	 * @generated
 	 * @ordered
@@ -38,8 +39,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	protected EList<String> stereotype;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected StereotypeQualifierCSImpl() {
@@ -47,8 +47,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -57,8 +56,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getStereotype() {
@@ -69,8 +67,8 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -79,18 +77,18 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitStereotypeQualifierCS(this);
+		return ((QVTOperationalCSVisitor<R>) v)
+			.visitStereotypeQualifierCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -103,8 +101,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -120,8 +117,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -135,8 +131,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -149,8 +144,7 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -164,4 +158,4 @@ public class StereotypeQualifierCSImpl extends ElementCSImpl implements Stereoty
 		return result.toString();
 	}
 
-} //StereotypeQualifierCSImpl
+} // StereotypeQualifierCSImpl

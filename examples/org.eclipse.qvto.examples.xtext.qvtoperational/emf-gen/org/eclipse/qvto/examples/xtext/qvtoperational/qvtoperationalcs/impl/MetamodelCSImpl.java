@@ -21,9 +21,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Metamodel CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Metamodel CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -34,11 +33,14 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
+public class MetamodelCSImpl
+		extends PackageCSImpl
+		implements MetamodelCS {
+
 	/**
 	 * The default value of the '{@link #getMetamodelKind() <em>Metamodel Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getMetamodelKind()
 	 * @generated
 	 * @ordered
@@ -47,8 +49,8 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 
 	/**
 	 * The cached value of the '{@link #getMetamodelKind() <em>Metamodel Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getMetamodelKind()
 	 * @generated
 	 * @ordered
@@ -57,8 +59,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 
 	/**
 	 * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getElement()
 	 * @generated
 	 * @ordered
@@ -66,8 +67,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	protected EList<ElementCS> element;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MetamodelCSImpl() {
@@ -75,8 +75,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -85,8 +84,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public MetamodelKind getMetamodelKind() {
@@ -94,8 +92,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setMetamodelKind(MetamodelKind newMetamodelKind) {
@@ -106,8 +103,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<ElementCS> getElement() {
@@ -118,8 +114,8 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -128,22 +124,22 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitMetamodelCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitMetamodelCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.METAMODEL_CS__ELEMENT:
 				return ((InternalEList<?>)getElement()).basicRemove(otherEnd, msgs);
@@ -152,8 +148,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -168,8 +163,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -188,8 +182,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -206,8 +199,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -222,8 +214,7 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -237,4 +228,4 @@ public class MetamodelCSImpl extends PackageCSImpl implements MetamodelCS {
 		return result.toString();
 	}
 
-} //MetamodelCSImpl
+} // MetamodelCSImpl

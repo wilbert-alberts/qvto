@@ -5,9 +5,8 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Operation CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Operation CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
@@ -20,13 +19,15 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * @model
  * @generated
  */
-public interface OperationCS extends org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS {
+public interface OperationCS
+		extends org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS {
+
 	/**
 	 * Returns the value of the '<em><b>Stereotypes</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Stereotypes</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Stereotypes</em>' containment reference isn't
+	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotypes</em>' containment reference.

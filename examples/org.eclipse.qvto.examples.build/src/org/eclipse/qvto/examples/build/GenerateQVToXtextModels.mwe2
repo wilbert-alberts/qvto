@@ -56,23 +56,23 @@ var imperativeOclXtextProjectURI = "platform:/resource/${imperativeOclXtextProje
 var imperativeOclXtextProjectPrefix = "ImperativeOCLCS"
 var imperativeOclXtextSuperProjectName = "${essentialOclXtextProjectName}"
 var imperativeOclXtextSuperProjectPrefix = "EssentialOCL" // FIXME Essential CS2AS visitors don't currently comply with naming convention which includes CS in their names
-var imperativeOclXtextEcoreProjectPath = "src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.ecore"
+var imperativeOclXtextEcoreProjectPath = "model/${imperativeOclXtextProjectPrefix}.ecore"
 var imperativeOclXtextEcoreURI = "${imperativeOclXtextProjectURI}/${imperativeOclXtextEcoreProjectPath}"
-var imperativeOclXtextGenModelProjectPath = "src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
+var imperativeOclXtextGenModelProjectPath = "model/${imperativeOclXtextProjectPrefix}.genmodel"
 var imperativeOclXtextGenModelPath = "${imperativeOclXtextProjectName}/${imperativeOclXtextGenModelProjectPath}"
-var imperativeOclXtextModelJavaFolder = "src-gen"
+var imperativeOclXtextModelJavaFolder = "emf-gen"
 
 /*
  * QVTOperational Xtext models related configuration variables
  */
 var qvtOperationalXtextProjectName = "org.eclipse.qvto.examples.xtext.qvtoperational"
 var qvtOperationalXtextProjectURI = "platform:/resource/${qvtOperationalXtextProjectName}"
-var qvtOperationalXtextProjectSufix = "QVTOperationalCS"
+var qvtOperationalXtextProjectPrefix = "QVTOperationalCS"
 var qvtOperationalXtextSuperProjectName = "${imperativeOclXtextProjectName}"
 var qvtOperationalXtextSuperProjectPrefix = "${imperativeOclXtextProjectPrefix}"
-var qvtOperationalXtextEcoreProjectPath = "model/${qvtOperationalXtextProjectSufix}.ecore"
+var qvtOperationalXtextEcoreProjectPath = "model/${qvtOperationalXtextProjectPrefix}.ecore"
 var qvtOperationalXtextEcoreURI = "${qvtOperationalXtextProjectURI}/${qvtOperationalXtextEcoreProjectPath}"
-var qvtOperationalXtextGenModelProjectPath = "model/${qvtOperationalXtextProjectSufix}.genmodel"
+var qvtOperationalXtextGenModelProjectPath = "model/${qvtOperationalXtextProjectPrefix}.genmodel"
 var qvtOperationalXtextGenModelPath = "${qvtOperationalXtextProjectName}/${qvtOperationalXtextGenModelProjectPath}"
 var qvtOperationalXtextModelJavaFolder = "emf-gen"
 
@@ -142,7 +142,7 @@ Workflow {
     component = GenerateCS2ASVisitors { resourceSet = resourceSet
     	javaFolder = qvtOperationalXtextModelJavaFolder
     	projectName = qvtOperationalXtextProjectName
-    	projectPrefix = qvtOperationalXtextProjectSufix
+    	projectPrefix = qvtOperationalXtextProjectPrefix
     	superProjectName = qvtOperationalXtextSuperProjectName
     	superProjectPrefix = qvtOperationalXtextSuperProjectPrefix
     	visitablePackageName = oclXtextBaseVisitablePackage

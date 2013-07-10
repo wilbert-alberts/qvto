@@ -15,9 +15,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Parameter CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Parameter CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -28,11 +27,14 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.impl.ParameterCSImpl implements ParameterCS {
+public class ParameterCSImpl
+		extends
+		org.eclipse.ocl.examples.xtext.base.baseCST.impl.ParameterCSImpl
+		implements ParameterCS {
+
 	/**
 	 * The default value of the '{@link #getDirection() <em>Direction</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getDirection()
 	 * @generated
 	 * @ordered
@@ -41,8 +43,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 
 	/**
 	 * The cached value of the '{@link #getDirection() <em>Direction</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getDirection()
 	 * @generated
 	 * @ordered
@@ -51,8 +52,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 
 	/**
 	 * The cached value of the '{@link #getInitPart() <em>Init Part</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInitPart()
 	 * @generated
 	 * @ordered
@@ -60,8 +60,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	protected ElementCS initPart;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ParameterCSImpl() {
@@ -69,8 +68,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -79,8 +77,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ParamDirection getDirection() {
@@ -88,8 +85,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setDirection(ParamDirection newDirection) {
@@ -100,8 +96,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ElementCS getInitPart() {
@@ -109,11 +104,11 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetInitPart(ElementCS newInitPart, NotificationChain msgs) {
+	public NotificationChain basicSetInitPart(ElementCS newInitPart,
+			NotificationChain msgs) {
 		ElementCS oldInitPart = initPart;
 		initPart = newInitPart;
 		if (eNotificationRequired()) {
@@ -124,8 +119,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setInitPart(ElementCS newInitPart) {
@@ -143,8 +137,8 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -153,22 +147,22 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitParameterCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitParameterCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.PARAMETER_CS__INIT_PART:
 				return basicSetInitPart(null, msgs);
@@ -177,8 +171,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -193,8 +186,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -211,8 +203,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -229,8 +220,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -245,8 +235,7 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -260,4 +249,4 @@ public class ParameterCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 		return result.toString();
 	}
 
-} //ParameterCSImpl
+} // ParameterCSImpl

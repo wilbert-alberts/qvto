@@ -16,9 +16,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>List Literal Exp CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>List Literal Exp CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -28,60 +27,54 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteral
  *
  * @generated
  */
-public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
-{
-  /**
+public class ListLiteralExpCSImpl
+		extends ExpCSImpl
+		implements ListLiteralExpCS {
+
+	/**
 	 * The cached value of the '{@link #getOwnedParts() <em>Owned Parts</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOwnedParts()
 	 * @generated
 	 * @ordered
 	 */
-  protected EList<CollectionLiteralPartCS> ownedParts;
+	protected EList<CollectionLiteralPartCS> ownedParts;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected ListLiteralExpCSImpl()
-  {
+	protected ListLiteralExpCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return ImperativeoclcsPackage.Literals.LIST_LITERAL_EXP_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public EList<CollectionLiteralPartCS> getOwnedParts()
-  {
+	public EList<CollectionLiteralPartCS> getOwnedParts() {
 		if (ownedParts == null) {
 			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
 		}
 		return ownedParts;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
@@ -89,14 +82,12 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return getOwnedParts();
@@ -104,15 +95,13 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				getOwnedParts().clear();
@@ -122,14 +111,12 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				getOwnedParts().clear();
@@ -138,14 +125,12 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return ownedParts != null && !ownedParts.isEmpty();
@@ -153,4 +138,4 @@ public class ListLiteralExpCSImpl extends ExpCSImpl implements ListLiteralExpCS
 		return super.eIsSet(featureID);
 	}
 
-} //ListLiteralExpCSImpl
+} // ListLiteralExpCSImpl

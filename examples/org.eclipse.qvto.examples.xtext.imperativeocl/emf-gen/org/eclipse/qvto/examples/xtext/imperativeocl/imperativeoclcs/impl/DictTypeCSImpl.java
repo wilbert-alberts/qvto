@@ -13,9 +13,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Dict Type CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Dict Type CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -26,66 +25,59 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  *
  * @generated
  */
-public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
-{
-  /**
+public class DictTypeCSImpl
+		extends TypedRefCSImpl
+		implements DictTypeCS {
+
+	/**
 	 * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getKeyType()
 	 * @generated
 	 * @ordered
 	 */
-  protected TypedRefCS keyType;
+	protected TypedRefCS keyType;
 
-  /**
+	/**
 	 * The cached value of the '{@link #getValueType() <em>Value Type</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getValueType()
 	 * @generated
 	 * @ordered
 	 */
-  protected TypedRefCS valueType;
+	protected TypedRefCS valueType;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected DictTypeCSImpl()
-  {
+	protected DictTypeCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return ImperativeoclcsPackage.Literals.DICT_TYPE_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TypedRefCS getKeyType()
-  {
+	public TypedRefCS getKeyType() {
 		return keyType;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetKeyType(TypedRefCS newKeyType, NotificationChain msgs)
-  {
+	public NotificationChain basicSetKeyType(TypedRefCS newKeyType,
+			NotificationChain msgs) {
 		TypedRefCS oldKeyType = keyType;
 		keyType = newKeyType;
 		if (eNotificationRequired()) {
@@ -95,13 +87,11 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setKeyType(TypedRefCS newKeyType)
-  {
+	public void setKeyType(TypedRefCS newKeyType) {
 		if (newKeyType != keyType) {
 			NotificationChain msgs = null;
 			if (keyType != null)
@@ -115,23 +105,20 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public TypedRefCS getValueType()
-  {
+	public TypedRefCS getValueType() {
 		return valueType;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetValueType(TypedRefCS newValueType, NotificationChain msgs)
-  {
+	public NotificationChain basicSetValueType(TypedRefCS newValueType,
+			NotificationChain msgs) {
 		TypedRefCS oldValueType = valueType;
 		valueType = newValueType;
 		if (eNotificationRequired()) {
@@ -141,13 +128,11 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setValueType(TypedRefCS newValueType)
-  {
+	public void setValueType(TypedRefCS newValueType) {
 		if (newValueType != valueType) {
 			NotificationChain msgs = null;
 			if (valueType != null)
@@ -161,14 +146,13 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
 				return basicSetKeyType(null, msgs);
@@ -178,14 +162,12 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
 				return getKeyType();
@@ -195,14 +177,12 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
 				setKeyType((TypedRefCS)newValue);
@@ -214,14 +194,12 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
 				setKeyType((TypedRefCS)null);
@@ -233,14 +211,12 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
 				return keyType != null;
@@ -250,4 +226,4 @@ public class DictTypeCSImpl extends TypedRefCSImpl implements DictTypeCS
 		return super.eIsSet(featureID);
 	}
 
-} //DictTypeCSImpl
+} // DictTypeCSImpl

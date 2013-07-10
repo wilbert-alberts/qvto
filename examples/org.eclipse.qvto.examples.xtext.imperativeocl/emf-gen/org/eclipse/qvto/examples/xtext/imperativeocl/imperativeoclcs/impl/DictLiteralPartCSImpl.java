@@ -14,9 +14,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteral
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Dict Literal Part CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Dict Literal Part CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -27,66 +26,59 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  *
  * @generated
  */
-public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralPartCS
-{
-  /**
+public class DictLiteralPartCSImpl
+		extends ElementCSImpl
+		implements DictLiteralPartCS {
+
+	/**
 	 * The cached value of the '{@link #getKey() <em>Key</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getKey()
 	 * @generated
 	 * @ordered
 	 */
-  protected PrimitiveLiteralExpCS key;
+	protected PrimitiveLiteralExpCS key;
 
-  /**
+	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
 	 */
-  protected ExpCS value;
+	protected ExpCS value;
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  protected DictLiteralPartCSImpl()
-  {
+	protected DictLiteralPartCSImpl() {
 		super();
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  protected EClass eStaticClass()
-  {
+	@Override
+	protected EClass eStaticClass() {
 		return ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public PrimitiveLiteralExpCS getKey()
-  {
+	public PrimitiveLiteralExpCS getKey() {
 		return key;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetKey(PrimitiveLiteralExpCS newKey, NotificationChain msgs)
-  {
+	public NotificationChain basicSetKey(PrimitiveLiteralExpCS newKey,
+			NotificationChain msgs) {
 		PrimitiveLiteralExpCS oldKey = key;
 		key = newKey;
 		if (eNotificationRequired()) {
@@ -96,13 +88,11 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setKey(PrimitiveLiteralExpCS newKey)
-  {
+	public void setKey(PrimitiveLiteralExpCS newKey) {
 		if (newKey != key) {
 			NotificationChain msgs = null;
 			if (key != null)
@@ -116,23 +106,20 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY, newKey, newKey));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public ExpCS getValue()
-  {
+	public ExpCS getValue() {
 		return value;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public NotificationChain basicSetValue(ExpCS newValue, NotificationChain msgs)
-  {
+	public NotificationChain basicSetValue(ExpCS newValue,
+			NotificationChain msgs) {
 		ExpCS oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
@@ -142,13 +129,11 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		return msgs;
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  public void setValue(ExpCS newValue)
-  {
+	public void setValue(ExpCS newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -162,14 +147,13 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_LITERAL_PART_CS__VALUE, newValue, newValue));
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
 				return basicSetKey(null, msgs);
@@ -179,14 +163,12 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
 				return getKey();
@@ -196,14 +178,12 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+	@Override
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
 				setKey((PrimitiveLiteralExpCS)newValue);
@@ -215,14 +195,12 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		super.eSet(featureID, newValue);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public void eUnset(int featureID)
-  {
+	@Override
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
 				setKey((PrimitiveLiteralExpCS)null);
@@ -234,14 +212,12 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		super.eUnset(featureID);
 	}
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+	@Override
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS__KEY:
 				return key != null;
@@ -251,4 +227,4 @@ public class DictLiteralPartCSImpl extends ElementCSImpl implements DictLiteralP
 		return super.eIsSet(featureID);
 	}
 
-} //DictLiteralPartCSImpl
+} // DictLiteralPartCSImpl

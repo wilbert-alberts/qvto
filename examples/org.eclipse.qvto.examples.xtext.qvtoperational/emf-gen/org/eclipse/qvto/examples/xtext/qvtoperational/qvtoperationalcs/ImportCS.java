@@ -2,20 +2,18 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Import CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '
+ * <em><b>Import CS</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS <em>Path Name CS</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,7 +21,9 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * @model
  * @generated
  */
-public interface ImportCS extends ElementCS {
+public interface ImportCS
+		extends ElementCS {
+
 	/**
 	 * Returns the value of the '<em><b>Unit</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -42,8 +42,8 @@ public interface ImportCS extends ElementCS {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @param value the new value of the '<em>Unit</em>' containment reference.
 	 * @see #getUnit()
 	 * @generated
@@ -51,45 +51,29 @@ public interface ImportCS extends ElementCS {
 	void setUnit(ElementCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't
+	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Name()
-	 * @model unique="false"
+	 * @return the value of the '<em>Path Name CS</em>' containment reference.
+	 * @see #setPathNameCS(PathNameCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_PathNameCS()
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<String> getName();
+	PathNameCS getPathNameCS();
 
 	/**
-	 * Returns the value of the '<em><b>All</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>All</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>All</em>' attribute.
-	 * @see #setAll(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_All()
-	 * @model
-	 * @generated
-	 */
-	boolean isAll();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>All</em>' attribute.
-	 * @see #isAll()
+	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
+	 * @see #getPathNameCS()
 	 * @generated
 	 */
-	void setAll(boolean value);
+	void setPathNameCS(PathNameCS value);
 
 } // ImportCS

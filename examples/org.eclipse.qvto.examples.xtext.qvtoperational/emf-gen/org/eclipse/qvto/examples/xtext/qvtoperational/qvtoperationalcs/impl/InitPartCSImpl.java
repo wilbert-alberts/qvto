@@ -16,9 +16,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Init Part CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Init Part CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -29,11 +28,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
+public class InitPartCSImpl
+		extends ElementCSImpl
+		implements InitPartCS {
+
 	/**
 	 * The default value of the '{@link #getInitOp() <em>Init Op</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInitOp()
 	 * @generated
 	 * @ordered
@@ -42,8 +43,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 
 	/**
 	 * The cached value of the '{@link #getInitOp() <em>Init Op</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInitOp()
 	 * @generated
 	 * @ordered
@@ -52,8 +52,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getExpression()
 	 * @generated
 	 * @ordered
@@ -61,8 +60,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	protected ExpCS expression;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected InitPartCSImpl() {
@@ -70,8 +68,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -80,8 +77,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public InitOp getInitOp() {
@@ -89,8 +85,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setInitOp(InitOp newInitOp) {
@@ -101,8 +96,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ExpCS getExpression() {
@@ -110,11 +104,11 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetExpression(ExpCS newExpression, NotificationChain msgs) {
+	public NotificationChain basicSetExpression(ExpCS newExpression,
+			NotificationChain msgs) {
 		ExpCS oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
@@ -125,8 +119,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setExpression(ExpCS newExpression) {
@@ -144,8 +137,8 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -154,22 +147,22 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitInitPartCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitInitPartCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
 				return basicSetExpression(null, msgs);
@@ -178,8 +171,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -194,8 +186,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -212,8 +203,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -230,8 +220,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -246,8 +235,7 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -261,4 +249,4 @@ public class InitPartCSImpl extends ElementCSImpl implements InitPartCS {
 		return result.toString();
 	}
 
-} //InitPartCSImpl
+} // InitPartCSImpl

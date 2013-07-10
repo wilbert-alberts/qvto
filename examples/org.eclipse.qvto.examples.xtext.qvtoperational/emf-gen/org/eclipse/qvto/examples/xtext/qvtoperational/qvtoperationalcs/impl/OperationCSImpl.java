@@ -14,9 +14,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Operation CS</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Operation CS</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -26,11 +25,14 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  *
  * @generated
  */
-public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST.impl.OperationCSImpl implements OperationCS {
+public class OperationCSImpl
+		extends
+		org.eclipse.ocl.examples.xtext.base.baseCST.impl.OperationCSImpl
+		implements OperationCS {
+
 	/**
 	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getStereotypes()
 	 * @generated
 	 * @ordered
@@ -38,8 +40,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	protected ElementCS stereotypes;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected OperationCSImpl() {
@@ -47,8 +48,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -57,8 +57,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ElementCS getStereotypes() {
@@ -66,11 +65,11 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetStereotypes(ElementCS newStereotypes, NotificationChain msgs) {
+	public NotificationChain basicSetStereotypes(ElementCS newStereotypes,
+			NotificationChain msgs) {
 		ElementCS oldStereotypes = stereotypes;
 		stereotypes = newStereotypes;
 		if (eNotificationRequired()) {
@@ -81,8 +80,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setStereotypes(ElementCS newStereotypes) {
@@ -100,8 +98,8 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
@@ -110,22 +108,22 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 * @added
 	 */
 	public <R> R accept(final BaseCSVisitor<R> v) {
-		return ((QVTOperationalCSVisitor<R>)v).visitOperationCS(this);
+		return ((QVTOperationalCSVisitor<R>) v).visitOperationCS(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.OPERATION_CS__STEREOTYPES:
 				return basicSetStereotypes(null, msgs);
@@ -134,8 +132,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -148,8 +145,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -163,8 +159,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -178,8 +173,7 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -191,4 +185,4 @@ public class OperationCSImpl extends org.eclipse.ocl.examples.xtext.base.baseCST
 		return super.eIsSet(featureID);
 	}
 
-} //OperationCSImpl
+} // OperationCSImpl
