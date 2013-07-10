@@ -15,9 +15,9 @@ public class AbstractImperativeOCLJavaValidator extends org.eclipse.ocl.examples
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
-	    result.add(org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage.eINSTANCE);
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/ocl/3.1.0/EssentialOCLCST"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/ocl/3.1.0/BaseCST"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS"));
 		return result;
 	}
 

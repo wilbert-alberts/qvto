@@ -41,6 +41,7 @@ Workflow {
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel"
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel"
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.genmodel"
 		
 //    	uriMap = Mapping {
 //    		from = "platform:/plugin/org.eclipse.ocl.examples.pivot/"

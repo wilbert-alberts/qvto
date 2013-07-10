@@ -53,14 +53,11 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequencer {
@@ -592,17 +589,7 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 	 *     (key=PrimitiveLiteralExpCS value=ExpCS)
 	 */
 	protected void sequence_DictLiteralPartCS(EObject context, DictLiteralPartCS semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__KEY));
-			if(transientValues.isValueTransient(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImperativeoclcsPackage.Literals.DICT_LITERAL_PART_CS__VALUE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getKeyPrimitiveLiteralExpCSParserRuleCall_0_0(), semanticObject.getKey());
-		feeder.accept(grammarAccess.getDictLiteralPartCSAccess().getValueExpCSParserRuleCall_2_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
