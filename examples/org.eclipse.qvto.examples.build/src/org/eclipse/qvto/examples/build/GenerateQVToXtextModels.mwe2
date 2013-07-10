@@ -99,8 +99,8 @@ Workflow {
 //    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
 //    	superVisitorInterfaceName = essentialOclXtextVisitorName
 //    	superVisitorInterfaceQualifiedName = essentialOclXtextVisitorQualifiedName
-//    	derivedVisitorInterfaceName = imperativeOclXtextVisitorName
-//    	derivedVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
+//    	derivedVisitorInterfaceName = "${imperativeOclXtextProjectPrefix}Visitor"
+//    	derivedVisitorInterfaceQualifiedName = "${imperativeOclXtextProjectName}.imperativeoclcs.util.${imperativeOclXtextProjectPrefix}Visitor"
 //    }
 
 //    component = DerivedVisitorPatternWeaver {
@@ -110,10 +110,10 @@ Workflow {
 //    	in = oclXtextBaseEcoreURI
 //    	rootVisitorInterfaceName = oclXtextBaseVisitorName
 //    	rootVisitorInterfaceQualifiedName = oclXtextBaseVisitorQualifiedName
-//    	superVisitorInterfaceName = imperativeOclXtextVisitorName
-//    	superVisitorInterfaceQualifiedName = imperativeOclXtextVisitorQualifiedName
-//    	derivedVisitorInterfaceName = qvtOperationalXtextVisitorName
-//    	derivedVisitorInterfaceQualifiedName = qvtOperationalXtextVisitorQualifiedName
+//    	superVisitorInterfaceName = "${imperativeOclXtextProjectPrefix}Visitor"
+//    	superVisitorInterfaceQualifiedName = "${imperativeOclXtextProjectName}.imperativeoclcs.util.${imperativeOclXtextProjectPrefix}Visitor"
+//    	derivedVisitorInterfaceName = "${qvtOperationalXtextProjectPrefix}Visitor"
+//    	derivedVisitorInterfaceQualifiedName = "${qvtOperationalXtextProjectName}.qvtoperationalcs.util.${qvtOperationalXtextProjectPrefix}Visitor"
 //    }
     
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
