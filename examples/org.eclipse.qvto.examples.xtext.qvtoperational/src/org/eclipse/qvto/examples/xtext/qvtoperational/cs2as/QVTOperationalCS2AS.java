@@ -5,7 +5,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCS2AS;
 
 public class QVTOperationalCS2AS
@@ -23,29 +23,29 @@ public class QVTOperationalCS2AS
 
 	@Override
 	protected @NonNull
-	QVTOperationalContainmentVisitor createContainmentVisitor(@NonNull
+	QVTOperationalCSContainmentVisitor createContainmentVisitor(@NonNull
 	CS2PivotConversion converter) {
-		return new QVTOperationalContainmentVisitor(converter);
+		return new QVTOperationalCSContainmentVisitor(converter);
 	}
 
 	@Override
 	protected @NonNull
-	QVTOperationalPreOrderVisitor createPreOrderVisitor(@NonNull
+	QVTOperationalCSPreOrderVisitor createPreOrderVisitor(@NonNull
 	CS2PivotConversion converter) {
-		return new QVTOperationalPreOrderVisitor(converter);
+		return new QVTOperationalCSPreOrderVisitor(converter);
 	}
 
 	@Override
 	protected @NonNull
-	QVTOperationalPostOrderVisitor createPostOrderVisitor(@NonNull
+	QVTOperationalCSPostOrderVisitor createPostOrderVisitor(@NonNull
 	CS2PivotConversion converter) {
-		return new QVTOperationalPostOrderVisitor(converter);
+		return new QVTOperationalCSPostOrderVisitor(converter);
 	}
 
 	@Override
 	protected @NonNull
-	QVTOperationalLeft2RightVisitor createLeft2RightVisitor(@NonNull
+	QVTOperationalCSLeft2RightVisitor createLeft2RightVisitor(@NonNull
 	CS2PivotConversion converter) {
-		return new QVTOperationalLeft2RightVisitor(converter);
+		return new QVTOperationalCSLeft2RightVisitor(converter);
 	}
 }

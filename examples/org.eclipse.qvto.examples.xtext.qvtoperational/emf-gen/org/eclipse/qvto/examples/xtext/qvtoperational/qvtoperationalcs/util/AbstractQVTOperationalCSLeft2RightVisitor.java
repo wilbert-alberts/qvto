@@ -14,24 +14,23 @@
  *
  * $Id$
  */
-package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
+package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.Element;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
-import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLLeft2RightVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSLeft2RightVisitor;
 
-public abstract class AbstractQVTOperationalLeft2RightVisitor
-		extends ImperativeOCLLeft2RightVisitor
+public abstract class AbstractQVTOperationalCSLeft2RightVisitor
+		extends ImperativeOCLCSLeft2RightVisitor
 		implements QVTOperationalCSVisitor<Element> {
 
 	//
 	// This file is maintained by copying from
 	// AbstractExtendingQVTOperationalCSVisitor and changing R to Element.
 	//
-	protected AbstractQVTOperationalLeft2RightVisitor(@NonNull
+	protected AbstractQVTOperationalCSLeft2RightVisitor(@NonNull
 	CS2PivotConversion context) {
 		super(context);
 	}

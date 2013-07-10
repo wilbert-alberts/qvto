@@ -14,17 +14,16 @@
  *
  * $Id$
  */
-package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
+package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.Continuation;
-import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLPostOrderVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
 
-public abstract class AbstractQVTOperationalPostOrderVisitor
-		extends ImperativeOCLPostOrderVisitor
+public abstract class AbstractQVTOperationalCSContainmentVisitor
+		extends ImperativeOCLCSContainmentVisitor
 		implements QVTOperationalCSVisitor<Continuation<?>> {
 
 	//
@@ -32,7 +31,7 @@ public abstract class AbstractQVTOperationalPostOrderVisitor
 	// AbstractExtendingQVTOperationalCSVisitor and changing R to
 	// Continuation<?>.
 	//
-	protected AbstractQVTOperationalPostOrderVisitor(@NonNull
+	protected AbstractQVTOperationalCSContainmentVisitor(@NonNull
 	CS2PivotConversion context) {
 		super(context);
 	}

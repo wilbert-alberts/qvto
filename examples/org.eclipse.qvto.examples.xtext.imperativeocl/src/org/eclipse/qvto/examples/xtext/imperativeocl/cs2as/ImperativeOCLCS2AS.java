@@ -5,8 +5,8 @@ import java.util.Map;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLCS2Pivot;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
+import org.eclipse.ocl.examples.xtext.essentialocl.cs2as.EssentialOCLCS2Pivot;
 
 public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	
@@ -20,30 +20,30 @@ public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 
 	@Override
 	protected @NonNull
-	ImperativeOCLContainmentVisitor createContainmentVisitor(
+	ImperativeOCLCSContainmentVisitor createContainmentVisitor(
 			@NonNull CS2PivotConversion converter) {
-		return new ImperativeOCLContainmentVisitor(converter);
+		return new ImperativeOCLCSContainmentVisitor(converter);
 	}
 	
 	@Override
 	protected @NonNull
-	ImperativeOCLPreOrderVisitor createPreOrderVisitor(
+	ImperativeOCLCSPreOrderVisitor createPreOrderVisitor(
 			@NonNull CS2PivotConversion converter) {
 	
-		return new ImperativeOCLPreOrderVisitor(converter);
+		return new ImperativeOCLCSPreOrderVisitor(converter);
 	}
 	
 	@Override
 	protected @NonNull
-	ImperativeOCLPostOrderVisitor createPostOrderVisitor(
+	ImperativeOCLCSPostOrderVisitor createPostOrderVisitor(
 			@NonNull CS2PivotConversion converter) {
-		return new ImperativeOCLPostOrderVisitor(converter);
+		return new ImperativeOCLCSPostOrderVisitor(converter);
 	}
 
 	@Override
 	protected @NonNull
-	ImperativeOCLLeft2RightVisitor createLeft2RightVisitor(
+	ImperativeOCLCSLeft2RightVisitor createLeft2RightVisitor(
 			@NonNull CS2PivotConversion converter) {
-		return new ImperativeOCLLeft2RightVisitor(converter);
+		return new ImperativeOCLCSLeft2RightVisitor(converter);
 	}
 }

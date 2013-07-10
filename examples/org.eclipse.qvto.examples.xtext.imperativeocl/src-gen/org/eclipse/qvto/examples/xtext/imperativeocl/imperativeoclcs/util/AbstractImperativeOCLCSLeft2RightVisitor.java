@@ -1,21 +1,20 @@
-package org.eclipse.qvto.examples.xtext.imperativeocl.cs2as;
+package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.Element;
-import org.eclipse.ocl.examples.xtext.base.cs2pivot.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.essentialocl.cs2pivot.EssentialOCLLeft2RightVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
+import org.eclipse.ocl.examples.xtext.essentialocl.cs2as.EssentialOCLLeft2RightVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
-public abstract class AbstractImperativeOCLLeft2RightVisitor extends EssentialOCLLeft2RightVisitor
+public abstract class AbstractImperativeOCLCSLeft2RightVisitor extends EssentialOCLLeft2RightVisitor
 	implements ImperativeOCLCSVisitor<Element>{
 
-	public AbstractImperativeOCLLeft2RightVisitor(CS2PivotConversion context) {
+	public AbstractImperativeOCLCSLeft2RightVisitor(CS2PivotConversion context) {
 		super(context);
 	}
 
