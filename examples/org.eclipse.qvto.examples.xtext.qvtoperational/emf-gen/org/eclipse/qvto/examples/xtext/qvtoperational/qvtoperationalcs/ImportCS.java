@@ -3,7 +3,6 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -13,7 +12,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS <em>Path Name CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,47 +33,73 @@ public interface ImportCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Unit</em>' containment reference.
-	 * @see #setUnit(ElementCS)
+	 * @see #setUnit(UnitCS)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_Unit()
 	 * @model containment="true"
 	 * @generated
 	 */
-	ElementCS getUnit();
+	UnitCS getUnit();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getUnit <em>Unit</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Unit</em>' containment reference.
 	 * @see #getUnit()
 	 * @generated
 	 */
-	void setUnit(ElementCS value);
+	void setUnit(UnitCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Imported Unit Element</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't
-	 * clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Imported Unit Element</em>' attribute isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_PathNameCS()
-	 * @model containment="true"
+	 * @return the value of the '<em>Imported Unit Element</em>' attribute.
+	 * @see #setImportedUnitElement(String)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_ImportedUnitElement()
+	 * @model
 	 * @generated
 	 */
-	PathNameCS getPathNameCS();
+	String getImportedUnitElement();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
-	 * @see #getPathNameCS()
+	 * @param value the new value of the '<em>Imported Unit Element</em>' attribute.
+	 * @see #getImportedUnitElement()
 	 * @generated
 	 */
-	void setPathNameCS(PathNameCS value);
+	void setImportedUnitElement(String value);
+
+	/**
+	 * Returns the value of the '<em><b>All</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>All</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>All</em>' attribute.
+	 * @see #setAll(boolean)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_All()
+	 * @model
+	 * @generated
+	 */
+	boolean isAll();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>All</em>' attribute.
+	 * @see #isAll()
+	 * @generated
+	 */
+	void setAll(boolean value);
 
 } // ImportCS

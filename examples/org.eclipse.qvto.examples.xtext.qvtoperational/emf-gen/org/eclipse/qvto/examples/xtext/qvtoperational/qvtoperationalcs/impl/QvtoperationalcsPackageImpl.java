@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
@@ -589,11 +590,21 @@ public class QvtoperationalcsPackageImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getImportCS_PathNameCS() {
-		return (EReference)importCSEClass.getEStructuralFeatures().get(1);
+	public EAttribute getImportCS_ImportedUnitElement() {
+		return (EAttribute)importCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportCS_All() {
+		return (EAttribute)importCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2155,7 +2166,8 @@ public class QvtoperationalcsPackageImpl
 
 		importCSEClass = createEClass(IMPORT_CS);
 		createEReference(importCSEClass, IMPORT_CS__UNIT);
-		createEReference(importCSEClass, IMPORT_CS__PATH_NAME_CS);
+		createEAttribute(importCSEClass, IMPORT_CS__IMPORTED_UNIT_ELEMENT);
+		createEAttribute(importCSEClass, IMPORT_CS__ALL);
 
 		libraryCSEClass = createEClass(LIBRARY_CS);
 
@@ -2350,6 +2362,7 @@ public class QvtoperationalcsPackageImpl
 		// Obtain other dependent packages
 		BaseCSTPackage theBaseCSTPackage = (BaseCSTPackage)EPackage.Registry.INSTANCE.getEPackage(BaseCSTPackage.eNS_URI);
 		EssentialOCLCSTPackage theEssentialOCLCSTPackage = (EssentialOCLCSTPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSTPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 		ImperativeoclcsPackage theImperativeoclcsPackage = (ImperativeoclcsPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeoclcsPackage.eNS_URI);
 
 		// Create type parameters
@@ -2493,8 +2506,9 @@ public class QvtoperationalcsPackageImpl
 		initEAttribute(getImperativeOperationCallExpCS_Module(), ecorePackage.getEString(), "module", null, 0, 1, ImperativeOperationCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(importCSEClass, ImportCS.class, "ImportCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getImportCS_Unit(), theBaseCSTPackage.getElementCS(), null, "unit", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getImportCS_PathNameCS(), theBaseCSTPackage.getPathNameCS(), null, "pathNameCS", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getImportCS_Unit(), this.getUnitCS(), null, "unit", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getImportCS_ImportedUnitElement(), theEcorePackage.getEString(), "importedUnitElement", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getImportCS_All(), theEcorePackage.getEBoolean(), "all", null, 0, 1, ImportCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(libraryCSEClass, LibraryCS.class, "LibraryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

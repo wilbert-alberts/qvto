@@ -7,12 +7,11 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -22,7 +21,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.ImportCSImpl#getUnit <em>Unit</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.ImportCSImpl#getPathNameCS <em>Path Name CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.ImportCSImpl#getImportedUnitElement <em>Imported Unit Element</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.ImportCSImpl#isAll <em>All</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,16 +39,47 @@ public class ImportCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected ElementCS unit;
+	protected UnitCS unit;
 
 	/**
-	 * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getPathNameCS()
+	 * The default value of the '{@link #getImportedUnitElement() <em>Imported Unit Element</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportedUnitElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected PathNameCS pathNameCS;
+	protected static final String IMPORTED_UNIT_ELEMENT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getImportedUnitElement() <em>Imported Unit Element</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportedUnitElement()
+	 * @generated
+	 * @ordered
+	 */
+	protected String importedUnitElement = IMPORTED_UNIT_ELEMENT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isAll() <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAll()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ALL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isAll() <em>All</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAll()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean all = ALL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -71,17 +102,17 @@ public class ImportCSImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ElementCS getUnit() {
+	public UnitCS getUnit() {
 		return unit;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetUnit(ElementCS newUnit,
-			NotificationChain msgs) {
-		ElementCS oldUnit = unit;
+	public NotificationChain basicSetUnit(UnitCS newUnit, NotificationChain msgs) {
+		UnitCS oldUnit = unit;
 		unit = newUnit;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__UNIT, oldUnit, newUnit);
@@ -91,10 +122,11 @@ public class ImportCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setUnit(ElementCS newUnit) {
+	public void setUnit(UnitCS newUnit) {
 		if (newUnit != unit) {
 			NotificationChain msgs = null;
 			if (unit != null)
@@ -109,44 +141,45 @@ public class ImportCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PathNameCS getPathNameCS() {
-		return pathNameCS;
+	public String getImportedUnitElement() {
+		return importedUnitElement;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPathNameCS(PathNameCS newPathNameCS,
-			NotificationChain msgs) {
-		PathNameCS oldPathNameCS = pathNameCS;
-		pathNameCS = newPathNameCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS, oldPathNameCS, newPathNameCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public void setImportedUnitElement(String newImportedUnitElement) {
+		String oldImportedUnitElement = importedUnitElement;
+		importedUnitElement = newImportedUnitElement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT, oldImportedUnitElement, importedUnitElement));
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPathNameCS(PathNameCS newPathNameCS) {
-		if (newPathNameCS != pathNameCS) {
-			NotificationChain msgs = null;
-			if (pathNameCS != null)
-				msgs = ((InternalEObject)pathNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
-			if (newPathNameCS != null)
-				msgs = ((InternalEObject)newPathNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS, null, msgs);
-			msgs = basicSetPathNameCS(newPathNameCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS, newPathNameCS, newPathNameCS));
+	public boolean isAll() {
+		return all;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAll(boolean newAll) {
+		boolean oldAll = all;
+		all = newAll;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__ALL, oldAll, all));
 	}
 
 	/**
@@ -179,8 +212,6 @@ public class ImportCSImpl
 		switch (featureID) {
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
 				return basicSetUnit(null, msgs);
-			case QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS:
-				return basicSetPathNameCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -194,8 +225,10 @@ public class ImportCSImpl
 		switch (featureID) {
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
 				return getUnit();
-			case QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS:
-				return getPathNameCS();
+			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+				return getImportedUnitElement();
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				return isAll();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -209,10 +242,13 @@ public class ImportCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-				setUnit((ElementCS)newValue);
+				setUnit((UnitCS)newValue);
 				return;
-			case QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS:
-				setPathNameCS((PathNameCS)newValue);
+			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+				setImportedUnitElement((String)newValue);
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				setAll((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -226,10 +262,13 @@ public class ImportCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
-				setUnit((ElementCS)null);
+				setUnit((UnitCS)null);
 				return;
-			case QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS:
-				setPathNameCS((PathNameCS)null);
+			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+				setImportedUnitElement(IMPORTED_UNIT_ELEMENT_EDEFAULT);
+				return;
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				setAll(ALL_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -244,10 +283,30 @@ public class ImportCSImpl
 		switch (featureID) {
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
 				return unit != null;
-			case QvtoperationalcsPackage.IMPORT_CS__PATH_NAME_CS:
-				return pathNameCS != null;
+			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+				return IMPORTED_UNIT_ELEMENT_EDEFAULT == null ? importedUnitElement != null : !IMPORTED_UNIT_ELEMENT_EDEFAULT.equals(importedUnitElement);
+			case QvtoperationalcsPackage.IMPORT_CS__ALL:
+				return all != ALL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (importedUnitElement: ");
+		result.append(importedUnitElement);
+		result.append(", all: ");
+		result.append(all);
+		result.append(')');
+		return result.toString();
 	}
 
 } // ImportCSImpl

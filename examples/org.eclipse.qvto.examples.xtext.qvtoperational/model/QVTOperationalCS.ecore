@@ -141,10 +141,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="module" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImportCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ElementCS">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="ecore:EClass ../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ElementCS"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="#//UnitCS"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pathNameCS" eType="ecore:EClass ../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PathNameCS"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedUnitElement" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ImportKindEnum">
     <eLiterals name="extension"/>

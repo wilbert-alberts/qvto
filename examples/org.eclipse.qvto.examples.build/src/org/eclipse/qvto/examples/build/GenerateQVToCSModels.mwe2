@@ -14,7 +14,7 @@
  *
  *
  */
-module GenerateQVToXtextModels
+module GenerateQVToCSModels
 
 import org.eclipse.ocl.examples.build.utilities.*
 import org.eclipse.ocl.examples.build.xtend.*

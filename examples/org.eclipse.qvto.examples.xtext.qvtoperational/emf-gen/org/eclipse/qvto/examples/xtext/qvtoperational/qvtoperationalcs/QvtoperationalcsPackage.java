@@ -2288,12 +2288,22 @@ public interface QvtoperationalcsPackage
 	int IMPORT_CS__UNIT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS__PATH_NAME_CS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int IMPORT_CS__IMPORTED_UNIT_ELEMENT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>All</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_CS__ALL = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Import CS</em>' class. <!--
@@ -2302,7 +2312,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int IMPORT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
@@ -2485,12 +2495,22 @@ public interface QvtoperationalcsPackage
 	int LIBRARY_IMPORT_CS__UNIT = IMPORT_CS__UNIT;
 
 	/**
-	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_IMPORT_CS__PATH_NAME_CS = IMPORT_CS__PATH_NAME_CS;
+	int LIBRARY_IMPORT_CS__IMPORTED_UNIT_ELEMENT = IMPORT_CS__IMPORTED_UNIT_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>All</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY_IMPORT_CS__ALL = IMPORT_CS__ALL;
 
 	/**
 	 * The number of structural features of the '<em>Library Import CS</em>' class.
@@ -4202,14 +4222,26 @@ public interface QvtoperationalcsPackage
 	EReference getImportCS_Unit();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS <em>Path Name CS</em>}'.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Path Name CS</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getPathNameCS()
+	 * Returns the meta object for the attribute '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Imported Unit Element</em>'.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement()
 	 * @see #getImportCS()
 	 * @generated
 	 */
-	EReference getImportCS_PathNameCS();
+	EAttribute getImportCS_ImportedUnitElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll <em>All</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>All</em>'.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#isAll()
+	 * @see #getImportCS()
+	 * @generated
+	 */
+	EAttribute getImportCS_All();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryCS <em>Library CS</em>}'.
@@ -6163,12 +6195,20 @@ public interface QvtoperationalcsPackage
 		EReference IMPORT_CS__UNIT = eINSTANCE.getImportCS_Unit();
 
 		/**
-		 * The meta object literal for the '<em><b>Path Name CS</b></em>' containment reference feature.
-		 * <!-- begin-user-doc --> <!--
-		 * end-user-doc -->
+		 * The meta object literal for the '<em><b>Imported Unit Element</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference IMPORT_CS__PATH_NAME_CS = eINSTANCE.getImportCS_PathNameCS();
+		EAttribute IMPORT_CS__IMPORTED_UNIT_ELEMENT = eINSTANCE.getImportCS_ImportedUnitElement();
+
+		/**
+		 * The meta object literal for the '<em><b>All</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORT_CS__ALL = eINSTANCE.getImportCS_All();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.LibraryCSImpl <em>Library CS</em>}' class.

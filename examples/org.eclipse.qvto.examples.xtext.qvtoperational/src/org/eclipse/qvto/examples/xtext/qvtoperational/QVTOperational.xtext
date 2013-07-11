@@ -42,12 +42,13 @@ FeatureQualifier returns ecore::EString : 'composes' & 'references' & 'readonly'
 // ****** Imports ******
 ImportCS : // returns ElementCS to make it inherits ElementCS 
 	  ('import' unit=UnitCS ';')
-	|  ('from' unit=UnitCS 'import' ((name+=Identifier (',' name+=Identifier)*) | all?='*') ';')
+	|  ('from' unit=UnitCS 'import' ((importedUnitElement+=Identifier (',' importedUnitElement+=Identifier)*) | all?='*') ';')
 ;
 
-UnitCS returns UnitCS :  // returns ElementCS to make it inherits ElementCS
+UnitCS :  // returns ElementCS to make it inherits ElementCS
 	segment+=Identifier ('.' segment+=Identifier)*
 ;
+
 	
 // ****** definitions in a compilation unit *******
 UnitElementCS returns MetamodelCS: // returns ElementCS to make it inherits ElementCS 

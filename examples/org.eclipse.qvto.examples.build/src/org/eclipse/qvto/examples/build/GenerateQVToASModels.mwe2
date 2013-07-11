@@ -16,7 +16,7 @@
  * 
  * Run As->MWE2 Workflow to regenerate QVTo models.
  */
-module GenerateQVToModels
+module GenerateQVToASModels
 
 import org.eclipse.ocl.examples.build.utilities.*
 import org.eclipse.ocl.examples.build.xtend.* 
@@ -125,26 +125,26 @@ Workflow {
 		clearResourceSet = false
 	}
     
-    component = GeneratePivotVisitors {	resourceSet = resourceSet
+    component = GenerateASVisitors {	resourceSet = resourceSet
     	projectName = imperativeOclProjectName
     	projectPrefix = imperativeOclProjectPrefix 
     	superProjectName = oclProjectName
     	superProjectPrefix = oclProjectPrefix
     	javaFolder = javaSrcFolder
     	modelPackageName = imperativeOclModelPackage
-    	superModelPackageName = oclModelPackage
+    	superVisitorPackageName = oclModelPackage
     	visitablePackageName = oclVisitablePackage
     	visitableClassName = oclVisitableName
     }
     
-    component = GeneratePivotVisitors {	resourceSet = resourceSet
+    component = GenerateASVisitors {	resourceSet = resourceSet
     	projectName = qvtOperationalProjectName
     	projectPrefix =  qvtOperationalProjectPrefix
     	superProjectName = imperativeOclProjectName
     	superProjectPrefix = imperativeOclProjectPrefix
     	javaFolder = javaSrcFolder
     	modelPackageName = qvtOperationalModelPackage
-    	superModelPackageName = imperativeOclModelPackage
+    	superVisitorPackageName = imperativeOclModelPackage
     	visitablePackageName = oclVisitablePackage
     	visitableClassName = oclVisitableName
     }
