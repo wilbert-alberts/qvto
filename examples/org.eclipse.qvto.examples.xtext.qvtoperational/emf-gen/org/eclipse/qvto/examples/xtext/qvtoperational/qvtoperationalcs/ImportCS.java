@@ -2,6 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 
 /**
@@ -51,30 +52,20 @@ public interface ImportCS
 	void setUnit(UnitCS value);
 
 	/**
-	 * Returns the value of the '<em><b>Imported Unit Element</b></em>' attribute.
+	 * Returns the value of the '<em><b>Imported Unit Element</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Imported Unit Element</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Imported Unit Element</em>' attribute.
-	 * @see #setImportedUnitElement(String)
+	 * @return the value of the '<em>Imported Unit Element</em>' attribute list.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getImportCS_ImportedUnitElement()
 	 * @model
 	 * @generated
 	 */
-	String getImportedUnitElement();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Imported Unit Element</em>' attribute.
-	 * @see #getImportedUnitElement()
-	 * @generated
-	 */
-	void setImportedUnitElement(String value);
+	EList<String> getImportedUnitElement();
 
 	/**
 	 * Returns the value of the '<em><b>All</b></em>' attribute.

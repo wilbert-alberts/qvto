@@ -2288,7 +2288,7 @@ public interface QvtoperationalcsPackage
 	int IMPORT_CS__UNIT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute.
+	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2495,7 +2495,7 @@ public interface QvtoperationalcsPackage
 	int LIBRARY_IMPORT_CS__UNIT = IMPORT_CS__UNIT;
 
 	/**
-	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute.
+	 * The feature id for the '<em><b>Imported Unit Element</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -4222,10 +4222,10 @@ public interface QvtoperationalcsPackage
 	EReference getImportCS_Unit();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement <em>Imported Unit Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Imported Unit Element</em>'.
+	 * @return the meta object for the attribute list '<em>Imported Unit Element</em>'.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS#getImportedUnitElement()
 	 * @see #getImportCS()
 	 * @generated
@@ -6195,7 +6195,7 @@ public interface QvtoperationalcsPackage
 		EReference IMPORT_CS__UNIT = eINSTANCE.getImportCS_Unit();
 
 		/**
-		 * The meta object literal for the '<em><b>Imported Unit Element</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Imported Unit Element</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

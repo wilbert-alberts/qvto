@@ -2,11 +2,14 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
@@ -42,24 +45,14 @@ public class ImportCSImpl
 	protected UnitCS unit;
 
 	/**
-	 * The default value of the '{@link #getImportedUnitElement() <em>Imported Unit Element</em>}' attribute.
+	 * The cached value of the '{@link #getImportedUnitElement() <em>Imported Unit Element</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getImportedUnitElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTED_UNIT_ELEMENT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getImportedUnitElement() <em>Imported Unit Element</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getImportedUnitElement()
-	 * @generated
-	 * @ordered
-	 */
-	protected String importedUnitElement = IMPORTED_UNIT_ELEMENT_EDEFAULT;
+	protected EList<String> importedUnitElement;
 
 	/**
 	 * The default value of the '{@link #isAll() <em>All</em>}' attribute.
@@ -145,20 +138,11 @@ public class ImportCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getImportedUnitElement() {
+	public EList<String> getImportedUnitElement() {
+		if (importedUnitElement == null) {
+			importedUnitElement = new EDataTypeUniqueEList<String>(String.class, this, QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT);
+		}
 		return importedUnitElement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setImportedUnitElement(String newImportedUnitElement) {
-		String oldImportedUnitElement = importedUnitElement;
-		importedUnitElement = newImportedUnitElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT, oldImportedUnitElement, importedUnitElement));
 	}
 
 	/**
@@ -245,7 +229,8 @@ public class ImportCSImpl
 				setUnit((UnitCS)newValue);
 				return;
 			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
-				setImportedUnitElement((String)newValue);
+				getImportedUnitElement().clear();
+				getImportedUnitElement().addAll((Collection<? extends String>)newValue);
 				return;
 			case QvtoperationalcsPackage.IMPORT_CS__ALL:
 				setAll((Boolean)newValue);
@@ -265,7 +250,7 @@ public class ImportCSImpl
 				setUnit((UnitCS)null);
 				return;
 			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
-				setImportedUnitElement(IMPORTED_UNIT_ELEMENT_EDEFAULT);
+				getImportedUnitElement().clear();
 				return;
 			case QvtoperationalcsPackage.IMPORT_CS__ALL:
 				setAll(ALL_EDEFAULT);
@@ -284,7 +269,7 @@ public class ImportCSImpl
 			case QvtoperationalcsPackage.IMPORT_CS__UNIT:
 				return unit != null;
 			case QvtoperationalcsPackage.IMPORT_CS__IMPORTED_UNIT_ELEMENT:
-				return IMPORTED_UNIT_ELEMENT_EDEFAULT == null ? importedUnitElement != null : !IMPORTED_UNIT_ELEMENT_EDEFAULT.equals(importedUnitElement);
+				return importedUnitElement != null && !importedUnitElement.isEmpty();
 			case QvtoperationalcsPackage.IMPORT_CS__ALL:
 				return all != ALL_EDEFAULT;
 		}

@@ -143,7 +143,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ImportCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="#//UnitCS"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedUnitElement" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedUnitElement" upperBound="-1"
+        eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ImportKindEnum">
