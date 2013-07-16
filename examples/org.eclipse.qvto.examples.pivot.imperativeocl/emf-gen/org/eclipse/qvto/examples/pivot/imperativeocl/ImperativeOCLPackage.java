@@ -2072,15 +2072,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = PivotPackage.LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2088,6 +2079,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = PivotPackage.LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = PivotPackage.LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Imperative Loop Exp</em>' class.
@@ -2253,15 +2253,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int FOR_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2269,6 +2260,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int FOR_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -2461,15 +2461,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_ITERATE_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_LOOP_EXP___GET_VALUE__TYPE_STRING;
 
 	/**
-	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate No Initializers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2477,6 +2468,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_ITERATE_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Source Is Collection</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP = IMPERATIVE_LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -3302,15 +3302,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
 
 	/**
-	 * The operation id for the '<em>Validate Argument Count</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3318,6 +3309,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Argument Count</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.

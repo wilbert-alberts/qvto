@@ -2865,15 +2865,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int IMPERATIVE_CALL_EXP___GET_REFERRED_ELEMENT = PivotPackage.OPERATION_CALL_EXP___GET_REFERRED_ELEMENT;
 
 	/**
-	 * The operation id for the '<em>Validate Argument Count</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2881,6 +2872,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Argument Count</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = PivotPackage.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
@@ -4039,15 +4039,6 @@ public interface QVTOperationalPackage extends EPackage {
 	int MAPPING_CALL_EXP___GET_REFERRED_ELEMENT = IMPERATIVE_CALL_EXP___GET_REFERRED_ELEMENT;
 
 	/**
-	 * The operation id for the '<em>Validate Argument Count</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
-
-	/**
 	 * The operation id for the '<em>Validate Argument Type Is Conformant</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4055,6 +4046,15 @@ public interface QVTOperationalPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Argument Count</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP = IMPERATIVE_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Accept</em>' operation.
