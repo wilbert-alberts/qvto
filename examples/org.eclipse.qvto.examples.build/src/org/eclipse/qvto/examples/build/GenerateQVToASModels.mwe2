@@ -131,8 +131,12 @@ Workflow {
     	superProjectName = oclProjectName
     	superProjectPrefix = oclProjectPrefix
     	javaFolder = javaSrcFolder
+    	genModelFile = imperativeOclGenModelProjectPath
     	modelPackageName = imperativeOclModelPackage
-    	superVisitorPackageName = oclModelPackage
+    	visitorPackageName = imperativeOclVisitorPackage
+    	visitorClassName = imperativeOclVisitorName
+    	superVisitorPackageName = oclVisitorPackage
+    	superVisitorClassName = oclVisitorName
     	visitablePackageName = oclVisitablePackage
     	visitableClassName = oclVisitableName
     }
@@ -143,8 +147,12 @@ Workflow {
     	superProjectName = imperativeOclProjectName
     	superProjectPrefix = imperativeOclProjectPrefix
     	javaFolder = javaSrcFolder
+    	genModelFile = qvtOperationalGenModelProjectPath
     	modelPackageName = qvtOperationalModelPackage
-    	superVisitorPackageName = imperativeOclModelPackage
+    	visitorPackageName = qvtOperationalVisitorPackage
+    	visitorClassName = qvtOperationalVisitorName
+    	superVisitorPackageName = imperativeOclVisitorPackage
+    	superVisitorClassName = imperativeOclVisitorName
     	visitablePackageName = oclVisitablePackage
     	visitableClassName = oclVisitableName
     }
