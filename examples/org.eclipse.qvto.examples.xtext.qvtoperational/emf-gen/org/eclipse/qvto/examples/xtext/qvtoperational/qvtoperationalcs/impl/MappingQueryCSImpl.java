@@ -217,13 +217,7 @@ public class MappingQueryCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isSimpleDefinition: ");
-		result.append(isSimpleDefinition);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // MappingQueryCSImpl

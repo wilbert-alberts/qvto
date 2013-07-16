@@ -219,13 +219,7 @@ public class MetamodelCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (metamodelKind: ");
-		result.append(metamodelKind);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // MetamodelCSImpl

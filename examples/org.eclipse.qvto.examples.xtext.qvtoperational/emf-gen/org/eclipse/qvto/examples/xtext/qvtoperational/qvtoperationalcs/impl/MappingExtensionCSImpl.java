@@ -219,13 +219,7 @@ public class MappingExtensionCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (kind: ");
-		result.append(kind);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // MappingExtensionCSImpl

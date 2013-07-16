@@ -241,13 +241,7 @@ public class ResolveInExpCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (inMappingName: ");
-		result.append(inMappingName);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ResolveInExpCSImpl

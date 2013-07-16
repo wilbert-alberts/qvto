@@ -289,15 +289,7 @@ public class OppositePropertyCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isNavigable: ");
-		result.append(isNavigable);
-		result.append(", simpleNameCS: ");
-		result.append(simpleNameCS);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // OppositePropertyCSImpl

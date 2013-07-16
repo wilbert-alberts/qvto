@@ -372,17 +372,7 @@ public class ClassifierProperty2CSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (stereotypeQualifiers: ");
-		result.append(stereotypeQualifiers);
-		result.append(", featureKeys: ");
-		result.append(featureKeys);
-		result.append(", isOrdered: ");
-		result.append(isOrdered);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ClassifierProperty2CSImpl

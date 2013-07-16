@@ -4,23 +4,18 @@
  * </copyright>
  *
  * This code is auto-generated
- * from: model/QVTOperationalCS.genmodel
- * by: org.eclipse.ocl.examples.build.acceleo.GenerateVisitor
- * defined by: org.eclipse.ocl.examples.build.acceleo.generateVisitors.mtl
- * invoked by: org.eclipse.ocl.examples.build.utilities.*
- * from: org.eclipse.ocl.examples.build.*.mwe2
+ * from: org.eclipse.qvto.examples.xtext.qvtoperational/model/QVTOperationalCS.genmodel
  *
  * Do not edit it.
- *
- * $Id$
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSPreOrderVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+
 /**
  * An AbstractQVTOperationalCSPreOrderVisitor provides a default implementation for each
  * visitXxx method that delegates to the visitYyy method of the first
@@ -39,7 +34,7 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 	 */
 	protected AbstractQVTOperationalCSPreOrderVisitor(@NonNull CS2PivotConversion context) {
 		super(context);
-	}	
+	}
 
 	public @Nullable Continuation<?> visitClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS csElement) {
 		return visitClassCS(csElement);

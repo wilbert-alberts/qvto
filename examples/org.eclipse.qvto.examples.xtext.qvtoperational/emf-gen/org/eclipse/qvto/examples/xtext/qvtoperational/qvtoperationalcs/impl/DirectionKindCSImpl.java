@@ -164,13 +164,7 @@ public class DirectionKindCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (directionKind: ");
-		result.append(directionKind);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // DirectionKindCSImpl

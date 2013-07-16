@@ -353,15 +353,7 @@ public class VariableInitializationCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (simpleNameCS: ");
-		result.append(simpleNameCS);
-		result.append(", withResult: ");
-		result.append(withResult);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // VariableInitializationCSImpl

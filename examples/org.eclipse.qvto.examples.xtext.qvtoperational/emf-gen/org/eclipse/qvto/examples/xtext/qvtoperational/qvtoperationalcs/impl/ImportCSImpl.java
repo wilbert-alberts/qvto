@@ -283,15 +283,7 @@ public class ImportCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (importedUnitElement: ");
-		result.append(importedUnitElement);
-		result.append(", all: ");
-		result.append(all);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ImportCSImpl

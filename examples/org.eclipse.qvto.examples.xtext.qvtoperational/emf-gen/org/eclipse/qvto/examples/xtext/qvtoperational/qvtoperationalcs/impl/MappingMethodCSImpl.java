@@ -220,13 +220,7 @@ public abstract class MappingMethodCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (blackBox: ");
-		result.append(blackBox);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // MappingMethodCSImpl

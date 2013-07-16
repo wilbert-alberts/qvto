@@ -162,13 +162,7 @@ public class ModuleKindCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (moduleKind: ");
-		result.append(moduleKind);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ModuleKindCSImpl

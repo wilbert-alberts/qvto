@@ -255,13 +255,7 @@ public class UnitCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (segment: ");
-		result.append(segment);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // UnitCSImpl

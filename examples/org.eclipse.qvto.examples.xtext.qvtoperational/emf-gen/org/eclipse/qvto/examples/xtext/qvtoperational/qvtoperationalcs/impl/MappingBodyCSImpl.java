@@ -162,13 +162,7 @@ public class MappingBodyCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hasPopulationKeyword: ");
-		result.append(hasPopulationKeyword);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // MappingBodyCSImpl

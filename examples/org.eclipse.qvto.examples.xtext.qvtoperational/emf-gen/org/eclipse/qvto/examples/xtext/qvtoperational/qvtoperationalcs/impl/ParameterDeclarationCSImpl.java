@@ -324,15 +324,7 @@ public class ParameterDeclarationCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (simpleNameCS: ");
-		result.append(simpleNameCS);
-		result.append(", directionKind: ");
-		if (directionKindESet) result.append(directionKind); else result.append("<unset>");
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ParameterDeclarationCSImpl

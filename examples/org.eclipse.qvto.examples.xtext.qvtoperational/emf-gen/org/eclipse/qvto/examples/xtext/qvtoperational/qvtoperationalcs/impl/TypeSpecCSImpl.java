@@ -241,13 +241,7 @@ public class TypeSpecCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (simpleNameCS: ");
-		result.append(simpleNameCS);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // TypeSpecCSImpl

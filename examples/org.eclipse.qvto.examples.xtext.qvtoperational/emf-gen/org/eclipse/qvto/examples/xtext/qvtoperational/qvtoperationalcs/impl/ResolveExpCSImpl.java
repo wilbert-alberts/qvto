@@ -401,17 +401,7 @@ public class ResolveExpCSImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (one: ");
-		result.append(one);
-		result.append(", isInverse: ");
-		result.append(isInverse);
-		result.append(", isDeferred: ");
-		result.append(isDeferred);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } // ResolveExpCSImpl
