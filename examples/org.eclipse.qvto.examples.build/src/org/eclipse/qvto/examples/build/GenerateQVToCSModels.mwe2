@@ -116,15 +116,15 @@ Workflow {
 //    	derivedVisitorInterfaceQualifiedName = "${qvtOperationalXtextProjectName}.qvtoperationalcs.util.${qvtOperationalXtextProjectPrefix}Visitor"
 //    }
     
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-		genModel = imperativeOclXtextGenModelPath
-		clearResourceSet = false
-    }
-    
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-		genModel = qvtOperationalXtextGenModelPath
-		clearResourceSet = false
-    }
+//    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+//		genModel = imperativeOclXtextGenModelPath
+//		clearResourceSet = false
+//    }
+//    
+//    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+//		genModel = qvtOperationalXtextGenModelPath
+//		clearResourceSet = false
+//    }
     
 //    component = GenerateCS2ASVisitors { resourceSet = resourceSet
 //    	genModelFile = imperativeOclXtextGenModelProjectPath // FIXME change this when changing from automatically generated MM to a manual one located in /model
