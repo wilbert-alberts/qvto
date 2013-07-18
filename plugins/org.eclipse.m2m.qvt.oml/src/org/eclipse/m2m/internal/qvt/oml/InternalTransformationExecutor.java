@@ -300,9 +300,9 @@ public class InternalTransformationExecutor {
 			ModelExtent nextArg = args[argCount++];
 
 			if (modelParam.getKind() != org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind.OUT) {
-				nextExtent = new ModelParameterExtent(nextArg.getContents(), null, modelParam);
+				nextExtent = new ModelParameterExtent(nextArg.getContents(), getResourceSet(), modelParam);
 			} else {
-				nextExtent = new ModelParameterExtent();
+				nextExtent = new ModelParameterExtent(getResourceSet());
 			}
 
 			extents.add(nextExtent);

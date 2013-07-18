@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -70,10 +69,6 @@ public class ModelExtentHelper {
 		fResourceSet = resSet;
 	}
 	
-	public ModelExtentHelper(OperationalTransformation transformation, List<URI> modelExtentURIs) {
-		this(transformation, modelExtentURIs, new ResourceSetImpl());
-	}
-		
 	public ResourceSet getResourceSet() {
 		return fResourceSet;
 	};
@@ -137,7 +132,7 @@ public class ModelExtentHelper {
 	}
 	
 	public List<ModelExtent> loadExtents() throws DiagnosticException {
-		fResourceSet.getResources().clear();
+		//fResourceSet.getResources().clear();
 		
 		List<ModelParameter> params = fTransformation.getModelParameter();
 		if(params.size() != fModelExtentURIs.size()) {

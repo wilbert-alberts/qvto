@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -407,14 +408,21 @@ public class EmfUtil {
 	}
 	
 	public static void cleanupResourceSet(ResourceSet rs) {
+		URI uri = URI.createURI(""); //$NON-NLS-1$
+		
 		for (Resource res : rs.getResources()) {
-			//res.unload();
+//			for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
+//				EObject eObject = it.next();
+//				eObject.eAdapters().clear();				
+//			}
+//			res.getContents().clear();
+//			res.eAdapters().clear();
 
 			for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
 				EObject eObject = it.next();
-				eObject.eAdapters().clear();				
+				((InternalEObject) eObject).eSetProxyURI(uri);
 			}
-			res.eAdapters().clear();			
+			res.unload();
 		}
 		rs.getResources().clear();
 		rs.eAdapters().clear();
