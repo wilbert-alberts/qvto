@@ -161,7 +161,7 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 	        if (SOURCE_CONTAINER.equals(element.getName())) {
 		        String namespace = element.getNamespaceIdentifier();
 		        String containerPath = element.getAttribute(CONTAINER_PATH);
-		        if (containerPath == null || containerPath.trim().isEmpty()) {
+		        if (containerPath == null || containerPath.trim().length() == 0) {
 		        	continue;
 		        }
 		        Set<IPath> containers = sourceContainers.get(namespace);
