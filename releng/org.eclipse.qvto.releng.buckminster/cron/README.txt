@@ -8,7 +8,7 @@ This is a release engineer task. To configure that:
 A new milestone build may be explicitly promoted by:
 
 logon to build.eclipse.org
-ant -f /shared/jobs/buckminster-mmt-qvto-3.3/lastSuccessful/archive/publishroot/publisher.ant -Dbuild.archives=/shared/jobs/buckminster-mmt-qvto-3.3/lastSuccessful/archive &> logs/mmt-qvto-publishing-3.3.log 
+ant -f /shared/jobs/qvto-luna-master/lastSuccessful/archive/publishroot/publisher.ant -Dbuild.archives=/shared/jobs/qvto-luna-master/lastSuccessful/archive &> logs/qvto-luna-master-publishing.log 
 
 Check that http://www.eclipse.org/mmt/downloads/index.php?project=qvto shows the new build with credible sizes
 
@@ -17,10 +17,10 @@ Check that http://www.eclipse.org/mmt/downloads/index.php?project=qvto shows the
 A new milestone build can be added to the composite repository by:
 
 logon to build.eclipse.org
-cd downloads/mmt/qvto/updates/milestones/3.3.0
+cd downloads/mmt/qvto/updates/milestones/3.4.0
 ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=S201210020848
 
-Check that Install New Software from http://download.eclipse.org/mmt/qvto/updates/milestones/3.3.0 shows the new build.
+Check that Install New Software from http://download.eclipse.org/mmt/qvto/updates/milestones/3.4.0 shows the new build.
 
 ----
 
