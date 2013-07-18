@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -663,29 +663,19 @@ public class QVTOCompiler {
     	return unit;
 	}
     
-    private List<String> getImportQName(ImportCS importCS) {
-		PathNameCS pathNameCS = importCS.getPathNameCS();
-		if(pathNameCS != null && !pathNameCS.getSimpleNames().isEmpty()) {
-			return QvtOperationalParserUtil.getSequenceOfNames(pathNameCS.getSimpleNames());
-		}
-		return null;
-    }
-    
     private void checkForDupImports(List<ImportCS> imports, QvtOperationalEnv env) {
-    	List<List<String>> checkedImports = new ArrayList<List<String>>(imports.size());
+    	if (imports.size() < 2) {
+    		return;
+    	}
+    	Set<Object> checkedImports = new HashSet<Object>(imports.size());
     	List<ImportCS> dupImports = new LinkedList<ImportCS>();
     	
-    	for(ListIterator<ImportCS> it = imports.listIterator(); it.hasNext();) {
-    		ImportCS nextImportCS = it.next();			
-    		List<String> checkedQName = getImportQName(nextImportCS);
-
-    		if(checkedQName != null) {
-    			if(checkedImports.contains(checkedQName)) {
-    				dupImports.add(nextImportCS);
-    			} else {
-    				checkedImports.add(checkedQName);
-    			}
-    		}
+    	for(ImportCS nextImportCS : imports) {
+			if(nextImportCS.getAst() != null && checkedImports.contains(nextImportCS.getAst())) {
+				dupImports.add(nextImportCS);
+			} else {
+				checkedImports.add(nextImportCS.getAst());
+			}
 		}
     	
     	for (ImportCS nextDupImport : dupImports) {
@@ -740,7 +730,7 @@ public class QVTOCompiler {
 
 		public List<QvtOperationalModuleEnv> getModules(List<String> importedUnitQualifiedName) {
 			if(importedUnitQualifiedName == null) {
-				return null;
+				return Collections.emptyList();
 			}
 			
 			CompiledUnit compiledUnit = qName2CU.get(importedUnitQualifiedName);
@@ -748,7 +738,7 @@ public class QVTOCompiler {
 				return compiledUnit.getModuleEnvironments();				
 			}
 			
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

@@ -2299,20 +2299,9 @@ public class QvtOperationalVisitorCS
 	
 	private void importsCS(MappingModuleCS parsedModuleCS, Module module, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver) {
 		
-		List<ModuleUsageCS> moduleUsages = new ArrayList<ModuleUsageCS>(parsedModuleCS.getHeaderCS().getModuleUsages());		
 		EMap<String, List<QvtOperationalModuleEnv>> importMap = new BasicEMap<String, List<QvtOperationalModuleEnv>>(5);
 		
-		Set<String> usedModulePathes = new HashSet<String>();
-		for (ModuleUsageCS moduleUsageCS : moduleUsages) {
-			for (ModuleRefCS moduleRefCS : moduleUsageCS.getModuleRefs()) {
-				PathNameCS modulePathNameCS = moduleRefCS.getPathNameCS();
-				if (modulePathNameCS != null) {
-					String modulePath = QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS);
-					usedModulePathes.add(modulePath);
-				}
-			}
-		}
-	    
+		// first pass: process all valid imports
 		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
 			if(nextImportedCS.getPathNameCS() == null) {
 				// nothing meaningful to represent in AST
@@ -2320,57 +2309,106 @@ public class QvtOperationalVisitorCS
 			}
 
 			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
-			PathNameCS importedUnitPathCS = nextImportedCS.getPathNameCS();
-			EList<SimpleNameCS> importedUnitQName = importedUnitPathCS.getSimpleNames();
+			EList<SimpleNameCS> importedUnitQName = nextImportedCS.getPathNameCS().getSimpleNames();
 			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(QvtOperationalParserUtil.getSequenceOfNames(importedUnitQName));
 			
-			if(moduleEnvironments != null && !moduleEnvironments.isEmpty()) {
-				String importedUnitPath = QvtOperationalParserUtil.getStringRepresentation(importedUnitPathCS);
-				if (false == usedModulePathes.contains(importedUnitPath)) {
-					// we might have duplicates in imports, so avoid exceptions in environments
-					usedModulePathes.add(importedUnitPath);
-					
-					// process imports here only in case of the legacy implicit import by extension, 
-					// pass the responsibility to module usage analysis						
-					ModuleUsageCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleUsageCS();
-					result.setImportKind(ImportKindEnum.EXTENSION);
-	
-					PathNameCS pathNameCS = CSTFactory.eINSTANCE.createPathNameCS();
-					for (SimpleNameCS simpleNameCS : importedUnitPathCS.getSimpleNames()) {
-						SimpleNameCS copyCS = CSTFactory.eINSTANCE.createSimpleNameCS();
-						copyCS.setType(simpleNameCS.getType());
-						copyCS.setValue(simpleNameCS.getValue());
-						pathNameCS.getSimpleNames().add(copyCS);
-					}
-					
-					ModuleRefCS moduleRefCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleRefCS();
-					moduleRefCS.setPathNameCS(pathNameCS);
-					moduleRefCS.setStartOffset(importedUnitPathCS.getStartOffset());
-					moduleRefCS.setEndOffset(importedUnitPathCS.getEndOffset());
-					result.getModuleRefs().add(moduleRefCS);
-					
-					moduleUsages.add(result);
-				}
+			if(moduleEnvironments.isEmpty()) {
+				// skip module which has compilation error(s)
+				continue;
+			}
+			
+			for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
+				URI sourceURI = getSourceURI(nextImportedEnv);
+				nextImportedCS.setAst(sourceURI);
+				nextImportedCS.getPathNameCS().setAst(sourceURI);
+			}
+			
+			importMap.put(unitQualifiedName, moduleEnvironments);				
+			
+			// report legacy library import statements
+			if(nextImportedCS instanceof LibraryImportCS) {
+				// warn about specific library import deprecation
+				env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportStatement, new Object[] { unitQualifiedName }), nextImportedCS.getPathNameCS());
+			}
+		}
 
-				for (QvtOperationalModuleEnv nextImportedEnv : moduleEnvironments) {
-					URI sourceURI = getSourceURI(nextImportedEnv);
-					nextImportedCS.setAst(sourceURI);
-					nextImportedCS.getPathNameCS().setAst(sourceURI);
-					
-					Module importedModule = nextImportedEnv.getModuleContextType();
-					if(importedModule == null) {
-						// nothing to import in, no module was successfully parsed
-						continue;
-					}
+		List<ModuleUsageCS> moduleUsages = new ArrayList<ModuleUsageCS>(parsedModuleCS.getHeaderCS().getModuleUsages());
+		
+		// make set of module imports corresponding to module usage references
+		Set<String> usedModulePathes = new HashSet<String>();
+		for (ModuleUsageCS moduleUsageCS : moduleUsages) {
+			for (ModuleRefCS moduleRefCS : moduleUsageCS.getModuleRefs()) {
+				PathNameCS modulePathNameCS = moduleRefCS.getPathNameCS();
+				if (modulePathNameCS == null) {
+					continue;
 				}
 				
-				importMap.put(unitQualifiedName, moduleEnvironments);				
+	    		String moduleName = QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS.getSimpleNames(), "."); //$NON-NLS-1$
+				List<QvtOperationalModuleEnv> moduleEnvs = importMap.get(moduleName);
 				
-				// report legacy library import statements
-				if(nextImportedCS instanceof LibraryImportCS) {
-					// warn about specific library import deprecation
-					env.reportWarning(NLS.bind(ValidationMessages.DeprecatedLibraryImportStatement, new Object[] { unitQualifiedName }), nextImportedCS.getPathNameCS());
+				if (moduleEnvs != null) {
+					usedModulePathes.add(moduleName);
 				}
+				else if (modulePathNameCS.getSimpleNames().size() == 1) {
+					// backward compatibility on using short module name as module reference				
+		    		moduleName = modulePathNameCS.getSimpleNames().get(0).getValue();
+
+	    			done:
+	    			for (String unitQName : importMap.keySet()) {
+	    				List<QvtOperationalModuleEnv> localModuleEnvs = importMap.get(unitQName);
+	    				
+	    				for (QvtOperationalModuleEnv nextModuleEnv : localModuleEnvs) {
+							Module nextImportedModule = nextModuleEnv.getModuleContextType();
+							if (nextImportedModule != null && moduleName.equals(nextImportedModule.getName())) {
+								usedModulePathes.add(unitQName);
+								break done;
+							}
+	    				}
+	    			}
+				}
+			}
+		}
+	    
+		// second pass: for all valid imports create new 'extension' module usage reference in case module import doesn't have corresponding usage reference 
+		for (ImportCS nextImportedCS : parsedModuleCS.getImports()) {			
+			if(nextImportedCS.getPathNameCS() == null) {
+				// nothing meaningful to represent in AST
+				continue;
+			}
+
+			String unitQualifiedName = QvtOperationalParserUtil.getStringRepresentation(nextImportedCS.getPathNameCS(), "."); //$NON-NLS-1$			
+			EList<SimpleNameCS> importedUnitQName = nextImportedCS.getPathNameCS().getSimpleNames();
+			List<QvtOperationalModuleEnv> moduleEnvironments = importResolver.getModules(QvtOperationalParserUtil.getSequenceOfNames(importedUnitQName));
+			
+			if(moduleEnvironments.isEmpty()) {
+				// skip module which has compilation error(s)
+				continue;
+			}
+			
+			if (!usedModulePathes.contains(unitQualifiedName)) {
+				// we might have duplicates in imports, so avoid exceptions in environments
+				usedModulePathes.add(unitQualifiedName);
+				
+				// process imports here only in case of the legacy implicit import by extension, 
+				// pass the responsibility to module usage analysis						
+				ModuleUsageCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleUsageCS();
+				result.setImportKind(ImportKindEnum.EXTENSION);
+
+				PathNameCS pathNameCS = CSTFactory.eINSTANCE.createPathNameCS();
+				for (SimpleNameCS simpleNameCS : nextImportedCS.getPathNameCS().getSimpleNames()) {
+					SimpleNameCS copyCS = CSTFactory.eINSTANCE.createSimpleNameCS();
+					copyCS.setType(simpleNameCS.getType());
+					copyCS.setValue(simpleNameCS.getValue());
+					pathNameCS.getSimpleNames().add(copyCS);
+				}
+				
+				ModuleRefCS moduleRefCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createModuleRefCS();
+				moduleRefCS.setPathNameCS(pathNameCS);
+				moduleRefCS.setStartOffset(nextImportedCS.getPathNameCS().getStartOffset());
+				moduleRefCS.setEndOffset(nextImportedCS.getPathNameCS().getEndOffset());
+				result.getModuleRefs().add(moduleRefCS);
+				
+				moduleUsages.add(result);
 			}
 		}
 		

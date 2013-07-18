@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2009, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 310991
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -21,15 +22,19 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.expressions.Variable;
@@ -252,5 +257,30 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		for (ModelParameter modelParam : module.getModelParameter()) {
 			addElement(modelParam.getName(), modelParam, true);
 		}
-	}	
+	}
+	
+	@Override
+    public List<EStructuralFeature> getAdditionalAttributes(EClassifier classifier) {
+    	
+    	List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
+    	result.addAll(super.getAdditionalAttributes(classifier));
+    	
+    	// extract features of extended modules, which are no explicit supertypes (fixed by bugs 302594/310991)	
+		if (classifier instanceof Module) {
+    		Module module = (Module) classifier;
+        	
+	    	for (ModuleImport imp : module.getModuleImport()) {
+				if (imp.getKind() == ImportKind.EXTENSION || imp.getImportedModule() instanceof Library) {
+					Module extendedModule = imp.getImportedModule();
+					
+					List<EStructuralFeature> attributes = getUMLReflection().getAttributes(extendedModule);
+					attributes.removeAll(result);
+					result.addAll(attributes);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
 }
