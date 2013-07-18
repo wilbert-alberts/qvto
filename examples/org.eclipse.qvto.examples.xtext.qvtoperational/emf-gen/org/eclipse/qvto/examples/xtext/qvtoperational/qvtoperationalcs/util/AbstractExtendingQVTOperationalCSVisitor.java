@@ -238,7 +238,7 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 	}
 
 	public @Nullable R visitTopLevelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS object) {
-		return visitElementCS(object);
+		return visitModelElementCS(object);
 	}
 
 	public @Nullable R visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS object) {

@@ -144,7 +144,10 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.TOP_LEVEL_CS: {
 				TopLevelCS topLevelCS = (TopLevelCS)theEObject;
 				T result = caseTopLevelCS(topLevelCS);
+				if (result == null) result = caseModelElementCS(topLevelCS);
+				if (result == null) result = casePivotableElementCS(topLevelCS);
 				if (result == null) result = caseElementCS(topLevelCS);
+				if (result == null) result = casePivotable(topLevelCS);
 				if (result == null) result = caseVisitableCS(topLevelCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

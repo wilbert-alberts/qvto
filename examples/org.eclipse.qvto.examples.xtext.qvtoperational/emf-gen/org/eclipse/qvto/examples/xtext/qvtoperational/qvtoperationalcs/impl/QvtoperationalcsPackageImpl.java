@@ -2370,7 +2370,7 @@ public class QvtoperationalcsPackageImpl
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		topLevelCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		topLevelCSEClass.getESuperTypes().add(theBaseCSTPackage.getModelElementCS());
 		parameterCSEClass.getESuperTypes().add(theBaseCSTPackage.getParameterCS());
 		initPartCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		metamodelCSEClass.getESuperTypes().add(theBaseCSTPackage.getPackageCS());

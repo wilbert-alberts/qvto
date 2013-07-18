@@ -77,7 +77,43 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int TOP_LEVEL_CS__LOGICAL_PARENT = BaseCSTPackage.MODEL_ELEMENT_CS__LOGICAL_PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Pivot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__PIVOT = BaseCSTPackage.MODEL_ELEMENT_CS__PIVOT;
+
+	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__OWNED_ANNOTATION = BaseCSTPackage.MODEL_ELEMENT_CS__OWNED_ANNOTATION;
+
+	/**
+	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__ORIGINAL_XMI_ID = BaseCSTPackage.MODEL_ELEMENT_CS__ORIGINAL_XMI_ID;
+
+	/**
+	 * The feature id for the '<em><b>Csi</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__CSI = BaseCSTPackage.MODEL_ELEMENT_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' containment reference list.
@@ -85,7 +121,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__IMPORT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int TOP_LEVEL_CS__IMPORT = BaseCSTPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Unit</b></em>' containment reference list.
@@ -93,7 +129,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__UNIT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int TOP_LEVEL_CS__UNIT = BaseCSTPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Top Level CS</em>' class.
@@ -101,7 +137,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSTPackage.MODEL_ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.ImportCSImpl <em>Import CS</em>}' class.

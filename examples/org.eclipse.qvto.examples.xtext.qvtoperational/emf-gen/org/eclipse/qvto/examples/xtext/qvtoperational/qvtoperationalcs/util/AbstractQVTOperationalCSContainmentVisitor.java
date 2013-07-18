@@ -37,7 +37,7 @@ public abstract class AbstractQVTOperationalCSContainmentVisitor
 	}
 
 	public @Nullable Continuation<?> visitClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS csElement) {
-		return visitClassCS(csElement);
+		return super.visitClassCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitClassifierDefCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS csElement) {
@@ -241,7 +241,7 @@ public abstract class AbstractQVTOperationalCSContainmentVisitor
 	}
 
 	public @Nullable Continuation<?> visitTopLevelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS csElement) {
-		return visitElementCS(csElement);
+		return visitModelElementCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {
