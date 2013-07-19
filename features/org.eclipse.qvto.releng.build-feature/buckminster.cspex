@@ -39,14 +39,14 @@
 			</cs:prerequisites>
 		</cs:private>
 		
-		<cs:public name="package.mmt-qvto-Update" actor="ant">
+		<cs:public name="package.qvto-Update" actor="ant">
 			<cs:actorProperties>
 				<cs:property key="buildFile" value="packaging.ant" />
 				<cs:property key="targets" value="package.site" />
 			</cs:actorProperties>
 			<cs:properties>
 				<cs:property key="target.platform.ius" value="org.eclipse.m2m.qvt.oml.sdk.source" />			
-				<cs:property key="package.name" value="mmt-qvto-Update" />
+				<cs:property key="package.name" value="qvto-Update" />
 			</cs:properties>
 			<cs:prerequisites>
 				<cs:attribute name="create.category.xml" alias="create.category" />
@@ -56,7 +56,7 @@
 			<cs:products alias="output" base="${buckminster.output}/zips/" />
 		</cs:public>		
 
-		<cs:public name="package.mmt-qvto-SDK" actor="ant">
+		<cs:public name="package.qvto-SDK" actor="ant">
 			<cs:actorProperties>
 				<cs:property key="buildFile" value="packaging.ant" />
 				<cs:property key="targets" value="package.ius" />
@@ -64,7 +64,7 @@
 			<cs:properties>
 				<cs:property key="content.ius" value="org.eclipse.m2m.qvt.oml.sdk.feature.group" />
 				<!--cs:property key="target.platform.ius" value="lpg.runtime.java,lpg.runtime.java.source" /-->
-				<cs:property key="package.name" value="mmt-qvto-SDK" />
+				<cs:property key="package.name" value="qvto-SDK" />
 			</cs:properties>
 			<cs:prerequisites>
 				<cs:attribute name="site.p2" alias="repository" />
@@ -73,14 +73,14 @@
 			<cs:products alias="output" base="${buckminster.output}/zips/" />
 		</cs:public>
 		
-		<cs:public name="package.mmt-qvto-examples" actor="ant">
+		<cs:public name="package.qvto-examples" actor="ant">
 			<cs:actorProperties>
 				<cs:property key="buildFile" value="packaging.ant" />
 				<cs:property key="targets" value="package.ius" />
 			</cs:actorProperties>
 			<cs:properties>
 				<cs:property key="content.ius" value="org.eclipse.m2m.qvt.oml.examples.feature.group" />
-				<cs:property key="package.name" value="mmt-qvto-examples" />
+				<cs:property key="package.name" value="qvto-examples" />
 			</cs:properties>
 			<cs:prerequisites>
 				<cs:attribute name="site.p2" alias="repository" />
@@ -100,9 +100,9 @@
 
 	<cs:groups>
 		<cs:public name="build">
-			<cs:attribute name="package.mmt-qvto-Update" />
-			<cs:attribute name="package.mmt-qvto-SDK" /> 
-			<cs:attribute name="package.mmt-qvto-examples" /> 
+			<cs:attribute name="package.qvto-Update" />
+			<cs:attribute name="package.qvto-SDK" /> 
+			<cs:attribute name="package.qvto-examples" /> 
 		</cs:public>
 	</cs:groups>
 </cs:cspecExtension>
