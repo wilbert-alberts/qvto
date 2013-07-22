@@ -49,10 +49,11 @@ COMPACT_BUILD_ID="${COMPACT_BUILD_ID:0:12}"
 	echo "buckminster.temp.root=${WORKSPACE}/buildroot/buckminster.temp"
 	echo "eclipse.staging.area=/shared/download-staging.priv/modeling/mmt/qvto"
 	echo "git.qvto.local.repository.location=${WORKSPACE}/org.eclipse.qvto.git"
+	echo "reference.repository=${REFERENCE_REPOSITORY}"
 
 	echo
 	echo "# Sign the jars (added by Hudson job definition)"
-    echo "signing.type=eclipse.local"
+	echo "signing.type=eclipse.local"
 	echo "site.signing=${SITE_SIGNING}"
 
 	echo
