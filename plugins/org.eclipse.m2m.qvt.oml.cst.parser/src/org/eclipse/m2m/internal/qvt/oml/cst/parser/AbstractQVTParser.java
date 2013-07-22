@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 410470
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
@@ -801,11 +802,29 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected final TransformationHeaderCS createTransformationHeaderCS(EList<StringLiteralExpCS> qualifiers, 
+	
+	protected final void setTransformationHeaderQualifiers(TransformationHeaderCS header, 
+			EList<OCLExpressionCS> qualifiers) {
+		for (OCLExpressionCS qualifier : qualifiers) {
+			if (qualifier instanceof StringLiteralExpCS) {
+				header.getQualifiers().add((StringLiteralExpCS)qualifier);
+			}
+			else if (qualifier instanceof SimpleNameCS)	{
+				IToken tokenQualifier = ((SimpleNameCS)qualifier).getStartToken();
+				if (tokenQualifier != null) {
+					StringLiteralExpCS qualifierExp = createStringLiteralExpCS(tokenQualifier);
+					setOffsets(qualifierExp, tokenQualifier);
+					header.getQualifiers().add(qualifierExp);
+				}
+			}
+		}
+	}
+	
+	protected final TransformationHeaderCS createTransformationHeaderCS(EList<OCLExpressionCS> qualifiers, 
 			PathNameCS pathNameCS, SimpleSignatureCS simpleSignatureCS, EList<ModuleUsageCS> transfUsages, 
 			TransformationRefineCS transfRefineCS) {
 				TransformationHeaderCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTransformationHeaderCS();
-				result.getQualifiers().addAll(qualifiers);
+				setTransformationHeaderQualifiers(result, qualifiers);
 				result.getParameters().addAll(simpleSignatureCS.getParams());
 				result.getModuleUsages().addAll(transfUsages);
 				result.setTransformationRefineCS(transfRefineCS);

@@ -10,6 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
  *                         397215, 397959, 358709, 388801, 254962
+ *     Alex Paperno - bugs 410470
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -313,6 +314,7 @@ public class TransformTests {
         		new FilesToFilesData("bug388801", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("bug254962"),
         		new FilesToFilesData("bug325192", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("bug410470"),
         };
     }
 
