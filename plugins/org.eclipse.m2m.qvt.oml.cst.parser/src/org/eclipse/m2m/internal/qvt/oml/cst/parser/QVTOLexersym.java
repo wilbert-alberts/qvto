@@ -18,7 +18,7 @@
 *
 * </copyright>
 *
-* $Id: QVTOLexersym.java,v 1.13 2010/05/14 09:16:04 sboyko Exp $
+* $Id: EssentialOCLLexer.gi,v 1.5 2010/02/11 15:40:41 sboyko Exp $
 */
 /**
 * <copyright>

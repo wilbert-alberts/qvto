@@ -20,7 +20,7 @@
 *        - 300534: Removing the use of deprecated macros.
 * </copyright>
 *
-* $Id: QVTOParsersym.java,v 1.13 2010/05/14 09:16:04 sboyko Exp $
+* $Id: EssentialOCL.gi,v 1.5 2010/02/11 15:40:41 sboyko Exp $
 */
 /**
 * <copyright>
@@ -50,6 +50,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
+*   Alex Paperno - bugs 392429
 *
 * </copyright>
 *

@@ -85,6 +85,7 @@
  * Contributors:
  *   Borland - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
+ *   Alex Paperno - bugs 392429
  *
  * </copyright>
  *
@@ -953,6 +954,17 @@
 							getRhsIToken(2),
 							null,
 							(OCLExpressionCS)getRhsSym(4)
+						);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+					setResult(result);
+		  $EndCode
+		./
+	_property ::= property qvtIdentifierCS ':' typeCS ';' 
+		/.$BeginCode
+					CSTNode result = createLocalPropertyCS(
+							getRhsIToken(2),
+							(TypeCS)getRhsSym(4),
+							null
 						);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
 					setResult(result);
