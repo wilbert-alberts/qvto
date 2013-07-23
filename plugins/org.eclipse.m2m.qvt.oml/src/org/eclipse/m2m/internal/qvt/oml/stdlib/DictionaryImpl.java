@@ -144,6 +144,6 @@ public class DictionaryImpl<KeyT, T> implements Dictionary<KeyT, T> {
 	
 	@Override
 	public String toString() {	
-		return fMap.toString();
+		return "Dict" + fMap.toString(); //$NON-NLS-1$
 	}
 }

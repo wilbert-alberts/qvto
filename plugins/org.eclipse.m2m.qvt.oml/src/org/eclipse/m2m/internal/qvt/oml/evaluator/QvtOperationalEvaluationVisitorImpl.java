@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218
+ *     Alex Paperno - bugs 294127
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -1984,7 +1985,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		
     	for (EStructuralFeature tupleProp : tupleType.oclProperties()) {
 			Object propVal = evalEnv.getValueOf(tupleProp.getName());
-			if(propVal == null) {
+			if(propVal == null && isMapping) {
 				ModelParameter extent = null;
 				for (VarParameter resultParam : resultParams) {
 					if(tupleProp.getName().equals(resultParam.getName())) {
@@ -1994,9 +1995,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					}
 				}
 				
-				if(isMapping) {
-					propVal = createInstance(tupleProp.getEType(), extent);
-				}
+				propVal = createInstance(tupleProp.getEType(), extent);
 			}
 			values.put(tupleProp, propVal);
 			evalEnv.replace(tupleProp.getName(), propVal, tupleProp.getEType());
