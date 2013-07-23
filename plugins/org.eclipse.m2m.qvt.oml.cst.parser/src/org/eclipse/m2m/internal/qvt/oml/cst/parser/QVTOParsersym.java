@@ -25,7 +25,7 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006, 2013 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -34,6 +34,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
+*   Alex Paperno - bugs 314443
 *
 * </copyright>
 *
@@ -74,7 +75,7 @@ public interface QVTOParsersym {
       TK_GREATER_EQUAL = 75,
       TK_LESS_EQUAL = 76,
       TK_NOT_EQUAL = 77,
-      TK_LPAREN = 2,
+      TK_LPAREN = 1,
       TK_RPAREN = 4,
       TK_LBRACE = 61,
       TK_RBRACE = 64,
@@ -102,7 +103,7 @@ public interface QVTOParsersym {
       TK_NOT_EQUAL_EXEQ = 80,
       TK_AT_SIGN = 111,
       TK_self = 36,
-      TK_if = 39,
+      TK_if = 40,
       TK_then = 123,
       TK_else = 112,
       TK_endif = 113,
@@ -111,7 +112,7 @@ public interface QVTOParsersym {
       TK_xor = 87,
       TK_not = 37,
       TK_implies = 97,
-      TK_let = 40,
+      TK_let = 41,
       TK_in = 85,
       TK_true = 29,
       TK_false = 30,
@@ -133,7 +134,7 @@ public interface QVTOParsersym {
       TK_OclInvalid = 23,
       TK_Dict = 25,
       TK_List = 26,
-      TK_break = 41,
+      TK_break = 42,
       TK_switch = 38,
       TK_case = 114,
       TK_xselect = 124,
@@ -144,20 +145,20 @@ public interface QVTOParsersym {
       TK_collectselectOne = 129,
       TK_forEach = 130,
       TK_forOne = 131,
-      TK_compute = 42,
+      TK_compute = 43,
       TK_return = 48,
       TK_var = 49,
-      TK_while = 43,
-      TK_continue = 44,
-      TK_log = 45,
+      TK_while = 44,
+      TK_continue = 45,
+      TK_log = 46,
       TK_assert = 50,
       TK_with = 132,
-      TK_new = 46,
+      TK_new = 47,
       TK_static = 86,
       TK_init = 133,
       TK_end = 88,
       TK_out = 98,
-      TK_object = 47,
+      TK_object = 39,
       TK_transformation = 101,
       TK_import = 134,
       TK_library = 102,
@@ -222,12 +223,12 @@ public interface QVTOParsersym {
       TK_unlimited = 163,
       TK_EOF_TOKEN = 119,
       TK_IDENTIFIER = 3,
-      TK_ERROR_TOKEN = 1;
+      TK_ERROR_TOKEN = 2;
 
     public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
-                 "ERROR_TOKEN", //$NON-NLS-1$
                  "LPAREN", //$NON-NLS-1$
+                 "ERROR_TOKEN", //$NON-NLS-1$
                  "IDENTIFIER", //$NON-NLS-1$
                  "RPAREN", //$NON-NLS-1$
                  "QUOTED_IDENTIFIER", //$NON-NLS-1$
@@ -264,6 +265,7 @@ public interface QVTOParsersym {
                  "self", //$NON-NLS-1$
                  "not", //$NON-NLS-1$
                  "switch", //$NON-NLS-1$
+                 "object", //$NON-NLS-1$
                  "if", //$NON-NLS-1$
                  "let", //$NON-NLS-1$
                  "break", //$NON-NLS-1$
@@ -272,7 +274,6 @@ public interface QVTOParsersym {
                  "continue", //$NON-NLS-1$
                  "log", //$NON-NLS-1$
                  "new", //$NON-NLS-1$
-                 "object", //$NON-NLS-1$
                  "return", //$NON-NLS-1$
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$

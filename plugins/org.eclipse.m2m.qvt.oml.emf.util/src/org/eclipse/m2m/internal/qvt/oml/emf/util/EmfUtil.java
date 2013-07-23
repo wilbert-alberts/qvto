@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -410,7 +411,8 @@ public class EmfUtil {
 	public static void cleanupResourceSet(ResourceSet rs) {
 		URI uri = URI.createURI(""); //$NON-NLS-1$
 		
-		for (Resource res : rs.getResources()) {
+		List<Resource> resCopy = new ArrayList<Resource>(rs.getResources()); 
+		for (Resource res : resCopy) {
 //			for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
 //				EObject eObject = it.next();
 //				eObject.eAdapters().clear();				

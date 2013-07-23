@@ -1,7 +1,7 @@
 --/**
 -- * <copyright>
 -- *
--- * Copyright (c) 2006-2008 Borland Inc.
+-- * Copyright (c) 2006, 2013 Borland Inc.
 -- * All rights reserved.   This program and the accompanying materials
 -- * are made available under the terms of the Eclipse Public License v1.0
 -- * which accompanies this distribution, and is available at
@@ -72,7 +72,7 @@
 	/./**
  * <copyright>
  *
- * Copyright (c) 2006, 2007 Borland Inc.
+ * Copyright (c) 2006, 2013 Borland Inc.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@
  * Contributors:
  *   Borland - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
+ *   Alex Paperno - bugs 314443
  *
  * </copyright>
  *
@@ -699,6 +700,39 @@
 		  $EndCode
 		./
 
+
+	-- 'xcollect' shorthand for object keyword
+	IterateExpCS ::= primaryExpCS '->' object '(' uninitializedVariableCS ')' objectDeclCS expression_block
+		/.$BeginCode
+					BlockExpCS  blockExpCS = (BlockExpCS) getRhsSym(8);
+					ObjectExpCS objectExpCS = setupOutExpCS(
+							(ObjectExpCS) getRhsSym(7),					
+							blockExpCS.getBodyExpressions(),
+							// passing body positions
+							blockExpCS.getStartOffset(),
+							blockExpCS.getEndOffset()
+						); 
+					setOffsets(objectExpCS, getRhsIToken(3), blockExpCS);
+
+					EList<VariableCS> iterators = new BasicEList<VariableCS>();
+					iterators.add((VariableCS) getRhsSym(5));
+					CallExpCS result = createImperativeIterateExpCS(
+							createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"), 
+							iterators,
+							null,
+							objectExpCS,
+							null
+						);
+						
+					result.setSource((OCLExpressionCS) getRhsSym(1));
+					setOffsets(result, getRhsIToken(1), getRhsIToken(8));
+					
+					setResult(result);
+		  $EndCode
+		./
+	
+	
+	
 	-- 'collect' shorthand for switch keyword 
 	IterateExpCS ::= primaryExpCS '->' switch '(' switchDeclaratorCS ')' switchBodyExpCS
 		/.$BeginCode

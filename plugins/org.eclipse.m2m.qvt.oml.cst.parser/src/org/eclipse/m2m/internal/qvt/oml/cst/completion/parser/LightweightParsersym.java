@@ -25,7 +25,7 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006, 2013 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -34,6 +34,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
+*   Alex Paperno - bugs 314443
 *
 * </copyright>
 *
@@ -106,11 +107,11 @@ public interface LightweightParsersym {
       TK_not = 36,
       TK_or = 84,
       TK_xor = 87,
-      TK_if = 39,
+      TK_if = 40,
       TK_then = 123,
       TK_else = 112,
       TK_endif = 113,
-      TK_let = 40,
+      TK_let = 41,
       TK_in = 85,
       TK_false = 29,
       TK_true = 30,
@@ -133,7 +134,7 @@ public interface LightweightParsersym {
       TK_OclVoid = 23,
       TK_Dict = 25,
       TK_List = 26,
-      TK_break = 41,
+      TK_break = 42,
       TK_switch = 38,
       TK_case = 114,
       TK_xselect = 124,
@@ -146,18 +147,18 @@ public interface LightweightParsersym {
       TK_forEach = 130,
       TK_forOne = 131,
       TK_var = 49,
-      TK_while = 42,
-      TK_continue = 43,
-      TK_log = 44,
+      TK_while = 43,
+      TK_continue = 44,
+      TK_log = 45,
       TK_assert = 50,
       TK_with = 132,
-      TK_compute = 45,
-      TK_new = 46,
+      TK_compute = 46,
+      TK_new = 47,
       TK_init = 133,
       TK_static = 86,
       TK_end = 88,
       TK_out = 98,
-      TK_object = 47,
+      TK_object = 39,
       TK_transformation = 101,
       TK_import = 134,
       TK_library = 102,
@@ -264,6 +265,7 @@ public interface LightweightParsersym {
                  "not", //$NON-NLS-1$
                  "self", //$NON-NLS-1$
                  "switch", //$NON-NLS-1$
+                 "object", //$NON-NLS-1$
                  "if", //$NON-NLS-1$
                  "let", //$NON-NLS-1$
                  "break", //$NON-NLS-1$
@@ -272,7 +274,6 @@ public interface LightweightParsersym {
                  "log", //$NON-NLS-1$
                  "compute", //$NON-NLS-1$
                  "new", //$NON-NLS-1$
-                 "object", //$NON-NLS-1$
                  "return", //$NON-NLS-1$
                  "var", //$NON-NLS-1$
                  "assert", //$NON-NLS-1$
