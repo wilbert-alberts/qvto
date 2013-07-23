@@ -8,6 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
+ *     Alex Paperno - bugs 272869
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -2524,6 +2525,11 @@ public class QvtOperationalVisitorCS
 					if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
 						validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
 					}					
+				
+					if (module instanceof Library && !(importedModule instanceof Library) && moduleUsageCS.eContainer() instanceof TransformationHeaderCS) {
+		    			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_libraryCantExtendNonLibrary, 
+		    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS)), moduleRefCS);
+					}
 				}
 				
 				module.getModuleImport().add(moduleImport);
