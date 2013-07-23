@@ -8,6 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bug 392153
+ *     Alex Paperno - bugs 400720
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
@@ -421,6 +423,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			}
 			
 		}
+		else if(object instanceof DynamicEObjectImpl) {
+			for (EClass objParent : ((DynamicEObjectImpl) object).eClass().getEAllSuperTypes()) {
+				if (objParent.getClassifierID() == classifier.getClassifierID())
+					return true;
+			}
+				
+		}
+		
 		
 		// The check bellow is a workarround until MDT OCL has fixed the following bug
 		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=227515
