@@ -2,6 +2,8 @@ modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 	
 transformation DuplicatedNamesDetection(in target : ECORE, in others : ECORE);
 
+// FIXME improve this functionality so that it doesn't need to receive an others ecore. Instead,
+// analyzing via target classes supertypes, we can compute all the involved epacakges to compare with
 main() {
 	var mainPackage = target.rootObjects()![EPackage];
 	var otherPackage = others.rootObjects()![EPackage];
