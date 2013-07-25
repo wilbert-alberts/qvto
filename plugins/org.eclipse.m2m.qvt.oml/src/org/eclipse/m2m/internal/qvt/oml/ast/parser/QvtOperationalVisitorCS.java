@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
- *     Alex Paperno - bugs 272869
+ *     Alex Paperno - bugs 272869, 268636
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -384,6 +384,12 @@ public class QvtOperationalVisitorCS
 				}
 	        }
 		}
+		
+  		if (type instanceof Library) {
+  			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_cantUseLibraryAsType, QvtOperationalTypesUtil.getTypeFullName(type)),
+					typeCS.getStartOffset(), typeCS.getEndOffset());
+		}
+		
 		return type;
 	}
 	
@@ -397,6 +403,7 @@ public class QvtOperationalVisitorCS
 					QvtOperationalParserUtil.getStringRepresentation(typeCS)}),
 					typeCS); */	
 		}
+		
 		return type;
 	}
 	
@@ -4006,6 +4013,7 @@ public class QvtOperationalVisitorCS
 		
 		prop.setEType(type);
 		prop.setInitExpression(exp);
+
 		
 		if (exp != null) {
 			EClassifier realType = exp.getType();
