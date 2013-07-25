@@ -2,7 +2,7 @@ import DuplicatedNamesDetection;
 
 modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 	
-transformation QVToDuplicatedNamesDetection(in qvtocs : ECORE, in imperativecs : ECORE, 
+transformation QVToCSDuplicatedNamesDetection(in qvtocs : ECORE, in imperativecs : ECORE, 
 		in essentialoclcs : ECORE, in basecs : ECORE);
 
 
