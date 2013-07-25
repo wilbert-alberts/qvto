@@ -8,8 +8,8 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     usedGenPackages="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST ../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST ../../org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.genmodel#//imperativeoclcs ../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot"
     importOrganizing="true">
-  <foreignModel>QVTOperationalCS.ecore</foreignModel>
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel/ToString"/>
+  <foreignModel>QVTOperationalCS.ecore</foreignModel>
   <genPackages prefix="Qvtoperationalcs" basePackage="org.eclipse.qvto.examples.xtext.qvtoperational"
       disposableProviderFactory="true" fileExtensions="qvto" ecorePackage="QVTOperationalCS.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperationalCS.ecore#//ClassifierKind">
@@ -67,9 +67,21 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//TopLevelCS/import"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//TopLevelCS/unit"/>
     </genClasses>
-    <genClasses ecoreClass="QVTOperationalCS.ecore#//ParameterCS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//ParameterCS/direction"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//ParameterCS/initPart"/>
+    <genClasses ecoreClass="QVTOperationalCS.ecore#//QVToClassCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//QVToClassCS/intermediate"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperationalCS.ecore#//QVToImportCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//QVToImportCS/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//QVToImportCS/importedUnitElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//QVToImportCS/all"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperationalCS.ecore#//QVToLibraryCS"/>
+    <genClasses ecoreClass="QVTOperationalCS.ecore#//QVToOperationCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//QVToOperationCS/stereotypes"/>
+    </genClasses>
+    <genClasses ecoreClass="QVTOperationalCS.ecore#//QVToParameterCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//QVToParameterCS/direction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//QVToParameterCS/initPart"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//InitPartCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//InitPartCS/initOp"/>
@@ -80,18 +92,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//MetamodelCS/element"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//PrimitiveTypeCS"/>
-    <genClasses ecoreClass="QVTOperationalCS.ecore#//ClassCS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//ClassCS/intermediate"/>
-    </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//ClassifierPropertyCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//ClassifierPropertyCS/stereotypes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//ClassifierPropertyCS/opposite"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//StereotypeQualifierCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//StereotypeQualifierCS/stereotype"/>
-    </genClasses>
-    <genClasses ecoreClass="QVTOperationalCS.ecore#//OperationCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//OperationCS/stereotypes"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//TagCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//TagCS/pathName"/>
@@ -136,11 +142,6 @@
     <genClasses ecoreClass="QVTOperationalCS.ecore#//ImperativeOperationCallExpCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//ImperativeOperationCallExpCS/module"/>
     </genClasses>
-    <genClasses ecoreClass="QVTOperationalCS.ecore#//ImportCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//ImportCS/unit"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//ImportCS/pathNameCS"/>
-    </genClasses>
-    <genClasses ecoreClass="QVTOperationalCS.ecore#//LibraryCS"/>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//LibraryImportCS"/>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//LocalPropertyCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//LocalPropertyCS/typeCS"/>

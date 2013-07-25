@@ -37,8 +37,8 @@ Workflow {
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel"
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel"
     	registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel"
-    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/src-gen/org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCL.genmodel"
-    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.qvtoperational/model/QVTOperational.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.genmodel"
+    	registerGenModelFile = "platform:/resource/org.eclipse.qvto.examples.xtext.qvtoperational/model/QVTOperationalCS.genmodel"
     }
     
     component = DirectoryCleaner {
