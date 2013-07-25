@@ -43,7 +43,7 @@ public class MappingEndCSImpl
 	 * @generated NOT
 	 * @added
 	 */
-	public <R> R accept(final org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor<R> v) {
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
 		return v.visitMappingEndCS(this);
 	}
 
