@@ -27,7 +27,10 @@ import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
 //import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
 //import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
 
-TopLevelCS : ^import+=ImportCS* unit+=UnitElementCS*;
+TopLevelCS : ^import+=ImportCS* 
+	// unit+=UnitElementCS* FIXME
+	ownedNestedPackage+= MetamodelCS
+;
 
 enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
 enum FeatureKey : COMPOSES='composes' | REFERRENCES='references' | READONLY='readonly' | DERIVED='derived' | STATIC='static';
@@ -78,17 +81,16 @@ InitPartCS returns InitPartCS:  // returns ElementCS to make it inherits Element
 MetamodelCS returns MetamodelCS: // MetamodeKind provides extra semantic, we need to retain the kind 
 	metamodelKind=MetamodelKind 
 	name = UnrestrictedName
-	'{' element+=MetamodelElementCS* '}' 
+	'{' (ownedType+=ClassifierCS |
+		ownedType+=EnumerationCS | // FIXME QVTo grammar distincts classifier from enumeration
+		ownedAnnotation+= TagCS)*
+	'}' 
 	';'?
 ;
 
-MetamodelElementCS returns base::ElementCS :
-	(ClassifierCS | TagCS | EnumerationCS )
-	';'
-;
-
 ClassifierCS returns base::ClassifierCS:
-	DataTypeCS | ExceptionCS | ClassCS	
+	(DataTypeCS | ExceptionCS | ClassCS)
+	';'?
 ;
 
 DataTypeCS returns base::DataTypeCS:
@@ -145,12 +147,12 @@ StereotypeQualifierCS returns StereotypeQualifierCS:
 
 MultiplicityCS returns base::MultiplicityBoundsCS: '[' (lowerBound=LOWER '...')? upperBound=UPPER ']';
 
-ClassifierOperationCS returns QVToOperationCS: 
+ClassifierOperationCS returns QVToOperationCS:
 	stereotypes = StereotypeQualifierCS? 
 	qualifier+= FeatureQualifier*
 	name=UnrestrictedName
 	'(' (ownedParameter+= ParameterCS (',' ownedParameter+=ParameterCS)*)? ')'
-	(':' ownedType=TypedMultiplicityRefCS)?	
+	(':' ownedType=TypedMultiplicityRefCS)?
 ;
 
 // FIXME Deviation from official grammar
@@ -158,6 +160,7 @@ EnumerationCS returns base::EnumerationCS:
 	'enum' 
 	name=Identifier
 	(  ('{' (ownedLiterals+=EnumerationLiteralCS (',' ownedLiterals+=EnumerationLiteralCS)*) '}' ))
+	';'?
 ;
 
 EnumerationLiteralCS returns base::EnumerationLiteralCS:
