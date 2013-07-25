@@ -17,7 +17,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * @generated
  */
 public class LibraryImportCSImpl
-		extends ImportCSImpl
+		extends QVToImportCSImpl
 		implements LibraryImportCS {
 
 	/**

@@ -3,28 +3,17 @@
 */
 package org.eclipse.qvto.examples.xtext.qvtoperational.services;
 
+import com.google.inject.Singleton;
+import com.google.inject.Inject;
+
 import java.util.List;
 
-import org.eclipse.ocl.examples.xtext.essentialocl.services.EssentialOCLGrammarAccess;
-import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLGrammarAccess;
-import org.eclipse.xtext.Action;
-import org.eclipse.xtext.Alternatives;
-import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.EnumLiteralDeclaration;
-import org.eclipse.xtext.EnumRule;
-import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.GrammarUtil;
-import org.eclipse.xtext.Group;
-import org.eclipse.xtext.Keyword;
-import org.eclipse.xtext.ParserRule;
-import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.TerminalRule;
-import org.eclipse.xtext.UnorderedGroup;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
+import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.eclipse.qvto.examples.xtext.imperativeocl.services.ImperativeOCLGrammarAccess;
+import org.eclipse.ocl.examples.xtext.essentialocl.services.EssentialOCLGrammarAccess;
 
 @Singleton
 public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
@@ -38,6 +27,15 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cUnitUnitElementCSParserRuleCall_1_0 = (RuleCall)cUnitAssignment_1.eContents().get(0);
 		
+		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+		//
+		//
+		////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+		//
+		//
+		////import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
+		//
+		//
 		//TopLevelCS:
 		//
 		//	^import+=ImportCS* unit+=UnitElementCS*;
@@ -132,24 +130,28 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cImportKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Alternatives cAlternatives_1_3 = (Alternatives)cGroup_1.eContents().get(3);
 		private final Group cGroup_1_3_0 = (Group)cAlternatives_1_3.eContents().get(0);
-		private final Assignment cNameAssignment_1_3_0_0 = (Assignment)cGroup_1_3_0.eContents().get(0);
-		private final RuleCall cNameIdentifierParserRuleCall_1_3_0_0_0 = (RuleCall)cNameAssignment_1_3_0_0.eContents().get(0);
+		private final Assignment cImportedUnitElementAssignment_1_3_0_0 = (Assignment)cGroup_1_3_0.eContents().get(0);
+		private final RuleCall cImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0 = (RuleCall)cImportedUnitElementAssignment_1_3_0_0.eContents().get(0);
 		private final Group cGroup_1_3_0_1 = (Group)cGroup_1_3_0.eContents().get(1);
 		private final Keyword cCommaKeyword_1_3_0_1_0 = (Keyword)cGroup_1_3_0_1.eContents().get(0);
-		private final Assignment cNameAssignment_1_3_0_1_1 = (Assignment)cGroup_1_3_0_1.eContents().get(1);
-		private final RuleCall cNameIdentifierParserRuleCall_1_3_0_1_1_0 = (RuleCall)cNameAssignment_1_3_0_1_1.eContents().get(0);
+		private final Assignment cImportedUnitElementAssignment_1_3_0_1_1 = (Assignment)cGroup_1_3_0_1.eContents().get(1);
+		private final RuleCall cImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0 = (RuleCall)cImportedUnitElementAssignment_1_3_0_1_1.eContents().get(0);
 		private final Assignment cAllAssignment_1_3_1 = (Assignment)cAlternatives_1_3.eContents().get(1);
 		private final Keyword cAllAsteriskKeyword_1_3_1_0 = (Keyword)cAllAssignment_1_3_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		
 		//// ****** Imports ******
 		// // returns ElementCS to make it inherits ElementCS 
-		// ImportCS:
+		// ImportCS returns QVToImportCS:
 		//
-		//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (name+=Identifier ("," name+=Identifier)* | all?="*") ";";
+		//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (importedUnitElement+=Identifier (","
+		//
+		//	importedUnitElement+=Identifier)* | all?="*") ";";
 		public ParserRule getRule() { return rule; }
 
-		//"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (name+=Identifier ("," name+=Identifier)* | all?="*") ";"
+		//"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (importedUnitElement+=Identifier (","
+		//
+		//importedUnitElement+=Identifier)* | all?="*") ";"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"import" unit=UnitCS ";"
@@ -167,7 +169,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//";"
 		public Keyword getSemicolonKeyword_0_2() { return cSemicolonKeyword_0_2; }
 
-		//"from" unit=UnitCS "import" (name+=Identifier ("," name+=Identifier)* | all?="*") ";"
+		//"from" unit=UnitCS "import" (importedUnitElement+=Identifier ("," importedUnitElement+=Identifier)* | all?="*") ";"
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"from"
@@ -182,29 +184,29 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//"import"
 		public Keyword getImportKeyword_1_2() { return cImportKeyword_1_2; }
 
-		//name+=Identifier ("," name+=Identifier)* | all?="*"
+		//importedUnitElement+=Identifier ("," importedUnitElement+=Identifier)* | all?="*"
 		public Alternatives getAlternatives_1_3() { return cAlternatives_1_3; }
 
-		//name+=Identifier ("," name+=Identifier)*
+		//importedUnitElement+=Identifier ("," importedUnitElement+=Identifier)*
 		public Group getGroup_1_3_0() { return cGroup_1_3_0; }
 
-		//name+=Identifier
-		public Assignment getNameAssignment_1_3_0_0() { return cNameAssignment_1_3_0_0; }
+		//importedUnitElement+=Identifier
+		public Assignment getImportedUnitElementAssignment_1_3_0_0() { return cImportedUnitElementAssignment_1_3_0_0; }
 
 		//Identifier
-		public RuleCall getNameIdentifierParserRuleCall_1_3_0_0_0() { return cNameIdentifierParserRuleCall_1_3_0_0_0; }
+		public RuleCall getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0() { return cImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0; }
 
-		//("," name+=Identifier)*
+		//("," importedUnitElement+=Identifier)*
 		public Group getGroup_1_3_0_1() { return cGroup_1_3_0_1; }
 
 		//","
 		public Keyword getCommaKeyword_1_3_0_1_0() { return cCommaKeyword_1_3_0_1_0; }
 
-		//name+=Identifier
-		public Assignment getNameAssignment_1_3_0_1_1() { return cNameAssignment_1_3_0_1_1; }
+		//importedUnitElement+=Identifier
+		public Assignment getImportedUnitElementAssignment_1_3_0_1_1() { return cImportedUnitElementAssignment_1_3_0_1_1; }
 
 		//Identifier
-		public RuleCall getNameIdentifierParserRuleCall_1_3_0_1_1_0() { return cNameIdentifierParserRuleCall_1_3_0_1_1_0; }
+		public RuleCall getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0() { return cImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0; }
 
 		//all?="*"
 		public Assignment getAllAssignment_1_3_1() { return cAllAssignment_1_3_1; }
@@ -293,7 +295,9 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//
 		////SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParameterCS (',' param+=ParameterCS)*)? ')';
-		// ParameterCS:
+		// ParameterCS returns
+		//
+		//QVToParameterCS:
 		//
 		//	direction=ParamDirection? name=UnrestrictedName (":" ownedType=TypedMultiplicityRefCS)? initPart=InitPartCS?;
 		public ParserRule getRule() { return rule; }
@@ -609,7 +613,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5_1_1 = (Keyword)cGroup_5_1.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
-		//ClassCS:
+		//ClassCS returns QVToClassCS:
 		//
 		//	intermediate?="intermediate"? qualifier+=Qualifier* "class" name=UnrestrictedName ("extends"
 		//
@@ -998,7 +1002,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedTypeAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cOwnedTypeTypedMultiplicityRefCSParserRuleCall_6_1_0 = (RuleCall)cOwnedTypeAssignment_6_1.eContents().get(0);
 		
-		//ClassifierOperationCS returns OperationCS:
+		//ClassifierOperationCS returns QVToOperationCS:
 		//
 		//	stereotypes=StereotypeQualifierCS? qualifier+=FeatureQualifier* name=UnrestrictedName "("
 		//
@@ -1484,6 +1488,15 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+	//
+	//
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+	//
+	//
+	////import "platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCST.ecore" as imperativeocl
+	//
+	//
 	//TopLevelCS:
 	//
 	//	^import+=ImportCS* unit+=UnitElementCS*;
@@ -1574,9 +1587,11 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ****** Imports ******
 	// // returns ElementCS to make it inherits ElementCS 
-	// ImportCS:
+	// ImportCS returns QVToImportCS:
 	//
-	//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (name+=Identifier ("," name+=Identifier)* | all?="*") ";";
+	//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (importedUnitElement+=Identifier (","
+	//
+	//	importedUnitElement+=Identifier)* | all?="*") ";";
 	public ImportCSElements getImportCSAccess() {
 		return (pImportCS != null) ? pImportCS : (pImportCS = new ImportCSElements());
 	}
@@ -1620,7 +1635,9 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//
 	////SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParameterCS (',' param+=ParameterCS)*)? ')';
-	// ParameterCS:
+	// ParameterCS returns
+	//
+	//QVToParameterCS:
 	//
 	//	direction=ParamDirection? name=UnrestrictedName (":" ownedType=TypedMultiplicityRefCS)? initPart=InitPartCS?;
 	public ParameterCSElements getParameterCSAccess() {
@@ -1704,7 +1721,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getExceptionCSAccess().getRule();
 	}
 
-	//ClassCS:
+	//ClassCS returns QVToClassCS:
 	//
 	//	intermediate?="intermediate"? qualifier+=Qualifier* "class" name=UnrestrictedName ("extends"
 	//
@@ -1806,7 +1823,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultiplicityCSAccess().getRule();
 	}
 
-	//ClassifierOperationCS returns OperationCS:
+	//ClassifierOperationCS returns QVToOperationCS:
 	//
 	//	stereotypes=StereotypeQualifierCS? qualifier+=FeatureQualifier* name=UnrestrictedName "("
 	//
@@ -1854,6 +1871,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagCSAccess().getRule();
 	}
 
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+	//
+	//
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+	//
+	//
 	//GrammmarCS returns essentialocl::ExpCS:
 	//
 	//	ImperativeOCLExpCS;

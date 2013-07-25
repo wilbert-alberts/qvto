@@ -97,7 +97,7 @@ public interface UnitCS
 
 	/**
 	 * Returns the value of the '<em><b>Imports</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS}.
+	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Imports</em>' reference list isn't clear,
@@ -109,6 +109,6 @@ public interface UnitCS
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
-	EList<ImportCS> getImports();
+	EList<QVToImportCS> getImports();
 
 } // UnitCS

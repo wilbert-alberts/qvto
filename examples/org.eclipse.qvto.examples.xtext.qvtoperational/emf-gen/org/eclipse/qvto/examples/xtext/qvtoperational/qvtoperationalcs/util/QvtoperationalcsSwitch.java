@@ -9,6 +9,7 @@ import org.eclipse.ocl.examples.domain.elements.Nameable;
 import org.eclipse.ocl.examples.pivot.util.Pivotable;
 import org.eclipse.ocl.examples.xtext.base.baseCST.AnnotationCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.AnnotationElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.DataTypeCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
@@ -16,7 +17,9 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.FeatureCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.NamedElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.NamespaceCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TemplateableElementCS;
@@ -28,7 +31,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NamedExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionBlockCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -40,9 +43,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Direction
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImperativeOperationCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
@@ -65,12 +66,15 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRef
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveExpCS;
@@ -152,18 +156,70 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QvtoperationalcsPackage.PARAMETER_CS: {
-				ParameterCS parameterCS = (ParameterCS)theEObject;
-				T result = caseParameterCS(parameterCS);
-				if (result == null) result = caseBaseCST_ParameterCS(parameterCS);
-				if (result == null) result = caseTypedElementCS(parameterCS);
-				if (result == null) result = caseNamedElementCS(parameterCS);
-				if (result == null) result = caseModelElementCS(parameterCS);
-				if (result == null) result = caseNameable(parameterCS);
-				if (result == null) result = casePivotableElementCS(parameterCS);
-				if (result == null) result = caseElementCS(parameterCS);
-				if (result == null) result = casePivotable(parameterCS);
-				if (result == null) result = caseVisitableCS(parameterCS);
+			case QvtoperationalcsPackage.QV_TO_CLASS_CS: {
+				QVToClassCS qvToClassCS = (QVToClassCS)theEObject;
+				T result = caseQVToClassCS(qvToClassCS);
+				if (result == null) result = caseClassCS(qvToClassCS);
+				if (result == null) result = caseClassifierCS(qvToClassCS);
+				if (result == null) result = caseNamespaceCS(qvToClassCS);
+				if (result == null) result = caseNamedElementCS(qvToClassCS);
+				if (result == null) result = caseTypeCS(qvToClassCS);
+				if (result == null) result = caseTemplateableElementCS(qvToClassCS);
+				if (result == null) result = caseModelElementCS(qvToClassCS);
+				if (result == null) result = caseNameable(qvToClassCS);
+				if (result == null) result = casePivotableElementCS(qvToClassCS);
+				if (result == null) result = caseElementCS(qvToClassCS);
+				if (result == null) result = casePivotable(qvToClassCS);
+				if (result == null) result = caseVisitableCS(qvToClassCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QvtoperationalcsPackage.QV_TO_IMPORT_CS: {
+				QVToImportCS qvToImportCS = (QVToImportCS)theEObject;
+				T result = caseQVToImportCS(qvToImportCS);
+				if (result == null) result = caseElementCS(qvToImportCS);
+				if (result == null) result = caseVisitableCS(qvToImportCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QvtoperationalcsPackage.QV_TO_LIBRARY_CS: {
+				QVToLibraryCS qvToLibraryCS = (QVToLibraryCS)theEObject;
+				T result = caseQVToLibraryCS(qvToLibraryCS);
+				if (result == null) result = caseMappingModuleCS(qvToLibraryCS);
+				if (result == null) result = caseElementCS(qvToLibraryCS);
+				if (result == null) result = caseVisitableCS(qvToLibraryCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QvtoperationalcsPackage.QV_TO_OPERATION_CS: {
+				QVToOperationCS qvToOperationCS = (QVToOperationCS)theEObject;
+				T result = caseQVToOperationCS(qvToOperationCS);
+				if (result == null) result = caseOperationCS(qvToOperationCS);
+				if (result == null) result = caseFeatureCS(qvToOperationCS);
+				if (result == null) result = caseTemplateableElementCS(qvToOperationCS);
+				if (result == null) result = caseTypedElementCS(qvToOperationCS);
+				if (result == null) result = caseNamedElementCS(qvToOperationCS);
+				if (result == null) result = caseModelElementCS(qvToOperationCS);
+				if (result == null) result = caseNameable(qvToOperationCS);
+				if (result == null) result = casePivotableElementCS(qvToOperationCS);
+				if (result == null) result = caseElementCS(qvToOperationCS);
+				if (result == null) result = casePivotable(qvToOperationCS);
+				if (result == null) result = caseVisitableCS(qvToOperationCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS: {
+				QVToParameterCS qvToParameterCS = (QVToParameterCS)theEObject;
+				T result = caseQVToParameterCS(qvToParameterCS);
+				if (result == null) result = caseParameterCS(qvToParameterCS);
+				if (result == null) result = caseTypedElementCS(qvToParameterCS);
+				if (result == null) result = caseNamedElementCS(qvToParameterCS);
+				if (result == null) result = caseModelElementCS(qvToParameterCS);
+				if (result == null) result = caseNameable(qvToParameterCS);
+				if (result == null) result = casePivotableElementCS(qvToParameterCS);
+				if (result == null) result = caseElementCS(qvToParameterCS);
+				if (result == null) result = casePivotable(qvToParameterCS);
+				if (result == null) result = caseVisitableCS(qvToParameterCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -208,24 +264,6 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QvtoperationalcsPackage.CLASS_CS: {
-				ClassCS classCS = (ClassCS)theEObject;
-				T result = caseClassCS(classCS);
-				if (result == null) result = caseBaseCST_ClassCS(classCS);
-				if (result == null) result = caseClassifierCS(classCS);
-				if (result == null) result = caseNamespaceCS(classCS);
-				if (result == null) result = caseNamedElementCS(classCS);
-				if (result == null) result = caseTypeCS(classCS);
-				if (result == null) result = caseTemplateableElementCS(classCS);
-				if (result == null) result = caseModelElementCS(classCS);
-				if (result == null) result = caseNameable(classCS);
-				if (result == null) result = casePivotableElementCS(classCS);
-				if (result == null) result = caseElementCS(classCS);
-				if (result == null) result = casePivotable(classCS);
-				if (result == null) result = caseVisitableCS(classCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case QvtoperationalcsPackage.CLASSIFIER_PROPERTY_CS: {
 				ClassifierPropertyCS classifierPropertyCS = (ClassifierPropertyCS)theEObject;
 				T result = caseClassifierPropertyCS(classifierPropertyCS);
@@ -250,23 +288,6 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QvtoperationalcsPackage.OPERATION_CS: {
-				OperationCS operationCS = (OperationCS)theEObject;
-				T result = caseOperationCS(operationCS);
-				if (result == null) result = caseBaseCST_OperationCS(operationCS);
-				if (result == null) result = caseFeatureCS(operationCS);
-				if (result == null) result = caseTemplateableElementCS(operationCS);
-				if (result == null) result = caseTypedElementCS(operationCS);
-				if (result == null) result = caseNamedElementCS(operationCS);
-				if (result == null) result = caseModelElementCS(operationCS);
-				if (result == null) result = caseNameable(operationCS);
-				if (result == null) result = casePivotableElementCS(operationCS);
-				if (result == null) result = caseElementCS(operationCS);
-				if (result == null) result = casePivotable(operationCS);
-				if (result == null) result = caseVisitableCS(operationCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case QvtoperationalcsPackage.TAG_CS: {
 				TagCS tagCS = (TagCS)theEObject;
 				T result = caseTagCS(tagCS);
@@ -285,7 +306,7 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.EXCEPTION_CS: {
 				ExceptionCS exceptionCS = (ExceptionCS)theEObject;
 				T result = caseExceptionCS(exceptionCS);
-				if (result == null) result = caseBaseCST_ClassCS(exceptionCS);
+				if (result == null) result = caseClassCS(exceptionCS);
 				if (result == null) result = caseClassifierCS(exceptionCS);
 				if (result == null) result = caseNamespaceCS(exceptionCS);
 				if (result == null) result = caseNamedElementCS(exceptionCS);
@@ -384,27 +405,10 @@ public class QvtoperationalcsSwitch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QvtoperationalcsPackage.IMPORT_CS: {
-				ImportCS importCS = (ImportCS)theEObject;
-				T result = caseImportCS(importCS);
-				if (result == null) result = caseElementCS(importCS);
-				if (result == null) result = caseVisitableCS(importCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case QvtoperationalcsPackage.LIBRARY_CS: {
-				LibraryCS libraryCS = (LibraryCS)theEObject;
-				T result = caseLibraryCS(libraryCS);
-				if (result == null) result = caseMappingModuleCS(libraryCS);
-				if (result == null) result = caseElementCS(libraryCS);
-				if (result == null) result = caseVisitableCS(libraryCS);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case QvtoperationalcsPackage.LIBRARY_IMPORT_CS: {
 				LibraryImportCS libraryImportCS = (LibraryImportCS)theEObject;
 				T result = caseLibraryImportCS(libraryImportCS);
-				if (result == null) result = caseImportCS(libraryImportCS);
+				if (result == null) result = caseQVToImportCS(libraryImportCS);
 				if (result == null) result = caseElementCS(libraryImportCS);
 				if (result == null) result = caseVisitableCS(libraryImportCS);
 				if (result == null) result = defaultCase(theEObject);
@@ -732,30 +736,77 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Import CS</em>'.
-	 * <!-- begin-user-doc --> This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>QV To Class CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Import CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>QV To Class CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseImportCS(ImportCS object) {
+	public T caseQVToClassCS(QVToClassCS object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Library CS</em>'.
-	 * <!-- begin-user-doc --> This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>QV To Import CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Library CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>QV To Import CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLibraryCS(LibraryCS object) {
+	public T caseQVToImportCS(QVToImportCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>QV To Library CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>QV To Library CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseQVToLibraryCS(QVToLibraryCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>QV To Operation CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>QV To Operation CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseQVToOperationCS(QVToOperationCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>QV To Parameter CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>QV To Parameter CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseQVToParameterCS(QVToParameterCS object) {
 		return null;
 	}
 
@@ -1236,20 +1287,6 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
-	 * <!-- begin-user-doc --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseParameterCS(ParameterCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Init Part CS</em>'.
 	 * <!-- begin-user-doc --> This implementation
 	 * returns null; returning a non-null result will terminate the switch. <!--
@@ -1292,20 +1329,6 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Class CS</em>'.
-	 * <!-- begin-user-doc --> This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Class CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseClassCS(ClassCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Classifier Property CS</em>'.
 	 * <!-- begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate
@@ -1330,20 +1353,6 @@ public class QvtoperationalcsSwitch<T>
 	 * @generated
 	 */
 	public T caseStereotypeQualifierCS(StereotypeQualifierCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Operation CS</em>'.
-	 * <!-- begin-user-doc --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Operation CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOperationCS(OperationCS object) {
 		return null;
 	}
 
@@ -1615,21 +1624,6 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
-	 * <!-- begin-user-doc --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBaseCST_ParameterCS(
-			org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Namespace CS</em>'.
 	 * <!-- begin-user-doc --> This implementation
 	 * returns null; returning a non-null result will terminate the switch. <!--
@@ -1640,6 +1634,21 @@ public class QvtoperationalcsSwitch<T>
 	 * @generated
 	 */
 	public T caseNamespaceCS(NamespaceCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Class CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Class CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseClassCS(ClassCS object) {
 		return null;
 	}
 
@@ -1714,21 +1723,6 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Class CS</em>'.
-	 * <!-- begin-user-doc --> This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Class CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBaseCST_ClassCS(
-			org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Feature CS</em>'.
 	 * <!-- begin-user-doc --> This implementation returns
 	 * null; returning a non-null result will terminate the switch. <!--
@@ -1743,6 +1737,36 @@ public class QvtoperationalcsSwitch<T>
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Operation CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Operation CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOperationCS(OperationCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Parameter CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseParameterCS(ParameterCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Structural Feature CS</em>'.
 	 * <!-- begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate
@@ -1753,21 +1777,6 @@ public class QvtoperationalcsSwitch<T>
 	 * @generated
 	 */
 	public T caseStructuralFeatureCS(StructuralFeatureCS object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Operation CS</em>'.
-	 * <!-- begin-user-doc --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Operation CS</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBaseCST_OperationCS(
-			org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS object) {
 		return null;
 	}
 

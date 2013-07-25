@@ -17,6 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.AbstractNameE
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NamedExpCS;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.*;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssertExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssignStatementCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.BlockExpCS;

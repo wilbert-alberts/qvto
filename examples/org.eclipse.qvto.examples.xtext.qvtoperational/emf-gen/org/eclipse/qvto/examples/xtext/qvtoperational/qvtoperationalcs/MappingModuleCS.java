@@ -58,7 +58,7 @@ public interface MappingModuleCS
 
 	/**
 	 * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS}.
+	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Imports</em>' containment reference list isn't
@@ -70,7 +70,7 @@ public interface MappingModuleCS
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<ImportCS> getImports();
+	EList<QVToImportCS> getImports();
 
 	/**
 	 * Returns the value of the '<em><b>Metamodels</b></em>' containment reference list.

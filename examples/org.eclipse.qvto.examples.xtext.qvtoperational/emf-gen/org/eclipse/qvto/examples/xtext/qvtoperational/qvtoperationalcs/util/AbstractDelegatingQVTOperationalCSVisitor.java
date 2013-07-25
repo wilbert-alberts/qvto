@@ -29,10 +29,6 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visiting(visitable);
 	}
 
-	public @Nullable R visitClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS object) {
-		return delegate.visitClassCS(object);
-	}
-
 	public @Nullable R visitClassifierDefCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS object) {
 		return delegate.visitClassifierDefCS(object);
 	}
@@ -77,16 +73,8 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visitImperativeOperationCallExpCS(object);
 	}
 
-	public @Nullable R visitImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS object) {
-		return delegate.visitImportCS(object);
-	}
-
 	public @Nullable R visitInitPartCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS object) {
 		return delegate.visitInitPartCS(object);
-	}
-
-	public @Nullable R visitLibraryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryCS object) {
-		return delegate.visitLibraryCS(object);
 	}
 
 	public @Nullable R visitLibraryImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryImportCS object) {
@@ -177,10 +165,6 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visitObjectExpCS(object);
 	}
 
-	public @Nullable R visitOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS object) {
-		return delegate.visitOperationCS(object);
-	}
-
 	public @Nullable R visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS object) {
 		return delegate.visitOppositePropertyCS(object);
 	}
@@ -189,16 +173,32 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visitPackageRefCS(object);
 	}
 
-	public @Nullable R visitParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS object) {
-		return delegate.visitParameterCS(object);
-	}
-
 	public @Nullable R visitParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS object) {
 		return delegate.visitParameterDeclarationCS(object);
 	}
 
 	public @Nullable R visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS object) {
 		return delegate.visitPrimitiveTypeCS(object);
+	}
+
+	public @Nullable R visitQVToClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS object) {
+		return delegate.visitQVToClassCS(object);
+	}
+
+	public @Nullable R visitQVToImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS object) {
+		return delegate.visitQVToImportCS(object);
+	}
+
+	public @Nullable R visitQVToLibraryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS object) {
+		return delegate.visitQVToLibraryCS(object);
+	}
+
+	public @Nullable R visitQVToOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS object) {
+		return delegate.visitQVToOperationCS(object);
+	}
+
+	public @Nullable R visitQVToParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS object) {
+		return delegate.visitQVToParameterCS(object);
 	}
 
 	public @Nullable R visitRenameCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS object) {

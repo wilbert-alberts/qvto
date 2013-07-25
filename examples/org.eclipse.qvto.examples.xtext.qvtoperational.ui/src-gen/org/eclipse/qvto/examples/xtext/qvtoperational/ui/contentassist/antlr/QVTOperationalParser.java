@@ -201,8 +201,8 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTopLevelCSAccess().getUnitAssignment_1(), "rule__TopLevelCS__UnitAssignment_1");
 					put(grammarAccess.getImportCSAccess().getUnitAssignment_0_1(), "rule__ImportCS__UnitAssignment_0_1");
 					put(grammarAccess.getImportCSAccess().getUnitAssignment_1_1(), "rule__ImportCS__UnitAssignment_1_1");
-					put(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_0(), "rule__ImportCS__NameAssignment_1_3_0_0");
-					put(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_1_1(), "rule__ImportCS__NameAssignment_1_3_0_1_1");
+					put(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0(), "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0");
+					put(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_1_1(), "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1");
 					put(grammarAccess.getImportCSAccess().getAllAssignment_1_3_1(), "rule__ImportCS__AllAssignment_1_3_1");
 					put(grammarAccess.getUnitCSAccess().getSegmentAssignment_0(), "rule__UnitCS__SegmentAssignment_0");
 					put(grammarAccess.getUnitCSAccess().getSegmentAssignment_1_1(), "rule__UnitCS__SegmentAssignment_1_1");

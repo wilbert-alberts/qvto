@@ -15,11 +15,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModulePropertyCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
@@ -65,7 +65,7 @@ public class MappingModuleCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ImportCS> imports;
+	protected EList<QVToImportCS> imports;
 
 	/**
 	 * The cached value of the '{@link #getMetamodels() <em>Metamodels</em>}' containment reference list.
@@ -185,9 +185,9 @@ public class MappingModuleCSImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ImportCS> getImports() {
+	public EList<QVToImportCS> getImports() {
 		if (imports == null) {
-			imports = new EObjectContainmentEList<ImportCS>(ImportCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS);
+			imports = new EObjectContainmentEList<QVToImportCS>(QVToImportCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS);
 		}
 		return imports;
 	}
@@ -346,7 +346,7 @@ public class MappingModuleCSImpl
 				return;
 			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
 				getImports().clear();
-				getImports().addAll((Collection<? extends ImportCS>)newValue);
+				getImports().addAll((Collection<? extends QVToImportCS>)newValue);
 				return;
 			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
 				getMetamodels().clear();

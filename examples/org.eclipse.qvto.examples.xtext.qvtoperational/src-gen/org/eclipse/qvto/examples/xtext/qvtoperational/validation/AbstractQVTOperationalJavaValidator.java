@@ -18,6 +18,7 @@ public class AbstractQVTOperationalJavaValidator extends org.eclipse.qvto.exampl
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/ocl/3.1.0/BaseCST"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/ocl/3.1.0/EssentialOCLCST"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS"));
 		return result;
 	}
 

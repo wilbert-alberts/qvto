@@ -31,22 +31,49 @@ public interface QvtoperationalcsFactory
 	TopLevelCS createTopLevelCS();
 
 	/**
-	 * Returns a new object of class '<em>Import CS</em>'.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @return a new object of class '<em>Import CS</em>'.
+	 * Returns a new object of class '<em>QV To Class CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>QV To Class CS</em>'.
 	 * @generated
 	 */
-	ImportCS createImportCS();
+	QVToClassCS createQVToClassCS();
 
 	/**
-	 * Returns a new object of class '<em>Library CS</em>'.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @return a new object of class '<em>Library CS</em>'.
+	 * Returns a new object of class '<em>QV To Import CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>QV To Import CS</em>'.
 	 * @generated
 	 */
-	LibraryCS createLibraryCS();
+	QVToImportCS createQVToImportCS();
+
+	/**
+	 * Returns a new object of class '<em>QV To Library CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>QV To Library CS</em>'.
+	 * @generated
+	 */
+	QVToLibraryCS createQVToLibraryCS();
+
+	/**
+	 * Returns a new object of class '<em>QV To Operation CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>QV To Operation CS</em>'.
+	 * @generated
+	 */
+	QVToOperationCS createQVToOperationCS();
+
+	/**
+	 * Returns a new object of class '<em>QV To Parameter CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>QV To Parameter CS</em>'.
+	 * @generated
+	 */
+	QVToParameterCS createQVToParameterCS();
 
 	/**
 	 * Returns a new object of class '<em>Library Import CS</em>'. <!--
@@ -328,15 +355,6 @@ public interface QvtoperationalcsFactory
 	ResolveInExpCS createResolveInExpCS();
 
 	/**
-	 * Returns a new object of class '<em>Parameter CS</em>'. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Parameter CS</em>'.
-	 * @generated
-	 */
-	ParameterCS createParameterCS();
-
-	/**
 	 * Returns a new object of class '<em>Init Part CS</em>'. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -364,15 +382,6 @@ public interface QvtoperationalcsFactory
 	PrimitiveTypeCS createPrimitiveTypeCS();
 
 	/**
-	 * Returns a new object of class '<em>Class CS</em>'.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 * @return a new object of class '<em>Class CS</em>'.
-	 * @generated
-	 */
-	ClassCS createClassCS();
-
-	/**
 	 * Returns a new object of class '<em>Classifier Property CS</em>'. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -389,15 +398,6 @@ public interface QvtoperationalcsFactory
 	 * @generated
 	 */
 	StereotypeQualifierCS createStereotypeQualifierCS();
-
-	/**
-	 * Returns a new object of class '<em>Operation CS</em>'. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Operation CS</em>'.
-	 * @generated
-	 */
-	OperationCS createOperationCS();
 
 	/**
 	 * Returns a new object of class '<em>Tag CS</em>'.

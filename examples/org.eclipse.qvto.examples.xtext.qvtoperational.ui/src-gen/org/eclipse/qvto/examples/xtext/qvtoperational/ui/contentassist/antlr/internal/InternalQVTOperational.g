@@ -4018,9 +4018,9 @@ rule__ImportCS__Group_1_3_0__0__Impl
     }
 :
 (
-{ before(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_0()); }
-(rule__ImportCS__NameAssignment_1_3_0_0)
-{ after(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_0()); }
+{ before(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0()); }
+(rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0)
+{ after(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0()); }
 )
 
 ;
@@ -4109,9 +4109,9 @@ rule__ImportCS__Group_1_3_0_1__1__Impl
     }
 :
 (
-{ before(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_1_1()); }
-(rule__ImportCS__NameAssignment_1_3_0_1_1)
-{ after(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_1_1()); }
+{ before(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_1_1()); }
+(rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1)
+{ after(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_1_1()); }
 )
 
 ;
@@ -14539,14 +14539,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ImportCS__NameAssignment_1_3_0_0
+rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_0_0()); }
-	ruleIdentifier{ after(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_0_0()); }
+{ before(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0()); }
+	ruleIdentifier{ after(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0()); }
 )
 
 ;
@@ -14554,14 +14554,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ImportCS__NameAssignment_1_3_0_1_1
+rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_1_1_0()); }
-	ruleIdentifier{ after(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_1_1_0()); }
+{ before(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0()); }
+	ruleIdentifier{ after(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0()); }
 )
 
 ;

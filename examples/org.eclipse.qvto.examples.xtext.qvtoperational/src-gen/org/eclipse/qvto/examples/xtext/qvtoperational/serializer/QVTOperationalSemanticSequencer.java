@@ -1,5 +1,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.serializer;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
@@ -55,20 +57,25 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.serializer.ImperativeOCLSemanticSequencer;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
-
-import com.google.inject.Inject;
+import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
+import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
+import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
+import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
+import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 
 @SuppressWarnings("all")
 public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequencer {
@@ -657,23 +664,9 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == QvtoperationalcsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case QvtoperationalcsPackage.CLASS_CS:
-				if(context == grammarAccess.getClassCSRule() ||
-				   context == grammarAccess.getClassifierCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
-					sequence_ClassCS(context, (org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS) semanticObject); 
-					return; 
-				}
-				else break;
 			case QvtoperationalcsPackage.CLASSIFIER_PROPERTY_CS:
 				if(context == grammarAccess.getClassifierPropertyCSRule()) {
 					sequence_ClassifierPropertyCS(context, (ClassifierPropertyCS) semanticObject); 
-					return; 
-				}
-				else break;
-			case QvtoperationalcsPackage.IMPORT_CS:
-				if(context == grammarAccess.getImportCSRule()) {
-					sequence_ImportCS(context, (ImportCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -690,23 +683,37 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.OPERATION_CS:
-				if(context == grammarAccess.getClassifierOperationCSRule()) {
-					sequence_ClassifierOperationCS(context, (OperationCS) semanticObject); 
-					return; 
-				}
-				else break;
-			case QvtoperationalcsPackage.PARAMETER_CS:
-				if(context == grammarAccess.getParameterCSRule()) {
-					sequence_ParameterCS(context, (ParameterCS) semanticObject); 
-					return; 
-				}
-				else break;
 			case QvtoperationalcsPackage.PRIMITIVE_TYPE_CS:
 				if(context == grammarAccess.getClassifierCSRule() ||
 				   context == grammarAccess.getDataTypeCSRule() ||
 				   context == grammarAccess.getMetamodelElementCSRule()) {
 					sequence_DataTypeCS(context, (PrimitiveTypeCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QvtoperationalcsPackage.QV_TO_CLASS_CS:
+				if(context == grammarAccess.getClassCSRule() ||
+				   context == grammarAccess.getClassifierCSRule() ||
+				   context == grammarAccess.getMetamodelElementCSRule()) {
+					sequence_ClassCS(context, (QVToClassCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QvtoperationalcsPackage.QV_TO_IMPORT_CS:
+				if(context == grammarAccess.getImportCSRule()) {
+					sequence_ImportCS(context, (QVToImportCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QvtoperationalcsPackage.QV_TO_OPERATION_CS:
+				if(context == grammarAccess.getClassifierOperationCSRule()) {
+					sequence_ClassifierOperationCS(context, (QVToOperationCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS:
+				if(context == grammarAccess.getParameterCSRule()) {
+					sequence_ParameterCS(context, (QVToParameterCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -749,7 +756,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *         (ownedProperty+=ClassifierPropertyCS | ownedOperation+=ClassifierOperationCS | ownedAnnotation+=TagCS)*
 	 *     )
 	 */
-	protected void sequence_ClassCS(EObject context, org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS semanticObject) {
+	protected void sequence_ClassCS(EObject context, QVToClassCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -764,7 +771,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *     )
 	 */
-	protected void sequence_ClassifierOperationCS(EObject context, OperationCS semanticObject) {
+	protected void sequence_ClassifierOperationCS(EObject context, QVToOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -850,9 +857,9 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (unit=UnitCS | (unit=UnitCS ((name+=Identifier name+=Identifier*) | all?='*')))
+	 *     (unit=UnitCS | (unit=UnitCS ((importedUnitElement+=Identifier importedUnitElement+=Identifier*) | all?='*')))
 	 */
-	protected void sequence_ImportCS(EObject context, ImportCS semanticObject) {
+	protected void sequence_ImportCS(EObject context, QVToImportCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -897,7 +904,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 * Constraint:
 	 *     (direction=ParamDirection? name=UnrestrictedName ownedType=TypedMultiplicityRefCS? initPart=InitPartCS?)
 	 */
-	protected void sequence_ParameterCS(EObject context, ParameterCS semanticObject) {
+	protected void sequence_ParameterCS(EObject context, QVToParameterCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

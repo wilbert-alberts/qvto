@@ -3,10 +3,10 @@
 */
 package org.eclipse.qvto.examples.xtext.qvtoperational.parser.antlr;
 
-import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
-
 import com.google.inject.Inject;
+
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
 
 public class QVTOperationalParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	

@@ -444,16 +444,16 @@ ruleImportCS returns [EObject current=null]
 (((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_0_0()); 
+	        newCompositeNode(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0()); 
 	    }
-		lv_name_6_0=ruleIdentifier		{
+		lv_importedUnitElement_6_0=ruleIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getImportCSRule());
 	        }
        		add(
        			$current, 
-       			"name",
-        		lv_name_6_0, 
+       			"importedUnitElement",
+        		lv_importedUnitElement_6_0, 
         		"Identifier");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -466,16 +466,16 @@ ruleImportCS returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_1_1_0()); 
+	        newCompositeNode(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0()); 
 	    }
-		lv_name_8_0=ruleIdentifier		{
+		lv_importedUnitElement_8_0=ruleIdentifier		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getImportCSRule());
 	        }
        		add(
        			$current, 
-       			"name",
-        		lv_name_8_0, 
+       			"importedUnitElement",
+        		lv_importedUnitElement_8_0, 
         		"Identifier");
 	        afterParserOrEnumRuleCall();
 	    }

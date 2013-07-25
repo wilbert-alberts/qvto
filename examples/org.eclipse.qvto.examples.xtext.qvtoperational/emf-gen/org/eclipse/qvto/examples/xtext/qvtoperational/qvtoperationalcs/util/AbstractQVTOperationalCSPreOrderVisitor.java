@@ -36,10 +36,6 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 		super(context);
 	}
 
-	public @Nullable Continuation<?> visitClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS csElement) {
-		return super.visitClassCS(csElement);
-	}
-
 	public @Nullable Continuation<?> visitClassifierDefCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS csElement) {
 		return visitElementCS(csElement);
 	}
@@ -84,20 +80,12 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 		return visitInvocationExpCS(csElement);
 	}
 
-	public @Nullable Continuation<?> visitImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS csElement) {
-		return visitElementCS(csElement);
-	}
-
 	public @Nullable Continuation<?> visitInitPartCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS csElement) {
 		return visitElementCS(csElement);
 	}
 
-	public @Nullable Continuation<?> visitLibraryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryCS csElement) {
-		return visitMappingModuleCS(csElement);
-	}
-
 	public @Nullable Continuation<?> visitLibraryImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryImportCS csElement) {
-		return visitImportCS(csElement);
+		return visitQVToImportCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitLocalPropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS csElement) {
@@ -184,10 +172,6 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 		return visitExpressionBlockCS(csElement);
 	}
 
-	public @Nullable Continuation<?> visitOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS csElement) {
-		return visitOperationCS(csElement);
-	}
-
 	public @Nullable Continuation<?> visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS csElement) {
 		return visitElementCS(csElement);
 	}
@@ -196,16 +180,32 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 		return visitElementCS(csElement);
 	}
 
-	public @Nullable Continuation<?> visitParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS csElement) {
-		return visitParameterCS(csElement);
-	}
-
 	public @Nullable Continuation<?> visitParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS csElement) {
 		return visitElementCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS csElement) {
 		return visitDataTypeCS(csElement);
+	}
+
+	public @Nullable Continuation<?> visitQVToClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS csElement) {
+		return visitClassCS(csElement);
+	}
+
+	public @Nullable Continuation<?> visitQVToImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS csElement) {
+		return visitElementCS(csElement);
+	}
+
+	public @Nullable Continuation<?> visitQVToLibraryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS csElement) {
+		return visitMappingModuleCS(csElement);
+	}
+
+	public @Nullable Continuation<?> visitQVToOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS csElement) {
+		return visitOperationCS(csElement);
+	}
+
+	public @Nullable Continuation<?> visitQVToParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS csElement) {
+		return visitParameterCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitRenameCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS csElement) {

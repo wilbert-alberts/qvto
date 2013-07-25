@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierKind;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
@@ -22,11 +22,9 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Direction
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.FeatureKey;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImperativeOperationCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportKindEnum;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitOp;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
@@ -49,13 +47,16 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRef
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QualifierKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsFactory;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
@@ -119,14 +120,16 @@ public class QvtoperationalcsFactoryImpl
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case QvtoperationalcsPackage.TOP_LEVEL_CS: return createTopLevelCS();
-			case QvtoperationalcsPackage.PARAMETER_CS: return createParameterCS();
+			case QvtoperationalcsPackage.QV_TO_CLASS_CS: return createQVToClassCS();
+			case QvtoperationalcsPackage.QV_TO_IMPORT_CS: return createQVToImportCS();
+			case QvtoperationalcsPackage.QV_TO_LIBRARY_CS: return createQVToLibraryCS();
+			case QvtoperationalcsPackage.QV_TO_OPERATION_CS: return createQVToOperationCS();
+			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS: return createQVToParameterCS();
 			case QvtoperationalcsPackage.INIT_PART_CS: return createInitPartCS();
 			case QvtoperationalcsPackage.METAMODEL_CS: return createMetamodelCS();
 			case QvtoperationalcsPackage.PRIMITIVE_TYPE_CS: return createPrimitiveTypeCS();
-			case QvtoperationalcsPackage.CLASS_CS: return createClassCS();
 			case QvtoperationalcsPackage.CLASSIFIER_PROPERTY_CS: return createClassifierPropertyCS();
 			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS: return createStereotypeQualifierCS();
-			case QvtoperationalcsPackage.OPERATION_CS: return createOperationCS();
 			case QvtoperationalcsPackage.TAG_CS: return createTagCS();
 			case QvtoperationalcsPackage.EXCEPTION_CS: return createExceptionCS();
 			case QvtoperationalcsPackage.CLASSIFIER_DEF_CS: return createClassifierDefCS();
@@ -137,8 +140,6 @@ public class QvtoperationalcsFactoryImpl
 			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
 			case QvtoperationalcsPackage.DIRECTION_KIND_CS: return createDirectionKindCS();
 			case QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS: return createImperativeOperationCallExpCS();
-			case QvtoperationalcsPackage.IMPORT_CS: return createImportCS();
-			case QvtoperationalcsPackage.LIBRARY_CS: return createLibraryCS();
 			case QvtoperationalcsPackage.LIBRARY_IMPORT_CS: return createLibraryImportCS();
 			case QvtoperationalcsPackage.LOCAL_PROPERTY_CS: return createLocalPropertyCS();
 			case QvtoperationalcsPackage.MAPPING_BODY_CS: return createMappingBodyCS();
@@ -249,21 +250,53 @@ public class QvtoperationalcsFactoryImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ImportCS createImportCS() {
-		ImportCSImpl importCS = new ImportCSImpl();
-		return importCS;
+	public QVToClassCS createQVToClassCS() {
+		QVToClassCSImpl qvToClassCS = new QVToClassCSImpl();
+		return qvToClassCS;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public LibraryCS createLibraryCS() {
-		LibraryCSImpl libraryCS = new LibraryCSImpl();
-		return libraryCS;
+	public QVToImportCS createQVToImportCS() {
+		QVToImportCSImpl qvToImportCS = new QVToImportCSImpl();
+		return qvToImportCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public QVToLibraryCS createQVToLibraryCS() {
+		QVToLibraryCSImpl qvToLibraryCS = new QVToLibraryCSImpl();
+		return qvToLibraryCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public QVToOperationCS createQVToOperationCS() {
+		QVToOperationCSImpl qvToOperationCS = new QVToOperationCSImpl();
+		return qvToOperationCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public QVToParameterCS createQVToParameterCS() {
+		QVToParameterCSImpl qvToParameterCS = new QVToParameterCSImpl();
+		return qvToParameterCS;
 	}
 
 	/**
@@ -549,15 +582,6 @@ public class QvtoperationalcsFactoryImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParameterCS createParameterCS() {
-		ParameterCSImpl parameterCS = new ParameterCSImpl();
-		return parameterCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public InitPartCS createInitPartCS() {
 		InitPartCSImpl initPartCS = new InitPartCSImpl();
 		return initPartCS;
@@ -585,15 +609,6 @@ public class QvtoperationalcsFactoryImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClassCS createClassCS() {
-		ClassCSImpl classCS = new ClassCSImpl();
-		return classCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ClassifierPropertyCS createClassifierPropertyCS() {
 		ClassifierPropertyCSImpl classifierPropertyCS = new ClassifierPropertyCSImpl();
 		return classifierPropertyCS;
@@ -606,15 +621,6 @@ public class QvtoperationalcsFactoryImpl
 	public StereotypeQualifierCS createStereotypeQualifierCS() {
 		StereotypeQualifierCSImpl stereotypeQualifierCS = new StereotypeQualifierCSImpl();
 		return stereotypeQualifierCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OperationCS createOperationCS() {
-		OperationCSImpl operationCS = new OperationCSImpl();
-		return operationCS;
 	}
 
 	/**

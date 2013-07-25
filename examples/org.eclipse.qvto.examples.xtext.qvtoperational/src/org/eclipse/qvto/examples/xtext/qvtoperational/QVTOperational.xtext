@@ -40,7 +40,7 @@ Qualifier returns ecore::EString : 'blackbox' & 'abstract' & 'static';
 FeatureQualifier returns ecore::EString : 'composes' & 'references' & 'readonly' & 'derived' & 'static';
 
 // ****** Imports ******
-ImportCS : // returns ElementCS to make it inherits ElementCS 
+ImportCS returns QVToImportCS : // returns ElementCS to make it inherits ElementCS 
 	  ('import' unit=UnitCS ';')
 	|  ('from' unit=UnitCS 'import' ((importedUnitElement+=Identifier (',' importedUnitElement+=Identifier)*) | all?='*') ';')
 ;
@@ -60,7 +60,7 @@ UnitElementCS returns MetamodelCS: // returns ElementCS to make it inherits Elem
 //
 //SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParameterCS (',' param+=ParameterCS)*)? ')';
 
-ParameterCS returns ParameterCS: 
+ParameterCS returns QVToParameterCS: 
 	direction = ParamDirection? 
 	name=UnrestrictedName
 	(':' ownedType=TypedMultiplicityRefCS)?
@@ -102,7 +102,7 @@ ExceptionCS returns base::ClassCS: // FIXME so far, exception is another class
 	('extends' (ownedSuperType+=TypedRefCS (',' ownedSuperType+=TypedRefCS)*))?
 ;
 
-ClassCS returns ClassCS: 
+ClassCS returns QVToClassCS: 
 	intermediate ?= 'intermediate' ? 
 	qualifier += Qualifier*
 	'class'
@@ -145,7 +145,7 @@ StereotypeQualifierCS returns StereotypeQualifierCS:
 
 MultiplicityCS returns base::MultiplicityBoundsCS: '[' (lowerBound=LOWER '...')? upperBound=UPPER ']';
 
-ClassifierOperationCS returns OperationCS: 
+ClassifierOperationCS returns QVToOperationCS: 
 	stereotypes = StereotypeQualifierCS? 
 	qualifier+= FeatureQualifier*
 	name=UnrestrictedName

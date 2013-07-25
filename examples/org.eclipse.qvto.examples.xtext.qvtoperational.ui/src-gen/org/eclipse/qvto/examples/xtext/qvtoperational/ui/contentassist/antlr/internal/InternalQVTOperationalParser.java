@@ -12768,26 +12768,26 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
 
 
     // $ANTLR start "rule__ImportCS__Group_1_3_0__0__Impl"
-    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4015:1: rule__ImportCS__Group_1_3_0__0__Impl : ( ( rule__ImportCS__NameAssignment_1_3_0_0 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4015:1: rule__ImportCS__Group_1_3_0__0__Impl : ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 ) ) ;
     public final void rule__ImportCS__Group_1_3_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4019:1: ( ( ( rule__ImportCS__NameAssignment_1_3_0_0 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4020:1: ( ( rule__ImportCS__NameAssignment_1_3_0_0 ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4019:1: ( ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4020:1: ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4020:1: ( ( rule__ImportCS__NameAssignment_1_3_0_0 ) )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4021:1: ( rule__ImportCS__NameAssignment_1_3_0_0 )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4020:1: ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4021:1: ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_0()); 
+               before(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4022:1: ( rule__ImportCS__NameAssignment_1_3_0_0 )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4022:2: rule__ImportCS__NameAssignment_1_3_0_0
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4022:1: ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4022:2: rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ImportCS__NameAssignment_1_3_0_0_in_rule__ImportCS__Group_1_3_0__0__Impl8669);
-            rule__ImportCS__NameAssignment_1_3_0_0();
+            pushFollow(FollowSets000.FOLLOW_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0_in_rule__ImportCS__Group_1_3_0__0__Impl8669);
+            rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -12795,7 +12795,7 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_0()); 
+               after(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0()); 
             }
 
             }
@@ -13033,26 +13033,26 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
 
 
     // $ANTLR start "rule__ImportCS__Group_1_3_0_1__1__Impl"
-    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4106:1: rule__ImportCS__Group_1_3_0_1__1__Impl : ( ( rule__ImportCS__NameAssignment_1_3_0_1_1 ) ) ;
+    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4106:1: rule__ImportCS__Group_1_3_0_1__1__Impl : ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 ) ) ;
     public final void rule__ImportCS__Group_1_3_0_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4110:1: ( ( ( rule__ImportCS__NameAssignment_1_3_0_1_1 ) ) )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4111:1: ( ( rule__ImportCS__NameAssignment_1_3_0_1_1 ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4110:1: ( ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 ) ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4111:1: ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 ) )
             {
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4111:1: ( ( rule__ImportCS__NameAssignment_1_3_0_1_1 ) )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4112:1: ( rule__ImportCS__NameAssignment_1_3_0_1_1 )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4111:1: ( ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 ) )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4112:1: ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_1_1()); 
+               before(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_1_1()); 
             }
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4113:1: ( rule__ImportCS__NameAssignment_1_3_0_1_1 )
-            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4113:2: rule__ImportCS__NameAssignment_1_3_0_1_1
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4113:1: ( rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 )
+            // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:4113:2: rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ImportCS__NameAssignment_1_3_0_1_1_in_rule__ImportCS__Group_1_3_0_1__1__Impl8850);
-            rule__ImportCS__NameAssignment_1_3_0_1_1();
+            pushFollow(FollowSets000.FOLLOW_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1_in_rule__ImportCS__Group_1_3_0_1__1__Impl8850);
+            rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13060,7 +13060,7 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getImportCSAccess().getNameAssignment_1_3_0_1_1()); 
+               after(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_1_1()); 
             }
 
             }
@@ -42028,9 +42028,9 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
     // $ANTLR end "rule__ImportCS__UnitAssignment_1_1"
 
 
-    // $ANTLR start "rule__ImportCS__NameAssignment_1_3_0_0"
-    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14542:1: rule__ImportCS__NameAssignment_1_3_0_0 : ( ruleIdentifier ) ;
-    public final void rule__ImportCS__NameAssignment_1_3_0_0() throws RecognitionException {
+    // $ANTLR start "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0"
+    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14542:1: rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0 : ( ruleIdentifier ) ;
+    public final void rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -42042,15 +42042,15 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
             // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14548:1: ruleIdentifier
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_0_0()); 
+               before(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleIdentifier_in_rule__ImportCS__NameAssignment_1_3_0_029854);
+            pushFollow(FollowSets001.FOLLOW_ruleIdentifier_in_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_029854);
             ruleIdentifier();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_0_0()); 
+               after(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_0_0()); 
             }
 
             }
@@ -42070,12 +42070,12 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         }
         return ;
     }
-    // $ANTLR end "rule__ImportCS__NameAssignment_1_3_0_0"
+    // $ANTLR end "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0"
 
 
-    // $ANTLR start "rule__ImportCS__NameAssignment_1_3_0_1_1"
-    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14557:1: rule__ImportCS__NameAssignment_1_3_0_1_1 : ( ruleIdentifier ) ;
-    public final void rule__ImportCS__NameAssignment_1_3_0_1_1() throws RecognitionException {
+    // $ANTLR start "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1"
+    // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14557:1: rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1 : ( ruleIdentifier ) ;
+    public final void rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -42087,15 +42087,15 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
             // ../org.eclipse.qvto.examples.xtext.qvtoperational.ui/src-gen/org/eclipse/qvto/examples/xtext/qvtoperational/ui/contentassist/antlr/internal/InternalQVTOperational.g:14563:1: ruleIdentifier
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_1_1_0()); 
+               before(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleIdentifier_in_rule__ImportCS__NameAssignment_1_3_0_1_129885);
+            pushFollow(FollowSets001.FOLLOW_ruleIdentifier_in_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_129885);
             ruleIdentifier();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getImportCSAccess().getNameIdentifierParserRuleCall_1_3_0_1_1_0()); 
+               after(grammarAccess.getImportCSAccess().getImportedUnitElementIdentifierParserRuleCall_1_3_0_1_1_0()); 
             }
 
             }
@@ -42115,7 +42115,7 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         }
         return ;
     }
-    // $ANTLR end "rule__ImportCS__NameAssignment_1_3_0_1_1"
+    // $ANTLR end "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1"
 
 
     // $ANTLR start "rule__ImportCS__AllAssignment_1_3_1"
@@ -51665,14 +51665,14 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         public static final BitSet FOLLOW_65_in_rule__ImportCS__Group_1__4__Impl8598 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0__0__Impl_in_rule__ImportCS__Group_1_3_0__08639 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0__1_in_rule__ImportCS__Group_1_3_0__08642 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ImportCS__NameAssignment_1_3_0_0_in_rule__ImportCS__Group_1_3_0__0__Impl8669 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0_in_rule__ImportCS__Group_1_3_0__0__Impl8669 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0__1__Impl_in_rule__ImportCS__Group_1_3_0__18699 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0_1__0_in_rule__ImportCS__Group_1_3_0__1__Impl8726 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000008L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0_1__0__Impl_in_rule__ImportCS__Group_1_3_0_1__08761 = new BitSet(new long[]{0x00000000000000C0L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0_1__1_in_rule__ImportCS__Group_1_3_0_1__08764 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_67_in_rule__ImportCS__Group_1_3_0_1__0__Impl8792 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ImportCS__Group_1_3_0_1__1__Impl_in_rule__ImportCS__Group_1_3_0_1__18823 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ImportCS__NameAssignment_1_3_0_1_1_in_rule__ImportCS__Group_1_3_0_1__1__Impl8850 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_1_in_rule__ImportCS__Group_1_3_0_1__1__Impl8850 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__UnitCS__Group__0__Impl_in_rule__UnitCS__Group__08884 = new BitSet(new long[]{0x0000020000000000L});
         public static final BitSet FOLLOW_rule__UnitCS__Group__1_in_rule__UnitCS__Group__08887 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__UnitCS__SegmentAssignment_0_in_rule__UnitCS__Group__0__Impl8914 = new BitSet(new long[]{0x0000000000000002L});
@@ -52532,8 +52532,8 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         public static final BitSet FOLLOW_ruleUnitElementCS_in_rule__TopLevelCS__UnitAssignment_129761 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleUnitCS_in_rule__ImportCS__UnitAssignment_0_129792 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleUnitCS_in_rule__ImportCS__UnitAssignment_1_129823 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleIdentifier_in_rule__ImportCS__NameAssignment_1_3_0_029854 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleIdentifier_in_rule__ImportCS__NameAssignment_1_3_0_1_129885 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleIdentifier_in_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_029854 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleIdentifier_in_rule__ImportCS__ImportedUnitElementAssignment_1_3_0_1_129885 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_26_in_rule__ImportCS__AllAssignment_1_3_129921 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleIdentifier_in_rule__UnitCS__SegmentAssignment_029960 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleIdentifier_in_rule__UnitCS__SegmentAssignment_1_129991 = new BitSet(new long[]{0x0000000000000002L});

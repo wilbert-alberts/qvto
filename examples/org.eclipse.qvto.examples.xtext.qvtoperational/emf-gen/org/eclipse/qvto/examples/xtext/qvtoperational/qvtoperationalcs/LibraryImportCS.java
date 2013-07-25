@@ -12,5 +12,5 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * @generated
  */
 public interface LibraryImportCS
-		extends ImportCS {
+		extends QVToImportCS {
 } // LibraryImportCS
