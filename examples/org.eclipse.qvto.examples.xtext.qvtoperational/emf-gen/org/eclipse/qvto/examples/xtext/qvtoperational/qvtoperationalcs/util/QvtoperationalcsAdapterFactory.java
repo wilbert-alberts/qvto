@@ -22,6 +22,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PivotableElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.RootCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TemplateableElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
@@ -399,6 +401,22 @@ public class QvtoperationalcsAdapterFactory
 				return createNamedElementCSAdapter();
 			}
 			@Override
+			public Adapter caseNamespaceCS(NamespaceCS object) {
+				return createNamespaceCSAdapter();
+			}
+			@Override
+			public Adapter casePackageCS(PackageCS object) {
+				return createPackageCSAdapter();
+			}
+			@Override
+			public Adapter caseRootCS(RootCS object) {
+				return createRootCSAdapter();
+			}
+			@Override
+			public Adapter caseRootPackageCS(RootPackageCS object) {
+				return createRootPackageCSAdapter();
+			}
+			@Override
 			public Adapter caseTypeCS(TypeCS object) {
 				return createTypeCSAdapter();
 			}
@@ -409,10 +427,6 @@ public class QvtoperationalcsAdapterFactory
 			@Override
 			public Adapter caseClassifierCS(ClassifierCS object) {
 				return createClassifierCSAdapter();
-			}
-			@Override
-			public Adapter caseNamespaceCS(NamespaceCS object) {
-				return createNamespaceCSAdapter();
 			}
 			@Override
 			public Adapter caseClassCS(ClassCS object) {
@@ -433,10 +447,6 @@ public class QvtoperationalcsAdapterFactory
 			@Override
 			public Adapter caseParameterCS(ParameterCS object) {
 				return createParameterCSAdapter();
-			}
-			@Override
-			public Adapter casePackageCS(PackageCS object) {
-				return createPackageCSAdapter();
 			}
 			@Override
 			public Adapter caseDataTypeCS(DataTypeCS object) {
@@ -1393,6 +1403,34 @@ public class QvtoperationalcsAdapterFactory
 	 * @generated
 	 */
 	public Adapter createModelElementCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.RootCS <em>Root CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.baseCST.RootCS
+	 * @generated
+	 */
+	public Adapter createRootCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS <em>Root Package CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS
+	 * @generated
+	 */
+	public Adapter createRootPackageCSAdapter() {
 		return null;
 	}
 

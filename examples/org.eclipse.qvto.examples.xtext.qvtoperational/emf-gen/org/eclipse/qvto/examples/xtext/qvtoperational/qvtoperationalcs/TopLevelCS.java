@@ -4,7 +4,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -23,7 +23,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ModelElementCS;
  * @generated
  */
 public interface TopLevelCS
-		extends ModelElementCS {
+		extends RootPackageCS {
 
 	/**
 	 * Returns the value of the '<em><b>Import</b></em>' containment reference

@@ -87,23 +87,20 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 		if(semanticObject.eClass().getEPackage() == BaseCSTPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case BaseCSTPackage.CLASS_CS:
 				if(context == grammarAccess.getClassifierCSRule() ||
-				   context == grammarAccess.getExceptionCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
+				   context == grammarAccess.getExceptionCSRule()) {
 					sequence_ExceptionCS(context, (ClassCS) semanticObject); 
 					return; 
 				}
 				else break;
 			case BaseCSTPackage.DATA_TYPE_CS:
 				if(context == grammarAccess.getClassifierCSRule() ||
-				   context == grammarAccess.getDataTypeCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
+				   context == grammarAccess.getDataTypeCSRule()) {
 					sequence_DataTypeCS(context, (DataTypeCS) semanticObject); 
 					return; 
 				}
 				else break;
 			case BaseCSTPackage.ENUMERATION_CS:
-				if(context == grammarAccess.getEnumerationCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
+				if(context == grammarAccess.getEnumerationCSRule()) {
 					sequence_EnumerationCS(context, (EnumerationCS) semanticObject); 
 					return; 
 				}
@@ -685,16 +682,14 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			case QvtoperationalcsPackage.PRIMITIVE_TYPE_CS:
 				if(context == grammarAccess.getClassifierCSRule() ||
-				   context == grammarAccess.getDataTypeCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
+				   context == grammarAccess.getDataTypeCSRule()) {
 					sequence_DataTypeCS(context, (PrimitiveTypeCS) semanticObject); 
 					return; 
 				}
 				else break;
 			case QvtoperationalcsPackage.QV_TO_CLASS_CS:
 				if(context == grammarAccess.getClassCSRule() ||
-				   context == grammarAccess.getClassifierCSRule() ||
-				   context == grammarAccess.getMetamodelElementCSRule()) {
+				   context == grammarAccess.getClassifierCSRule()) {
 					sequence_ClassCS(context, (QVToClassCS) semanticObject); 
 					return; 
 				}
@@ -724,8 +719,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				}
 				else break;
 			case QvtoperationalcsPackage.TAG_CS:
-				if(context == grammarAccess.getMetamodelElementCSRule() ||
-				   context == grammarAccess.getTagCSRule()) {
+				if(context == grammarAccess.getTagCSRule()) {
 					sequence_TagCS(context, (TagCS) semanticObject); 
 					return; 
 				}
@@ -884,7 +878,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (metamodelKind=MetamodelKind name=UnrestrictedName element+=MetamodelElementCS*)
+	 *     (metamodelKind=MetamodelKind name=UnrestrictedName (ownedType+=ClassifierCS | ownedType+=EnumerationCS | ownedAnnotation+=TagCS)*)
 	 */
 	protected void sequence_MetamodelCS(EObject context, MetamodelCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -938,7 +932,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (import+=ImportCS* unit+=UnitElementCS*)
+	 *     (import+=ImportCS* ownedNestedPackage+=MetamodelCS)
 	 */
 	protected void sequence_TopLevelCS(EObject context, TopLevelCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

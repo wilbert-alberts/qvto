@@ -24,8 +24,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cImportAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cImportImportCSParserRuleCall_0_0 = (RuleCall)cImportAssignment_0.eContents().get(0);
-		private final Assignment cUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cUnitUnitElementCSParserRuleCall_1_0 = (RuleCall)cUnitAssignment_1.eContents().get(0);
+		private final Assignment cOwnedNestedPackageAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cOwnedNestedPackageMetamodelCSParserRuleCall_1_0 = (RuleCall)cOwnedNestedPackageAssignment_1.eContents().get(0);
 		
 		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
 		//
@@ -38,10 +38,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//TopLevelCS:
 		//
-		//	^import+=ImportCS* unit+=UnitElementCS*;
+		//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
+		// ownedNestedPackage+=MetamodelCS;
 		public ParserRule getRule() { return rule; }
 
-		//^import+=ImportCS* unit+=UnitElementCS*
+		//^import+=ImportCS* // unit+=UnitElementCS* FIXME
+		// ownedNestedPackage+=MetamodelCS
 		public Group getGroup() { return cGroup; }
 
 		//^import+=ImportCS*
@@ -50,11 +52,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportCS
 		public RuleCall getImportImportCSParserRuleCall_0_0() { return cImportImportCSParserRuleCall_0_0; }
 
-		//unit+=UnitElementCS*
-		public Assignment getUnitAssignment_1() { return cUnitAssignment_1; }
+		//// unit+=UnitElementCS* FIXME
+		// ownedNestedPackage+=MetamodelCS
+		public Assignment getOwnedNestedPackageAssignment_1() { return cOwnedNestedPackageAssignment_1; }
 
-		//UnitElementCS
-		public RuleCall getUnitUnitElementCSParserRuleCall_1_0() { return cUnitUnitElementCSParserRuleCall_1_0; }
+		//MetamodelCS
+		public RuleCall getOwnedNestedPackageMetamodelCSParserRuleCall_1_0() { return cOwnedNestedPackageMetamodelCSParserRuleCall_1_0; }
 	}
 
 	public class QualifierElements extends AbstractParserRuleElementFinder {
@@ -374,8 +377,13 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameUnrestrictedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cElementAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cElementMetamodelElementCSParserRuleCall_3_0 = (RuleCall)cElementAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cOwnedTypeAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cOwnedTypeClassifierCSParserRuleCall_3_0_0 = (RuleCall)cOwnedTypeAssignment_3_0.eContents().get(0);
+		private final Assignment cOwnedTypeAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cOwnedTypeEnumerationCSParserRuleCall_3_1_0 = (RuleCall)cOwnedTypeAssignment_3_1.eContents().get(0);
+		private final Assignment cOwnedAnnotationAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
+		private final RuleCall cOwnedAnnotationTagCSParserRuleCall_3_2_0 = (RuleCall)cOwnedAnnotationAssignment_3_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
@@ -386,10 +394,18 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//// MetamodeKind provides extra semantic, we need to retain the kind 
 		// MetamodelCS:
 		//
-		//	metamodelKind=MetamodelKind name=UnrestrictedName "{" element+=MetamodelElementCS* "}" ";"?;
+		//	metamodelKind=MetamodelKind name=UnrestrictedName "{" (ownedType+=ClassifierCS
+		//
+		//	// QVTo grammar distincts classifier from enumeration
+		// | ownedType+=EnumerationCS | ownedAnnotation+=TagCS)* "}"
+		//
+		//	";"?;
 		public ParserRule getRule() { return rule; }
 
-		//metamodelKind=MetamodelKind name=UnrestrictedName "{" element+=MetamodelElementCS* "}" ";"?
+		//metamodelKind=MetamodelKind name=UnrestrictedName "{" (ownedType+=ClassifierCS
+		//
+		//// QVTo grammar distincts classifier from enumeration
+		// | ownedType+=EnumerationCS | ownedAnnotation+=TagCS)* "}" ";"?
 		public Group getGroup() { return cGroup; }
 
 		//metamodelKind=MetamodelKind
@@ -407,11 +423,29 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//element+=MetamodelElementCS*
-		public Assignment getElementAssignment_3() { return cElementAssignment_3; }
+		//(ownedType+=ClassifierCS // QVTo grammar distincts classifier from enumeration
+		// | ownedType+=EnumerationCS |
+		//
+		//ownedAnnotation+=TagCS)*
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//MetamodelElementCS
-		public RuleCall getElementMetamodelElementCSParserRuleCall_3_0() { return cElementMetamodelElementCSParserRuleCall_3_0; }
+		//ownedType+=ClassifierCS
+		public Assignment getOwnedTypeAssignment_3_0() { return cOwnedTypeAssignment_3_0; }
+
+		//ClassifierCS
+		public RuleCall getOwnedTypeClassifierCSParserRuleCall_3_0_0() { return cOwnedTypeClassifierCSParserRuleCall_3_0_0; }
+
+		//ownedType+=EnumerationCS
+		public Assignment getOwnedTypeAssignment_3_1() { return cOwnedTypeAssignment_3_1; }
+
+		//EnumerationCS
+		public RuleCall getOwnedTypeEnumerationCSParserRuleCall_3_1_0() { return cOwnedTypeEnumerationCSParserRuleCall_3_1_0; }
+
+		//ownedAnnotation+=TagCS
+		public Assignment getOwnedAnnotationAssignment_3_2() { return cOwnedAnnotationAssignment_3_2; }
+
+		//TagCS
+		public RuleCall getOwnedAnnotationTagCSParserRuleCall_3_2_0() { return cOwnedAnnotationTagCSParserRuleCall_3_2_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -420,62 +454,37 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
-	public class MetamodelElementCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MetamodelElementCS");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final RuleCall cClassifierCSParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
-		private final RuleCall cTagCSParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
-		private final RuleCall cEnumerationCSParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
-		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		
-		//MetamodelElementCS returns base::ElementCS:
-		//
-		//	(ClassifierCS | TagCS | EnumerationCS) ";";
-		public ParserRule getRule() { return rule; }
-
-		//(ClassifierCS | TagCS | EnumerationCS) ";"
-		public Group getGroup() { return cGroup; }
-
-		//ClassifierCS | TagCS | EnumerationCS
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
-		//ClassifierCS
-		public RuleCall getClassifierCSParserRuleCall_0_0() { return cClassifierCSParserRuleCall_0_0; }
-
-		//TagCS
-		public RuleCall getTagCSParserRuleCall_0_1() { return cTagCSParserRuleCall_0_1; }
-
-		//EnumerationCS
-		public RuleCall getEnumerationCSParserRuleCall_0_2() { return cEnumerationCSParserRuleCall_0_2; }
-
-		//";"
-		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
-	}
-
 	public class ClassifierCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ClassifierCS");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cDataTypeCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cExceptionCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cClassCSParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cDataTypeCSParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cExceptionCSParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final RuleCall cClassCSParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//ClassifierCS returns base::ClassifierCS:
 		//
-		//	DataTypeCS | ExceptionCS | ClassCS;
+		//	(DataTypeCS | ExceptionCS | ClassCS) ";"?;
 		public ParserRule getRule() { return rule; }
 
+		//(DataTypeCS | ExceptionCS | ClassCS) ";"?
+		public Group getGroup() { return cGroup; }
+
 		//DataTypeCS | ExceptionCS | ClassCS
-		public Alternatives getAlternatives() { return cAlternatives; }
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//DataTypeCS
-		public RuleCall getDataTypeCSParserRuleCall_0() { return cDataTypeCSParserRuleCall_0; }
+		public RuleCall getDataTypeCSParserRuleCall_0_0() { return cDataTypeCSParserRuleCall_0_0; }
 
 		//ExceptionCS
-		public RuleCall getExceptionCSParserRuleCall_1() { return cExceptionCSParserRuleCall_1; }
+		public RuleCall getExceptionCSParserRuleCall_0_1() { return cExceptionCSParserRuleCall_0_1; }
 
 		//ClassCS
-		public RuleCall getClassCSParserRuleCall_2() { return cClassCSParserRuleCall_2; }
+		public RuleCall getClassCSParserRuleCall_0_2() { return cClassCSParserRuleCall_0_2; }
+
+		//";"?
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
 	}
 
 	public class DataTypeCSElements extends AbstractParserRuleElementFinder {
@@ -1088,14 +1097,17 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedLiteralsAssignment_2_1_1_1 = (Assignment)cGroup_2_1_1.eContents().get(1);
 		private final RuleCall cOwnedLiteralsEnumerationLiteralCSParserRuleCall_2_1_1_1_0 = (RuleCall)cOwnedLiteralsAssignment_2_1_1_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//// FIXME Deviation from official grammar
 		// EnumerationCS returns base::EnumerationCS:
 		//
-		//	"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}");
+		//	"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}")
+		//
+		//	";"?;
 		public ParserRule getRule() { return rule; }
 
-		//"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}")
+		//"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}") ";"?
 		public Group getGroup() { return cGroup; }
 
 		//"enum"
@@ -1136,6 +1148,9 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
+
+		//";"?
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
 	public class EnumerationLiteralCSElements extends AbstractParserRuleElementFinder {
@@ -1433,7 +1448,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private ParameterCSElements pParameterCS;
 	private InitPartCSElements pInitPartCS;
 	private MetamodelCSElements pMetamodelCS;
-	private MetamodelElementCSElements pMetamodelElementCS;
 	private ClassifierCSElements pClassifierCS;
 	private DataTypeCSElements pDataTypeCS;
 	private ExceptionCSElements pExceptionCS;
@@ -1499,7 +1513,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//TopLevelCS:
 	//
-	//	^import+=ImportCS* unit+=UnitElementCS*;
+	//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
+	// ownedNestedPackage+=MetamodelCS;
 	public TopLevelCSElements getTopLevelCSAccess() {
 		return (pTopLevelCS != null) ? pTopLevelCS : (pTopLevelCS = new TopLevelCSElements());
 	}
@@ -1667,7 +1682,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//// MetamodeKind provides extra semantic, we need to retain the kind 
 	// MetamodelCS:
 	//
-	//	metamodelKind=MetamodelKind name=UnrestrictedName "{" element+=MetamodelElementCS* "}" ";"?;
+	//	metamodelKind=MetamodelKind name=UnrestrictedName "{" (ownedType+=ClassifierCS
+	//
+	//	// QVTo grammar distincts classifier from enumeration
+	// | ownedType+=EnumerationCS | ownedAnnotation+=TagCS)* "}"
+	//
+	//	";"?;
 	public MetamodelCSElements getMetamodelCSAccess() {
 		return (pMetamodelCS != null) ? pMetamodelCS : (pMetamodelCS = new MetamodelCSElements());
 	}
@@ -1676,20 +1696,9 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getMetamodelCSAccess().getRule();
 	}
 
-	//MetamodelElementCS returns base::ElementCS:
-	//
-	//	(ClassifierCS | TagCS | EnumerationCS) ";";
-	public MetamodelElementCSElements getMetamodelElementCSAccess() {
-		return (pMetamodelElementCS != null) ? pMetamodelElementCS : (pMetamodelElementCS = new MetamodelElementCSElements());
-	}
-	
-	public ParserRule getMetamodelElementCSRule() {
-		return getMetamodelElementCSAccess().getRule();
-	}
-
 	//ClassifierCS returns base::ClassifierCS:
 	//
-	//	DataTypeCS | ExceptionCS | ClassCS;
+	//	(DataTypeCS | ExceptionCS | ClassCS) ";"?;
 	public ClassifierCSElements getClassifierCSAccess() {
 		return (pClassifierCS != null) ? pClassifierCS : (pClassifierCS = new ClassifierCSElements());
 	}
@@ -1839,7 +1848,9 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//// FIXME Deviation from official grammar
 	// EnumerationCS returns base::EnumerationCS:
 	//
-	//	"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}");
+	//	"enum" name=Identifier ("{" (ownedLiterals+=EnumerationLiteralCS ("," ownedLiterals+=EnumerationLiteralCS)*) "}")
+	//
+	//	";"?;
 	public EnumerationCSElements getEnumerationCSAccess() {
 		return (pEnumerationCS != null) ? pEnumerationCS : (pEnumerationCS = new EnumerationCSElements());
 	}

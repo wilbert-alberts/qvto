@@ -39,8 +39,8 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getImportCSAccess().getAlternatives(), "rule__ImportCS__Alternatives");
 					put(grammarAccess.getImportCSAccess().getAlternatives_1_3(), "rule__ImportCS__Alternatives_1_3");
-					put(grammarAccess.getMetamodelElementCSAccess().getAlternatives_0(), "rule__MetamodelElementCS__Alternatives_0");
-					put(grammarAccess.getClassifierCSAccess().getAlternatives(), "rule__ClassifierCS__Alternatives");
+					put(grammarAccess.getMetamodelCSAccess().getAlternatives_3(), "rule__MetamodelCS__Alternatives_3");
+					put(grammarAccess.getClassifierCSAccess().getAlternatives_0(), "rule__ClassifierCS__Alternatives_0");
 					put(grammarAccess.getDataTypeCSAccess().getAlternatives_0(), "rule__DataTypeCS__Alternatives_0");
 					put(grammarAccess.getClassCSAccess().getAlternatives_5_1_0(), "rule__ClassCS__Alternatives_5_1_0");
 					put(grammarAccess.getTypedRefCSAccess().getAlternatives(), "rule__TypedRefCS__Alternatives");
@@ -86,7 +86,7 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterCSAccess().getGroup_2(), "rule__ParameterCS__Group_2__0");
 					put(grammarAccess.getInitPartCSAccess().getGroup(), "rule__InitPartCS__Group__0");
 					put(grammarAccess.getMetamodelCSAccess().getGroup(), "rule__MetamodelCS__Group__0");
-					put(grammarAccess.getMetamodelElementCSAccess().getGroup(), "rule__MetamodelElementCS__Group__0");
+					put(grammarAccess.getClassifierCSAccess().getGroup(), "rule__ClassifierCS__Group__0");
 					put(grammarAccess.getDataTypeCSAccess().getGroup(), "rule__DataTypeCS__Group__0");
 					put(grammarAccess.getDataTypeCSAccess().getGroup_0_1(), "rule__DataTypeCS__Group_0_1__0");
 					put(grammarAccess.getExceptionCSAccess().getGroup(), "rule__ExceptionCS__Group__0");
@@ -198,7 +198,7 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNestedExpCSAccess().getGroup(), "rule__NestedExpCS__Group__0");
 					put(grammarAccess.getSelfExpCSAccess().getGroup(), "rule__SelfExpCS__Group__0");
 					put(grammarAccess.getTopLevelCSAccess().getImportAssignment_0(), "rule__TopLevelCS__ImportAssignment_0");
-					put(grammarAccess.getTopLevelCSAccess().getUnitAssignment_1(), "rule__TopLevelCS__UnitAssignment_1");
+					put(grammarAccess.getTopLevelCSAccess().getOwnedNestedPackageAssignment_1(), "rule__TopLevelCS__OwnedNestedPackageAssignment_1");
 					put(grammarAccess.getImportCSAccess().getUnitAssignment_0_1(), "rule__ImportCS__UnitAssignment_0_1");
 					put(grammarAccess.getImportCSAccess().getUnitAssignment_1_1(), "rule__ImportCS__UnitAssignment_1_1");
 					put(grammarAccess.getImportCSAccess().getImportedUnitElementAssignment_1_3_0_0(), "rule__ImportCS__ImportedUnitElementAssignment_1_3_0_0");
@@ -214,7 +214,9 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInitPartCSAccess().getExpressionAssignment_1(), "rule__InitPartCS__ExpressionAssignment_1");
 					put(grammarAccess.getMetamodelCSAccess().getMetamodelKindAssignment_0(), "rule__MetamodelCS__MetamodelKindAssignment_0");
 					put(grammarAccess.getMetamodelCSAccess().getNameAssignment_1(), "rule__MetamodelCS__NameAssignment_1");
-					put(grammarAccess.getMetamodelCSAccess().getElementAssignment_3(), "rule__MetamodelCS__ElementAssignment_3");
+					put(grammarAccess.getMetamodelCSAccess().getOwnedTypeAssignment_3_0(), "rule__MetamodelCS__OwnedTypeAssignment_3_0");
+					put(grammarAccess.getMetamodelCSAccess().getOwnedTypeAssignment_3_1(), "rule__MetamodelCS__OwnedTypeAssignment_3_1");
+					put(grammarAccess.getMetamodelCSAccess().getOwnedAnnotationAssignment_3_2(), "rule__MetamodelCS__OwnedAnnotationAssignment_3_2");
 					put(grammarAccess.getDataTypeCSAccess().getNameAssignment_1(), "rule__DataTypeCS__NameAssignment_1");
 					put(grammarAccess.getExceptionCSAccess().getNameAssignment_1(), "rule__ExceptionCS__NameAssignment_1");
 					put(grammarAccess.getExceptionCSAccess().getOwnedSuperTypeAssignment_2_1_0(), "rule__ExceptionCS__OwnedSuperTypeAssignment_2_1_0");

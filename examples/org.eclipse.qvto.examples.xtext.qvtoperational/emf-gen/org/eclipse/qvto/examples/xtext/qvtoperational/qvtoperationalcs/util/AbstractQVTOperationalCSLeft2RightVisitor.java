@@ -241,7 +241,7 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 	}
 
 	public @Nullable Element visitTopLevelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS csElement) {
-		return visitModelElementCS(csElement);
+		return visitRootPackageCS(csElement);
 	}
 
 	public @Nullable Element visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {

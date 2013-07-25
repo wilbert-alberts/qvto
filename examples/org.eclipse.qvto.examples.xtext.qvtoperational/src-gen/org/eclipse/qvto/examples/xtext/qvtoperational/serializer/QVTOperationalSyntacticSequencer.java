@@ -18,14 +18,18 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class QVTOperationalSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected QVTOperationalGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_ClassifierCS_SemicolonKeyword_1_q;
 	protected AbstractElementAlias match_ClassifierPropertyCS_TildeKeyword_6_1_q;
+	protected AbstractElementAlias match_EnumerationCS_SemicolonKeyword_3_q;
 	protected AbstractElementAlias match_MetamodelCS_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (QVTOperationalGrammarAccess) access;
+		match_ClassifierCS_SemicolonKeyword_1_q = new TokenAlias(false, true, grammarAccess.getClassifierCSAccess().getSemicolonKeyword_1());
 		match_ClassifierPropertyCS_TildeKeyword_6_1_q = new TokenAlias(false, true, grammarAccess.getClassifierPropertyCSAccess().getTildeKeyword_6_1());
+		match_EnumerationCS_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getEnumerationCSAccess().getSemicolonKeyword_3());
 		match_MetamodelCS_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getMetamodelCSAccess().getSemicolonKeyword_5());
 		match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2()));
 	}
@@ -42,8 +46,12 @@ public class QVTOperationalSyntacticSequencer extends AbstractSyntacticSequencer
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_ClassifierPropertyCS_TildeKeyword_6_1_q.equals(syntax))
+			if(match_ClassifierCS_SemicolonKeyword_1_q.equals(syntax))
+				emit_ClassifierCS_SemicolonKeyword_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_ClassifierPropertyCS_TildeKeyword_6_1_q.equals(syntax))
 				emit_ClassifierPropertyCS_TildeKeyword_6_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_EnumerationCS_SemicolonKeyword_3_q.equals(syntax))
+				emit_EnumerationCS_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_MetamodelCS_SemicolonKeyword_5_q.equals(syntax))
 				emit_MetamodelCS_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
@@ -54,9 +62,25 @@ public class QVTOperationalSyntacticSequencer extends AbstractSyntacticSequencer
 
 	/**
 	 * Syntax:
+	 *     ';'?
+	 */
+	protected void emit_ClassifierCS_SemicolonKeyword_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
 	 *     '~'?
 	 */
 	protected void emit_ClassifierPropertyCS_TildeKeyword_6_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     ';'?
+	 */
+	protected void emit_EnumerationCS_SemicolonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
