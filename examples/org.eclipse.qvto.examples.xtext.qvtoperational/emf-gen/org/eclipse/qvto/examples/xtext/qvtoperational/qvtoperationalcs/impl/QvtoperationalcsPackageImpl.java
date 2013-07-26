@@ -1682,14 +1682,6 @@ public class QvtoperationalcsPackageImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMetamodelCS_Element() {
-		return (EReference)metamodelCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getPrimitiveTypeCS() {
 		return primitiveTypeCSEClass;
 	}
@@ -2131,7 +2123,6 @@ public class QvtoperationalcsPackageImpl
 
 		metamodelCSEClass = createEClass(METAMODEL_CS);
 		createEAttribute(metamodelCSEClass, METAMODEL_CS__METAMODEL_KIND);
-		createEReference(metamodelCSEClass, METAMODEL_CS__ELEMENT);
 
 		primitiveTypeCSEClass = createEClass(PRIMITIVE_TYPE_CS);
 
@@ -2472,7 +2463,6 @@ public class QvtoperationalcsPackageImpl
 
 		initEClass(metamodelCSEClass, MetamodelCS.class, "MetamodelCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMetamodelCS_MetamodelKind(), this.getMetamodelKind(), "metamodelKind", null, 0, 1, MetamodelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMetamodelCS_Element(), theBaseCSTPackage.getElementCS(), null, "element", null, 0, -1, MetamodelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(primitiveTypeCSEClass, PrimitiveTypeCS.class, "PrimitiveTypeCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

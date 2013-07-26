@@ -1542,20 +1542,12 @@ public interface QvtoperationalcsPackage
 	int METAMODEL_CS__METAMODEL_KIND = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Element</b></em>' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int METAMODEL_CS__ELEMENT = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Metamodel CS</em>' class.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METAMODEL_CS_FEATURE_COUNT = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 2;
+	int METAMODEL_CS_FEATURE_COUNT = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--
@@ -5740,16 +5732,6 @@ public interface QvtoperationalcsPackage
 	EAttribute getMetamodelCS_MetamodelKind();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS#getElement <em>Element</em>}'.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Element</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS#getElement()
-	 * @see #getMetamodelCS()
-	 * @generated
-	 */
-	EReference getMetamodelCS_Element();
-
-	/**
 	 * Returns the meta object for class '
 	 * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS
 	 * <em>Primitive Type CS</em>}'. <!-- begin-user-doc --> <!-- end-user-doc
@@ -7437,13 +7419,6 @@ public interface QvtoperationalcsPackage
 		 * @generated
 		 */
 		EAttribute METAMODEL_CS__METAMODEL_KIND = eINSTANCE.getMetamodelCS_MetamodelKind();
-
-		/**
-		 * The meta object literal for the '<em><b>Element</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference METAMODEL_CS__ELEMENT = eINSTANCE.getMetamodelCS_Element();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.PrimitiveTypeCSImpl <em>Primitive Type CS</em>}' class.

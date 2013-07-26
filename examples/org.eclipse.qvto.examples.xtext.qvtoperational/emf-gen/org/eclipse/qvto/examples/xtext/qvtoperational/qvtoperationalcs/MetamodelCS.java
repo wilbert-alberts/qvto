@@ -2,8 +2,6 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
 
 /**
@@ -14,7 +12,6 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS#getMetamodelKind <em>Metamodel Kind</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,23 +50,5 @@ public interface MetamodelCS
 	 * @generated
 	 */
 	void setMetamodelKind(MetamodelKind value);
-
-	/**
-	 * Returns the value of the '<em><b>Element</b></em>' containment reference
-	 * list. The list contents are of type
-	 * {@link org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS}. <!--
-	 * begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Element</em>' containment reference list isn't
-	 * clear, there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Element</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMetamodelCS_Element()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ElementCS> getElement();
 
 } // MetamodelCS
