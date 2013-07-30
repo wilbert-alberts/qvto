@@ -2,32 +2,44 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperationalcs" nsURI="http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
     nsPrefix="qvtoperationalcs">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="baseCST" value="/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#/"/>
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    <details key="essentialOCLCST" value="/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#/"/>
+    <details key="imperativeoclcs" value="/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/"/>
+    <details key="qvtoperational" value="/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EEnum" name="ClassifierKind">
-    <eLiterals name="DATATYPE" literal="datatype"/>
-    <eLiterals name="PRIMITIVE" value="1" literal="primitive"/>
-    <eLiterals name="EXCEPTION" value="2" literal="exception"/>
-    <eLiterals name="CLASS" value="3" literal="class"/>
+    <eLiterals name="DATATYPE"/>
+    <eLiterals name="PRIMITIVE" value="1"/>
+    <eLiterals name="EXCEPTION" value="2"/>
+    <eLiterals name="CLASS" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="FeatureKey">
-    <eLiterals name="COMPOSES" literal="composes"/>
-    <eLiterals name="REFERRENCES" value="1" literal="references"/>
-    <eLiterals name="READONLY" value="2" literal="readonly"/>
-    <eLiterals name="DERIVED" value="3" literal="derived"/>
-    <eLiterals name="STATIC" value="4" literal="static"/>
+    <eLiterals name="COMPOSES"/>
+    <eLiterals name="REFERRENCES" value="1"/>
+    <eLiterals name="READONLY" value="2"/>
+    <eLiterals name="DERIVED" value="3"/>
+    <eLiterals name="STATIC" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="InitOp">
-    <eLiterals name="EQUALS" literal="="/>
-    <eLiterals name="COLON_EQUALS" value="1" literal=":="/>
-    <eLiterals name="COLON_COLON_EQUALS" value="2" literal="::="/>
+    <eLiterals name="EQUALS"/>
+    <eLiterals name="COLON_EQUALS" value="1"/>
+    <eLiterals name="COLON_COLON_EQUALS" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MetamodelKind">
-    <eLiterals name="METAMODEL" literal="metamodel"/>
-    <eLiterals name="PACKAGE" value="1" literal="package"/>
+    <eLiterals name="METAMODEL"/>
+    <eLiterals name="PACKAGE" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ParamDirection">
-    <eLiterals name="IN" literal="in"/>
-    <eLiterals name="INOUT" value="1" literal="inout"/>
-    <eLiterals name="OUT" value="2" literal="out"/>
+    <eLiterals name="IN"/>
+    <eLiterals name="INOUT" value="1"/>
+    <eLiterals name="OUT" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TopLevelCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//RootPackageCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="import" upperBound="-1"
@@ -43,8 +55,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="#//UnitCS"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedUnitElement" upperBound="-1"
-        eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="QVToLibraryCS" eSuperTypes="#//MappingModuleCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="QVToOperationCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//OperationCS">
@@ -331,7 +343,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
         eType="#//ParameterDeclarationCS" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransformationHeaderCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ElementCS">
+  <eClassifiers xsi:type="ecore:EClass" name="TransformationHeaderCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PackageCS ../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ClassCS">
+    <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational.OperationalTransformation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="qvtoperational::OperationalTransformation {&#xA;&#x9;&#x9;&#x9;&#x9;name = name&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#//StringLiteralExpCS"
         containment="true"/>

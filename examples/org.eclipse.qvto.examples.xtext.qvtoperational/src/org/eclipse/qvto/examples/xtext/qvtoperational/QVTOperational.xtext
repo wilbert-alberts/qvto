@@ -172,5 +172,24 @@ TagCS returns TagCS:
 	pathName=PathNameCS ('=' expression=ExpCS)? ';'
 ;
 
+
 // typedefs
 // TypedefCS: 'typedef' name=Identifier '=' typespec=TypeExpCS ('[' condition=ExpCS ']')? ';';
+
+// ****** Transformations, mappings, etc ******
+
+TransformationCS returns TransformationHeaderCS:
+	TransformationDeclCS | TransformationDefCS
+;
+
+TransformationDeclCS returns TransformationHeaderCS:
+	TransformationHeaderCS ';'
+;
+
+TransformationDefCS returns TransformationHeaderCS:
+	TransformationHeaderCS '{' '}'
+;
+	
+TransformationHeaderCS:
+	'transformation' name=UnrestrictedName
+;
