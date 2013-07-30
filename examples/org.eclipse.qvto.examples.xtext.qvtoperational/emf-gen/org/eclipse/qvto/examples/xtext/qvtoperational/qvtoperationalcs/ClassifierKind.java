@@ -26,7 +26,7 @@ public enum ClassifierKind
 	 * @generated
 	 * @ordered
 	 */
-	DATATYPE(0, "DATATYPE", "datatype"),
+	DATATYPE(0, "DATATYPE", "DATATYPE"),
 
 	/**
 	 * The '<em><b>PRIMITIVE</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum ClassifierKind
 	 * @generated
 	 * @ordered
 	 */
-	PRIMITIVE(1, "PRIMITIVE", "primitive"),
+	PRIMITIVE(1, "PRIMITIVE", "PRIMITIVE"),
 
 	/**
 	 * The '<em><b>EXCEPTION</b></em>' literal object.
@@ -46,7 +46,7 @@ public enum ClassifierKind
 	 * @generated
 	 * @ordered
 	 */
-	EXCEPTION(2, "EXCEPTION", "exception"),
+	EXCEPTION(2, "EXCEPTION", "EXCEPTION"),
 
 	/**
 	 * The '<em><b>CLASS</b></em>' literal object.
@@ -56,7 +56,7 @@ public enum ClassifierKind
 	 * @generated
 	 * @ordered
 	 */
-	CLASS(3, "CLASS", "class");
+	CLASS(3, "CLASS", "CLASS");
 
 	/**
 	 * The '<em><b>DATATYPE</b></em>' literal value.
@@ -67,7 +67,7 @@ public enum ClassifierKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #DATATYPE
-	 * @model literal="datatype"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -82,7 +82,7 @@ public enum ClassifierKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #PRIMITIVE
-	 * @model literal="primitive"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -97,7 +97,7 @@ public enum ClassifierKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #EXCEPTION
-	 * @model literal="exception"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -112,7 +112,7 @@ public enum ClassifierKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #CLASS
-	 * @model literal="class"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */

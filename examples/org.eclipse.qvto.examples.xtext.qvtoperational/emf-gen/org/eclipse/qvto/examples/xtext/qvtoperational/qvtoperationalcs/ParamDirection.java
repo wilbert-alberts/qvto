@@ -26,7 +26,7 @@ public enum ParamDirection
 	 * @generated
 	 * @ordered
 	 */
-	IN(0, "IN", "in"),
+	IN(0, "IN", "IN"),
 
 	/**
 	 * The '<em><b>INOUT</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum ParamDirection
 	 * @generated
 	 * @ordered
 	 */
-	INOUT(1, "INOUT", "inout"),
+	INOUT(1, "INOUT", "INOUT"),
 
 	/**
 	 * The '<em><b>OUT</b></em>' literal object.
@@ -46,7 +46,7 @@ public enum ParamDirection
 	 * @generated
 	 * @ordered
 	 */
-	OUT(2, "OUT", "out");
+	OUT(2, "OUT", "OUT");
 
 	/**
 	 * The '<em><b>IN</b></em>' literal value.
@@ -57,7 +57,7 @@ public enum ParamDirection
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #IN
-	 * @model literal="in"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -72,7 +72,7 @@ public enum ParamDirection
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #INOUT
-	 * @model literal="inout"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -87,7 +87,7 @@ public enum ParamDirection
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #OUT
-	 * @model literal="out"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */

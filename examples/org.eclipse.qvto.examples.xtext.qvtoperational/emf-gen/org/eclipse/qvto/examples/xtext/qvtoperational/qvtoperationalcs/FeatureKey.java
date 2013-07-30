@@ -26,7 +26,7 @@ public enum FeatureKey
 	 * @generated
 	 * @ordered
 	 */
-	COMPOSES(0, "COMPOSES", "composes"),
+	COMPOSES(0, "COMPOSES", "COMPOSES"),
 
 	/**
 	 * The '<em><b>REFERRENCES</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum FeatureKey
 	 * @generated
 	 * @ordered
 	 */
-	REFERRENCES(1, "REFERRENCES", "references"),
+	REFERRENCES(1, "REFERRENCES", "REFERRENCES"),
 
 	/**
 	 * The '<em><b>READONLY</b></em>' literal object.
@@ -46,7 +46,7 @@ public enum FeatureKey
 	 * @generated
 	 * @ordered
 	 */
-	READONLY(2, "READONLY", "readonly"),
+	READONLY(2, "READONLY", "READONLY"),
 
 	/**
 	 * The '<em><b>DERIVED</b></em>' literal object.
@@ -56,7 +56,7 @@ public enum FeatureKey
 	 * @generated
 	 * @ordered
 	 */
-	DERIVED(3, "DERIVED", "derived"),
+	DERIVED(3, "DERIVED", "DERIVED"),
 
 	/**
 	 * The '<em><b>STATIC</b></em>' literal object.
@@ -66,7 +66,7 @@ public enum FeatureKey
 	 * @generated
 	 * @ordered
 	 */
-	STATIC(4, "STATIC", "static");
+	STATIC(4, "STATIC", "STATIC");
 
 	/**
 	 * The '<em><b>COMPOSES</b></em>' literal value.
@@ -77,7 +77,7 @@ public enum FeatureKey
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #COMPOSES
-	 * @model literal="composes"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -92,7 +92,7 @@ public enum FeatureKey
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #REFERRENCES
-	 * @model literal="references"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -107,7 +107,7 @@ public enum FeatureKey
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #READONLY
-	 * @model literal="readonly"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -122,7 +122,7 @@ public enum FeatureKey
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #DERIVED
-	 * @model literal="derived"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -137,7 +137,7 @@ public enum FeatureKey
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #STATIC
-	 * @model literal="static"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */

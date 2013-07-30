@@ -68,6 +68,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Qvtoperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -730,6 +731,15 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
+			case QvtoperationalcsPackage.TRANSFORMATION_HEADER_CS:
+				if(context == grammarAccess.getTransformationCSRule() ||
+				   context == grammarAccess.getTransformationDeclCSRule() ||
+				   context == grammarAccess.getTransformationDefCSRule() ||
+				   context == grammarAccess.getTransformationHeaderCSRule()) {
+					sequence_TransformationHeaderCS(context, (TransformationHeaderCS) semanticObject); 
+					return; 
+				}
+				else break;
 			case QvtoperationalcsPackage.UNIT_CS:
 				if(context == grammarAccess.getUnitCSRule()) {
 					sequence_UnitCS(context, (UnitCS) semanticObject); 
@@ -935,6 +945,15 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *     (import+=ImportCS* ownedNestedPackage+=MetamodelCS)
 	 */
 	protected void sequence_TopLevelCS(EObject context, TopLevelCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     name=UnrestrictedName
+	 */
+	protected void sequence_TransformationHeaderCS(EObject context, TransformationHeaderCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

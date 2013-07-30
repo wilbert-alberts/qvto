@@ -26,7 +26,7 @@ public enum InitOp
 	 * @generated
 	 * @ordered
 	 */
-	EQUALS(0, "EQUALS", "="),
+	EQUALS(0, "EQUALS", "EQUALS"),
 
 	/**
 	 * The '<em><b>COLON EQUALS</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum InitOp
 	 * @generated
 	 * @ordered
 	 */
-	COLON_EQUALS(1, "COLON_EQUALS", ":="),
+	COLON_EQUALS(1, "COLON_EQUALS", "COLON_EQUALS"),
 
 	/**
 	 * The '<em><b>COLON COLON EQUALS</b></em>' literal object. <!--
@@ -46,7 +46,7 @@ public enum InitOp
 	 * @generated
 	 * @ordered
 	 */
-	COLON_COLON_EQUALS(2, "COLON_COLON_EQUALS", "::=");
+	COLON_COLON_EQUALS(2, "COLON_COLON_EQUALS", "COLON_COLON_EQUALS");
 
 	/**
 	 * The '<em><b>EQUALS</b></em>' literal value.
@@ -57,7 +57,7 @@ public enum InitOp
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #EQUALS
-	 * @model literal="="
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -72,7 +72,7 @@ public enum InitOp
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #COLON_EQUALS
-	 * @model literal=":="
+	 * @model
 	 * @generated
 	 * @ordered
 	 */

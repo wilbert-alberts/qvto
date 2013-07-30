@@ -665,7 +665,18 @@ public class QvtoperationalcsSwitch<T>
 			case QvtoperationalcsPackage.TRANSFORMATION_HEADER_CS: {
 				TransformationHeaderCS transformationHeaderCS = (TransformationHeaderCS)theEObject;
 				T result = caseTransformationHeaderCS(transformationHeaderCS);
+				if (result == null) result = casePackageCS(transformationHeaderCS);
+				if (result == null) result = caseClassCS(transformationHeaderCS);
+				if (result == null) result = caseNamespaceCS(transformationHeaderCS);
+				if (result == null) result = caseClassifierCS(transformationHeaderCS);
+				if (result == null) result = caseNamedElementCS(transformationHeaderCS);
+				if (result == null) result = caseTypeCS(transformationHeaderCS);
+				if (result == null) result = caseTemplateableElementCS(transformationHeaderCS);
+				if (result == null) result = caseModelElementCS(transformationHeaderCS);
+				if (result == null) result = caseNameable(transformationHeaderCS);
+				if (result == null) result = casePivotableElementCS(transformationHeaderCS);
 				if (result == null) result = caseElementCS(transformationHeaderCS);
+				if (result == null) result = casePivotable(transformationHeaderCS);
 				if (result == null) result = caseVisitableCS(transformationHeaderCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

@@ -26,7 +26,7 @@ public enum MetamodelKind
 	 * @generated
 	 * @ordered
 	 */
-	METAMODEL(0, "METAMODEL", "metamodel"),
+	METAMODEL(0, "METAMODEL", "METAMODEL"),
 
 	/**
 	 * The '<em><b>PACKAGE</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum MetamodelKind
 	 * @generated
 	 * @ordered
 	 */
-	PACKAGE(1, "PACKAGE", "package");
+	PACKAGE(1, "PACKAGE", "PACKAGE");
 
 	/**
 	 * The '<em><b>METAMODEL</b></em>' literal value.
@@ -47,7 +47,7 @@ public enum MetamodelKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #METAMODEL
-	 * @model literal="metamodel"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -62,7 +62,7 @@ public enum MetamodelKind
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #PACKAGE
-	 * @model literal="package"
+	 * @model
 	 * @generated
 	 * @ordered
 	 */

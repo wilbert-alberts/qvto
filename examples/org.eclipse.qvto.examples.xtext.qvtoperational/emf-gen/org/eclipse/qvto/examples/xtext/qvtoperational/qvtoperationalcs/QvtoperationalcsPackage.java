@@ -5,6 +5,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
@@ -24,6 +25,8 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  * <!-- end-user-doc -->
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/OCL/Import baseCST='/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#/' ecore='http://www.eclipse.org/emf/2002/Ecore#/' essentialOCLCST='/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#/' imperativeoclcs='/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/' imperativeocl='/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL' qvtoperational='/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore invocationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' settingDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' validationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot'"
  * @generated
  */
 public interface QvtoperationalcsPackage
@@ -3750,7 +3753,169 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int TRANSFORMATION_HEADER_CS__LOGICAL_PARENT = BaseCSTPackage.PACKAGE_CS__LOGICAL_PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Pivot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__PIVOT = BaseCSTPackage.PACKAGE_CS__PIVOT;
+
+	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_ANNOTATION = BaseCSTPackage.PACKAGE_CS__OWNED_ANNOTATION;
+
+	/**
+	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__ORIGINAL_XMI_ID = BaseCSTPackage.PACKAGE_CS__ORIGINAL_XMI_ID;
+
+	/**
+	 * The feature id for the '<em><b>Csi</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__CSI = BaseCSTPackage.PACKAGE_CS__CSI;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__NAME = BaseCSTPackage.PACKAGE_CS__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_TYPE = BaseCSTPackage.PACKAGE_CS__OWNED_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_NESTED_PACKAGE = BaseCSTPackage.PACKAGE_CS__OWNED_NESTED_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__NS_PREFIX = BaseCSTPackage.PACKAGE_CS__NS_PREFIX;
+
+	/**
+	 * The feature id for the '<em><b>Ns URI</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__NS_URI = BaseCSTPackage.PACKAGE_CS__NS_URI;
+
+	/**
+	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_TEMPLATE_SIGNATURE = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Owner</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNER = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__INSTANCE_CLASS_NAME = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Owned Constraint</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_CONSTRAINT = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Qualifier</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__QUALIFIER = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Owned Super Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_SUPER_TYPE = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Owned Operation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_OPERATION = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Owned Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_PROPERTY = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Owned Meta Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_HEADER_CS__OWNED_META_TYPE = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Qualifiers</b></em>' containment reference list.
@@ -3758,7 +3923,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__QUALIFIERS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int TRANSFORMATION_HEADER_CS__QUALIFIERS = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Path Name CS</b></em>' containment reference.
@@ -3766,7 +3931,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__PATH_NAME_CS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int TRANSFORMATION_HEADER_CS__PATH_NAME_CS = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -3774,7 +3939,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__PARAMETERS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int TRANSFORMATION_HEADER_CS__PARAMETERS = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Module Usages</b></em>' containment reference list.
@@ -3782,7 +3947,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__MODULE_USAGES = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 3;
+	int TRANSFORMATION_HEADER_CS__MODULE_USAGES = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Transformation Refine CS</b></em>' containment reference.
@@ -3790,7 +3955,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 4;
+	int TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>Transformation Header CS</em>' class.
@@ -3799,7 +3964,7 @@ public interface QvtoperationalcsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFORMATION_HEADER_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 5;
+	int TRANSFORMATION_HEADER_CS_FEATURE_COUNT = BaseCSTPackage.PACKAGE_CS_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Logical Parent</b></em>' reference. <!--

@@ -2048,6 +2048,129 @@ ruleTagCS returns [EObject current=null]
 
 
 
+// Entry rule entryRuleTransformationDeclCS
+entryRuleTransformationDeclCS returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTransformationDeclCSRule()); }
+	 iv_ruleTransformationDeclCS=ruleTransformationDeclCS 
+	 { $current=$iv_ruleTransformationDeclCS.current; } 
+	 EOF 
+;
+
+// Rule TransformationDeclCS
+ruleTransformationDeclCS returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTransformationDeclCSAccess().getTransformationHeaderCSParserRuleCall_0()); 
+    }
+    this_TransformationHeaderCS_0=ruleTransformationHeaderCS
+    { 
+        $current = $this_TransformationHeaderCS_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+	otherlv_1=';' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTransformationDeclCSAccess().getSemicolonKeyword_1());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleTransformationDefCS
+entryRuleTransformationDefCS returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTransformationDefCSRule()); }
+	 iv_ruleTransformationDefCS=ruleTransformationDefCS 
+	 { $current=$iv_ruleTransformationDefCS.current; } 
+	 EOF 
+;
+
+// Rule TransformationDefCS
+ruleTransformationDefCS returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTransformationDefCSAccess().getTransformationHeaderCSParserRuleCall_0()); 
+    }
+    this_TransformationHeaderCS_0=ruleTransformationHeaderCS
+    { 
+        $current = $this_TransformationHeaderCS_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTransformationDefCSAccess().getLeftCurlyBracketKeyword_1());
+    }
+	otherlv_2='}' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getTransformationDefCSAccess().getRightCurlyBracketKeyword_2());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleTransformationHeaderCS
+entryRuleTransformationHeaderCS returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTransformationHeaderCSRule()); }
+	 iv_ruleTransformationHeaderCS=ruleTransformationHeaderCS 
+	 { $current=$iv_ruleTransformationHeaderCS.current; } 
+	 EOF 
+;
+
+// Rule TransformationHeaderCS
+ruleTransformationHeaderCS returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='transformation' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getTransformationHeaderCSAccess().getTransformationKeyword_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransformationHeaderCSAccess().getNameUnrestrictedNameParserRuleCall_1_0()); 
+	    }
+		lv_name_1_0=ruleUnrestrictedName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransformationHeaderCSRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_1_0, 
+        		"UnrestrictedName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
+
+
 
 
 

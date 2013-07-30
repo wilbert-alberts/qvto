@@ -3,9 +3,12 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS;
+import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -27,7 +30,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
  * @generated
  */
 public interface TransformationHeaderCS
-		extends ElementCS {
+		extends PackageCS, ClassCS {
 
 	/**
 	 * Returns the value of the '<em><b>Qualifiers</b></em>' containment reference list.
@@ -133,5 +136,14 @@ public interface TransformationHeaderCS
 	 * @generated
 	 */
 	void setTransformationRefineCS(TransformationRefineCS value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name\t\t\t\t\n\t\t\t}'"
+	 * @generated
+	 */
+	OperationalTransformation ast();
 
 } // TransformationHeaderCS
