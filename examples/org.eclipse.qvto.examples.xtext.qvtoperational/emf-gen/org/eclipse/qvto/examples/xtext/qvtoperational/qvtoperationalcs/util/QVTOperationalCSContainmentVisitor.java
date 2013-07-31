@@ -30,7 +30,7 @@ public class QVTOperationalCSContainmentVisitor
 		super(context);
 	}
 	
-	public @Nullable Continuation<?> visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {
+	public @Nullable Continuation<?> visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {		
 		return null;
 	}
 }

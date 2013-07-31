@@ -24,6 +24,9 @@ import org.eclipse.ocl.examples.build.xtend.MergeWriter
 import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors
 import org.eclipse.emf.ecore.EOperation
 
+
+// TODO non-derived visitor is not supported, since currently 
+// the root CS2AS are not generated but manually coded. 
 public class GenerateCS2ASVisitors extends GenerateCSVisitors
 {
 	override void generateVisitors(EPackage csPackage) {
@@ -151,10 +154,11 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors
 		writer.close();
 	}
 	
-		/**
-	 * Assumptions to be considered:
-	 * - the package of the extended visitor of generated visitors need to be qualified as follows:
-	 *    <code> «superProjectName».cs2as </code>
+	/**
+	 * TODO When fully generation is achieved, visitAbstractConcept method needs to be qualified as follows:
+	 *     visitAbstractElement(Abstract object) {
+	 *       throw new UnsupportedOperationException();
+	 *     }  
 	 */
 	protected def void generateContainmentVisitor(@NonNull EPackage ePackage, 
 		@NonNull String className, @NonNull String extendedClassName, @NonNull String resultTypeName, 
