@@ -29,7 +29,7 @@ import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
 
 TopLevelCS : ^import+=ImportCS* 
 	// unit+=UnitElementCS* FIXME
-	ownedNestedPackage+= MetamodelCS
+	(ownedNestedPackage+= UnitPacakgeCS)*
 ;
 
 enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
@@ -48,14 +48,14 @@ ImportCS returns QVToImportCS : // returns ElementCS to make it inherits Element
 	|  ('from' unit=UnitCS 'import' ((importedUnitElement+=Identifier (',' importedUnitElement+=Identifier)*) | all?='*') ';')
 ;
 
-UnitCS :  // returns ElementCS to make it inherits ElementCS
+UnitCS : 
 	segment+=Identifier ('.' segment+=Identifier)*
 ;
 
 	
 // ****** definitions in a compilation unit *******
-UnitElementCS returns MetamodelCS: // returns ElementCS to make it inherits ElementCS 
-	MetamodelCS
+UnitPacakgeCS returns base::PackageCS:
+	MetamodelCS | TransformationCS
 ;
 
 // ****** General rules ******

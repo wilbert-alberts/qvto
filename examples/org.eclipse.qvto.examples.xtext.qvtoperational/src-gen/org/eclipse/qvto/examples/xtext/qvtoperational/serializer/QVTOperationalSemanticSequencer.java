@@ -676,7 +676,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				else break;
 			case QvtoperationalcsPackage.METAMODEL_CS:
 				if(context == grammarAccess.getMetamodelCSRule() ||
-				   context == grammarAccess.getUnitElementCSRule()) {
+				   context == grammarAccess.getUnitPacakgeCSRule()) {
 					sequence_MetamodelCS(context, (MetamodelCS) semanticObject); 
 					return; 
 				}
@@ -735,7 +735,8 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				if(context == grammarAccess.getTransformationCSRule() ||
 				   context == grammarAccess.getTransformationDeclCSRule() ||
 				   context == grammarAccess.getTransformationDefCSRule() ||
-				   context == grammarAccess.getTransformationHeaderCSRule()) {
+				   context == grammarAccess.getTransformationHeaderCSRule() ||
+				   context == grammarAccess.getUnitPacakgeCSRule()) {
 					sequence_TransformationHeaderCS(context, (TransformationHeaderCS) semanticObject); 
 					return; 
 				}
@@ -942,7 +943,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (import+=ImportCS* ownedNestedPackage+=MetamodelCS)
+	 *     (import+=ImportCS* ownedNestedPackage+=UnitPacakgeCS*)
 	 */
 	protected void sequence_TopLevelCS(EObject context, TopLevelCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

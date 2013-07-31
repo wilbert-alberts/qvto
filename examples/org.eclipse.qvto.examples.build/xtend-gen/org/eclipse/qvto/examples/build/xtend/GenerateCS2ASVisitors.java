@@ -266,9 +266,10 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors {
   }
   
   /**
-   * Assumptions to be considered:
-   * - the package of the extended visitor of generated visitors need to be qualified as follows:
-   *    <code> «superProjectName».cs2as </code>
+   * TODO When fully generation is achieved, visitAbstractConcept method needs to be qualified as follows:
+   *     visitAbstractElement(Abstract object) {
+   *       throw new UnsupportedOperationException();
+   *     }
    */
   protected void generateContainmentVisitor(@NonNull final EPackage ePackage, @NonNull final String className, @NonNull final String extendedClassName, @NonNull final String resultTypeName, @NonNull final List<String> additionalImports) {
     try {

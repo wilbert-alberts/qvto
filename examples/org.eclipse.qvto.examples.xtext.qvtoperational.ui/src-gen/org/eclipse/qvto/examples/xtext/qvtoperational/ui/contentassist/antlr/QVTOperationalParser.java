@@ -39,6 +39,7 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getImportCSAccess().getAlternatives(), "rule__ImportCS__Alternatives");
 					put(grammarAccess.getImportCSAccess().getAlternatives_1_3(), "rule__ImportCS__Alternatives_1_3");
+					put(grammarAccess.getUnitPacakgeCSAccess().getAlternatives(), "rule__UnitPacakgeCS__Alternatives");
 					put(grammarAccess.getMetamodelCSAccess().getAlternatives_3(), "rule__MetamodelCS__Alternatives_3");
 					put(grammarAccess.getClassifierCSAccess().getAlternatives_0(), "rule__ClassifierCS__Alternatives_0");
 					put(grammarAccess.getDataTypeCSAccess().getAlternatives_0(), "rule__DataTypeCS__Alternatives_0");

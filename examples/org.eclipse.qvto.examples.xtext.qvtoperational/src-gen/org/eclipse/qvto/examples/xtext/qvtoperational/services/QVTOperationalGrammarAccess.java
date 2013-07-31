@@ -25,7 +25,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cImportAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cImportImportCSParserRuleCall_0_0 = (RuleCall)cImportAssignment_0.eContents().get(0);
 		private final Assignment cOwnedNestedPackageAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cOwnedNestedPackageMetamodelCSParserRuleCall_1_0 = (RuleCall)cOwnedNestedPackageAssignment_1.eContents().get(0);
+		private final RuleCall cOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0 = (RuleCall)cOwnedNestedPackageAssignment_1.eContents().get(0);
 		
 		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
 		//
@@ -39,11 +39,11 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//TopLevelCS:
 		//
 		//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
-		// ownedNestedPackage+=MetamodelCS;
+		// ownedNestedPackage+=UnitPacakgeCS*;
 		public ParserRule getRule() { return rule; }
 
 		//^import+=ImportCS* // unit+=UnitElementCS* FIXME
-		// ownedNestedPackage+=MetamodelCS
+		// ownedNestedPackage+=UnitPacakgeCS*
 		public Group getGroup() { return cGroup; }
 
 		//^import+=ImportCS*
@@ -52,12 +52,11 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportCS
 		public RuleCall getImportImportCSParserRuleCall_0_0() { return cImportImportCSParserRuleCall_0_0; }
 
-		//// unit+=UnitElementCS* FIXME
-		// ownedNestedPackage+=MetamodelCS
+		//ownedNestedPackage+=UnitPacakgeCS*
 		public Assignment getOwnedNestedPackageAssignment_1() { return cOwnedNestedPackageAssignment_1; }
 
-		//MetamodelCS
-		public RuleCall getOwnedNestedPackageMetamodelCSParserRuleCall_1_0() { return cOwnedNestedPackageMetamodelCSParserRuleCall_1_0; }
+		//UnitPacakgeCS
+		public RuleCall getOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0() { return cOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0; }
 	}
 
 	public class QualifierElements extends AbstractParserRuleElementFinder {
@@ -231,8 +230,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSegmentAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cSegmentIdentifierParserRuleCall_1_1_0 = (RuleCall)cSegmentAssignment_1_1.eContents().get(0);
 		
-		//// returns ElementCS to make it inherits ElementCS
-		// UnitCS:
+		//UnitCS:
 		//
 		//	segment+=Identifier ("." segment+=Identifier)*;
 		public ParserRule getRule() { return rule; }
@@ -259,21 +257,26 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getSegmentIdentifierParserRuleCall_1_1_0() { return cSegmentIdentifierParserRuleCall_1_1_0; }
 	}
 
-	public class UnitElementCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnitElementCS");
-		private final RuleCall cMetamodelCSParserRuleCall = (RuleCall)rule.eContents().get(1);
+	public class UnitPacakgeCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnitPacakgeCS");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cMetamodelCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cTransformationCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// ****** definitions in a compilation unit *******
-		// // returns ElementCS to make it inherits ElementCS 
-		// UnitElementCS
+		// UnitPacakgeCS returns base::PackageCS:
 		//
-		//returns MetamodelCS:
-		//
-		//	MetamodelCS;
+		//	MetamodelCS | TransformationCS;
 		public ParserRule getRule() { return rule; }
 
+		//MetamodelCS | TransformationCS
+		public Alternatives getAlternatives() { return cAlternatives; }
+
 		//MetamodelCS
-		public RuleCall getMetamodelCSParserRuleCall() { return cMetamodelCSParserRuleCall; }
+		public RuleCall getMetamodelCSParserRuleCall_0() { return cMetamodelCSParserRuleCall_0; }
+
+		//TransformationCS
+		public RuleCall getTransformationCSParserRuleCall_1() { return cTransformationCSParserRuleCall_1; }
 	}
 
 	public class ParameterCSElements extends AbstractParserRuleElementFinder {
@@ -1542,7 +1545,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private FeatureQualifierElements pFeatureQualifier;
 	private ImportCSElements pImportCS;
 	private UnitCSElements pUnitCS;
-	private UnitElementCSElements pUnitElementCS;
+	private UnitPacakgeCSElements pUnitPacakgeCS;
 	private ParameterCSElements pParameterCS;
 	private InitPartCSElements pInitPartCS;
 	private MetamodelCSElements pMetamodelCS;
@@ -1616,7 +1619,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//TopLevelCS:
 	//
 	//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
-	// ownedNestedPackage+=MetamodelCS;
+	// ownedNestedPackage+=UnitPacakgeCS*;
 	public TopLevelCSElements getTopLevelCSAccess() {
 		return (pTopLevelCS != null) ? pTopLevelCS : (pTopLevelCS = new TopLevelCSElements());
 	}
@@ -1717,8 +1720,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportCSAccess().getRule();
 	}
 
-	//// returns ElementCS to make it inherits ElementCS
-	// UnitCS:
+	//UnitCS:
 	//
 	//	segment+=Identifier ("." segment+=Identifier)*;
 	public UnitCSElements getUnitCSAccess() {
@@ -1730,18 +1732,15 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ****** definitions in a compilation unit *******
-	// // returns ElementCS to make it inherits ElementCS 
-	// UnitElementCS
+	// UnitPacakgeCS returns base::PackageCS:
 	//
-	//returns MetamodelCS:
-	//
-	//	MetamodelCS;
-	public UnitElementCSElements getUnitElementCSAccess() {
-		return (pUnitElementCS != null) ? pUnitElementCS : (pUnitElementCS = new UnitElementCSElements());
+	//	MetamodelCS | TransformationCS;
+	public UnitPacakgeCSElements getUnitPacakgeCSAccess() {
+		return (pUnitPacakgeCS != null) ? pUnitPacakgeCS : (pUnitPacakgeCS = new UnitPacakgeCSElements());
 	}
 	
-	public ParserRule getUnitElementCSRule() {
-		return getUnitElementCSAccess().getRule();
+	public ParserRule getUnitPacakgeCSRule() {
+		return getUnitPacakgeCSAccess().getRule();
 	}
 
 	//// ****** General rules ******

@@ -39,8 +39,8 @@ public class QVToXtextTestCase extends AbstractQVToXtextTestCase {
 				+ "	class c1 {\n"
 				+ "		prop1 : String ;\n"
 				+ "	};"
-				+ "}";
-			doLoadFromString("simpleMetamodelDefinition.qvto", testFile);
+				+ "};";
+		doLoadFromString("simpleMetamodelDefinition.qvto", testFile);
 	}
 	
 	public void testSimpleMetamodelDefinitionWithoutOptionalSemicolon() throws Exception {
@@ -51,6 +51,12 @@ public class QVToXtextTestCase extends AbstractQVToXtextTestCase {
 				+ "		prop1 : String ;\n"
 				+ "	}"
 				+ "}";
-			doLoadFromString("simpleMetamodelDefinitionWithouOptionalSemicolon.qvto", testFile);
+		doLoadFromString("simpleMetamodelDefinitionWithouOptionalSemicolon.qvto", testFile);
+	}
+	
+	public void testSimpleTransformationDefinition() throws Exception {
+		String testFile =
+				"transformation t1;";
+		doLoadFromString("simpleTransforrmationDefinition.qvto", testFile);
 	}
 }
