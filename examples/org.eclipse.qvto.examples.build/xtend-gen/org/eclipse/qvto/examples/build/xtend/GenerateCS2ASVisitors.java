@@ -1,0 +1,399 @@
+/**
+ * <copyright>
+ * 
+ * Copyright (c) 2013 Willink Transformations Ltd., University of York and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - initial API and implementation
+ * 
+ * </copyright>
+ */
+package org.eclipse.qvto.examples.build.xtend;
+
+import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors;
+import org.eclipse.ocl.examples.build.xtend.GenerateVisitors;
+import org.eclipse.ocl.examples.build.xtend.MergeWriter;
+import org.eclipse.ocl.examples.pivot.Element;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+
+@SuppressWarnings("all")
+public class GenerateCS2ASVisitors extends GenerateCSVisitors {
+  public void generateVisitors(final EPackage csPackage) {
+    super.generateVisitors(csPackage);
+    boolean _isDerived = this.isDerived();
+    if (_isDerived) {
+      this.generateContainmentVisitor(csPackage);
+      this.generatePreOrderVisitor(csPackage);
+      this.generatePostOrderVisitor(csPackage);
+      this.generateLeft2RightVisitor(csPackage);
+    }
+  }
+  
+  protected void generateContainmentVisitor(@NonNull final EPackage csPackage) {
+    String visitorVariant = "Containment";
+    String resultTypeName = "Continuation<?>";
+    String _plus = ("Abstract" + this.projectPrefix);
+    String _plus_1 = (_plus + visitorVariant);
+    String abstractVisitorClassName = (_plus_1 + "Visitor");
+    String _plus_2 = (this.superProjectPrefix + visitorVariant);
+    String abstractExtendedClass = (_plus_2 + "Visitor");
+    String _plus_3 = (this.visitorClassName + "<");
+    String _plus_4 = (_plus_3 + resultTypeName);
+    String interfaceName = (_plus_4 + ">");
+    ArrayList<String> _arrayList = new ArrayList<String>();
+    List<String> additionalImports = _arrayList;
+    String _name = Continuation.class.getName();
+    additionalImports.add(_name);
+    this.generateContextfulAbstractExtendingVisitor(csPackage, abstractVisitorClassName, abstractExtendedClass, interfaceName, resultTypeName, additionalImports);
+    String _plus_5 = (this.projectPrefix + visitorVariant);
+    String variantVisitorClassName = (_plus_5 + "Visitor");
+    this.generateContainmentVisitor(csPackage, variantVisitorClassName, abstractVisitorClassName, resultTypeName, additionalImports);
+  }
+  
+  protected void generatePreOrderVisitor(@NonNull final EPackage csPackage) {
+    String visitorVariant = "PreOrder";
+    String resultTypeName = "Continuation<?>";
+    String _plus = ("Abstract" + this.projectPrefix);
+    String _plus_1 = (_plus + visitorVariant);
+    String className = (_plus_1 + "Visitor");
+    String _plus_2 = (this.superProjectPrefix + visitorVariant);
+    String extendedClass = (_plus_2 + "Visitor");
+    String _plus_3 = (this.visitorClassName + "<");
+    String _plus_4 = (_plus_3 + resultTypeName);
+    String interfaceName = (_plus_4 + ">");
+    ArrayList<String> _arrayList = new ArrayList<String>();
+    List<String> additionalImports = _arrayList;
+    String _name = Continuation.class.getName();
+    additionalImports.add(_name);
+    this.generateContextfulAbstractExtendingVisitor(csPackage, className, extendedClass, interfaceName, resultTypeName, additionalImports);
+  }
+  
+  protected void generatePostOrderVisitor(@NonNull final EPackage csPackage) {
+    String visitorVariant = "PostOrder";
+    String resultTypeName = "Continuation<?>";
+    String _plus = ("Abstract" + this.projectPrefix);
+    String _plus_1 = (_plus + visitorVariant);
+    String className = (_plus_1 + "Visitor");
+    String _plus_2 = (this.superProjectPrefix + visitorVariant);
+    String extendedClass = (_plus_2 + "Visitor");
+    String _plus_3 = (this.visitorClassName + "<");
+    String _plus_4 = (_plus_3 + resultTypeName);
+    String interfaceName = (_plus_4 + ">");
+    ArrayList<String> _arrayList = new ArrayList<String>();
+    List<String> additionalImports = _arrayList;
+    String _name = Continuation.class.getName();
+    additionalImports.add(_name);
+    this.generateContextfulAbstractExtendingVisitor(csPackage, className, extendedClass, interfaceName, resultTypeName, additionalImports);
+  }
+  
+  protected void generateLeft2RightVisitor(@NonNull final EPackage csPackage) {
+    String visitorVariant = "Left2Right";
+    String resultTypeName = "Element";
+    String _plus = ("Abstract" + this.projectPrefix);
+    String _plus_1 = (_plus + visitorVariant);
+    String className = (_plus_1 + "Visitor");
+    String _plus_2 = (this.superProjectPrefix + visitorVariant);
+    String extendedClass = (_plus_2 + "Visitor");
+    String _plus_3 = (this.visitorClassName + "<");
+    String _plus_4 = (_plus_3 + resultTypeName);
+    String interfaceName = (_plus_4 + ">");
+    ArrayList<String> _arrayList = new ArrayList<String>();
+    List<String> additionalImports = _arrayList;
+    String _name = Element.class.getName();
+    additionalImports.add(_name);
+    this.generateContextfulAbstractExtendingVisitor(csPackage, className, extendedClass, interfaceName, resultTypeName, additionalImports);
+  }
+  
+  /**
+   * Assumptions to be considered:
+   * - the package of the extended visitor of generated visitors need to be qualified as follows:
+   *    <code> «superProjectName».cs2as </code>
+   */
+  protected void generateContextfulAbstractExtendingVisitor(@NonNull final EPackage ePackage, @NonNull final String className, @NonNull final String extendedClassName, @NonNull final String interfaceName, @NonNull final String resultTypeName, @NonNull final List<String> additionalImports) {
+    try {
+      String _plus = (this.outputFolder + className);
+      String _plus_1 = (_plus + ".java");
+      MergeWriter _mergeWriter = new MergeWriter(_plus_1);
+      MergeWriter writer = _mergeWriter;
+      StringConcatenation _builder = new StringConcatenation();
+      String _generateHeader = this.generateHeader(ePackage, this.visitorPackageName);
+      _builder.append(_generateHeader, "");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("import org.eclipse.jdt.annotation.NonNull;");
+      _builder.newLine();
+      _builder.append("import org.eclipse.jdt.annotation.Nullable;");
+      _builder.newLine();
+      _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;");
+      _builder.newLine();
+      _builder.append("import ");
+      _builder.append(this.superProjectName, "");
+      _builder.append(".cs2as.");
+      _builder.append(extendedClassName, "");
+      _builder.append(";");
+      _builder.newLineIfNotEmpty();
+      {
+        for(final String addtionalImport : additionalImports) {
+          _builder.append("import ");
+          _builder.append(addtionalImport, "");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.newLine();
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* An ");
+      _builder.append(className, " ");
+      _builder.append(" provides a default implementation for each");
+      _builder.newLineIfNotEmpty();
+      _builder.append(" ");
+      _builder.append("* visitXxx method that delegates to the visitYyy method of the first");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* super class, (or transitively its first super class first super class");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* until a non-interface super-class is found). In the absence of any");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* suitable first super class, the method delegates to visiting().");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("public abstract class ");
+      _builder.append(className, "");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("extends ");
+      _builder.append(extendedClassName, "	");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("implements ");
+      _builder.append(interfaceName, "	");
+      _builder.newLineIfNotEmpty();
+      _builder.append("{");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* Initializes me with an initial value for my result.");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* ");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* @param context my initial result value");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("protected ");
+      _builder.append(className, "	");
+      _builder.append("(@NonNull CS2PivotConversion context) {");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("super(context);");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      {
+        List<EClass> _sortedEClasses = GenerateVisitors.getSortedEClasses(ePackage);
+        for(final EClass eClass : _sortedEClasses) {
+          _builder.append("\t");
+          EClass firstSuperClass = GenerateVisitors.firstSuperClass(eClass, eClass);
+          _builder.newLineIfNotEmpty();
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("public @Nullable ");
+          _builder.append(resultTypeName, "	");
+          _builder.append(" visit");
+          String _name = eClass.getName();
+          _builder.append(_name, "	");
+          _builder.append("(@NonNull ");
+          _builder.append(this.modelPackageName, "	");
+          _builder.append(".");
+          String _name_1 = eClass.getName();
+          _builder.append(_name_1, "	");
+          _builder.append(" csElement) {");
+          _builder.newLineIfNotEmpty();
+          {
+            boolean _equals = Objects.equal(firstSuperClass, eClass);
+            if (_equals) {
+              _builder.append("\t\t");
+              _builder.append("return visiting(csElement);");
+              _builder.newLine();
+            } else {
+              _builder.append("\t\t");
+              _builder.append("return visit");
+              String _name_2 = firstSuperClass.getName();
+              _builder.append(_name_2, "		");
+              _builder.append("(csElement);");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+        }
+      }
+      _builder.append("}");
+      _builder.newLine();
+      writer.append(_builder.toString());
+      writer.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Assumptions to be considered:
+   * - the package of the extended visitor of generated visitors need to be qualified as follows:
+   *    <code> «superProjectName».cs2as </code>
+   */
+  protected void generateContainmentVisitor(@NonNull final EPackage ePackage, @NonNull final String className, @NonNull final String extendedClassName, @NonNull final String resultTypeName, @NonNull final List<String> additionalImports) {
+    try {
+      String _plus = (this.outputFolder + className);
+      String _plus_1 = (_plus + ".java");
+      MergeWriter _mergeWriter = new MergeWriter(_plus_1);
+      MergeWriter writer = _mergeWriter;
+      StringConcatenation _builder = new StringConcatenation();
+      String _generateHeader = this.generateHeader(ePackage, this.visitorPackageName);
+      _builder.append(_generateHeader, "");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("import org.eclipse.jdt.annotation.NonNull;");
+      _builder.newLine();
+      _builder.append("import org.eclipse.jdt.annotation.Nullable;");
+      _builder.newLine();
+      _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;");
+      _builder.newLine();
+      {
+        for(final String additionalImport : additionalImports) {
+          _builder.append("import ");
+          _builder.append(additionalImport, "");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.newLine();
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("*");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("public class ");
+      _builder.append(className, "");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("extends ");
+      _builder.append(extendedClassName, "	");
+      _builder.newLineIfNotEmpty();
+      _builder.append("{");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* Initializes me with an initial value for my result.");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* ");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* @param context my initial result value");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("public ");
+      _builder.append(className, "	");
+      _builder.append("(@NonNull CS2PivotConversion context) {");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("super(context);");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      {
+        List<EClass> _sortedEClasses = GenerateVisitors.getSortedEClasses(ePackage);
+        for(final EClass eClass : _sortedEClasses) {
+          {
+            boolean _hasAstOperation = this.hasAstOperation(eClass);
+            if (_hasAstOperation) {
+              _builder.append("\t");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("public @Nullable ");
+              _builder.append(resultTypeName, "	");
+              _builder.append(" visit");
+              String _name = eClass.getName();
+              _builder.append(_name, "	");
+              _builder.append("(@NonNull ");
+              _builder.append(this.modelPackageName, "	");
+              _builder.append(".");
+              String _name_1 = eClass.getName();
+              _builder.append(_name_1, "	");
+              _builder.append(" csElement) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              String _generateContainmentVisit = this.generateContainmentVisit(eClass);
+              _builder.append(_generateContainmentVisit, "		");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+        }
+      }
+      _builder.append("}");
+      _builder.newLine();
+      writer.append(_builder.toString());
+      writer.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  private boolean hasAstOperation(final EClass eclass) {
+    EList<EOperation> _eOperations = eclass.getEOperations();
+    for (final EOperation operation : _eOperations) {
+      String _name = operation.getName();
+      boolean _equals = Objects.equal(_name, "ast");
+      if (_equals) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private String generateContainmentVisit(final EClass eClass) {
+    return "return null;";
+  }
+}

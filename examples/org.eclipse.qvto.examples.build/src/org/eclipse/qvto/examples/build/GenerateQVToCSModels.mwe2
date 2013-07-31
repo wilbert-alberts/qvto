@@ -139,7 +139,7 @@ Workflow {
 //    	visitableClassName = oclXtextBaseVisitableName
 //    }
     
-    component = @SubGenerateCSModel { resourceSet = resourceSet
+    component = @qvto.SubGenerateCSModel { resourceSet = resourceSet
     	projectName = imperativeOclXtextProjectName
     	projectPrefix = imperativeOclXtextProjectPrefix
     	modelName = imperativeOclXtextEcoreName
@@ -151,7 +151,7 @@ Workflow {
     	visitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"  
     }
     
-    component = @SubGenerateCSModel { resourceSet = resourceSet
+    component = @qvto.SubGenerateCSModel { resourceSet = resourceSet
     	projectName = qvtOperationalXtextProjectName
     	projectPrefix = qvtOperationalXtextProjectPrefix
     	modelName = qvtOperationalXtextEcoreName
