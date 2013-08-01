@@ -16,18 +16,13 @@ package org.eclipse.qvto.examples.build.xtend
 
 import java.util.ArrayList
 import java.util.List
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EOperation
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.jdt.annotation.NonNull
-import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors
 import org.eclipse.ocl.examples.build.xtend.MergeWriter
 import org.eclipse.ocl.examples.pivot.Class
-import org.eclipse.ocl.examples.pivot.Element
 import org.eclipse.ocl.examples.pivot.ExpressionInOCL
 import org.eclipse.ocl.examples.pivot.OpaqueExpression
 import org.eclipse.ocl.examples.pivot.Operation
@@ -43,7 +38,7 @@ import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx
 // the root CS2AS are not generated but manually coded. 
 public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.GenerateCS2ASVisitors
 {
-	private String asGenModelURI;
+//	private String asGenModelURI;
 	 
 	override void generateVisitors(EPackage csPackage) {
 		super.generateVisitors(csPackage);
@@ -151,29 +146,29 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 					var ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
 					
 					// We compute the context
-					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
-					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
-					var GenModel sourceGenModel = getGenModel(genModelURI, resourceSet);
-					var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
+//					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
+//					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
+//					var GenModel csGenModel = getGenModel(genModelURI, resourceSet);
+					// var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
 					
 					// We visit the expression to generate the containment visit method body
-					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(sourceGenModel, targetGenModel)));
+					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager)));
 				}
 			}
 		}
 		return "return null;"; // TODO case in which no pClass or no ast operation has been found
 	}
 	
-	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {
-		var Resource genModelResource = resourceSet.getResource(genModelURI, true);
-		return genModelResource.getContents().get(0) as GenModel;
-	}
-	
-	def public setASGenModelURI(String asGenModelURI) {
-		this.asGenModelURI = asGenModelURI;
-	}
-	
-	def protected String getASGenModelURI () {
-		return asGenModelURI;
-	}
+//	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {
+//		var Resource genModelResource = resourceSet.getResource(genModelURI, true);
+//		return genModelResource.getContents().get(0) as GenModel;
+//	}
+//	
+//	def public setASGenModelURI(String asGenModelURI) {
+//		this.asGenModelURI = asGenModelURI;
+//	}
+//	
+//	def protected String getASGenModelURI () {
+//		return asGenModelURI;
+//	}
 }

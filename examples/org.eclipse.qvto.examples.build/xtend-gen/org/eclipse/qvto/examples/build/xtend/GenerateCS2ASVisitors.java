@@ -17,15 +17,11 @@ package org.eclipse.qvto.examples.build.xtend;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.build.xtend.GenerateVisitors;
 import org.eclipse.ocl.examples.build.xtend.MergeWriter;
@@ -46,8 +42,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.GenerateCS2ASVisitors {
-  private String asGenModelURI;
-  
   public void generateVisitors(final EPackage csPackage) {
     super.generateVisitors(csPackage);
     boolean _isDerived = this.isDerived();
@@ -242,38 +236,13 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
         if (_equals) {
           OpaqueExpression opaqueExp = operation.getBodyExpression();
           ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
-          String _plus = ("/" + this.projectName);
-          String _plus_1 = (_plus + "/");
-          URI projectResourceURI = URI.createPlatformResourceURI(_plus_1, true);
-          URI _createURI = URI.createURI(this.genModelFile);
-          URI genModelURI = _createURI.resolve(projectResourceURI);
-          GenModel sourceGenModel = this.getGenModel(genModelURI, this.resourceSet);
-          String _aSGenModelURI = this.getASGenModelURI();
-          URI _createURI_1 = URI.createURI(_aSGenModelURI);
-          GenModel targetGenModel = this.getGenModel(_createURI_1, this.resourceSet);
           OCLExpression _bodyExpression = expInOcl.getBodyExpression();
-          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(sourceGenModel, targetGenModel);
+          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager);
           ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
           return _bodyExpression.<String>accept(_containmentVisitsGenerator);
         }
       }
     }
     return "return null;";
-  }
-  
-  private GenModel getGenModel(final URI genModelURI, final ResourceSet rSet) {
-    Resource genModelResource = this.resourceSet.getResource(genModelURI, true);
-    EList<EObject> _contents = genModelResource.getContents();
-    EObject _get = _contents.get(0);
-    return ((GenModel) _get);
-  }
-  
-  public String setASGenModelURI(final String asGenModelURI) {
-    String _asGenModelURI = this.asGenModelURI = asGenModelURI;
-    return _asGenModelURI;
-  }
-  
-  protected String getASGenModelURI() {
-    return this.asGenModelURI;
   }
 }

@@ -48,10 +48,6 @@ var superProjectName
 var superProjectPrefix = ""
 
 /**
- * the URI of the GenModel file for the abstract syntax metamodel
- */
-var asGenModelURI
-/**
  * (Optional) The package for generated model interfaces; default: "${projectName}.${modelName}".
  */
 var modelPackageName = "${projectName}.${modelName}"
@@ -134,6 +130,5 @@ Workflow {
     	superVisitorClassName = superVisitorClassName
     	visitablePackageName = visitablePackageName
     	visitableClassName= visitableClassName
-    	aSGenModelURI = asGenModelURI
     }
 }

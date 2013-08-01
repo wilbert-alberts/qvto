@@ -1,6 +1,7 @@
 package org.eclipse.qvto.examples.build.utlities;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
 
 
 /**
@@ -11,20 +12,13 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
  */
 public class ContainmentVisitsGeneratorCtx implements IContainmentVisitsGeneratorCtx {
 
-	private GenModel sourceGenModel;
+	private MetaModelManager mmManager;
 	
-	private GenModel targetGenModel;
-	
-	public ContainmentVisitsGeneratorCtx(GenModel sourceGenModel, GenModel targetGenModel) {
-		this.sourceGenModel = sourceGenModel;
-		this.targetGenModel = targetGenModel;
+	public ContainmentVisitsGeneratorCtx(@NonNull MetaModelManager mmManager) {
+		this.mmManager = mmManager;
 	}
 	
-	public GenModel getSourceGenModel() {
-		return sourceGenModel;
-	}
-	
-	public GenModel getTargetGenModel() {
-		return targetGenModel;
+	public MetaModelManager getMetamodelManager() {
+		return mmManager;
 	}
 }
