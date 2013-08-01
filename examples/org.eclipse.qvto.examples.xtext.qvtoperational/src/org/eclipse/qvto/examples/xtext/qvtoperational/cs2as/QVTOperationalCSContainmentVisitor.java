@@ -27,12 +27,11 @@ public class QVTOperationalCSContainmentVisitor extends org.eclipse.qvto.example
 	public @Nullable
 	Continuation<?> visitTransformationHeaderCS(@NonNull
 	TransformationHeaderCS csElement) {
-
-		EClass pivotEClass = QVTOperationalPackage.Literals.OPERATIONAL_TRANSFORMATION;
+		
 		CS2Pivot converter = context.getConverter();
 		// AS element creation
 		OperationalTransformation pivotElement = csElement != null ? (OperationalTransformation)  converter.getPivotElement(csElement) : null;		
-		if (pivotElement == null || pivotEClass != pivotElement.eClass()) {
+		if (pivotElement == null) {
 			pivotElement = QVTOperationalFactory.eINSTANCE.createOperationalTransformation();
 			converter.installPivotDefinition(csElement, pivotElement);
 		}

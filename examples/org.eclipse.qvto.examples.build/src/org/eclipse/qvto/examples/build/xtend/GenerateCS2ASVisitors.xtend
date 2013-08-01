@@ -14,16 +14,30 @@
  */
 package org.eclipse.qvto.examples.build.xtend
 
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.jdt.annotation.NonNull
+import java.util.ArrayList
 import java.util.List
-import java.util.ArrayListimport org.eclipse.ocl.examples.xtext.base.cs2as.Continuation
-import org.eclipse.ocl.examples.pivot.Element
-import org.eclipse.ocl.examples.build.xtend.MergeWriter
-import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EOperation
-
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.jdt.annotation.NonNull
+import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors
+import org.eclipse.ocl.examples.build.xtend.MergeWriter
+import org.eclipse.ocl.examples.pivot.Class
+import org.eclipse.ocl.examples.pivot.Element
+import org.eclipse.ocl.examples.pivot.ExpressionInOCL
+import org.eclipse.ocl.examples.pivot.OpaqueExpression
+import org.eclipse.ocl.examples.pivot.Operation
+import org.eclipse.ocl.examples.pivot.ecore.Ecore2Pivot
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManager
+import org.eclipse.ocl.examples.pivot.model.OCLstdlib
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation
+import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup
+import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx
 
 // TODO non-derived visitor is not supported, since currently 
 // the root CS2AS are not generated but manually coded. 
@@ -170,6 +184,7 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
+			import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 			«FOR additionalImport : additionalImports»
 			import «additionalImport»;
 			«ENDFOR»
@@ -211,7 +226,36 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors
 	}
 	
 	private def String generateContainmentVisit(EClass eClass) {
-		// TODO
-		return "return null;";
+		
+		OCLstdlib.install();
+		EssentialOCLStandaloneSetup.doSetup();
+		var MetaModelManager metaModelManager = MetaModelManager.getAdapter(resourceSet);
+		var Resource ecoreResource = eClass.eResource(); 
+		var Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
+		var Class pClass = ecore2Pivot.getPivotElement(typeof(Class), eClass);
+		if (pClass != null) {
+			for (Operation operation :  pClass.ownedOperation) {
+				if ("ast".equals(operation.name)) {
+					// We obtain the expression to visit
+					var OpaqueExpression opaqueExp = operation.bodyExpression;
+					var ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
+					
+					// We compute the context
+					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
+					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
+					var GenModel sourceGenModel = getGenModel(genModelURI, resourceSet);
+					var GenModel targetGenModel = getGenModel(URI.createURI("platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"), resourceSet) // FIXME
+					
+					// We visit the expression to generate the containment visit method body
+					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(sourceGenModel, targetGenModel)));
+				}
+			}
+		}
+		return "return null;"; // TODO case in which no pClass or no ast operation has been found
+	}
+	
+	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {
+		var Resource genModelResource = resourceSet.getResource(genModelURI, true);
+		return genModelResource.getContents().get(0) as GenModel;
 	}
 }

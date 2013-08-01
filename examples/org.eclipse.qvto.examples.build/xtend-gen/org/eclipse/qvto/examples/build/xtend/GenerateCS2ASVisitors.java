@@ -17,16 +17,32 @@ package org.eclipse.qvto.examples.build.xtend;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.build.xtend.GenerateCSVisitors;
 import org.eclipse.ocl.examples.build.xtend.GenerateVisitors;
 import org.eclipse.ocl.examples.build.xtend.MergeWriter;
 import org.eclipse.ocl.examples.pivot.Element;
+import org.eclipse.ocl.examples.pivot.ExpressionInOCL;
+import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.ocl.examples.pivot.OpaqueExpression;
+import org.eclipse.ocl.examples.pivot.Operation;
+import org.eclipse.ocl.examples.pivot.ecore.Ecore2Pivot;
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
+import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup;
+import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx;
+import org.eclipse.qvto.examples.build.xtend.ContainmentVisitsGenerator;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
@@ -288,6 +304,8 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors {
       _builder.newLine();
       _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;");
       _builder.newLine();
+      _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;");
+      _builder.newLine();
       {
         for(final String additionalImport : additionalImports) {
           _builder.append("import ");
@@ -395,6 +413,43 @@ public class GenerateCS2ASVisitors extends GenerateCSVisitors {
   }
   
   private String generateContainmentVisit(final EClass eClass) {
+    OCLstdlib.install();
+    EssentialOCLStandaloneSetup.doSetup();
+    MetaModelManager metaModelManager = MetaModelManager.getAdapter(this.resourceSet);
+    Resource ecoreResource = eClass.eResource();
+    Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
+    org.eclipse.ocl.examples.pivot.Class pClass = ecore2Pivot.<org.eclipse.ocl.examples.pivot.Class>getPivotElement(org.eclipse.ocl.examples.pivot.Class.class, eClass);
+    boolean _notEquals = (!Objects.equal(pClass, null));
+    if (_notEquals) {
+      List<Operation> _ownedOperation = pClass.getOwnedOperation();
+      for (final Operation operation : _ownedOperation) {
+        String _name = operation.getName();
+        boolean _equals = "ast".equals(_name);
+        if (_equals) {
+          OpaqueExpression opaqueExp = operation.getBodyExpression();
+          ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
+          String _plus = ("/" + this.projectName);
+          String _plus_1 = (_plus + "/");
+          URI projectResourceURI = URI.createPlatformResourceURI(_plus_1, true);
+          URI _createURI = URI.createURI(this.genModelFile);
+          URI genModelURI = _createURI.resolve(projectResourceURI);
+          GenModel sourceGenModel = this.getGenModel(genModelURI, this.resourceSet);
+          URI _createURI_1 = URI.createURI("platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel");
+          GenModel targetGenModel = this.getGenModel(_createURI_1, this.resourceSet);
+          OCLExpression _bodyExpression = expInOcl.getBodyExpression();
+          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(sourceGenModel, targetGenModel);
+          ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
+          return _bodyExpression.<String>accept(_containmentVisitsGenerator);
+        }
+      }
+    }
     return "return null;";
+  }
+  
+  private GenModel getGenModel(final URI genModelURI, final ResourceSet rSet) {
+    Resource genModelResource = this.resourceSet.getResource(genModelURI, true);
+    EList<EObject> _contents = genModelResource.getContents();
+    EObject _get = _contents.get(0);
+    return ((GenModel) _get);
   }
 }
