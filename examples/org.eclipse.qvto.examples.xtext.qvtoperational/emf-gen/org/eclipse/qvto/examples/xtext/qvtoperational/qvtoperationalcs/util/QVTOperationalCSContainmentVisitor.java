@@ -249,6 +249,14 @@ public class QVTOperationalCSContainmentVisitor
 		converter.installPivotDefinition(csElement, asElement);
 	}
 	
+	// AS Name property update
+	String newName = csElement.getName();
+	String oldName = asElement.getName();
+	if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+		asElement.setName(newName);
+	}
+	// AS element comments update
+	context.refreshComments(asElement, csElement);
 	return null;
 	}
 	

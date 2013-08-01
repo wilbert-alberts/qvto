@@ -43,6 +43,11 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 	override void generateVisitors(EPackage csPackage) {
 		super.generateVisitors(csPackage);
 		if (isDerived()) {
+			// We do some required initializations	
+			OCLstdlib.install();
+			EssentialOCLStandaloneSetup.doSetup();
+			
+			// We generate the visitors
 			generateContainmentVisitor(csPackage);
 			generatePreOrderVisitor(csPackage);
 			generatePostOrderVisitor(csPackage);
@@ -78,6 +83,7 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 	protected def void generateContainmentVisitor(@NonNull EPackage ePackage, 
 		@NonNull String className, @NonNull String extendedClassName, @NonNull String interfaceName, @NonNull String resultTypeName, 
 		@NonNull List<String> additionalImports) {
+		
 		var MergeWriter writer = new MergeWriter(outputFolder + className + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
@@ -132,8 +138,6 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 	
 	private def String generateContainmentVisit(EClass eClass) {
 		
-		OCLstdlib.install();
-		EssentialOCLStandaloneSetup.doSetup();
 		var MetaModelManager metaModelManager = MetaModelManager.getAdapter(resourceSet);
 		var Resource ecoreResource = eClass.eResource(); 
 		var Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);

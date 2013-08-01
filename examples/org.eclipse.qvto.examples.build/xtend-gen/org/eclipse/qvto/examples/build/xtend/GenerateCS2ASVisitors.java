@@ -46,6 +46,8 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
     super.generateVisitors(csPackage);
     boolean _isDerived = this.isDerived();
     if (_isDerived) {
+      OCLstdlib.install();
+      EssentialOCLStandaloneSetup.doSetup();
       this.generateContainmentVisitor(csPackage);
       this.generatePreOrderVisitor(csPackage);
       this.generatePostOrderVisitor(csPackage);
@@ -221,8 +223,6 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
   }
   
   private String generateContainmentVisit(final EClass eClass) {
-    OCLstdlib.install();
-    EssentialOCLStandaloneSetup.doSetup();
     MetaModelManager metaModelManager = MetaModelManager.getAdapter(this.resourceSet);
     Resource ecoreResource = eClass.eResource();
     Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
