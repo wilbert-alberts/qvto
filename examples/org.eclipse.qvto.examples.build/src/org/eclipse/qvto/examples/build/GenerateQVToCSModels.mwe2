@@ -148,7 +148,8 @@ Workflow {
     	superProjectPrefix = imperativeOclXtextSuperProjectPrefix
     	modelPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs"
     	visitorPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
-    	visitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"  
+    	visitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"
+    	asGenModelURI = "platform:/resource/org.eclipse.qvto.examples.pivot.imperaticeocl/model/ImperativeOCL.genmodel"
     }
     
     component = @qvto.SubGenerateCSModel { resourceSet = resourceSet
@@ -163,6 +164,8 @@ Workflow {
     	visitorClassName = "${qvtOperationalXtextProjectPrefix}Visitor"
     	superVisitorPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
     	superVisitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"  
+    	asGenModelURI = "platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
+    	
     	
     }
     
