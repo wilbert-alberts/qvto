@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636
+ *     Alex Paperno - bugs 272869, 268636, 413130
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
@@ -94,7 +94,7 @@ public class ParserTests {
     	TestData.createSourceChecked("importedInstances", 1, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("moduleElementErrorRecovery_265452", 7, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264517_1", 1, 0), //$NON-NLS-1$    	
-    	TestData.createSourceChecked("unitElementErrorRecovery_264517_2", 3, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("unitElementErrorRecovery_264517_2", 2, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("unitElementErrorRecovery_264675", 3, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("nestedPropertiesAssignment_262757", 7, 0), //$NON-NLS-1$    	
     	TestData.createSourceChecked("collectionOperationNotFound_224093", 3, 0), //$NON-NLS-1$    	
@@ -206,5 +206,6 @@ public class ParserTests {
     	TestData.createSourceChecked("bug325192", 8, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug268636", 5, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug272869", 1, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug413130", 0, 0), //$NON-NLS-1$
     };
 }

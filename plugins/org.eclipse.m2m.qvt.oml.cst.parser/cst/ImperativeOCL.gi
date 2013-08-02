@@ -32,6 +32,8 @@
 	-- 'if' extension in Imperative OCL
 	IfExpCS ::= if OclExpressionCS then OclExpressionCS else OclExpressionCS endif
 
+	LiteralExpCS -> TypeLiteralExpCS
+
 %End
 
 %Define
@@ -152,6 +154,17 @@
 %Rules
 	-- opt = optional
 	-- m = multiple
+
+    LiteralExpCS ::= primitiveTypeCS
+        /.$NewCase./
+    LiteralExpCS ::= collectionTypeCS
+        /.$NewCase./
+    LiteralExpCS ::= tupleTypeCS
+        /.$BeginCode
+                    setResult((TypeCS) getRhsSym(1));
+          $EndCode
+        ./
+
 
 	typeCS -> listTypeCS
 	listTypeCS ::= List '(' typeCS ')'
