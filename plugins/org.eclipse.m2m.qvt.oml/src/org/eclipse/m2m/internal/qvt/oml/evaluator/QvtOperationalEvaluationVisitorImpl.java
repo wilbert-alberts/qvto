@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744
  *     Alex Paperno - bugs 294127
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -1191,9 +1191,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return null;
 	}
 	
-	private boolean doVisitLogExp(LogExp logExp, Log logger, String messagePrefix) {
+	private String doVisitLogExp(LogExp logExp, Log logger, String messagePrefix) {
 		if(logExp.getCondition() != null && !Boolean.TRUE.equals(logExp.getCondition().accept(getVisitor()))) {
-			return false;
+			return null;
 		}
 		InternalEvaluationEnv internalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);		
 		Object invalid = internalEnv.getInvalid();
@@ -1213,8 +1213,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			message = invalidRepr;
 		}
 		
+		Object logEntry = message;
 		if(messagePrefix != null) {
-			message = messagePrefix + " : " + message; //$NON-NLS-1$
+			logEntry = messagePrefix + " : " + message; //$NON-NLS-1$
 		}
 
 		Object element = null;
@@ -1230,19 +1231,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 		if(level == null) {
 			if(element == null) {
-				logger.log(String.valueOf(message));
+				logger.log(String.valueOf(logEntry));
 			} else {		
-				logger.log(String.valueOf(message), formatedElement);
+				logger.log(String.valueOf(logEntry), formatedElement);
 			}
 		} else {
 			if(element == null) {
-				logger.log(level, String.valueOf(message));
+				logger.log(level, String.valueOf(logEntry));
 			} else {		
-				logger.log(level, String.valueOf(message), formatedElement);
+				logger.log(level, String.valueOf(logEntry), formatedElement);
 			}			
 		}
 		
-		return true;
+		return message.toString();
 	}
 	
 	public Object visitAssertExp(AssertExp assertExp) {		
@@ -1269,8 +1270,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			String message = NLS.bind(EvaluationMessages.AssertFailedMessage, assertExp.getSeverity(), locationBuf.toString());				
 			Log logger = getContext().getLog();
 			
+			String logMessage = null;
 			if(assertExp.getLog() != null) {
-				doVisitLogExp(assertExp.getLog(), logger, message);
+				logMessage = doVisitLogExp(assertExp.getLog(), logger, message);
 			} else {
 				logger.log(message);				
 			}
@@ -1280,7 +1282,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 				
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
-				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed));
+				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed 
+						+ (logMessage == null ? "" : " : " + logMessage))); //$NON-NLS-1$ //$NON-NLS-2$
 			}		
 				
 		}			
