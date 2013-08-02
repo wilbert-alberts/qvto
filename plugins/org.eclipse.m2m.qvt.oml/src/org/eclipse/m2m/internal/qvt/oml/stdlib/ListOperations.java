@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,8 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *******************************************************************************/
+ *     Alex Paperno - bugs 404647
+ ********************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class ListOperations extends AbstractContextualOperations {
 	public static final String INSERT_AT_NAME = "insertAt"; //$NON-NLS-1$	
 	public static final String JOINFIELDS_NAME = "joinfields"; //$NON-NLS-1$	
 	
-	static CallHandler ADD = new CallHandler() {
+	static CallHandler ADD = new CallHandlerMutator() {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			List<Object> list = (List<Object>) source;
@@ -40,7 +41,7 @@ public class ListOperations extends AbstractContextualOperations {
 		}
 	};
 	
-	static CallHandler PREPEND = new CallHandler() {
+	static CallHandler PREPEND = new CallHandlerMutator() {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			List<Object> list = (List<Object>) source;
@@ -52,7 +53,7 @@ public class ListOperations extends AbstractContextualOperations {
 		}
 	};
 
-	static CallHandler INSERT_AT = new CallHandler() {
+	static CallHandler INSERT_AT = new CallHandlerMutator() {
 		@SuppressWarnings("unchecked")
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			MutableList<Object> list = (MutableList<Object>) source;

@@ -6222,10 +6222,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 675:  scoped_identifier ::= typeCS2 :: IDENTIFIER
+            // Rule 677:  scoped_identifier ::= typeCS2 :: IDENTIFIER
             //
-            case 675: {
-               //#line 2266 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 677: {
+               //#line 2268 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), getRhsTokenText(3));		
 				setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(3));
@@ -6234,10 +6234,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 676:  scoped_identifier ::= typeCS2 :: qvtErrorToken
+            // Rule 678:  scoped_identifier ::= typeCS2 :: qvtErrorToken
             //
-            case 676: {
-               //#line 2273 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 678: {
+               //#line 2275 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), ""); 		 //$NON-NLS-1$
 				setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(2));
@@ -6246,10 +6246,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 677:  scoped_identifier ::= scoped_identifier2
+            // Rule 679:  scoped_identifier ::= scoped_identifier2
             //
-            case 677: {
-               //#line 2280 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 679: {
+               //#line 2282 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS pathNameCS = (PathNameCS)getRhsSym(1);
 				String name = pathNameCS.getSimpleNames().remove(pathNameCS.getSimpleNames().size() - 1).getValue();
@@ -6267,34 +6267,34 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 678:  scoped_identifier2 ::= IDENTIFIER
-            //
-            case 678: {
-               //#line 2296 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				CSTNode result = createPathNameCS(getRhsIToken(1));
-				setOffsets(result, getRhsIToken(1));
-				setResult(result);
-	                  break;
-            }
-	
-            //
-            // Rule 679:  scoped_identifier2 ::= main
-            //
-            case 679: {
-               //#line 2303 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				CSTNode result = createPathNameCS(getRhsIToken(1));
-				setOffsets(result, getRhsIToken(1));
-				setResult(result);
-	                  break;
-            }
-	
-            //
-            // Rule 680:  scoped_identifier2 ::= scoped_identifier2 :: IDENTIFIER
+            // Rule 680:  scoped_identifier2 ::= IDENTIFIER
             //
             case 680: {
-               //#line 2310 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2298 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createPathNameCS(getRhsIToken(1));
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 681:  scoped_identifier2 ::= main
+            //
+            case 681: {
+               //#line 2305 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createPathNameCS(getRhsIToken(1));
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 682:  scoped_identifier2 ::= scoped_identifier2 :: IDENTIFIER
+            //
+            case 682: {
+               //#line 2312 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6304,10 +6304,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 681:  scoped_identifier2 ::= scoped_identifier2 :: qvtErrorToken
+            // Rule 683:  scoped_identifier2 ::= scoped_identifier2 :: qvtErrorToken
             //
-            case 681: {
-               //#line 2318 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 683: {
+               //#line 2320 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6317,10 +6317,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 682:  scoped_identifier_list ::= scoped_identifier
+            // Rule 684:  scoped_identifier_list ::= scoped_identifier
             //
-            case 682: {
-               //#line 2326 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 684: {
+               //#line 2328 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				result.add(getRhsSym(1));
@@ -6329,10 +6329,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 683:  scoped_identifier_list ::= scoped_identifier_list , scoped_identifier
+            // Rule 685:  scoped_identifier_list ::= scoped_identifier_list , scoped_identifier
             //
-            case 683: {
-               //#line 2333 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 685: {
+               //#line 2335 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -6341,10 +6341,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 684:  scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
+            // Rule 686:  scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
             //
-            case 684: {
-               //#line 2340 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 686: {
+               //#line 2342 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -6352,10 +6352,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 685:  qualifiedNameCS ::= qvtIdentifierCS
+            // Rule 687:  qualifiedNameCS ::= qvtIdentifierCS
             //
-            case 685: {
-               //#line 2347 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 687: {
+               //#line 2349 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -6364,10 +6364,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 686:  qualifiedNameCS ::= qualifiedNameCS . qvtIdentifierCS
+            // Rule 688:  qualifiedNameCS ::= qualifiedNameCS . qvtIdentifierCS
             //
-            case 686: {
-               //#line 2354 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 688: {
+               //#line 2356 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6377,10 +6377,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 687:  qualifiedNameCS ::= qualifiedNameCS . qvtErrorToken
+            // Rule 689:  qualifiedNameCS ::= qualifiedNameCS . qvtErrorToken
             //
-            case 687: {
-               //#line 2362 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 689: {
+               //#line 2364 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6390,10 +6390,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 688:  qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
+            // Rule 690:  qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
             //
-            case 688: {
-               //#line 2370 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 690: {
+               //#line 2372 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				setResult(result);

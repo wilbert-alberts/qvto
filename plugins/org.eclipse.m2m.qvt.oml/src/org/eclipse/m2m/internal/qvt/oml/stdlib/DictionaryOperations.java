@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 404647
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
@@ -44,7 +45,7 @@ public class DictionaryOperations extends AbstractContextualOperations {
 		}
 	};
 
-	static CallHandler PUT = new CallHandler() {		
+	static CallHandler PUT = new CallHandlerMutator() {		
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			@SuppressWarnings("unchecked")			
 			Dictionary<Object, Object> dict = (Dictionary<Object, Object>) source;
@@ -61,7 +62,7 @@ public class DictionaryOperations extends AbstractContextualOperations {
 		}
 	};
 	
-	static CallHandler CLEAR = new CallHandler() {		
+	static CallHandler CLEAR = new CallHandlerMutator() {		
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			@SuppressWarnings("unchecked")			
 			Dictionary<Object, Object> dict = (Dictionary<Object, Object>) source;

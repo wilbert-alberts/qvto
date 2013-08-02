@@ -13,28 +13,8 @@
 
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
-
-
-public abstract class  CallHandler {
-			
-	public abstract Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv);
-	
+public abstract class CallHandlerMutator extends CallHandler {
 	public boolean isMutator() {
-		return false;
+		return true;
 		}
-	
-	public static class Access {
-		public static CallHandler getHandler(EOperation operation) {
-			return CallHandlerAdapter.getDispatcher(operation);
-		}
-		
-		public static boolean hasHandler(EOperation operation) {
-			return getHandler(operation) != null;
-		}
-	}
-
 }
-

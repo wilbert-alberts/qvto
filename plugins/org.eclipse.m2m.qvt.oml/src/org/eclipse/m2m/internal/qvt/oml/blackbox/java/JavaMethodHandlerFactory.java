@@ -51,7 +51,7 @@ class JavaMethodHandlerFactory {
 		return fInvalid;
 	}
 		
-	private class Handler implements CallHandler {
+	private class Handler extends CallHandler {
 				
 		private Method fMethod;
 		private Class<?>[] fCachedParamTypes;

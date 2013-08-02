@@ -78,13 +78,13 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final static int NT_OFFSET = 163;
     public final int getNtOffset() { return NT_OFFSET; }
 
-    public final static int LA_STATE_OFFSET = 1485;
+    public final static int LA_STATE_OFFSET = 1489;
     public final int getLaStateOffset() { return LA_STATE_OFFSET; }
 
     public final static int MAX_LA = 1;
     public final int getMaxLa() { return MAX_LA; }
 
-    public final static int NUM_RULES = 690;
+    public final static int NUM_RULES = 692;
     public final int getNumRules() { return NUM_RULES; }
 
     public final static int NUM_NONTERMINALS = 287;
@@ -96,7 +96,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final static int SEGMENT_SIZE = 8192;
     public final int getSegmentSize() { return SEGMENT_SIZE; }
 
-    public final static int START_STATE = 691;
+    public final static int START_STATE = 693;
     public final int getStartState() { return START_STATE; }
 
     public final static int IDENTIFIER_SYMBOL = 1;
@@ -108,10 +108,10 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final static int EOLT_SYMBOL = 28;
     public final int getEoltSymbol() { return EOLT_SYMBOL; }
 
-    public final static int ACCEPT_ACTION = 794;
+    public final static int ACCEPT_ACTION = 796;
     public final int getAcceptAction() { return ACCEPT_ACTION; }
 
-    public final static int ERROR_ACTION = 795;
+    public final static int ERROR_ACTION = 797;
     public final int getErrorAction() { return ERROR_ACTION; }
 
     public final static boolean BACKTRACK = true;
@@ -302,19 +302,19 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             3,4,3,1,7,0,2,1,1,1,
             0,2,2,0,1,3,0,1,3,3,
             1,1,4,2,0,1,1,1,1,1,
-            3,1,1,1,3,3,1,1,1,3,
-            3,1,3,2,1,3,3,2,1,1,
-            -1,1,2,3,4,5,6,7,8,9,
-            10,-2,12,-3,-4,-5,-6,-7,18,-10,
-            1,2,3,4,5,6,7,8,9,10,
-            -11,1,2,3,4,5,6,7,8,9,
-            10,-13,1,2,3,4,5,6,7,8,
-            9,10,-22,1,2,3,4,5,6,7,
-            8,9,10,-23,1,2,3,4,5,6,
-            7,8,9,10,-14,1,2,3,4,-12,
-            1,2,-24,1,2,-8,-9,13,14,15,
-            11,-15,-16,11,-17,16,17,-18,-19,-20,
-            -21,-25,0,0,0,0,0,0,0,0,
+            3,1,1,1,1,1,3,3,1,1,
+            1,3,3,1,3,2,1,3,3,2,
+            1,1,-1,1,2,3,4,5,6,7,
+            8,9,10,-2,12,-3,-4,-5,-6,-7,
+            18,-10,1,2,3,4,5,6,7,8,
+            9,10,-11,1,2,3,4,5,6,7,
+            8,9,10,-13,1,2,3,4,5,6,
+            7,8,9,10,-22,1,2,3,4,5,
+            6,7,8,9,10,-23,1,2,3,4,
+            5,6,7,8,9,10,-14,1,2,3,
+            4,-12,1,2,-24,1,2,-8,-9,13,
+            14,15,11,-15,-16,11,-17,16,17,-18,
+            -19,-20,-21,-25,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
@@ -342,7 +342,8 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0
+            0,0,0,0,0,0,0,0,0,0,
+            0
         };
     };
     public final static short baseCheck[] = BaseCheck.baseCheck;
@@ -419,19 +420,19 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             79,155,164,180,163,279,185,185,280,280,
             280,281,281,235,203,203,191,283,283,282,
             282,282,282,284,284,250,250,285,285,285,
-            18,18,286,286,286,229,229,229,287,287,
-            287,287,255,255,255,167,167,167,167,213,
-            12,1,40,708,707,55,776,777,57,58,
-            227,230,49,702,5,57,61,62,50,690,
-            1,40,708,707,55,776,783,57,58,227,
-            230,1,40,708,707,55,776,785,57,58,
-            227,230,1,40,708,707,55,776,791,57,
-            58,227,230,1,40,708,707,55,776,792,
-            57,58,227,230,1,40,708,707,55,776,
-            66,57,58,227,230,24,38,708,30,31,
-            46,789,708,53,789,708,56,63,32,39,
-            41,63,66,68,64,69,788,790,70,71,
-            76,78,81,795,0
+            18,18,286,286,286,286,286,229,229,229,
+            287,287,287,287,255,255,255,167,167,167,
+            167,213,12,1,40,710,709,55,778,779,
+            57,58,227,230,49,704,5,57,61,62,
+            50,692,1,40,710,709,55,778,785,57,
+            58,227,230,1,40,710,709,55,778,787,
+            57,58,227,230,1,40,710,709,55,778,
+            793,57,58,227,230,1,40,710,709,55,
+            778,794,57,58,227,230,1,40,710,709,
+            55,778,66,57,58,227,230,24,38,710,
+            30,31,46,791,710,53,791,710,56,63,
+            32,39,41,63,66,68,64,69,790,792,
+            70,71,76,78,81,797,0
         };
     };
     public final static char baseAction[] = BaseAction.baseAction;
@@ -473,16 +474,16 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
 
     public interface TermAction {
         public final static char termAction[] = {0,
-            795,829,831,795,795,1429,1428,710,846,848,
-            849,847,845,706,837,838,839,840,841,842,
-            843,844,795,795,829,831,704,705,1429,1428,
-            795,846,848,849,847,845,823,837,838,839,
-            840,841,842,843,844,61,829,831,795,35,
-            1429,1428,795,829,831,56,795,1429,1428,721,
-            795,795,670,770,732,795,1466,795,795,795,
-            795,832,1023,855,743,62,794,795,795,765,
-            795,854,773,795,1026,795,795,782,795,795,
-            795,795,795,754
+            797,831,833,797,797,1431,1430,712,848,850,
+            851,849,847,708,839,840,841,842,843,844,
+            845,846,797,797,831,833,706,707,1431,1430,
+            797,848,850,851,849,847,825,839,840,841,
+            842,843,844,845,846,61,831,833,797,35,
+            1431,1430,797,831,833,56,797,1431,1430,723,
+            797,797,670,772,734,797,1468,797,797,797,
+            797,834,1025,857,745,62,796,797,797,767,
+            797,856,775,797,1028,797,797,784,797,797,
+            797,797,797,756
         };
     };
     public final static char termAction[] = TermAction.termAction;
@@ -640,7 +641,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
 
     public interface ScopeState {
         public final static char scopeState[] = {0,
-            754,743,732,721,710,691,0
+            756,745,734,723,712,693,0
         };
     };
     public final static char scopeState[] = ScopeState.scopeState;

@@ -106,7 +106,7 @@ public class LegacyNativeLibSupport {
 		return libEnv;
 	}
 		
-	private static class Handler implements CallHandler {
+	private static class Handler extends CallHandler {
 		private LibraryOperation fOperation;
 		private Class<?> fReturnClass;
 

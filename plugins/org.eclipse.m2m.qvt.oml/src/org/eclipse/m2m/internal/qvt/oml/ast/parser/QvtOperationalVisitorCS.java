@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
- *     Alex Paperno - bugs 272869, 268636
+ *     Alex Paperno - bugs 272869, 268636, 404647
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -146,6 +146,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveInExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.QVTUMLReflection;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
@@ -4471,6 +4473,7 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void validateOperationCall(OperationCallExpCS opCallCS, OperationCallExp<EClassifier, EOperation> operationCallExp, 
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
@@ -4494,6 +4497,16 @@ public class QvtOperationalVisitorCS
 			if (false == opCallCS instanceof MappingCallExpCS) {
 				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,
 						operationCallExp.getReferredOperation().getName()), opCallCS);
+			}
+		}
+
+		if (operationCallExp.getReferredOperation() != null) {
+			CallHandler callHandler = CallHandlerAdapter.getDispatcher(operationCallExp.getReferredOperation());
+			if (callHandler != null && callHandler.isMutator() && operationCallExp.getSource() instanceof VariableExp) {
+	            VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) operationCallExp.getSource();
+	            Variable<EClassifier, EParameter> sourceVariable = sourceExp.getReferredVariable();
+	    	    OCLExpressionCS varCS = opCallCS.getSource();
+		        QvtOperationalParserUtil.validateVariableModification(sourceVariable, varCS, null, env, false);         
 			}
 		}
 	}

@@ -64,7 +64,7 @@ public interface LightweightParsersym {
       TK_QUOTED_IDENTIFIER = 5,
       TK_INTEGER_LITERAL = 27,
       TK_REAL_LITERAL = 28,
-      TK_STRING_LITERAL = 24,
+      TK_STRING_LITERAL = 26,
       TK_PLUS = 68,
       TK_MINUS = 9,
       TK_MULTIPLY = 8,
@@ -132,8 +132,8 @@ public interface LightweightParsersym {
       TK_OclAny = 21,
       TK_OclInvalid = 22,
       TK_OclVoid = 23,
-      TK_Dict = 25,
-      TK_List = 26,
+      TK_Dict = 24,
+      TK_List = 25,
       TK_break = 42,
       TK_switch = 38,
       TK_case = 114,
@@ -250,9 +250,9 @@ public interface LightweightParsersym {
                  "OclAny", //$NON-NLS-1$
                  "OclInvalid", //$NON-NLS-1$
                  "OclVoid", //$NON-NLS-1$
-                 "STRING_LITERAL", //$NON-NLS-1$
                  "Dict", //$NON-NLS-1$
                  "List", //$NON-NLS-1$
+                 "STRING_LITERAL", //$NON-NLS-1$
                  "INTEGER_LITERAL", //$NON-NLS-1$
                  "REAL_LITERAL", //$NON-NLS-1$
                  "false", //$NON-NLS-1$

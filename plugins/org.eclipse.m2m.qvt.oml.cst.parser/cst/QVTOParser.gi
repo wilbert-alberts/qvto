@@ -2260,6 +2260,8 @@
 	typeCS2 -> primitiveTypeCS
 	typeCS2 -> tupleTypeCS
 	typeCS2 -> collectionTypeCS
+	typeCS2 -> listTypeCS
+	typeCS2 -> dictTypeCS
 	
 	scoped_identifier ::= typeCS2 '::' IDENTIFIER
 		/.$BeginCode
