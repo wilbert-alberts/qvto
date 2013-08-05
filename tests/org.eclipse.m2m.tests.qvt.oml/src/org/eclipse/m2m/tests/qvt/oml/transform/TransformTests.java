@@ -2,7 +2,7 @@
  * Copyright (c) 2007, 2013 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License v1.0 
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -10,7 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
  *                         397215, 397959, 358709, 388801, 254962
- *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647
+ *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -320,6 +320,7 @@ public class TransformTests {
         		new FileToFileData("bug392429"),
         		new FileToFileData("bug410470"),
         		new FileToFileData("bug404647"),
+        		new FileToFileData("bug413131"),
         		};
     }
 

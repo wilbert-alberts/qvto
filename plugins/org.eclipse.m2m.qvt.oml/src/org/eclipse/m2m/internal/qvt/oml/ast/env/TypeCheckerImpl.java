@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 413131
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -294,6 +295,39 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				return UMLReflection.UNRELATED_TYPE;				
 			}			
 		}		
+		
+		
+		boolean isTuple1 = type1 instanceof TupleType;
+		boolean isTuple2 = type2 instanceof TupleType;
+		if (isTuple1 && isTuple2) {
+			int currentRelation = UMLReflection.SAME_TYPE;
+			int matchingFeaturesCount = 0;
+			@SuppressWarnings("unchecked")
+			EList<EStructuralFeature> features1 = ((TupleType<EOperation, EStructuralFeature>)type1).oclProperties();
+			@SuppressWarnings("unchecked")
+			EList<EStructuralFeature> features2 = ((TupleType<EOperation, EStructuralFeature>)type2).oclProperties();
+			for (EStructuralFeature feature1 : features1) {
+				EStructuralFeature feature2 = findAttribute(type2, feature1.getName());
+				if (feature2 == null) {
+					return UMLReflection.UNRELATED_TYPE;
+				}
+				int partRelShip = getRelationship(feature1.getEType(), feature2.getEType());
+				
+				if (partRelShip == UMLReflection.UNRELATED_TYPE ||
+					partRelShip == UMLReflection.STRICT_SUBTYPE && currentRelation == UMLReflection.STRICT_SUPERTYPE ||
+					partRelShip == UMLReflection.STRICT_SUPERTYPE && currentRelation == UMLReflection.STRICT_SUBTYPE ) {
+					return UMLReflection.UNRELATED_TYPE;
+				}
+				currentRelation = partRelShip;
+				matchingFeaturesCount ++;
+			}
+			
+			if (matchingFeaturesCount < features1.size() || features1.size() != features2.size()) {
+				return UMLReflection.UNRELATED_TYPE;
+			}
+
+			return currentRelation;
+		}	
 		
 		return super.getRelationship(type1, type2);
 	}
