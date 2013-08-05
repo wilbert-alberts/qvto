@@ -83,7 +83,7 @@
  * Contributors:
  *   Borland - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
- *   Alex Paperno - bugs 314443
+ *   Alex Paperno - bugs 314443, 274105, 274505
  *
  * </copyright>
  *
@@ -1134,7 +1134,8 @@
 	IterateExpCS ::= primaryExpCS exclamationOpt '[' declarator_vsepOpt OclExpressionCS ']'
 		/.$BeginCode
 			OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
-			if (source instanceof ImperativeIterateExpCS) {
+			if (source instanceof ImperativeIterateExpCS
+				&& "xcollect".equals(((ImperativeIterateExpCS)source).getSimpleNameCS().getValue())) {
 				String opCode = isTokenOfType(getRhsIToken(2), $sym_type.TK_EXCLAMATION_MARK) 
 					?  "collectselectOne" 
 					: "collectselect"; 
@@ -1148,9 +1149,9 @@
 				result.setSimpleNameCS(simpleNameCS);
 				
 				VariableCS variableCS = (VariableCS) getRhsSym(4);
-		        if (variableCS != null) {
-		            result.setTarget(variableCS);
-		        }
+				if (variableCS != null) {
+					result.setTarget(variableCS);
+				}
 		        result.setCondition((OCLExpressionCS) getRhsSym(5));
 				
 				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
@@ -1166,10 +1167,13 @@
 						);
 				setOffsets(simpleNameCS, getRhsIToken(3), getRhsIToken(6));
 				
+				EList<VariableCS> iterators = new BasicEList<VariableCS>();
+				iterators.add((VariableCS) getRhsSym(4));
+				
 				CallExpCS result = createImperativeIterateExpCS(
 						simpleNameCS,
-						$EMPTY_ELIST,
-						(VariableCS) getRhsSym(4),
+						iterators,
+						null,
 						null,
 						(OCLExpressionCS) getRhsSym(5)
 						);

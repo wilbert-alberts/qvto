@@ -34,7 +34,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
-*   Alex Paperno - bugs 314443
+*   Alex Paperno - bugs 314443, 274105, 274505
 *
 * </copyright>
 *
