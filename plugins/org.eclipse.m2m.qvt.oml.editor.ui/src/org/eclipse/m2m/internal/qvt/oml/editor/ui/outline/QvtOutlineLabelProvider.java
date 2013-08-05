@@ -226,12 +226,18 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     	for (ParameterDeclarationCS param : decl.getParameters()) {
     		listParam.add(getParameterDeclarationAsString(param));
     	}
-    	String context = getTypeAsString(decl.getContextType());
+    	String context = ""; //$NON-NLS-1$
     	if (decl.getContextType() == null) {
         	EObject rootContainer = EcoreUtil.getRootContainer(decl);
         	if (rootContainer instanceof MappingModuleCS) {
         		context = getMappingModuleLabel((MappingModuleCS) rootContainer);
         	}
+    	}
+    	else {
+    		context = getTypeAsString(decl.getContextType());
+    	}
+    	if (context.length() > 0) {
+    		context += "::"; //$NON-NLS-1$
     	}
 		return getMappingDeclarationAsString(decl.getSimpleNameCS().getValue(), context, listParam);
     }
@@ -239,7 +245,6 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 
     public static String getMappingDeclarationAsString(String name, String contextType, List<String> params){
     	StringBuffer result = new StringBuffer (contextType);
-    	result.append("::"); //$NON-NLS-1$
     	result.append(name);
     	result.append("("); //$NON-NLS-1$
     	for (Iterator<String> it = params.iterator(); it.hasNext(); ){

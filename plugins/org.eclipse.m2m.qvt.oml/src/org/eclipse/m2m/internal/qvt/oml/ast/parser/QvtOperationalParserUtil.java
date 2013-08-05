@@ -179,13 +179,16 @@ public class QvtOperationalParserUtil {
 					+ "(" + getStringRepresentation(((CollectionTypeCS) typeCS).getTypeCS()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		else if (typeCS instanceof TupleTypeCS) {
-			String name = TupleType.SINGLETON_NAME + "("; //$NON-NLS-1$
+			StringBuffer result = new StringBuffer();
 			for (VariableCS var : ((TupleTypeCS) typeCS).getVariables()) {
-				name += var.getName();
-				name += ","; //$NON-NLS-1$
+				if (result.length() > 0) {
+					result.append(","); //$NON-NLS-1$
+				}
+				result.append(var.getName());
+				result.append(":"); //$NON-NLS-1$
+				result.append(getStringRepresentation(var.getTypeCS()));
 			}
-			name += ")"; //$NON-NLS-1$
-			return name;
+			return TupleType.SINGLETON_NAME + "(" + result.toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		
 		return ""; //$NON-NLS-1$
