@@ -162,21 +162,33 @@
 			   class="org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationWindowActionDelegate"
                definitionId="org.eclipse.m2m.qvt.oml.editor.ui.openDecl"
                label="%action.label.openDeclaration">
+			</action>
+			<action id="org.eclipse.m2m.qvt.oml.editor.ui.actions.ShowOutline"
+               menubarPath="navigate/open.ext"
+			   class="org.eclipse.m2m.internal.qvt.oml.editor.ui.quickoutline.actions.ShowOutlineWindowActionDelegate"
+               definitionId="org.eclipse.m2m.qvt.oml.editor.ui.show.outline"
+               label="%action.label.showOutline">
 			</action>  
 		</actionSet>          
 	</extension>
 
 	 <extension point="org.eclipse.ui.popupMenus">
 		 <viewerContribution
-	            targetID="#QvtEditorContext"	            
+	            targetID="#QvtoEditorContext"	            
 	            id="org.eclipse.m2m.qvt.oml.editor.NavigateActions">
 
 		   <action id="org.eclipse.m2m.qvt.oml.editor.ui.actions.OpenDeclaration"
+			   menubarPath="group.open"
 			   class="org.eclipse.m2m.internal.qvt.oml.editor.ui.actions.OpenDeclarationActionDelegate"
 			   definitionId="org.eclipse.m2m.qvt.oml.editor.ui.openDecl"
-			   menubarPath="group.open"
 			   label="%action.label.openDeclaration">			   
 		   </action>
+		   <action id="org.eclipse.m2m.qvt.oml.editor.ui.actions.ShowOutline"
+               menubarPath="group.open"
+			   class="org.eclipse.m2m.internal.qvt.oml.editor.ui.quickoutline.actions.ShowOutlineActionDelegate"
+               definitionId="org.eclipse.m2m.qvt.oml.editor.ui.show.outline"
+               label="%action.label.showOutline">
+			</action>  
 	      </viewerContribution>
 	</extension>
 
@@ -185,7 +197,14 @@
             id="org.eclipse.m2m.qvt.oml.editor.ui.openDecl"
 			name="%command.openDeclaration.name"
 			description="%command.openDeclaration.description"			
-            categoryId="org.eclipse.ui.category.navigate"/>
+            categoryId="org.eclipse.ui.category.navigate">
+      </command>
+      <command
+            id="org.eclipse.m2m.qvt.oml.editor.ui.show.outline"
+            name="%command.showOutline.name"
+            description="%command.showOutline.description"
+            categoryId="org.eclipse.ui.category.navigate">
+      </command>
 	</extension>
     
     <extension point="org.eclipse.ui.bindings">
@@ -194,6 +213,11 @@
 			contextId="org.eclipse.m2m.qvt.oml.editor.ui.context"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F3"/>
+		<key
+			commandId="org.eclipse.m2m.qvt.oml.editor.ui.show.outline"
+			contextId="org.eclipse.m2m.qvt.oml.editor.ui.context"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+O"/>
     </extension>
     
     <extension point="org.eclipse.ui.contexts">
@@ -257,6 +281,5 @@
 	            id="org.eclipse.m2m.qvt.oml.editor.ui.viewers.QVTContentViewerCreator">
 	      </viewer>
 	</extension>
-   
    
 </plugin>
