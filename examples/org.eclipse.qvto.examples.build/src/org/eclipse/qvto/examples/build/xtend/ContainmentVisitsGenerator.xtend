@@ -12,6 +12,8 @@ import org.eclipse.ocl.examples.pivot.OCLExpression
 import org.eclipse.ocl.examples.pivot.PropertyCallExp
 import org.eclipse.ocl.examples.pivot.VariableExp
 import org.eclipse.ocl.examples.pivot.Variable
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil
+import org.eclipse.ocl.examples.pivot.CollectionType
 
 public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String, IContainmentVisitsGeneratorCtx> {
 	
@@ -64,8 +66,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var Property astProperty = object.referredProperty;
 		var OCLExpression initExp = object.initExpression;
 				
-		if (astProperty.many) {
-			// TODO
+		if (isMany(astProperty.type)) {
+			result.append(createMultivaluedPropertyStub(astProperty, initExp));
 		} else {
 			result.append(createMonovaluedPropertyStub(astProperty, initExp));	
 		}		
@@ -95,24 +97,43 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	def private String getTypeQualifiedName(Type astType) {
-		return genModelHelper.getQualifiedInterfaceName(astType);
+		// TODO ask Ed for suitable already coded functioality to compute this.
+		// FIXME
+		// Bad String handling exception. Nasty temporal WORKAROUND to make prototype work
+		if (astType.name == "String") { return "String"};
+		
+		var Type type = null
+		if (astType instanceof CollectionType) {
+			type = (astType as CollectionType).elementType; // FIXME
+		} else {
+			type = astType
+		}
+		
+		// FIXME Boxing/Unboxing		
+		return genModelHelper.getQualifiedInterfaceName(PivotUtil.getType(type));
 	}
 	
 	// SHARED Functionality
 	def private String createMonovaluedPropertyStub(Property astProperty, OCLExpression initExp) {
 		var StringBuilder result = new StringBuilder();
 		var String propertyName = astProperty.name.toFirstUpper;
-		var String propertyType = astProperty.type.name;
+		var String propertyTypeName = astProperty.type.name;
+		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
+		var String initExpTypeName = initExp.type.name;
+		var String initExpTypeQName = getTypeQualifiedName(initExp.type);
 		
 		// We compute the new value from CS element (initExp)
+		// We assume that the initExp is monovalued type compatible expression.
+		// This generator should not be responsible of checking this
 		result.append('''
 			// AS «propertyName» property update
-			«propertyType» new«propertyName» = «initExp.accept(this)»;
+			«initExpTypeQName» newCs«initExpTypeName» = «initExp.accept(this)»;
+			«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
 			''');
-		
+
 		// We process the as element update
 		result.append('''
-			«propertyType» old«propertyName» = asElement.get«propertyName»();
+			«propertyTypeQName» old«propertyName» = asElement.get«propertyName»();
 			if ((new«propertyName» != old«propertyName») && ((new«propertyName» == null) || !new«propertyName».equals(old«propertyName»))) {
 				asElement.set«propertyName»(new«propertyName»);
 			}
@@ -120,6 +141,80 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		return result.toString;
 	}
 	
-
 	
+	def private String createMultivaluedPropertyStub(Property astProperty, OCLExpression initExp) {
+		var StringBuilder result = new StringBuilder();
+		var String propertyName = astProperty.name.toFirstUpper;
+		var String propertyTypeName = astProperty.type.name;
+		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
+		var String initExpTypeName = initExp.type.name;
+		var String initExpTypeQName = getTypeQualifiedName(initExp.type);
+		
+		// We compute the new property value from CS element (initExp)
+		result.append('''
+			// AS «propertyName» property update
+			''');
+		if (isMany(initExp.type)) {
+			result.append('''
+				List<«initExpTypeQName»> newCs«initExpTypeName»s = «initExp.accept(this)»;
+				''');
+			result.append('''
+				List<«propertyTypeQName»> new«propertyName»s= new ArrayList<«propertyTypeQName»>();
+				for («initExpTypeQName» newCs«initExpTypeName» : newCs«initExpTypeName»s) {
+					«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
+					if (new«propertyName» != null) {
+						new«propertyName»s.add(new«propertyName»);
+					}
+				}
+			''')
+		} else {
+			result.append('''
+				«initExpTypeQName» newCs«initExpTypeName» = «initExp.accept(this)»;
+				«propertyTypeQName» new«propertyName»s = new ArrayList<«propertyTypeQName»>();
+				«propertyTypeQName» new«propertyName»s.add(«getASfromCSStub(astProperty, initExp)»);
+				''');
+		}
+		
+		// We compute the old value 
+		result.append('''
+				List<«propertyTypeQName»> old«propertyName»s = asElement.get«propertyName»();
+				''');
+				
+		// We process the as property values update
+		result.append('''
+			PivotUtil.refreshList(old«propertyName»s, new«propertyName»s);
+			''');
+		return result.toString;
+	}
+	
+	def private boolean isMany(Type type) {
+		// TODO ask Ed for suitable already coded functioality to compute this.
+		
+		if (type instanceof CollectionType) {
+			return true;
+		} else {
+			return false;	
+		}
+	}
+	
+	def private String getASfromCSStub(Property astProperty, OCLExpression initExp) {
+		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
+		var String initExpType = initExp.type.name;
+		// FIXME Study boxing/unboxing
+		// quick nasty workround to make prototype work
+		var Type type = initExp.type; 
+		if (type instanceof CollectionType) {
+			type = (type as CollectionType).elementType;
+		}
+		
+		//var EClass class = context.metamodelManager.getEcoreOfPivot(typeof(EClass), type);
+		var boolean isPivotable = context.metamodelManager.getAllSuperClasses(type).exists[name == "Pivotable"] ;
+		
+		if (isPivotable) {
+			return '''PivotUtil.getPivot(«propertyTypeQName».class, newCs«initExpType»''';	
+		}
+		else {
+			return '''newCs«initExpType»''';
+		}
+	}
 }

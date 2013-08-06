@@ -88,10 +88,14 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 			
+			import java.util.ArrayList;
+			import java.util.List;
+
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 			import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+			import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 			import «superProjectName».cs2as.«extendedClassName»;
 			«FOR additionalImport : additionalImports»
 			import «additionalImport»;

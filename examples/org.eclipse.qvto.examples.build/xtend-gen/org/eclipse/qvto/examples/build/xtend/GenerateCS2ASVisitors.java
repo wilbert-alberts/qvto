@@ -90,6 +90,11 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
       _builder.append(_generateHeader, "");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
+      _builder.append("import java.util.ArrayList;");
+      _builder.newLine();
+      _builder.append("import java.util.List;");
+      _builder.newLine();
+      _builder.newLine();
       _builder.append("import org.eclipse.jdt.annotation.NonNull;");
       _builder.newLine();
       _builder.append("import org.eclipse.jdt.annotation.Nullable;");
@@ -97,6 +102,8 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
       _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;");
       _builder.newLine();
       _builder.append("import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;");
+      _builder.newLine();
+      _builder.append("import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;");
       _builder.newLine();
       _builder.append("import ");
       _builder.append(this.superProjectName, "");

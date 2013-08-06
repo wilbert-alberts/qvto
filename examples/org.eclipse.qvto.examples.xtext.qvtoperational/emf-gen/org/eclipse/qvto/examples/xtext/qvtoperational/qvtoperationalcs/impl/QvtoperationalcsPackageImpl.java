@@ -2755,8 +2755,8 @@ public class QvtoperationalcsPackageImpl
 			 "baseCST", "/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#/",
 			 "ecore", "http://www.eclipse.org/emf/2002/Ecore#/",
 			 "essentialOCLCST", "/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#/",
-			 "imperativeoclcs", "/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/",
 			 "imperativeocl", "/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL",
+			 "imperativeoclcs", "/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/",
 			 "qvtoperational", "/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational"
 		   });		
 	}
@@ -2791,7 +2791,7 @@ public class QvtoperationalcsPackageImpl
 		  (transformationHeaderCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name\t\t\t\t\n\t\t\t}"
+			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnestedPackage = ownedNestedPackage\n\t\t\t}"
 		   });
 	}
 

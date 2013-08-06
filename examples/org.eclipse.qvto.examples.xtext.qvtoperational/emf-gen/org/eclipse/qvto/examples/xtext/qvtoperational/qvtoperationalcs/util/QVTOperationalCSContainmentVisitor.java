@@ -10,10 +10,14 @@
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 
@@ -250,11 +254,23 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	// AS Name property update
-	String newName = csElement.getName();
+	String newCsString = csElement.getName();
+	String newName = newCsString;
 	String oldName = asElement.getName();
 	if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 		asElement.setName(newName);
 	}
+	// AS NestedPackage property update
+	List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsOrderedSets = csElement.getOwnedNestedPackage();
+	List<org.eclipse.ocl.examples.pivot.Package> newNestedPackages= new ArrayList<org.eclipse.ocl.examples.pivot.Package>();
+	for (org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS newCsOrderedSet : newCsOrderedSets) {
+		org.eclipse.ocl.examples.pivot.Package newNestedPackage = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Package.class, newCsOrderedSet);
+		if (newNestedPackage != null) {
+			newNestedPackages.add(newNestedPackage);
+		}
+	}
+	List<org.eclipse.ocl.examples.pivot.Package> oldNestedPackages = asElement.getNestedPackage();
+	PivotUtil.refreshList(oldNestedPackages, newNestedPackages);
 	// AS element comments update
 	context.refreshComments(asElement, csElement);
 	return null;

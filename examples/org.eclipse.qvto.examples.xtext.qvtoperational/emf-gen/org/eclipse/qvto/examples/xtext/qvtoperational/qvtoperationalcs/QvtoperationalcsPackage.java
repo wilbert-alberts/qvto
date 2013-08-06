@@ -25,7 +25,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.Imperativeo
  * <!-- end-user-doc -->
  * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/OCL/Import baseCST='/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#/' ecore='http://www.eclipse.org/emf/2002/Ecore#/' essentialOCLCST='/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#/' imperativeoclcs='/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/' imperativeocl='/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL' qvtoperational='/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational'"
+ *        annotation="http://www.eclipse.org/OCL/Import baseCST='/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#/' ecore='http://www.eclipse.org/emf/2002/Ecore#/' essentialOCLCST='/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore#/' imperativeocl='/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL' imperativeoclcs='/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/' qvtoperational='/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational'"
  *        annotation="http://www.eclipse.org/emf/2002/Ecore invocationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' settingDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot' validationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot'"
  * @generated
  */
