@@ -182,7 +182,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.newLineIfNotEmpty();
     _builder.append(initExpTypeQName, "");
     _builder.append(" newCs");
-    _builder.append(initExpTypeName, "");
+    _builder.append(propertyName, "");
     _builder.append(" = ");
     String _accept = initExp.<String>accept(this);
     _builder.append(_accept, "");
@@ -256,7 +256,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       _builder_1.append("List<");
       _builder_1.append(initExpTypeQName, "");
       _builder_1.append("> newCs");
-      _builder_1.append(initExpTypeName, "");
+      _builder_1.append(propertyName, "");
       _builder_1.append("s = ");
       String _accept = initExp.<String>accept(this);
       _builder_1.append(_accept, "");
@@ -275,9 +275,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       _builder_2.append("for (");
       _builder_2.append(initExpTypeQName, "");
       _builder_2.append(" newCs");
-      _builder_2.append(initExpTypeName, "");
+      _builder_2.append(propertyName, "");
       _builder_2.append(" : newCs");
-      _builder_2.append(initExpTypeName, "");
+      _builder_2.append(propertyName, "");
       _builder_2.append("s) {");
       _builder_2.newLineIfNotEmpty();
       _builder_2.append("\t");
@@ -311,7 +311,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       StringConcatenation _builder_3 = new StringConcatenation();
       _builder_3.append(initExpTypeQName, "");
       _builder_3.append(" newCs");
-      _builder_3.append(initExpTypeName, "");
+      _builder_3.append(propertyTypeQName, "");
       _builder_3.append(" = ");
       String _accept_1 = initExp.<String>accept(this);
       _builder_3.append(_accept_1, "");
@@ -364,6 +364,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
   }
   
   private String getASfromCSStub(final Property astProperty, final OCLExpression initExp) {
+    String _name = astProperty.getName();
+    String propertyName = StringExtensions.toFirstUpper(_name);
     Type _type = astProperty.getType();
     String propertyTypeQName = this.getTypeQualifiedName(_type);
     Type _type_1 = initExp.getType();
@@ -388,12 +390,13 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       _builder.append("PivotUtil.getPivot(");
       _builder.append(propertyTypeQName, "");
       _builder.append(".class, newCs");
-      _builder.append(initExpType, "");
+      _builder.append(propertyName, "");
+      _builder.append(")");
       return _builder.toString();
     } else {
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("newCs");
-      _builder_1.append(initExpType, "");
+      _builder_1.append(propertyName, "");
       return _builder_1.toString();
     }
   }

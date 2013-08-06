@@ -127,7 +127,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		// This generator should not be responsible of checking this
 		result.append('''
 			// AS «propertyName» property update
-			«initExpTypeQName» newCs«initExpTypeName» = «initExp.accept(this)»;
+			«initExpTypeQName» newCs«propertyName» = «initExp.accept(this)»;
 			«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
 			''');
 
@@ -156,11 +156,11 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			''');
 		if (isMany(initExp.type)) {
 			result.append('''
-				List<«initExpTypeQName»> newCs«initExpTypeName»s = «initExp.accept(this)»;
+				List<«initExpTypeQName»> newCs«propertyName»s = «initExp.accept(this)»;
 				''');
 			result.append('''
 				List<«propertyTypeQName»> new«propertyName»s= new ArrayList<«propertyTypeQName»>();
-				for («initExpTypeQName» newCs«initExpTypeName» : newCs«initExpTypeName»s) {
+				for («initExpTypeQName» newCs«propertyName» : newCs«propertyName»s) {
 					«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
 					if (new«propertyName» != null) {
 						new«propertyName»s.add(new«propertyName»);
@@ -169,7 +169,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			''')
 		} else {
 			result.append('''
-				«initExpTypeQName» newCs«initExpTypeName» = «initExp.accept(this)»;
+				«initExpTypeQName» newCs«propertyTypeQName» = «initExp.accept(this)»;
 				«propertyTypeQName» new«propertyName»s = new ArrayList<«propertyTypeQName»>();
 				«propertyTypeQName» new«propertyName»s.add(«getASfromCSStub(astProperty, initExp)»);
 				''');
@@ -198,6 +198,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	def private String getASfromCSStub(Property astProperty, OCLExpression initExp) {
+		var String propertyName = astProperty.name.toFirstUpper;
 		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
 		var String initExpType = initExp.type.name;
 		// FIXME Study boxing/unboxing
@@ -211,10 +212,10 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var boolean isPivotable = context.metamodelManager.getAllSuperClasses(type).exists[name == "Pivotable"] ;
 		
 		if (isPivotable) {
-			return '''PivotUtil.getPivot(«propertyTypeQName».class, newCs«initExpType»''';	
+			return '''PivotUtil.getPivot(«propertyTypeQName».class, newCs«propertyName»)''';	
 		}
 		else {
-			return '''newCs«initExpType»''';
+			return '''newCs«propertyName»''';
 		}
 	}
 }
