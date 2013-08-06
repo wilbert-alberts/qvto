@@ -42,13 +42,13 @@ public class InMemoryLaunchUtils {
     }
     
     public static void setAttribute(ILaunchConfigurationWorkingCopy config, String name, Object value) {
-        List<Object> list;
+        List<String> list;
         if(value == null) {
-            list = Collections.<Object>emptyList(); 
+            list = Collections.<String>emptyList(); 
         }
         else {
-            list = new ArrayList<Object>();
-            list.add(value);
+            list = new ArrayList<String>();
+            list.add(String.valueOf(value));
         }
         
         config.setAttribute(name, list);

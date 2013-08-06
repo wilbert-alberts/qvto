@@ -11,7 +11,9 @@
 package org.eclipse.m2m.internal.tests.qvt.oml.debugger;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -103,7 +105,12 @@ public class DebuggerTransformation extends TestTransformation {
 
 	    	myLaunchConfigurationWorkingCopy.setAttribute(IQvtLaunchConstants.MODULE, URIUtils.getResourceURI(transformation).toString());
 	        myLaunchConfigurationWorkingCopy.setAttribute(IQvtLaunchConstants.ELEM_COUNT, index-1);
-	        myLaunchConfigurationWorkingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, qvtContext.getConfigProperties());
+	        
+	        Map<String, String> configProps = new LinkedHashMap<String, String>();
+	        for (Map.Entry<String, Object> e : qvtContext.getConfigProperties().entrySet()) {
+	        	configProps.put(e.getKey(), e.getValue() == null ? null : String.valueOf(e.getValue()));
+	        }
+	        myLaunchConfigurationWorkingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, configProps);
 	        
 	        runDebugger();
 	        

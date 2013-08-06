@@ -13,6 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,7 +140,8 @@ public class QvtLaunchUtil {
     public static Map<String, Object> loadConfigurationProperties(ILaunchConfiguration configuration) {
         Map<String, Object> map;
         try {
-            map = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());            
+            Map<String, String> configProps = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());
+            map = new LinkedHashMap<String, Object>(configProps);
         } catch (CoreException e) {
             map = Collections.<String, Object>emptyMap();
             QvtRuntimePlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e)); 
