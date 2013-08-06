@@ -2809,7 +2809,7 @@ public class QvtoperationalcsPackageImpl
 		  (transformationHeaderCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}"
+			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name, -- TODO\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}"
 		   });
 	}
 

@@ -141,7 +141,7 @@ public interface TransformationHeaderCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name, -- TODO\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}'"
 	 * @generated
 	 */
 	OperationalTransformation ast();

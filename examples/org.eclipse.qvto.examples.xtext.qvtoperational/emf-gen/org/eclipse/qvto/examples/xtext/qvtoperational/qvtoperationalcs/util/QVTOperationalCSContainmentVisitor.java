@@ -330,6 +330,20 @@ public class QVTOperationalCSContainmentVisitor
 	if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 		asElement.setName(newName);
 	}
+	// AS NsPrefix property update
+	String newCsNsPrefix = csElement.getName();
+	String newNsPrefix = newCsNsPrefix;
+	String oldNsPrefix = asElement.getNsPrefix();
+	if ((newNsPrefix != oldNsPrefix) && ((newNsPrefix == null) || !newNsPrefix.equals(oldNsPrefix))) {
+		asElement.setNsPrefix(newNsPrefix);
+	}
+	// AS NsURI property update
+	String newCsNsURI = csElement.getName();
+	String newNsURI = newCsNsURI;
+	String oldNsURI = asElement.getNsURI();
+	if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
+		asElement.setNsURI(newNsURI);
+	}
 	// AS NestedPackage property update
 	List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsNestedPackages = csElement.getOwnedNestedPackage();
 	List<org.eclipse.ocl.examples.pivot.Package> newNestedPackages= new ArrayList<org.eclipse.ocl.examples.pivot.Package>();
