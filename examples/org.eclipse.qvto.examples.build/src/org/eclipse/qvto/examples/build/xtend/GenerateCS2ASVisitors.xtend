@@ -118,11 +118,11 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				public @Nullable «resultTypeName» visit«eClass.name»(@NonNull «modelPackageName».«eClass.name» csElement) {
-				«IF (eClass.hasAstOperation())»
+					«IF (eClass.hasAstOperation())»
 					«eClass.generateContainmentVisit()»
-				«ELSE»
-						throw new UnsupportedOperationException("visit«eClass.name» not supported in «className»");
-				«ENDIF»
+					«ELSE»
+					throw new UnsupportedOperationException("visit«eClass.name» not supported in «className»");
+					«ENDIF»
 				}
 				
 				«ENDFOR»
@@ -165,9 +165,10 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 //			}
 //		}
 //		return "return null;"; // TODO case in which no pClass or no ast operation has been found
-		return '''csElement.ast();
-				return null;
-				''';
+		return  '''
+			csElement.ast();
+			return null;
+		''';
 	}
 	
 //	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {

@@ -13,8 +13,8 @@ package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSPostOrderVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 
 /**
  * An AbstractQVTOperationalCSPostOrderVisitor provides a default implementation for each

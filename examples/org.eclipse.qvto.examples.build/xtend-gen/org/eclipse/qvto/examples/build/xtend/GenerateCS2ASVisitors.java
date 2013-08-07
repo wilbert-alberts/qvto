@@ -177,16 +177,18 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
             boolean _hasAstOperation = this.hasAstOperation(eClass);
             if (_hasAstOperation) {
               _builder.append("\t");
+              _builder.append("\t");
               String _generateContainmentVisit = this.generateContainmentVisit(eClass);
-              _builder.append(_generateContainmentVisit, "	");
+              _builder.append(_generateContainmentVisit, "		");
               _builder.newLineIfNotEmpty();
             } else {
               _builder.append("\t");
+              _builder.append("\t");
               _builder.append("throw new UnsupportedOperationException(\"visit");
               String _name_2 = eClass.getName();
-              _builder.append(_name_2, "	");
+              _builder.append(_name_2, "		");
               _builder.append(" not supported in ");
-              _builder.append(className, "	");
+              _builder.append(className, "		");
               _builder.append("\");");
               _builder.newLineIfNotEmpty();
             }
@@ -223,7 +225,6 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("csElement.ast();");
     _builder.newLine();
-    _builder.append("\t\t\t\t");
     _builder.append("return null;");
     _builder.newLine();
     return _builder.toString();
