@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getElementWithBody()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getElementWithBody()
  * @model abstract="true"
  * @generated
  */
@@ -34,7 +34,7 @@ public interface ElementWithBody
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body Start Location</em>' attribute.
 	 * @see #setBodyStartLocation(int)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getElementWithBody_BodyStartLocation()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getElementWithBody_BodyStartLocation()
 	 * @model default="0"
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public interface ElementWithBody
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body End Location</em>' attribute.
 	 * @see #setBodyEndLocation(int)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getElementWithBody_BodyEndLocation()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getElementWithBody_BodyEndLocation()
 	 * @model default="0"
 	 * @generated
 	 */

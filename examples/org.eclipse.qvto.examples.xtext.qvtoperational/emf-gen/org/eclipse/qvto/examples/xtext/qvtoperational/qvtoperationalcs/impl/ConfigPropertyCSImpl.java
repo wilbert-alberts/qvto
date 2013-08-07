@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConfigPropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -52,7 +52,7 @@ public class ConfigPropertyCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.CONFIG_PROPERTY_CS;
+		return QVTOperationalCSPackage.Literals.CONFIG_PROPERTY_CS;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ConfigPropertyCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -86,14 +86,14 @@ public class ConfigPropertyCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ConfigPropertyCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -137,7 +137,7 @@ public class ConfigPropertyCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS:
 				return getTypeCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -150,7 +150,7 @@ public class ConfigPropertyCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
 		}
@@ -164,7 +164,7 @@ public class ConfigPropertyCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
 		}
@@ -178,7 +178,7 @@ public class ConfigPropertyCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONFIG_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS__TYPE_CS:
 				return typeCS != null;
 		}
 		return super.eIsSet(featureID);

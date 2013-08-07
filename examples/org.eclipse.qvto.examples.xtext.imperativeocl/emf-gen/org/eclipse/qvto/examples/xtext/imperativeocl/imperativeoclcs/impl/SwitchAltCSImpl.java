@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.SwitchAltCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -81,7 +81,7 @@ public class SwitchAltCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.SWITCH_ALT_CS;
+		return ImperativeOCLCSPackage.Literals.SWITCH_ALT_CS;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SwitchAltCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -115,14 +115,14 @@ public class SwitchAltCSImpl
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class SwitchAltCSImpl
 		ExpCS oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_ALT_CS__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -155,14 +155,14 @@ public class SwitchAltCSImpl
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_ALT_CS__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY, null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_ALT_CS__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY, null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_ALT_CS__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY, newBody, newBody));
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class SwitchAltCSImpl
 		String oldKeyword = keyword;
 		keyword = newKeyword;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_ALT_CS__KEYWORD, oldKeyword, keyword));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_ALT_CS__KEYWORD, oldKeyword, keyword));
 	}
 
 	/**
@@ -212,9 +212,9 @@ public class SwitchAltCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION:
 				return basicSetCondition(null, msgs);
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__BODY:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -227,11 +227,11 @@ public class SwitchAltCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION:
 				return getCondition();
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__BODY:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY:
 				return getBody();
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__KEYWORD:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__KEYWORD:
 				return getKeyword();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -244,13 +244,13 @@ public class SwitchAltCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__BODY:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY:
 				setBody((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__KEYWORD:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__KEYWORD:
 				setKeyword((String)newValue);
 				return;
 		}
@@ -264,13 +264,13 @@ public class SwitchAltCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__BODY:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY:
 				setBody((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__KEYWORD:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__KEYWORD:
 				setKeyword(KEYWORD_EDEFAULT);
 				return;
 		}
@@ -284,11 +284,11 @@ public class SwitchAltCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__CONDITION:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__CONDITION:
 				return condition != null;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__BODY:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__BODY:
 				return body != null;
-			case ImperativeoclcsPackage.SWITCH_ALT_CS__KEYWORD:
+			case ImperativeOCLCSPackage.SWITCH_ALT_CS__KEYWORD:
 				return KEYWORD_EDEFAULT == null ? keyword != null : !KEYWORD_EDEFAULT.equals(keyword);
 		}
 		return super.eIsSet(featureID);

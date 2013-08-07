@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveInExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -74,7 +74,7 @@ public class ResolveInExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.RESOLVE_IN_EXP_CS;
+		return QVTOperationalCSPackage.Literals.RESOLVE_IN_EXP_CS;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class ResolveInExpCSImpl
 		TypeCS oldInMappingType = inMappingType;
 		inMappingType = newInMappingType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, oldInMappingType, newInMappingType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, oldInMappingType, newInMappingType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +108,14 @@ public class ResolveInExpCSImpl
 		if (newInMappingType != inMappingType) {
 			NotificationChain msgs = null;
 			if (inMappingType != null)
-				msgs = ((InternalEObject)inMappingType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, null, msgs);
+				msgs = ((InternalEObject)inMappingType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, null, msgs);
 			if (newInMappingType != null)
-				msgs = ((InternalEObject)newInMappingType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, null, msgs);
+				msgs = ((InternalEObject)newInMappingType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, null, msgs);
 			msgs = basicSetInMappingType(newInMappingType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, newInMappingType, newInMappingType));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE, newInMappingType, newInMappingType));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class ResolveInExpCSImpl
 		String oldInMappingName = inMappingName;
 		inMappingName = newInMappingName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, oldInMappingName, inMappingName));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME, oldInMappingName, inMappingName));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class ResolveInExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				return basicSetInMappingType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -178,9 +178,9 @@ public class ResolveInExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				return getInMappingType();
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
 				return getInMappingName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public class ResolveInExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				setInMappingType((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
 				setInMappingName((String)newValue);
 				return;
 		}
@@ -210,10 +210,10 @@ public class ResolveInExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				setInMappingType((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
 				setInMappingName(IN_MAPPING_NAME_EDEFAULT);
 				return;
 		}
@@ -227,9 +227,9 @@ public class ResolveInExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_TYPE:
 				return inMappingType != null;
-			case QvtoperationalcsPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
+			case QVTOperationalCSPackage.RESOLVE_IN_EXP_CS__IN_MAPPING_NAME:
 				return IN_MAPPING_NAME_EDEFAULT == null ? inMappingName != null : !IN_MAPPING_NAME_EDEFAULT.equals(inMappingName);
 		}
 		return super.eIsSet(featureID);

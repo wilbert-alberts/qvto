@@ -51,7 +51,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.UnlimitedNatu
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
@@ -60,11 +60,11 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Classifie
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
@@ -572,8 +572,8 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == ImperativeoclcsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS:
+		else if(semanticObject.eClass().getEPackage() == ImperativeOCLCSPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case ImperativeOCLCSPackage.DICT_LITERAL_EXP_CS:
 				if(context == grammarAccess.getDictLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
@@ -586,13 +586,13 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS:
+			case ImperativeOCLCSPackage.DICT_LITERAL_PART_CS:
 				if(context == grammarAccess.getDictLiteralPartCSRule()) {
 					sequence_DictLiteralPartCS(context, (DictLiteralPartCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.DICT_TYPE_CS:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS:
 				if(context == grammarAccess.getDictTypeCSRule() ||
 				   context == grammarAccess.getTypeLiteralCSRule() ||
 				   context == grammarAccess.getTypeRefCSRule() ||
@@ -613,7 +613,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
 				   context == grammarAccess.getGrammmarCSRule() ||
@@ -626,7 +626,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.LIST_TYPE_CS:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS:
 				if(context == grammarAccess.getListTypeCSRule() ||
 				   context == grammarAccess.getTypeLiteralCSRule() ||
 				   context == grammarAccess.getTypeRefCSRule() ||
@@ -647,7 +647,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.RETURN_EXP_CS:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
 				   context == grammarAccess.getGrammmarCSRule() ||
@@ -661,77 +661,77 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == QvtoperationalcsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case QvtoperationalcsPackage.CLASSIFIER_PROPERTY_CS:
+		else if(semanticObject.eClass().getEPackage() == QVTOperationalCSPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case QVTOperationalCSPackage.CLASSIFIER_PROPERTY_CS:
 				if(context == grammarAccess.getClassifierPropertyCSRule()) {
 					sequence_ClassifierPropertyCS(context, (ClassifierPropertyCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.INIT_PART_CS:
+			case QVTOperationalCSPackage.INIT_PART_CS:
 				if(context == grammarAccess.getInitPartCSRule()) {
 					sequence_InitPartCS(context, (InitPartCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.METAMODEL_CS:
+			case QVTOperationalCSPackage.METAMODEL_CS:
 				if(context == grammarAccess.getMetamodelCSRule() ||
 				   context == grammarAccess.getUnitPacakgeCSRule()) {
 					sequence_MetamodelCS(context, (MetamodelCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.PRIMITIVE_TYPE_CS:
+			case QVTOperationalCSPackage.PRIMITIVE_TYPE_CS:
 				if(context == grammarAccess.getClassifierCSRule() ||
 				   context == grammarAccess.getDataTypeCSRule()) {
 					sequence_DataTypeCS(context, (PrimitiveTypeCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.QV_TO_CLASS_CS:
+			case QVTOperationalCSPackage.QV_TO_CLASS_CS:
 				if(context == grammarAccess.getClassCSRule() ||
 				   context == grammarAccess.getClassifierCSRule()) {
 					sequence_ClassCS(context, (QVToClassCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS:
 				if(context == grammarAccess.getImportCSRule()) {
 					sequence_ImportCS(context, (QVToImportCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS:
 				if(context == grammarAccess.getClassifierOperationCSRule()) {
 					sequence_ClassifierOperationCS(context, (QVToOperationCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS:
 				if(context == grammarAccess.getParameterCSRule()) {
 					sequence_ParameterCS(context, (QVToParameterCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS:
+			case QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS:
 				if(context == grammarAccess.getStereotypeQualifierCSRule()) {
 					sequence_StereotypeQualifierCS(context, (StereotypeQualifierCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.TAG_CS:
+			case QVTOperationalCSPackage.TAG_CS:
 				if(context == grammarAccess.getTagCSRule()) {
 					sequence_TagCS(context, (TagCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.TOP_LEVEL_CS:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS:
 				if(context == grammarAccess.getTopLevelCSRule()) {
 					sequence_TopLevelCS(context, (TopLevelCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.TRANSFORMATION_HEADER_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_HEADER_CS:
 				if(context == grammarAccess.getTransformationCSRule() ||
 				   context == grammarAccess.getTransformationDeclCSRule() ||
 				   context == grammarAccess.getTransformationDefCSRule() ||
@@ -741,7 +741,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case QvtoperationalcsPackage.UNIT_CS:
+			case QVTOperationalCSPackage.UNIT_CS:
 				if(context == grammarAccess.getUnitCSRule()) {
 					sequence_UnitCS(context, (UnitCS) semanticObject); 
 					return; 

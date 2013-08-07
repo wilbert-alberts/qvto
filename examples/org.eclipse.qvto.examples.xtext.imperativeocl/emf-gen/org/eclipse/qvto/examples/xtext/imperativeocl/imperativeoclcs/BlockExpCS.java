@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getBlockExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getBlockExpCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface BlockExpCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body Expressions</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getBlockExpCS_BodyExpressions()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getBlockExpCS_BodyExpressions()
 	 * @model containment="true"
 	 * @generated
 	 */

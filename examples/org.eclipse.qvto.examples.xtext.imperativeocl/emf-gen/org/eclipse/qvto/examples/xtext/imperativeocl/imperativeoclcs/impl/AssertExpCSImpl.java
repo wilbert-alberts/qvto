@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssertExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.LogExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -82,7 +82,7 @@ public class AssertExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.ASSERT_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.ASSERT_EXP_CS;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class AssertExpCSImpl
 		ExpCS oldAssertion = assertion;
 		assertion = newAssertion;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION, oldAssertion, newAssertion);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION, oldAssertion, newAssertion);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -116,14 +116,14 @@ public class AssertExpCSImpl
 		if (newAssertion != assertion) {
 			NotificationChain msgs = null;
 			if (assertion != null)
-				msgs = ((InternalEObject)assertion).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION, null, msgs);
+				msgs = ((InternalEObject)assertion).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION, null, msgs);
 			if (newAssertion != null)
-				msgs = ((InternalEObject)newAssertion).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION, null, msgs);
+				msgs = ((InternalEObject)newAssertion).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION, null, msgs);
 			msgs = basicSetAssertion(newAssertion, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION, newAssertion, newAssertion));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION, newAssertion, newAssertion));
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class AssertExpCSImpl
 		LogExpCS oldLog = log;
 		log = newLog;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSERT_EXP_CS__LOG, oldLog, newLog);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG, oldLog, newLog);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -156,14 +156,14 @@ public class AssertExpCSImpl
 		if (newLog != log) {
 			NotificationChain msgs = null;
 			if (log != null)
-				msgs = ((InternalEObject)log).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSERT_EXP_CS__LOG, null, msgs);
+				msgs = ((InternalEObject)log).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG, null, msgs);
 			if (newLog != null)
-				msgs = ((InternalEObject)newLog).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSERT_EXP_CS__LOG, null, msgs);
+				msgs = ((InternalEObject)newLog).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG, null, msgs);
 			msgs = basicSetLog(newLog, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSERT_EXP_CS__LOG, newLog, newLog));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG, newLog, newLog));
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class AssertExpCSImpl
 		String oldSeverity = severity;
 		severity = newSeverity;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSERT_EXP_CS__SEVERITY, oldSeverity, severity));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSERT_EXP_CS__SEVERITY, oldSeverity, severity));
 	}
 
 	/**
@@ -213,9 +213,9 @@ public class AssertExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION:
 				return basicSetAssertion(null, msgs);
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__LOG:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG:
 				return basicSetLog(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -228,11 +228,11 @@ public class AssertExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION:
 				return getAssertion();
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__LOG:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG:
 				return getLog();
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__SEVERITY:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__SEVERITY:
 				return getSeverity();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -245,13 +245,13 @@ public class AssertExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION:
 				setAssertion((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__LOG:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG:
 				setLog((LogExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__SEVERITY:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__SEVERITY:
 				setSeverity((String)newValue);
 				return;
 		}
@@ -265,13 +265,13 @@ public class AssertExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION:
 				setAssertion((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__LOG:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG:
 				setLog((LogExpCS)null);
 				return;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__SEVERITY:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__SEVERITY:
 				setSeverity(SEVERITY_EDEFAULT);
 				return;
 		}
@@ -285,11 +285,11 @@ public class AssertExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__ASSERTION:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__ASSERTION:
 				return assertion != null;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__LOG:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__LOG:
 				return log != null;
-			case ImperativeoclcsPackage.ASSERT_EXP_CS__SEVERITY:
+			case ImperativeOCLCSPackage.ASSERT_EXP_CS__SEVERITY:
 				return SEVERITY_EDEFAULT == null ? severity != null : !SEVERITY_EDEFAULT.equals(severity);
 		}
 		return super.eIsSet(featureID);

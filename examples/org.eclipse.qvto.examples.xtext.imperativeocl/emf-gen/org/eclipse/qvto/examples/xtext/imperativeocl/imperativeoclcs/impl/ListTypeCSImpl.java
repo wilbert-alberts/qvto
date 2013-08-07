@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.TypedRefCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -53,7 +53,7 @@ public class ListTypeCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.LIST_TYPE_CS;
+		return ImperativeOCLCSPackage.Literals.LIST_TYPE_CS;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ListTypeCSImpl
 		TypedRefCS oldType = type;
 		type = newType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, oldType, newType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE, oldType, newType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -87,14 +87,14 @@ public class ListTypeCSImpl
 		if (newType != type) {
 			NotificationChain msgs = null;
 			if (type != null)
-				msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, null, msgs);
+				msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE, null, msgs);
 			if (newType != null)
-				msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, null, msgs);
+				msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE, null, msgs);
 			msgs = basicSetType(newType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.LIST_TYPE_CS__TYPE, newType, newType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE, newType, newType));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ListTypeCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE:
 				return basicSetType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,7 +138,7 @@ public class ListTypeCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE:
 				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -151,7 +151,7 @@ public class ListTypeCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE:
 				setType((TypedRefCS)newValue);
 				return;
 		}
@@ -165,7 +165,7 @@ public class ListTypeCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE:
 				setType((TypedRefCS)null);
 				return;
 		}
@@ -179,7 +179,7 @@ public class ListTypeCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_TYPE_CS__TYPE:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS__TYPE:
 				return type != null;
 		}
 		return super.eIsSet(featureID);

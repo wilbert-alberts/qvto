@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleRefCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleRefCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface ModuleRefCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Path Name CS</em>' containment reference.
 	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleRefCS_PathNameCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleRefCS_PathNameCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public interface ModuleRefCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleRefCS_Parameters()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleRefCS_Parameters()
 	 * @model containment="true"
 	 * @generated
 	 */

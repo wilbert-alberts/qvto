@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -71,7 +71,7 @@ public class CompleteSignatureCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.COMPLETE_SIGNATURE_CS;
+		return QVTOperationalCSPackage.Literals.COMPLETE_SIGNATURE_CS;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class CompleteSignatureCSImpl
 		SimpleSignatureCS oldSimpleSignature = simpleSignature;
 		simpleSignature = newSimpleSignature;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, oldSimpleSignature, newSimpleSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, oldSimpleSignature, newSimpleSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -105,14 +105,14 @@ public class CompleteSignatureCSImpl
 		if (newSimpleSignature != simpleSignature) {
 			NotificationChain msgs = null;
 			if (simpleSignature != null)
-				msgs = ((InternalEObject)simpleSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, null, msgs);
+				msgs = ((InternalEObject)simpleSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, null, msgs);
 			if (newSimpleSignature != null)
-				msgs = ((InternalEObject)newSimpleSignature).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, null, msgs);
+				msgs = ((InternalEObject)newSimpleSignature).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, null, msgs);
 			msgs = basicSetSimpleSignature(newSimpleSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, newSimpleSignature, newSimpleSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE, newSimpleSignature, newSimpleSignature));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class CompleteSignatureCSImpl
 	 */
 	public EList<ParameterDeclarationCS> getResultParams() {
 		if (resultParams == null) {
-			resultParams = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS);
+			resultParams = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS);
 		}
 		return resultParams;
 	}
@@ -154,9 +154,9 @@ public class CompleteSignatureCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
 				return basicSetSimpleSignature(null, msgs);
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
 				return ((InternalEList<?>)getResultParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -169,9 +169,9 @@ public class CompleteSignatureCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
 				return getSimpleSignature();
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
 				return getResultParams();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -185,10 +185,10 @@ public class CompleteSignatureCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
 				setSimpleSignature((SimpleSignatureCS)newValue);
 				return;
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
 				getResultParams().clear();
 				getResultParams().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
@@ -203,10 +203,10 @@ public class CompleteSignatureCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
 				setSimpleSignature((SimpleSignatureCS)null);
 				return;
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
 				getResultParams().clear();
 				return;
 		}
@@ -220,9 +220,9 @@ public class CompleteSignatureCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__SIMPLE_SIGNATURE:
 				return simpleSignature != null;
-			case QvtoperationalcsPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
+			case QVTOperationalCSPackage.COMPLETE_SIGNATURE_CS__RESULT_PARAMS:
 				return resultParams != null && !resultParams.isEmpty();
 		}
 		return super.eIsSet(featureID);

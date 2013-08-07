@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -80,7 +80,7 @@ public abstract class ElementWithBodyImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.ELEMENT_WITH_BODY;
+		return QVTOperationalCSPackage.Literals.ELEMENT_WITH_BODY;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public abstract class ElementWithBodyImpl
 		int oldBodyStartLocation = bodyStartLocation;
 		bodyStartLocation = newBodyStartLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public abstract class ElementWithBodyImpl
 		int oldBodyEndLocation = bodyEndLocation;
 		bodyEndLocation = newBodyEndLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
 	}
 
 	/**
@@ -128,9 +128,9 @@ public abstract class ElementWithBodyImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
 				return getBodyStartLocation();
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
 				return getBodyEndLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -143,10 +143,10 @@ public abstract class ElementWithBodyImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
 				setBodyStartLocation((Integer)newValue);
 				return;
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
 				setBodyEndLocation((Integer)newValue);
 				return;
 		}
@@ -160,10 +160,10 @@ public abstract class ElementWithBodyImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
 				setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
 				setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
 				return;
 		}
@@ -177,9 +177,9 @@ public abstract class ElementWithBodyImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION:
 				return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
-			case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION:
 				return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

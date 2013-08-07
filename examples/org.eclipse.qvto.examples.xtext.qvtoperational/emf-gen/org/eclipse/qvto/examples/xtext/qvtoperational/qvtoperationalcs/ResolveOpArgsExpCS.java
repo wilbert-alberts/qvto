@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveOpArgsExpCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveOpArgsExpCS()
  * @model
  * @generated
  */

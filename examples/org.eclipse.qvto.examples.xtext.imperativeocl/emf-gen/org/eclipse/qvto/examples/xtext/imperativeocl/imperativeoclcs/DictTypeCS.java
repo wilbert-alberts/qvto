@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictTypeCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getDictTypeCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface DictTypeCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Key Type</em>' containment reference.
 	 * @see #setKeyType(TypedRefCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictTypeCS_KeyType()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getDictTypeCS_KeyType()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -59,7 +59,7 @@ public interface DictTypeCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value Type</em>' containment reference.
 	 * @see #setValueType(TypedRefCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getDictTypeCS_ValueType()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getDictTypeCS_ValueType()
 	 * @model containment="true"
 	 * @generated
 	 */

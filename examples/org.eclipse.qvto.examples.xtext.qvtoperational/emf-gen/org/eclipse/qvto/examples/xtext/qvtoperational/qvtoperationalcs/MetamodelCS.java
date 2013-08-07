@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMetamodelCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMetamodelCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface MetamodelCS
 	 * @return the value of the '<em>Metamodel Kind</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelKind
 	 * @see #setMetamodelKind(MetamodelKind)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMetamodelCS_MetamodelKind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMetamodelCS_MetamodelKind()
 	 * @model
 	 * @generated
 	 */
@@ -50,14 +50,5 @@ public interface MetamodelCS
 	 * @generated
 	 */
 	void setMetamodelKind(MetamodelKind value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsURI = nsURI,\n\t\t\t\tnsPrefix = nsPrefix,\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}'"
-	 * @generated
-	 */
-	org.eclipse.ocl.examples.pivot.Package ast();
 
 } // MetamodelCS

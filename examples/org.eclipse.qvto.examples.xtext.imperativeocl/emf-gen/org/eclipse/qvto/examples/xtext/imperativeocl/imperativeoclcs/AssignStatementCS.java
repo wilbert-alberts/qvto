@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssignStatementCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssignStatementCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface AssignStatementCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>LValue CS</em>' containment reference.
 	 * @see #setLValueCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssignStatementCS_LValueCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssignStatementCS_LValueCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface AssignStatementCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
 	 * @see #setOclExpressionCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssignStatementCS_OclExpressionCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssignStatementCS_OclExpressionCS()
 	 * @model containment="true"
 	 * @generated
 	 */

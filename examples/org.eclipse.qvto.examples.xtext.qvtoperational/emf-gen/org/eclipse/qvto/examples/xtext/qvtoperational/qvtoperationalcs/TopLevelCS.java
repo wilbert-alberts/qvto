@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTopLevelCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTopLevelCS()
  * @model
  * @generated
  */

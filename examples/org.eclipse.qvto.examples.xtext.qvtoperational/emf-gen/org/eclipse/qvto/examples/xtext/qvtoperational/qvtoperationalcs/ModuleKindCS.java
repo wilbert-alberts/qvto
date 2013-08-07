@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleKindCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleKindCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface ModuleKindCS
 	 * @return the value of the '<em>Module Kind</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleKindEnum
 	 * @see #setModuleKind(ModuleKindEnum)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleKindCS_ModuleKind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleKindCS_ModuleKind()
 	 * @model
 	 * @generated
 	 */

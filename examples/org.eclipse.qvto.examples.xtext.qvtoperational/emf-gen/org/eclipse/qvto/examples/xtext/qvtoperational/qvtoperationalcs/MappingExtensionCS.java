@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingExtensionCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingExtensionCS()
  * @model
  * @generated
  */
@@ -37,7 +37,7 @@ public interface MappingExtensionCS
 	 * @return the value of the '<em>Kind</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionKindCS
 	 * @see #setKind(MappingExtensionKindCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingExtensionCS_Kind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingExtensionCS_Kind()
 	 * @model default="disjuncts"
 	 * @generated
 	 */
@@ -64,7 +64,7 @@ public interface MappingExtensionCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Identifiers</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingExtensionCS_MappingIdentifiers()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingExtensionCS_MappingIdentifiers()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */

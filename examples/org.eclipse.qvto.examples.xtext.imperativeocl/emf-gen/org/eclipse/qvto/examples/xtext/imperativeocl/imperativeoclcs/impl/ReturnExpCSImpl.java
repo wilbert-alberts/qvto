@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -53,7 +53,7 @@ public class ReturnExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.RETURN_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.RETURN_EXP_CS;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ReturnExpCSImpl
 		ExpCS oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.RETURN_EXP_CS__VALUE, oldValue, newValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE, oldValue, newValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -87,14 +87,14 @@ public class ReturnExpCSImpl
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.RETURN_EXP_CS__VALUE, null, msgs);
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE, null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.RETURN_EXP_CS__VALUE, null, msgs);
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE, null, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.RETURN_EXP_CS__VALUE, newValue, newValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE, newValue, newValue));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ReturnExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE:
 				return basicSetValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,7 +138,7 @@ public class ReturnExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -151,7 +151,7 @@ public class ReturnExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE:
 				setValue((ExpCS)newValue);
 				return;
 		}
@@ -165,7 +165,7 @@ public class ReturnExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE:
 				setValue((ExpCS)null);
 				return;
 		}
@@ -179,7 +179,7 @@ public class ReturnExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.RETURN_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS__VALUE:
 				return value != null;
 		}
 		return super.eIsSet(featureID);

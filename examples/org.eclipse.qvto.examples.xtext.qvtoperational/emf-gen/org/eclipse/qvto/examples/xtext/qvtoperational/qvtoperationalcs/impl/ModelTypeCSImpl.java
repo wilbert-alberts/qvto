@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -147,7 +147,7 @@ public class ModelTypeCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MODEL_TYPE_CS;
+		return QVTOperationalCSPackage.Literals.MODEL_TYPE_CS;
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class ModelTypeCSImpl
 		int oldBodyStartLocation = bodyStartLocation;
 		bodyStartLocation = newBodyStartLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class ModelTypeCSImpl
 		int oldBodyEndLocation = bodyEndLocation;
 		bodyEndLocation = newBodyEndLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class ModelTypeCSImpl
 		String oldIdentifierCS = identifierCS;
 		identifierCS = newIdentifierCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODEL_TYPE_CS__IDENTIFIER_CS, oldIdentifierCS, identifierCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODEL_TYPE_CS__IDENTIFIER_CS, oldIdentifierCS, identifierCS));
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class ModelTypeCSImpl
 		StringLiteralExpCS oldComplianceKindCS = complianceKindCS;
 		complianceKindCS = newComplianceKindCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, oldComplianceKindCS, newComplianceKindCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, oldComplianceKindCS, newComplianceKindCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -238,14 +238,14 @@ public class ModelTypeCSImpl
 		if (newComplianceKindCS != complianceKindCS) {
 			NotificationChain msgs = null;
 			if (complianceKindCS != null)
-				msgs = ((InternalEObject)complianceKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)complianceKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, null, msgs);
 			if (newComplianceKindCS != null)
-				msgs = ((InternalEObject)newComplianceKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)newComplianceKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, null, msgs);
 			msgs = basicSetComplianceKindCS(newComplianceKindCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, newComplianceKindCS, newComplianceKindCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS, newComplianceKindCS, newComplianceKindCS));
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class ModelTypeCSImpl
 	 */
 	public EList<PackageRefCS> getPackageRefs() {
 		if (packageRefs == null) {
-			packageRefs = new EObjectContainmentEList<PackageRefCS>(PackageRefCS.class, this, QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS);
+			packageRefs = new EObjectContainmentEList<PackageRefCS>(PackageRefCS.class, this, QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS);
 		}
 		return packageRefs;
 	}
@@ -265,7 +265,7 @@ public class ModelTypeCSImpl
 	 */
 	public EList<ExpCS> getWhereStatements() {
 		if (whereStatements == null) {
-			whereStatements = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS);
+			whereStatements = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS);
 		}
 		return whereStatements;
 	}
@@ -298,11 +298,11 @@ public class ModelTypeCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
 				return basicSetComplianceKindCS(null, msgs);
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS:
 				return ((InternalEList<?>)getPackageRefs()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				return ((InternalEList<?>)getWhereStatements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -315,17 +315,17 @@ public class ModelTypeCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
 				return getBodyStartLocation();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
 				return getBodyEndLocation();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				return getIdentifierCS();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
 				return getComplianceKindCS();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS:
 				return getPackageRefs();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				return getWhereStatements();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -339,23 +339,23 @@ public class ModelTypeCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
 				setBodyStartLocation((Integer)newValue);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
 				setBodyEndLocation((Integer)newValue);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				setIdentifierCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
 				setComplianceKindCS((StringLiteralExpCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS:
 				getPackageRefs().clear();
 				getPackageRefs().addAll((Collection<? extends PackageRefCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				getWhereStatements().clear();
 				getWhereStatements().addAll((Collection<? extends ExpCS>)newValue);
 				return;
@@ -370,22 +370,22 @@ public class ModelTypeCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
 				setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
 				setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				setIdentifierCS(IDENTIFIER_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
 				setComplianceKindCS((StringLiteralExpCS)null);
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS:
 				getPackageRefs().clear();
 				return;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				getWhereStatements().clear();
 				return;
 		}
@@ -399,17 +399,17 @@ public class ModelTypeCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION:
 				return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION:
 				return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__IDENTIFIER_CS:
 				return IDENTIFIER_CS_EDEFAULT == null ? identifierCS != null : !IDENTIFIER_CS_EDEFAULT.equals(identifierCS);
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__COMPLIANCE_KIND_CS:
 				return complianceKindCS != null;
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__PACKAGE_REFS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__PACKAGE_REFS:
 				return packageRefs != null && !packageRefs.isEmpty();
-			case QvtoperationalcsPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
+			case QVTOperationalCSPackage.MODEL_TYPE_CS__WHERE_STATEMENTS:
 				return whereStatements != null && !whereStatements.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -423,8 +423,8 @@ public class ModelTypeCSImpl
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (derivedFeatureID) {
-				case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION: return QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
-				case QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION: return QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
+				case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION: return QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
+				case QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION: return QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}
@@ -439,8 +439,8 @@ public class ModelTypeCSImpl
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (baseFeatureID) {
-				case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_START_LOCATION;
-				case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return QvtoperationalcsPackage.MODEL_TYPE_CS__BODY_END_LOCATION;
+				case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_START_LOCATION;
+				case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return QVTOperationalCSPackage.MODEL_TYPE_CS__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}

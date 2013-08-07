@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -58,7 +58,7 @@ public class MappingCallExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_CALL_EXP_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_CALL_EXP_CS;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MappingCallExpCSImpl
 		boolean oldStrict = strict;
 		strict = newStrict;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_CALL_EXP_CS__STRICT, oldStrict, strict));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_CALL_EXP_CS__STRICT, oldStrict, strict));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class MappingCallExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_CALL_EXP_CS__STRICT:
+			case QVTOperationalCSPackage.MAPPING_CALL_EXP_CS__STRICT:
 				return isStrict();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -120,7 +120,7 @@ public class MappingCallExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_CALL_EXP_CS__STRICT:
+			case QVTOperationalCSPackage.MAPPING_CALL_EXP_CS__STRICT:
 				setStrict((Boolean)newValue);
 				return;
 		}
@@ -134,7 +134,7 @@ public class MappingCallExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_CALL_EXP_CS__STRICT:
+			case QVTOperationalCSPackage.MAPPING_CALL_EXP_CS__STRICT:
 				setStrict(STRICT_EDEFAULT);
 				return;
 		}
@@ -148,7 +148,7 @@ public class MappingCallExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_CALL_EXP_CS__STRICT:
+			case QVTOperationalCSPackage.MAPPING_CALL_EXP_CS__STRICT:
 				return strict != STRICT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

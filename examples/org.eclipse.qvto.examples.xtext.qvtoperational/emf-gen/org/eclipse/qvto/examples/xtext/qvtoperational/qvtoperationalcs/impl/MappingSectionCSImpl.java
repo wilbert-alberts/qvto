@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingRuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -111,7 +111,7 @@ public abstract class MappingSectionCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_SECTION_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_SECTION_CS;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public abstract class MappingSectionCSImpl
 		int oldBodyStartLocation = bodyStartLocation;
 		bodyStartLocation = newBodyStartLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION, oldBodyStartLocation, bodyStartLocation));
 	}
 
 	/**
@@ -149,7 +149,7 @@ public abstract class MappingSectionCSImpl
 		int oldBodyEndLocation = bodyEndLocation;
 		bodyEndLocation = newBodyEndLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION, oldBodyEndLocation, bodyEndLocation));
 	}
 
 	/**
@@ -158,7 +158,7 @@ public abstract class MappingSectionCSImpl
 	 */
 	public EList<ExpCS> getStatements() {
 		if (statements == null) {
-			statements = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS);
+			statements = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS);
 		}
 		return statements;
 	}
@@ -180,7 +180,7 @@ public abstract class MappingSectionCSImpl
 		MappingRuleCS oldMappingRuleCS = mappingRuleCS;
 		mappingRuleCS = newMappingRuleCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, oldMappingRuleCS, newMappingRuleCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, oldMappingRuleCS, newMappingRuleCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -194,14 +194,14 @@ public abstract class MappingSectionCSImpl
 		if (newMappingRuleCS != mappingRuleCS) {
 			NotificationChain msgs = null;
 			if (mappingRuleCS != null)
-				msgs = ((InternalEObject)mappingRuleCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, null, msgs);
+				msgs = ((InternalEObject)mappingRuleCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, null, msgs);
 			if (newMappingRuleCS != null)
-				msgs = ((InternalEObject)newMappingRuleCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, null, msgs);
+				msgs = ((InternalEObject)newMappingRuleCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, null, msgs);
 			msgs = basicSetMappingRuleCS(newMappingRuleCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, newMappingRuleCS, newMappingRuleCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS, newMappingRuleCS, newMappingRuleCS));
 	}
 
 	/**
@@ -212,9 +212,9 @@ public abstract class MappingSectionCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS:
 				return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				return basicSetMappingRuleCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -227,13 +227,13 @@ public abstract class MappingSectionCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
 				return getBodyStartLocation();
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
 				return getBodyEndLocation();
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS:
 				return getStatements();
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				return getMappingRuleCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -247,17 +247,17 @@ public abstract class MappingSectionCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
 				setBodyStartLocation((Integer)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
 				setBodyEndLocation((Integer)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS:
 				getStatements().clear();
 				getStatements().addAll((Collection<? extends ExpCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				setMappingRuleCS((MappingRuleCS)newValue);
 				return;
 		}
@@ -271,16 +271,16 @@ public abstract class MappingSectionCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
 				setBodyStartLocation(BODY_START_LOCATION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
 				setBodyEndLocation(BODY_END_LOCATION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS:
 				getStatements().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				setMappingRuleCS((MappingRuleCS)null);
 				return;
 		}
@@ -294,13 +294,13 @@ public abstract class MappingSectionCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION:
 				return bodyStartLocation != BODY_START_LOCATION_EDEFAULT;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION:
 				return bodyEndLocation != BODY_END_LOCATION_EDEFAULT;
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__STATEMENTS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__STATEMENTS:
 				return statements != null && !statements.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTION_CS__MAPPING_RULE_CS:
 				return mappingRuleCS != null;
 		}
 		return super.eIsSet(featureID);
@@ -314,8 +314,8 @@ public abstract class MappingSectionCSImpl
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (derivedFeatureID) {
-				case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION: return QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
-				case QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION: return QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
+				case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION: return QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION;
+				case QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION: return QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}
@@ -330,8 +330,8 @@ public abstract class MappingSectionCSImpl
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == ElementWithBody.class) {
 			switch (baseFeatureID) {
-				case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_START_LOCATION;
-				case QvtoperationalcsPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return QvtoperationalcsPackage.MAPPING_SECTION_CS__BODY_END_LOCATION;
+				case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_START_LOCATION: return QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_START_LOCATION;
+				case QVTOperationalCSPackage.ELEMENT_WITH_BODY__BODY_END_LOCATION: return QVTOperationalCSPackage.MAPPING_SECTION_CS__BODY_END_LOCATION;
 				default: return -1;
 			}
 		}

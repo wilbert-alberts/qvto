@@ -5,7 +5,7 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ForExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -34,7 +34,7 @@ public class ForExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.FOR_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.FOR_EXP_CS;
 	}
 
 	/**

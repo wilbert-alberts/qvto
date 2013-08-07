@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getContextualPropertyCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getContextualPropertyCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface ContextualPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scoped Name CS</em>' containment reference.
 	 * @see #setScopedNameCS(ScopedNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getContextualPropertyCS_ScopedNameCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getContextualPropertyCS_ScopedNameCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public interface ContextualPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getContextualPropertyCS_TypeCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getContextualPropertyCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -87,7 +87,7 @@ public interface ContextualPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
 	 * @see #setOclExpressionCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getContextualPropertyCS_OclExpressionCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getContextualPropertyCS_OclExpressionCS()
 	 * @model containment="true"
 	 * @generated
 	 */

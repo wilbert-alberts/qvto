@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getSwitchExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getSwitchExpCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface SwitchExpCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Alternative Part</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getSwitchExpCS_AlternativePart()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getSwitchExpCS_AlternativePart()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -50,7 +50,7 @@ public interface SwitchExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Else Part</em>' containment reference.
 	 * @see #setElsePart(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getSwitchExpCS_ElsePart()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getSwitchExpCS_ElsePart()
 	 * @model containment="true"
 	 * @generated
 	 */

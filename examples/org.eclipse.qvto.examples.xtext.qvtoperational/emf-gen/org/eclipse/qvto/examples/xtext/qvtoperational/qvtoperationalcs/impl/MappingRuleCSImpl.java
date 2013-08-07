@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingRuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionsCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -63,7 +63,7 @@ public class MappingRuleCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_RULE_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_RULE_CS;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class MappingRuleCSImpl
 		ExpCS oldGuard = guard;
 		guard = newGuard;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD, oldGuard, newGuard);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD, oldGuard, newGuard);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -97,14 +97,14 @@ public class MappingRuleCSImpl
 		if (newGuard != guard) {
 			NotificationChain msgs = null;
 			if (guard != null)
-				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD, null, msgs);
+				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD, null, msgs);
 			if (newGuard != null)
-				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD, null, msgs);
+				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD, null, msgs);
 			msgs = basicSetGuard(newGuard, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD, newGuard, newGuard));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD, newGuard, newGuard));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class MappingRuleCSImpl
 		MappingSectionsCS oldMappingBody = mappingBody;
 		mappingBody = newMappingBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY, oldMappingBody, newMappingBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY, oldMappingBody, newMappingBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -138,14 +138,14 @@ public class MappingRuleCSImpl
 		if (newMappingBody != mappingBody) {
 			NotificationChain msgs = null;
 			if (mappingBody != null)
-				msgs = ((InternalEObject)mappingBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
+				msgs = ((InternalEObject)mappingBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
 			if (newMappingBody != null)
-				msgs = ((InternalEObject)newMappingBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
+				msgs = ((InternalEObject)newMappingBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY, null, msgs);
 			msgs = basicSetMappingBody(newMappingBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY, newMappingBody, newMappingBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY, newMappingBody, newMappingBody));
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class MappingRuleCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD:
 				return basicSetGuard(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return basicSetMappingBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,9 +191,9 @@ public class MappingRuleCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD:
 				return getGuard();
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return getMappingBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,10 +206,10 @@ public class MappingRuleCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD:
 				setGuard((ExpCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				setMappingBody((MappingSectionsCS)newValue);
 				return;
 		}
@@ -223,10 +223,10 @@ public class MappingRuleCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD:
 				setGuard((ExpCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				setMappingBody((MappingSectionsCS)null);
 				return;
 		}
@@ -240,9 +240,9 @@ public class MappingRuleCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__GUARD:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__GUARD:
 				return guard != null;
-			case QvtoperationalcsPackage.MAPPING_RULE_CS__MAPPING_BODY:
+			case QVTOperationalCSPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return mappingBody != null;
 		}
 		return super.eIsSet(featureID);

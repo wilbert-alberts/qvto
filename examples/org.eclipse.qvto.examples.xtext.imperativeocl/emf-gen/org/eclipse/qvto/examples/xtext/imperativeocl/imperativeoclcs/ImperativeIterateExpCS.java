@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getImperativeIterateExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getImperativeIterateExpCS()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface ImperativeIterateExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' containment reference.
 	 * @see #setTarget(VariableCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getImperativeIterateExpCS_Target()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getImperativeIterateExpCS_Target()
 	 * @model containment="true"
 	 * @generated
 	 */

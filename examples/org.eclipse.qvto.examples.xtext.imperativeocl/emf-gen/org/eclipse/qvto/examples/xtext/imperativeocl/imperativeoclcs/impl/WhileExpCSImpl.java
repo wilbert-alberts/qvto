@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.WhileExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -63,7 +63,7 @@ public class WhileExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.WHILE_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.WHILE_EXP_CS;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class WhileExpCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -97,14 +97,14 @@ public class WhileExpCSImpl
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class WhileExpCSImpl
 		VariableCS oldResultVar = resultVar;
 		resultVar = newResultVar;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR, oldResultVar, newResultVar);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR, oldResultVar, newResultVar);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -138,14 +138,14 @@ public class WhileExpCSImpl
 		if (newResultVar != resultVar) {
 			NotificationChain msgs = null;
 			if (resultVar != null)
-				msgs = ((InternalEObject)resultVar).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR, null, msgs);
+				msgs = ((InternalEObject)resultVar).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR, null, msgs);
 			if (newResultVar != null)
-				msgs = ((InternalEObject)newResultVar).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR, null, msgs);
+				msgs = ((InternalEObject)newResultVar).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR, null, msgs);
 			msgs = basicSetResultVar(newResultVar, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR, newResultVar, newResultVar));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR, newResultVar, newResultVar));
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class WhileExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION:
 				return basicSetCondition(null, msgs);
-			case ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR:
 				return basicSetResultVar(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,9 +191,9 @@ public class WhileExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION:
 				return getCondition();
-			case ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR:
 				return getResultVar();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,10 +206,10 @@ public class WhileExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR:
 				setResultVar((VariableCS)newValue);
 				return;
 		}
@@ -223,10 +223,10 @@ public class WhileExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR:
 				setResultVar((VariableCS)null);
 				return;
 		}
@@ -240,9 +240,9 @@ public class WhileExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.WHILE_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__CONDITION:
 				return condition != null;
-			case ImperativeoclcsPackage.WHILE_EXP_CS__RESULT_VAR:
+			case ImperativeOCLCSPackage.WHILE_EXP_CS__RESULT_VAR:
 				return resultVar != null;
 		}
 		return super.eIsSet(featureID);

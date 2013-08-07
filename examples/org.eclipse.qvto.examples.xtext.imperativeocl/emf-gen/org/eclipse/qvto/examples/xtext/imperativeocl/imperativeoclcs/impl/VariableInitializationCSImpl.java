@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.VariableInitializationCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -104,7 +104,7 @@ public class VariableInitializationCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.VARIABLE_INITIALIZATION_CS;
+		return ImperativeOCLCSPackage.Literals.VARIABLE_INITIALIZATION_CS;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class VariableInitializationCSImpl
 		ExpCS oldOclExpressionCS = oclExpressionCS;
 		oclExpressionCS = newOclExpressionCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -138,14 +138,14 @@ public class VariableInitializationCSImpl
 		if (newOclExpressionCS != oclExpressionCS) {
 			NotificationChain msgs = null;
 			if (oclExpressionCS != null)
-				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, null, msgs);
 			if (newOclExpressionCS != null)
-				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, null, msgs);
 			msgs = basicSetOclExpressionCS(newOclExpressionCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class VariableInitializationCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class VariableInitializationCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -198,14 +198,14 @@ public class VariableInitializationCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class VariableInitializationCSImpl
 		boolean oldWithResult = withResult;
 		withResult = newWithResult;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT, oldWithResult, withResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT, oldWithResult, withResult));
 	}
 
 	/**
@@ -255,9 +255,9 @@ public class VariableInitializationCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
 				return basicSetOclExpressionCS(null, msgs);
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -270,13 +270,13 @@ public class VariableInitializationCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
 				return getOclExpressionCS();
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return getTypeCS();
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
 				return isWithResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -289,16 +289,16 @@ public class VariableInitializationCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
 				setWithResult((Boolean)newValue);
 				return;
 		}
@@ -312,16 +312,16 @@ public class VariableInitializationCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
 				setWithResult(WITH_RESULT_EDEFAULT);
 				return;
 		}
@@ -335,13 +335,13 @@ public class VariableInitializationCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__OCL_EXPRESSION_CS:
 				return oclExpressionCS != null;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__TYPE_CS:
 				return typeCS != null;
-			case ImperativeoclcsPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
+			case ImperativeOCLCSPackage.VARIABLE_INITIALIZATION_CS__WITH_RESULT:
 				return withResult != WITH_RESULT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

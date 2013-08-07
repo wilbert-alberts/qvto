@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getInstantiationExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getInstantiationExpCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface InstantiationExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
 	 * @see #setTypeSpecCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getInstantiationExpCS_TypeSpecCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getInstantiationExpCS_TypeSpecCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public interface InstantiationExpCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Arguments</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getInstantiationExpCS_Arguments()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getInstantiationExpCS_Arguments()
 	 * @model containment="true"
 	 * @generated
 	 */

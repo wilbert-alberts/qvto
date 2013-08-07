@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionKindCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ScopedNameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -80,7 +80,7 @@ public class MappingExtensionCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_EXTENSION_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_EXTENSION_CS;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class MappingExtensionCSImpl
 		MappingExtensionKindCS oldKind = kind;
 		kind = newKind == null ? KIND_EDEFAULT : newKind;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_EXTENSION_CS__KIND, oldKind, kind));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_EXTENSION_CS__KIND, oldKind, kind));
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class MappingExtensionCSImpl
 	 */
 	public EList<ScopedNameCS> getMappingIdentifiers() {
 		if (mappingIdentifiers == null) {
-			mappingIdentifiers = new EObjectContainmentEList<ScopedNameCS>(ScopedNameCS.class, this, QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
+			mappingIdentifiers = new EObjectContainmentEList<ScopedNameCS>(ScopedNameCS.class, this, QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS);
 		}
 		return mappingIdentifiers;
 	}
@@ -141,7 +141,7 @@ public class MappingExtensionCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
 				return ((InternalEList<?>)getMappingIdentifiers()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -154,9 +154,9 @@ public class MappingExtensionCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__KIND:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__KIND:
 				return getKind();
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
 				return getMappingIdentifiers();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -170,10 +170,10 @@ public class MappingExtensionCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__KIND:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__KIND:
 				setKind((MappingExtensionKindCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
 				getMappingIdentifiers().clear();
 				getMappingIdentifiers().addAll((Collection<? extends ScopedNameCS>)newValue);
 				return;
@@ -188,10 +188,10 @@ public class MappingExtensionCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__KIND:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
 				getMappingIdentifiers().clear();
 				return;
 		}
@@ -205,9 +205,9 @@ public class MappingExtensionCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__KIND:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__KIND:
 				return kind != KIND_EDEFAULT;
-			case QvtoperationalcsPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
+			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS:
 				return mappingIdentifiers != null && !mappingIdentifiers.isEmpty();
 		}
 		return super.eIsSet(featureID);

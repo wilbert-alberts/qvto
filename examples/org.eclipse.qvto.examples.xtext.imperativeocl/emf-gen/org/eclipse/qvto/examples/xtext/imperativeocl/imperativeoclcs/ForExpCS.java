@@ -7,7 +7,7 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
  * <em><b>For Exp CS</b></em>'. <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getForExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getForExpCS()
  * @model
  * @generated
  */

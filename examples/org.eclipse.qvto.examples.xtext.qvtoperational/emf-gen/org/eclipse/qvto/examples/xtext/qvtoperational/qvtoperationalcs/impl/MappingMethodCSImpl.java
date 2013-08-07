@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -72,7 +72,7 @@ public abstract class MappingMethodCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_METHOD_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_METHOD_CS;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public abstract class MappingMethodCSImpl
 		boolean oldBlackBox = blackBox;
 		blackBox = newBlackBox;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_METHOD_CS__BLACK_BOX, oldBlackBox, blackBox));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_METHOD_CS__BLACK_BOX, oldBlackBox, blackBox));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public abstract class MappingMethodCSImpl
 		MappingDeclarationCS oldMappingDeclarationCS = mappingDeclarationCS;
 		mappingDeclarationCS = newMappingDeclarationCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, oldMappingDeclarationCS, newMappingDeclarationCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, oldMappingDeclarationCS, newMappingDeclarationCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -126,14 +126,14 @@ public abstract class MappingMethodCSImpl
 		if (newMappingDeclarationCS != mappingDeclarationCS) {
 			NotificationChain msgs = null;
 			if (mappingDeclarationCS != null)
-				msgs = ((InternalEObject)mappingDeclarationCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, null, msgs);
+				msgs = ((InternalEObject)mappingDeclarationCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, null, msgs);
 			if (newMappingDeclarationCS != null)
-				msgs = ((InternalEObject)newMappingDeclarationCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, null, msgs);
+				msgs = ((InternalEObject)newMappingDeclarationCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, null, msgs);
 			msgs = basicSetMappingDeclarationCS(newMappingDeclarationCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, newMappingDeclarationCS, newMappingDeclarationCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, newMappingDeclarationCS, newMappingDeclarationCS));
 	}
 
 	/**
@@ -144,7 +144,7 @@ public abstract class MappingMethodCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return basicSetMappingDeclarationCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -157,9 +157,9 @@ public abstract class MappingMethodCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__BLACK_BOX:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__BLACK_BOX:
 				return isBlackBox();
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return getMappingDeclarationCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -172,10 +172,10 @@ public abstract class MappingMethodCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__BLACK_BOX:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__BLACK_BOX:
 				setBlackBox((Boolean)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				setMappingDeclarationCS((MappingDeclarationCS)newValue);
 				return;
 		}
@@ -189,10 +189,10 @@ public abstract class MappingMethodCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__BLACK_BOX:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__BLACK_BOX:
 				setBlackBox(BLACK_BOX_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				setMappingDeclarationCS((MappingDeclarationCS)null);
 				return;
 		}
@@ -206,9 +206,9 @@ public abstract class MappingMethodCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__BLACK_BOX:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__BLACK_BOX:
 				return blackBox != BLACK_BOX_EDEFAULT;
-			case QvtoperationalcsPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
+			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
 				return mappingDeclarationCS != null;
 		}
 		return super.eIsSet(featureID);

@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.TypedRefCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -63,7 +63,7 @@ public class DictTypeCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.DICT_TYPE_CS;
+		return ImperativeOCLCSPackage.Literals.DICT_TYPE_CS;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class DictTypeCSImpl
 		TypedRefCS oldKeyType = keyType;
 		keyType = newKeyType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, oldKeyType, newKeyType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE, oldKeyType, newKeyType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -97,14 +97,14 @@ public class DictTypeCSImpl
 		if (newKeyType != keyType) {
 			NotificationChain msgs = null;
 			if (keyType != null)
-				msgs = ((InternalEObject)keyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+				msgs = ((InternalEObject)keyType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
 			if (newKeyType != null)
-				msgs = ((InternalEObject)newKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
+				msgs = ((InternalEObject)newKeyType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE, null, msgs);
 			msgs = basicSetKeyType(newKeyType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE, newKeyType, newKeyType));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class DictTypeCSImpl
 		TypedRefCS oldValueType = valueType;
 		valueType = newValueType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, oldValueType, newValueType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE, oldValueType, newValueType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -138,14 +138,14 @@ public class DictTypeCSImpl
 		if (newValueType != valueType) {
 			NotificationChain msgs = null;
 			if (valueType != null)
-				msgs = ((InternalEObject)valueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+				msgs = ((InternalEObject)valueType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
 			if (newValueType != null)
-				msgs = ((InternalEObject)newValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
+				msgs = ((InternalEObject)newValueType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE, null, msgs);
 			msgs = basicSetValueType(newValueType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE, newValueType, newValueType));
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class DictTypeCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE:
 				return basicSetKeyType(null, msgs);
-			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE:
 				return basicSetValueType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,9 +191,9 @@ public class DictTypeCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE:
 				return getKeyType();
-			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE:
 				return getValueType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,10 +206,10 @@ public class DictTypeCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE:
 				setKeyType((TypedRefCS)newValue);
 				return;
-			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE:
 				setValueType((TypedRefCS)newValue);
 				return;
 		}
@@ -223,10 +223,10 @@ public class DictTypeCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE:
 				setKeyType((TypedRefCS)null);
 				return;
-			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE:
 				setValueType((TypedRefCS)null);
 				return;
 		}
@@ -240,9 +240,9 @@ public class DictTypeCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DICT_TYPE_CS__KEY_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__KEY_TYPE:
 				return keyType != null;
-			case ImperativeoclcsPackage.DICT_TYPE_CS__VALUE_TYPE:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS__VALUE_TYPE:
 				return valueType != null;
 		}
 		return super.eIsSet(featureID);

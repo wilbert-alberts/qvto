@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getExpressionStatementCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getExpressionStatementCS()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface ExpressionStatementCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
 	 * @see #setOclExpressionCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getExpressionStatementCS_OclExpressionCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getExpressionStatementCS_OclExpressionCS()
 	 * @model containment="true"
 	 * @generated
 	 */

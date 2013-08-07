@@ -16,7 +16,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionB
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getObjectExpCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getObjectExpCS()
  * @model
  * @generated
  */

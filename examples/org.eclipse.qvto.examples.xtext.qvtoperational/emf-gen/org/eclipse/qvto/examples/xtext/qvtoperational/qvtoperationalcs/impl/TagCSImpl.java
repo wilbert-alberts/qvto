@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.AnnotationCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -66,7 +66,7 @@ public class TagCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.TAG_CS;
+		return QVTOperationalCSPackage.Literals.TAG_CS;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class TagCSImpl
 		PathNameCS oldPathName = pathName;
 		pathName = newPathName;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TAG_CS__PATH_NAME, oldPathName, newPathName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TAG_CS__PATH_NAME, oldPathName, newPathName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -100,14 +100,14 @@ public class TagCSImpl
 		if (newPathName != pathName) {
 			NotificationChain msgs = null;
 			if (pathName != null)
-				msgs = ((InternalEObject)pathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TAG_CS__PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)pathName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TAG_CS__PATH_NAME, null, msgs);
 			if (newPathName != null)
-				msgs = ((InternalEObject)newPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TAG_CS__PATH_NAME, null, msgs);
+				msgs = ((InternalEObject)newPathName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TAG_CS__PATH_NAME, null, msgs);
 			msgs = basicSetPathName(newPathName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TAG_CS__PATH_NAME, newPathName, newPathName));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TAG_CS__PATH_NAME, newPathName, newPathName));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class TagCSImpl
 		ExpCS oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TAG_CS__EXPRESSION, oldExpression, newExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TAG_CS__EXPRESSION, oldExpression, newExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -141,14 +141,14 @@ public class TagCSImpl
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
-				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TAG_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TAG_CS__EXPRESSION, null, msgs);
 			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TAG_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TAG_CS__EXPRESSION, null, msgs);
 			msgs = basicSetExpression(newExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TAG_CS__EXPRESSION, newExpression, newExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TAG_CS__EXPRESSION, newExpression, newExpression));
 	}
 
 	/**
@@ -179,9 +179,9 @@ public class TagCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
+			case QVTOperationalCSPackage.TAG_CS__PATH_NAME:
 				return basicSetPathName(null, msgs);
-			case QvtoperationalcsPackage.TAG_CS__EXPRESSION:
+			case QVTOperationalCSPackage.TAG_CS__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -194,9 +194,9 @@ public class TagCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
+			case QVTOperationalCSPackage.TAG_CS__PATH_NAME:
 				return getPathName();
-			case QvtoperationalcsPackage.TAG_CS__EXPRESSION:
+			case QVTOperationalCSPackage.TAG_CS__EXPRESSION:
 				return getExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -210,10 +210,10 @@ public class TagCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
+			case QVTOperationalCSPackage.TAG_CS__PATH_NAME:
 				setPathName((PathNameCS)newValue);
 				return;
-			case QvtoperationalcsPackage.TAG_CS__EXPRESSION:
+			case QVTOperationalCSPackage.TAG_CS__EXPRESSION:
 				setExpression((ExpCS)newValue);
 				return;
 		}
@@ -227,10 +227,10 @@ public class TagCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
+			case QVTOperationalCSPackage.TAG_CS__PATH_NAME:
 				setPathName((PathNameCS)null);
 				return;
-			case QvtoperationalcsPackage.TAG_CS__EXPRESSION:
+			case QVTOperationalCSPackage.TAG_CS__EXPRESSION:
 				setExpression((ExpCS)null);
 				return;
 		}
@@ -244,9 +244,9 @@ public class TagCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TAG_CS__PATH_NAME:
+			case QVTOperationalCSPackage.TAG_CS__PATH_NAME:
 				return pathName != null;
-			case QvtoperationalcsPackage.TAG_CS__EXPRESSION:
+			case QVTOperationalCSPackage.TAG_CS__EXPRESSION:
 				return expression != null;
 		}
 		return super.eIsSet(featureID);

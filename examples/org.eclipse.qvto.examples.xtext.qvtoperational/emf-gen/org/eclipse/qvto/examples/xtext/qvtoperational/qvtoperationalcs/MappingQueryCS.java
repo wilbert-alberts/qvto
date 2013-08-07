@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingQueryCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingQueryCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface MappingQueryCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Expressions</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingQueryCS_Expressions()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingQueryCS_Expressions()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -50,7 +50,7 @@ public interface MappingQueryCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Simple Definition</em>' attribute.
 	 * @see #setIsSimpleDefinition(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingQueryCS_IsSimpleDefinition()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingQueryCS_IsSimpleDefinition()
 	 * @model
 	 * @generated
 	 */

@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getComputeExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getComputeExpCS()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface ComputeExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Returned Element</em>' containment reference.
 	 * @see #setReturnedElement(VariableCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getComputeExpCS_ReturnedElement()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getComputeExpCS_ReturnedElement()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */

@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -52,7 +52,7 @@ public class StereotypeQualifierCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.STEREOTYPE_QUALIFIER_CS;
+		return QVTOperationalCSPackage.Literals.STEREOTYPE_QUALIFIER_CS;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class StereotypeQualifierCSImpl
 	 */
 	public EList<String> getStereotype() {
 		if (stereotype == null) {
-			stereotype = new EDataTypeEList<String>(String.class, this, QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE);
+			stereotype = new EDataTypeEList<String>(String.class, this, QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE);
 		}
 		return stereotype;
 	}
@@ -94,7 +94,7 @@ public class StereotypeQualifierCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
+			case QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
 				return getStereotype();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -108,7 +108,7 @@ public class StereotypeQualifierCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
+			case QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
 				getStereotype().clear();
 				getStereotype().addAll((Collection<? extends String>)newValue);
 				return;
@@ -123,7 +123,7 @@ public class StereotypeQualifierCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
+			case QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
 				getStereotype().clear();
 				return;
 		}
@@ -137,7 +137,7 @@ public class StereotypeQualifierCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
+			case QVTOperationalCSPackage.STEREOTYPE_QUALIFIER_CS__STEREOTYPE:
 				return stereotype != null && !stereotype.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToClassCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToClassCS()
  * @model
  * @generated
  */
@@ -31,7 +31,7 @@ public interface QVToClassCS extends ClassCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Intermediate</em>' attribute.
 	 * @see #setIntermediate(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToClassCS_Intermediate()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToClassCS_Intermediate()
 	 * @model
 	 * @generated
 	 */

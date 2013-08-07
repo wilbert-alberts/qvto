@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getCompleteSignatureCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getCompleteSignatureCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface CompleteSignatureCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Simple Signature</em>' containment reference.
 	 * @see #setSimpleSignature(SimpleSignatureCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getCompleteSignatureCS_SimpleSignature()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getCompleteSignatureCS_SimpleSignature()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface CompleteSignatureCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result Params</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getCompleteSignatureCS_ResultParams()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getCompleteSignatureCS_ResultParams()
 	 * @model containment="true"
 	 * @generated
 	 */

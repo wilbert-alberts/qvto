@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getSimpleSignatureCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getSimpleSignatureCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface SimpleSignatureCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Params</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getSimpleSignatureCS_Params()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getSimpleSignatureCS_Params()
 	 * @model containment="true"
 	 * @generated
 	 */

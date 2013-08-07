@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionsCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionsCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface MappingSectionsCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Init CS</em>' containment reference.
 	 * @see #setMappingInitCS(MappingInitCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionsCS_MappingInitCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionsCS_MappingInitCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface MappingSectionsCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Body CS</em>' containment reference.
 	 * @see #setMappingBodyCS(MappingBodyCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionsCS_MappingBodyCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionsCS_MappingBodyCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -86,7 +86,7 @@ public interface MappingSectionsCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping End CS</em>' containment reference.
 	 * @see #setMappingEndCS(MappingEndCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionsCS_MappingEndCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionsCS_MappingEndCS()
 	 * @model containment="true"
 	 * @generated
 	 */

@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getExceptCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getExceptCS()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface ExceptCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Except</em>' reference list.
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getExceptCS_Except()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getExceptCS_Except()
 	 * @model
 	 * @generated
 	 */
@@ -52,7 +52,7 @@ public interface ExceptCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Body</em>' containment reference.
 	 * @see #setBody(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getExceptCS_Body()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getExceptCS_Body()
 	 * @model containment="true"
 	 * @generated
 	 */

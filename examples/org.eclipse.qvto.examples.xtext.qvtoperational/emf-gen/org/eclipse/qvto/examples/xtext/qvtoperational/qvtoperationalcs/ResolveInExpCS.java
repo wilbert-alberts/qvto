@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveInExpCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveInExpCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface ResolveInExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>In Mapping Type</em>' containment reference.
 	 * @see #setInMappingType(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveInExpCS_InMappingType()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveInExpCS_InMappingType()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -59,7 +59,7 @@ public interface ResolveInExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>In Mapping Name</em>' attribute.
 	 * @see #setInMappingName(String)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveInExpCS_InMappingName()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveInExpCS_InMappingName()
 	 * @model required="true"
 	 * @generated
 	 */

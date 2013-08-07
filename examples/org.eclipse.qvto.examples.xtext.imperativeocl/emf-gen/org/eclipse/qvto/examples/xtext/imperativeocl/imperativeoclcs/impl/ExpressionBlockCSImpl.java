@@ -14,7 +14,7 @@ import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionBlockCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -56,7 +56,7 @@ public class ExpressionBlockCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.EXPRESSION_BLOCK_CS;
+		return ImperativeOCLCSPackage.Literals.EXPRESSION_BLOCK_CS;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class ExpressionBlockCSImpl
 	 */
 	public EList<ExpCS> getBody() {
 		if (body == null) {
-			body = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY);
+			body = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY);
 		}
 		return body;
 	}
@@ -98,7 +98,7 @@ public class ExpressionBlockCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY:
+			case ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY:
 				return ((InternalEList<?>)getBody()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -111,7 +111,7 @@ public class ExpressionBlockCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY:
+			case ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -125,7 +125,7 @@ public class ExpressionBlockCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY:
+			case ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY:
 				getBody().clear();
 				getBody().addAll((Collection<? extends ExpCS>)newValue);
 				return;
@@ -140,7 +140,7 @@ public class ExpressionBlockCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY:
+			case ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY:
 				getBody().clear();
 				return;
 		}
@@ -154,7 +154,7 @@ public class ExpressionBlockCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXPRESSION_BLOCK_CS__BODY:
+			case ImperativeOCLCSPackage.EXPRESSION_BLOCK_CS__BODY:
 				return body != null && !body.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getLocalPropertyCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getLocalPropertyCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface LocalPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getLocalPropertyCS_TypeCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getLocalPropertyCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface LocalPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
 	 * @see #setOclExpressionCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getLocalPropertyCS_OclExpressionCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getLocalPropertyCS_OclExpressionCS()
 	 * @model containment="true"
 	 * @generated
 	 */

@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DoExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -52,7 +52,7 @@ public class DoExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.DO_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.DO_EXP_CS;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class DoExpCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DO_EXP_CS__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DO_EXP_CS__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -86,14 +86,14 @@ public class DoExpCSImpl
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DO_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DO_EXP_CS__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.DO_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.DO_EXP_CS__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.DO_EXP_CS__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.DO_EXP_CS__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class DoExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DO_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.DO_EXP_CS__CONDITION:
 				return basicSetCondition(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -137,7 +137,7 @@ public class DoExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DO_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.DO_EXP_CS__CONDITION:
 				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -150,7 +150,7 @@ public class DoExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DO_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.DO_EXP_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
 		}
@@ -164,7 +164,7 @@ public class DoExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DO_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.DO_EXP_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
 		}
@@ -178,7 +178,7 @@ public class DoExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.DO_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.DO_EXP_CS__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

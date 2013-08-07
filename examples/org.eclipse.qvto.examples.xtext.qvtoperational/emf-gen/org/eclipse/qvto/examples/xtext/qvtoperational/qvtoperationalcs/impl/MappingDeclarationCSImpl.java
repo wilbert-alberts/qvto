@@ -20,8 +20,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Direction
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QualifierKindCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -156,7 +156,7 @@ public class MappingDeclarationCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_DECLARATION_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_DECLARATION_CS;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class MappingDeclarationCSImpl
 	 */
 	public EList<QualifierKindCS> getQualifiers() {
 		if (qualifiers == null) {
-			qualifiers = new EDataTypeEList<QualifierKindCS>(QualifierKindCS.class, this, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__QUALIFIERS);
+			qualifiers = new EDataTypeEList<QualifierKindCS>(QualifierKindCS.class, this, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__QUALIFIERS);
 		}
 		return qualifiers;
 	}
@@ -186,7 +186,7 @@ public class MappingDeclarationCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class MappingDeclarationCSImpl
 		TypeCS oldContextType = contextType;
 		contextType = newContextType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, oldContextType, newContextType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, oldContextType, newContextType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -220,14 +220,14 @@ public class MappingDeclarationCSImpl
 		if (newContextType != contextType) {
 			NotificationChain msgs = null;
 			if (contextType != null)
-				msgs = ((InternalEObject)contextType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, null, msgs);
+				msgs = ((InternalEObject)contextType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, null, msgs);
 			if (newContextType != null)
-				msgs = ((InternalEObject)newContextType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, null, msgs);
+				msgs = ((InternalEObject)newContextType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, null, msgs);
 			msgs = basicSetContextType(newContextType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, newContextType, newContextType));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE, newContextType, newContextType));
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class MappingDeclarationCSImpl
 	 */
 	public EList<ParameterDeclarationCS> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS);
+			parameters = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS);
 		}
 		return parameters;
 	}
@@ -247,7 +247,7 @@ public class MappingDeclarationCSImpl
 	 */
 	public EList<ParameterDeclarationCS> getResult() {
 		if (result == null) {
-			result = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT);
+			result = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT);
 		}
 		return result;
 	}
@@ -269,7 +269,7 @@ public class MappingDeclarationCSImpl
 		DirectionKindCS oldDirectionKindCS = directionKindCS;
 		directionKindCS = newDirectionKindCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, oldDirectionKindCS, newDirectionKindCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, oldDirectionKindCS, newDirectionKindCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -283,14 +283,14 @@ public class MappingDeclarationCSImpl
 		if (newDirectionKindCS != directionKindCS) {
 			NotificationChain msgs = null;
 			if (directionKindCS != null)
-				msgs = ((InternalEObject)directionKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)directionKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, null, msgs);
 			if (newDirectionKindCS != null)
-				msgs = ((InternalEObject)newDirectionKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)newDirectionKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, null, msgs);
 			msgs = basicSetDirectionKindCS(newDirectionKindCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, newDirectionKindCS, newDirectionKindCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS, newDirectionKindCS, newDirectionKindCS));
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class MappingDeclarationCSImpl
 	 */
 	public EList<MappingExtensionCS> getMappingExtension() {
 		if (mappingExtension == null) {
-			mappingExtension = new EObjectContainmentEList<MappingExtensionCS>(MappingExtensionCS.class, this, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION);
+			mappingExtension = new EObjectContainmentEList<MappingExtensionCS>(MappingExtensionCS.class, this, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION);
 		}
 		return mappingExtension;
 	}
@@ -320,7 +320,7 @@ public class MappingDeclarationCSImpl
 		boolean oldIsQuery = isQuery;
 		isQuery = newIsQuery;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_DECLARATION_CS__IS_QUERY, oldIsQuery, isQuery));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_DECLARATION_CS__IS_QUERY, oldIsQuery, isQuery));
 	}
 
 	/**
@@ -351,15 +351,15 @@ public class MappingDeclarationCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return basicSetContextType(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT:
 				return ((InternalEList<?>)getResult()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				return basicSetDirectionKindCS(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return ((InternalEList<?>)getMappingExtension()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -372,21 +372,21 @@ public class MappingDeclarationCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
 				return getQualifiers();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return getContextType();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return getParameters();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT:
 				return getResult();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				return getDirectionKindCS();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return getMappingExtension();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__IS_QUERY:
 				return isIsQuery();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -400,32 +400,32 @@ public class MappingDeclarationCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends QualifierKindCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT:
 				getResult().clear();
 				getResult().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				setDirectionKindCS((DirectionKindCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				getMappingExtension().clear();
 				getMappingExtension().addAll((Collection<? extends MappingExtensionCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__IS_QUERY:
 				setIsQuery((Boolean)newValue);
 				return;
 		}
@@ -439,28 +439,28 @@ public class MappingDeclarationCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
 				getQualifiers().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				getParameters().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT:
 				getResult().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				setDirectionKindCS((DirectionKindCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				getMappingExtension().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__IS_QUERY:
 				setIsQuery(IS_QUERY_EDEFAULT);
 				return;
 		}
@@ -474,21 +474,21 @@ public class MappingDeclarationCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__QUALIFIERS:
 				return qualifiers != null && !qualifiers.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__CONTEXT_TYPE:
 				return contextType != null;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__PARAMETERS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__RESULT:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__RESULT:
 				return result != null && !result.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__DIRECTION_KIND_CS:
 				return directionKindCS != null;
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__MAPPING_EXTENSION:
 				return mappingExtension != null && !mappingExtension.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_DECLARATION_CS__IS_QUERY:
+			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS__IS_QUERY:
 				return isQuery != IS_QUERY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

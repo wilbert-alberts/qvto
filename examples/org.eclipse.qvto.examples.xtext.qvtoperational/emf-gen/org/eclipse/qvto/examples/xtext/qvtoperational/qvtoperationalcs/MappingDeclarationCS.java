@@ -24,7 +24,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS()
  * @model
  * @generated
  */
@@ -43,7 +43,7 @@ public interface MappingDeclarationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Qualifiers</em>' attribute list.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QualifierKindCS
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_Qualifiers()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_Qualifiers()
 	 * @model unique="false"
 	 * @generated
 	 */
@@ -86,7 +86,7 @@ public interface MappingDeclarationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Context Type</em>' containment reference.
 	 * @see #setContextType(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_ContextType()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_ContextType()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -112,7 +112,7 @@ public interface MappingDeclarationCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_Parameters()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_Parameters()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -128,7 +128,7 @@ public interface MappingDeclarationCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_Result()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_Result()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -144,7 +144,7 @@ public interface MappingDeclarationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Direction Kind CS</em>' containment reference.
 	 * @see #setDirectionKindCS(DirectionKindCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_DirectionKindCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_DirectionKindCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -170,7 +170,7 @@ public interface MappingDeclarationCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Extension</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingDeclarationCS_MappingExtension()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingDeclarationCS_MappingExtension()
 	 * @model containment="true"
 	 * @generated
 	 */

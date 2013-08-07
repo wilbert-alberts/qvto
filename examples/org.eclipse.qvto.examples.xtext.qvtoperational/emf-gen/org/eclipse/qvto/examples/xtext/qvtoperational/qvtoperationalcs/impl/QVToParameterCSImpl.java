@@ -11,8 +11,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ParameterCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -76,7 +76,7 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.QV_TO_PARAMETER_CS;
+		return QVTOperationalCSPackage.Literals.QV_TO_PARAMETER_CS;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 		ParamDirection oldDirection = direction;
 		direction = newDirection == null ? DIRECTION_EDEFAULT : newDirection;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_PARAMETER_CS__DIRECTION, oldDirection, direction));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_PARAMETER_CS__DIRECTION, oldDirection, direction));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 		ElementCS oldInitPart = initPart;
 		initPart = newInitPart;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART, oldInitPart, newInitPart);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART, oldInitPart, newInitPart);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -133,14 +133,14 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 		if (newInitPart != initPart) {
 			NotificationChain msgs = null;
 			if (initPart != null)
-				msgs = ((InternalEObject)initPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART, null, msgs);
+				msgs = ((InternalEObject)initPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART, null, msgs);
 			if (newInitPart != null)
-				msgs = ((InternalEObject)newInitPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART, null, msgs);
+				msgs = ((InternalEObject)newInitPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART, null, msgs);
 			msgs = basicSetInitPart(newInitPart, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART, newInitPart, newInitPart));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART, newInitPart, newInitPart));
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART:
 				return basicSetInitPart(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -194,9 +194,9 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__DIRECTION:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__DIRECTION:
 				return getDirection();
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART:
 				return getInitPart();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -210,10 +210,10 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__DIRECTION:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__DIRECTION:
 				setDirection((ParamDirection)newValue);
 				return;
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART:
 				setInitPart((ElementCS)newValue);
 				return;
 		}
@@ -228,10 +228,10 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__DIRECTION:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__DIRECTION:
 				setDirection(DIRECTION_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART:
 				setInitPart((ElementCS)null);
 				return;
 		}
@@ -246,9 +246,9 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__DIRECTION:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__DIRECTION:
 				return direction != DIRECTION_EDEFAULT;
-			case QvtoperationalcsPackage.QV_TO_PARAMETER_CS__INIT_PART:
+			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS__INIT_PART:
 				return initPart != null;
 		}
 		return super.eIsSet(featureID);

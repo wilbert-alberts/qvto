@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -56,7 +56,7 @@ public class SimpleSignatureCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.SIMPLE_SIGNATURE_CS;
+		return QVTOperationalCSPackage.Literals.SIMPLE_SIGNATURE_CS;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class SimpleSignatureCSImpl
 	 */
 	public EList<ParameterDeclarationCS> getParams() {
 		if (params == null) {
-			params = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS);
+			params = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS);
 		}
 		return params;
 	}
@@ -98,7 +98,7 @@ public class SimpleSignatureCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
 				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -111,7 +111,7 @@ public class SimpleSignatureCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
 				return getParams();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -125,7 +125,7 @@ public class SimpleSignatureCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
 				getParams().clear();
 				getParams().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
@@ -140,7 +140,7 @@ public class SimpleSignatureCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
 				getParams().clear();
 				return;
 		}
@@ -154,7 +154,7 @@ public class SimpleSignatureCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SIMPLE_SIGNATURE_CS__PARAMS:
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
 				return params != null && !params.isEmpty();
 		}
 		return super.eIsSet(featureID);

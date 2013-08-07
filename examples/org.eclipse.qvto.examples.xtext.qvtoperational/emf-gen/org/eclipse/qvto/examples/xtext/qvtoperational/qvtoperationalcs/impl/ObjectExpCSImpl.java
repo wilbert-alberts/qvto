@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ExpressionBlockCSImpl;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -81,7 +81,7 @@ public class ObjectExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.OBJECT_EXP_CS;
+		return QVTOperationalCSPackage.Literals.OBJECT_EXP_CS;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class ObjectExpCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class ObjectExpCSImpl
 		boolean oldIsImplicit = isImplicit;
 		isImplicit = newIsImplicit;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OBJECT_EXP_CS__IS_IMPLICIT, oldIsImplicit, isImplicit));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OBJECT_EXP_CS__IS_IMPLICIT, oldIsImplicit, isImplicit));
 	}
 
 	/**
@@ -149,9 +149,9 @@ public class ObjectExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__IS_IMPLICIT:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				return isIsImplicit();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -164,10 +164,10 @@ public class ObjectExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__IS_IMPLICIT:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				setIsImplicit((Boolean)newValue);
 				return;
 		}
@@ -181,10 +181,10 @@ public class ObjectExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__IS_IMPLICIT:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				setIsImplicit(IS_IMPLICIT_EDEFAULT);
 				return;
 		}
@@ -198,9 +198,9 @@ public class ObjectExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case QvtoperationalcsPackage.OBJECT_EXP_CS__IS_IMPLICIT:
+			case QVTOperationalCSPackage.OBJECT_EXP_CS__IS_IMPLICIT:
 				return isImplicit != IS_IMPLICIT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

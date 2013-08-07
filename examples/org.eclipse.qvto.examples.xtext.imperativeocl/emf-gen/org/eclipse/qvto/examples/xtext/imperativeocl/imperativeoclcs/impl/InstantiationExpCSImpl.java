@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.InstantiationExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -68,7 +68,7 @@ public class InstantiationExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.INSTANTIATION_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.INSTANTIATION_EXP_CS;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class InstantiationExpCSImpl
 		TypeCS oldTypeSpecCS = typeSpecCS;
 		typeSpecCS = newTypeSpecCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -102,14 +102,14 @@ public class InstantiationExpCSImpl
 		if (newTypeSpecCS != typeSpecCS) {
 			NotificationChain msgs = null;
 			if (typeSpecCS != null)
-				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, null, msgs);
+				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, null, msgs);
 			if (newTypeSpecCS != null)
-				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, null, msgs);
 			msgs = basicSetTypeSpecCS(newTypeSpecCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class InstantiationExpCSImpl
 	 */
 	public EList<ExpCS> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS);
+			arguments = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS);
 		}
 		return arguments;
 	}
@@ -151,9 +151,9 @@ public class InstantiationExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
 				return basicSetTypeSpecCS(null, msgs);
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
 				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -166,9 +166,9 @@ public class InstantiationExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
 				return getTypeSpecCS();
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
 				return getArguments();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -182,10 +182,10 @@ public class InstantiationExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
 				setTypeSpecCS((TypeCS)newValue);
 				return;
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends ExpCS>)newValue);
 				return;
@@ -200,10 +200,10 @@ public class InstantiationExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
 				setTypeSpecCS((TypeCS)null);
 				return;
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
 				getArguments().clear();
 				return;
 		}
@@ -217,9 +217,9 @@ public class InstantiationExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__TYPE_SPEC_CS:
 				return typeSpecCS != null;
-			case ImperativeoclcsPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
+			case ImperativeOCLCSPackage.INSTANTIATION_EXP_CS__ARGUMENTS:
 				return arguments != null && !arguments.isEmpty();
 		}
 		return super.eIsSet(featureID);

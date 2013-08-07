@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ComputeExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -53,7 +53,7 @@ public class ComputeExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.COMPUTE_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.COMPUTE_EXP_CS;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ComputeExpCSImpl
 		VariableCS oldReturnedElement = returnedElement;
 		returnedElement = newReturnedElement;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, oldReturnedElement, newReturnedElement);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, oldReturnedElement, newReturnedElement);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -87,14 +87,14 @@ public class ComputeExpCSImpl
 		if (newReturnedElement != returnedElement) {
 			NotificationChain msgs = null;
 			if (returnedElement != null)
-				msgs = ((InternalEObject)returnedElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, null, msgs);
+				msgs = ((InternalEObject)returnedElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, null, msgs);
 			if (newReturnedElement != null)
-				msgs = ((InternalEObject)newReturnedElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, null, msgs);
+				msgs = ((InternalEObject)newReturnedElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, null, msgs);
 			msgs = basicSetReturnedElement(newReturnedElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, newReturnedElement, newReturnedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT, newReturnedElement, newReturnedElement));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ComputeExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
+			case ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
 				return basicSetReturnedElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,7 +138,7 @@ public class ComputeExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
+			case ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
 				return getReturnedElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -151,7 +151,7 @@ public class ComputeExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
+			case ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
 				setReturnedElement((VariableCS)newValue);
 				return;
 		}
@@ -165,7 +165,7 @@ public class ComputeExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
+			case ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
 				setReturnedElement((VariableCS)null);
 				return;
 		}
@@ -179,7 +179,7 @@ public class ComputeExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
+			case ImperativeOCLCSPackage.COMPUTE_EXP_CS__RETURNED_ELEMENT:
 				return returnedElement != null;
 		}
 		return super.eIsSet(featureID);

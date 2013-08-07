@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -74,7 +74,7 @@ public class TypeSpecCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.TYPE_SPEC_CS;
+		return QVTOperationalCSPackage.Literals.TYPE_SPEC_CS;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TypeSpecCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +108,14 @@ public class TypeSpecCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class TypeSpecCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class TypeSpecCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -178,9 +178,9 @@ public class TypeSpecCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
 				return getTypeCS();
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public class TypeSpecCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
 		}
@@ -210,10 +210,10 @@ public class TypeSpecCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
 		}
@@ -227,9 +227,9 @@ public class TypeSpecCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__TYPE_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
 				return typeCS != null;
-			case QvtoperationalcsPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
 		}
 		return super.eIsSet(featureID);

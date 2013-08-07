@@ -7,7 +7,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * <em><b>Mapping End CS</b></em>'. <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingEndCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingEndCS()
  * @model
  * @generated
  */

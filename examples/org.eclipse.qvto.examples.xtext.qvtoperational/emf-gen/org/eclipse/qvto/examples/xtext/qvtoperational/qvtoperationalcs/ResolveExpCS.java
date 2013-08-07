@@ -21,7 +21,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveExpCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveExpCS()
  * @model
  * @generated
  */
@@ -118,7 +118,7 @@ public interface ResolveExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' containment reference.
 	 * @see #setTarget(VariableCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveExpCS_Target()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveExpCS_Target()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -144,7 +144,7 @@ public interface ResolveExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' containment reference.
 	 * @see #setCondition(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getResolveExpCS_Condition()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getResolveExpCS_Condition()
 	 * @model containment="true"
 	 * @generated
 	 */

@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getScopedNameCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getScopedNameCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface ScopedNameCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getScopedNameCS_TypeCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getScopedNameCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */

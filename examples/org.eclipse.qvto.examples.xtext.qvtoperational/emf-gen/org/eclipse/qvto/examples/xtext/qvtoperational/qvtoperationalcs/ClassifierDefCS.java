@@ -20,7 +20,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierDefCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierDefCS()
  * @model
  * @generated
  */
@@ -82,7 +82,7 @@ public interface ClassifierDefCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Properties</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierDefCS_Properties()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierDefCS_Properties()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -98,7 +98,7 @@ public interface ClassifierDefCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tags</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierDefCS_Tags()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierDefCS_Tags()
 	 * @model containment="true"
 	 * @generated
 	 */

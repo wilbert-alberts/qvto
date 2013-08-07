@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToParameterCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToParameterCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface QVToParameterCS extends ParameterCS {
 	 * @return the value of the '<em>Direction</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection
 	 * @see #setDirection(ParamDirection)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToParameterCS_Direction()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToParameterCS_Direction()
 	 * @model
 	 * @generated
 	 */
@@ -62,7 +62,7 @@ public interface QVToParameterCS extends ParameterCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Init Part</em>' containment reference.
 	 * @see #setInitPart(ElementCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToParameterCS_InitPart()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToParameterCS_InitPart()
 	 * @model containment="true"
 	 * @generated
 	 */

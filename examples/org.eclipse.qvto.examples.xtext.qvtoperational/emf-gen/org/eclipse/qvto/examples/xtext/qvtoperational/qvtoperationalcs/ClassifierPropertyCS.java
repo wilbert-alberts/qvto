@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierPropertyCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierPropertyCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface ClassifierPropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotypes</em>' containment reference.
 	 * @see #setStereotypes(ElementCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierPropertyCS_Stereotypes()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierPropertyCS_Stereotypes()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -85,7 +85,7 @@ public interface ClassifierPropertyCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Property {\n\t\t\t\tname = name\n\t\t\t\t-- isComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}'"
 	 * @generated
 	 */
 	Property ast();

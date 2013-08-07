@@ -9,7 +9,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.DataTypeCS;
  * <em><b>Primitive Type CS</b></em>'. <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getPrimitiveTypeCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getPrimitiveTypeCS()
  * @model
  * @generated
  */

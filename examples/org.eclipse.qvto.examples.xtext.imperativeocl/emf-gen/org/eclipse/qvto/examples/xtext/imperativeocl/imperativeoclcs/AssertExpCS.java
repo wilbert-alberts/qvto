@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssertExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssertExpCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface AssertExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Assertion</em>' containment reference.
 	 * @see #setAssertion(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssertExpCS_Assertion()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssertExpCS_Assertion()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface AssertExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Log</em>' containment reference.
 	 * @see #setLog(LogExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getAssertExpCS_Log()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getAssertExpCS_Log()
 	 * @model containment="true"
 	 * @generated
 	 */

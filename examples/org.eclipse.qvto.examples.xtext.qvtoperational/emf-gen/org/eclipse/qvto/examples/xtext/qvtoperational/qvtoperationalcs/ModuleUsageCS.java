@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleUsageCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleUsageCS()
  * @model
  * @generated
  */
@@ -37,7 +37,7 @@ public interface ModuleUsageCS
 	 * @return the value of the '<em>Import Kind</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportKindEnum
 	 * @see #setImportKind(ImportKindEnum)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleUsageCS_ImportKind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleUsageCS_ImportKind()
 	 * @model
 	 * @generated
 	 */
@@ -64,7 +64,7 @@ public interface ModuleUsageCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Module Kind CS</em>' containment reference.
 	 * @see #setModuleKindCS(ModuleKindCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleUsageCS_ModuleKindCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleUsageCS_ModuleKindCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -90,7 +90,7 @@ public interface ModuleUsageCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Module Refs</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModuleUsageCS_ModuleRefs()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModuleUsageCS_ModuleRefs()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */

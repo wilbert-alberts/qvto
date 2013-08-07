@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getStereotypeQualifierCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getStereotypeQualifierCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface StereotypeQualifierCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotype</em>' attribute list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getStereotypeQualifierCS_Stereotype()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getStereotypeQualifierCS_Stereotype()
 	 * @model unique="false"
 	 * @generated
 	 */

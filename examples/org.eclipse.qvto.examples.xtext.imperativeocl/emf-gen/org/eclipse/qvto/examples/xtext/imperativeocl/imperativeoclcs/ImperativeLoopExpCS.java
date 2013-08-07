@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExp
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getImperativeLoopExpCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getImperativeLoopExpCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface ImperativeLoopExpCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' containment reference.
 	 * @see #setCondition(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getImperativeLoopExpCS_Condition()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getImperativeLoopExpCS_Condition()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */

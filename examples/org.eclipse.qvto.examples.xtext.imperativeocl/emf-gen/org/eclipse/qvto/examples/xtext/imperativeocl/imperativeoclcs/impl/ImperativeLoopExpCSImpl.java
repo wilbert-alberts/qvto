@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.InvocationExpCSImpl;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeLoopExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -53,7 +53,7 @@ public class ImperativeLoopExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.IMPERATIVE_LOOP_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.IMPERATIVE_LOOP_EXP_CS;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ImperativeLoopExpCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -87,14 +87,14 @@ public class ImperativeLoopExpCSImpl
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ImperativeLoopExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
 				return basicSetCondition(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -138,7 +138,7 @@ public class ImperativeLoopExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
 				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -151,7 +151,7 @@ public class ImperativeLoopExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
 		}
@@ -165,7 +165,7 @@ public class ImperativeLoopExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
 		}
@@ -179,7 +179,7 @@ public class ImperativeLoopExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
+			case ImperativeOCLCSPackage.IMPERATIVE_LOOP_EXP_CS__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

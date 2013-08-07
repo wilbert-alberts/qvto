@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.InvocationExpCSImpl;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImperativeOperationCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -59,7 +59,7 @@ public class ImperativeOperationCallExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.IMPERATIVE_OPERATION_CALL_EXP_CS;
+		return QVTOperationalCSPackage.Literals.IMPERATIVE_OPERATION_CALL_EXP_CS;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ImperativeOperationCallExpCSImpl
 		String oldModule = module;
 		module = newModule;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE, oldModule, module));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE, oldModule, module));
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ImperativeOperationCallExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
+			case QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
 				return getModule();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -121,7 +121,7 @@ public class ImperativeOperationCallExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
+			case QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
 				setModule((String)newValue);
 				return;
 		}
@@ -135,7 +135,7 @@ public class ImperativeOperationCallExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
+			case QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
 				setModule(MODULE_EDEFAULT);
 				return;
 		}
@@ -149,7 +149,7 @@ public class ImperativeOperationCallExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
+			case QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS__MODULE:
 				return MODULE_EDEFAULT == null ? module != null : !MODULE_EDEFAULT.equals(module);
 		}
 		return super.eIsSet(featureID);

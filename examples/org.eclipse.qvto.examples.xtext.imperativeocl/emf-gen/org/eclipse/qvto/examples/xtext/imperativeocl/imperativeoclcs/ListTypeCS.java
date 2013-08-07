@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getListTypeCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getListTypeCS()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface ListTypeCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' containment reference.
 	 * @see #setType(TypedRefCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getListTypeCS_Type()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getListTypeCS_Type()
 	 * @model containment="true"
 	 * @generated
 	 */

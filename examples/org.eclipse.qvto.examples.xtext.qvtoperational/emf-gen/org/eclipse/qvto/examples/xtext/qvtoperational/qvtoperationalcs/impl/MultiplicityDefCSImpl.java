@@ -10,7 +10,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.PrimitiveLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -62,7 +62,7 @@ public class MultiplicityDefCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MULTIPLICITY_DEF_CS;
+		return QVTOperationalCSPackage.Literals.MULTIPLICITY_DEF_CS;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class MultiplicityDefCSImpl
 			lowerBound = (PrimitiveLiteralExpCS)eResolveProxy(oldLowerBound);
 			if (lowerBound != oldLowerBound) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND, oldLowerBound, lowerBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND, oldLowerBound, lowerBound));
 			}
 		}
 		return lowerBound;
@@ -97,7 +97,7 @@ public class MultiplicityDefCSImpl
 		PrimitiveLiteralExpCS oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND, oldLowerBound, lowerBound));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class MultiplicityDefCSImpl
 			upperBound = (PrimitiveLiteralExpCS)eResolveProxy(oldUpperBound);
 			if (upperBound != oldUpperBound) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND, oldUpperBound, upperBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND, oldUpperBound, upperBound));
 			}
 		}
 		return upperBound;
@@ -132,7 +132,7 @@ public class MultiplicityDefCSImpl
 		PrimitiveLiteralExpCS oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -162,10 +162,10 @@ public class MultiplicityDefCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
 				if (resolve) return getLowerBound();
 				return basicGetLowerBound();
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
 				if (resolve) return getUpperBound();
 				return basicGetUpperBound();
 		}
@@ -179,10 +179,10 @@ public class MultiplicityDefCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
 				setLowerBound((PrimitiveLiteralExpCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
 				setUpperBound((PrimitiveLiteralExpCS)newValue);
 				return;
 		}
@@ -196,10 +196,10 @@ public class MultiplicityDefCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
 				setLowerBound((PrimitiveLiteralExpCS)null);
 				return;
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
 				setUpperBound((PrimitiveLiteralExpCS)null);
 				return;
 		}
@@ -213,9 +213,9 @@ public class MultiplicityDefCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__LOWER_BOUND:
 				return lowerBound != null;
-			case QvtoperationalcsPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
+			case QVTOperationalCSPackage.MULTIPLICITY_DEF_CS__UPPER_BOUND:
 				return upperBound != null;
 		}
 		return super.eIsSet(featureID);

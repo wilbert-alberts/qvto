@@ -7,7 +7,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * <em><b>Library Import CS</b></em>'. <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getLibraryImportCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getLibraryImportCS()
  * @model
  * @generated
  */

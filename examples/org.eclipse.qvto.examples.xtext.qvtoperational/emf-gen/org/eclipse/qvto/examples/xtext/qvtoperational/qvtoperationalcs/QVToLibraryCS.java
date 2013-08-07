@@ -9,7 +9,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToLibraryCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToLibraryCS()
  * @model
  * @generated
  */

@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ContextualPropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ScopedNameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -76,7 +76,7 @@ public class ContextualPropertyCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.CONTEXTUAL_PROPERTY_CS;
+		return QVTOperationalCSPackage.Literals.CONTEXTUAL_PROPERTY_CS;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ContextualPropertyCSImpl
 		ScopedNameCS oldScopedNameCS = scopedNameCS;
 		scopedNameCS = newScopedNameCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, oldScopedNameCS, newScopedNameCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, oldScopedNameCS, newScopedNameCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -110,14 +110,14 @@ public class ContextualPropertyCSImpl
 		if (newScopedNameCS != scopedNameCS) {
 			NotificationChain msgs = null;
 			if (scopedNameCS != null)
-				msgs = ((InternalEObject)scopedNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, null, msgs);
+				msgs = ((InternalEObject)scopedNameCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, null, msgs);
 			if (newScopedNameCS != null)
-				msgs = ((InternalEObject)newScopedNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, null, msgs);
+				msgs = ((InternalEObject)newScopedNameCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, null, msgs);
 			msgs = basicSetScopedNameCS(newScopedNameCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, newScopedNameCS, newScopedNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS, newScopedNameCS, newScopedNameCS));
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class ContextualPropertyCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -151,14 +151,14 @@ public class ContextualPropertyCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class ContextualPropertyCSImpl
 		ExpCS oldOclExpressionCS = oclExpressionCS;
 		oclExpressionCS = newOclExpressionCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -192,14 +192,14 @@ public class ContextualPropertyCSImpl
 		if (newOclExpressionCS != oclExpressionCS) {
 			NotificationChain msgs = null;
 			if (oclExpressionCS != null)
-				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
 			if (newOclExpressionCS != null)
-				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, null, msgs);
 			msgs = basicSetOclExpressionCS(newOclExpressionCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
 	}
 
 	/**
@@ -230,11 +230,11 @@ public class ContextualPropertyCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
 				return basicSetScopedNameCS(null, msgs);
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
 				return basicSetOclExpressionCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -247,11 +247,11 @@ public class ContextualPropertyCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
 				return getScopedNameCS();
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
 				return getTypeCS();
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
 				return getOclExpressionCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -264,13 +264,13 @@ public class ContextualPropertyCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
 				setScopedNameCS((ScopedNameCS)newValue);
 				return;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)newValue);
 				return;
 		}
@@ -284,13 +284,13 @@ public class ContextualPropertyCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
 				setScopedNameCS((ScopedNameCS)null);
 				return;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)null);
 				return;
 		}
@@ -304,11 +304,11 @@ public class ContextualPropertyCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__SCOPED_NAME_CS:
 				return scopedNameCS != null;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__TYPE_CS:
 				return typeCS != null;
-			case QvtoperationalcsPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
+			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS__OCL_EXPRESSION_CS:
 				return oclExpressionCS != null;
 		}
 		return super.eIsSet(featureID);

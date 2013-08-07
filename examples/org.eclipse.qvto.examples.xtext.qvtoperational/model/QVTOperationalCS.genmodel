@@ -10,7 +10,7 @@
     importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel/ToString"/>
   <foreignModel>QVTOperationalCS.ecore</foreignModel>
-  <genPackages prefix="Qvtoperationalcs" basePackage="org.eclipse.qvto.examples.xtext.qvtoperational"
+  <genPackages prefix="QVTOperationalCS" basePackage="org.eclipse.qvto.examples.xtext.qvtoperational"
       disposableProviderFactory="true" fileExtensions="qvto" ecorePackage="QVTOperationalCS.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperationalCS.ecore#//ClassifierKind">
       <genEnumLiterals ecoreEnumLiteral="QVTOperationalCS.ecore#//ClassifierKind/DATATYPE"/>
@@ -89,11 +89,13 @@
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//MetamodelCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//MetamodelCS/metamodelKind"/>
+      <genOperations ecoreOperation="QVTOperationalCS.ecore#//MetamodelCS/ast"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//PrimitiveTypeCS"/>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//ClassifierPropertyCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//ClassifierPropertyCS/stereotypes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//ClassifierPropertyCS/opposite"/>
+      <genOperations ecoreOperation="QVTOperationalCS.ecore#//ClassifierPropertyCS/ast"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//StereotypeQualifierCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//StereotypeQualifierCS/stereotype"/>

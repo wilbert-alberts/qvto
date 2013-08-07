@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationRefineCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -74,7 +74,7 @@ public class TransformationRefineCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.TRANSFORMATION_REFINE_CS;
+		return QVTOperationalCSPackage.Literals.TRANSFORMATION_REFINE_CS;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TransformationRefineCSImpl
 		ModuleRefCS oldModuleRefCS = moduleRefCS;
 		moduleRefCS = newModuleRefCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, oldModuleRefCS, newModuleRefCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, oldModuleRefCS, newModuleRefCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +108,14 @@ public class TransformationRefineCSImpl
 		if (newModuleRefCS != moduleRefCS) {
 			NotificationChain msgs = null;
 			if (moduleRefCS != null)
-				msgs = ((InternalEObject)moduleRefCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, null, msgs);
+				msgs = ((InternalEObject)moduleRefCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, null, msgs);
 			if (newModuleRefCS != null)
-				msgs = ((InternalEObject)newModuleRefCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, null, msgs);
+				msgs = ((InternalEObject)newModuleRefCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, null, msgs);
 			msgs = basicSetModuleRefCS(newModuleRefCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, newModuleRefCS, newModuleRefCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS, newModuleRefCS, newModuleRefCS));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class TransformationRefineCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class TransformationRefineCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
 				return basicSetModuleRefCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -178,9 +178,9 @@ public class TransformationRefineCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
 				return getModuleRefCS();
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public class TransformationRefineCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
 				setModuleRefCS((ModuleRefCS)newValue);
 				return;
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
 		}
@@ -210,10 +210,10 @@ public class TransformationRefineCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
 				setModuleRefCS((ModuleRefCS)null);
 				return;
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
 		}
@@ -227,9 +227,9 @@ public class TransformationRefineCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__MODULE_REF_CS:
 				return moduleRefCS != null;
-			case QvtoperationalcsPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
 		}
 		return super.eIsSet(featureID);

@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ScopedNameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -72,7 +72,7 @@ public class ScopedNameCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.SCOPED_NAME_CS;
+		return QVTOperationalCSPackage.Literals.SCOPED_NAME_CS;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class ScopedNameCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -106,14 +106,14 @@ public class ScopedNameCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class ScopedNameCSImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.SCOPED_NAME_CS__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.SCOPED_NAME_CS__NAME, oldName, name));
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class ScopedNameCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -176,9 +176,9 @@ public class ScopedNameCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS:
 				return getTypeCS();
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__NAME:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__NAME:
 				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -191,10 +191,10 @@ public class ScopedNameCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__NAME:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__NAME:
 				setName((String)newValue);
 				return;
 		}
@@ -208,10 +208,10 @@ public class ScopedNameCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__NAME:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__NAME:
 				setName(NAME_EDEFAULT);
 				return;
 		}
@@ -225,9 +225,9 @@ public class ScopedNameCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__TYPE_CS:
 				return typeCS != null;
-			case QvtoperationalcsPackage.SCOPED_NAME_CS__NAME:
+			case QVTOperationalCSPackage.SCOPED_NAME_CS__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);

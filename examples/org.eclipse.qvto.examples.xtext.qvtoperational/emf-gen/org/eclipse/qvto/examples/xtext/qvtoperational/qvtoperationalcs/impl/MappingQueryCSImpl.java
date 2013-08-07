@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -78,7 +78,7 @@ public class MappingQueryCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_QUERY_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_QUERY_CS;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class MappingQueryCSImpl
 	 */
 	public EList<ExpCS> getExpressions() {
 		if (expressions == null) {
-			expressions = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS);
+			expressions = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS);
 		}
 		return expressions;
 	}
@@ -108,7 +108,7 @@ public class MappingQueryCSImpl
 		boolean oldIsSimpleDefinition = isSimpleDefinition;
 		isSimpleDefinition = newIsSimpleDefinition;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION, oldIsSimpleDefinition, isSimpleDefinition));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION, oldIsSimpleDefinition, isSimpleDefinition));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class MappingQueryCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -152,9 +152,9 @@ public class MappingQueryCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return getExpressions();
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
 				return isIsSimpleDefinition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -168,11 +168,11 @@ public class MappingQueryCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				getExpressions().clear();
 				getExpressions().addAll((Collection<? extends ExpCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
 				setIsSimpleDefinition((Boolean)newValue);
 				return;
 		}
@@ -186,10 +186,10 @@ public class MappingQueryCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				getExpressions().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
 				setIsSimpleDefinition(IS_SIMPLE_DEFINITION_EDEFAULT);
 				return;
 		}
@@ -203,9 +203,9 @@ public class MappingQueryCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__EXPRESSIONS:
 				return expressions != null && !expressions.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
+			case QVTOperationalCSPackage.MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION:
 				return isSimpleDefinition != IS_SIMPLE_DEFINITION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -11,12 +11,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ImportCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.LibraryCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ModelElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.RootPackageCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -69,7 +66,7 @@ public class TopLevelCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.TOP_LEVEL_CS;
+		return QVTOperationalCSPackage.Literals.TOP_LEVEL_CS;
 	}
 
 	/**
@@ -78,7 +75,7 @@ public class TopLevelCSImpl
 	 */
 	public EList<ElementCS> getImport() {
 		if (import_ == null) {
-			import_ = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT);
+			import_ = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT);
 		}
 		return import_;
 	}
@@ -89,7 +86,7 @@ public class TopLevelCSImpl
 	 */
 	public EList<ElementCS> getUnit() {
 		if (unit == null) {
-			unit = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT);
+			unit = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT);
 		}
 		return unit;
 	}
@@ -122,9 +119,9 @@ public class TopLevelCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT:
 				return ((InternalEList<?>)getImport()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return ((InternalEList<?>)getUnit()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -137,9 +134,9 @@ public class TopLevelCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT:
 				return getImport();
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return getUnit();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -153,11 +150,11 @@ public class TopLevelCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT:
 				getImport().clear();
 				getImport().addAll((Collection<? extends ElementCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				getUnit().clear();
 				getUnit().addAll((Collection<? extends ElementCS>)newValue);
 				return;
@@ -172,10 +169,10 @@ public class TopLevelCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT:
 				getImport().clear();
 				return;
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				getUnit().clear();
 				return;
 		}
@@ -189,9 +186,9 @@ public class TopLevelCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__IMPORT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__IMPORT:
 				return import_ != null && !import_.isEmpty();
-			case QvtoperationalcsPackage.TOP_LEVEL_CS__UNIT:
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return unit != null && !unit.isEmpty();
 		}
 		return super.eIsSet(featureID);

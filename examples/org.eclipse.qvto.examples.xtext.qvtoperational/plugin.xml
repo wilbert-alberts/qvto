@@ -14,4 +14,12 @@
             genModel="model/QVTOperational.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated QVTOperationalCS -->
+      <package
+            uri="http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS"
+            class="org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage"
+            genModel="model/QVTOperationalCS.genmodel"/>
+   </extension>
+
 </plugin>

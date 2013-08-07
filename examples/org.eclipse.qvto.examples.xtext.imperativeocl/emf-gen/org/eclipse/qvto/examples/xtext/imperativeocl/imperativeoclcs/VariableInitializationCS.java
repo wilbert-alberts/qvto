@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getVariableInitializationCS()
+ * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getVariableInitializationCS()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface VariableInitializationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ocl Expression CS</em>' containment reference.
 	 * @see #setOclExpressionCS(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getVariableInitializationCS_OclExpressionCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getVariableInitializationCS_OclExpressionCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -89,7 +89,7 @@ public interface VariableInitializationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getVariableInitializationCS_TypeCS()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getVariableInitializationCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -116,7 +116,7 @@ public interface VariableInitializationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>With Result</em>' attribute.
 	 * @see #setWithResult(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage#getVariableInitializationCS_WithResult()
+	 * @see org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage#getVariableInitializationCS_WithResult()
 	 * @model default="false" required="true"
 	 * @generated
 	 */

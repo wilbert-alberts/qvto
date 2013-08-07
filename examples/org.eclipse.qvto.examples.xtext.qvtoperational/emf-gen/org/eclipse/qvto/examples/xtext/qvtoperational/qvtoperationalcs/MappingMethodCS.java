@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingMethodCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingMethodCS()
  * @model abstract="true"
  * @generated
  */
@@ -64,7 +64,7 @@ public interface MappingMethodCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Declaration CS</em>' containment reference.
 	 * @see #setMappingDeclarationCS(MappingDeclarationCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingMethodCS_MappingDeclarationCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingMethodCS_MappingDeclarationCS()
 	 * @model containment="true"
 	 * @generated
 	 */

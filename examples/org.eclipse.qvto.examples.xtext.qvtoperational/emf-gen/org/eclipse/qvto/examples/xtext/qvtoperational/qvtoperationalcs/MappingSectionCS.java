@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionCS()
  * @model abstract="true"
  * @generated
  */
@@ -35,7 +35,7 @@ public interface MappingSectionCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Statements</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionCS_Statements()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionCS_Statements()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -51,7 +51,7 @@ public interface MappingSectionCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Rule CS</em>' containment reference.
 	 * @see #setMappingRuleCS(MappingRuleCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingSectionCS_MappingRuleCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingSectionCS_MappingRuleCS()
 	 * @model containment="true"
 	 * @generated
 	 */

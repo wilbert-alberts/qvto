@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExceptCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -68,7 +68,7 @@ public class ExceptCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.EXCEPT_CS;
+		return ImperativeOCLCSPackage.Literals.EXCEPT_CS;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ExceptCSImpl
 	 */
 	public EList<Type> getExcept() {
 		if (except == null) {
-			except = new EObjectResolvingEList<Type>(Type.class, this, ImperativeoclcsPackage.EXCEPT_CS__EXCEPT);
+			except = new EObjectResolvingEList<Type>(Type.class, this, ImperativeOCLCSPackage.EXCEPT_CS__EXCEPT);
 		}
 		return except;
 	}
@@ -98,7 +98,7 @@ public class ExceptCSImpl
 		ExpCS oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.EXCEPT_CS__BODY, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.EXCEPT_CS__BODY, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -112,14 +112,14 @@ public class ExceptCSImpl
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.EXCEPT_CS__BODY, null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.EXCEPT_CS__BODY, null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.EXCEPT_CS__BODY, null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.EXCEPT_CS__BODY, null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.EXCEPT_CS__BODY, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.EXCEPT_CS__BODY, newBody, newBody));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ExceptCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXCEPT_CS__BODY:
+			case ImperativeOCLCSPackage.EXCEPT_CS__BODY:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -163,9 +163,9 @@ public class ExceptCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXCEPT_CS__EXCEPT:
+			case ImperativeOCLCSPackage.EXCEPT_CS__EXCEPT:
 				return getExcept();
-			case ImperativeoclcsPackage.EXCEPT_CS__BODY:
+			case ImperativeOCLCSPackage.EXCEPT_CS__BODY:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -179,11 +179,11 @@ public class ExceptCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXCEPT_CS__EXCEPT:
+			case ImperativeOCLCSPackage.EXCEPT_CS__EXCEPT:
 				getExcept().clear();
 				getExcept().addAll((Collection<? extends Type>)newValue);
 				return;
-			case ImperativeoclcsPackage.EXCEPT_CS__BODY:
+			case ImperativeOCLCSPackage.EXCEPT_CS__BODY:
 				setBody((ExpCS)newValue);
 				return;
 		}
@@ -197,10 +197,10 @@ public class ExceptCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXCEPT_CS__EXCEPT:
+			case ImperativeOCLCSPackage.EXCEPT_CS__EXCEPT:
 				getExcept().clear();
 				return;
-			case ImperativeoclcsPackage.EXCEPT_CS__BODY:
+			case ImperativeOCLCSPackage.EXCEPT_CS__BODY:
 				setBody((ExpCS)null);
 				return;
 		}
@@ -214,9 +214,9 @@ public class ExceptCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.EXCEPT_CS__EXCEPT:
+			case ImperativeOCLCSPackage.EXCEPT_CS__EXCEPT:
 				return except != null && !except.isEmpty();
-			case ImperativeoclcsPackage.EXCEPT_CS__BODY:
+			case ImperativeOCLCSPackage.EXCEPT_CS__BODY:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

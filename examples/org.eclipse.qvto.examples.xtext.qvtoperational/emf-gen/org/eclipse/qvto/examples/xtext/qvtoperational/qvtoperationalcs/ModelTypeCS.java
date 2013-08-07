@@ -21,7 +21,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModelTypeCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModelTypeCS()
  * @model
  * @generated
  */
@@ -65,7 +65,7 @@ public interface ModelTypeCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Compliance Kind CS</em>' containment reference.
 	 * @see #setComplianceKindCS(StringLiteralExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModelTypeCS_ComplianceKindCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModelTypeCS_ComplianceKindCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -91,7 +91,7 @@ public interface ModelTypeCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Package Refs</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModelTypeCS_PackageRefs()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModelTypeCS_PackageRefs()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -107,7 +107,7 @@ public interface ModelTypeCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Where Statements</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getModelTypeCS_WhereStatements()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getModelTypeCS_WhereStatements()
 	 * @model containment="true"
 	 * @generated
 	 */

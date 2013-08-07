@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getPackageRefCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getPackageRefCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface PackageRefCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Path Name CS</em>' containment reference.
 	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getPackageRefCS_PathNameCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getPackageRefCS_PathNameCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public interface PackageRefCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Uri CS</em>' containment reference.
 	 * @see #setUriCS(StringLiteralExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getPackageRefCS_UriCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getPackageRefCS_UriCS()
 	 * @model containment="true"
 	 * @generated
 	 */

@@ -13,7 +13,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBo
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionsCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -78,7 +78,7 @@ public class MappingSectionsCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_SECTIONS_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_SECTIONS_CS;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class MappingSectionsCSImpl
 		MappingInitCS oldMappingInitCS = mappingInitCS;
 		mappingInitCS = newMappingInitCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, oldMappingInitCS, newMappingInitCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, oldMappingInitCS, newMappingInitCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -112,14 +112,14 @@ public class MappingSectionsCSImpl
 		if (newMappingInitCS != mappingInitCS) {
 			NotificationChain msgs = null;
 			if (mappingInitCS != null)
-				msgs = ((InternalEObject)mappingInitCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, null, msgs);
+				msgs = ((InternalEObject)mappingInitCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, null, msgs);
 			if (newMappingInitCS != null)
-				msgs = ((InternalEObject)newMappingInitCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, null, msgs);
+				msgs = ((InternalEObject)newMappingInitCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, null, msgs);
 			msgs = basicSetMappingInitCS(newMappingInitCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, newMappingInitCS, newMappingInitCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS, newMappingInitCS, newMappingInitCS));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class MappingSectionsCSImpl
 		MappingBodyCS oldMappingBodyCS = mappingBodyCS;
 		mappingBodyCS = newMappingBodyCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, oldMappingBodyCS, newMappingBodyCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, oldMappingBodyCS, newMappingBodyCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -153,14 +153,14 @@ public class MappingSectionsCSImpl
 		if (newMappingBodyCS != mappingBodyCS) {
 			NotificationChain msgs = null;
 			if (mappingBodyCS != null)
-				msgs = ((InternalEObject)mappingBodyCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, null, msgs);
+				msgs = ((InternalEObject)mappingBodyCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, null, msgs);
 			if (newMappingBodyCS != null)
-				msgs = ((InternalEObject)newMappingBodyCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, null, msgs);
+				msgs = ((InternalEObject)newMappingBodyCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, null, msgs);
 			msgs = basicSetMappingBodyCS(newMappingBodyCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, newMappingBodyCS, newMappingBodyCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS, newMappingBodyCS, newMappingBodyCS));
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class MappingSectionsCSImpl
 		MappingEndCS oldMappingEndCS = mappingEndCS;
 		mappingEndCS = newMappingEndCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, oldMappingEndCS, newMappingEndCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, oldMappingEndCS, newMappingEndCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -194,14 +194,14 @@ public class MappingSectionsCSImpl
 		if (newMappingEndCS != mappingEndCS) {
 			NotificationChain msgs = null;
 			if (mappingEndCS != null)
-				msgs = ((InternalEObject)mappingEndCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, null, msgs);
+				msgs = ((InternalEObject)mappingEndCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, null, msgs);
 			if (newMappingEndCS != null)
-				msgs = ((InternalEObject)newMappingEndCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, null, msgs);
+				msgs = ((InternalEObject)newMappingEndCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, null, msgs);
 			msgs = basicSetMappingEndCS(newMappingEndCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, newMappingEndCS, newMappingEndCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS, newMappingEndCS, newMappingEndCS));
 	}
 
 	/**
@@ -232,11 +232,11 @@ public class MappingSectionsCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
 				return basicSetMappingInitCS(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
 				return basicSetMappingBodyCS(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
 				return basicSetMappingEndCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -249,11 +249,11 @@ public class MappingSectionsCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
 				return getMappingInitCS();
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
 				return getMappingBodyCS();
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
 				return getMappingEndCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -266,13 +266,13 @@ public class MappingSectionsCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
 				setMappingInitCS((MappingInitCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
 				setMappingBodyCS((MappingBodyCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
 				setMappingEndCS((MappingEndCS)newValue);
 				return;
 		}
@@ -286,13 +286,13 @@ public class MappingSectionsCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
 				setMappingInitCS((MappingInitCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
 				setMappingBodyCS((MappingBodyCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
 				setMappingEndCS((MappingEndCS)null);
 				return;
 		}
@@ -306,11 +306,11 @@ public class MappingSectionsCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_INIT_CS:
 				return mappingInitCS != null;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_BODY_CS:
 				return mappingBodyCS != null;
-			case QvtoperationalcsPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
+			case QVTOperationalCSPackage.MAPPING_SECTIONS_CS__MAPPING_END_CS:
 				return mappingEndCS != null;
 		}
 		return super.eIsSet(featureID);

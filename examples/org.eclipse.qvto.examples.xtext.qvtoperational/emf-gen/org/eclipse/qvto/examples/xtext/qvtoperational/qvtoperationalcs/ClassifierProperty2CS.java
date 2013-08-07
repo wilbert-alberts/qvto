@@ -19,7 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierProperty2CS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierProperty2CS()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface ClassifierProperty2CS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotype Qualifiers</em>' attribute list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierProperty2CS_StereotypeQualifiers()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierProperty2CS_StereotypeQualifiers()
 	 * @model
 	 * @generated
 	 */
@@ -69,7 +69,7 @@ public interface ClassifierProperty2CS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Multiplicity</em>' containment reference.
 	 * @see #setMultiplicity(MultiplicityDefCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierProperty2CS_Multiplicity()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierProperty2CS_Multiplicity()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -95,7 +95,7 @@ public interface ClassifierProperty2CS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Opposite</em>' containment reference.
 	 * @see #setOpposite(OppositePropertyCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierProperty2CS_Opposite()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierProperty2CS_Opposite()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -122,7 +122,7 @@ public interface ClassifierProperty2CS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Ordered</em>' attribute.
 	 * @see #setIsOrdered(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getClassifierProperty2CS_IsOrdered()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getClassifierProperty2CS_IsOrdered()
 	 * @model default="true"
 	 * @generated
 	 */

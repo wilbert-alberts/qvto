@@ -5,7 +5,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -34,7 +34,7 @@ public class MappingEndCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_END_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_END_CS;
 	}
 
 	/**

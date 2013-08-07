@@ -140,31 +140,34 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 		return false;
 	}
 	
-	private def String generateContainmentVisit(EClass eClass) {
+	protected def String generateContainmentVisit(EClass eClass) {
 		
-		var MetaModelManager metaModelManager = MetaModelManager.getAdapter(resourceSet);
-		var Resource ecoreResource = eClass.eResource(); 
-		var Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
-		var Class pClass = ecore2Pivot.getPivotElement(typeof(Class), eClass);
-		if (pClass != null) {
-			for (Operation operation :  pClass.ownedOperation) {
-				if ("ast".equals(operation.name)) {
-					// We obtain the expression to visit
-					var OpaqueExpression opaqueExp = operation.bodyExpression;
-					var ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
-					
-					// We compute the context
-//					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
-//					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
-//					var GenModel csGenModel = getGenModel(genModelURI, resourceSet);
-					// var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
-					
-					// We visit the expression to generate the containment visit method body
-					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager)));
-				}
-			}
-		}
-		return "return null;"; // TODO case in which no pClass or no ast operation has been found
+//		var MetaModelManager metaModelManager = MetaModelManager.getAdapter(resourceSet);
+//		var Resource ecoreResource = eClass.eResource(); 
+//		var Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
+//		var Class pClass = ecore2Pivot.getPivotElement(typeof(Class), eClass);
+//		if (pClass != null) {
+//			for (Operation operation :  pClass.ownedOperation) {
+//				if ("ast".equals(operation.name)) {
+//					// We obtain the expression to visit
+//					var OpaqueExpression opaqueExp = operation.bodyExpression;
+//					var ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
+//					
+//					// We compute the context
+////					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
+////					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
+////					var GenModel csGenModel = getGenModel(genModelURI, resourceSet);
+//					// var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
+//					
+//					// We visit the expression to generate the containment visit method body
+//					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager)));
+//				}
+//			}
+//		}
+//		return "return null;"; // TODO case in which no pClass or no ast operation has been found
+		return '''csElement.ast();
+				return null;
+				''';
 	}
 	
 //	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {

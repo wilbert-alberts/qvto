@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getOppositePropertyCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOppositePropertyCS()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface OppositePropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Navigable</em>' attribute.
 	 * @see #setIsNavigable(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getOppositePropertyCS_IsNavigable()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOppositePropertyCS_IsNavigable()
 	 * @model default="true"
 	 * @generated
 	 */
@@ -88,7 +88,7 @@ public interface OppositePropertyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Multiplicity</em>' containment reference.
 	 * @see #setMultiplicity(MultiplicityDefCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getOppositePropertyCS_Multiplicity()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOppositePropertyCS_Multiplicity()
 	 * @model containment="true"
 	 * @generated
 	 */

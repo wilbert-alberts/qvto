@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -93,7 +93,7 @@ public class OppositePropertyCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.OPPOSITE_PROPERTY_CS;
+		return QVTOperationalCSPackage.Literals.OPPOSITE_PROPERTY_CS;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class OppositePropertyCSImpl
 		boolean oldIsNavigable = isNavigable;
 		isNavigable = newIsNavigable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE, oldIsNavigable, isNavigable));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE, oldIsNavigable, isNavigable));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class OppositePropertyCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class OppositePropertyCSImpl
 		MultiplicityDefCS oldMultiplicity = multiplicity;
 		multiplicity = newMultiplicity;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, oldMultiplicity, newMultiplicity);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, oldMultiplicity, newMultiplicity);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -165,14 +165,14 @@ public class OppositePropertyCSImpl
 		if (newMultiplicity != multiplicity) {
 			NotificationChain msgs = null;
 			if (multiplicity != null)
-				msgs = ((InternalEObject)multiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)multiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, null, msgs);
 			if (newMultiplicity != null)
-				msgs = ((InternalEObject)newMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, null, msgs);
+				msgs = ((InternalEObject)newMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, null, msgs);
 			msgs = basicSetMultiplicity(newMultiplicity, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, newMultiplicity, newMultiplicity));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY, newMultiplicity, newMultiplicity));
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class OppositePropertyCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
 				return basicSetMultiplicity(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -216,11 +216,11 @@ public class OppositePropertyCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
 				return isIsNavigable();
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
 				return getMultiplicity();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -233,13 +233,13 @@ public class OppositePropertyCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
 				setIsNavigable((Boolean)newValue);
 				return;
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
 				setMultiplicity((MultiplicityDefCS)newValue);
 				return;
 		}
@@ -253,13 +253,13 @@ public class OppositePropertyCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
 				setIsNavigable(IS_NAVIGABLE_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
 				setMultiplicity((MultiplicityDefCS)null);
 				return;
 		}
@@ -273,11 +273,11 @@ public class OppositePropertyCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__IS_NAVIGABLE:
 				return isNavigable != IS_NAVIGABLE_EDEFAULT;
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case QvtoperationalcsPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
+			case QVTOperationalCSPackage.OPPOSITE_PROPERTY_CS__MULTIPLICITY:
 				return multiplicity != null;
 		}
 		return super.eIsSet(featureID);

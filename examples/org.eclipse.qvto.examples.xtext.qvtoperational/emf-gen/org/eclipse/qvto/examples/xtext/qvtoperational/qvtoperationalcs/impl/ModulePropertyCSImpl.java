@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModulePropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -59,7 +59,7 @@ public abstract class ModulePropertyCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MODULE_PROPERTY_CS;
+		return QVTOperationalCSPackage.Literals.MODULE_PROPERTY_CS;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public abstract class ModulePropertyCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -88,7 +88,7 @@ public abstract class ModulePropertyCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -101,7 +101,7 @@ public abstract class ModulePropertyCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
 		}
@@ -115,7 +115,7 @@ public abstract class ModulePropertyCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
 		}
@@ -129,7 +129,7 @@ public abstract class ModulePropertyCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.MODULE_PROPERTY_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
 		}
 		return super.eIsSet(featureID);

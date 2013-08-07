@@ -13,7 +13,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingCallExpCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingCallExpCS()
  * @model
  * @generated
  */

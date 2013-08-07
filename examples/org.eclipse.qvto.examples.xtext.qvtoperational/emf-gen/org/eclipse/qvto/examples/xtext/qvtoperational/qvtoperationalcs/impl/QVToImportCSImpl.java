@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -90,7 +90,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.QV_TO_IMPORT_CS;
+		return QVTOperationalCSPackage.Literals.QV_TO_IMPORT_CS;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 		UnitCS oldUnit = unit;
 		unit = newUnit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT, oldUnit, newUnit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT, oldUnit, newUnit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -126,14 +126,14 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 		if (newUnit != unit) {
 			NotificationChain msgs = null;
 			if (unit != null)
-				msgs = ((InternalEObject)unit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT, null, msgs);
+				msgs = ((InternalEObject)unit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT, null, msgs);
 			if (newUnit != null)
-				msgs = ((InternalEObject)newUnit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT, null, msgs);
+				msgs = ((InternalEObject)newUnit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT, null, msgs);
 			msgs = basicSetUnit(newUnit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT, newUnit, newUnit));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT, newUnit, newUnit));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	 */
 	public EList<String> getImportedUnitElement() {
 		if (importedUnitElement == null) {
-			importedUnitElement = new EDataTypeUniqueEList<String>(String.class, this, QvtoperationalcsPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT);
+			importedUnitElement = new EDataTypeUniqueEList<String>(String.class, this, QVTOperationalCSPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT);
 		}
 		return importedUnitElement;
 	}
@@ -166,7 +166,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 		boolean oldAll = all;
 		all = newAll;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_IMPORT_CS__ALL, oldAll, all));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_IMPORT_CS__ALL, oldAll, all));
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT:
 				return basicSetUnit(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -220,11 +220,11 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT:
 				return getUnit();
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
 				return getImportedUnitElement();
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__ALL:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__ALL:
 				return isAll();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -239,14 +239,14 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT:
 				setUnit((UnitCS)newValue);
 				return;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
 				getImportedUnitElement().clear();
 				getImportedUnitElement().addAll((Collection<? extends String>)newValue);
 				return;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__ALL:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__ALL:
 				setAll((Boolean)newValue);
 				return;
 		}
@@ -261,13 +261,13 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT:
 				setUnit((UnitCS)null);
 				return;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
 				getImportedUnitElement().clear();
 				return;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__ALL:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__ALL:
 				setAll(ALL_EDEFAULT);
 				return;
 		}
@@ -282,11 +282,11 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__UNIT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__UNIT:
 				return unit != null;
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__IMPORTED_UNIT_ELEMENT:
 				return importedUnitElement != null && !importedUnitElement.isEmpty();
-			case QvtoperationalcsPackage.QV_TO_IMPORT_CS__ALL:
+			case QVTOperationalCSPackage.QV_TO_IMPORT_CS__ALL:
 				return all != ALL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

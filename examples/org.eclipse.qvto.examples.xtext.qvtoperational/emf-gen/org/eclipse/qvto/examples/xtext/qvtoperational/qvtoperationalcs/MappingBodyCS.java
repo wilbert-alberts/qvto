@@ -13,7 +13,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingBodyCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingBodyCS()
  * @model
  * @generated
  */
@@ -30,7 +30,7 @@ public interface MappingBodyCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Has Population Keyword</em>' attribute.
 	 * @see #setHasPopulationKeyword(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingBodyCS_HasPopulationKeyword()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingBodyCS_HasPopulationKeyword()
 	 * @model
 	 * @generated
 	 */

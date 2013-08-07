@@ -23,7 +23,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface MappingModuleCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Header CS</em>' containment reference.
 	 * @see #setHeaderCS(TransformationHeaderCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_HeaderCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_HeaderCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -66,7 +66,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Imports</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Imports()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Imports()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -82,7 +82,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Metamodels</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Metamodels()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Metamodels()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -98,7 +98,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Renamings</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Renamings()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Renamings()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -114,7 +114,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Properties</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Properties()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Properties()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -130,7 +130,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Methods</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Methods()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Methods()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -146,7 +146,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Classifier Def CS</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_ClassifierDefCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_ClassifierDefCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -162,7 +162,7 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tags</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingModuleCS_Tags()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_Tags()
 	 * @model containment="true"
 	 * @generated
 	 */

@@ -9,7 +9,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
  * <em><b>Exception CS</b></em>'. <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getExceptionCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getExceptionCS()
  * @model
  * @generated
  */

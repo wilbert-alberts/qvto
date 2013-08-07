@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getDirectionKindCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getDirectionKindCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface DirectionKindCS
 	 * @return the value of the '<em>Direction Kind</em>' attribute.
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindEnum
 	 * @see #setDirectionKind(DirectionKindEnum)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getDirectionKindCS_DirectionKind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getDirectionKindCS_DirectionKind()
 	 * @model
 	 * @generated
 	 */

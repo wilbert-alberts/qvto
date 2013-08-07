@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConstructorCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -55,7 +55,7 @@ public class ConstructorCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.CONSTRUCTOR_CS;
+		return QVTOperationalCSPackage.Literals.CONSTRUCTOR_CS;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class ConstructorCSImpl
 	 */
 	public EList<ExpCS> getExpressions() {
 		if (expressions == null) {
-			expressions = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS);
+			expressions = new EObjectContainmentEList<ExpCS>(ExpCS.class, this, QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS);
 		}
 		return expressions;
 	}
@@ -97,7 +97,7 @@ public class ConstructorCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS:
 				return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -110,7 +110,7 @@ public class ConstructorCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS:
 				return getExpressions();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +124,7 @@ public class ConstructorCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS:
 				getExpressions().clear();
 				getExpressions().addAll((Collection<? extends ExpCS>)newValue);
 				return;
@@ -139,7 +139,7 @@ public class ConstructorCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS:
 				getExpressions().clear();
 				return;
 		}
@@ -153,7 +153,7 @@ public class ConstructorCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.CONSTRUCTOR_CS__EXPRESSIONS:
+			case QVTOperationalCSPackage.CONSTRUCTOR_CS__EXPRESSIONS:
 				return expressions != null && !expressions.isEmpty();
 		}
 		return super.eIsSet(featureID);

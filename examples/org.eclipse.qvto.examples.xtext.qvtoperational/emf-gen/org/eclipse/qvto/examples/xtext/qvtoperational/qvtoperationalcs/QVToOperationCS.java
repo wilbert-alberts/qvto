@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToOperationCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToOperationCS()
  * @model
  * @generated
  */
@@ -31,7 +31,7 @@ public interface QVToOperationCS extends OperationCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotypes</em>' containment reference.
 	 * @see #setStereotypes(StereotypeQualifierCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToOperationCS_Stereotypes()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToOperationCS_Stereotypes()
 	 * @model containment="true"
 	 * @generated
 	 */

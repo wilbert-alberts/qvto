@@ -16,8 +16,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -75,7 +75,7 @@ public class UnitCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.UNIT_CS;
+		return QVTOperationalCSPackage.Literals.UNIT_CS;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class UnitCSImpl
 	 */
 	public EList<String> getSegment() {
 		if (segment == null) {
-			segment = new EDataTypeEList<String>(String.class, this, QvtoperationalcsPackage.UNIT_CS__SEGMENT);
+			segment = new EDataTypeEList<String>(String.class, this, QVTOperationalCSPackage.UNIT_CS__SEGMENT);
 		}
 		return segment;
 	}
@@ -95,7 +95,7 @@ public class UnitCSImpl
 	 */
 	public EList<ElementCS> getTopLevelElements() {
 		if (topLevelElements == null) {
-			topLevelElements = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS);
+			topLevelElements = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS);
 		}
 		return topLevelElements;
 	}
@@ -144,7 +144,7 @@ public class UnitCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+			case QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
 				return ((InternalEList<?>)getTopLevelElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -177,15 +177,15 @@ public class UnitCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QVTOperationalCSPackage.UNIT_CS__SEGMENT:
 				return getSegment();
-			case QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+			case QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
 				return getTopLevelElements();
-			case QvtoperationalcsPackage.UNIT_CS__MODULES:
+			case QVTOperationalCSPackage.UNIT_CS__MODULES:
 				return getModules();
-			case QvtoperationalcsPackage.UNIT_CS__MODEL_TYPES:
+			case QVTOperationalCSPackage.UNIT_CS__MODEL_TYPES:
 				return getModelTypes();
-			case QvtoperationalcsPackage.UNIT_CS__IMPORTS:
+			case QVTOperationalCSPackage.UNIT_CS__IMPORTS:
 				return getImports();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -199,11 +199,11 @@ public class UnitCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QVTOperationalCSPackage.UNIT_CS__SEGMENT:
 				getSegment().clear();
 				getSegment().addAll((Collection<? extends String>)newValue);
 				return;
-			case QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+			case QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
 				getTopLevelElements().clear();
 				getTopLevelElements().addAll((Collection<? extends ElementCS>)newValue);
 				return;
@@ -218,10 +218,10 @@ public class UnitCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QVTOperationalCSPackage.UNIT_CS__SEGMENT:
 				getSegment().clear();
 				return;
-			case QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+			case QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
 				getTopLevelElements().clear();
 				return;
 		}
@@ -235,15 +235,15 @@ public class UnitCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.UNIT_CS__SEGMENT:
+			case QVTOperationalCSPackage.UNIT_CS__SEGMENT:
 				return segment != null && !segment.isEmpty();
-			case QvtoperationalcsPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
+			case QVTOperationalCSPackage.UNIT_CS__TOP_LEVEL_ELEMENTS:
 				return topLevelElements != null && !topLevelElements.isEmpty();
-			case QvtoperationalcsPackage.UNIT_CS__MODULES:
+			case QVTOperationalCSPackage.UNIT_CS__MODULES:
 				return !getModules().isEmpty();
-			case QvtoperationalcsPackage.UNIT_CS__MODEL_TYPES:
+			case QVTOperationalCSPackage.UNIT_CS__MODEL_TYPES:
 				return !getModelTypes().isEmpty();
-			case QvtoperationalcsPackage.UNIT_CS__IMPORTS:
+			case QVTOperationalCSPackage.UNIT_CS__IMPORTS:
 				return !getImports().isEmpty();
 		}
 		return super.eIsSet(featureID);

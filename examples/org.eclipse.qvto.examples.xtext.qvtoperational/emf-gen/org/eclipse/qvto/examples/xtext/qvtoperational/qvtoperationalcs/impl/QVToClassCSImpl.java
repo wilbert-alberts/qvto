@@ -7,8 +7,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ClassCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -61,7 +61,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.QV_TO_CLASS_CS;
+		return QVTOperationalCSPackage.Literals.QV_TO_CLASS_CS;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 		boolean oldIntermediate = intermediate;
 		intermediate = newIntermediate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_CLASS_CS__INTERMEDIATE, oldIntermediate, intermediate));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_CLASS_CS__INTERMEDIATE, oldIntermediate, intermediate));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_CLASS_CS__INTERMEDIATE:
+			case QVTOperationalCSPackage.QV_TO_CLASS_CS__INTERMEDIATE:
 				return isIntermediate();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -136,7 +136,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_CLASS_CS__INTERMEDIATE:
+			case QVTOperationalCSPackage.QV_TO_CLASS_CS__INTERMEDIATE:
 				setIntermediate((Boolean)newValue);
 				return;
 		}
@@ -151,7 +151,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_CLASS_CS__INTERMEDIATE:
+			case QVTOperationalCSPackage.QV_TO_CLASS_CS__INTERMEDIATE:
 				setIntermediate(INTERMEDIATE_EDEFAULT);
 				return;
 		}
@@ -166,7 +166,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_CLASS_CS__INTERMEDIATE:
+			case QVTOperationalCSPackage.QV_TO_CLASS_CS__INTERMEDIATE:
 				return intermediate != INTERMEDIATE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

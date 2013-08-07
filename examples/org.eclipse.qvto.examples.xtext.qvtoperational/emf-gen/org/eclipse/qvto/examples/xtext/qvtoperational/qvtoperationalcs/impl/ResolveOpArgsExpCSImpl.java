@@ -10,7 +10,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveOpArgsExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -63,7 +63,7 @@ public class ResolveOpArgsExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.RESOLVE_OP_ARGS_EXP_CS;
+		return QVTOperationalCSPackage.Literals.RESOLVE_OP_ARGS_EXP_CS;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class ResolveOpArgsExpCSImpl
 			target = (VariableCS)eResolveProxy(oldTarget);
 			if (target != oldTarget) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET, oldTarget, target));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET, oldTarget, target));
 			}
 		}
 		return target;
@@ -98,7 +98,7 @@ public class ResolveOpArgsExpCSImpl
 		VariableCS oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET, oldTarget, target));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET, oldTarget, target));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class ResolveOpArgsExpCSImpl
 			condition = (ExpCS)eResolveProxy(oldCondition);
 			if (condition != oldCondition) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION, oldCondition, condition));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION, oldCondition, condition));
 			}
 		}
 		return condition;
@@ -133,7 +133,7 @@ public class ResolveOpArgsExpCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION, oldCondition, condition));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION, oldCondition, condition));
 	}
 
 	/**
@@ -163,10 +163,10 @@ public class ResolveOpArgsExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
 				if (resolve) return getTarget();
 				return basicGetTarget();
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
 				if (resolve) return getCondition();
 				return basicGetCondition();
 		}
@@ -180,10 +180,10 @@ public class ResolveOpArgsExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
 				setTarget((VariableCS)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
 		}
@@ -197,10 +197,10 @@ public class ResolveOpArgsExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
 				setTarget((VariableCS)null);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
 		}
@@ -214,9 +214,9 @@ public class ResolveOpArgsExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__TARGET:
 				return target != null;
-			case QvtoperationalcsPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_OP_ARGS_EXP_CS__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

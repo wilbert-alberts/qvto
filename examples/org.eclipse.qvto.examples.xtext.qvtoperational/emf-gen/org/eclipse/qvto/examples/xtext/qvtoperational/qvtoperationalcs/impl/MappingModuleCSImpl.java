@@ -19,8 +19,8 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMe
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModulePropertyCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
@@ -137,7 +137,7 @@ public class MappingModuleCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_MODULE_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_MODULE_CS;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class MappingModuleCSImpl
 		TransformationHeaderCS oldHeaderCS = headerCS;
 		headerCS = newHeaderCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS, oldHeaderCS, newHeaderCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS, oldHeaderCS, newHeaderCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -171,14 +171,14 @@ public class MappingModuleCSImpl
 		if (newHeaderCS != headerCS) {
 			NotificationChain msgs = null;
 			if (headerCS != null)
-				msgs = ((InternalEObject)headerCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS, null, msgs);
+				msgs = ((InternalEObject)headerCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS, null, msgs);
 			if (newHeaderCS != null)
-				msgs = ((InternalEObject)newHeaderCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS, null, msgs);
+				msgs = ((InternalEObject)newHeaderCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS, null, msgs);
 			msgs = basicSetHeaderCS(newHeaderCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS, newHeaderCS, newHeaderCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS, newHeaderCS, newHeaderCS));
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<QVToImportCS> getImports() {
 		if (imports == null) {
-			imports = new EObjectContainmentEList<QVToImportCS>(QVToImportCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS);
+			imports = new EObjectContainmentEList<QVToImportCS>(QVToImportCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS);
 		}
 		return imports;
 	}
@@ -198,7 +198,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<ModelTypeCS> getMetamodels() {
 		if (metamodels == null) {
-			metamodels = new EObjectContainmentEList<ModelTypeCS>(ModelTypeCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS);
+			metamodels = new EObjectContainmentEList<ModelTypeCS>(ModelTypeCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS);
 		}
 		return metamodels;
 	}
@@ -209,7 +209,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<RenameCS> getRenamings() {
 		if (renamings == null) {
-			renamings = new EObjectContainmentEList<RenameCS>(RenameCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS);
+			renamings = new EObjectContainmentEList<RenameCS>(RenameCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS);
 		}
 		return renamings;
 	}
@@ -220,7 +220,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<ModulePropertyCS> getProperties() {
 		if (properties == null) {
-			properties = new EObjectContainmentEList<ModulePropertyCS>(ModulePropertyCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES);
+			properties = new EObjectContainmentEList<ModulePropertyCS>(ModulePropertyCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES);
 		}
 		return properties;
 	}
@@ -231,7 +231,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<MappingMethodCS> getMethods() {
 		if (methods == null) {
-			methods = new EObjectContainmentEList<MappingMethodCS>(MappingMethodCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS);
+			methods = new EObjectContainmentEList<MappingMethodCS>(MappingMethodCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS);
 		}
 		return methods;
 	}
@@ -242,7 +242,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<ClassifierDefCS> getClassifierDefCS() {
 		if (classifierDefCS == null) {
-			classifierDefCS = new EObjectContainmentEList<ClassifierDefCS>(ClassifierDefCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS);
+			classifierDefCS = new EObjectContainmentEList<ClassifierDefCS>(ClassifierDefCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS);
 		}
 		return classifierDefCS;
 	}
@@ -253,7 +253,7 @@ public class MappingModuleCSImpl
 	 */
 	public EList<TagCS> getTags() {
 		if (tags == null) {
-			tags = new EObjectContainmentEList<TagCS>(TagCS.class, this, QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS);
+			tags = new EObjectContainmentEList<TagCS>(TagCS.class, this, QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS);
 		}
 		return tags;
 	}
@@ -286,21 +286,21 @@ public class MappingModuleCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
 				return basicSetHeaderCS(null, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				return ((InternalEList<?>)getImports()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS:
 				return ((InternalEList<?>)getMetamodels()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS:
 				return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES:
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS:
 				return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return ((InternalEList<?>)getClassifierDefCS()).basicRemove(otherEnd, msgs);
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS:
 				return ((InternalEList<?>)getTags()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -313,21 +313,21 @@ public class MappingModuleCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
 				return getHeaderCS();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				return getImports();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS:
 				return getMetamodels();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS:
 				return getRenamings();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES:
 				return getProperties();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS:
 				return getMethods();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return getClassifierDefCS();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS:
 				return getTags();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -341,34 +341,34 @@ public class MappingModuleCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
 				setHeaderCS((TransformationHeaderCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				getImports().clear();
 				getImports().addAll((Collection<? extends QVToImportCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS:
 				getMetamodels().clear();
 				getMetamodels().addAll((Collection<? extends ModelTypeCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS:
 				getRenamings().clear();
 				getRenamings().addAll((Collection<? extends RenameCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES:
 				getProperties().clear();
 				getProperties().addAll((Collection<? extends ModulePropertyCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS:
 				getMethods().clear();
 				getMethods().addAll((Collection<? extends MappingMethodCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				getClassifierDefCS().clear();
 				getClassifierDefCS().addAll((Collection<? extends ClassifierDefCS>)newValue);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS:
 				getTags().clear();
 				getTags().addAll((Collection<? extends TagCS>)newValue);
 				return;
@@ -383,28 +383,28 @@ public class MappingModuleCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
 				setHeaderCS((TransformationHeaderCS)null);
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				getImports().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS:
 				getMetamodels().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS:
 				getRenamings().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES:
 				getProperties().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS:
 				getMethods().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				getClassifierDefCS().clear();
 				return;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS:
 				getTags().clear();
 				return;
 		}
@@ -418,21 +418,21 @@ public class MappingModuleCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__HEADER_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
 				return headerCS != null;
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__IMPORTS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				return imports != null && !imports.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METAMODELS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METAMODELS:
 				return metamodels != null && !metamodels.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__RENAMINGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__RENAMINGS:
 				return renamings != null && !renamings.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__PROPERTIES:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__PROPERTIES:
 				return properties != null && !properties.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__METHODS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__METHODS:
 				return methods != null && !methods.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__CLASSIFIER_DEF_CS:
 				return classifierDefCS != null && !classifierDefCS.isEmpty();
-			case QvtoperationalcsPackage.MAPPING_MODULE_CS__TAGS:
+			case QVTOperationalCSPackage.MAPPING_MODULE_CS__TAGS:
 				return tags != null && !tags.isEmpty();
 		}
 		return super.eIsSet(featureID);

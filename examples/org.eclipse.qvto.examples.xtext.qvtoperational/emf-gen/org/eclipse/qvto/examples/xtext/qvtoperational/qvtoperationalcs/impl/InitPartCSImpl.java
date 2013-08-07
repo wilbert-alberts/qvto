@@ -12,7 +12,7 @@ import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitOp;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -73,7 +73,7 @@ public class InitPartCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.INIT_PART_CS;
+		return QVTOperationalCSPackage.Literals.INIT_PART_CS;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class InitPartCSImpl
 		InitOp oldInitOp = initOp;
 		initOp = newInitOp == null ? INIT_OP_EDEFAULT : newInitOp;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.INIT_PART_CS__INIT_OP, oldInitOp, initOp));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.INIT_PART_CS__INIT_OP, oldInitOp, initOp));
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class InitPartCSImpl
 		ExpCS oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION, oldExpression, newExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION, oldExpression, newExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -126,14 +126,14 @@ public class InitPartCSImpl
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
-				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION, null, msgs);
 			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION, null, msgs);
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION, null, msgs);
 			msgs = basicSetExpression(newExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION, newExpression, newExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION, newExpression, newExpression));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class InitPartCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
+			case QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -177,9 +177,9 @@ public class InitPartCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.INIT_PART_CS__INIT_OP:
+			case QVTOperationalCSPackage.INIT_PART_CS__INIT_OP:
 				return getInitOp();
-			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
+			case QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION:
 				return getExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -192,10 +192,10 @@ public class InitPartCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.INIT_PART_CS__INIT_OP:
+			case QVTOperationalCSPackage.INIT_PART_CS__INIT_OP:
 				setInitOp((InitOp)newValue);
 				return;
-			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
+			case QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION:
 				setExpression((ExpCS)newValue);
 				return;
 		}
@@ -209,10 +209,10 @@ public class InitPartCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.INIT_PART_CS__INIT_OP:
+			case QVTOperationalCSPackage.INIT_PART_CS__INIT_OP:
 				setInitOp(INIT_OP_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
+			case QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION:
 				setExpression((ExpCS)null);
 				return;
 		}
@@ -226,9 +226,9 @@ public class InitPartCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.INIT_PART_CS__INIT_OP:
+			case QVTOperationalCSPackage.INIT_PART_CS__INIT_OP:
 				return initOp != INIT_OP_EDEFAULT;
-			case QvtoperationalcsPackage.INIT_PART_CS__EXPRESSION:
+			case QVTOperationalCSPackage.INIT_PART_CS__EXPRESSION:
 				return expression != null;
 		}
 		return super.eIsSet(featureID);

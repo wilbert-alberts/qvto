@@ -5,7 +5,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryImportCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -34,7 +34,7 @@ public class LibraryImportCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.LIBRARY_IMPORT_CS;
+		return QVTOperationalCSPackage.Literals.LIBRARY_IMPORT_CS;
 	}
 
 	/**

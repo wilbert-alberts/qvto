@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParameterDeclarationCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS()
  * @model
  * @generated
  */
@@ -61,7 +61,7 @@ public interface ParameterDeclarationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Spec CS</em>' containment reference.
 	 * @see #setTypeSpecCS(TypeSpecCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParameterDeclarationCS_TypeSpecCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS_TypeSpecCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -91,7 +91,7 @@ public interface ParameterDeclarationCS
 	 * @see #isSetDirectionKind()
 	 * @see #unsetDirectionKind()
 	 * @see #setDirectionKind(DirectionKindEnum)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getParameterDeclarationCS_DirectionKind()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS_DirectionKind()
 	 * @model unsettable="true"
 	 * @generated
 	 */

@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -60,7 +60,7 @@ public class MappingBodyCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MAPPING_BODY_CS;
+		return QVTOperationalCSPackage.Literals.MAPPING_BODY_CS;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class MappingBodyCSImpl
 		boolean oldHasPopulationKeyword = hasPopulationKeyword;
 		hasPopulationKeyword = newHasPopulationKeyword;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD, oldHasPopulationKeyword, hasPopulationKeyword));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD, oldHasPopulationKeyword, hasPopulationKeyword));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class MappingBodyCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+			case QVTOperationalCSPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
 				return isHasPopulationKeyword();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +122,7 @@ public class MappingBodyCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+			case QVTOperationalCSPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
 				setHasPopulationKeyword((Boolean)newValue);
 				return;
 		}
@@ -136,7 +136,7 @@ public class MappingBodyCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+			case QVTOperationalCSPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
 				setHasPopulationKeyword(HAS_POPULATION_KEYWORD_EDEFAULT);
 				return;
 		}
@@ -150,7 +150,7 @@ public class MappingBodyCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
+			case QVTOperationalCSPackage.MAPPING_BODY_CS__HAS_POPULATION_KEYWORD:
 				return hasPopulationKeyword != HAS_POPULATION_KEYWORD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

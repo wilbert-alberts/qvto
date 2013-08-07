@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.SwitchAltCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.SwitchExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
@@ -70,7 +70,7 @@ public class SwitchExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.SWITCH_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.SWITCH_EXP_CS;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class SwitchExpCSImpl
 	 */
 	public EList<SwitchAltCS> getAlternativePart() {
 		if (alternativePart == null) {
-			alternativePart = new EObjectContainmentEList<SwitchAltCS>(SwitchAltCS.class, this, ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART);
+			alternativePart = new EObjectContainmentEList<SwitchAltCS>(SwitchAltCS.class, this, ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART);
 		}
 		return alternativePart;
 	}
@@ -101,7 +101,7 @@ public class SwitchExpCSImpl
 		ExpCS oldElsePart = elsePart;
 		elsePart = newElsePart;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART, oldElsePart, newElsePart);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART, oldElsePart, newElsePart);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -115,14 +115,14 @@ public class SwitchExpCSImpl
 		if (newElsePart != elsePart) {
 			NotificationChain msgs = null;
 			if (elsePart != null)
-				msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
+				msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
 			if (newElsePart != null)
-				msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
+				msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART, null, msgs);
 			msgs = basicSetElsePart(newElsePart, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART, newElsePart, newElsePart));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART, newElsePart, newElsePart));
 	}
 
 	/**
@@ -153,9 +153,9 @@ public class SwitchExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
 				return ((InternalEList<?>)getAlternativePart()).basicRemove(otherEnd, msgs);
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART:
 				return basicSetElsePart(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -168,9 +168,9 @@ public class SwitchExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
 				return getAlternativePart();
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART:
 				return getElsePart();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -184,11 +184,11 @@ public class SwitchExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
 				getAlternativePart().clear();
 				getAlternativePart().addAll((Collection<? extends SwitchAltCS>)newValue);
 				return;
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART:
 				setElsePart((ExpCS)newValue);
 				return;
 		}
@@ -202,10 +202,10 @@ public class SwitchExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
 				getAlternativePart().clear();
 				return;
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART:
 				setElsePart((ExpCS)null);
 				return;
 		}
@@ -219,9 +219,9 @@ public class SwitchExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ALTERNATIVE_PART:
 				return alternativePart != null && !alternativePart.isEmpty();
-			case ImperativeoclcsPackage.SWITCH_EXP_CS__ELSE_PART:
+			case ImperativeOCLCSPackage.SWITCH_EXP_CS__ELSE_PART:
 				return elsePart != null;
 		}
 		return super.eIsSet(featureID);

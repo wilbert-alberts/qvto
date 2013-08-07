@@ -9,7 +9,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindEnum;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -62,7 +62,7 @@ public class DirectionKindCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.DIRECTION_KIND_CS;
+		return QVTOperationalCSPackage.Literals.DIRECTION_KIND_CS;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class DirectionKindCSImpl
 		DirectionKindEnum oldDirectionKind = directionKind;
 		directionKind = newDirectionKind == null ? DIRECTION_KIND_EDEFAULT : newDirectionKind;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.DIRECTION_KIND_CS__DIRECTION_KIND, oldDirectionKind, directionKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.DIRECTION_KIND_CS__DIRECTION_KIND, oldDirectionKind, directionKind));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class DirectionKindCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
 				return getDirectionKind();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +124,7 @@ public class DirectionKindCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
 				setDirectionKind((DirectionKindEnum)newValue);
 				return;
 		}
@@ -138,7 +138,7 @@ public class DirectionKindCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
 				setDirectionKind(DIRECTION_KIND_EDEFAULT);
 				return;
 		}
@@ -152,7 +152,7 @@ public class DirectionKindCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS__DIRECTION_KIND:
 				return directionKind != DIRECTION_KIND_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

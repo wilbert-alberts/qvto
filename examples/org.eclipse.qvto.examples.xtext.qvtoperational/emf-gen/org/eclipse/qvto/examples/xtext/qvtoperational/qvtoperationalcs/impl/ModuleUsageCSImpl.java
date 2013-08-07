@@ -18,7 +18,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImportKin
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -90,7 +90,7 @@ public class ModuleUsageCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MODULE_USAGE_CS;
+		return QVTOperationalCSPackage.Literals.MODULE_USAGE_CS;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ModuleUsageCSImpl
 		ImportKindEnum oldImportKind = importKind;
 		importKind = newImportKind == null ? IMPORT_KIND_EDEFAULT : newImportKind;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODULE_USAGE_CS__IMPORT_KIND, oldImportKind, importKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODULE_USAGE_CS__IMPORT_KIND, oldImportKind, importKind));
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class ModuleUsageCSImpl
 		ModuleKindCS oldModuleKindCS = moduleKindCS;
 		moduleKindCS = newModuleKindCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS, oldModuleKindCS, newModuleKindCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS, oldModuleKindCS, newModuleKindCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -143,14 +143,14 @@ public class ModuleUsageCSImpl
 		if (newModuleKindCS != moduleKindCS) {
 			NotificationChain msgs = null;
 			if (moduleKindCS != null)
-				msgs = ((InternalEObject)moduleKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)moduleKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
 			if (newModuleKindCS != null)
-				msgs = ((InternalEObject)newModuleKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
+				msgs = ((InternalEObject)newModuleKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS, null, msgs);
 			msgs = basicSetModuleKindCS(newModuleKindCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS, newModuleKindCS, newModuleKindCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS, newModuleKindCS, newModuleKindCS));
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class ModuleUsageCSImpl
 	 */
 	public EList<ModuleRefCS> getModuleRefs() {
 		if (moduleRefs == null) {
-			moduleRefs = new EObjectContainmentEList<ModuleRefCS>(ModuleRefCS.class, this, QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS);
+			moduleRefs = new EObjectContainmentEList<ModuleRefCS>(ModuleRefCS.class, this, QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS);
 		}
 		return moduleRefs;
 	}
@@ -192,9 +192,9 @@ public class ModuleUsageCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
 				return basicSetModuleKindCS(null, msgs);
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS:
 				return ((InternalEList<?>)getModuleRefs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -207,11 +207,11 @@ public class ModuleUsageCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__IMPORT_KIND:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__IMPORT_KIND:
 				return getImportKind();
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
 				return getModuleKindCS();
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS:
 				return getModuleRefs();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -225,13 +225,13 @@ public class ModuleUsageCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__IMPORT_KIND:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__IMPORT_KIND:
 				setImportKind((ImportKindEnum)newValue);
 				return;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
 				setModuleKindCS((ModuleKindCS)newValue);
 				return;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS:
 				getModuleRefs().clear();
 				getModuleRefs().addAll((Collection<? extends ModuleRefCS>)newValue);
 				return;
@@ -246,13 +246,13 @@ public class ModuleUsageCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__IMPORT_KIND:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__IMPORT_KIND:
 				setImportKind(IMPORT_KIND_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
 				setModuleKindCS((ModuleKindCS)null);
 				return;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS:
 				getModuleRefs().clear();
 				return;
 		}
@@ -266,11 +266,11 @@ public class ModuleUsageCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__IMPORT_KIND:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__IMPORT_KIND:
 				return importKind != IMPORT_KIND_EDEFAULT;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_KIND_CS:
 				return moduleKindCS != null;
-			case QvtoperationalcsPackage.MODULE_USAGE_CS__MODULE_REFS:
+			case QVTOperationalCSPackage.MODULE_USAGE_CS__MODULE_REFS:
 				return moduleRefs != null && !moduleRefs.isEmpty();
 		}
 		return super.eIsSet(featureID);

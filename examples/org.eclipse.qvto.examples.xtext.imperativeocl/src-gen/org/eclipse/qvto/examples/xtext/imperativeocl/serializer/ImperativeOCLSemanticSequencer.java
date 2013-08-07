@@ -47,7 +47,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.serializer.EssentialOCLSemant
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictLiteralPartCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.DictTypeCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListTypeCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ReturnExpCS;
@@ -495,8 +495,8 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == ImperativeoclcsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case ImperativeoclcsPackage.DICT_LITERAL_EXP_CS:
+		else if(semanticObject.eClass().getEPackage() == ImperativeOCLCSPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case ImperativeOCLCSPackage.DICT_LITERAL_EXP_CS:
 				if(context == grammarAccess.getDictLiteralExpCSRule() ||
 				   context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
@@ -509,13 +509,13 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.DICT_LITERAL_PART_CS:
+			case ImperativeOCLCSPackage.DICT_LITERAL_PART_CS:
 				if(context == grammarAccess.getDictLiteralPartCSRule()) {
 					sequence_DictLiteralPartCS(context, (DictLiteralPartCS) semanticObject); 
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.DICT_TYPE_CS:
+			case ImperativeOCLCSPackage.DICT_TYPE_CS:
 				if(context == grammarAccess.getDictTypeCSRule() ||
 				   context == grammarAccess.getTypeLiteralCSRule()) {
 					sequence_DictTypeCS(context, (DictTypeCS) semanticObject); 
@@ -530,7 +530,7 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
 				   context == grammarAccess.getGrammmarCSRule() ||
@@ -543,7 +543,7 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.LIST_TYPE_CS:
+			case ImperativeOCLCSPackage.LIST_TYPE_CS:
 				if(context == grammarAccess.getListTypeCSRule() ||
 				   context == grammarAccess.getTypeLiteralCSRule()) {
 					sequence_ListTypeCS(context, (ListTypeCS) semanticObject); 
@@ -558,7 +558,7 @@ public class ImperativeOCLSemanticSequencer extends EssentialOCLSemanticSequence
 					return; 
 				}
 				else break;
-			case ImperativeoclcsPackage.RETURN_EXP_CS:
+			case ImperativeOCLCSPackage.RETURN_EXP_CS:
 				if(context == grammarAccess.getExpCSRule() ||
 				   context == grammarAccess.getExpCSAccess().getInfixExpCSOwnedExpressionAction_0_1_0() ||
 				   context == grammarAccess.getGrammmarCSRule() ||

@@ -20,7 +20,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getUnitCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getUnitCS()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface UnitCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segment</em>' attribute list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getUnitCS_Segment()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getUnitCS_Segment()
 	 * @model unique="false"
 	 * @generated
 	 */
@@ -73,7 +73,7 @@ public interface UnitCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Modules</em>' reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getUnitCS_Modules()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getUnitCS_Modules()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
@@ -89,7 +89,7 @@ public interface UnitCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Model Types</em>' reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getUnitCS_ModelTypes()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getUnitCS_ModelTypes()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
@@ -105,7 +105,7 @@ public interface UnitCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Imports</em>' reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getUnitCS_Imports()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getUnitCS_Imports()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */

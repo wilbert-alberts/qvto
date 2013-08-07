@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationRefineCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationRefineCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface TransformationRefineCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Module Ref CS</em>' containment reference.
 	 * @see #setModuleRefCS(ModuleRefCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationRefineCS_ModuleRefCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationRefineCS_ModuleRefCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */

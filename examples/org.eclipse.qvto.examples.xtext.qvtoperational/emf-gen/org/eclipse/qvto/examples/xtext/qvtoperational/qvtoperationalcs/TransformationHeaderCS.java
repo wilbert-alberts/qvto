@@ -4,7 +4,6 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS;
@@ -25,7 +24,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS()
  * @model
  * @generated
  */
@@ -42,7 +41,7 @@ public interface TransformationHeaderCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Qualifiers</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS_Qualifiers()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_Qualifiers()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -58,7 +57,7 @@ public interface TransformationHeaderCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Path Name CS</em>' containment reference.
 	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS_PathNameCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_PathNameCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -84,7 +83,7 @@ public interface TransformationHeaderCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS_Parameters()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_Parameters()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -100,7 +99,7 @@ public interface TransformationHeaderCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Module Usages</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS_ModuleUsages()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_ModuleUsages()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -117,7 +116,7 @@ public interface TransformationHeaderCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Transformation Refine CS</em>' containment reference.
 	 * @see #setTransformationRefineCS(TransformationRefineCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTransformationHeaderCS_TransformationRefineCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_TransformationRefineCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -141,7 +140,7 @@ public interface TransformationHeaderCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name, -- TODO\n\t\t\t\tnestedPackage = ownedNestedPackage,\n\t\t\t\townedType = ownedType\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name -- TODO\n--\t\t\t\tnestedPackage = ownedNestedPackage.ast(),\n--\t\t\t\townedType = ownedType.ast()\t\t\t\t\n\t\t\t}'"
 	 * @generated
 	 */
 	OperationalTransformation ast();

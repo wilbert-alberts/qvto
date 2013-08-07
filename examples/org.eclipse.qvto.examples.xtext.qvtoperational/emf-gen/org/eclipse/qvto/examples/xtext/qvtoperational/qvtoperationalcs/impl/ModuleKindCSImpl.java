@@ -9,7 +9,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleKindEnum;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -60,7 +60,7 @@ public class ModuleKindCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.MODULE_KIND_CS;
+		return QVTOperationalCSPackage.Literals.MODULE_KIND_CS;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class ModuleKindCSImpl
 		ModuleKindEnum oldModuleKind = moduleKind;
 		moduleKind = newModuleKind == null ? MODULE_KIND_EDEFAULT : newModuleKind;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.MODULE_KIND_CS__MODULE_KIND, oldModuleKind, moduleKind));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MODULE_KIND_CS__MODULE_KIND, oldModuleKind, moduleKind));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ModuleKindCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_KIND_CS__MODULE_KIND:
+			case QVTOperationalCSPackage.MODULE_KIND_CS__MODULE_KIND:
 				return getModuleKind();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,7 +122,7 @@ public class ModuleKindCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_KIND_CS__MODULE_KIND:
+			case QVTOperationalCSPackage.MODULE_KIND_CS__MODULE_KIND:
 				setModuleKind((ModuleKindEnum)newValue);
 				return;
 		}
@@ -136,7 +136,7 @@ public class ModuleKindCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_KIND_CS__MODULE_KIND:
+			case QVTOperationalCSPackage.MODULE_KIND_CS__MODULE_KIND:
 				setModuleKind(MODULE_KIND_EDEFAULT);
 				return;
 		}
@@ -150,7 +150,7 @@ public class ModuleKindCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.MODULE_KIND_CS__MODULE_KIND:
+			case QVTOperationalCSPackage.MODULE_KIND_CS__MODULE_KIND:
 				return moduleKind != MODULE_KIND_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

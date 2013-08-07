@@ -22,6 +22,12 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "GrammmarCS");
 		private final RuleCall cImperativeOCLExpCSParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
+		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+		//
+		//
+		////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+		//
+		//
 		//GrammmarCS returns essentialocl::ExpCS:
 		//
 		//	ImperativeOCLExpCS;
@@ -900,6 +906,12 @@ public class ImperativeOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
+	//
+	//
+	////import "platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.ecore" as essentialocl
+	//
+	//
 	//GrammmarCS returns essentialocl::ExpCS:
 	//
 	//	ImperativeOCLExpCS;

@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -86,7 +86,7 @@ public class RenameCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.RENAME_CS;
+		return QVTOperationalCSPackage.Literals.RENAME_CS;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class RenameCSImpl
 		TypeCS oldTypeCS = typeCS;
 		typeCS = newTypeCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RENAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RENAME_CS__TYPE_CS, oldTypeCS, newTypeCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -120,14 +120,14 @@ public class RenameCSImpl
 		if (newTypeCS != typeCS) {
 			NotificationChain msgs = null;
 			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RENAME_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RENAME_CS__TYPE_CS, null, msgs);
 			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RENAME_CS__TYPE_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RENAME_CS__TYPE_CS, null, msgs);
 			msgs = basicSetTypeCS(newTypeCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RENAME_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RENAME_CS__TYPE_CS, newTypeCS, newTypeCS));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class RenameCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RENAME_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RENAME_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class RenameCSImpl
 		StringLiteralExpCS oldOriginalName = originalName;
 		originalName = newOriginalName;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME, oldOriginalName, newOriginalName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME, oldOriginalName, newOriginalName);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -180,14 +180,14 @@ public class RenameCSImpl
 		if (newOriginalName != originalName) {
 			NotificationChain msgs = null;
 			if (originalName != null)
-				msgs = ((InternalEObject)originalName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME, null, msgs);
+				msgs = ((InternalEObject)originalName).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME, null, msgs);
 			if (newOriginalName != null)
-				msgs = ((InternalEObject)newOriginalName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME, null, msgs);
+				msgs = ((InternalEObject)newOriginalName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME, null, msgs);
 			msgs = basicSetOriginalName(newOriginalName, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME, newOriginalName, newOriginalName));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME, newOriginalName, newOriginalName));
 	}
 
 	/**
@@ -218,9 +218,9 @@ public class RenameCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RENAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.RENAME_CS__TYPE_CS:
 				return basicSetTypeCS(null, msgs);
-			case QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME:
+			case QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME:
 				return basicSetOriginalName(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -233,11 +233,11 @@ public class RenameCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RENAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.RENAME_CS__TYPE_CS:
 				return getTypeCS();
-			case QvtoperationalcsPackage.RENAME_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.RENAME_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME:
+			case QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME:
 				return getOriginalName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -250,13 +250,13 @@ public class RenameCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RENAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.RENAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)newValue);
 				return;
-			case QvtoperationalcsPackage.RENAME_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.RENAME_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME:
+			case QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME:
 				setOriginalName((StringLiteralExpCS)newValue);
 				return;
 		}
@@ -270,13 +270,13 @@ public class RenameCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RENAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.RENAME_CS__TYPE_CS:
 				setTypeCS((TypeCS)null);
 				return;
-			case QvtoperationalcsPackage.RENAME_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.RENAME_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME:
+			case QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME:
 				setOriginalName((StringLiteralExpCS)null);
 				return;
 		}
@@ -290,11 +290,11 @@ public class RenameCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RENAME_CS__TYPE_CS:
+			case QVTOperationalCSPackage.RENAME_CS__TYPE_CS:
 				return typeCS != null;
-			case QvtoperationalcsPackage.RENAME_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.RENAME_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case QvtoperationalcsPackage.RENAME_CS__ORIGINAL_NAME:
+			case QVTOperationalCSPackage.RENAME_CS__ORIGINAL_NAME:
 				return originalName != null;
 		}
 		return super.eIsSet(featureID);

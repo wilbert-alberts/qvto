@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.QuitExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -71,7 +71,7 @@ public class QuitExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.QUIT_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.QUIT_EXP_CS;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class QuitExpCSImpl
 		String oldKeyword = keyword;
 		keyword = newKeyword;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.QUIT_EXP_CS__KEYWORD, oldKeyword, keyword));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.QUIT_EXP_CS__KEYWORD, oldKeyword, keyword));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class QuitExpCSImpl
 		ExpCS oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.QUIT_EXP_CS__VALUE, oldValue, newValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE, oldValue, newValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +124,14 @@ public class QuitExpCSImpl
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.QUIT_EXP_CS__VALUE, null, msgs);
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE, null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.QUIT_EXP_CS__VALUE, null, msgs);
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE, null, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.QUIT_EXP_CS__VALUE, newValue, newValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE, newValue, newValue));
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class QuitExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.QUIT_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE:
 				return basicSetValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -175,9 +175,9 @@ public class QuitExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.QUIT_EXP_CS__KEYWORD:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__KEYWORD:
 				return getKeyword();
-			case ImperativeoclcsPackage.QUIT_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -190,10 +190,10 @@ public class QuitExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.QUIT_EXP_CS__KEYWORD:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__KEYWORD:
 				setKeyword((String)newValue);
 				return;
-			case ImperativeoclcsPackage.QUIT_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE:
 				setValue((ExpCS)newValue);
 				return;
 		}
@@ -207,10 +207,10 @@ public class QuitExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.QUIT_EXP_CS__KEYWORD:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__KEYWORD:
 				setKeyword(KEYWORD_EDEFAULT);
 				return;
-			case ImperativeoclcsPackage.QUIT_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE:
 				setValue((ExpCS)null);
 				return;
 		}
@@ -224,9 +224,9 @@ public class QuitExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.QUIT_EXP_CS__KEYWORD:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__KEYWORD:
 				return KEYWORD_EDEFAULT == null ? keyword != null : !KEYWORD_EDEFAULT.equals(keyword);
-			case ImperativeoclcsPackage.QUIT_EXP_CS__VALUE:
+			case ImperativeOCLCSPackage.QUIT_EXP_CS__VALUE:
 				return value != null;
 		}
 		return super.eIsSet(featureID);

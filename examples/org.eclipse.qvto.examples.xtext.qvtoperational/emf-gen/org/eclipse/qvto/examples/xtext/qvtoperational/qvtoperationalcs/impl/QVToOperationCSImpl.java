@@ -9,8 +9,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.OperationCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -54,7 +54,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.QV_TO_OPERATION_CS;
+		return QVTOperationalCSPackage.Literals.QV_TO_OPERATION_CS;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 		StereotypeQualifierCS oldStereotypes = stereotypes;
 		stereotypes = newStereotypes;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES, oldStereotypes, newStereotypes);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES, oldStereotypes, newStereotypes);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -90,14 +90,14 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 		if (newStereotypes != stereotypes) {
 			NotificationChain msgs = null;
 			if (stereotypes != null)
-				msgs = ((InternalEObject)stereotypes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES, null, msgs);
+				msgs = ((InternalEObject)stereotypes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES, null, msgs);
 			if (newStereotypes != null)
-				msgs = ((InternalEObject)newStereotypes).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES, null, msgs);
+				msgs = ((InternalEObject)newStereotypes).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES, null, msgs);
 			msgs = basicSetStereotypes(newStereotypes, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES, newStereotypes, newStereotypes));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES, newStereotypes, newStereotypes));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES:
 				return basicSetStereotypes(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -142,7 +142,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES:
 				return getStereotypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -156,7 +156,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES:
 				setStereotypes((StereotypeQualifierCS)newValue);
 				return;
 		}
@@ -171,7 +171,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES:
 				setStereotypes((StereotypeQualifierCS)null);
 				return;
 		}
@@ -186,7 +186,7 @@ public class QVToOperationCSImpl extends OperationCSImpl implements QVToOperatio
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.QV_TO_OPERATION_CS__STEREOTYPES:
+			case QVTOperationalCSPackage.QV_TO_OPERATION_CS__STEREOTYPES:
 				return stereotypes != null;
 		}
 		return super.eIsSet(featureID);

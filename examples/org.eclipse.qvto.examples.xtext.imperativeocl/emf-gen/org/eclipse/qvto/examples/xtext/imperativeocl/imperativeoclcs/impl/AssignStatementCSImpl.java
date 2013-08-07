@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssignStatementCS;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 /**
@@ -82,7 +82,7 @@ public class AssignStatementCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.ASSIGN_STATEMENT_CS;
+		return ImperativeOCLCSPackage.Literals.ASSIGN_STATEMENT_CS;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class AssignStatementCSImpl
 		ExpCS oldLValueCS = lValueCS;
 		lValueCS = newLValueCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, oldLValueCS, newLValueCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, oldLValueCS, newLValueCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -116,14 +116,14 @@ public class AssignStatementCSImpl
 		if (newLValueCS != lValueCS) {
 			NotificationChain msgs = null;
 			if (lValueCS != null)
-				msgs = ((InternalEObject)lValueCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, null, msgs);
+				msgs = ((InternalEObject)lValueCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, null, msgs);
 			if (newLValueCS != null)
-				msgs = ((InternalEObject)newLValueCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, null, msgs);
+				msgs = ((InternalEObject)newLValueCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, null, msgs);
 			msgs = basicSetLValueCS(newLValueCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, newLValueCS, newLValueCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS, newLValueCS, newLValueCS));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class AssignStatementCSImpl
 		ExpCS oldOclExpressionCS = oclExpressionCS;
 		oclExpressionCS = newOclExpressionCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, oldOclExpressionCS, newOclExpressionCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -157,14 +157,14 @@ public class AssignStatementCSImpl
 		if (newOclExpressionCS != oclExpressionCS) {
 			NotificationChain msgs = null;
 			if (oclExpressionCS != null)
-				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)oclExpressionCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, null, msgs);
 			if (newOclExpressionCS != null)
-				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, null, msgs);
+				msgs = ((InternalEObject)newOclExpressionCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, null, msgs);
 			msgs = basicSetOclExpressionCS(newOclExpressionCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS, newOclExpressionCS, newOclExpressionCS));
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class AssignStatementCSImpl
 		boolean oldIncremental = incremental;
 		incremental = newIncremental;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__INCREMENTAL, oldIncremental, incremental));
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__INCREMENTAL, oldIncremental, incremental));
 	}
 
 	/**
@@ -214,9 +214,9 @@ public class AssignStatementCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
 				return basicSetLValueCS(null, msgs);
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				return basicSetOclExpressionCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -229,11 +229,11 @@ public class AssignStatementCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
 				return getLValueCS();
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				return getOclExpressionCS();
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
 				return isIncremental();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -246,13 +246,13 @@ public class AssignStatementCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
 				setLValueCS((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)newValue);
 				return;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
 				setIncremental((Boolean)newValue);
 				return;
 		}
@@ -266,13 +266,13 @@ public class AssignStatementCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
 				setLValueCS((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				setOclExpressionCS((ExpCS)null);
 				return;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
 				setIncremental(INCREMENTAL_EDEFAULT);
 				return;
 		}
@@ -286,11 +286,11 @@ public class AssignStatementCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__LVALUE_CS:
 				return lValueCS != null;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__OCL_EXPRESSION_CS:
 				return oclExpressionCS != null;
-			case ImperativeoclcsPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
+			case ImperativeOCLCSPackage.ASSIGN_STATEMENT_CS__INCREMENTAL:
 				return incremental != INCREMENTAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

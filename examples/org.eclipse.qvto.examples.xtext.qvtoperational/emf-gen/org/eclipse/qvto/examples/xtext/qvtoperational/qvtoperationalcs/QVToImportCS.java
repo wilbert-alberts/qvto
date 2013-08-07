@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToImportCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToImportCS()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface QVToImportCS extends ElementCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Unit</em>' containment reference.
 	 * @see #setUnit(UnitCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToImportCS_Unit()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToImportCS_Unit()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -60,7 +60,7 @@ public interface QVToImportCS extends ElementCS {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Imported Unit Element</em>' attribute list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToImportCS_ImportedUnitElement()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToImportCS_ImportedUnitElement()
 	 * @model
 	 * @generated
 	 */
@@ -76,7 +76,7 @@ public interface QVToImportCS extends ElementCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>All</em>' attribute.
 	 * @see #setAll(boolean)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getQVToImportCS_All()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToImportCS_All()
 	 * @model
 	 * @generated
 	 */

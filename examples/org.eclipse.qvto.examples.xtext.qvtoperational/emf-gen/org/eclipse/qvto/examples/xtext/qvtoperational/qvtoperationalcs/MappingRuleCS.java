@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingRuleCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingRuleCS()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface MappingRuleCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Guard</em>' containment reference.
 	 * @see #setGuard(ExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingRuleCS_Guard()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingRuleCS_Guard()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -59,7 +59,7 @@ public interface MappingRuleCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Body</em>' containment reference.
 	 * @see #setMappingBody(MappingSectionsCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getMappingRuleCS_MappingBody()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingRuleCS_MappingBody()
 	 * @model containment="true"
 	 * @generated
 	 */

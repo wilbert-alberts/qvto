@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getRenameCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getRenameCS()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface RenameCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type CS</em>' containment reference.
 	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getRenameCS_TypeCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getRenameCS_TypeCS()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -89,7 +89,7 @@ public interface RenameCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Original Name</em>' containment reference.
 	 * @see #setOriginalName(StringLiteralExpCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getRenameCS_OriginalName()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getRenameCS_OriginalName()
 	 * @model containment="true"
 	 * @generated
 	 */

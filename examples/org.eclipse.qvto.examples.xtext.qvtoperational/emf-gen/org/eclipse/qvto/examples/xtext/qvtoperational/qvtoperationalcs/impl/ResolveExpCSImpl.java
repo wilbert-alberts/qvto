@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.VariableCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.InvocationExpCSImpl;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -123,7 +123,7 @@ public class ResolveExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.RESOLVE_EXP_CS;
+		return QVTOperationalCSPackage.Literals.RESOLVE_EXP_CS;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class ResolveExpCSImpl
 		boolean oldOne = one;
 		one = newOne;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__ONE, oldOne, one));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__ONE, oldOne, one));
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class ResolveExpCSImpl
 		boolean oldIsInverse = isInverse;
 		isInverse = newIsInverse;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_INVERSE, oldIsInverse, isInverse));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_INVERSE, oldIsInverse, isInverse));
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class ResolveExpCSImpl
 		boolean oldIsDeferred = isDeferred;
 		isDeferred = newIsDeferred;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_DEFERRED, oldIsDeferred, isDeferred));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_DEFERRED, oldIsDeferred, isDeferred));
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class ResolveExpCSImpl
 		VariableCS oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET, oldTarget, newTarget);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET, oldTarget, newTarget);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -214,14 +214,14 @@ public class ResolveExpCSImpl
 		if (newTarget != target) {
 			NotificationChain msgs = null;
 			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET, null, msgs);
+				msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET, null, msgs);
 			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET, null, msgs);
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET, null, msgs);
 			msgs = basicSetTarget(newTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET, newTarget, newTarget));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET, newTarget, newTarget));
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class ResolveExpCSImpl
 		ExpCS oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION, oldCondition, newCondition);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION, oldCondition, newCondition);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -255,14 +255,14 @@ public class ResolveExpCSImpl
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION, null, msgs);
 			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION, null, msgs);
+				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION, null, msgs);
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION, newCondition, newCondition));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION, newCondition, newCondition));
 	}
 
 	/**
@@ -293,9 +293,9 @@ public class ResolveExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET:
 				return basicSetTarget(null, msgs);
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION:
 				return basicSetCondition(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -308,15 +308,15 @@ public class ResolveExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__ONE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__ONE:
 				return isOne();
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_INVERSE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_INVERSE:
 				return isIsInverse();
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_DEFERRED:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_DEFERRED:
 				return isIsDeferred();
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET:
 				return getTarget();
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION:
 				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -329,19 +329,19 @@ public class ResolveExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__ONE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__ONE:
 				setOne((Boolean)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_INVERSE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_INVERSE:
 				setIsInverse((Boolean)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_DEFERRED:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_DEFERRED:
 				setIsDeferred((Boolean)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET:
 				setTarget((VariableCS)newValue);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION:
 				setCondition((ExpCS)newValue);
 				return;
 		}
@@ -355,19 +355,19 @@ public class ResolveExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__ONE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__ONE:
 				setOne(ONE_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_INVERSE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_INVERSE:
 				setIsInverse(IS_INVERSE_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_DEFERRED:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_DEFERRED:
 				setIsDeferred(IS_DEFERRED_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET:
 				setTarget((VariableCS)null);
 				return;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION:
 				setCondition((ExpCS)null);
 				return;
 		}
@@ -381,15 +381,15 @@ public class ResolveExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__ONE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__ONE:
 				return one != ONE_EDEFAULT;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_INVERSE:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_INVERSE:
 				return isInverse != IS_INVERSE_EDEFAULT;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__IS_DEFERRED:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__IS_DEFERRED:
 				return isDeferred != IS_DEFERRED_EDEFAULT;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__TARGET:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__TARGET:
 				return target != null;
-			case QvtoperationalcsPackage.RESOLVE_EXP_CS__CONDITION:
+			case QVTOperationalCSPackage.RESOLVE_EXP_CS__CONDITION:
 				return condition != null;
 		}
 		return super.eIsSet(featureID);

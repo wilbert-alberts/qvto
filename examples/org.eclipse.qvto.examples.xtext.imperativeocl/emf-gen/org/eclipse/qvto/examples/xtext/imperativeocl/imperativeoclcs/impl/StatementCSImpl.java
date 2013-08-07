@@ -4,7 +4,7 @@ package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.StatementCS;
 
 /**
@@ -33,7 +33,7 @@ public abstract class StatementCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.STATEMENT_CS;
+		return ImperativeOCLCSPackage.Literals.STATEMENT_CS;
 	}
 
 } // StatementCSImpl

@@ -11,7 +11,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindEnum;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
@@ -105,7 +105,7 @@ public class ParameterDeclarationCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QvtoperationalcsPackage.Literals.PARAMETER_DECLARATION_CS;
+		return QVTOperationalCSPackage.Literals.PARAMETER_DECLARATION_CS;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ParameterDeclarationCSImpl
 		String oldSimpleNameCS = simpleNameCS;
 		simpleNameCS = newSimpleNameCS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class ParameterDeclarationCSImpl
 		TypeSpecCS oldTypeSpecCS = typeSpecCS;
 		typeSpecCS = newTypeSpecCS;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, oldTypeSpecCS, newTypeSpecCS);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -158,14 +158,14 @@ public class ParameterDeclarationCSImpl
 		if (newTypeSpecCS != typeSpecCS) {
 			NotificationChain msgs = null;
 			if (typeSpecCS != null)
-				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, null, msgs);
+				msgs = ((InternalEObject)typeSpecCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, null, msgs);
 			if (newTypeSpecCS != null)
-				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, null, msgs);
+				msgs = ((InternalEObject)newTypeSpecCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, null, msgs);
 			msgs = basicSetTypeSpecCS(newTypeSpecCS, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS, newTypeSpecCS, newTypeSpecCS));
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class ParameterDeclarationCSImpl
 		boolean oldDirectionKindESet = directionKindESet;
 		directionKindESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, directionKind, !oldDirectionKindESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, directionKind, !oldDirectionKindESet));
 	}
 
 	/**
@@ -199,7 +199,7 @@ public class ParameterDeclarationCSImpl
 		directionKind = DIRECTION_KIND_EDEFAULT;
 		directionKindESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, DIRECTION_KIND_EDEFAULT, oldDirectionKindESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND, oldDirectionKind, DIRECTION_KIND_EDEFAULT, oldDirectionKindESet));
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class ParameterDeclarationCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				return basicSetTypeSpecCS(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -251,11 +251,11 @@ public class ParameterDeclarationCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
 				return getSimpleNameCS();
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				return getTypeSpecCS();
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
 				return getDirectionKind();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -268,13 +268,13 @@ public class ParameterDeclarationCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS((String)newValue);
 				return;
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				setTypeSpecCS((TypeSpecCS)newValue);
 				return;
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
 				setDirectionKind((DirectionKindEnum)newValue);
 				return;
 		}
@@ -288,13 +288,13 @@ public class ParameterDeclarationCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
 				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
 				return;
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				setTypeSpecCS((TypeSpecCS)null);
 				return;
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
 				unsetDirectionKind();
 				return;
 		}
@@ -308,11 +308,11 @@ public class ParameterDeclarationCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__SIMPLE_NAME_CS:
 				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__TYPE_SPEC_CS:
 				return typeSpecCS != null;
-			case QvtoperationalcsPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS__DIRECTION_KIND:
 				return isSetDirectionKind();
 		}
 		return super.eIsSet(featureID);

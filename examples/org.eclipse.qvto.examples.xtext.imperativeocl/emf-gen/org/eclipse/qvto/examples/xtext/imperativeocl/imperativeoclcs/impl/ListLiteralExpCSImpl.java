@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.CollectionLiteralPartCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ListLiteralExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
@@ -56,7 +56,7 @@ public class ListLiteralExpCSImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ImperativeoclcsPackage.Literals.LIST_LITERAL_EXP_CS;
+		return ImperativeOCLCSPackage.Literals.LIST_LITERAL_EXP_CS;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class ListLiteralExpCSImpl
 	 */
 	public EList<CollectionLiteralPartCS> getOwnedParts() {
 		if (ownedParts == null) {
-			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
+			ownedParts = new EObjectContainmentEList<CollectionLiteralPartCS>(CollectionLiteralPartCS.class, this, ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS);
 		}
 		return ownedParts;
 	}
@@ -98,7 +98,7 @@ public class ListLiteralExpCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return ((InternalEList<?>)getOwnedParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -111,7 +111,7 @@ public class ListLiteralExpCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return getOwnedParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -125,7 +125,7 @@ public class ListLiteralExpCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				getOwnedParts().clear();
 				getOwnedParts().addAll((Collection<? extends CollectionLiteralPartCS>)newValue);
 				return;
@@ -140,7 +140,7 @@ public class ListLiteralExpCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				getOwnedParts().clear();
 				return;
 		}
@@ -154,7 +154,7 @@ public class ListLiteralExpCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ImperativeoclcsPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
+			case ImperativeOCLCSPackage.LIST_LITERAL_EXP_CS__OWNED_PARTS:
 				return ownedParts != null && !ownedParts.isEmpty();
 		}
 		return super.eIsSet(featureID);
