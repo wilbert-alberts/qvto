@@ -194,6 +194,7 @@ public class QVToImportCSImpl extends ElementCSImpl implements QVToImportCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}

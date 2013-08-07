@@ -242,7 +242,8 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	public @Nullable Continuation<?> visitTopLevelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS csElement) {
-		throw new UnsupportedOperationException("visitTopLevelCS not supported in QVTOperationalCSContainmentVisitor");
+		csElement.ast();
+		return null;
 	}
 	
 	public @Nullable Continuation<?> visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {

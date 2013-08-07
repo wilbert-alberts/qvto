@@ -2,14 +2,18 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.RootPackageCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
@@ -89,6 +93,31 @@ public class TopLevelCSImpl
 			unit = new EObjectContainmentEList<ElementCS>(ElementCS.class, this, QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT);
 		}
 		return unit;
+	}
+
+	/**
+	 * The cached invocation delegate for the '{@link #ast() <em>Ast</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ast()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final EOperation.Internal.InvocationDelegate AST__EINVOCATION_DELEGATE = ((EOperation.Internal)QVTOperationalCSPackage.Literals.TOP_LEVEL_CS.getEOperations().get(0)).getInvocationDelegate();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Root ast() {
+		try {
+			Root t = (Root)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null); 
+			return t;
+		}
+		catch (InvocationTargetException ite) {
+			throw new WrappedException(ite);
+		}
 	}
 
 	/**

@@ -2608,8 +2608,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		// Obtain other dependent packages
 		BaseCSTPackage theBaseCSTPackage = (BaseCSTPackage)EPackage.Registry.INSTANCE.getEPackage(BaseCSTPackage.eNS_URI);
-		EssentialOCLCSTPackage theEssentialOCLCSTPackage = (EssentialOCLCSTPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSTPackage.eNS_URI);
 		PivotPackage thePivotPackage = (PivotPackage)EPackage.Registry.INSTANCE.getEPackage(PivotPackage.eNS_URI);
+		EssentialOCLCSTPackage theEssentialOCLCSTPackage = (EssentialOCLCSTPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSTPackage.eNS_URI);
 		ImperativeOCLCSPackage theImperativeOCLCSPackage = (ImperativeOCLCSPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeOCLCSPackage.eNS_URI);
 		QVTOperationalPackage theQVTOperationalPackage = (QVTOperationalPackage)EPackage.Registry.INSTANCE.getEPackage(QVTOperationalPackage.eNS_URI);
 
@@ -2682,6 +2682,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEClass(topLevelCSEClass, TopLevelCS.class, "TopLevelCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTopLevelCS_Import(), theBaseCSTPackage.getElementCS(), null, "import", null, 0, -1, TopLevelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTopLevelCS_Unit(), theBaseCSTPackage.getElementCS(), null, "unit", null, 0, -1, TopLevelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(topLevelCSEClass, thePivotPackage.getRoot(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(qvToClassCSEClass, QVToClassCS.class, "QVToClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getQVToClassCS_Intermediate(), ecorePackage.getEBoolean(), "intermediate", null, 0, 1, QVToClassCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2999,7 +3001,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "imperativeocl", "/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL",
 			 "imperativeoclcs", "/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/",
 			 "qvtoperational", "/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational"
-		   });			
+		   });				
 	}
 
 	/**
@@ -3017,7 +3019,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-		   });		
+		   });			
 	}
 
 	/**
@@ -3028,6 +3030,12 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 */
 	protected void createPivotAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";				
+		addAnnotation
+		  (topLevelCSEClass.getEOperations().get(0), 
+		   source, 
+		   new String[] {
+			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage->selectByType(TransformationHeaderCS).ast() -- FIXME when BaseCST implemented\n\t\t\t}"
+		   });		
 		addAnnotation
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
 		   source, 

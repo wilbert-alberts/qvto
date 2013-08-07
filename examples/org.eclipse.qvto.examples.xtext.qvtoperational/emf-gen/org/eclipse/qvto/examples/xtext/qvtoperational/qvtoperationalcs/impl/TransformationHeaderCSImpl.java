@@ -619,7 +619,8 @@ public class TransformationHeaderCSImpl
 	 */
 	public OperationalTransformation ast() {
 		try {
-			return (OperationalTransformation)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
+			OperationalTransformation t = (OperationalTransformation)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
+			return t;
 		}
 		catch (InvocationTargetException ite) {
 			throw new WrappedException(ite);
@@ -631,6 +632,7 @@ public class TransformationHeaderCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}

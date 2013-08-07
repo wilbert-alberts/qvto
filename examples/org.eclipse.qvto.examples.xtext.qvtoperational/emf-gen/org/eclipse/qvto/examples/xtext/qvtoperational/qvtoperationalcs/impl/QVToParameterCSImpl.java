@@ -168,6 +168,7 @@ public class QVToParameterCSImpl extends ParameterCSImpl implements QVToParamete
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}

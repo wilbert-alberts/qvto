@@ -3,6 +3,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.RootPackageCS;
 
@@ -60,5 +61,14 @@ public interface TopLevelCS
 	 * @generated
 	 */
 	EList<ElementCS> getUnit();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage->selectByType(TransformationHeaderCS).ast() -- FIXME when BaseCST implemented\n\t\t\t}'"
+	 * @generated
+	 */
+	Root ast();
 
 } // TopLevelCS

@@ -110,6 +110,7 @@ public class QVToClassCSImpl extends ClassCSImpl implements QVToClassCS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}
