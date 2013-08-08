@@ -619,8 +619,7 @@ public class TransformationHeaderCSImpl
 	 */
 	public OperationalTransformation ast() {
 		try {
-			OperationalTransformation t = (OperationalTransformation)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
-			return t;
+			return (OperationalTransformation)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
 		}
 		catch (InvocationTargetException ite) {
 			throw new WrappedException(ite);

@@ -14,6 +14,12 @@ import org.eclipse.ocl.examples.pivot.VariableExp
 import org.eclipse.ocl.examples.pivot.Variable
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil
 import org.eclipse.ocl.examples.pivot.CollectionType
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManager
+import org.eclipse.ocl.examples.pivot.IterateExp
+import org.eclipse.ocl.examples.pivot.StringLiteralExp
+import org.eclipse.ocl.examples.pivot.IteratorExp
+import org.eclipse.ocl.examples.pivot.Iteration
+import org.eclipse.ocl.examples.pivot.OperationCallExp
 
 public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String, IContainmentVisitsGeneratorCtx> {
 	
@@ -25,7 +31,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	override String visiting(Visitable visitable) {
-		return "return null;";
+		throw new UnsupportedOperationException('''visit«visitable.class.canonicalName» not supported in ContainmentVisitsGenerator''');
 	}
 	
 	override String visitConstructorExp(ConstructorExp object) {
@@ -61,6 +67,35 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		return result.toString();
 	}
 	
+	override visitIteratorExp(IteratorExp object) {
+		var StringBuilder result = new StringBuilder();
+			
+		// We process
+		result.append('''«object.source.accept(this)».''');
+		
+		// Then the iteration body
+		var Iteration iteration = object.referredIteration;
+		result.append(
+		switch (iteration.name) {
+			case "exists":'''contains(«object.body.accept(this)»)'''
+			default: throw new UnsupportedOperationException('''iterator "«iteration.name»" not implemented yet in visitIterateExp in ContainmentVisitsGenerator''')
+		})
+		return result.toString()
+	}
+	
+	override visitStringLiteralExp(StringLiteralExp object) {
+		return '''"«object.stringSymbol»"''' 
+	}
+	
+	override visitOperationCallExp(OperationCallExp object) {
+		if (object.name == "ast") {
+			return "";
+		} 
+		// FIXME todo  
+		 
+		super.visitOperationCallExp(object)
+	}
+	
 	override String visitConstructorPart(ConstructorPart object) {
 		var StringBuilder result = new StringBuilder();		
 		var Property astProperty = object.referredProperty;
@@ -78,9 +113,16 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var StringBuilder result = new StringBuilder();	
 		var Property csProperty = object.referredProperty;
 		var String propertyName = csProperty.name.toFirstUpper;
+		var MetaModelManager mm = context.metamodelManager;
 		
+	
+		var methodName = 
+			if (mm.conformsTo(csProperty.type, mm.booleanType, null)) 
+				"is" + propertyName 
+			else  
+				"get" + propertyName
 		// FIXME study boxing/unboxing value problem
-		result.append('''«object.source.accept(this)».get«propertyName»()''');
+		result.append('''«object.source.accept(this)».«methodName»()''');
 		return result.toString; 
 	}
 	
@@ -97,20 +139,41 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	def private String getTypeQualifiedName(Type astType) {
+		var StringBuilder result = new StringBuilder();
 		// TODO ask Ed for suitable already coded functioality to compute this.
 		// FIXME
 		// Bad String handling exception. Nasty temporal WORKAROUND to make prototype work
-		if (astType.name == "String") { return "String"};
+		if (astType.name == "String") { return "java.lang.String"};
+		if (astType.name == "Boolean") { return "java.lang.Boolean"};
 		
-		var Type type = null
 		if (astType instanceof CollectionType) {
-			type = (astType as CollectionType).elementType; // FIXME
+			result.append("java.util.List<");
+			result.append(getTypeQualifiedName((astType as CollectionType).elementType));
+			result.append('>');			
 		} else {
-			type = astType
+			result.append(genModelHelper.getQualifiedInterfaceName(PivotUtil.getType(astType)));
 		}
 		
 		// FIXME Boxing/Unboxing		
-		return genModelHelper.getQualifiedInterfaceName(PivotUtil.getType(type));
+		return result.toString();
+	}
+	
+	def private String getTypeImplQualifiedName(Type astType) {
+		var StringBuilder result = new StringBuilder();
+		// TODO ask Ed for suitable already coded functioality to compute this.
+		// FIXME
+		// Bad String handling exception. Nasty temporal WORKAROUND to make prototype work
+		if (astType.name == "String") { return "java.lang.String"};
+		if (astType.name == "Boolean") { return "java.lang.Boolean"};
+		
+		if (astType instanceof CollectionType) {
+			result.append("java.util.ArrayList<");
+			result.append(getTypeQualifiedName((astType as CollectionType).elementType));
+			result.append('>');			
+		} else {
+			result.append(genModelHelper.getQualifiedClassName(PivotUtil.getType(astType)));
+		}
+		return result.toString();
 	}
 	
 	// SHARED Functionality
@@ -145,23 +208,25 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	def private String createMultivaluedPropertyStub(Property astProperty, OCLExpression initExp) {
 		var StringBuilder result = new StringBuilder();
 		var String propertyName = astProperty.name.toFirstUpper;
-		var String propertyTypeName = astProperty.type.name;
+		var String propertyTypeName = astProperty.type.name;		
 		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
+		var String propertyTypeImplQName = getTypeImplQualifiedName(astProperty.type);
 		var String initExpTypeName = initExp.type.name;
 		var String initExpTypeQName = getTypeQualifiedName(initExp.type);
 		
 		// We compute the new property value from CS element (initExp)
 		result.append('''
 			// AS «propertyName» property update
+			«initExpTypeQName» newCs«propertyName»s = «initExp.accept(this)»;
+			«propertyTypeQName» new«propertyName»s = new «propertyTypeImplQName»();
+			
 			''');
-		if (isMany(initExp.type)) {
+		if (isMany(initExp.type)) {			
+			var csTypeQName = getTypeQualifiedName((initExp.type as CollectionType).elementType);
+			var asTypeQName = getTypeQualifiedName((astProperty.type as CollectionType).elementType);
 			result.append('''
-				List<«initExpTypeQName»> newCs«propertyName»s = «initExp.accept(this)»;
-				''');
-			result.append('''
-				List<«propertyTypeQName»> new«propertyName»s= new ArrayList<«propertyTypeQName»>();
-				for («initExpTypeQName» newCs«propertyName» : newCs«propertyName»s) {
-					«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
+				for («csTypeQName» newCs«propertyName» : newCs«propertyName»s) {
+					«asTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
 					if (new«propertyName» != null) {
 						new«propertyName»s.add(new«propertyName»);
 					}
@@ -169,15 +234,13 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			''')
 		} else {
 			result.append('''
-				«initExpTypeQName» newCs«propertyTypeQName» = «initExp.accept(this)»;
-				«propertyTypeQName» new«propertyName»s = new ArrayList<«propertyTypeQName»>();
-				«propertyTypeQName» new«propertyName»s.add(«getASfromCSStub(astProperty, initExp)»);
+				new«propertyName»s.add(«getASfromCSStub(astProperty, initExp)»);
 				''');
 		}
 		
 		// We compute the old value 
 		result.append('''
-				List<«propertyTypeQName»> old«propertyName»s = asElement.get«propertyName»();
+				«propertyTypeQName» old«propertyName»s = asElement.get«propertyName»();
 				''');
 				
 		// We process the as property values update
@@ -189,30 +252,29 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	
 	def private boolean isMany(Type type) {
 		// TODO ask Ed for suitable already coded functioality to compute this.
-		
-		if (type instanceof CollectionType) {
-			return true;
-		} else {
-			return false;	
-		}
+		return (type instanceof CollectionType);
 	}
 	
 	def private String getASfromCSStub(Property astProperty, OCLExpression initExp) {
-		var String propertyName = astProperty.name.toFirstUpper;
-		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
-		var String initExpType = initExp.type.name;
+		var String propertyName = astProperty.name.toFirstUpper;		
+
 		// FIXME Study boxing/unboxing
 		// quick nasty workround to make prototype work
-		var Type type = initExp.type; 
-		if (type instanceof CollectionType) {
-			type = (type as CollectionType).elementType;
+		var Type csType = initExp.type; 
+		if (csType instanceof CollectionType) {
+			csType = (csType as CollectionType).elementType;
 		}
 		
+		var Type asType = astProperty.type; 
+		if (asType instanceof CollectionType) {
+			asType = (asType as CollectionType).elementType;
+		}		
+		
 		//var EClass class = context.metamodelManager.getEcoreOfPivot(typeof(EClass), type);
-		var boolean isPivotable = context.metamodelManager.getAllSuperClasses(type).exists[name == "Pivotable"] ;
+		var boolean isPivotable = context.metamodelManager.getAllSuperClasses(csType).exists[name == "Pivotable"] ;		 
 		
 		if (isPivotable) {
-			return '''PivotUtil.getPivot(«propertyTypeQName».class, newCs«propertyName»)''';	
+			return '''PivotUtil.getPivot(«getTypeQualifiedName(asType)».class, newCs«propertyName»)''';	
 		}
 		else {
 			return '''newCs«propertyName»''';

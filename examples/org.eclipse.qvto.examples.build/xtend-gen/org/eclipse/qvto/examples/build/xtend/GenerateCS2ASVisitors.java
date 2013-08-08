@@ -21,12 +21,22 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.build.xtend.GenerateVisitors;
 import org.eclipse.ocl.examples.build.xtend.MergeWriter;
+import org.eclipse.ocl.examples.pivot.ExpressionInOCL;
+import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.ocl.examples.pivot.OpaqueExpression;
+import org.eclipse.ocl.examples.pivot.Operation;
+import org.eclipse.ocl.examples.pivot.ecore.Ecore2Pivot;
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
 import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup;
+import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx;
+import org.eclipse.qvto.examples.build.xtend.ContainmentVisitsGenerator;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
@@ -222,11 +232,26 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
   }
   
   protected String generateContainmentVisit(final EClass eClass) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("csElement.ast();");
-    _builder.newLine();
-    _builder.append("return null;");
-    _builder.newLine();
-    return _builder.toString();
+    MetaModelManager metaModelManager = MetaModelManager.getAdapter(this.resourceSet);
+    Resource ecoreResource = eClass.eResource();
+    Ecore2Pivot ecore2Pivot = Ecore2Pivot.getAdapter(ecoreResource, metaModelManager);
+    org.eclipse.ocl.examples.pivot.Class pClass = ecore2Pivot.<org.eclipse.ocl.examples.pivot.Class>getPivotElement(org.eclipse.ocl.examples.pivot.Class.class, eClass);
+    boolean _notEquals = (!Objects.equal(pClass, null));
+    if (_notEquals) {
+      List<Operation> _ownedOperation = pClass.getOwnedOperation();
+      for (final Operation operation : _ownedOperation) {
+        String _name = operation.getName();
+        boolean _equals = "ast".equals(_name);
+        if (_equals) {
+          OpaqueExpression opaqueExp = operation.getBodyExpression();
+          ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
+          OCLExpression _bodyExpression = expInOcl.getBodyExpression();
+          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager);
+          ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
+          return _bodyExpression.<String>accept(_containmentVisitsGenerator);
+        }
+      }
+    }
+    return "return null;";
   }
 }

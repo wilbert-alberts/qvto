@@ -29,6 +29,13 @@ public class QVToGenModelHelper extends AbstractGenModelHelper {
 				: ((GenClass) genClassifier).getQualifiedInterfaceName();
 	}
 	
+	public @Nullable String getQualifiedClassName(@NonNull Type type) {
+		GenClassifier genClassifier = getGenClassifier(type);
+		return genClassifier instanceof GenDataType  
+				? ((GenDataType) genClassifier).getQualifiedInstanceClassName()
+				: ((GenClass) genClassifier).getQualifiedClassName();
+	}
+	
 	public @Nullable String getQualifiedFactoryInstanceAccessor(@NonNull Type astType) {
 		GenPackage genPackage = getGenPackage(astType);
 		if (genPackage == null) {

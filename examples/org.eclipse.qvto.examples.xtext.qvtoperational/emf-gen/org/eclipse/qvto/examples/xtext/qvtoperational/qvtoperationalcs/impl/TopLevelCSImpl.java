@@ -112,8 +112,7 @@ public class TopLevelCSImpl
 	 */
 	public Root ast() {
 		try {
-			Root t = (Root)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null); 
-			return t;
+			return (Root)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
 		}
 		catch (InvocationTargetException ite) {
 			throw new WrappedException(ite);
