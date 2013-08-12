@@ -213,7 +213,48 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	public @Nullable Continuation<?> visitQVToClassCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS csElement) {
-		throw new UnsupportedOperationException("visitQVToClassCS not supported in QVTOperationalCSContainmentVisitor");
+		CS2Pivot converter = context.getConverter();
+		// AS element creation
+		org.eclipse.ocl.examples.pivot.Class asElement = csElement != null ? (org.eclipse.ocl.examples.pivot.Class) converter.getPivotElement(csElement) : null;
+		if (asElement == null) {
+			asElement = org.eclipse.ocl.examples.pivot.PivotFactory.eINSTANCE.createClass();
+			converter.installPivotDefinition(csElement, asElement);
+		}
+		
+		// AS Name property update
+		java.lang.String newCsName = csElement.getName();
+		java.lang.String newName = newCsName;
+		java.lang.String oldName = asElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			asElement.setName(newName);
+		}
+		// AS OwnedAttribute property update
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS> newCsOwnedAttributes = csElement.getOwnedProperty();
+		java.util.List<org.eclipse.ocl.examples.pivot.Property> newOwnedAttributes = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Property>();
+		
+		for (org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS newCsOwnedAttribute : newCsOwnedAttributes) {
+			org.eclipse.ocl.examples.pivot.Property newOwnedAttribute = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Property.class, newCsOwnedAttribute);
+			if (newOwnedAttribute != null) {
+				newOwnedAttributes.add(newOwnedAttribute);
+			}
+		}
+		java.util.List<org.eclipse.ocl.examples.pivot.Property> oldOwnedAttributes = asElement.getOwnedAttribute();
+		PivotUtil.refreshList(oldOwnedAttributes, newOwnedAttributes);
+		// AS OwnedOperation property update
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = csElement.getOwnedOperation();
+		java.util.List<org.eclipse.ocl.examples.pivot.Operation> newOwnedOperations = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Operation>();
+		
+		for (org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS newCsOwnedOperation : newCsOwnedOperations) {
+			org.eclipse.ocl.examples.pivot.Operation newOwnedOperation = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Operation.class, newCsOwnedOperation);
+			if (newOwnedOperation != null) {
+				newOwnedOperations.add(newOwnedOperation);
+			}
+		}
+		java.util.List<org.eclipse.ocl.examples.pivot.Operation> oldOwnedOperations = asElement.getOwnedOperation();
+		PivotUtil.refreshList(oldOwnedOperations, newOwnedOperations);
+		// AS element comments update
+		context.refreshComments(asElement, csElement);
+		return null;
 	}
 	
 	public @Nullable Continuation<?> visitQVToImportCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS csElement) {

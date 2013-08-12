@@ -23,6 +23,9 @@ import org.eclipse.ocl.examples.pivot.OperationCallExp
 
 public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String, IContainmentVisitsGeneratorCtx> {
 	
+	private final static String IS_PREFIX = "is";
+	private final static String GET_PREFIX = "get";
+	
 	private QVToGenModelHelper genModelHelper;
 	
 	public new(IContainmentVisitsGeneratorCtx context) {
@@ -46,7 +49,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			// AS element creation
 			«typeQN» asElement = csElement != null ? («typeQN») converter.getPivotElement(csElement) : null;
 			if (asElement == null) {
-				asElement = «getFactoryInstanceName(astType)».create«astType.name»();
+				asElement = «getFactoryInstanceAccessor(astType)».create«astType.name»();
 				converter.installPivotDefinition(csElement, asElement);
 			}
 			
@@ -110,20 +113,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 		
 	override visitPropertyCallExp(PropertyCallExp object) {
-		var StringBuilder result = new StringBuilder();	
-		var Property csProperty = object.referredProperty;
-		var String propertyName = csProperty.name.toFirstUpper;
-		var MetaModelManager mm = context.metamodelManager;
-		
-	
-		var methodName = 
-			if (mm.conformsTo(csProperty.type, mm.booleanType, null)) 
-				"is" + propertyName 
-			else  
-				"get" + propertyName
-		// FIXME study boxing/unboxing value problem
-		result.append('''«object.source.accept(this)».«methodName»()''');
-		return result.toString; 
+		return	'''«object.source.accept(this)».«getAccessorName(object.referredProperty)»()'''; 
 	}
 	
 	override visitVariableExp(VariableExp object) {		
@@ -134,17 +124,28 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		return if ("self".equals(object.name)) "csElement" else object.name; 
 	}
 
-	def private String getFactoryInstanceName(Type astType) {
+	def private String getFactoryInstanceAccessor(Type astType) {
+		if (astType.name == "Class") { return "org.eclipse.ocl.examples.pivot.PivotFactory.eINSTANCE"};
+		// FIXME HACK for the generator:
+		// genModelHelper.getQualifiedInterfaceName is failing because astType it's related to a sort
+		// of dummy OCL library package. Two comments:
+		//     1. There is a bug around since some pivot classes are associated to this dummy OCL libary package as well.
+		// 	   It could be solved if explicitly referring to pivot metamodel however Bug 414855 prevents to import the metamodel 
 		return genModelHelper.getQualifiedFactoryInstanceAccessor(astType);		
 	}
-	
+		
 	def private String getTypeQualifiedName(Type astType) {
 		var StringBuilder result = new StringBuilder();
 		// TODO ask Ed for suitable already coded functioality to compute this.
-		// FIXME
-		// Bad String handling exception. Nasty temporal WORKAROUND to make prototype work
+		// FIXME HACK for the generator:
+		// genModelHelper.getQualifiedInterfaceName is failing because astType it's related to a sort
+		// of dummy OCL library package. Two comments:
+		//     1. For library types could make sense. I should look for a better way to solve this (probably using metamodelManager)
+		//     2. There is a bug around since some pivot classes are associated to this dummy OCL libary package as well.
+		// 	   It could be solved if explicitly referring to pivot metamodel however Bug 414855 prevents to import the metamodel 
 		if (astType.name == "String") { return "java.lang.String"};
 		if (astType.name == "Boolean") { return "java.lang.Boolean"};
+		if (astType.name == "Class") { return "org.eclipse.ocl.examples.pivot.Class"};
 		
 		if (astType instanceof CollectionType) {
 			result.append("java.util.List<");
@@ -156,6 +157,19 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		
 		// FIXME Boxing/Unboxing		
 		return result.toString();
+	}
+	
+	def private String getAccessorName(Property property ) {
+		var String propertyName = property.name;
+		var MetaModelManager mm = context.metamodelManager;
+		return 
+			if (mm.conformsTo(property.type, mm.booleanType, null))
+				if (propertyName.startsWith(IS_PREFIX)) // FIXME has prefix
+					propertyName
+				else
+					IS_PREFIX + propertyName.toFirstUpper
+			else  
+				GET_PREFIX + propertyName.toFirstUpper;
 	}
 	
 	def private String getTypeImplQualifiedName(Type astType) {
@@ -180,9 +194,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	def private String createMonovaluedPropertyStub(Property astProperty, OCLExpression initExp) {
 		var StringBuilder result = new StringBuilder();
 		var String propertyName = astProperty.name.toFirstUpper;
-		var String propertyTypeName = astProperty.type.name;
+		//var String propertyTypeName = astProperty.type.name;
 		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
-		var String initExpTypeName = initExp.type.name;
+		//var String initExpTypeName = initExp.type.name;
 		var String initExpTypeQName = getTypeQualifiedName(initExp.type);
 		
 		// We compute the new value from CS element (initExp)
@@ -196,7 +210,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 
 		// We process the as element update
 		result.append('''
-			«propertyTypeQName» old«propertyName» = asElement.get«propertyName»();
+			«propertyTypeQName» old«propertyName» = asElement.«getAccessorName(astProperty)»();
 			if ((new«propertyName» != old«propertyName») && ((new«propertyName» == null) || !new«propertyName».equals(old«propertyName»))) {
 				asElement.set«propertyName»(new«propertyName»);
 			}
@@ -208,10 +222,10 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	def private String createMultivaluedPropertyStub(Property astProperty, OCLExpression initExp) {
 		var StringBuilder result = new StringBuilder();
 		var String propertyName = astProperty.name.toFirstUpper;
-		var String propertyTypeName = astProperty.type.name;		
+		//var String propertyTypeName = astProperty.type.name;		
 		var String propertyTypeQName = getTypeQualifiedName(astProperty.type);
 		var String propertyTypeImplQName = getTypeImplQualifiedName(astProperty.type);
-		var String initExpTypeName = initExp.type.name;
+		//var String initExpTypeName = initExp.type.name;
 		var String initExpTypeQName = getTypeQualifiedName(initExp.type);
 		
 		// We compute the new property value from CS element (initExp)
@@ -251,7 +265,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	def private boolean isMany(Type type) {
+		
 		// TODO ask Ed for suitable already coded functioality to compute this.
+		// Should not metamodel manager have a similar functionality
 		return (type instanceof CollectionType);
 	}
 	

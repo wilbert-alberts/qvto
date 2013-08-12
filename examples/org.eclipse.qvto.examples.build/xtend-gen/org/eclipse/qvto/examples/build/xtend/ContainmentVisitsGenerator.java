@@ -31,6 +31,10 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,IContainmentVisitsGeneratorCtx> {
+  private final static String IS_PREFIX = "is";
+  
+  private final static String GET_PREFIX = "get";
+  
   private QVToGenModelHelper genModelHelper;
   
   public ContainmentVisitsGenerator(final IContainmentVisitsGeneratorCtx context) {
@@ -70,8 +74,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.newLine();
     _builder.append("\t");
     _builder.append("asElement = ");
-    String _factoryInstanceName = this.getFactoryInstanceName(astType);
-    _builder.append(_factoryInstanceName, "	");
+    String _factoryInstanceAccessor = this.getFactoryInstanceAccessor(astType);
+    _builder.append(_factoryInstanceAccessor, "	");
     _builder.append(".create");
     String _name = astType.getName();
     _builder.append(_name, "	");
@@ -181,33 +185,16 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
   }
   
   public String visitPropertyCallExp(final PropertyCallExp object) {
-    StringBuilder _stringBuilder = new StringBuilder();
-    StringBuilder result = _stringBuilder;
-    Property csProperty = object.getReferredProperty();
-    String _name = csProperty.getName();
-    String propertyName = StringExtensions.toFirstUpper(_name);
-    MetaModelManager mm = this.context.getMetamodelManager();
-    String _xifexpression = null;
-    Type _type = csProperty.getType();
-    PrimitiveType _booleanType = mm.getBooleanType();
-    boolean _conformsTo = mm.conformsTo(_type, _booleanType, null);
-    if (_conformsTo) {
-      String _plus = ("is" + propertyName);
-      _xifexpression = _plus;
-    } else {
-      String _plus_1 = ("get" + propertyName);
-      _xifexpression = _plus_1;
-    }
-    String methodName = _xifexpression;
     StringConcatenation _builder = new StringConcatenation();
     OCLExpression _source = object.getSource();
     String _accept = _source.<String>accept(this);
     _builder.append(_accept, "");
     _builder.append(".");
-    _builder.append(methodName, "");
+    Property _referredProperty = object.getReferredProperty();
+    String _accessorName = this.getAccessorName(_referredProperty);
+    _builder.append(_accessorName, "");
     _builder.append("()");
-    result.append(_builder);
-    return result.toString();
+    return _builder.toString();
   }
   
   public String visitVariableExp(final VariableExp object) {
@@ -228,7 +215,12 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     return _xifexpression;
   }
   
-  private String getFactoryInstanceName(final Type astType) {
+  private String getFactoryInstanceAccessor(final Type astType) {
+    String _name = astType.getName();
+    boolean _equals = Objects.equal(_name, "Class");
+    if (_equals) {
+      return "org.eclipse.ocl.examples.pivot.PivotFactory.eINSTANCE";
+    }
     return this.genModelHelper.getQualifiedFactoryInstanceAccessor(astType);
   }
   
@@ -245,6 +237,11 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     if (_equals_1) {
       return "java.lang.Boolean";
     }
+    String _name_2 = astType.getName();
+    boolean _equals_2 = Objects.equal(_name_2, "Class");
+    if (_equals_2) {
+      return "org.eclipse.ocl.examples.pivot.Class";
+    }
     if ((astType instanceof CollectionType)) {
       result.append("java.util.List<");
       Type _elementType = ((CollectionType) astType).getElementType();
@@ -257,6 +254,32 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       result.append(_qualifiedInterfaceName);
     }
     return result.toString();
+  }
+  
+  private String getAccessorName(final Property property) {
+    String propertyName = property.getName();
+    MetaModelManager mm = this.context.getMetamodelManager();
+    String _xifexpression = null;
+    Type _type = property.getType();
+    PrimitiveType _booleanType = mm.getBooleanType();
+    boolean _conformsTo = mm.conformsTo(_type, _booleanType, null);
+    if (_conformsTo) {
+      String _xifexpression_1 = null;
+      boolean _startsWith = propertyName.startsWith(ContainmentVisitsGenerator.IS_PREFIX);
+      if (_startsWith) {
+        _xifexpression_1 = propertyName;
+      } else {
+        String _firstUpper = StringExtensions.toFirstUpper(propertyName);
+        String _plus = (ContainmentVisitsGenerator.IS_PREFIX + _firstUpper);
+        _xifexpression_1 = _plus;
+      }
+      _xifexpression = _xifexpression_1;
+    } else {
+      String _firstUpper_1 = StringExtensions.toFirstUpper(propertyName);
+      String _plus_1 = (ContainmentVisitsGenerator.GET_PREFIX + _firstUpper_1);
+      _xifexpression = _plus_1;
+    }
+    return _xifexpression;
   }
   
   private String getTypeImplQualifiedName(final Type astType) {
@@ -292,13 +315,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     String _name = astProperty.getName();
     String propertyName = StringExtensions.toFirstUpper(_name);
     Type _type = astProperty.getType();
-    String propertyTypeName = _type.getName();
-    Type _type_1 = astProperty.getType();
-    String propertyTypeQName = this.getTypeQualifiedName(_type_1);
-    Type _type_2 = initExp.getType();
-    String initExpTypeName = _type_2.getName();
-    Type _type_3 = initExp.getType();
-    String initExpTypeQName = this.getTypeQualifiedName(_type_3);
+    String propertyTypeQName = this.getTypeQualifiedName(_type);
+    Type _type_1 = initExp.getType();
+    String initExpTypeQName = this.getTypeQualifiedName(_type_1);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("// AS ");
     _builder.append(propertyName, "");
@@ -325,8 +344,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder_1.append(propertyTypeQName, "");
     _builder_1.append(" old");
     _builder_1.append(propertyName, "");
-    _builder_1.append(" = asElement.get");
-    _builder_1.append(propertyName, "");
+    _builder_1.append(" = asElement.");
+    String _accessorName = this.getAccessorName(astProperty);
+    _builder_1.append(_accessorName, "");
     _builder_1.append("();");
     _builder_1.newLineIfNotEmpty();
     _builder_1.append("if ((new");
@@ -360,15 +380,11 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     String _name = astProperty.getName();
     String propertyName = StringExtensions.toFirstUpper(_name);
     Type _type = astProperty.getType();
-    String propertyTypeName = _type.getName();
+    String propertyTypeQName = this.getTypeQualifiedName(_type);
     Type _type_1 = astProperty.getType();
-    String propertyTypeQName = this.getTypeQualifiedName(_type_1);
-    Type _type_2 = astProperty.getType();
-    String propertyTypeImplQName = this.getTypeImplQualifiedName(_type_2);
-    Type _type_3 = initExp.getType();
-    String initExpTypeName = _type_3.getName();
-    Type _type_4 = initExp.getType();
-    String initExpTypeQName = this.getTypeQualifiedName(_type_4);
+    String propertyTypeImplQName = this.getTypeImplQualifiedName(_type_1);
+    Type _type_2 = initExp.getType();
+    String initExpTypeQName = this.getTypeQualifiedName(_type_2);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("// AS ");
     _builder.append(propertyName, "");
@@ -391,14 +407,14 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     result.append(_builder);
-    Type _type_5 = initExp.getType();
-    boolean _isMany = this.isMany(_type_5);
+    Type _type_3 = initExp.getType();
+    boolean _isMany = this.isMany(_type_3);
     if (_isMany) {
-      Type _type_6 = initExp.getType();
-      Type _elementType = ((CollectionType) _type_6).getElementType();
+      Type _type_4 = initExp.getType();
+      Type _elementType = ((CollectionType) _type_4).getElementType();
       String csTypeQName = this.getTypeQualifiedName(_elementType);
-      Type _type_7 = astProperty.getType();
-      Type _elementType_1 = ((CollectionType) _type_7).getElementType();
+      Type _type_5 = astProperty.getType();
+      Type _elementType_1 = ((CollectionType) _type_5).getElementType();
       String asTypeQName = this.getTypeQualifiedName(_elementType_1);
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("for (");
