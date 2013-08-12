@@ -165,7 +165,50 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	public @Nullable Continuation<?> visitMetamodelCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS csElement) {
-		throw new UnsupportedOperationException("visitMetamodelCS not supported in QVTOperationalCSContainmentVisitor");
+		CS2Pivot converter = context.getConverter();
+		// AS element creation
+		org.eclipse.ocl.examples.pivot.Package asElement = csElement != null ? (org.eclipse.ocl.examples.pivot.Package) converter.getPivotElement(csElement) : null;
+		if (asElement == null) {
+			asElement = org.eclipse.ocl.examples.pivot.PivotFactory.eINSTANCE.createPackage();
+			converter.installPivotDefinition(csElement, asElement);
+		}
+		
+		// AS Name property update
+		java.lang.String newCsName = csElement.getName();
+		java.lang.String newName = newCsName;
+		java.lang.String oldName = asElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			asElement.setName(newName);
+		}
+		// AS NsPrefix property update
+		java.lang.String newCsNsPrefix = csElement.getName();
+		java.lang.String newNsPrefix = newCsNsPrefix;
+		java.lang.String oldNsPrefix = asElement.getNsPrefix();
+		if ((newNsPrefix != oldNsPrefix) && ((newNsPrefix == null) || !newNsPrefix.equals(oldNsPrefix))) {
+			asElement.setNsPrefix(newNsPrefix);
+		}
+		// AS NsURI property update
+		java.lang.String newCsNsURI = csElement.getName();
+		java.lang.String newNsURI = newCsNsURI;
+		java.lang.String oldNsURI = asElement.getNsURI();
+		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
+			asElement.setNsURI(newNsURI);
+		}
+		// AS OwnedType property update
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS> newCsOwnedTypes = csElement.getOwnedType();
+		java.util.List<org.eclipse.ocl.examples.pivot.Type> newOwnedTypes = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Type>();
+		
+		for (org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS newCsOwnedType : newCsOwnedTypes) {
+			org.eclipse.ocl.examples.pivot.Type newOwnedType = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Type.class, newCsOwnedType);
+			if (newOwnedType != null) {
+				newOwnedTypes.add(newOwnedType);
+			}
+		}
+		java.util.List<org.eclipse.ocl.examples.pivot.Type> oldOwnedTypes = asElement.getOwnedType();
+		PivotUtil.refreshList(oldOwnedTypes, newOwnedTypes);
+		// AS element comments update
+		context.refreshComments(asElement, csElement);
+		return null;
 	}
 	
 	public @Nullable Continuation<?> visitModelTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS csElement) {

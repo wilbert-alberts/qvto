@@ -43,7 +43,7 @@
         name="isQuery" eType="ecore:EDataType ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Boolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="QVTOperational.ImperativeCallExp"
-      name="ImperativeCallExp" eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//OperationCallExp ../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
+      name="ImperativeCallExp" eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//OperationCallExp ../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL.ImperativeExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="QVTOperational.ImperativeCallExp.isVirtual"
         name="isVirtual" eType="ecore:EDataType ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Boolean"
         defaultValueLiteral="true"/>
@@ -214,7 +214,7 @@
         eOpposite="#QVTOperational.Module.moduleImport"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="QVTOperational.ObjectExp" name="ObjectExp"
-      eSuperTypes="../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#//InstantiationExp">
+      eSuperTypes="../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL.InstantiationExp">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="QVTOperational.ObjectExp.body"
         name="body" lowerBound="1" eType="#QVTOperational.ConstructorBody" containment="true"
         resolveProxies="false"/>
@@ -281,7 +281,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="QVTOperational.ResolveExp" name="ResolveExp"
-      eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//CallExp ../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
+      eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//CallExp ../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL.ImperativeExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="QVTOperational.ResolveExp.condition"
         name="condition" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//OCLExpression"
         containment="true" resolveProxies="false"/>

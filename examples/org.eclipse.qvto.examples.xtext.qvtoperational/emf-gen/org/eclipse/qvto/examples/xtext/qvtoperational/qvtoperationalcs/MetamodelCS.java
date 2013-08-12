@@ -51,4 +51,13 @@ public interface MetamodelCS
 	 */
 	void setMetamodelKind(MetamodelKind value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\townedType = ownedType\n\t\t\t\t-- type = TODO\n\t\t\t}'"
+	 * @generated
+	 */
+	org.eclipse.ocl.examples.pivot.Package ast();
+
 } // MetamodelCS
