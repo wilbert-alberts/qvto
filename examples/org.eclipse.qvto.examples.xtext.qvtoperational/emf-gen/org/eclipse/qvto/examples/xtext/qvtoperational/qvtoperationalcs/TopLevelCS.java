@@ -66,7 +66,7 @@ public interface TopLevelCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t\t \n\t\t\t\t\n\t\t\t}'"
 	 * @generated
 	 */
 	Root ast();

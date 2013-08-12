@@ -33,7 +33,6 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NamedExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionBlockCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -50,12 +49,12 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryIm
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingRuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionCS;
@@ -87,7 +86,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSig
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationRefineCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
@@ -459,11 +458,20 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS: {
-				MappingDeclarationCS mappingDeclarationCS = (MappingDeclarationCS)theEObject;
-				T result = caseMappingDeclarationCS(mappingDeclarationCS);
-				if (result == null) result = caseElementCS(mappingDeclarationCS);
-				if (result == null) result = caseVisitableCS(mappingDeclarationCS);
+			case QVTOperationalCSPackage.MAPPING_OPERATION_CS: {
+				MappingOperationCS mappingOperationCS = (MappingOperationCS)theEObject;
+				T result = caseMappingOperationCS(mappingOperationCS);
+				if (result == null) result = caseOperationCS(mappingOperationCS);
+				if (result == null) result = caseFeatureCS(mappingOperationCS);
+				if (result == null) result = caseTemplateableElementCS(mappingOperationCS);
+				if (result == null) result = caseTypedElementCS(mappingOperationCS);
+				if (result == null) result = caseNamedElementCS(mappingOperationCS);
+				if (result == null) result = caseModelElementCS(mappingOperationCS);
+				if (result == null) result = caseNameable(mappingOperationCS);
+				if (result == null) result = casePivotableElementCS(mappingOperationCS);
+				if (result == null) result = caseElementCS(mappingOperationCS);
+				if (result == null) result = casePivotable(mappingOperationCS);
+				if (result == null) result = caseVisitableCS(mappingOperationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -565,8 +573,18 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 			case QVTOperationalCSPackage.MODEL_TYPE_CS: {
 				ModelTypeCS modelTypeCS = (ModelTypeCS)theEObject;
 				T result = caseModelTypeCS(modelTypeCS);
+				if (result == null) result = caseClassCS(modelTypeCS);
 				if (result == null) result = caseElementWithBody(modelTypeCS);
+				if (result == null) result = caseClassifierCS(modelTypeCS);
+				if (result == null) result = caseNamespaceCS(modelTypeCS);
+				if (result == null) result = caseNamedElementCS(modelTypeCS);
+				if (result == null) result = caseTypeCS(modelTypeCS);
+				if (result == null) result = caseTemplateableElementCS(modelTypeCS);
+				if (result == null) result = caseModelElementCS(modelTypeCS);
+				if (result == null) result = caseNameable(modelTypeCS);
+				if (result == null) result = casePivotableElementCS(modelTypeCS);
 				if (result == null) result = caseElementCS(modelTypeCS);
+				if (result == null) result = casePivotable(modelTypeCS);
 				if (result == null) result = caseVisitableCS(modelTypeCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -664,22 +682,22 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case QVTOperationalCSPackage.TRANSFORMATION_HEADER_CS: {
-				TransformationHeaderCS transformationHeaderCS = (TransformationHeaderCS)theEObject;
-				T result = caseTransformationHeaderCS(transformationHeaderCS);
-				if (result == null) result = casePackageCS(transformationHeaderCS);
-				if (result == null) result = caseClassCS(transformationHeaderCS);
-				if (result == null) result = caseNamespaceCS(transformationHeaderCS);
-				if (result == null) result = caseClassifierCS(transformationHeaderCS);
-				if (result == null) result = caseNamedElementCS(transformationHeaderCS);
-				if (result == null) result = caseTypeCS(transformationHeaderCS);
-				if (result == null) result = caseTemplateableElementCS(transformationHeaderCS);
-				if (result == null) result = caseModelElementCS(transformationHeaderCS);
-				if (result == null) result = caseNameable(transformationHeaderCS);
-				if (result == null) result = casePivotableElementCS(transformationHeaderCS);
-				if (result == null) result = caseElementCS(transformationHeaderCS);
-				if (result == null) result = casePivotable(transformationHeaderCS);
-				if (result == null) result = caseVisitableCS(transformationHeaderCS);
+			case QVTOperationalCSPackage.TRANSFORMATION_CS: {
+				TransformationCS transformationCS = (TransformationCS)theEObject;
+				T result = caseTransformationCS(transformationCS);
+				if (result == null) result = casePackageCS(transformationCS);
+				if (result == null) result = caseClassCS(transformationCS);
+				if (result == null) result = caseNamespaceCS(transformationCS);
+				if (result == null) result = caseClassifierCS(transformationCS);
+				if (result == null) result = caseNamedElementCS(transformationCS);
+				if (result == null) result = caseTypeCS(transformationCS);
+				if (result == null) result = caseTemplateableElementCS(transformationCS);
+				if (result == null) result = caseModelElementCS(transformationCS);
+				if (result == null) result = caseNameable(transformationCS);
+				if (result == null) result = casePivotableElementCS(transformationCS);
+				if (result == null) result = caseElementCS(transformationCS);
+				if (result == null) result = casePivotable(transformationCS);
+				if (result == null) result = caseVisitableCS(transformationCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1133,17 +1151,17 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Mapping Declaration CS</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Mapping Operation CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Mapping Declaration CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Mapping Operation CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseMappingDeclarationCS(MappingDeclarationCS object) {
+	public T caseMappingOperationCS(MappingOperationCS object) {
 		return null;
 	}
 
@@ -1493,17 +1511,17 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Transformation Header CS</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Transformation CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Transformation Header CS</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Transformation CS</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTransformationHeaderCS(TransformationHeaderCS object) {
+	public T caseTransformationCS(TransformationCS object) {
 		return null;
 	}
 

@@ -34,13 +34,13 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryIm
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingRuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionCS;
@@ -77,7 +77,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSig
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationRefineCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
@@ -276,7 +276,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass mappingDeclarationCSEClass = null;
+	private EClass mappingOperationCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -444,7 +444,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass transformationHeaderCSEClass = null;
+	private EClass transformationCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1224,8 +1224,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getMappingDeclarationCS() {
-		return mappingDeclarationCSEClass;
+	public EClass getMappingOperationCS() {
+		return mappingOperationCSEClass;
 	}
 
 	/**
@@ -1233,8 +1233,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMappingDeclarationCS_Qualifiers() {
-		return (EAttribute)mappingDeclarationCSEClass.getEStructuralFeatures().get(0);
+	public EReference getMappingOperationCS_ContextType() {
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1242,8 +1242,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMappingDeclarationCS_SimpleNameCS() {
-		return (EAttribute)mappingDeclarationCSEClass.getEStructuralFeatures().get(1);
+	public EReference getMappingOperationCS_Parameters() {
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1251,8 +1251,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_ContextType() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(2);
+	public EReference getMappingOperationCS_Result() {
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1260,8 +1260,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_Parameters() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(3);
+	public EReference getMappingOperationCS_DirectionKindCS() {
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1269,8 +1269,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_Result() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(4);
+	public EReference getMappingOperationCS_MappingExtension() {
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1278,26 +1278,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingDeclarationCS_DirectionKindCS() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getMappingDeclarationCS_MappingExtension() {
-		return (EReference)mappingDeclarationCSEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMappingDeclarationCS_IsQuery() {
-		return (EAttribute)mappingDeclarationCSEClass.getEStructuralFeatures().get(7);
+	public EAttribute getMappingOperationCS_IsQuery() {
+		return (EAttribute)mappingOperationCSEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1980,8 +1962,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTransformationHeaderCS() {
-		return transformationHeaderCSEClass;
+	public EClass getTransformationCS() {
+		return transformationCSEClass;
 	}
 
 	/**
@@ -1989,8 +1971,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_Qualifiers() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(0);
+	public EReference getTransformationCS_Qualifiers() {
+		return (EReference)transformationCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1998,8 +1980,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_PathNameCS() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(1);
+	public EReference getTransformationCS_PathNameCS() {
+		return (EReference)transformationCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2007,8 +1989,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_Parameters() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(2);
+	public EReference getTransformationCS_Parameters() {
+		return (EReference)transformationCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2016,8 +1998,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_ModuleUsages() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(3);
+	public EReference getTransformationCS_ModuleUsages() {
+		return (EReference)transformationCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2025,8 +2007,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_TransformationRefineCS() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(4);
+	public EReference getTransformationCS_TransformationRefineCS() {
+		return (EReference)transformationCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2429,15 +2411,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		mappingCallExpCSEClass = createEClass(MAPPING_CALL_EXP_CS);
 		createEAttribute(mappingCallExpCSEClass, MAPPING_CALL_EXP_CS__STRICT);
 
-		mappingDeclarationCSEClass = createEClass(MAPPING_DECLARATION_CS);
-		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__QUALIFIERS);
-		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__SIMPLE_NAME_CS);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__CONTEXT_TYPE);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__PARAMETERS);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__RESULT);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__DIRECTION_KIND_CS);
-		createEReference(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__MAPPING_EXTENSION);
-		createEAttribute(mappingDeclarationCSEClass, MAPPING_DECLARATION_CS__IS_QUERY);
+		mappingOperationCSEClass = createEClass(MAPPING_OPERATION_CS);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__CONTEXT_TYPE);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__PARAMETERS);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__RESULT);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__DIRECTION_KIND_CS);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__MAPPING_EXTENSION);
+		createEAttribute(mappingOperationCSEClass, MAPPING_OPERATION_CS__IS_QUERY);
 
 		mappingEndCSEClass = createEClass(MAPPING_END_CS);
 
@@ -2537,12 +2517,12 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		simpleSignatureCSEClass = createEClass(SIMPLE_SIGNATURE_CS);
 		createEReference(simpleSignatureCSEClass, SIMPLE_SIGNATURE_CS__PARAMS);
 
-		transformationHeaderCSEClass = createEClass(TRANSFORMATION_HEADER_CS);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__QUALIFIERS);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__PATH_NAME_CS);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__PARAMETERS);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__MODULE_USAGES);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__TRANSFORMATION_REFINE_CS);
+		transformationCSEClass = createEClass(TRANSFORMATION_CS);
+		createEReference(transformationCSEClass, TRANSFORMATION_CS__QUALIFIERS);
+		createEReference(transformationCSEClass, TRANSFORMATION_CS__PATH_NAME_CS);
+		createEReference(transformationCSEClass, TRANSFORMATION_CS__PARAMETERS);
+		createEReference(transformationCSEClass, TRANSFORMATION_CS__MODULE_USAGES);
+		createEReference(transformationCSEClass, TRANSFORMATION_CS__TRANSFORMATION_REFINE_CS);
 
 		transformationRefineCSEClass = createEClass(TRANSFORMATION_REFINE_CS);
 		createEReference(transformationRefineCSEClass, TRANSFORMATION_REFINE_CS__MODULE_REF_CS);
@@ -2644,7 +2624,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		localPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		mappingBodyCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		mappingCallExpCSEClass.getESuperTypes().add(this.getImperativeOperationCallExpCS());
-		mappingDeclarationCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		mappingOperationCSEClass.getESuperTypes().add(theBaseCSTPackage.getOperationCS());
 		mappingEndCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		mappingExtensionCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		mappingInitCSEClass.getESuperTypes().add(this.getMappingSectionCS());
@@ -2657,7 +2637,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		mappingSectionsCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		moduleKindCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		moduleRefCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
-		modelTypeCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		modelTypeCSEClass.getESuperTypes().add(theBaseCSTPackage.getClassCS());
 		modelTypeCSEClass.getESuperTypes().add(this.getElementWithBody());
 		modulePropertyCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		moduleUsageCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
@@ -2670,8 +2650,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		packageRefCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		scopedNameCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		simpleSignatureCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
-		transformationHeaderCSEClass.getESuperTypes().add(theBaseCSTPackage.getPackageCS());
-		transformationHeaderCSEClass.getESuperTypes().add(theBaseCSTPackage.getClassCS());
+		transformationCSEClass.getESuperTypes().add(theBaseCSTPackage.getPackageCS());
+		transformationCSEClass.getESuperTypes().add(theBaseCSTPackage.getClassCS());
 		transformationRefineCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		typeSpecCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		unitCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
@@ -2780,15 +2760,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEClass(mappingCallExpCSEClass, MappingCallExpCS.class, "MappingCallExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMappingCallExpCS_Strict(), ecorePackage.getEBoolean(), "strict", null, 0, 1, MappingCallExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(mappingDeclarationCSEClass, MappingDeclarationCS.class, "MappingDeclarationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMappingDeclarationCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMappingDeclarationCS_SimpleNameCS(), ecorePackage.getEString(), "simpleNameCS", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingDeclarationCS_ContextType(), theBaseCSTPackage.getTypeCS(), null, "contextType", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingDeclarationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingDeclarationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingDeclarationCS_DirectionKindCS(), this.getDirectionKindCS(), null, "directionKindCS", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingDeclarationCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMappingDeclarationCS_IsQuery(), ecorePackage.getEBoolean(), "isQuery", null, 0, 1, MappingDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(mappingOperationCSEClass, MappingOperationCS.class, "MappingOperationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getMappingOperationCS_ContextType(), theBaseCSTPackage.getTypeCS(), null, "contextType", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingOperationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingOperationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingOperationCS_DirectionKindCS(), this.getDirectionKindCS(), null, "directionKindCS", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingOperationCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMappingOperationCS_IsQuery(), ecorePackage.getEBoolean(), "isQuery", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mappingEndCSEClass, MappingEndCS.class, "MappingEndCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -2800,10 +2778,10 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		initEClass(mappingMethodCSEClass, MappingMethodCS.class, "MappingMethodCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMappingMethodCS_BlackBox(), ecorePackage.getEBoolean(), "blackBox", null, 0, 1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingMethodCS_MappingDeclarationCS(), this.getMappingDeclarationCS(), null, "mappingDeclarationCS", null, 0, 1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingMethodCS_MappingDeclarationCS(), this.getMappingOperationCS(), null, "mappingDeclarationCS", null, 0, 1, MappingMethodCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getMappingModuleCS_HeaderCS(), this.getTransformationHeaderCS(), null, "headerCS", null, 1, 1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingModuleCS_HeaderCS(), this.getTransformationCS(), null, "headerCS", null, 1, 1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingModuleCS_Imports(), this.getQVToImportCS(), null, "imports", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingModuleCS_Metamodels(), this.getModelTypeCS(), null, "metamodels", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingModuleCS_Renamings(), this.getRenameCS(), null, "renamings", null, 0, -1, MappingModuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2888,14 +2866,14 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEClass(simpleSignatureCSEClass, SimpleSignatureCS.class, "SimpleSignatureCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSimpleSignatureCS_Params(), this.getParameterDeclarationCS(), null, "params", null, 0, -1, SimpleSignatureCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(transformationHeaderCSEClass, TransformationHeaderCS.class, "TransformationHeaderCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTransformationHeaderCS_Qualifiers(), theEssentialOCLCSTPackage.getStringLiteralExpCS(), null, "qualifiers", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransformationHeaderCS_PathNameCS(), theBaseCSTPackage.getPathNameCS(), null, "pathNameCS", null, 1, 1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransformationHeaderCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransformationHeaderCS_ModuleUsages(), this.getModuleUsageCS(), null, "moduleUsages", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransformationHeaderCS_TransformationRefineCS(), this.getTransformationRefineCS(), null, "transformationRefineCS", null, 0, 1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(transformationCSEClass, TransformationCS.class, "TransformationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTransformationCS_Qualifiers(), theEssentialOCLCSTPackage.getStringLiteralExpCS(), null, "qualifiers", null, 0, -1, TransformationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransformationCS_PathNameCS(), theBaseCSTPackage.getPathNameCS(), null, "pathNameCS", null, 1, 1, TransformationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransformationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, TransformationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransformationCS_ModuleUsages(), this.getModuleUsageCS(), null, "moduleUsages", null, 0, -1, TransformationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransformationCS_TransformationRefineCS(), this.getTransformationRefineCS(), null, "transformationRefineCS", null, 0, 1, TransformationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(transformationHeaderCSEClass, theQVTOperationalPackage.getOperationalTransformation(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(transformationCSEClass, theQVTOperationalPackage.getOperationalTransformation(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(transformationRefineCSEClass, TransformationRefineCS.class, "TransformationRefineCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTransformationRefineCS_ModuleRefCS(), this.getModuleRefCS(), null, "moduleRefCS", null, 1, 1, TransformationRefineCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3038,7 +3016,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (topLevelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t}"
+			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t\t \n\t\t\t\t\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (qvToClassCSEClass.getEOperations().get(0), 
@@ -3050,7 +3028,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (metamodelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\townedType = ownedType\n\t\t\t\t-- type = TODO\n\t\t\t}"
+			 "body", "ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\t-- QVTo spec doesn\'t provide concrete syntax for nsPrefix\n\t\t\t\tnsURI = name,\t\t-- QVTo spec doesn\'t provide concrete syntax for nsURI. Build an internal protocol\n\t\t\t\townedType = ownedType -- .ast() FIXME when BaseCST is implemented\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
@@ -3059,7 +3037,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "body", "ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
-		  (transformationHeaderCSEClass.getEOperations().get(0), 
+		  (transformationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME .ast(),\n\t\t\t\townedType = ownedType -- FIXME .ast()\n\t\t\t}"

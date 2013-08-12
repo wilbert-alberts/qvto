@@ -8,8 +8,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 
 /**
@@ -56,7 +56,7 @@ public abstract class MappingMethodCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected MappingDeclarationCS mappingDeclarationCS;
+	protected MappingOperationCS mappingDeclarationCS;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -98,17 +98,17 @@ public abstract class MappingMethodCSImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MappingDeclarationCS getMappingDeclarationCS() {
+	public MappingOperationCS getMappingDeclarationCS() {
 		return mappingDeclarationCS;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetMappingDeclarationCS(
-			MappingDeclarationCS newMappingDeclarationCS, NotificationChain msgs) {
-		MappingDeclarationCS oldMappingDeclarationCS = mappingDeclarationCS;
+	public NotificationChain basicSetMappingDeclarationCS(MappingOperationCS newMappingDeclarationCS, NotificationChain msgs) {
+		MappingOperationCS oldMappingDeclarationCS = mappingDeclarationCS;
 		mappingDeclarationCS = newMappingDeclarationCS;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS, oldMappingDeclarationCS, newMappingDeclarationCS);
@@ -118,11 +118,11 @@ public abstract class MappingMethodCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setMappingDeclarationCS(
-			MappingDeclarationCS newMappingDeclarationCS) {
+	public void setMappingDeclarationCS(MappingOperationCS newMappingDeclarationCS) {
 		if (newMappingDeclarationCS != mappingDeclarationCS) {
 			NotificationChain msgs = null;
 			if (mappingDeclarationCS != null)
@@ -176,7 +176,7 @@ public abstract class MappingMethodCSImpl
 				setBlackBox((Boolean)newValue);
 				return;
 			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
-				setMappingDeclarationCS((MappingDeclarationCS)newValue);
+				setMappingDeclarationCS((MappingOperationCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -193,7 +193,7 @@ public abstract class MappingMethodCSImpl
 				setBlackBox(BLACK_BOX_EDEFAULT);
 				return;
 			case QVTOperationalCSPackage.MAPPING_METHOD_CS__MAPPING_DECLARATION_CS:
-				setMappingDeclarationCS((MappingDeclarationCS)null);
+				setMappingDeclarationCS((MappingOperationCS)null);
 				return;
 		}
 		super.eUnset(featureID);

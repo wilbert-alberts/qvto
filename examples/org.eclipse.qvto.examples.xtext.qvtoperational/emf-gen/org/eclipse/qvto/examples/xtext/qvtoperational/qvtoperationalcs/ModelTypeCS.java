@@ -3,7 +3,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS;
 
@@ -26,7 +26,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
  * @generated
  */
 public interface ModelTypeCS
-		extends ElementCS, ElementWithBody {
+		extends ClassCS, ElementWithBody {
 
 	/**
 	 * Returns the value of the '<em><b>Identifier CS</b></em>' attribute. <!--

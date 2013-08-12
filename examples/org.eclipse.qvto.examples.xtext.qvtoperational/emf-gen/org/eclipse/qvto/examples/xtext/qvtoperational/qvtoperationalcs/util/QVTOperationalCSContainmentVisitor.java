@@ -10,16 +10,13 @@
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
-import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
 
 /**
  *
@@ -124,10 +121,6 @@ public class QVTOperationalCSContainmentVisitor
 		throw new UnsupportedOperationException("visitMappingCallExpCS not supported in QVTOperationalCSContainmentVisitor");
 	}
 	
-	public @Nullable Continuation<?> visitMappingDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS csElement) {
-		throw new UnsupportedOperationException("visitMappingDeclarationCS not supported in QVTOperationalCSContainmentVisitor");
-	}
-	
 	public @Nullable Continuation<?> visitMappingEndCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS csElement) {
 		throw new UnsupportedOperationException("visitMappingEndCS not supported in QVTOperationalCSContainmentVisitor");
 	}
@@ -146,6 +139,10 @@ public class QVTOperationalCSContainmentVisitor
 	
 	public @Nullable Continuation<?> visitMappingModuleCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS csElement) {
 		throw new UnsupportedOperationException("visitMappingModuleCS not supported in QVTOperationalCSContainmentVisitor");
+	}
+	
+	public @Nullable Continuation<?> visitMappingOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS csElement) {
+		throw new UnsupportedOperationException("visitMappingOperationCS not supported in QVTOperationalCSContainmentVisitor");
 	}
 	
 	public @Nullable Continuation<?> visitMappingQueryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS csElement) {
@@ -374,7 +371,7 @@ public class QVTOperationalCSContainmentVisitor
 		return null;
 	}
 	
-	public @Nullable Continuation<?> visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS csElement) {
+	public @Nullable Continuation<?> visitTransformationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS csElement) {
 		CS2Pivot converter = context.getConverter();
 		// AS element creation
 		org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation asElement = csElement != null ? (org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation) converter.getPivotElement(csElement) : null;

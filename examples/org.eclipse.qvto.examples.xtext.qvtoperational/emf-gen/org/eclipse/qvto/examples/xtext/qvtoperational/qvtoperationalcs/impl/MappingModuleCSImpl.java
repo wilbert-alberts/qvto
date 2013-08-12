@@ -23,7 +23,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperat
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
@@ -56,7 +56,7 @@ public class MappingModuleCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected TransformationHeaderCS headerCS;
+	protected TransformationCS headerCS;
 
 	/**
 	 * The cached value of the '{@link #getImports() <em>Imports</em>}' containment reference list.
@@ -144,17 +144,17 @@ public class MappingModuleCSImpl
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationHeaderCS getHeaderCS() {
+	public TransformationCS getHeaderCS() {
 		return headerCS;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetHeaderCS(
-			TransformationHeaderCS newHeaderCS, NotificationChain msgs) {
-		TransformationHeaderCS oldHeaderCS = headerCS;
+	public NotificationChain basicSetHeaderCS(TransformationCS newHeaderCS, NotificationChain msgs) {
+		TransformationCS oldHeaderCS = headerCS;
 		headerCS = newHeaderCS;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS, oldHeaderCS, newHeaderCS);
@@ -164,10 +164,11 @@ public class MappingModuleCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setHeaderCS(TransformationHeaderCS newHeaderCS) {
+	public void setHeaderCS(TransformationCS newHeaderCS) {
 		if (newHeaderCS != headerCS) {
 			NotificationChain msgs = null;
 			if (headerCS != null)
@@ -342,7 +343,7 @@ public class MappingModuleCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
-				setHeaderCS((TransformationHeaderCS)newValue);
+				setHeaderCS((TransformationCS)newValue);
 				return;
 			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				getImports().clear();
@@ -384,7 +385,7 @@ public class MappingModuleCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_MODULE_CS__HEADER_CS:
-				setHeaderCS((TransformationHeaderCS)null);
+				setHeaderCS((TransformationCS)null);
 				return;
 			case QVTOperationalCSPackage.MAPPING_MODULE_CS__IMPORTS:
 				getImports().clear();

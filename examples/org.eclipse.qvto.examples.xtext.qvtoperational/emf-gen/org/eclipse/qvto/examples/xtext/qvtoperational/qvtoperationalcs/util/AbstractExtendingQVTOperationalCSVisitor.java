@@ -97,10 +97,6 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 		return visitImperativeOperationCallExpCS(object);
 	}
 
-	public @Nullable R visitMappingDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS object) {
-		return visitElementCS(object);
-	}
-
 	public @Nullable R visitMappingEndCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS object) {
 		return visitMappingSectionCS(object);
 	}
@@ -119,6 +115,10 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 
 	public @Nullable R visitMappingModuleCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS object) {
 		return visitElementCS(object);
+	}
+
+	public @Nullable R visitMappingOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS object) {
+		return visitOperationCS(object);
 	}
 
 	public @Nullable R visitMappingQueryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS object) {
@@ -142,7 +142,7 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 	}
 
 	public @Nullable R visitModelTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS object) {
-		return visitElementCS(object);
+		return visitClassCS(object);
 	}
 
 	public @Nullable R visitModuleKindCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleKindCS object) {
@@ -241,7 +241,7 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 		return visitRootPackageCS(object);
 	}
 
-	public @Nullable R visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS object) {
+	public @Nullable R visitTransformationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS object) {
 		return visitPackageCS(object);
 	}
 

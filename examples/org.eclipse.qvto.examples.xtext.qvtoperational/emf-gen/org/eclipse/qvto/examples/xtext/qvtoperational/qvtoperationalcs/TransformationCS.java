@@ -10,38 +10,37 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteral
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '
- * <em><b>Transformation Header CS</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Transformation CS</b></em>'.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getQualifiers <em>Qualifiers</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getPathNameCS <em>Path Name CS</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getModuleUsages <em>Module Usages</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getTransformationRefineCS <em>Transformation Refine CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getQualifiers <em>Qualifiers</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getPathNameCS <em>Path Name CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getModuleUsages <em>Module Usages</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getTransformationRefineCS <em>Transformation Refine CS</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS()
  * @model
  * @generated
  */
-public interface TransformationHeaderCS
-		extends PackageCS, ClassCS {
-
+public interface TransformationCS extends PackageCS, ClassCS {
 	/**
 	 * Returns the value of the '<em><b>Qualifiers</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Qualifiers</em>' containment reference list
-	 * isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Qualifiers</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Qualifiers</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_Qualifiers()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS_Qualifiers()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -51,20 +50,20 @@ public interface TransformationHeaderCS
 	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't
-	 * clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Path Name CS</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Path Name CS</em>' containment reference.
 	 * @see #setPathNameCS(PathNameCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_PathNameCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS_PathNameCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	PathNameCS getPathNameCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getPathNameCS <em>Path Name CS</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Path Name CS</em>' containment reference.
@@ -78,12 +77,12 @@ public interface TransformationHeaderCS
 	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parameters</em>' containment reference list
-	 * isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_Parameters()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS_Parameters()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -94,12 +93,12 @@ public interface TransformationHeaderCS
 	 * The list contents are of type {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Module Usages</em>' containment reference list
-	 * isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Module Usages</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Module Usages</em>' containment reference list.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_ModuleUsages()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS_ModuleUsages()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -109,28 +108,23 @@ public interface TransformationHeaderCS
 	 * Returns the value of the '<em><b>Transformation Refine CS</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Transformation Refine CS</em>' containment
-	 * reference isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Transformation Refine CS</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Transformation Refine CS</em>' containment reference.
 	 * @see #setTransformationRefineCS(TransformationRefineCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationHeaderCS_TransformationRefineCS()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTransformationCS_TransformationRefineCS()
 	 * @model containment="true"
 	 * @generated
 	 */
 	TransformationRefineCS getTransformationRefineCS();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS#getTransformationRefineCS
-	 * <em>Transformation Refine CS</em>}' containment reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Transformation Refine CS</em>'
-	 *            containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS#getTransformationRefineCS <em>Transformation Refine CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Transformation Refine CS</em>' containment reference.
 	 * @see #getTransformationRefineCS()
 	 * @generated
 	 */
@@ -145,4 +139,4 @@ public interface TransformationHeaderCS
 	 */
 	OperationalTransformation ast();
 
-} // TransformationHeaderCS
+} // TransformationCS

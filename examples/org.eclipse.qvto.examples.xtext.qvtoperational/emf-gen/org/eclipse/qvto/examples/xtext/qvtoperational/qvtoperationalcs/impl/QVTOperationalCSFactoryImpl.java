@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierKind;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
@@ -29,12 +28,12 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LibraryIm
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.LocalPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingBodyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingCallExpCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingRuleCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingSectionsCS;
@@ -69,7 +68,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSig
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationRefineCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
@@ -143,7 +142,7 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 			case QVTOperationalCSPackage.LOCAL_PROPERTY_CS: return createLocalPropertyCS();
 			case QVTOperationalCSPackage.MAPPING_BODY_CS: return createMappingBodyCS();
 			case QVTOperationalCSPackage.MAPPING_CALL_EXP_CS: return createMappingCallExpCS();
-			case QVTOperationalCSPackage.MAPPING_DECLARATION_CS: return createMappingDeclarationCS();
+			case QVTOperationalCSPackage.MAPPING_OPERATION_CS: return createMappingOperationCS();
 			case QVTOperationalCSPackage.MAPPING_END_CS: return createMappingEndCS();
 			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS: return createMappingExtensionCS();
 			case QVTOperationalCSPackage.MAPPING_INIT_CS: return createMappingInitCS();
@@ -164,7 +163,7 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 			case QVTOperationalCSPackage.PACKAGE_REF_CS: return createPackageRefCS();
 			case QVTOperationalCSPackage.SCOPED_NAME_CS: return createScopedNameCS();
 			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS: return createSimpleSignatureCS();
-			case QVTOperationalCSPackage.TRANSFORMATION_HEADER_CS: return createTransformationHeaderCS();
+			case QVTOperationalCSPackage.TRANSFORMATION_CS: return createTransformationCS();
 			case QVTOperationalCSPackage.TRANSFORMATION_REFINE_CS: return createTransformationRefineCS();
 			case QVTOperationalCSPackage.TYPE_SPEC_CS: return createTypeSpecCS();
 			case QVTOperationalCSPackage.UNIT_CS: return createUnitCS();
@@ -496,9 +495,9 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MappingDeclarationCS createMappingDeclarationCS() {
-		MappingDeclarationCSImpl mappingDeclarationCS = new MappingDeclarationCSImpl();
-		return mappingDeclarationCS;
+	public MappingOperationCS createMappingOperationCS() {
+		MappingOperationCSImpl mappingOperationCS = new MappingOperationCSImpl();
+		return mappingOperationCS;
 	}
 
 	/**
@@ -706,9 +705,9 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationHeaderCS createTransformationHeaderCS() {
-		TransformationHeaderCSImpl transformationHeaderCS = new TransformationHeaderCSImpl();
-		return transformationHeaderCS;
+	public TransformationCS createTransformationCS() {
+		TransformationCSImpl transformationCS = new TransformationCSImpl();
+		return transformationCS;
 	}
 
 	/**

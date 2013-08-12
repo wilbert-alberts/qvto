@@ -63,25 +63,21 @@ public interface MappingMethodCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mapping Declaration CS</em>' containment reference.
-	 * @see #setMappingDeclarationCS(MappingDeclarationCS)
+	 * @see #setMappingDeclarationCS(MappingOperationCS)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingMethodCS_MappingDeclarationCS()
 	 * @model containment="true"
 	 * @generated
 	 */
-	MappingDeclarationCS getMappingDeclarationCS();
+	MappingOperationCS getMappingDeclarationCS();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS#getMappingDeclarationCS
-	 * <em>Mapping Declaration CS</em>}' containment reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Mapping Declaration CS</em>'
-	 *            containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingMethodCS#getMappingDeclarationCS <em>Mapping Declaration CS</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Mapping Declaration CS</em>' containment reference.
 	 * @see #getMappingDeclarationCS()
 	 * @generated
 	 */
-	void setMappingDeclarationCS(MappingDeclarationCS value);
+	void setMappingDeclarationCS(MappingOperationCS value);
 
 } // MappingMethodCS

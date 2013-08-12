@@ -39,22 +39,22 @@ public interface MappingModuleCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Header CS</em>' containment reference.
-	 * @see #setHeaderCS(TransformationHeaderCS)
+	 * @see #setHeaderCS(TransformationCS)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingModuleCS_HeaderCS()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	TransformationHeaderCS getHeaderCS();
+	TransformationCS getHeaderCS();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS#getHeaderCS <em>Header CS</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Header CS</em>' containment reference.
 	 * @see #getHeaderCS()
 	 * @generated
 	 */
-	void setHeaderCS(TransformationHeaderCS value);
+	void setHeaderCS(TransformationCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Imports</b></em>' containment reference list.

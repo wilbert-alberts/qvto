@@ -247,13 +247,13 @@ public interface QVTOperationalCSFactory extends EFactory {
 	MappingCallExpCS createMappingCallExpCS();
 
 	/**
-	 * Returns a new object of class '<em>Mapping Declaration CS</em>'.
+	 * Returns a new object of class '<em>Mapping Operation CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Mapping Declaration CS</em>'.
+	 * @return a new object of class '<em>Mapping Operation CS</em>'.
 	 * @generated
 	 */
-	MappingDeclarationCS createMappingDeclarationCS();
+	MappingOperationCS createMappingOperationCS();
 
 	/**
 	 * Returns a new object of class '<em>Mapping End CS</em>'.
@@ -436,13 +436,13 @@ public interface QVTOperationalCSFactory extends EFactory {
 	SimpleSignatureCS createSimpleSignatureCS();
 
 	/**
-	 * Returns a new object of class '<em>Transformation Header CS</em>'.
+	 * Returns a new object of class '<em>Transformation CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Transformation Header CS</em>'.
+	 * @return a new object of class '<em>Transformation CS</em>'.
 	 * @generated
 	 */
-	TransformationHeaderCS createTransformationHeaderCS();
+	TransformationCS createTransformationCS();
 
 	/**
 	 * Returns a new object of class '<em>Transformation Refine CS</em>'.

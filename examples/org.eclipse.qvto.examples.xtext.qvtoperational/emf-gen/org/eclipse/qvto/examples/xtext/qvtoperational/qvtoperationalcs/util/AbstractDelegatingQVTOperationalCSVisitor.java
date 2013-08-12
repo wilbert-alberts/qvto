@@ -93,10 +93,6 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visitMappingCallExpCS(object);
 	}
 
-	public @Nullable R visitMappingDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingDeclarationCS object) {
-		return delegate.visitMappingDeclarationCS(object);
-	}
-
 	public @Nullable R visitMappingEndCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingEndCS object) {
 		return delegate.visitMappingEndCS(object);
 	}
@@ -115,6 +111,10 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 
 	public @Nullable R visitMappingModuleCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingModuleCS object) {
 		return delegate.visitMappingModuleCS(object);
+	}
+
+	public @Nullable R visitMappingOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS object) {
+		return delegate.visitMappingOperationCS(object);
 	}
 
 	public @Nullable R visitMappingQueryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS object) {
@@ -237,8 +237,8 @@ public abstract class AbstractDelegatingQVTOperationalCSVisitor<R, C, D extends 
 		return delegate.visitTopLevelCS(object);
 	}
 
-	public @Nullable R visitTransformationHeaderCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationHeaderCS object) {
-		return delegate.visitTransformationHeaderCS(object);
+	public @Nullable R visitTransformationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS object) {
+		return delegate.visitTransformationCS(object);
 	}
 
 	public @Nullable R visitTransformationRefineCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationRefineCS object) {
