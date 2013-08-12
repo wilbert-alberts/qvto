@@ -10,13 +10,16 @@
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 
 /**
  *
@@ -142,7 +145,24 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	public @Nullable Continuation<?> visitMappingOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS csElement) {
-		throw new UnsupportedOperationException("visitMappingOperationCS not supported in QVTOperationalCSContainmentVisitor");
+		CS2Pivot converter = context.getConverter();
+		// AS element creation
+		org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation asElement = csElement != null ? (org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation) converter.getPivotElement(csElement) : null;
+		if (asElement == null) {
+			asElement = org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalFactory.eINSTANCE.createMappingOperation();
+			converter.installPivotDefinition(csElement, asElement);
+		}
+		
+		// AS Name property update
+		java.lang.String newCsName = csElement.getName();
+		java.lang.String newName = newCsName;
+		java.lang.String oldName = asElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			asElement.setName(newName);
+		}
+		// AS element comments update
+		context.refreshComments(asElement, csElement);
+		return null;
 	}
 	
 	public @Nullable Continuation<?> visitMappingQueryCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingQueryCS csElement) {
@@ -425,6 +445,18 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		java.util.List<org.eclipse.ocl.examples.pivot.Type> oldOwnedTypes = asElement.getOwnedType();
 		PivotUtil.refreshList(oldOwnedTypes, newOwnedTypes);
+		// AS OwnedOperation property update
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = csElement.getOwnedOperation();
+		java.util.List<org.eclipse.ocl.examples.pivot.Operation> newOwnedOperations = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Operation>();
+		
+		for (org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS newCsOwnedOperation : newCsOwnedOperations) {
+			org.eclipse.ocl.examples.pivot.Operation newOwnedOperation = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Operation.class, newCsOwnedOperation);
+			if (newOwnedOperation != null) {
+				newOwnedOperations.add(newOwnedOperation);
+			}
+		}
+		java.util.List<org.eclipse.ocl.examples.pivot.Operation> oldOwnedOperations = asElement.getOwnedOperation();
+		PivotUtil.refreshList(oldOwnedOperations, newOwnedOperations);
 		// AS element comments update
 		context.refreshComments(asElement, csElement);
 		return null;

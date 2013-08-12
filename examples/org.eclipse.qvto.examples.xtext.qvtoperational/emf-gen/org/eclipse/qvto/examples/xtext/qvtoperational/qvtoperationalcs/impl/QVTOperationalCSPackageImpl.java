@@ -2590,8 +2590,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		BaseCSTPackage theBaseCSTPackage = (BaseCSTPackage)EPackage.Registry.INSTANCE.getEPackage(BaseCSTPackage.eNS_URI);
 		PivotPackage thePivotPackage = (PivotPackage)EPackage.Registry.INSTANCE.getEPackage(PivotPackage.eNS_URI);
 		EssentialOCLCSTPackage theEssentialOCLCSTPackage = (EssentialOCLCSTPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSTPackage.eNS_URI);
-		ImperativeOCLCSPackage theImperativeOCLCSPackage = (ImperativeOCLCSPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeOCLCSPackage.eNS_URI);
 		QVTOperationalPackage theQVTOperationalPackage = (QVTOperationalPackage)EPackage.Registry.INSTANCE.getEPackage(QVTOperationalPackage.eNS_URI);
+		ImperativeOCLCSPackage theImperativeOCLCSPackage = (ImperativeOCLCSPackage)EPackage.Registry.INSTANCE.getEPackage(ImperativeOCLCSPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -2767,6 +2767,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEReference(getMappingOperationCS_DirectionKindCS(), this.getDirectionKindCS(), null, "directionKindCS", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingOperationCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMappingOperationCS_IsQuery(), ecorePackage.getEBoolean(), "isQuery", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(mappingOperationCSEClass, theQVTOperationalPackage.getMappingOperation(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(mappingEndCSEClass, MappingEndCS.class, "MappingEndCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -2983,7 +2985,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "imperativeocl", "/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL",
 			 "imperativeoclcs", "/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/",
 			 "qvtoperational", "/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational"
-		   });						
+		   });							
 	}
 
 	/**
@@ -3001,7 +3003,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-		   });					
+		   });						
 	}
 
 	/**
@@ -3037,10 +3039,16 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "body", "ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
+		  (mappingOperationCSEClass.getEOperations().get(0), 
+		   source, 
+		   new String[] {
+			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name\n\t\t\t}"
+		   });		
+		addAnnotation
 		  (transformationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME .ast(),\n\t\t\t\townedType = ownedType -- FIXME .ast()\n\t\t\t}"
+			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME .ast(),\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}"
 		   });
 	}
 

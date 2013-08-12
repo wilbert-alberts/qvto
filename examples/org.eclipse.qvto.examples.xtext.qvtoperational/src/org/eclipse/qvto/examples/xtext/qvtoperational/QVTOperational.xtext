@@ -193,9 +193,9 @@ TransformationDeclCS returns TransformationCS:
 
 TransformationDefCS returns TransformationCS:
 	 TransformationHeaderCS '{'
-	 	(ownedType += ModuleTypeCS)*
+	 	(ownedType+= ModuleTypeCS)*
 		(ownedProperty+= ModulePropertyCS)*
-		(ownedOperation += ModuleOperationCS)*
+		(ownedOperation+= ModuleOperationCS)*
 		 
 	'}'
 ;

@@ -5,6 +5,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
+import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
 
 /**
  * <!-- begin-user-doc -->
@@ -153,5 +154,14 @@ public interface MappingOperationCS extends OperationCS {
 	 * @generated
 	 */
 	void setIsQuery(boolean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::MappingOperation {\n\t\t\t\tname = name\n\t\t\t}'"
+	 * @generated
+	 */
+	MappingOperation ast();
 
 } // MappingOperationCS
