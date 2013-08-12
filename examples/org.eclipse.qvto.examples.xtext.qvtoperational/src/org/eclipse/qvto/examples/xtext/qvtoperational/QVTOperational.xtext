@@ -30,6 +30,7 @@ import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
 TopLevelCS : ^import+=ImportCS* 
 	// unit+=UnitElementCS* FIXME
 	(ownedNestedPackage+= UnitPacakgeCS)*
+	(ownedType+=ModelTypeCS)*
 ;
 
 enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
@@ -43,7 +44,7 @@ Qualifier returns ecore::EString : 'blackbox' & 'abstract' & 'static';
 FeatureQualifier returns ecore::EString : 'composes' & 'references' & 'readonly' & 'derived' & 'static';
 
 // ****** Imports ******
-ImportCS returns QVToImportCS : // returns ElementCS to make it inherits ElementCS 
+ImportCS returns QVToImportCS :
 	  ('import' unit=UnitCS ';')
 	|  ('from' unit=UnitCS 'import' ((importedUnitElement+=Identifier (',' importedUnitElement+=Identifier)*) | all?='*') ';')
 ;
@@ -58,6 +59,10 @@ UnitPacakgeCS returns base::PackageCS:
 	MetamodelCS | TransformationCS
 ;
 
+
+UnitTypeCS returns base::TypeCS:
+	ModelTypeCS
+;
 // ****** General rules ******
 //CompleteSignatureCS: SimpleSignatureCS (':' (param+=ParameterCS (',' param+=ParameterCS)*))?;
 //
@@ -178,18 +183,62 @@ TagCS returns TagCS:
 
 // ****** Transformations, mappings, etc ******
 
-TransformationCS returns TransformationHeaderCS:
+TransformationCS:
 	TransformationDeclCS | TransformationDefCS
 ;
 
-TransformationDeclCS returns TransformationHeaderCS:
+TransformationDeclCS returns TransformationCS:
 	TransformationHeaderCS ';'
 ;
 
-TransformationDefCS returns TransformationHeaderCS:
-	TransformationHeaderCS '{' '}'
+TransformationDefCS returns TransformationCS:
+	 TransformationHeaderCS '{'
+	 	(ownedType += ModuleTypeCS)*
+		(ownedProperty+= ModulePropertyCS)*
+		(ownedOperation += ModuleOperationCS)*
+		 
+	'}'
 ;
-	
-TransformationHeaderCS:
+
+TransformationHeaderCS returns TransformationCS:
 	'transformation' name=UnrestrictedName
+;
+
+ModelTypeCS:
+	'modeltype' name=UnrestrictedName complianceKindCS=StringLiteralExpCS 'uses' (packageRefs+= PackageRefCS)
+;
+
+PackageRefCS:
+	uriCS= StringLiteralExpCS
+	| pathNameCS=PathNameCS (uriCS=StringLiteralExpCS)
+;
+
+ModulePropertyCS returns base::StructuralFeatureCS:
+	ClassifierPropertyCS
+;
+
+ModuleOperationCS returns base::OperationCS: 
+	MappingOperationCS
+;
+
+ModuleTypeCS returns base::ClassifierCS:
+	ModelTypeCS
+;
+
+MappingOperationCS:
+	MappingDeclarationCS | MappingDefinitionCS
+;
+
+MappingDeclarationCS returns MappingOperationCS:
+	MappingOperationHeaderCS ';'
+;
+
+MappingDefinitionCS returns MappingOperationCS:
+	MappingOperationHeaderCS '{'
+	
+	'}' 
+;
+
+MappingOperationHeaderCS returns MappingOperationCS:
+	"mapping" name=UnreservedName
 ;

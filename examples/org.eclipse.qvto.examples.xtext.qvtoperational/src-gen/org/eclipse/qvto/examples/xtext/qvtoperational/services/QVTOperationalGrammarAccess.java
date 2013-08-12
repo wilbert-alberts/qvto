@@ -26,6 +26,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cImportImportCSParserRuleCall_0_0 = (RuleCall)cImportAssignment_0.eContents().get(0);
 		private final Assignment cOwnedNestedPackageAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0 = (RuleCall)cOwnedNestedPackageAssignment_1.eContents().get(0);
+		private final Assignment cOwnedTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cOwnedTypeModelTypeCSParserRuleCall_2_0 = (RuleCall)cOwnedTypeAssignment_2.eContents().get(0);
 		
 		////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
 		//
@@ -39,11 +41,11 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//TopLevelCS:
 		//
 		//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
-		// ownedNestedPackage+=UnitPacakgeCS*;
+		// ownedNestedPackage+=UnitPacakgeCS* ownedType+=ModelTypeCS*;
 		public ParserRule getRule() { return rule; }
 
 		//^import+=ImportCS* // unit+=UnitElementCS* FIXME
-		// ownedNestedPackage+=UnitPacakgeCS*
+		// ownedNestedPackage+=UnitPacakgeCS* ownedType+=ModelTypeCS*
 		public Group getGroup() { return cGroup; }
 
 		//^import+=ImportCS*
@@ -57,6 +59,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 		//UnitPacakgeCS
 		public RuleCall getOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0() { return cOwnedNestedPackageUnitPacakgeCSParserRuleCall_1_0; }
+
+		//ownedType+=ModelTypeCS*
+		public Assignment getOwnedTypeAssignment_2() { return cOwnedTypeAssignment_2; }
+
+		//ModelTypeCS
+		public RuleCall getOwnedTypeModelTypeCSParserRuleCall_2_0() { return cOwnedTypeModelTypeCSParserRuleCall_2_0; }
 	}
 
 	public class QualifierElements extends AbstractParserRuleElementFinder {
@@ -143,7 +151,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		
 		//// ****** Imports ******
-		// // returns ElementCS to make it inherits ElementCS 
 		// ImportCS returns QVToImportCS:
 		//
 		//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (importedUnitElement+=Identifier (","
@@ -277,6 +284,19 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TransformationCS
 		public RuleCall getTransformationCSParserRuleCall_1() { return cTransformationCSParserRuleCall_1; }
+	}
+
+	public class UnitTypeCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnitTypeCS");
+		private final RuleCall cModelTypeCSParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//UnitTypeCS returns base::TypeCS:
+		//
+		//	ModelTypeCS;
+		public ParserRule getRule() { return rule; }
+
+		//ModelTypeCS
+		public RuleCall getModelTypeCSParserRuleCall() { return cModelTypeCSParserRuleCall; }
 	}
 
 	public class ParameterCSElements extends AbstractParserRuleElementFinder {
@@ -1247,7 +1267,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//
 		//// ****** Transformations, mappings, etc ******
-		// TransformationCS returns TransformationHeaderCS:
+		// TransformationCS:
 		//
 		//	TransformationDeclCS | TransformationDefCS;
 		public ParserRule getRule() { return rule; }
@@ -1268,7 +1288,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTransformationHeaderCSParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		//TransformationDeclCS returns TransformationHeaderCS:
+		//TransformationDeclCS returns TransformationCS:
 		//
 		//	TransformationHeaderCS ";";
 		public ParserRule getRule() { return rule; }
@@ -1288,14 +1308,24 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cTransformationHeaderCSParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cOwnedTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cOwnedTypeModuleTypeCSParserRuleCall_2_0 = (RuleCall)cOwnedTypeAssignment_2.eContents().get(0);
+		private final Assignment cOwnedPropertyAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cOwnedPropertyModulePropertyCSParserRuleCall_3_0 = (RuleCall)cOwnedPropertyAssignment_3.eContents().get(0);
+		private final Assignment cOwnedOperationAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cOwnedOperationModuleOperationCSParserRuleCall_4_0 = (RuleCall)cOwnedOperationAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//TransformationDefCS returns TransformationHeaderCS:
+		//TransformationDefCS returns TransformationCS:
 		//
-		//	TransformationHeaderCS "{" "}";
+		//	TransformationHeaderCS "{" ownedType+=ModuleTypeCS* ownedProperty+=ModulePropertyCS*
+		//
+		//	ownedOperation+=ModuleOperationCS* "}";
 		public ParserRule getRule() { return rule; }
 
-		//TransformationHeaderCS "{" "}"
+		//TransformationHeaderCS "{" ownedType+=ModuleTypeCS* ownedProperty+=ModulePropertyCS* ownedOperation+=ModuleOperationCS*
+		//
+		//"}"
 		public Group getGroup() { return cGroup; }
 
 		//TransformationHeaderCS
@@ -1304,8 +1334,26 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
+		//ownedType+=ModuleTypeCS*
+		public Assignment getOwnedTypeAssignment_2() { return cOwnedTypeAssignment_2; }
+
+		//ModuleTypeCS
+		public RuleCall getOwnedTypeModuleTypeCSParserRuleCall_2_0() { return cOwnedTypeModuleTypeCSParserRuleCall_2_0; }
+
+		//ownedProperty+=ModulePropertyCS*
+		public Assignment getOwnedPropertyAssignment_3() { return cOwnedPropertyAssignment_3; }
+
+		//ModulePropertyCS
+		public RuleCall getOwnedPropertyModulePropertyCSParserRuleCall_3_0() { return cOwnedPropertyModulePropertyCSParserRuleCall_3_0; }
+
+		//ownedOperation+=ModuleOperationCS*
+		public Assignment getOwnedOperationAssignment_4() { return cOwnedOperationAssignment_4; }
+
+		//ModuleOperationCS
+		public RuleCall getOwnedOperationModuleOperationCSParserRuleCall_4_0() { return cOwnedOperationModuleOperationCSParserRuleCall_4_0; }
+
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_2() { return cRightCurlyBracketKeyword_2; }
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 
 	public class TransformationHeaderCSElements extends AbstractParserRuleElementFinder {
@@ -1315,7 +1363,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameUnrestrictedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//TransformationHeaderCS:
+		//TransformationHeaderCS returns TransformationCS:
 		//
 		//	"transformation" name=UnrestrictedName;
 		public ParserRule getRule() { return rule; }
@@ -1331,6 +1379,223 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 		//UnrestrictedName
 		public RuleCall getNameUnrestrictedNameParserRuleCall_1_0() { return cNameUnrestrictedNameParserRuleCall_1_0; }
+	}
+
+	public class ModelTypeCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModelTypeCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cModeltypeKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameUnrestrictedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cComplianceKindCSAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cComplianceKindCSStringLiteralExpCSParserRuleCall_2_0 = (RuleCall)cComplianceKindCSAssignment_2.eContents().get(0);
+		private final Keyword cUsesKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cPackageRefsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cPackageRefsPackageRefCSParserRuleCall_4_0 = (RuleCall)cPackageRefsAssignment_4.eContents().get(0);
+		
+		//ModelTypeCS:
+		//
+		//	"modeltype" name=UnrestrictedName complianceKindCS=StringLiteralExpCS "uses" packageRefs+=PackageRefCS;
+		public ParserRule getRule() { return rule; }
+
+		//"modeltype" name=UnrestrictedName complianceKindCS=StringLiteralExpCS "uses" packageRefs+=PackageRefCS
+		public Group getGroup() { return cGroup; }
+
+		//"modeltype"
+		public Keyword getModeltypeKeyword_0() { return cModeltypeKeyword_0; }
+
+		//name=UnrestrictedName
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//UnrestrictedName
+		public RuleCall getNameUnrestrictedNameParserRuleCall_1_0() { return cNameUnrestrictedNameParserRuleCall_1_0; }
+
+		//complianceKindCS=StringLiteralExpCS
+		public Assignment getComplianceKindCSAssignment_2() { return cComplianceKindCSAssignment_2; }
+
+		//StringLiteralExpCS
+		public RuleCall getComplianceKindCSStringLiteralExpCSParserRuleCall_2_0() { return cComplianceKindCSStringLiteralExpCSParserRuleCall_2_0; }
+
+		//"uses"
+		public Keyword getUsesKeyword_3() { return cUsesKeyword_3; }
+
+		//packageRefs+=PackageRefCS
+		public Assignment getPackageRefsAssignment_4() { return cPackageRefsAssignment_4; }
+
+		//PackageRefCS
+		public RuleCall getPackageRefsPackageRefCSParserRuleCall_4_0() { return cPackageRefsPackageRefCSParserRuleCall_4_0; }
+	}
+
+	public class PackageRefCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PackageRefCS");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cUriCSAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cUriCSStringLiteralExpCSParserRuleCall_0_0 = (RuleCall)cUriCSAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Assignment cPathNameCSAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cPathNameCSPathNameCSParserRuleCall_1_0_0 = (RuleCall)cPathNameCSAssignment_1_0.eContents().get(0);
+		private final Assignment cUriCSAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cUriCSStringLiteralExpCSParserRuleCall_1_1_0 = (RuleCall)cUriCSAssignment_1_1.eContents().get(0);
+		
+		//PackageRefCS:
+		//
+		//	uriCS=StringLiteralExpCS | pathNameCS=PathNameCS uriCS=StringLiteralExpCS;
+		public ParserRule getRule() { return rule; }
+
+		//uriCS=StringLiteralExpCS | pathNameCS=PathNameCS uriCS=StringLiteralExpCS
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//uriCS=StringLiteralExpCS
+		public Assignment getUriCSAssignment_0() { return cUriCSAssignment_0; }
+
+		//StringLiteralExpCS
+		public RuleCall getUriCSStringLiteralExpCSParserRuleCall_0_0() { return cUriCSStringLiteralExpCSParserRuleCall_0_0; }
+
+		//pathNameCS=PathNameCS uriCS=StringLiteralExpCS
+		public Group getGroup_1() { return cGroup_1; }
+
+		//pathNameCS=PathNameCS
+		public Assignment getPathNameCSAssignment_1_0() { return cPathNameCSAssignment_1_0; }
+
+		//PathNameCS
+		public RuleCall getPathNameCSPathNameCSParserRuleCall_1_0_0() { return cPathNameCSPathNameCSParserRuleCall_1_0_0; }
+
+		//uriCS=StringLiteralExpCS
+		public Assignment getUriCSAssignment_1_1() { return cUriCSAssignment_1_1; }
+
+		//StringLiteralExpCS
+		public RuleCall getUriCSStringLiteralExpCSParserRuleCall_1_1_0() { return cUriCSStringLiteralExpCSParserRuleCall_1_1_0; }
+	}
+
+	public class ModulePropertyCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModulePropertyCS");
+		private final RuleCall cClassifierPropertyCSParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ModulePropertyCS returns base::StructuralFeatureCS:
+		//
+		//	ClassifierPropertyCS;
+		public ParserRule getRule() { return rule; }
+
+		//ClassifierPropertyCS
+		public RuleCall getClassifierPropertyCSParserRuleCall() { return cClassifierPropertyCSParserRuleCall; }
+	}
+
+	public class ModuleOperationCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModuleOperationCS");
+		private final RuleCall cMappingOperationCSParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ModuleOperationCS returns base::OperationCS:
+		//
+		//	MappingOperationCS;
+		public ParserRule getRule() { return rule; }
+
+		//MappingOperationCS
+		public RuleCall getMappingOperationCSParserRuleCall() { return cMappingOperationCSParserRuleCall; }
+	}
+
+	public class ModuleTypeCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModuleTypeCS");
+		private final RuleCall cModelTypeCSParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ModuleTypeCS returns base::ClassifierCS:
+		//
+		//	ModelTypeCS;
+		public ParserRule getRule() { return rule; }
+
+		//ModelTypeCS
+		public RuleCall getModelTypeCSParserRuleCall() { return cModelTypeCSParserRuleCall; }
+	}
+
+	public class MappingOperationCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MappingOperationCS");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cMappingDeclarationCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cMappingDefinitionCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//MappingOperationCS:
+		//
+		//	MappingDeclarationCS | MappingDefinitionCS;
+		public ParserRule getRule() { return rule; }
+
+		//MappingDeclarationCS | MappingDefinitionCS
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//MappingDeclarationCS
+		public RuleCall getMappingDeclarationCSParserRuleCall_0() { return cMappingDeclarationCSParserRuleCall_0; }
+
+		//MappingDefinitionCS
+		public RuleCall getMappingDefinitionCSParserRuleCall_1() { return cMappingDefinitionCSParserRuleCall_1; }
+	}
+
+	public class MappingDeclarationCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MappingDeclarationCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMappingOperationHeaderCSParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//MappingDeclarationCS returns MappingOperationCS:
+		//
+		//	MappingOperationHeaderCS ";";
+		public ParserRule getRule() { return rule; }
+
+		//MappingOperationHeaderCS ";"
+		public Group getGroup() { return cGroup; }
+
+		//MappingOperationHeaderCS
+		public RuleCall getMappingOperationHeaderCSParserRuleCall_0() { return cMappingOperationHeaderCSParserRuleCall_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
+	}
+
+	public class MappingDefinitionCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MappingDefinitionCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMappingOperationHeaderCSParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//MappingDefinitionCS returns MappingOperationCS:
+		//
+		//	MappingOperationHeaderCS "{" "}";
+		public ParserRule getRule() { return rule; }
+
+		//MappingOperationHeaderCS "{" "}"
+		public Group getGroup() { return cGroup; }
+
+		//MappingOperationHeaderCS
+		public RuleCall getMappingOperationHeaderCSParserRuleCall_0() { return cMappingOperationHeaderCSParserRuleCall_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_2() { return cRightCurlyBracketKeyword_2; }
+	}
+
+	public class MappingOperationHeaderCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MappingOperationHeaderCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMappingKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameUnreservedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//MappingOperationHeaderCS returns MappingOperationCS:
+		//
+		//	"mapping" name=UnreservedName;
+		public ParserRule getRule() { return rule; }
+
+		//"mapping" name=UnreservedName
+		public Group getGroup() { return cGroup; }
+
+		//"mapping"
+		public Keyword getMappingKeyword_0() { return cMappingKeyword_0; }
+
+		//name=UnreservedName
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//UnreservedName
+		public RuleCall getNameUnreservedNameParserRuleCall_1_0() { return cNameUnreservedNameParserRuleCall_1_0; }
 	}
 	
 	
@@ -1546,6 +1811,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private ImportCSElements pImportCS;
 	private UnitCSElements pUnitCS;
 	private UnitPacakgeCSElements pUnitPacakgeCS;
+	private UnitTypeCSElements pUnitTypeCS;
 	private ParameterCSElements pParameterCS;
 	private InitPartCSElements pInitPartCS;
 	private MetamodelCSElements pMetamodelCS;
@@ -1568,6 +1834,15 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private TransformationDeclCSElements pTransformationDeclCS;
 	private TransformationDefCSElements pTransformationDefCS;
 	private TransformationHeaderCSElements pTransformationHeaderCS;
+	private ModelTypeCSElements pModelTypeCS;
+	private PackageRefCSElements pPackageRefCS;
+	private ModulePropertyCSElements pModulePropertyCS;
+	private ModuleOperationCSElements pModuleOperationCS;
+	private ModuleTypeCSElements pModuleTypeCS;
+	private MappingOperationCSElements pMappingOperationCS;
+	private MappingDeclarationCSElements pMappingDeclarationCS;
+	private MappingDefinitionCSElements pMappingDefinitionCS;
+	private MappingOperationHeaderCSElements pMappingOperationHeaderCS;
 	
 	private final Grammar grammar;
 
@@ -1619,7 +1894,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//TopLevelCS:
 	//
 	//	^import+=ImportCS* // unit+=UnitElementCS* FIXME
-	// ownedNestedPackage+=UnitPacakgeCS*;
+	// ownedNestedPackage+=UnitPacakgeCS* ownedType+=ModelTypeCS*;
 	public TopLevelCSElements getTopLevelCSAccess() {
 		return (pTopLevelCS != null) ? pTopLevelCS : (pTopLevelCS = new TopLevelCSElements());
 	}
@@ -1706,7 +1981,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ****** Imports ******
-	// // returns ElementCS to make it inherits ElementCS 
 	// ImportCS returns QVToImportCS:
 	//
 	//	"import" unit=UnitCS ";" | "from" unit=UnitCS "import" (importedUnitElement+=Identifier (","
@@ -1741,6 +2015,17 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getUnitPacakgeCSRule() {
 		return getUnitPacakgeCSAccess().getRule();
+	}
+
+	//UnitTypeCS returns base::TypeCS:
+	//
+	//	ModelTypeCS;
+	public UnitTypeCSElements getUnitTypeCSAccess() {
+		return (pUnitTypeCS != null) ? pUnitTypeCS : (pUnitTypeCS = new UnitTypeCSElements());
+	}
+	
+	public ParserRule getUnitTypeCSRule() {
+		return getUnitTypeCSAccess().getRule();
 	}
 
 	//// ****** General rules ******
@@ -1987,7 +2272,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//
 	//// ****** Transformations, mappings, etc ******
-	// TransformationCS returns TransformationHeaderCS:
+	// TransformationCS:
 	//
 	//	TransformationDeclCS | TransformationDefCS;
 	public TransformationCSElements getTransformationCSAccess() {
@@ -1998,7 +2283,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransformationCSAccess().getRule();
 	}
 
-	//TransformationDeclCS returns TransformationHeaderCS:
+	//TransformationDeclCS returns TransformationCS:
 	//
 	//	TransformationHeaderCS ";";
 	public TransformationDeclCSElements getTransformationDeclCSAccess() {
@@ -2009,9 +2294,11 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransformationDeclCSAccess().getRule();
 	}
 
-	//TransformationDefCS returns TransformationHeaderCS:
+	//TransformationDefCS returns TransformationCS:
 	//
-	//	TransformationHeaderCS "{" "}";
+	//	TransformationHeaderCS "{" ownedType+=ModuleTypeCS* ownedProperty+=ModulePropertyCS*
+	//
+	//	ownedOperation+=ModuleOperationCS* "}";
 	public TransformationDefCSElements getTransformationDefCSAccess() {
 		return (pTransformationDefCS != null) ? pTransformationDefCS : (pTransformationDefCS = new TransformationDefCSElements());
 	}
@@ -2020,7 +2307,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransformationDefCSAccess().getRule();
 	}
 
-	//TransformationHeaderCS:
+	//TransformationHeaderCS returns TransformationCS:
 	//
 	//	"transformation" name=UnrestrictedName;
 	public TransformationHeaderCSElements getTransformationHeaderCSAccess() {
@@ -2029,6 +2316,105 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTransformationHeaderCSRule() {
 		return getTransformationHeaderCSAccess().getRule();
+	}
+
+	//ModelTypeCS:
+	//
+	//	"modeltype" name=UnrestrictedName complianceKindCS=StringLiteralExpCS "uses" packageRefs+=PackageRefCS;
+	public ModelTypeCSElements getModelTypeCSAccess() {
+		return (pModelTypeCS != null) ? pModelTypeCS : (pModelTypeCS = new ModelTypeCSElements());
+	}
+	
+	public ParserRule getModelTypeCSRule() {
+		return getModelTypeCSAccess().getRule();
+	}
+
+	//PackageRefCS:
+	//
+	//	uriCS=StringLiteralExpCS | pathNameCS=PathNameCS uriCS=StringLiteralExpCS;
+	public PackageRefCSElements getPackageRefCSAccess() {
+		return (pPackageRefCS != null) ? pPackageRefCS : (pPackageRefCS = new PackageRefCSElements());
+	}
+	
+	public ParserRule getPackageRefCSRule() {
+		return getPackageRefCSAccess().getRule();
+	}
+
+	//ModulePropertyCS returns base::StructuralFeatureCS:
+	//
+	//	ClassifierPropertyCS;
+	public ModulePropertyCSElements getModulePropertyCSAccess() {
+		return (pModulePropertyCS != null) ? pModulePropertyCS : (pModulePropertyCS = new ModulePropertyCSElements());
+	}
+	
+	public ParserRule getModulePropertyCSRule() {
+		return getModulePropertyCSAccess().getRule();
+	}
+
+	//ModuleOperationCS returns base::OperationCS:
+	//
+	//	MappingOperationCS;
+	public ModuleOperationCSElements getModuleOperationCSAccess() {
+		return (pModuleOperationCS != null) ? pModuleOperationCS : (pModuleOperationCS = new ModuleOperationCSElements());
+	}
+	
+	public ParserRule getModuleOperationCSRule() {
+		return getModuleOperationCSAccess().getRule();
+	}
+
+	//ModuleTypeCS returns base::ClassifierCS:
+	//
+	//	ModelTypeCS;
+	public ModuleTypeCSElements getModuleTypeCSAccess() {
+		return (pModuleTypeCS != null) ? pModuleTypeCS : (pModuleTypeCS = new ModuleTypeCSElements());
+	}
+	
+	public ParserRule getModuleTypeCSRule() {
+		return getModuleTypeCSAccess().getRule();
+	}
+
+	//MappingOperationCS:
+	//
+	//	MappingDeclarationCS | MappingDefinitionCS;
+	public MappingOperationCSElements getMappingOperationCSAccess() {
+		return (pMappingOperationCS != null) ? pMappingOperationCS : (pMappingOperationCS = new MappingOperationCSElements());
+	}
+	
+	public ParserRule getMappingOperationCSRule() {
+		return getMappingOperationCSAccess().getRule();
+	}
+
+	//MappingDeclarationCS returns MappingOperationCS:
+	//
+	//	MappingOperationHeaderCS ";";
+	public MappingDeclarationCSElements getMappingDeclarationCSAccess() {
+		return (pMappingDeclarationCS != null) ? pMappingDeclarationCS : (pMappingDeclarationCS = new MappingDeclarationCSElements());
+	}
+	
+	public ParserRule getMappingDeclarationCSRule() {
+		return getMappingDeclarationCSAccess().getRule();
+	}
+
+	//MappingDefinitionCS returns MappingOperationCS:
+	//
+	//	MappingOperationHeaderCS "{" "}";
+	public MappingDefinitionCSElements getMappingDefinitionCSAccess() {
+		return (pMappingDefinitionCS != null) ? pMappingDefinitionCS : (pMappingDefinitionCS = new MappingDefinitionCSElements());
+	}
+	
+	public ParserRule getMappingDefinitionCSRule() {
+		return getMappingDefinitionCSAccess().getRule();
+	}
+
+	//MappingOperationHeaderCS returns MappingOperationCS:
+	//
+	//	"mapping" name=UnreservedName;
+	public MappingOperationHeaderCSElements getMappingOperationHeaderCSAccess() {
+		return (pMappingOperationHeaderCS != null) ? pMappingOperationHeaderCS : (pMappingOperationHeaderCS = new MappingOperationHeaderCSElements());
+	}
+	
+	public ParserRule getMappingOperationHeaderCSRule() {
+		return getMappingOperationHeaderCSAccess().getRule();
 	}
 
 	////import "platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore" as base
