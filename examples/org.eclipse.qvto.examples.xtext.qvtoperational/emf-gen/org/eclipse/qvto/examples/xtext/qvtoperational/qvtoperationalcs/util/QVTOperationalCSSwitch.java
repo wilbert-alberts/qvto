@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NamedExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionBlockCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -228,6 +229,14 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				if (result == null) result = caseElementCS(operationParameterDeclarationCS);
 				if (result == null) result = casePivotable(operationParameterDeclarationCS);
 				if (result == null) result = caseVisitableCS(operationParameterDeclarationCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QVTOperationalCSPackage.OPERATION_SIMPLE_SIGNATURE_CS: {
+				OperationSimpleSignatureCS operationSimpleSignatureCS = (OperationSimpleSignatureCS)theEObject;
+				T result = caseOperationSimpleSignatureCS(operationSimpleSignatureCS);
+				if (result == null) result = caseElementCS(operationSimpleSignatureCS);
+				if (result == null) result = caseVisitableCS(operationSimpleSignatureCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -844,6 +853,21 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOperationParameterDeclarationCS(OperationParameterDeclarationCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Operation Simple Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Operation Simple Signature CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOperationSimpleSignatureCS(OperationSimpleSignatureCS object) {
 		return null;
 	}
 

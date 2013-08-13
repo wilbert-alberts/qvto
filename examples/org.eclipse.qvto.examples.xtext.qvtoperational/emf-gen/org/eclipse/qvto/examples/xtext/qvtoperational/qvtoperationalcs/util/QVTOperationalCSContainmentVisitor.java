@@ -10,13 +10,16 @@
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 
 /**
  *
@@ -251,6 +254,10 @@ public class QVTOperationalCSContainmentVisitor
 	
 	public @Nullable Continuation<?> visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS csElement) {
 		throw new UnsupportedOperationException("visitOperationParameterDeclarationCS not supported in QVTOperationalCSContainmentVisitor");
+	}
+	
+	public @Nullable Continuation<?> visitOperationSimpleSignatureCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS csElement) {
+		throw new UnsupportedOperationException("visitOperationSimpleSignatureCS not supported in QVTOperationalCSContainmentVisitor");
 	}
 	
 	public @Nullable Continuation<?> visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS csElement) {

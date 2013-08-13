@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierKind;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
@@ -121,6 +122,7 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 			case QVTOperationalCSPackage.QV_TO_LIBRARY_CS: return createQVToLibraryCS();
 			case QVTOperationalCSPackage.QV_TO_OPERATION_CS: return createQVToOperationCS();
 			case QVTOperationalCSPackage.OPERATION_PARAMETER_DECLARATION_CS: return createOperationParameterDeclarationCS();
+			case QVTOperationalCSPackage.OPERATION_SIMPLE_SIGNATURE_CS: return createOperationSimpleSignatureCS();
 			case QVTOperationalCSPackage.INIT_PART_CS: return createInitPartCS();
 			case QVTOperationalCSPackage.METAMODEL_CS: return createMetamodelCS();
 			case QVTOperationalCSPackage.PRIMITIVE_TYPE_CS: return createPrimitiveTypeCS();
@@ -291,6 +293,16 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	public OperationParameterDeclarationCS createOperationParameterDeclarationCS() {
 		OperationParameterDeclarationCSImpl operationParameterDeclarationCS = new OperationParameterDeclarationCSImpl();
 		return operationParameterDeclarationCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OperationSimpleSignatureCS createOperationSimpleSignatureCS() {
+		OperationSimpleSignatureCSImpl operationSimpleSignatureCS = new OperationSimpleSignatureCSImpl();
+		return operationSimpleSignatureCS;
 	}
 
 	/**

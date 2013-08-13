@@ -76,6 +76,15 @@ public interface QVTOperationalCSFactory extends EFactory {
 	OperationParameterDeclarationCS createOperationParameterDeclarationCS();
 
 	/**
+	 * Returns a new object of class '<em>Operation Simple Signature CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Operation Simple Signature CS</em>'.
+	 * @generated
+	 */
+	OperationSimpleSignatureCS createOperationSimpleSignatureCS();
+
+	/**
 	 * Returns a new object of class '<em>Init Part CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

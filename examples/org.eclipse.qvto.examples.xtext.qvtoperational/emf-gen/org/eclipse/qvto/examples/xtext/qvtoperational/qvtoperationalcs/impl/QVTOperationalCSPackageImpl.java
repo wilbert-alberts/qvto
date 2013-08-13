@@ -55,6 +55,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsa
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
@@ -128,6 +129,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	private EClass operationParameterDeclarationCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass operationSimpleSignatureCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -740,6 +748,24 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getOperationSimpleSignatureCS() {
+		return operationSimpleSignatureCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOperationSimpleSignatureCS_Parameter() {
+		return (EReference)operationSimpleSignatureCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getInitPartCS() {
 		return initPartCSEClass;
 	}
@@ -1217,7 +1243,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingOperationCS_Parameters() {
+	public EReference getMappingOperationCS_Signature() {
 		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2287,6 +2313,9 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		createEAttribute(operationParameterDeclarationCSEClass, OPERATION_PARAMETER_DECLARATION_CS__DIRECTION);
 		createEReference(operationParameterDeclarationCSEClass, OPERATION_PARAMETER_DECLARATION_CS__INIT_PART);
 
+		operationSimpleSignatureCSEClass = createEClass(OPERATION_SIMPLE_SIGNATURE_CS);
+		createEReference(operationSimpleSignatureCSEClass, OPERATION_SIMPLE_SIGNATURE_CS__PARAMETER);
+
 		initPartCSEClass = createEClass(INIT_PART_CS);
 		createEAttribute(initPartCSEClass, INIT_PART_CS__INIT_OP);
 		createEReference(initPartCSEClass, INIT_PART_CS__EXPRESSION);
@@ -2358,7 +2387,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		mappingOperationCSEClass = createEClass(MAPPING_OPERATION_CS);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__CONTEXT_TYPE);
-		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__PARAMETERS);
+		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__SIGNATURE);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__RESULT);
 		createEAttribute(mappingOperationCSEClass, MAPPING_OPERATION_CS__DIRECTION_KIND_CS);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__MAPPING_EXTENSION);
@@ -2547,6 +2576,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		qvToLibraryCSEClass.getESuperTypes().add(this.getMappingModuleCS());
 		qvToOperationCSEClass.getESuperTypes().add(theBaseCSTPackage.getOperationCS());
 		operationParameterDeclarationCSEClass.getESuperTypes().add(theBaseCSTPackage.getParameterCS());
+		operationSimpleSignatureCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		initPartCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		metamodelCSEClass.getESuperTypes().add(theBaseCSTPackage.getPackageCS());
 		primitiveTypeCSEClass.getESuperTypes().add(theBaseCSTPackage.getDataTypeCS());
@@ -2626,6 +2656,9 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEAttribute(getOperationParameterDeclarationCS_Direction(), this.getDirectionKindCS(), "direction", null, 0, 1, OperationParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getOperationParameterDeclarationCS_InitPart(), this.getInitPartCS(), null, "initPart", null, 0, 1, OperationParameterDeclarationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(operationSimpleSignatureCSEClass, OperationSimpleSignatureCS.class, "OperationSimpleSignatureCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOperationSimpleSignatureCS_Parameter(), this.getOperationParameterDeclarationCS(), null, "parameter", null, 0, -1, OperationSimpleSignatureCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(initPartCSEClass, InitPartCS.class, "InitPartCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInitPartCS_InitOp(), this.getInitOp(), "initOp", null, 0, 1, InitPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInitPartCS_Expression(), theEssentialOCLCSTPackage.getExpCS(), null, "expression", null, 0, 1, InitPartCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2701,7 +2734,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		initEClass(mappingOperationCSEClass, MappingOperationCS.class, "MappingOperationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMappingOperationCS_ContextType(), theBaseCSTPackage.getTypeCS(), null, "contextType", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingOperationCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingOperationCS_Signature(), this.getOperationSimpleSignatureCS(), null, "signature", null, 1, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingOperationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMappingOperationCS_DirectionKindCS(), this.getDirectionKindCS(), "directionKindCS", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingOperationCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

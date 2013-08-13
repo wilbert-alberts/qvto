@@ -12,9 +12,9 @@ package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSLeft2RightVisitor;
+import org.eclipse.ocl.examples.pivot.Element;
 
 /**
  * An AbstractQVTOperationalCSLeft2RightVisitor provides a default implementation for each
@@ -170,6 +170,10 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 
 	public @Nullable Element visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS csElement) {
 		return visitParameterCS(csElement);
+	}
+
+	public @Nullable Element visitOperationSimpleSignatureCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS csElement) {
+		return visitElementCS(csElement);
 	}
 
 	public @Nullable Element visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS csElement) {

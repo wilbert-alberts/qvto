@@ -169,6 +169,10 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 		return visitParameterCS(object);
 	}
 
+	public @Nullable R visitOperationSimpleSignatureCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS object) {
+		return visitElementCS(object);
+	}
+
 	public @Nullable R visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS object) {
 		return visitElementCS(object);
 	}

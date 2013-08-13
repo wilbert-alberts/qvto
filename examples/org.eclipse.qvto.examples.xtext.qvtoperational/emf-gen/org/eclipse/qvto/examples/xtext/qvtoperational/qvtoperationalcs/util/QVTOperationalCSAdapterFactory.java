@@ -34,6 +34,7 @@ import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.InvocationExpCS;
 import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.NamedExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ExpressionBlockCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -170,6 +171,10 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOperationParameterDeclarationCS(OperationParameterDeclarationCS object) {
 				return createOperationParameterDeclarationCSAdapter();
+			}
+			@Override
+			public Adapter caseOperationSimpleSignatureCS(OperationSimpleSignatureCS object) {
+				return createOperationSimpleSignatureCSAdapter();
 			}
 			@Override
 			public Adapter caseInitPartCS(InitPartCS object) {
@@ -580,6 +585,20 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOperationParameterDeclarationCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS <em>Operation Simple Signature CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS
+	 * @generated
+	 */
+	public Adapter createOperationSimpleSignatureCSAdapter() {
 		return null;
 	}
 
