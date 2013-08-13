@@ -61,13 +61,16 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartC
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.StereotypeQualifierCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
@@ -703,9 +706,27 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
+			case QVTOperationalCSPackage.OPERATION_PARAMETER_DECLARATION_CS:
+				if(context == grammarAccess.getOperationParameterDeclarationCSRule()) {
+					sequence_OperationParameterDeclarationCS(context, (OperationParameterDeclarationCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QVTOperationalCSPackage.OPERATION_SIMPLE_SIGNATURE_CS:
+				if(context == grammarAccess.getOperationSimpleSignatureCSRule()) {
+					sequence_OperationSimpleSignatureCS(context, (OperationSimpleSignatureCS) semanticObject); 
+					return; 
+				}
+				else break;
 			case QVTOperationalCSPackage.PACKAGE_REF_CS:
 				if(context == grammarAccess.getPackageRefCSRule()) {
 					sequence_PackageRefCS(context, (PackageRefCS) semanticObject); 
+					return; 
+				}
+				else break;
+			case QVTOperationalCSPackage.PARAMETER_DECLARATION_CS:
+				if(context == grammarAccess.getParameterDeclarationCSRule()) {
+					sequence_ParameterDeclarationCS(context, (ParameterDeclarationCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -735,9 +756,9 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS:
-				if(context == grammarAccess.getParameterCSRule()) {
-					sequence_ParameterCS(context, (QVToParameterCS) semanticObject); 
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS:
+				if(context == grammarAccess.getSimpleSignatureCSRule()) {
+					sequence_SimpleSignatureCS(context, (SimpleSignatureCS) semanticObject); 
 					return; 
 				}
 				else break;
@@ -803,7 +824,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *         stereotypes=StereotypeQualifierCS? 
 	 *         qualifier+=FeatureQualifier* 
 	 *         name=UnrestrictedName 
-	 *         (ownedParameter+=ParameterCS ownedParameter+=ParameterCS*)? 
+	 *         (ownedParameter+=OperationParameterDeclarationCS ownedParameter+=OperationParameterDeclarationCS*)? 
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *     )
 	 */
@@ -920,7 +941,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     name=UnreservedName
+	 *     (name=UnreservedName signature=OperationSimpleSignatureCS)
 	 */
 	protected void sequence_MappingOperationHeaderCS(EObject context, MappingOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -956,6 +977,24 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     (direction=DirectionKindCS? name=UnrestrictedName ownedType=TypedMultiplicityRefCS? initPart=InitPartCS?)
+	 */
+	protected void sequence_OperationParameterDeclarationCS(EObject context, OperationParameterDeclarationCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((parameter+=OperationParameterDeclarationCS parameter+=OperationParameterDeclarationCS)?)
+	 */
+	protected void sequence_OperationSimpleSignatureCS(EObject context, OperationSimpleSignatureCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (uriCS=StringLiteralExpCS | (pathNameCS=PathNameCS uriCS=StringLiteralExpCS))
 	 */
 	protected void sequence_PackageRefCS(EObject context, PackageRefCS semanticObject) {
@@ -965,9 +1004,9 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (direction=ParamDirection? name=UnrestrictedName ownedType=TypedMultiplicityRefCS? initPart=InitPartCS?)
+	 *     (direction=DirectionKindCS? name=UnrestrictedName ownedType=TypedMultiplicityRefCS? initPart=InitPartCS?)
 	 */
-	protected void sequence_ParameterCS(EObject context, QVToParameterCS semanticObject) {
+	protected void sequence_ParameterDeclarationCS(EObject context, ParameterDeclarationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -977,6 +1016,15 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *     (name=PrimitiveTypeIdentifier multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_PrimitiveTypeCS_TypedMultiplicityRefCS(EObject context, PrimitiveTypeRefCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((parameter+=ParameterDeclarationCS parameter+=ParameterDeclarationCS*)?)
+	 */
+	protected void sequence_SimpleSignatureCS(EObject context, SimpleSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -71,20 +71,26 @@ SimpleSignatureCS: {SimpleSignatureCS}
 	'(' (parameter+=ParameterDeclarationCS (',' parameter+=ParameterDeclarationCS)*)? ')'
 ;
 
-// FIXME  
+  
 ParameterDeclarationCS : 
 	(direction= DirectionKindCS)? 
-	name=UnrestrictedName // FIXME Spec grammar says  that you can have just a typeSped  
+	name=UnrestrictedName // FIXME Spec grammar says that you can have just a typeSpec
 	(':' ownedType=TypedMultiplicityRefCS)?
 	initPart=InitPartCS?
 ;
 
+OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
+	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS))? ')'
+;
+
 OperationParameterDeclarationCS :
 	(direction= DirectionKindCS)? 
-	name=UnrestrictedName // FIXME Spec grammar says  that you can have just a typeSped  
+	name=UnrestrictedName // FIXME Spec grammar says that you can have just a typeSpec  
 	(':' ownedType=TypedMultiplicityRefCS)?
 	initPart=InitPartCS?
 ;
+
+
 
 InitPartCS returns InitPartCS:  // returns ElementCS to make it inherits ElementCS 
 	initOp=InitOp expression= ExpCS
@@ -252,4 +258,5 @@ MappingDefinitionCS returns MappingOperationCS:
 
 MappingOperationHeaderCS returns MappingOperationCS:
 	"mapping" name=UnreservedName
+	signature= OperationSimpleSignatureCS
 ;
