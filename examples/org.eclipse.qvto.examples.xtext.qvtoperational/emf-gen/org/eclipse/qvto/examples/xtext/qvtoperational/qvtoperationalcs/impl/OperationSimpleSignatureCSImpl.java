@@ -16,9 +16,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
 
+import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -73,6 +75,26 @@ public class OperationSimpleSignatureCSImpl extends ElementCSImpl implements Ope
 			parameter = new EObjectContainmentEList<OperationParameterDeclarationCS>(OperationParameterDeclarationCS.class, this, QVTOperationalCSPackage.OPERATION_SIMPLE_SIGNATURE_CS__PARAMETER);
 		}
 		return parameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final QVTOperationalCSVisitor<R> v) {
+		return v.visitOperationSimpleSignatureCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 * @added
+	 */
+	public <R> R accept(final BaseCSVisitor<R> v) {
+		return ((QVTOperationalCSVisitor<R>)v).visitOperationSimpleSignatureCS(this);
 	}
 
 	/**

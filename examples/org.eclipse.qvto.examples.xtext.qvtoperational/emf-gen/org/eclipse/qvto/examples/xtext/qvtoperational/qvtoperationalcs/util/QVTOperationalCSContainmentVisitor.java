@@ -156,6 +156,18 @@ public class QVTOperationalCSContainmentVisitor
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
+		// AS OwnedParameter property update
+		java.util.List<org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS> newCsOwnedParameters = csElement.getSignature().getParameter();
+		java.util.List<org.eclipse.ocl.examples.pivot.Parameter> newOwnedParameters = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Parameter>();
+		
+		for (org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS newCsOwnedParameter : newCsOwnedParameters) {
+			org.eclipse.ocl.examples.pivot.Parameter newOwnedParameter = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Parameter.class, newCsOwnedParameter);
+			if (newOwnedParameter != null) {
+				newOwnedParameters.add(newOwnedParameter);
+			}
+		}
+		java.util.List<org.eclipse.ocl.examples.pivot.Parameter> oldOwnedParameters = asElement.getOwnedParameter();
+		PivotUtil.refreshList(oldOwnedParameters, newOwnedParameters);
 		// AS element comments update
 		context.refreshComments(asElement, csElement);
 		return null;
@@ -253,7 +265,38 @@ public class QVTOperationalCSContainmentVisitor
 	}
 	
 	public @Nullable Continuation<?> visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS csElement) {
-		throw new UnsupportedOperationException("visitOperationParameterDeclarationCS not supported in QVTOperationalCSContainmentVisitor");
+		CS2Pivot converter = context.getConverter();
+		// AS element creation
+		org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter asElement = csElement != null ? (org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter) converter.getPivotElement(csElement) : null;
+		if (asElement == null) {
+			asElement = org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalFactory.eINSTANCE.createVarParameter();
+			converter.installPivotDefinition(csElement, asElement);
+		}
+		
+		// AS Name property update
+		java.lang.String newCsName = csElement.getName();
+		java.lang.String newName = newCsName;
+		java.lang.String oldName = asElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			asElement.setName(newName);
+		}
+		// AS Kind property update
+		org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS newCsKind = csElement.getDirection();
+		org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind newKind = org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind.valueOf(newCsKind.getLiteral());
+		org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind oldKind = asElement.getKind();
+		if ((newKind != oldKind) && ((newKind == null) || !newKind.equals(oldKind))) {
+			asElement.setKind(newKind);
+		}
+		// AS InitExpression property update
+		org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS newCsInitExpression = csElement.getInitPart().getExpression();
+		org.eclipse.ocl.examples.pivot.OCLExpression newInitExpression = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.OCLExpression.class, newCsInitExpression);
+		org.eclipse.ocl.examples.pivot.OCLExpression oldInitExpression = asElement.getInitExpression();
+		if ((newInitExpression != oldInitExpression) && ((newInitExpression == null) || !newInitExpression.equals(oldInitExpression))) {
+			asElement.setInitExpression(newInitExpression);
+		}
+		// AS element comments update
+		context.refreshComments(asElement, csElement);
+		return null;
 	}
 	
 	public @Nullable Continuation<?> visitOperationSimpleSignatureCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS csElement) {

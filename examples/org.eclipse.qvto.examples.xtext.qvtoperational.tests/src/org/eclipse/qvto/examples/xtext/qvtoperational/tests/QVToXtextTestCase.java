@@ -63,7 +63,7 @@ public class QVToXtextTestCase extends AbstractQVToXtextTestCase {
 	public void testSimpleMappingDefinition() throws Exception {
 		String testFile =
 				  "transformation t1 {"
-				+ " mapping m1;"
+				+ " mapping m1 (in p1 : String = 'foo', out p2 : Sequence(Integer) = Sequence{1,2});"
 				+ "}";
 		doLoadFromString("simpleMappingDefinition.qvto", testFile);
 	}

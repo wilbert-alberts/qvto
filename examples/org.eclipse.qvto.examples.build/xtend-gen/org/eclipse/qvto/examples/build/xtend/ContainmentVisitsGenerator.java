@@ -6,6 +6,7 @@ import org.eclipse.ocl.examples.domain.elements.DomainType;
 import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.ConstructorExp;
 import org.eclipse.ocl.examples.pivot.ConstructorPart;
+import org.eclipse.ocl.examples.pivot.Enumeration;
 import org.eclipse.ocl.examples.pivot.Iteration;
 import org.eclipse.ocl.examples.pivot.IteratorExp;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
@@ -108,12 +109,6 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
   public String visitIteratorExp(final IteratorExp object) {
     StringBuilder _stringBuilder = new StringBuilder();
     StringBuilder result = _stringBuilder;
-    StringConcatenation _builder = new StringConcatenation();
-    OCLExpression _source = object.getSource();
-    String _accept = _source.<String>accept(this);
-    _builder.append(_accept, "");
-    _builder.append(".");
-    result.append(_builder);
     Iteration iteration = object.getReferredIteration();
     CharSequence _switchResult = null;
     String _name = iteration.getName();
@@ -122,11 +117,26 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     if (!_matched) {
       if (Objects.equal(_switchValue,"exists")) {
         _matched=true;
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("contains(");
+        StringConcatenation _builder = new StringConcatenation();
+        OCLExpression _source = object.getSource();
+        String _accept = _source.<String>accept(this);
+        _builder.append(_accept, "");
+        _builder.append(".contains(");
         OCLExpression _body = object.getBody();
         String _accept_1 = _body.<String>accept(this);
-        _builder_1.append(_accept_1, "");
+        _builder.append(_accept_1, "");
+        _builder.append(")");
+        _switchResult = _builder;
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(_switchValue,"collect")) {
+        _matched=true;
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("doCollect(");
+        OCLExpression _source_1 = object.getSource();
+        String _accept_2 = _source_1.<String>accept(this);
+        _builder_1.append(_accept_2, "");
         _builder_1.append(")");
         _switchResult = _builder_1;
       }
@@ -136,7 +146,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       _builder_2.append("iterator \"");
       String _name_1 = iteration.getName();
       _builder_2.append(_name_1, "");
-      _builder_2.append("\" not implemented yet in visitIterateExp in ContainmentVisitsGenerator");
+      _builder_2.append("\" not implemented yet in visitIteratorExp in ContainmentVisitsGenerator");
       UnsupportedOperationException _unsupportedOperationException = new UnsupportedOperationException(_builder_2.toString());
       throw _unsupportedOperationException;
     }
@@ -490,6 +500,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
   private String getASfromCSStub(final Property astProperty, final OCLExpression initExp) {
     String _name = astProperty.getName();
     String propertyName = StringExtensions.toFirstUpper(_name);
+    MetaModelManager mm = this.context.getMetamodelManager();
     Type csType = initExp.getType();
     if ((csType instanceof CollectionType)) {
       Type _elementType = ((CollectionType) csType).getElementType();
@@ -500,8 +511,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       Type _elementType_1 = ((CollectionType) asType).getElementType();
       asType = _elementType_1;
     }
-    MetaModelManager _metamodelManager = this.context.getMetamodelManager();
-    Iterable<? extends DomainType> _allSuperClasses = _metamodelManager.getAllSuperClasses(csType);
+    String csStub = null;
+    Iterable<? extends DomainType> _allSuperClasses = mm.getAllSuperClasses(csType);
     final Function1<DomainType,Boolean> _function = new Function1<DomainType,Boolean>() {
         public Boolean apply(final DomainType it) {
           String _name = it.getName();
@@ -509,8 +520,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
           return Boolean.valueOf(_equals);
         }
       };
-    boolean isPivotable = IterableExtensions.exists(_allSuperClasses, _function);
-    if (isPivotable) {
+    boolean _exists = IterableExtensions.exists(_allSuperClasses, _function);
+    if (_exists) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("PivotUtil.getPivot(");
       String _typeQualifiedName = this.getTypeQualifiedName(asType);
@@ -518,12 +529,31 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       _builder.append(".class, newCs");
       _builder.append(propertyName, "");
       _builder.append(")");
-      return _builder.toString();
+      csStub = _builder.toString();
     } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("newCs");
-      _builder_1.append(propertyName, "");
-      return _builder_1.toString();
+      if ((csType instanceof Enumeration)) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("newCs");
+        _builder_1.append(propertyName, "");
+        _builder_1.append(".getLiteral()");
+        csStub = _builder_1.toString();
+      } else {
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("newCs");
+        _builder_2.append(propertyName, "");
+        csStub = _builder_2.toString();
+      }
+    }
+    if ((asType instanceof Enumeration)) {
+      StringConcatenation _builder_3 = new StringConcatenation();
+      String _typeQualifiedName_1 = this.getTypeQualifiedName(asType);
+      _builder_3.append(_typeQualifiedName_1, "");
+      _builder_3.append(".valueOf(");
+      _builder_3.append(csStub, "");
+      _builder_3.append(")");
+      return _builder_3.toString();
+    } else {
+      return csStub;
     }
   }
 }

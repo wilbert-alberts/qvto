@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.pivot.StringLiteralExp
 import org.eclipse.ocl.examples.pivot.IteratorExp
 import org.eclipse.ocl.examples.pivot.Iteration
 import org.eclipse.ocl.examples.pivot.OperationCallExp
+import org.eclipse.ocl.examples.pivot.Enumeration
 
 public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String, IContainmentVisitsGeneratorCtx> {
 	
@@ -74,14 +75,16 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var StringBuilder result = new StringBuilder();
 			
 		// We process
-		result.append('''«object.source.accept(this)».''');
+		
 		
 		// Then the iteration body
 		var Iteration iteration = object.referredIteration;
 		result.append(
 		switch (iteration.name) {
-			case "exists":'''contains(«object.body.accept(this)»)'''
-			default: throw new UnsupportedOperationException('''iterator "«iteration.name»" not implemented yet in visitIterateExp in ContainmentVisitsGenerator''')
+			case "exists": '''«object.source.accept(this)».contains(«object.body.accept(this)»)'''
+			case "collect": '''doCollect(«object.source.accept(this)»)'''
+			
+			default: throw new UnsupportedOperationException('''iterator "«iteration.name»" not implemented yet in visitIteratorExp in ContainmentVisitsGenerator''')
 		})
 		return result.toString()
 	}
@@ -164,7 +167,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var MetaModelManager mm = context.metamodelManager;
 		return 
 			if (mm.conformsTo(property.type, mm.booleanType, null))
-				if (propertyName.startsWith(IS_PREFIX)) // FIXME has prefix
+				if (propertyName.startsWith(IS_PREFIX)) // FIXME check "has" prefix
 					propertyName
 				else
 					IS_PREFIX + propertyName.toFirstUpper
@@ -272,7 +275,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 	}
 	
 	def private String getASfromCSStub(Property astProperty, OCLExpression initExp) {
-		var String propertyName = astProperty.name.toFirstUpper;		
+		var String propertyName = astProperty.name.toFirstUpper;
+		var MetaModelManager mm =context.metamodelManager;
+		
 
 		// FIXME Study boxing/unboxing
 		// quick nasty workround to make prototype work
@@ -287,13 +292,25 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		}		
 		
 		//var EClass class = context.metamodelManager.getEcoreOfPivot(typeof(EClass), type);
-		var boolean isPivotable = context.metamodelManager.getAllSuperClasses(csType).exists[name == "Pivotable"] ;		 
+		// CS stub computation
+		var String csStub; 
 		
-		if (isPivotable) {
-			return '''PivotUtil.getPivot(«getTypeQualifiedName(asType)».class, newCs«propertyName»)''';	
-		}
+		if (mm.getAllSuperClasses(csType).exists[name == "Pivotable"]) {
+			csStub = '''PivotUtil.getPivot(«getTypeQualifiedName(asType)».class, newCs«propertyName»)'''	
+		} 
+		else if (csType instanceof Enumeration) { // FIXME Should not metamodel manager have a similar functionality
+		 	csStub = '''newCs«propertyName».getLiteral()''';
+		} 
 		else {
-			return '''newCs«propertyName»''';
+			csStub = '''newCs«propertyName»''';
+		}
+		
+		// Type specific AS 2 CS conversion.
+		// FIXME this conversions should be done somewhere else. Ask Ed		
+		if (asType instanceof Enumeration) { // right hand side have the literal of the enumeration from which compute the enumaration 
+			return '''«getTypeQualifiedName(asType)».valueOf(«csStub»)'''
+		} else {
+			return csStub;
 		}
 	}
 }
