@@ -74,14 +74,24 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 	protected EList<ParameterDeclarationCS> result;
 
 	/**
-	 * The cached value of the '{@link #getDirectionKindCS() <em>Direction Kind CS</em>}' containment reference.
+	 * The default value of the '{@link #getDirectionKindCS() <em>Direction Kind CS</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDirectionKindCS()
 	 * @generated
 	 * @ordered
 	 */
-	protected DirectionKindCS directionKindCS;
+	protected static final DirectionKindCS DIRECTION_KIND_CS_EDEFAULT = DirectionKindCS.IN;
+
+	/**
+	 * The cached value of the '{@link #getDirectionKindCS() <em>Direction Kind CS</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDirectionKindCS()
+	 * @generated
+	 * @ordered
+	 */
+	protected DirectionKindCS directionKindCS = DIRECTION_KIND_CS_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getMappingExtension() <em>Mapping Extension</em>}' containment reference list.
@@ -213,33 +223,11 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetDirectionKindCS(DirectionKindCS newDirectionKindCS, NotificationChain msgs) {
-		DirectionKindCS oldDirectionKindCS = directionKindCS;
-		directionKindCS = newDirectionKindCS;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS, oldDirectionKindCS, newDirectionKindCS);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public void setDirectionKindCS(DirectionKindCS newDirectionKindCS) {
-		if (newDirectionKindCS != directionKindCS) {
-			NotificationChain msgs = null;
-			if (directionKindCS != null)
-				msgs = ((InternalEObject)directionKindCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS, null, msgs);
-			if (newDirectionKindCS != null)
-				msgs = ((InternalEObject)newDirectionKindCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS, null, msgs);
-			msgs = basicSetDirectionKindCS(newDirectionKindCS, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS, newDirectionKindCS, newDirectionKindCS));
+		DirectionKindCS oldDirectionKindCS = directionKindCS;
+		directionKindCS = newDirectionKindCS == null ? DIRECTION_KIND_CS_EDEFAULT : newDirectionKindCS;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS, oldDirectionKindCS, directionKindCS));
 	}
 
 	/**
@@ -322,8 +310,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				return ((InternalEList<?>)getResult()).basicRemove(otherEnd, msgs);
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS:
-				return basicSetDirectionKindCS(null, msgs);
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__MAPPING_EXTENSION:
 				return ((InternalEList<?>)getMappingExtension()).basicRemove(otherEnd, msgs);
 		}
@@ -406,7 +392,7 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 				getResult().clear();
 				return;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS:
-				setDirectionKindCS((DirectionKindCS)null);
+				setDirectionKindCS(DIRECTION_KIND_CS_EDEFAULT);
 				return;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__MAPPING_EXTENSION:
 				getMappingExtension().clear();
@@ -433,7 +419,7 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				return result != null && !result.isEmpty();
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS:
-				return directionKindCS != null;
+				return directionKindCS != DIRECTION_KIND_CS_EDEFAULT;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__MAPPING_EXTENSION:
 				return mappingExtension != null && !mappingExtension.isEmpty();
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__IS_QUERY:

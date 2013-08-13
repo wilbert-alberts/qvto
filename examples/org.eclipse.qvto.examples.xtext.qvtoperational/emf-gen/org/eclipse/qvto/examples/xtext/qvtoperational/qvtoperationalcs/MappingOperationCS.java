@@ -88,26 +88,29 @@ public interface MappingOperationCS extends OperationCS {
 	EList<ParameterDeclarationCS> getResult();
 
 	/**
-	 * Returns the value of the '<em><b>Direction Kind CS</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Direction Kind CS</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Direction Kind CS</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Direction Kind CS</em>' containment reference.
+	 * @return the value of the '<em>Direction Kind CS</em>' attribute.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS
 	 * @see #setDirectionKindCS(DirectionKindCS)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingOperationCS_DirectionKindCS()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	DirectionKindCS getDirectionKindCS();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getDirectionKindCS <em>Direction Kind CS</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getDirectionKindCS <em>Direction Kind CS</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Direction Kind CS</em>' containment reference.
+	 * @param value the new value of the '<em>Direction Kind CS</em>' attribute.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS
 	 * @see #getDirectionKindCS()
 	 * @generated
 	 */

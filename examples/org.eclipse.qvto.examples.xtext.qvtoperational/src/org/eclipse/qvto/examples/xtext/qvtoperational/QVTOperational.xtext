@@ -37,7 +37,8 @@ enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='e
 enum FeatureKey : COMPOSES='composes' | REFERRENCES='references' | READONLY='readonly' | DERIVED='derived' | STATIC='static';
 enum InitOp : EQUALS='=' | COLON_EQUALS=':=' | COLON_COLON_EQUALS='::=';
 enum MetamodelKind : METAMODEL= 'metamodel' | PACKAGE='package';
-enum ParamDirection : IN='in' | INOUT='inout' | OUT='out';
+enum DirectionKindCS : in='in'| out='out' | inout='inout';
+//enum ParamDirection : IN='in' | INOUT='inout' | OUT='out';
 
 Qualifier returns ecore::EString : 'blackbox' & 'abstract' & 'static';
 
@@ -66,11 +67,21 @@ UnitTypeCS returns base::TypeCS:
 // ****** General rules ******
 //CompleteSignatureCS: SimpleSignatureCS (':' (param+=ParameterCS (',' param+=ParameterCS)*))?;
 //
-//SimpleSignatureCS: {SimpleSignatureCS} '(' (param+=ParameterCS (',' param+=ParameterCS)*)? ')';
+SimpleSignatureCS: {SimpleSignatureCS} 
+	'(' (parameter+=ParameterDeclarationCS (',' parameter+=ParameterDeclarationCS)*)? ')'
+;
 
-ParameterCS returns QVToParameterCS: 
-	direction = ParamDirection? 
-	name=UnrestrictedName
+// FIXME  
+ParameterDeclarationCS : 
+	(direction= DirectionKindCS)? 
+	name=UnrestrictedName // FIXME Spec grammar says  that you can have just a typeSped  
+	(':' ownedType=TypedMultiplicityRefCS)?
+	initPart=InitPartCS?
+;
+
+OperationParameterDeclarationCS :
+	(direction= DirectionKindCS)? 
+	name=UnrestrictedName // FIXME Spec grammar says  that you can have just a typeSped  
 	(':' ownedType=TypedMultiplicityRefCS)?
 	initPart=InitPartCS?
 ;
@@ -156,7 +167,7 @@ ClassifierOperationCS returns QVToOperationCS:
 	stereotypes = StereotypeQualifierCS? 
 	qualifier+= FeatureQualifier*
 	name=UnrestrictedName
-	'(' (ownedParameter+= ParameterCS (',' ownedParameter+=ParameterCS)*)? ')'
+	'(' (ownedParameter+= OperationParameterDeclarationCS (',' ownedParameter+=OperationParameterDeclarationCS)*)? ')'
 	(':' ownedType=TypedMultiplicityRefCS)?
 ;
 

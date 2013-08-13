@@ -61,10 +61,6 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 		return visitModulePropertyCS(object);
 	}
 
-	public @Nullable R visitDirectionKindCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS object) {
-		return visitElementCS(object);
-	}
-
 	public @Nullable R visitElementWithBody(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody object) {
 		return visitElementCS(object);
 	}
@@ -169,6 +165,10 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 		return visitExpressionBlockCS(object);
 	}
 
+	public @Nullable R visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS object) {
+		return visitParameterCS(object);
+	}
+
 	public @Nullable R visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS object) {
 		return visitElementCS(object);
 	}
@@ -178,7 +178,7 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 	}
 
 	public @Nullable R visitParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS object) {
-		return visitElementCS(object);
+		return visitTypedElementCS(object);
 	}
 
 	public @Nullable R visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS object) {
@@ -199,10 +199,6 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 
 	public @Nullable R visitQVToOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS object) {
 		return visitOperationCS(object);
-	}
-
-	public @Nullable R visitQVToParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS object) {
-		return visitParameterCS(object);
 	}
 
 	public @Nullable R visitRenameCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS object) {

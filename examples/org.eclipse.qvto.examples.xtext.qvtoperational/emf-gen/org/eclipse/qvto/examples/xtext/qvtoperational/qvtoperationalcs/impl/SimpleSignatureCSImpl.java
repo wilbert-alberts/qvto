@@ -23,7 +23,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.SimpleSignatureCSImpl#getParams <em>Params</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.SimpleSignatureCSImpl#getParameter <em>Parameter</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,14 +34,14 @@ public class SimpleSignatureCSImpl
 		implements SimpleSignatureCS {
 
 	/**
-	 * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getParams()
+	 * The cached value of the '{@link #getParameter() <em>Parameter</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameter()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ParameterDeclarationCS> params;
-
+	protected EList<ParameterDeclarationCS> parameter;
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -60,14 +60,15 @@ public class SimpleSignatureCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ParameterDeclarationCS> getParams() {
-		if (params == null) {
-			params = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS);
+	public EList<ParameterDeclarationCS> getParameter() {
+		if (parameter == null) {
+			parameter = new EObjectContainmentEList<ParameterDeclarationCS>(ParameterDeclarationCS.class, this, QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER);
 		}
-		return params;
+		return parameter;
 	}
 
 	/**
@@ -98,8 +99,8 @@ public class SimpleSignatureCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
-				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER:
+				return ((InternalEList<?>)getParameter()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -111,8 +112,8 @@ public class SimpleSignatureCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
-				return getParams();
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER:
+				return getParameter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,9 +126,9 @@ public class SimpleSignatureCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
-				getParams().clear();
-				getParams().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER:
+				getParameter().clear();
+				getParameter().addAll((Collection<? extends ParameterDeclarationCS>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -140,8 +141,8 @@ public class SimpleSignatureCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
-				getParams().clear();
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER:
+				getParameter().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -154,8 +155,8 @@ public class SimpleSignatureCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMS:
-				return params != null && !params.isEmpty();
+			case QVTOperationalCSPackage.SIMPLE_SIGNATURE_CS__PARAMETER:
+				return parameter != null && !parameter.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -41,7 +41,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.CompleteS
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConfigPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConstructorCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ContextualPropertyCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImperativeOperationCallExpCS;
@@ -68,6 +67,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRef
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
@@ -77,7 +77,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClass
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveExpCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveInExpCS;
@@ -169,8 +168,8 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 				return createQVToOperationCSAdapter();
 			}
 			@Override
-			public Adapter caseQVToParameterCS(QVToParameterCS object) {
-				return createQVToParameterCSAdapter();
+			public Adapter caseOperationParameterDeclarationCS(OperationParameterDeclarationCS object) {
+				return createOperationParameterDeclarationCSAdapter();
 			}
 			@Override
 			public Adapter caseInitPartCS(InitPartCS object) {
@@ -223,10 +222,6 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseContextualPropertyCS(ContextualPropertyCS object) {
 				return createContextualPropertyCSAdapter();
-			}
-			@Override
-			public Adapter caseDirectionKindCS(DirectionKindCS object) {
-				return createDirectionKindCSAdapter();
 			}
 			@Override
 			public Adapter caseElementWithBody(ElementWithBody object) {
@@ -575,16 +570,16 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS <em>QV To Parameter CS</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS <em>Operation Parameter Declaration CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS
 	 * @generated
 	 */
-	public Adapter createQVToParameterCSAdapter() {
+	public Adapter createOperationParameterDeclarationCSAdapter() {
 		return null;
 	}
 
@@ -767,20 +762,6 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContextualPropertyCSAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS <em>Direction Kind CS</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS
-	 * @generated
-	 */
-	public Adapter createDirectionKindCSAdapter() {
 		return null;
 	}
 

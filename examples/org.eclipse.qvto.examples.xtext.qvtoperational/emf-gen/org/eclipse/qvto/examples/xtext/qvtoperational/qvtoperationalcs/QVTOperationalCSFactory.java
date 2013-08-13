@@ -67,13 +67,13 @@ public interface QVTOperationalCSFactory extends EFactory {
 	QVToOperationCS createQVToOperationCS();
 
 	/**
-	 * Returns a new object of class '<em>QV To Parameter CS</em>'.
+	 * Returns a new object of class '<em>Operation Parameter Declaration CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>QV To Parameter CS</em>'.
+	 * @return a new object of class '<em>Operation Parameter Declaration CS</em>'.
 	 * @generated
 	 */
-	QVToParameterCS createQVToParameterCS();
+	OperationParameterDeclarationCS createOperationParameterDeclarationCS();
 
 	/**
 	 * Returns a new object of class '<em>Init Part CS</em>'.
@@ -191,15 +191,6 @@ public interface QVTOperationalCSFactory extends EFactory {
 	 * @generated
 	 */
 	ContextualPropertyCS createContextualPropertyCS();
-
-	/**
-	 * Returns a new object of class '<em>Direction Kind CS</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Direction Kind CS</em>'.
-	 * @generated
-	 */
-	DirectionKindCS createDirectionKindCS();
 
 	/**
 	 * Returns a new object of class '<em>Imperative Operation Call Exp CS</em>'.

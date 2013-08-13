@@ -12,9 +12,9 @@ package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSLeft2RightVisitor;
-import org.eclipse.ocl.examples.pivot.Element;
 
 /**
  * An AbstractQVTOperationalCSLeft2RightVisitor provides a default implementation for each
@@ -62,10 +62,6 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 
 	public @Nullable Element visitContextualPropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ContextualPropertyCS csElement) {
 		return visitModulePropertyCS(csElement);
-	}
-
-	public @Nullable Element visitDirectionKindCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS csElement) {
-		return visitElementCS(csElement);
 	}
 
 	public @Nullable Element visitElementWithBody(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody csElement) {
@@ -172,6 +168,10 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 		return visitExpressionBlockCS(csElement);
 	}
 
+	public @Nullable Element visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS csElement) {
+		return visitParameterCS(csElement);
+	}
+
 	public @Nullable Element visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS csElement) {
 		return visitElementCS(csElement);
 	}
@@ -181,7 +181,7 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 	}
 
 	public @Nullable Element visitParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS csElement) {
-		return visitElementCS(csElement);
+		return visitTypedElementCS(csElement);
 	}
 
 	public @Nullable Element visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS csElement) {
@@ -202,10 +202,6 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 
 	public @Nullable Element visitQVToOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS csElement) {
 		return visitOperationCS(csElement);
-	}
-
-	public @Nullable Element visitQVToParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS csElement) {
-		return visitParameterCS(csElement);
 	}
 
 	public @Nullable Element visitRenameCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS csElement) {

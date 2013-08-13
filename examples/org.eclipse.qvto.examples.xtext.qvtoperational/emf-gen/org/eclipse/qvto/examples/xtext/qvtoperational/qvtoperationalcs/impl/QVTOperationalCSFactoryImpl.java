@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.*;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierKind;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
@@ -18,7 +17,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConfigPro
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ConstructorCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ContextualPropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindEnum;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ExceptionCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.FeatureKey;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ImperativeOperationCallExpCS;
@@ -47,9 +45,9 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleRef
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MultiplicityDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ObjectExpCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParamDirection;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSFactory;
@@ -58,7 +56,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClass
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToImportCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToLibraryCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QualifierKindCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ResolveExpCS;
@@ -123,7 +120,7 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 			case QVTOperationalCSPackage.QV_TO_IMPORT_CS: return createQVToImportCS();
 			case QVTOperationalCSPackage.QV_TO_LIBRARY_CS: return createQVToLibraryCS();
 			case QVTOperationalCSPackage.QV_TO_OPERATION_CS: return createQVToOperationCS();
-			case QVTOperationalCSPackage.QV_TO_PARAMETER_CS: return createQVToParameterCS();
+			case QVTOperationalCSPackage.OPERATION_PARAMETER_DECLARATION_CS: return createOperationParameterDeclarationCS();
 			case QVTOperationalCSPackage.INIT_PART_CS: return createInitPartCS();
 			case QVTOperationalCSPackage.METAMODEL_CS: return createMetamodelCS();
 			case QVTOperationalCSPackage.PRIMITIVE_TYPE_CS: return createPrimitiveTypeCS();
@@ -137,7 +134,6 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 			case QVTOperationalCSPackage.CONFIG_PROPERTY_CS: return createConfigPropertyCS();
 			case QVTOperationalCSPackage.CONSTRUCTOR_CS: return createConstructorCS();
 			case QVTOperationalCSPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
-			case QVTOperationalCSPackage.DIRECTION_KIND_CS: return createDirectionKindCS();
 			case QVTOperationalCSPackage.IMPERATIVE_OPERATION_CALL_EXP_CS: return createImperativeOperationCallExpCS();
 			case QVTOperationalCSPackage.LIBRARY_IMPORT_CS: return createLibraryImportCS();
 			case QVTOperationalCSPackage.LOCAL_PROPERTY_CS: return createLocalPropertyCS();
@@ -191,10 +187,8 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 				return createInitOpFromString(eDataType, initialValue);
 			case QVTOperationalCSPackage.METAMODEL_KIND:
 				return createMetamodelKindFromString(eDataType, initialValue);
-			case QVTOperationalCSPackage.PARAM_DIRECTION:
-				return createParamDirectionFromString(eDataType, initialValue);
-			case QVTOperationalCSPackage.DIRECTION_KIND_ENUM:
-				return createDirectionKindEnumFromString(eDataType, initialValue);
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS:
+				return createDirectionKindCSFromString(eDataType, initialValue);
 			case QVTOperationalCSPackage.IMPORT_KIND_ENUM:
 				return createImportKindEnumFromString(eDataType, initialValue);
 			case QVTOperationalCSPackage.MAPPING_EXTENSION_KIND_CS:
@@ -224,10 +218,8 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 				return convertInitOpToString(eDataType, instanceValue);
 			case QVTOperationalCSPackage.METAMODEL_KIND:
 				return convertMetamodelKindToString(eDataType, instanceValue);
-			case QVTOperationalCSPackage.PARAM_DIRECTION:
-				return convertParamDirectionToString(eDataType, instanceValue);
-			case QVTOperationalCSPackage.DIRECTION_KIND_ENUM:
-				return convertDirectionKindEnumToString(eDataType, instanceValue);
+			case QVTOperationalCSPackage.DIRECTION_KIND_CS:
+				return convertDirectionKindCSToString(eDataType, instanceValue);
 			case QVTOperationalCSPackage.IMPORT_KIND_ENUM:
 				return convertImportKindEnumToString(eDataType, instanceValue);
 			case QVTOperationalCSPackage.MAPPING_EXTENSION_KIND_CS:
@@ -296,9 +288,9 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public QVToParameterCS createQVToParameterCS() {
-		QVToParameterCSImpl qvToParameterCS = new QVToParameterCSImpl();
-		return qvToParameterCS;
+	public OperationParameterDeclarationCS createOperationParameterDeclarationCS() {
+		OperationParameterDeclarationCSImpl operationParameterDeclarationCS = new OperationParameterDeclarationCSImpl();
+		return operationParameterDeclarationCS;
 	}
 
 	/**
@@ -429,16 +421,6 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	public ContextualPropertyCS createContextualPropertyCS() {
 		ContextualPropertyCSImpl contextualPropertyCS = new ContextualPropertyCSImpl();
 		return contextualPropertyCS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DirectionKindCS createDirectionKindCS() {
-		DirectionKindCSImpl directionKindCS = new DirectionKindCSImpl();
-		return directionKindCS;
 	}
 
 	/**
@@ -846,8 +828,8 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParamDirection createParamDirectionFromString(EDataType eDataType, String initialValue) {
-		ParamDirection result = ParamDirection.get(initialValue);
+	public DirectionKindCS createDirectionKindCSFromString(EDataType eDataType, String initialValue) {
+		DirectionKindCS result = DirectionKindCS.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
 		return result;
 	}
@@ -857,27 +839,7 @@ public class QVTOperationalCSFactoryImpl extends EFactoryImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertParamDirectionToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DirectionKindEnum createDirectionKindEnumFromString(EDataType eDataType, String initialValue) {
-		DirectionKindEnum result = DirectionKindEnum.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertDirectionKindEnumToString(EDataType eDataType, Object instanceValue) {
+	public String convertDirectionKindCSToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

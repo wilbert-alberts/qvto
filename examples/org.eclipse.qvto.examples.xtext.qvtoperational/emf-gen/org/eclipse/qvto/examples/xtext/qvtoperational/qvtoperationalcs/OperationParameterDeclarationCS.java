@@ -2,27 +2,26 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypedElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '
- * <em><b>Parameter Declaration CS</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Operation Parameter Declaration CS</b></em>'.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getDirection <em>Direction</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getInitPart <em>Init Part</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getDirection <em>Direction</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getInitPart <em>Init Part</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS()
+ * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOperationParameterDeclarationCS()
  * @model
  * @generated
  */
-public interface ParameterDeclarationCS
-		extends TypedElementCS {
-
+public interface OperationParameterDeclarationCS extends ParameterCS {
 	/**
 	 * Returns the value of the '<em><b>Direction</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS}.
@@ -37,14 +36,14 @@ public interface ParameterDeclarationCS
 	 * @see #isSetDirection()
 	 * @see #unsetDirection()
 	 * @see #setDirection(DirectionKindCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS_Direction()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOperationParameterDeclarationCS_Direction()
 	 * @model unsettable="true"
 	 * @generated
 	 */
 	DirectionKindCS getDirection();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getDirection <em>Direction</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getDirection <em>Direction</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Direction</em>' attribute.
@@ -57,7 +56,7 @@ public interface ParameterDeclarationCS
 	void setDirection(DirectionKindCS value);
 
 	/**
-	 * Unsets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getDirection <em>Direction</em>}' attribute.
+	 * Unsets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getDirection <em>Direction</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #isSetDirection()
@@ -68,7 +67,7 @@ public interface ParameterDeclarationCS
 	void unsetDirection();
 
 	/**
-	 * Returns whether the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getDirection <em>Direction</em>}' attribute is set.
+	 * Returns whether the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getDirection <em>Direction</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return whether the value of the '<em>Direction</em>' attribute is set.
@@ -89,14 +88,14 @@ public interface ParameterDeclarationCS
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Init Part</em>' containment reference.
 	 * @see #setInitPart(InitPartCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getParameterDeclarationCS_InitPart()
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getOperationParameterDeclarationCS_InitPart()
 	 * @model containment="true"
 	 * @generated
 	 */
 	InitPartCS getInitPart();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS#getInitPart <em>Init Part</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS#getInitPart <em>Init Part</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Init Part</em>' containment reference.
@@ -105,4 +104,4 @@ public interface ParameterDeclarationCS
 	 */
 	void setInitPart(InitPartCS value);
 
-} // ParameterDeclarationCS
+} // OperationParameterDeclarationCS

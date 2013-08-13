@@ -13,8 +13,8 @@ package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSPreOrderVisitor;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSPreOrderVisitor;
 
 /**
  * An AbstractQVTOperationalCSPreOrderVisitor provides a default implementation for each
@@ -62,10 +62,6 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 
 	public @Nullable Continuation<?> visitContextualPropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ContextualPropertyCS csElement) {
 		return visitModulePropertyCS(csElement);
-	}
-
-	public @Nullable Continuation<?> visitDirectionKindCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS csElement) {
-		return visitElementCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitElementWithBody(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ElementWithBody csElement) {
@@ -172,6 +168,10 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 		return visitExpressionBlockCS(csElement);
 	}
 
+	public @Nullable Continuation<?> visitOperationParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS csElement) {
+		return visitParameterCS(csElement);
+	}
+
 	public @Nullable Continuation<?> visitOppositePropertyCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OppositePropertyCS csElement) {
 		return visitElementCS(csElement);
 	}
@@ -181,7 +181,7 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 	}
 
 	public @Nullable Continuation<?> visitParameterDeclarationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS csElement) {
-		return visitElementCS(csElement);
+		return visitTypedElementCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitPrimitiveTypeCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS csElement) {
@@ -202,10 +202,6 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 
 	public @Nullable Continuation<?> visitQVToOperationCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToOperationCS csElement) {
 		return visitOperationCS(csElement);
-	}
-
-	public @Nullable Continuation<?> visitQVToParameterCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToParameterCS csElement) {
-		return visitParameterCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitRenameCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.RenameCS csElement) {
