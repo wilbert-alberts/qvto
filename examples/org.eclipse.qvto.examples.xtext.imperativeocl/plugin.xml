@@ -3,17 +3,6 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" 
-       class = "org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeoclcsPackage"
-       genModel = "org/eclipse/qvto/examples/xtext/imperativeocl/ImperativeOCLCS.genmodel" /> 
-	
-  </extension>
-
-
-
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated ImperativeOCLCS -->
       <package
