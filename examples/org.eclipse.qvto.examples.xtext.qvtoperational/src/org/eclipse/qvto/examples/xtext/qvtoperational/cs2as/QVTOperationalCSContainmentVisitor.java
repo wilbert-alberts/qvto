@@ -7,6 +7,7 @@ import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 
 
 /**
@@ -36,6 +37,15 @@ public class QVTOperationalCSContainmentVisitor extends org.eclipse.qvto.example
 	OperationSimpleSignatureCS csElement) {
 		// Intermediate CS node, which doesn't produce AST. For the time being 
 		// to avoid thrown exception
+		return null;
+	}
+	
+	@Override
+	public @Nullable
+	Continuation<?> visitTypeSpecCS(@NonNull
+	TypeSpecCS csElement) {
+		// FIXME I don't know yet how to deal with type resolution,
+		// so skip it so far.
 		return null;
 	}
 }

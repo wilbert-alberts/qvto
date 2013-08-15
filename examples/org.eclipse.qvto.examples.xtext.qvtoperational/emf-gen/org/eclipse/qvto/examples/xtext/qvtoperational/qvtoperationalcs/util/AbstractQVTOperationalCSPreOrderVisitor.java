@@ -253,7 +253,7 @@ public abstract class AbstractQVTOperationalCSPreOrderVisitor
 	}
 
 	public @Nullable Continuation<?> visitTypeSpecCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS csElement) {
-		return visitElementCS(csElement);
+		return visitTypedRefCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitUnitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS csElement) {

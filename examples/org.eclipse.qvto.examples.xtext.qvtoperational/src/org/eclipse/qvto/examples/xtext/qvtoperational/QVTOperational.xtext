@@ -80,27 +80,32 @@ ParameterDeclarationCS :
 ;
 
 OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
-	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS))? ')'
+	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
 ;
 
 OperationParameterDeclarationCS :
-	(direction= DirectionKindCS)? 
+	direction=DirectionKindCS? 
 	name=UnrestrictedName // FIXME Spec grammar says that you can have just a typeSpec  
-	(':' ownedType=TypedMultiplicityRefCS)?
+	(':' ownedType=TypeSpecCS)?
 	initPart=InitPartCS?
 ;
 
 
 
-InitPartCS returns InitPartCS:  // returns ElementCS to make it inherits ElementCS 
+InitPartCS: 
 	initOp=InitOp expression= ExpCS
 ;
+
+TypeSpecCS :
+	ownedType= TypedRefCS ('@' extentLocation=UnrestrictedName)?
+;
+
 // General rules END
 
 
 // ****** Syntax for defining explicitly metamodel contents ******
 
-MetamodelCS returns MetamodelCS: // MetamodeKind provides extra semantic, we need to retain the kind 
+MetamodelCS returns MetamodelCS: // MetamodelKind provides extra semantic, we need to retain the kind 
 	metamodelKind=MetamodelKind 
 	name = UnrestrictedName
 	'{' (ownedType+=ClassifierCS |
@@ -153,6 +158,7 @@ TypedTypeRefCS returns base::TypedTypeRefCS:
 	pathName=PathNameCS	// (ownedTemplateBinding=TemplateBindingCS)?
 						// FIXME deviation from OCLInEcore. No templates parameter, yet
 ;
+
 
 
 ClassifierPropertyCS returns ClassifierPropertyCS:
@@ -257,6 +263,6 @@ MappingDefinitionCS returns MappingOperationCS:
 ;
 
 MappingOperationHeaderCS returns MappingOperationCS:
-	"mapping" name=UnreservedName
+	"mapping" name=UnrestrictedName
 	signature= OperationSimpleSignatureCS
 ;

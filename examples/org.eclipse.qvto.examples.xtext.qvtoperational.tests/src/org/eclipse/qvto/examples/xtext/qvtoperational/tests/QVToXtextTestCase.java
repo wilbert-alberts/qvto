@@ -57,13 +57,13 @@ public class QVToXtextTestCase extends AbstractQVToXtextTestCase {
 	public void testSimpleTransformationDefinition() throws Exception {
 		String testFile =
 				"transformation t1;";
-		doLoadFromString("simpleTransforrmationDefinition.qvto", testFile);
+		doLoadFromString("simpleTransformationDefinition.qvto", testFile);
 	}
 	
 	public void testSimpleMappingDefinition() throws Exception {
 		String testFile =
-				  "transformation t1 {"
-				+ " mapping m1 (in p1 : String = 'foo', out p2 : Sequence(Integer) = Sequence{1,2});"
+				  "transformation t1 {\n"
+				+ " mapping m1 (in p1 : String);\n"
 				+ "}";
 		doLoadFromString("simpleMappingDefinition.qvto", testFile);
 	}

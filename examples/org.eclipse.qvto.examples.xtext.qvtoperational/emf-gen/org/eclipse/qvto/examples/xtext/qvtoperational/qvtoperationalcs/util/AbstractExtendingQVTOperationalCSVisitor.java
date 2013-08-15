@@ -250,7 +250,7 @@ public abstract class AbstractExtendingQVTOperationalCSVisitor<R, C>
 	}
 
 	public @Nullable R visitTypeSpecCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS object) {
-		return visitElementCS(object);
+		return visitTypedRefCS(object);
 	}
 
 	public @Nullable R visitUnitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS object) {

@@ -97,6 +97,8 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOperationParameterDeclarationCSAccess().getGroup(), "rule__OperationParameterDeclarationCS__Group__0");
 					put(grammarAccess.getOperationParameterDeclarationCSAccess().getGroup_2(), "rule__OperationParameterDeclarationCS__Group_2__0");
 					put(grammarAccess.getInitPartCSAccess().getGroup(), "rule__InitPartCS__Group__0");
+					put(grammarAccess.getTypeSpecCSAccess().getGroup(), "rule__TypeSpecCS__Group__0");
+					put(grammarAccess.getTypeSpecCSAccess().getGroup_1(), "rule__TypeSpecCS__Group_1__0");
 					put(grammarAccess.getMetamodelCSAccess().getGroup(), "rule__MetamodelCS__Group__0");
 					put(grammarAccess.getClassifierCSAccess().getGroup(), "rule__ClassifierCS__Group__0");
 					put(grammarAccess.getDataTypeCSAccess().getGroup(), "rule__DataTypeCS__Group__0");
@@ -241,6 +243,8 @@ public class QVTOperationalParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOperationParameterDeclarationCSAccess().getInitPartAssignment_3(), "rule__OperationParameterDeclarationCS__InitPartAssignment_3");
 					put(grammarAccess.getInitPartCSAccess().getInitOpAssignment_0(), "rule__InitPartCS__InitOpAssignment_0");
 					put(grammarAccess.getInitPartCSAccess().getExpressionAssignment_1(), "rule__InitPartCS__ExpressionAssignment_1");
+					put(grammarAccess.getTypeSpecCSAccess().getOwnedTypeAssignment_0(), "rule__TypeSpecCS__OwnedTypeAssignment_0");
+					put(grammarAccess.getTypeSpecCSAccess().getExtentLocationAssignment_1_1(), "rule__TypeSpecCS__ExtentLocationAssignment_1_1");
 					put(grammarAccess.getMetamodelCSAccess().getMetamodelKindAssignment_0(), "rule__MetamodelCS__MetamodelKindAssignment_0");
 					put(grammarAccess.getMetamodelCSAccess().getNameAssignment_1(), "rule__MetamodelCS__NameAssignment_1");
 					put(grammarAccess.getMetamodelCSAccess().getOwnedTypeAssignment_3_0(), "rule__MetamodelCS__OwnedTypeAssignment_3_0");

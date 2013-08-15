@@ -4442,25 +4442,43 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_SPEC_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int TYPE_SPEC_CS__LOGICAL_PARENT = BaseCSTPackage.TYPED_REF_CS__LOGICAL_PARENT;
 
 	/**
-	 * The feature id for the '<em><b>Type CS</b></em>' containment reference.
+	 * The feature id for the '<em><b>Pivot</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_SPEC_CS__TYPE_CS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int TYPE_SPEC_CS__PIVOT = BaseCSTPackage.TYPED_REF_CS__PIVOT;
 
 	/**
-	 * The feature id for the '<em><b>Simple Name CS</b></em>' attribute.
+	 * The feature id for the '<em><b>Multiplicity</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_SPEC_CS__SIMPLE_NAME_CS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int TYPE_SPEC_CS__MULTIPLICITY = BaseCSTPackage.TYPED_REF_CS__MULTIPLICITY;
+
+	/**
+	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_SPEC_CS__OWNED_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Extent Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_SPEC_CS__EXTENT_LOCATION = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Type Spec CS</em>' class.
@@ -4469,7 +4487,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_SPEC_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int TYPE_SPEC_CS_FEATURE_COUNT = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.UnitCSImpl <em>Unit CS</em>}' class.
@@ -6611,26 +6629,26 @@ public interface QVTOperationalCSPackage extends EPackage {
 	EClass getTypeSpecCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getTypeCS <em>Type CS</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getOwnedType <em>Owned Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type CS</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getTypeCS()
+	 * @return the meta object for the containment reference '<em>Owned Type</em>'.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getOwnedType()
 	 * @see #getTypeSpecCS()
 	 * @generated
 	 */
-	EReference getTypeSpecCS_TypeCS();
+	EReference getTypeSpecCS_OwnedType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getSimpleNameCS <em>Simple Name CS</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getExtentLocation <em>Extent Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Simple Name CS</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getSimpleNameCS()
+	 * @return the meta object for the attribute '<em>Extent Location</em>'.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getExtentLocation()
 	 * @see #getTypeSpecCS()
 	 * @generated
 	 */
-	EAttribute getTypeSpecCS_SimpleNameCS();
+	EAttribute getTypeSpecCS_ExtentLocation();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS <em>Unit CS</em>}'.
@@ -8277,20 +8295,20 @@ public interface QVTOperationalCSPackage extends EPackage {
 		EClass TYPE_SPEC_CS = eINSTANCE.getTypeSpecCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Type CS</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Owned Type</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TYPE_SPEC_CS__TYPE_CS = eINSTANCE.getTypeSpecCS_TypeCS();
+		EReference TYPE_SPEC_CS__OWNED_TYPE = eINSTANCE.getTypeSpecCS_OwnedType();
 
 		/**
-		 * The meta object literal for the '<em><b>Simple Name CS</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Extent Location</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TYPE_SPEC_CS__SIMPLE_NAME_CS = eINSTANCE.getTypeSpecCS_SimpleNameCS();
+		EAttribute TYPE_SPEC_CS__EXTENT_LOCATION = eINSTANCE.getTypeSpecCS_ExtentLocation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.UnitCSImpl <em>Unit CS</em>}' class.

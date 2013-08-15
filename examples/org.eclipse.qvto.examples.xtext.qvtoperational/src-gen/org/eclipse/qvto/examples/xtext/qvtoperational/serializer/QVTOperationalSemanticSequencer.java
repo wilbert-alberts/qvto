@@ -75,6 +75,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.Stereotyp
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TagCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TransformationCS;
+import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.services.QVTOperationalGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -793,6 +794,12 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
+			case QVTOperationalCSPackage.TYPE_SPEC_CS:
+				if(context == grammarAccess.getTypeSpecCSRule()) {
+					sequence_TypeSpecCS(context, (TypeSpecCS) semanticObject); 
+					return; 
+				}
+				else break;
 			case QVTOperationalCSPackage.UNIT_CS:
 				if(context == grammarAccess.getUnitCSRule()) {
 					sequence_UnitCS(context, (UnitCS) semanticObject); 
@@ -941,7 +948,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (name=UnreservedName signature=OperationSimpleSignatureCS)
+	 *     (name=UnrestrictedName signature=OperationSimpleSignatureCS)
 	 */
 	protected void sequence_MappingOperationHeaderCS(EObject context, MappingOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -977,7 +984,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (direction=DirectionKindCS? name=UnrestrictedName ownedType=TypedMultiplicityRefCS? initPart=InitPartCS?)
+	 *     (direction=DirectionKindCS? name=UnrestrictedName ownedType=TypeSpecCS? initPart=InitPartCS?)
 	 */
 	protected void sequence_OperationParameterDeclarationCS(EObject context, OperationParameterDeclarationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -986,7 +993,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((parameter+=OperationParameterDeclarationCS parameter+=OperationParameterDeclarationCS)?)
+	 *     ((parameter+=OperationParameterDeclarationCS parameter+=OperationParameterDeclarationCS*)?)
 	 */
 	protected void sequence_OperationSimpleSignatureCS(EObject context, OperationSimpleSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1079,6 +1086,15 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)? multiplicity=MultiplicityCS?)
 	 */
 	protected void sequence_TupleTypeCS_TypedMultiplicityRefCS(EObject context, TupleTypeCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ownedType=TypedRefCS extentLocation=UnrestrictedName?)
+	 */
+	protected void sequence_TypeSpecCS(EObject context, TypeSpecCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

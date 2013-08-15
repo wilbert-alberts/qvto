@@ -8,7 +8,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.impl.ElementCSImpl;
+import org.eclipse.ocl.examples.xtext.base.baseCST.impl.TypedRefCSImpl;
 import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
@@ -20,45 +22,46 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TypeSpecCSImpl#getTypeCS <em>Type CS</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TypeSpecCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TypeSpecCSImpl#getOwnedType <em>Owned Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TypeSpecCSImpl#getExtentLocation <em>Extent Location</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class TypeSpecCSImpl
-		extends ElementCSImpl
+		extends TypedRefCSImpl
 		implements TypeSpecCS {
 
 	/**
-	 * The cached value of the '{@link #getTypeCS() <em>Type CS</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getTypeCS()
+	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedType()
 	 * @generated
 	 * @ordered
 	 */
-	protected TypeCS typeCS;
+	protected TypedRefCS ownedType;
 
 	/**
-	 * The default value of the '{@link #getSimpleNameCS() <em>Simple Name CS</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @see #getSimpleNameCS()
+	 * The default value of the '{@link #getExtentLocation() <em>Extent Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtentLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SIMPLE_NAME_CS_EDEFAULT = null;
+	protected static final String EXTENT_LOCATION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getSimpleNameCS() <em>Simple Name CS</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @see #getSimpleNameCS()
+	 * The cached value of the '{@link #getExtentLocation() <em>Extent Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtentLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected String simpleNameCS = SIMPLE_NAME_CS_EDEFAULT;
+	protected String extentLocation = EXTENT_LOCATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -78,63 +81,67 @@ public class TypeSpecCSImpl
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TypeCS getTypeCS() {
-		return typeCS;
+	public TypedRefCS getOwnedType() {
+		return ownedType;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTypeCS(TypeCS newTypeCS,
-			NotificationChain msgs) {
-		TypeCS oldTypeCS = typeCS;
-		typeCS = newTypeCS;
+	public NotificationChain basicSetOwnedType(TypedRefCS newOwnedType, NotificationChain msgs) {
+		TypedRefCS oldOwnedType = ownedType;
+		ownedType = newOwnedType;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, oldTypeCS, newTypeCS);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypeCS(TypeCS newTypeCS) {
-		if (newTypeCS != typeCS) {
+	public void setOwnedType(TypedRefCS newOwnedType) {
+		if (newOwnedType != ownedType) {
 			NotificationChain msgs = null;
-			if (typeCS != null)
-				msgs = ((InternalEObject)typeCS).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
-			if (newTypeCS != null)
-				msgs = ((InternalEObject)newTypeCS).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, null, msgs);
-			msgs = basicSetTypeCS(newTypeCS, msgs);
+			if (ownedType != null)
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE, null, msgs);
+			if (newOwnedType != null)
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE, null, msgs);
+			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS, newTypeCS, newTypeCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE, newOwnedType, newOwnedType));
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getSimpleNameCS() {
-		return simpleNameCS;
+	public String getExtentLocation() {
+		return extentLocation;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSimpleNameCS(String newSimpleNameCS) {
-		String oldSimpleNameCS = simpleNameCS;
-		simpleNameCS = newSimpleNameCS;
+	public void setExtentLocation(String newExtentLocation) {
+		String oldExtentLocation = extentLocation;
+		extentLocation = newExtentLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS, oldSimpleNameCS, simpleNameCS));
+			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.TYPE_SPEC_CS__EXTENT_LOCATION, oldExtentLocation, extentLocation));
 	}
 
 	/**
@@ -165,8 +172,8 @@ public class TypeSpecCSImpl
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
-				return basicSetTypeCS(null, msgs);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE:
+				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -178,10 +185,10 @@ public class TypeSpecCSImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
-				return getTypeCS();
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
-				return getSimpleNameCS();
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE:
+				return getOwnedType();
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__EXTENT_LOCATION:
+				return getExtentLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -193,11 +200,11 @@ public class TypeSpecCSImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
-				setTypeCS((TypeCS)newValue);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE:
+				setOwnedType((TypedRefCS)newValue);
 				return;
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
-				setSimpleNameCS((String)newValue);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__EXTENT_LOCATION:
+				setExtentLocation((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -210,11 +217,11 @@ public class TypeSpecCSImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
-				setTypeCS((TypeCS)null);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE:
+				setOwnedType((TypedRefCS)null);
 				return;
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
-				setSimpleNameCS(SIMPLE_NAME_CS_EDEFAULT);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__EXTENT_LOCATION:
+				setExtentLocation(EXTENT_LOCATION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -227,10 +234,10 @@ public class TypeSpecCSImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__TYPE_CS:
-				return typeCS != null;
-			case QVTOperationalCSPackage.TYPE_SPEC_CS__SIMPLE_NAME_CS:
-				return SIMPLE_NAME_CS_EDEFAULT == null ? simpleNameCS != null : !SIMPLE_NAME_CS_EDEFAULT.equals(simpleNameCS);
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__OWNED_TYPE:
+				return ownedType != null;
+			case QVTOperationalCSPackage.TYPE_SPEC_CS__EXTENT_LOCATION:
+				return EXTENT_LOCATION_EDEFAULT == null ? extentLocation != null : !EXTENT_LOCATION_EDEFAULT.equals(extentLocation);
 		}
 		return super.eIsSet(featureID);
 	}

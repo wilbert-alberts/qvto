@@ -4,6 +4,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -12,8 +13,8 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getTypeCS <em>Type CS</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getOwnedType <em>Owned Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getExtentLocation <em>Extent Location</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,59 +23,58 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
  * @generated
  */
 public interface TypeSpecCS
-		extends ElementCS {
+		extends TypedRefCS {
 
 	/**
-	 * Returns the value of the '<em><b>Type CS</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Owned Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Type CS</em>' containment reference isn't
-	 * clear, there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type CS</em>' containment reference.
-	 * @see #setTypeCS(TypeCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTypeSpecCS_TypeCS()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	TypeCS getTypeCS();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getTypeCS <em>Type CS</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @param value the new value of the '<em>Type CS</em>' containment reference.
-	 * @see #getTypeCS()
-	 * @generated
-	 */
-	void setTypeCS(TypeCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Simple Name CS</b></em>' attribute. <!--
-	 * begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Simple Name CS</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Owned Type</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Simple Name CS</em>' attribute.
-	 * @see #setSimpleNameCS(String)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QvtoperationalcsPackage#getTypeSpecCS_SimpleNameCS()
+	 * @return the value of the '<em>Owned Type</em>' containment reference.
+	 * @see #setOwnedType(TypedRefCS)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTypeSpecCS_OwnedType()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	TypedRefCS getOwnedType();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getOwnedType <em>Owned Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Type</em>' containment reference.
+	 * @see #getOwnedType()
+	 * @generated
+	 */
+	void setOwnedType(TypedRefCS value);
+
+	/**
+	 * Returns the value of the '<em><b>Extent Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Extent Location</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Extent Location</em>' attribute.
+	 * @see #setExtentLocation(String)
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getTypeSpecCS_ExtentLocation()
 	 * @model
 	 * @generated
 	 */
-	String getSimpleNameCS();
+	String getExtentLocation();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getSimpleNameCS <em>Simple Name CS</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @param value the new value of the '<em>Simple Name CS</em>' attribute.
-	 * @see #getSimpleNameCS()
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS#getExtentLocation <em>Extent Location</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Extent Location</em>' attribute.
+	 * @see #getExtentLocation()
 	 * @generated
 	 */
-	void setSimpleNameCS(String value);
+	void setExtentLocation(String value);
 
 } // TypeSpecCS

@@ -280,20 +280,6 @@ public class QVTOperationalCSContainmentVisitor
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
-		// AS Kind property update
-		org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.DirectionKindCS newCsKind = csElement.getDirection();
-		org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind newKind = org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind.valueOf(newCsKind.getLiteral());
-		org.eclipse.qvto.examples.pivot.qvtoperational.DirectionKind oldKind = asElement.getKind();
-		if ((newKind != oldKind) && ((newKind == null) || !newKind.equals(oldKind))) {
-			asElement.setKind(newKind);
-		}
-		// AS InitExpression property update
-		org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS newCsInitExpression = csElement.getInitPart().getExpression();
-		org.eclipse.ocl.examples.pivot.OCLExpression newInitExpression = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.OCLExpression.class, newCsInitExpression);
-		org.eclipse.ocl.examples.pivot.OCLExpression oldInitExpression = asElement.getInitExpression();
-		if ((newInitExpression != oldInitExpression) && ((newInitExpression == null) || !newInitExpression.equals(oldInitExpression))) {
-			asElement.setInitExpression(newInitExpression);
-		}
 		// AS element comments update
 		context.refreshComments(asElement, csElement);
 		return null;

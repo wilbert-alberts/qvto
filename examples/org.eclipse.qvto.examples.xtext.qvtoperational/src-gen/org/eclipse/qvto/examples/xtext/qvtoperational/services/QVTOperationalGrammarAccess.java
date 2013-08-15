@@ -439,12 +439,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
 		//
-		//	parameter+=OperationParameterDeclarationCS))? ")";
+		//	parameter+=OperationParameterDeclarationCS)*)? ")";
 		public ParserRule getRule() { return rule; }
 
 		//{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
 		//
-		//parameter+=OperationParameterDeclarationCS))? ")"
+		//parameter+=OperationParameterDeclarationCS)*)? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{OperationSimpleSignatureCS}
@@ -453,7 +453,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//(parameter+=OperationParameterDeclarationCS ("," parameter+=OperationParameterDeclarationCS))?
+		//(parameter+=OperationParameterDeclarationCS ("," parameter+=OperationParameterDeclarationCS)*)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//parameter+=OperationParameterDeclarationCS
@@ -462,7 +462,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//OperationParameterDeclarationCS
 		public RuleCall getParameterOperationParameterDeclarationCSParserRuleCall_2_0_0() { return cParameterOperationParameterDeclarationCSParserRuleCall_2_0_0; }
 
-		//"," parameter+=OperationParameterDeclarationCS
+		//("," parameter+=OperationParameterDeclarationCS)*
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//","
@@ -488,7 +488,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cOwnedTypeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_1_0 = (RuleCall)cOwnedTypeAssignment_2_1.eContents().get(0);
+		private final RuleCall cOwnedTypeTypeSpecCSParserRuleCall_2_1_0 = (RuleCall)cOwnedTypeAssignment_2_1.eContents().get(0);
 		private final Assignment cInitPartAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cInitPartInitPartCSParserRuleCall_3_0 = (RuleCall)cInitPartAssignment_3.eContents().get(0);
 		
@@ -497,13 +497,13 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//	direction=DirectionKindCS? name= // FIXME Spec grammar says that you can have just a typeSpec  
 		// UnrestrictedName
 		//
-		//	(":" ownedType=TypedMultiplicityRefCS)? initPart=InitPartCS?;
+		//	(":" ownedType=TypeSpecCS)? initPart=InitPartCS?;
 		public ParserRule getRule() { return rule; }
 
 		//direction=DirectionKindCS? name= // FIXME Spec grammar says that you can have just a typeSpec  
 		// UnrestrictedName (":"
 		//
-		//ownedType=TypedMultiplicityRefCS)? initPart=InitPartCS?
+		//ownedType=TypeSpecCS)? initPart=InitPartCS?
 		public Group getGroup() { return cGroup; }
 
 		//direction=DirectionKindCS?
@@ -520,17 +520,17 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		// UnrestrictedName
 		public RuleCall getNameUnrestrictedNameParserRuleCall_1_0() { return cNameUnrestrictedNameParserRuleCall_1_0; }
 
-		//(":" ownedType=TypedMultiplicityRefCS)?
+		//(":" ownedType=TypeSpecCS)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//":"
 		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
 
-		//ownedType=TypedMultiplicityRefCS
+		//ownedType=TypeSpecCS
 		public Assignment getOwnedTypeAssignment_2_1() { return cOwnedTypeAssignment_2_1; }
 
-		//TypedMultiplicityRefCS
-		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_1_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_1_0; }
+		//TypeSpecCS
+		public RuleCall getOwnedTypeTypeSpecCSParserRuleCall_2_1_0() { return cOwnedTypeTypeSpecCSParserRuleCall_2_1_0; }
 
 		//initPart=InitPartCS?
 		public Assignment getInitPartAssignment_3() { return cInitPartAssignment_3; }
@@ -547,8 +547,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cExpressionExpCSParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		
-		//// returns ElementCS to make it inherits ElementCS 
-		// InitPartCS:
+		//InitPartCS:
 		//
 		//	initOp=InitOp expression=ExpCS;
 		public ParserRule getRule() { return rule; }
@@ -567,6 +566,43 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ExpCS
 		public RuleCall getExpressionExpCSParserRuleCall_1_0() { return cExpressionExpCSParserRuleCall_1_0; }
+	}
+
+	public class TypeSpecCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeSpecCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOwnedTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOwnedTypeTypedRefCSParserRuleCall_0_0 = (RuleCall)cOwnedTypeAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cExtentLocationAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cExtentLocationUnrestrictedNameParserRuleCall_1_1_0 = (RuleCall)cExtentLocationAssignment_1_1.eContents().get(0);
+		
+		//TypeSpecCS:
+		//
+		//	ownedType=TypedRefCS ("@" extentLocation=UnrestrictedName)?;
+		public ParserRule getRule() { return rule; }
+
+		//ownedType=TypedRefCS ("@" extentLocation=UnrestrictedName)?
+		public Group getGroup() { return cGroup; }
+
+		//ownedType=TypedRefCS
+		public Assignment getOwnedTypeAssignment_0() { return cOwnedTypeAssignment_0; }
+
+		//TypedRefCS
+		public RuleCall getOwnedTypeTypedRefCSParserRuleCall_0_0() { return cOwnedTypeTypedRefCSParserRuleCall_0_0; }
+
+		//("@" extentLocation=UnrestrictedName)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_1_0() { return cCommercialAtKeyword_1_0; }
+
+		//extentLocation=UnrestrictedName
+		public Assignment getExtentLocationAssignment_1_1() { return cExtentLocationAssignment_1_1; }
+
+		//UnrestrictedName
+		public RuleCall getExtentLocationUnrestrictedNameParserRuleCall_1_1_0() { return cExtentLocationUnrestrictedNameParserRuleCall_1_1_0; }
 	}
 
 	public class MetamodelCSElements extends AbstractParserRuleElementFinder {
@@ -591,7 +627,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		// // ****** Syntax for defining explicitly metamodel contents ******
 		//
 		//
-		//// MetamodeKind provides extra semantic, we need to retain the kind 
+		//// MetamodelKind provides extra semantic, we need to retain the kind 
 		// MetamodelCS:
 		//
 		//	metamodelKind=MetamodelKind name=UnrestrictedName "{" (ownedType+=ClassifierCS
@@ -1759,26 +1795,26 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cMappingKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameUnreservedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final RuleCall cNameUnrestrictedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cSignatureAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cSignatureOperationSimpleSignatureCSParserRuleCall_2_0 = (RuleCall)cSignatureAssignment_2.eContents().get(0);
 		
 		//MappingOperationHeaderCS returns MappingOperationCS:
 		//
-		//	"mapping" name=UnreservedName signature=OperationSimpleSignatureCS;
+		//	"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS;
 		public ParserRule getRule() { return rule; }
 
-		//"mapping" name=UnreservedName signature=OperationSimpleSignatureCS
+		//"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS
 		public Group getGroup() { return cGroup; }
 
 		//"mapping"
 		public Keyword getMappingKeyword_0() { return cMappingKeyword_0; }
 
-		//name=UnreservedName
+		//name=UnrestrictedName
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//UnreservedName
-		public RuleCall getNameUnreservedNameParserRuleCall_1_0() { return cNameUnreservedNameParserRuleCall_1_0; }
+		//UnrestrictedName
+		public RuleCall getNameUnrestrictedNameParserRuleCall_1_0() { return cNameUnrestrictedNameParserRuleCall_1_0; }
 
 		//signature=OperationSimpleSignatureCS
 		public Assignment getSignatureAssignment_2() { return cSignatureAssignment_2; }
@@ -2006,6 +2042,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private OperationSimpleSignatureCSElements pOperationSimpleSignatureCS;
 	private OperationParameterDeclarationCSElements pOperationParameterDeclarationCS;
 	private InitPartCSElements pInitPartCS;
+	private TypeSpecCSElements pTypeSpecCS;
 	private MetamodelCSElements pMetamodelCS;
 	private ClassifierCSElements pClassifierCS;
 	private DataTypeCSElements pDataTypeCS;
@@ -2257,7 +2294,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
 	//
-	//	parameter+=OperationParameterDeclarationCS))? ")";
+	//	parameter+=OperationParameterDeclarationCS)*)? ")";
 	public OperationSimpleSignatureCSElements getOperationSimpleSignatureCSAccess() {
 		return (pOperationSimpleSignatureCS != null) ? pOperationSimpleSignatureCS : (pOperationSimpleSignatureCS = new OperationSimpleSignatureCSElements());
 	}
@@ -2271,7 +2308,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	//	direction=DirectionKindCS? name= // FIXME Spec grammar says that you can have just a typeSpec  
 	// UnrestrictedName
 	//
-	//	(":" ownedType=TypedMultiplicityRefCS)? initPart=InitPartCS?;
+	//	(":" ownedType=TypeSpecCS)? initPart=InitPartCS?;
 	public OperationParameterDeclarationCSElements getOperationParameterDeclarationCSAccess() {
 		return (pOperationParameterDeclarationCS != null) ? pOperationParameterDeclarationCS : (pOperationParameterDeclarationCS = new OperationParameterDeclarationCSElements());
 	}
@@ -2280,8 +2317,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getOperationParameterDeclarationCSAccess().getRule();
 	}
 
-	//// returns ElementCS to make it inherits ElementCS 
-	// InitPartCS:
+	//InitPartCS:
 	//
 	//	initOp=InitOp expression=ExpCS;
 	public InitPartCSElements getInitPartCSAccess() {
@@ -2292,11 +2328,22 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getInitPartCSAccess().getRule();
 	}
 
+	//TypeSpecCS:
+	//
+	//	ownedType=TypedRefCS ("@" extentLocation=UnrestrictedName)?;
+	public TypeSpecCSElements getTypeSpecCSAccess() {
+		return (pTypeSpecCS != null) ? pTypeSpecCS : (pTypeSpecCS = new TypeSpecCSElements());
+	}
+	
+	public ParserRule getTypeSpecCSRule() {
+		return getTypeSpecCSAccess().getRule();
+	}
+
 	//// General rules END
 	// // ****** Syntax for defining explicitly metamodel contents ******
 	//
 	//
-	//// MetamodeKind provides extra semantic, we need to retain the kind 
+	//// MetamodelKind provides extra semantic, we need to retain the kind 
 	// MetamodelCS:
 	//
 	//	metamodelKind=MetamodelKind name=UnrestrictedName "{" (ownedType+=ClassifierCS
@@ -2641,7 +2688,7 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 
 	//MappingOperationHeaderCS returns MappingOperationCS:
 	//
-	//	"mapping" name=UnreservedName signature=OperationSimpleSignatureCS;
+	//	"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS;
 	public MappingOperationHeaderCSElements getMappingOperationHeaderCSAccess() {
 		return (pMappingOperationHeaderCS != null) ? pMappingOperationHeaderCS : (pMappingOperationHeaderCS = new MappingOperationHeaderCSElements());
 	}

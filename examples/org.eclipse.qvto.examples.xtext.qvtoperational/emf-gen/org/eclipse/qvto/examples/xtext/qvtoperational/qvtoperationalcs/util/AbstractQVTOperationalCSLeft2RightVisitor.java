@@ -253,7 +253,7 @@ public abstract class AbstractQVTOperationalCSLeft2RightVisitor
 	}
 
 	public @Nullable Element visitTypeSpecCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS csElement) {
-		return visitElementCS(csElement);
+		return visitTypedRefCS(csElement);
 	}
 
 	public @Nullable Element visitUnitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS csElement) {
