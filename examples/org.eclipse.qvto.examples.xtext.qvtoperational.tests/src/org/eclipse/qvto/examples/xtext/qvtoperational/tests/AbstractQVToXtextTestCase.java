@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -35,6 +36,8 @@ import org.eclipse.ocl.examples.pivot.manager.MetaModelManagerResourceSetAdapter
 import org.eclipse.ocl.examples.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.examples.xtext.base.utilities.CS2PivotResourceAdapter;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLStandaloneSetup;
+import org.eclipse.qvto.examples.xtext.qvtoperational.QVTOperationalStandaloneSetup;
 
 public class AbstractQVToXtextTestCase extends XtextTestCase
 {	
@@ -114,6 +117,8 @@ public class AbstractQVToXtextTestCase extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		doImperativeOCLSetup();
+		doQVTOperationalSetup();
 		configurePlatformResources();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
@@ -134,5 +139,25 @@ public class AbstractQVToXtextTestCase extends XtextTestCase
 		}
 		StandardLibraryContribution.REGISTRY.remove(MetaModelManager.DEFAULT_OCL_STDLIB_URI);
 		super.tearDown();
+	}
+	
+	protected static void doQVTOperationalSetup() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			QVTOperationalStandaloneSetup.doSetup();
+    	}
+    	else {
+    		// FIXME remove this if it's configured on bundle startup
+    		QVTOperationalStandaloneSetup.init();
+    	}
+	}
+	
+	protected static void doImperativeOCLSetup() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			ImperativeOCLStandaloneSetup.doSetup();
+    	}
+    	else {
+    		// FIXME remove this if it's configured on bundle startup
+    		ImperativeOCLStandaloneSetup.init();
+    	}
 	}
 }

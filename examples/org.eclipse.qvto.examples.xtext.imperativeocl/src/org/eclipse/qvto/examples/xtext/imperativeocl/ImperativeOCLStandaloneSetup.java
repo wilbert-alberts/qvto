@@ -3,6 +3,7 @@
 */
 package org.eclipse.qvto.examples.xtext.imperativeocl;
 
+
 /**
  * Initialization support for running Xtext languages 
  * without equinox extension registry
@@ -11,6 +12,11 @@ public class ImperativeOCLStandaloneSetup extends ImperativeOCLStandaloneSetupGe
 
 	public static void doSetup() {
 		new ImperativeOCLStandaloneSetup().createInjectorAndDoEMFRegistration();
+		init();
+	}
+	
+	public static void init() {
+		// ImperativeCS2MonikerVisitor.FACTORY.getClass(); // To registry moniker factory
 	}
 }
 

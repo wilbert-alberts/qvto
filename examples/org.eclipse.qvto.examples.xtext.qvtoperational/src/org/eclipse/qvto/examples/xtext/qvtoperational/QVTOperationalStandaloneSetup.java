@@ -3,6 +3,7 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational;
 
+
 /**
  * Initialization support for running Xtext languages without equinox extension
  * registry
@@ -11,7 +12,13 @@ public class QVTOperationalStandaloneSetup
 		extends QVTOperationalStandaloneSetupGenerated {
 
 	public static void doSetup() {
+		init();
 		new QVTOperationalStandaloneSetup()
 			.createInjectorAndDoEMFRegistration();
+		
+	}
+	
+	public static void init() {
+		// QVTOperationalCS2MonikerVisitor.FACTORY.getClass(); // To register monikers Factory
 	}
 }
