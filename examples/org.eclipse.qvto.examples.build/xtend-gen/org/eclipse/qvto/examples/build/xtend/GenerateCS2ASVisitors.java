@@ -53,6 +53,7 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
       this.generatePostOrderVisitor(csPackage);
       this.generateLeft2RightVisitor(csPackage);
     }
+    this.generateAbstractExtendingDelegatingVisitor(csPackage);
   }
   
   public void generateContainmentVisitor(@NonNull final EPackage csPackage) {
