@@ -11,6 +11,6 @@ main() {
 	new exec3_withImport(output);
 	
 	object EPackage {
-		name = "T1";
+		name := "T1";
 	}
 }

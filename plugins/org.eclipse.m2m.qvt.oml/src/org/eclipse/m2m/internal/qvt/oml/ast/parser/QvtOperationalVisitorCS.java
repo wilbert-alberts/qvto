@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
- *     Alex Paperno - bugs 272869, 268636, 404647
+ *     Alex Paperno - bugs 272869, 268636, 404647, 414363
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -86,6 +86,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.LogExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingBodyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.MappingEndCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingInitCS;
@@ -1015,6 +1016,50 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
 	
+	
+	protected boolean isBlockNode(EObject node)
+	{
+		if (node instanceof ObjectExpCS
+				|| node instanceof MappingSectionCS
+				|| node instanceof MappingQueryCS
+				|| node instanceof ConstructorCS
+				|| node instanceof BlockExpCS) {
+			return true;
+		}				
+		return false;
+	}
+	
+	
+	protected boolean isPossibleEqualityInsteadOfAssignment(OperationCallExpCS operationCallExpCS) {
+		if (!"=".equals(operationCallExpCS.getSimpleNameCS().getValue())) { //$NON-NLS-1$
+			return false;
+		}
+				
+		EObject container = operationCallExpCS.eContainer();
+		if (isBlockNode(container)) {
+			if (!(container instanceof MappingQueryCS)) {
+				return true;
+			}
+			// it's ok to have a '=' equality in the last expression of a query
+			EList<OCLExpressionCS> exprList = ((MappingQueryCS)container).getExpressions();
+			return (exprList.get(exprList.size()-1) != operationCallExpCS);
+		}		
+		if (container instanceof MappingRuleCS) {
+			return false;
+		}		
+		if (container instanceof IfExpCS) {
+			IfExpCS containerIf = (IfExpCS) container;
+			if (containerIf.getThenExpression() == operationCallExpCS 
+					 || containerIf.getElseExpression() == operationCallExpCS) {
+				if (isBlockNode(containerIf.eContainer())) {
+					return true; 
+				}
+			}				
+		}		
+
+		return false;
+	}
+	
     @Override
     protected OCLExpression<EClassifier> operationCallExpCS(
     		OperationCallExpCS operationCallExpCS,
@@ -1029,7 +1074,12 @@ public class QvtOperationalVisitorCS
 				 }
 			}
 		}    	
-    	
+		
+		if (isPossibleEqualityInsteadOfAssignment(operationCallExpCS)) {
+			QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_possibleEqualityInsteadOfAssignment , new Object[] { }),
+					operationCallExpCS.getSimpleNameCS());
+		}
+		
     	OCLExpression<EClassifier> result = super.operationCallExpCS(operationCallExpCS, env);
     	
     	if(result instanceof OperationCallExp<?,?>) {

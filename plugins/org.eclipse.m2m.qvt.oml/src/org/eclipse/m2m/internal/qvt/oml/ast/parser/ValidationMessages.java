@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636
+ *     Alex Paperno - bugs 272869, 268636, 414363
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -217,6 +217,7 @@ public final class ValidationMessages extends NLS {
 	public static String TypeConformanceOperation_ERROR_;
 	public static String NonStd_Operation_;
 	public static String QvtOperationalVisitorCS_libraryCantExtendNonLibrary;
+	public static String QvtOperationalVisitorCS_possibleEqualityInsteadOfAssignment;
     
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);

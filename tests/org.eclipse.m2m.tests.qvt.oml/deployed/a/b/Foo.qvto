@@ -17,6 +17,6 @@ main() {
 	testHelper2();
 
 	object EPackage {
-		name = "foo";
+		name := "foo";
 	}
 }
