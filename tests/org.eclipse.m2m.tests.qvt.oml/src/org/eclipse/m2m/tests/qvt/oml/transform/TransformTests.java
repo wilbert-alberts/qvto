@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
- *                         397215, 397959, 358709, 388801, 254962
+ *                         397215, 397959, 358709, 388801, 254962, 414555
  *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131,
  *                         274105, 274505
  *******************************************************************************/
@@ -323,6 +323,7 @@ public class TransformTests {
         		new FileToFileData("bug404647"),
         		new FileToFileData("bug413131"),
         		new FileToFileData("bug274105_274505"),
+        		new FileToFileData("bug414555"),
         		};
     }
 
@@ -348,5 +349,8 @@ public class TransformTests {
             
             // generated ECORE models -> not applicable to dynamic models  
             "blackboxlib_annotation_java", //$NON-NLS-1$
+            
+            // 'import' statement is not properly patched
+            "bug414555", //$NON-NLS-1$
     }));
 }

@@ -26,8 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
-import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.types.OCLStandardLibrary;
@@ -197,11 +195,7 @@ public class ElementOperations extends AbstractContextualOperations {
 				
 				Module importedModule = moduleImport.getImportedModule();
 				
-				if (moduleImport.getKind() == ImportKind.EXTENSION || importedModule instanceof Library) {
-					
-					cloneIntermediateProperties(source, target, importedModule);
-					
-				}
+				cloneIntermediateProperties(source, target, importedModule);
 				
 			}
 			
