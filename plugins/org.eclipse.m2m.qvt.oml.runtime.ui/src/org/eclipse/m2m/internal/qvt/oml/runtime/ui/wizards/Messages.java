@@ -44,7 +44,6 @@ public class Messages extends NLS {
 	public static String SelectQvtProjectTransformationPage_RunInterpretedMode;
 	public static String SelectQvtProjectTransformationPage_Description;
 
-    public static String SelectWorkspaceTransformationPage_emptyTransformation;
     public static String SelectWorkspaceTransformationPage_Title;
     public static String SelectWorkspaceTransformationPage_Description;
     public static String SelectWorkspaceTransformationPage_transformationSelected;

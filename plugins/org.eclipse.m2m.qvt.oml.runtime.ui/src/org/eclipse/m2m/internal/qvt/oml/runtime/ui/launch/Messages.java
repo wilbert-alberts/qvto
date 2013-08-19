@@ -28,7 +28,6 @@ public class Messages extends NLS {
 	public static String QvtLauncherTab_ParametersLabel;
 	public static String QvtLauncherTab_NoTransformationModule;
 	public static String QvtLauncherTab_InvalidTransformationUri;
-	public static String QvtLauncherTab_EmptyTransformation;
 	public static String QvtLauncherTab_TransformationSelected;
 	public static String QvtLauncherTab_ValidateModels;
 	

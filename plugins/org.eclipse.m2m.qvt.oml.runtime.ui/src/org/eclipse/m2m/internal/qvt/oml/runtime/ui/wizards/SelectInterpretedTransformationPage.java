@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
@@ -25,7 +23,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransforma
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -82,12 +79,6 @@ public class SelectInterpretedTransformationPage extends WizardPage implements I
             	return false;
             }
             transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(uri));
-            
-            List<TransformationParameter> parameters = transformation.getParameters();
-            if (parameters.isEmpty()) {
-                setErrorMessage(NLS.bind(Messages.SelectWorkspaceTransformationPage_emptyTransformation, null));
-                return false;
-            }
             transfName = transformation.getModuleName();
         }
         catch (Exception e) {

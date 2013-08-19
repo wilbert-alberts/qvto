@@ -52,7 +52,6 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationTy
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
@@ -134,11 +133,6 @@ public class QvtLauncherTab extends MdaLaunchTab {
 				            	return TransformationControls.makeStatus(IStatus.ERROR, Messages.QvtLauncherTab_NoTransformationModule);
 				            }
 				            QvtTransformation transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(selectedUri));
-				            
-				            List<TransformationParameter> parameters = transformation.getParameters();
-				            if (parameters.isEmpty()) {
-				            	return TransformationControls.makeStatus(IStatus.ERROR, Messages.QvtLauncherTab_EmptyTransformation);
-				            }
 				            transfName = transformation.getModuleName();
 				        }
 				        catch (Exception e) {
