@@ -1249,7 +1249,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public Object visitAssertExp(AssertExp assertExp) {		
 		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
 		
-		if(Boolean.FALSE.equals(assertionValue) || assertionValue == getInvalid()) {	
+		if(!Boolean.TRUE.equals(assertionValue)) {	
 			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
 			Module currentModule = internEvalEnv.getCurrentModule().getModule();
 			IModuleSourceInfo moduleSource = ASTBindingHelper.getModuleSourceBinding(currentModule);
