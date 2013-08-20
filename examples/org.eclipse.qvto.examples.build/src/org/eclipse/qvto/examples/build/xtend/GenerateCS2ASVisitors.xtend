@@ -161,7 +161,7 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 					// var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
 					
 					// We visit the expression to generate the containment visit method body
-					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager)));
+					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager, outputFolder, visitorPackageName)));
 				}
 			}
 		}

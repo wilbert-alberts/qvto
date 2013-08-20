@@ -247,7 +247,7 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
           OpaqueExpression opaqueExp = operation.getBodyExpression();
           ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
           OCLExpression _bodyExpression = expInOcl.getBodyExpression();
-          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager);
+          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager, this.outputFolder, this.visitorPackageName);
           ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
           return _bodyExpression.<String>accept(_containmentVisitsGenerator);
         }

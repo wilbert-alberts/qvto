@@ -2638,7 +2638,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		addEOperation(topLevelCSEClass, thePivotPackage.getRoot(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(qvToClassCSEClass, QVToClassCS.class, "QVToClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getQVToClassCS_Intermediate(), ecorePackage.getEBoolean(), "intermediate", null, 0, 1, QVToClassCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getQVToClassCS_Intermediate(), ecorePackage.getEBoolean(), "intermediate", null, 1, 1, QVToClassCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(qvToClassCSEClass, thePivotPackage.getClass_(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -3009,7 +3009,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
+			 "body", "ocl::Property {\n\t\t\t\tname = name\n\t\t\t\t-- isComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (mappingOperationCSEClass.getEOperations().get(0), 

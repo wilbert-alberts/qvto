@@ -54,18 +54,11 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.ClassifierPropertyCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
-		}
-		// AS IsComposite property update
-		java.lang.Boolean newCsIsComposite = csElement.getQualifier().contains("composite");
-		java.lang.Boolean newIsComposite = newCsIsComposite;
-		java.lang.Boolean oldIsComposite = asElement.isComposite();
-		if ((newIsComposite != oldIsComposite) && ((newIsComposite == null) || !newIsComposite.equals(oldIsComposite))) {
-			asElement.setIsComposite(newIsComposite);
 		}
 		// AS element comments update
 		context.refreshComments(asElement, csElement);
@@ -150,14 +143,14 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MappingOperationCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
 		// AS OwnedParameter property update
-		java.util.List<org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS> newCsOwnedParameters = csElement.getSignature().getParameter();
+		java.util.List<org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS> newCsOwnedParameters = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MappingOperationCS_AST_Part1.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Parameter> newOwnedParameters = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Parameter>();
 		
 		for (org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS newCsOwnedParameter : newCsOwnedParameters) {
@@ -199,28 +192,28 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MetamodelCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
 		// AS NsPrefix property update
-		java.lang.String newCsNsPrefix = csElement.getName();
+		java.lang.String newCsNsPrefix = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MetamodelCS_AST_Part1.INSTANCE.evaluate(csElement);
 		java.lang.String newNsPrefix = newCsNsPrefix;
 		java.lang.String oldNsPrefix = asElement.getNsPrefix();
 		if ((newNsPrefix != oldNsPrefix) && ((newNsPrefix == null) || !newNsPrefix.equals(oldNsPrefix))) {
 			asElement.setNsPrefix(newNsPrefix);
 		}
 		// AS NsURI property update
-		java.lang.String newCsNsURI = csElement.getName();
+		java.lang.String newCsNsURI = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MetamodelCS_AST_Part2.INSTANCE.evaluate(csElement);
 		java.lang.String newNsURI = newCsNsURI;
 		java.lang.String oldNsURI = asElement.getNsURI();
 		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
 			asElement.setNsURI(newNsURI);
 		}
 		// AS OwnedType property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS> newCsOwnedTypes = csElement.getOwnedType();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS> newCsOwnedTypes = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MetamodelCS_AST_Part3.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Type> newOwnedTypes = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Type>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS newCsOwnedType : newCsOwnedTypes) {
@@ -274,7 +267,7 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.OperationParameterDeclarationCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
@@ -315,14 +308,14 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.QVToClassCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
 		// AS OwnedAttribute property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS> newCsOwnedAttributes = csElement.getOwnedProperty();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS> newCsOwnedAttributes = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.QVToClassCS_AST_Part1.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Property> newOwnedAttributes = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Property>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS newCsOwnedAttribute : newCsOwnedAttributes) {
@@ -334,7 +327,7 @@ public class QVTOperationalCSContainmentVisitor
 		java.util.List<org.eclipse.ocl.examples.pivot.Property> oldOwnedAttributes = asElement.getOwnedAttribute();
 		PivotUtil.refreshList(oldOwnedAttributes, newOwnedAttributes);
 		// AS OwnedOperation property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = csElement.getOwnedOperation();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.QVToClassCS_AST_Part2.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Operation> newOwnedOperations = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Operation>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS newCsOwnedOperation : newCsOwnedOperations) {
@@ -404,7 +397,7 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS NestedPackage property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsNestedPackages = csElement.getOwnedNestedPackage();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsNestedPackages = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TopLevelCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Package> newNestedPackages = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Package>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS newCsNestedPackage : newCsNestedPackages) {
@@ -430,28 +423,28 @@ public class QVTOperationalCSContainmentVisitor
 		}
 		
 		// AS Name property update
-		java.lang.String newCsName = csElement.getName();
+		java.lang.String newCsName = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part0.INSTANCE.evaluate(csElement);
 		java.lang.String newName = newCsName;
 		java.lang.String oldName = asElement.getName();
 		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
 			asElement.setName(newName);
 		}
 		// AS NsPrefix property update
-		java.lang.String newCsNsPrefix = csElement.getName();
+		java.lang.String newCsNsPrefix = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part1.INSTANCE.evaluate(csElement);
 		java.lang.String newNsPrefix = newCsNsPrefix;
 		java.lang.String oldNsPrefix = asElement.getNsPrefix();
 		if ((newNsPrefix != oldNsPrefix) && ((newNsPrefix == null) || !newNsPrefix.equals(oldNsPrefix))) {
 			asElement.setNsPrefix(newNsPrefix);
 		}
 		// AS NsURI property update
-		java.lang.String newCsNsURI = csElement.getName();
+		java.lang.String newCsNsURI = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part2.INSTANCE.evaluate(csElement);
 		java.lang.String newNsURI = newCsNsURI;
 		java.lang.String oldNsURI = asElement.getNsURI();
 		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
 			asElement.setNsURI(newNsURI);
 		}
 		// AS NestedPackage property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsNestedPackages = csElement.getOwnedNestedPackage();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS> newCsNestedPackages = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part3.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Package> newNestedPackages = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Package>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS newCsNestedPackage : newCsNestedPackages) {
@@ -463,7 +456,7 @@ public class QVTOperationalCSContainmentVisitor
 		java.util.List<org.eclipse.ocl.examples.pivot.Package> oldNestedPackages = asElement.getNestedPackage();
 		PivotUtil.refreshList(oldNestedPackages, newNestedPackages);
 		// AS OwnedType property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS> newCsOwnedTypes = csElement.getOwnedType();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS> newCsOwnedTypes = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part4.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Type> newOwnedTypes = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Type>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS newCsOwnedType : newCsOwnedTypes) {
@@ -475,7 +468,7 @@ public class QVTOperationalCSContainmentVisitor
 		java.util.List<org.eclipse.ocl.examples.pivot.Type> oldOwnedTypes = asElement.getOwnedType();
 		PivotUtil.refreshList(oldOwnedTypes, newOwnedTypes);
 		// AS OwnedOperation property update
-		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = csElement.getOwnedOperation();
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS> newCsOwnedOperations = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.TransformationCS_AST_Part5.INSTANCE.evaluate(csElement);
 		java.util.List<org.eclipse.ocl.examples.pivot.Operation> newOwnedOperations = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Operation>();
 		
 		for (org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS newCsOwnedOperation : newCsOwnedOperations) {

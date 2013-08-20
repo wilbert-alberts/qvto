@@ -2,6 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
+import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
 
 /**
@@ -32,7 +33,7 @@ public interface QVToClassCS extends ClassCS {
 	 * @return the value of the '<em>Intermediate</em>' attribute.
 	 * @see #setIntermediate(boolean)
 	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getQVToClassCS_Intermediate()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	boolean isIntermediate();

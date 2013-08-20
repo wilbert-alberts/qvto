@@ -43,4 +43,15 @@ public class QVToGenModelHelper extends AbstractGenModelHelper {
 		}
 		return genPackage.getQualifiedFactoryInstanceAccessor();
 	}
+		
+	/**
+	 * 
+	 * @param type a type
+	 * @return the name of the java package name of the java interface 
+	 * corresponding to the given Type
+	 */
+	public @Nullable String getInterfacePackageName(Type type) {
+		GenPackage genPackage = getGenPackage(type);
+		return genPackage.getClassPackageName(); 
+	}
 }

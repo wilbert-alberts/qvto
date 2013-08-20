@@ -1,31 +1,32 @@
 package org.eclipse.qvto.examples.build.xtend;
 
 import com.google.common.base.Objects;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.List;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.examples.domain.elements.DomainType;
 import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.ConstructorExp;
 import org.eclipse.ocl.examples.pivot.ConstructorPart;
+import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.pivot.Enumeration;
-import org.eclipse.ocl.examples.pivot.Iteration;
-import org.eclipse.ocl.examples.pivot.IteratorExp;
+import org.eclipse.ocl.examples.pivot.ExpressionInOCL;
+import org.eclipse.ocl.examples.pivot.OCL;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
-import org.eclipse.ocl.examples.pivot.OperationCallExp;
 import org.eclipse.ocl.examples.pivot.PrimitiveType;
 import org.eclipse.ocl.examples.pivot.Property;
-import org.eclipse.ocl.examples.pivot.PropertyCallExp;
-import org.eclipse.ocl.examples.pivot.StringLiteralExp;
 import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.pivot.Variable;
-import org.eclipse.ocl.examples.pivot.VariableDeclaration;
-import org.eclipse.ocl.examples.pivot.VariableExp;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
 import org.eclipse.ocl.examples.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.examples.pivot.util.Visitable;
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
+import org.eclipse.qvto.examples.build.codegen.ContextualizedOCLExpressionCodeGenerator;
 import org.eclipse.qvto.examples.build.utlities.IContainmentVisitsGeneratorCtx;
 import org.eclipse.qvto.examples.build.utlities.QVToGenModelHelper;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -36,13 +37,19 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
   
   private final static String GET_PREFIX = "get";
   
+  private final static String EVALUATORS_SUBPACKAGE = "evaluators";
+  
   private QVToGenModelHelper genModelHelper;
+  
+  private OCL ocl;
   
   public ContainmentVisitsGenerator(final IContainmentVisitsGeneratorCtx context) {
     super(context);
     MetaModelManager _metamodelManager = context.getMetamodelManager();
     QVToGenModelHelper _qVToGenModelHelper = new QVToGenModelHelper(_metamodelManager);
     this.genModelHelper = _qVToGenModelHelper;
+    OCL _newInstance = OCL.newInstance();
+    this.ocl = _newInstance;
   }
   
   public String visiting(final Visitable visitable) {
@@ -106,123 +113,31 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     return result.toString();
   }
   
-  public String visitIteratorExp(final IteratorExp object) {
-    StringBuilder _stringBuilder = new StringBuilder();
-    StringBuilder result = _stringBuilder;
-    Iteration iteration = object.getReferredIteration();
-    CharSequence _switchResult = null;
-    String _name = iteration.getName();
-    final String _switchValue = _name;
-    boolean _matched = false;
-    if (!_matched) {
-      if (Objects.equal(_switchValue,"exists")) {
-        _matched=true;
-        StringConcatenation _builder = new StringConcatenation();
-        OCLExpression _source = object.getSource();
-        String _accept = _source.<String>accept(this);
-        _builder.append(_accept, "");
-        _builder.append(".contains(");
-        OCLExpression _body = object.getBody();
-        String _accept_1 = _body.<String>accept(this);
-        _builder.append(_accept_1, "");
-        _builder.append(")");
-        _switchResult = _builder;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_switchValue,"collect")) {
-        _matched=true;
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("doCollect(");
-        OCLExpression _source_1 = object.getSource();
-        String _accept_2 = _source_1.<String>accept(this);
-        _builder_1.append(_accept_2, "");
-        _builder_1.append(")");
-        _switchResult = _builder_1;
-      }
-    }
-    if (!_matched) {
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("iterator \"");
-      String _name_1 = iteration.getName();
-      _builder_2.append(_name_1, "");
-      _builder_2.append("\" not implemented yet in visitIteratorExp in ContainmentVisitsGenerator");
-      UnsupportedOperationException _unsupportedOperationException = new UnsupportedOperationException(_builder_2.toString());
-      throw _unsupportedOperationException;
-    }
-    result.append(_switchResult);
-    return result.toString();
-  }
-  
-  public String visitStringLiteralExp(final StringLiteralExp object) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("\"");
-    String _stringSymbol = object.getStringSymbol();
-    _builder.append(_stringSymbol, "");
-    _builder.append("\"");
-    return _builder.toString();
-  }
-  
-  public String visitOperationCallExp(final OperationCallExp object) {
-    String _xblockexpression = null;
-    {
-      String _name = object.getName();
-      boolean _equals = Objects.equal(_name, "ast");
-      if (_equals) {
-        return "";
-      }
-      String _visitOperationCallExp = super.visitOperationCallExp(object);
-      _xblockexpression = (_visitOperationCallExp);
-    }
-    return _xblockexpression;
-  }
-  
   public String visitConstructorPart(final ConstructorPart object) {
     StringBuilder _stringBuilder = new StringBuilder();
     StringBuilder result = _stringBuilder;
     Property astProperty = object.getReferredProperty();
     OCLExpression initExp = object.getInitExpression();
+    StringConcatenation _builder = new StringConcatenation();
+    String _visitorsPackageName = this.context.getVisitorsPackageName();
+    _builder.append(_visitorsPackageName, "");
+    _builder.append(".");
+    _builder.append(ContainmentVisitsGenerator.EVALUATORS_SUBPACKAGE, "");
+    _builder.append(".");
+    String _rightHandSideEvaluatorName = this.getRightHandSideEvaluatorName(object);
+    _builder.append(_rightHandSideEvaluatorName, "");
+    String rhsEvaluatorQName = _builder.toString();
     Type _type = astProperty.getType();
     boolean _isMany = this.isMany(_type);
     if (_isMany) {
-      String _createMultivaluedPropertyStub = this.createMultivaluedPropertyStub(astProperty, initExp);
+      String _createMultivaluedPropertyStub = this.createMultivaluedPropertyStub(astProperty, initExp, rhsEvaluatorQName);
       result.append(_createMultivaluedPropertyStub);
     } else {
-      String _createMonovaluedPropertyStub = this.createMonovaluedPropertyStub(astProperty, initExp);
+      String _createMonovaluedPropertyStub = this.createMonovaluedPropertyStub(astProperty, initExp, rhsEvaluatorQName);
       result.append(_createMonovaluedPropertyStub);
     }
+    this.generateRightHandSideEvaluator(object);
     return result.toString();
-  }
-  
-  public String visitPropertyCallExp(final PropertyCallExp object) {
-    StringConcatenation _builder = new StringConcatenation();
-    OCLExpression _source = object.getSource();
-    String _accept = _source.<String>accept(this);
-    _builder.append(_accept, "");
-    _builder.append(".");
-    Property _referredProperty = object.getReferredProperty();
-    String _accessorName = this.getAccessorName(_referredProperty);
-    _builder.append(_accessorName, "");
-    _builder.append("()");
-    return _builder.toString();
-  }
-  
-  public String visitVariableExp(final VariableExp object) {
-    VariableDeclaration _referredVariable = object.getReferredVariable();
-    return _referredVariable.<String>accept(this);
-  }
-  
-  public String visitVariable(final Variable object) {
-    String _xifexpression = null;
-    String _name = object.getName();
-    boolean _equals = "self".equals(_name);
-    if (_equals) {
-      _xifexpression = "csElement";
-    } else {
-      String _name_1 = object.getName();
-      _xifexpression = _name_1;
-    }
-    return _xifexpression;
   }
   
   private String getFactoryInstanceAccessor(final Type astType) {
@@ -319,7 +234,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     return result.toString();
   }
   
-  private String createMonovaluedPropertyStub(final Property astProperty, final OCLExpression initExp) {
+  private String createMonovaluedPropertyStub(final Property astProperty, final OCLExpression initExp, final String rhsEvaluatorQName) {
     StringBuilder _stringBuilder = new StringBuilder();
     StringBuilder result = _stringBuilder;
     String _name = astProperty.getName();
@@ -337,9 +252,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.append(" newCs");
     _builder.append(propertyName, "");
     _builder.append(" = ");
-    String _accept = initExp.<String>accept(this);
-    _builder.append(_accept, "");
-    _builder.append(";");
+    _builder.append(rhsEvaluatorQName, "");
+    _builder.append(".INSTANCE.evaluate(csElement);");
     _builder.newLineIfNotEmpty();
     _builder.append(propertyTypeQName, "");
     _builder.append(" new");
@@ -384,7 +298,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     return result.toString();
   }
   
-  private String createMultivaluedPropertyStub(final Property astProperty, final OCLExpression initExp) {
+  private String createMultivaluedPropertyStub(final Property astProperty, final OCLExpression initExp, final String rhsEvaluatorQName) {
     StringBuilder _stringBuilder = new StringBuilder();
     StringBuilder result = _stringBuilder;
     String _name = astProperty.getName();
@@ -404,9 +318,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.append(" newCs");
     _builder.append(propertyName, "");
     _builder.append("s = ");
-    String _accept = initExp.<String>accept(this);
-    _builder.append(_accept, "");
-    _builder.append(";");
+    _builder.append(rhsEvaluatorQName, "");
+    _builder.append(".INSTANCE.evaluate(csElement);");
     _builder.newLineIfNotEmpty();
     _builder.append(propertyTypeQName, "");
     _builder.append(" new");
@@ -493,6 +406,51 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     return result.toString();
   }
   
+  private String getRightHandSideEvaluatorName(final ConstructorPart constructorPart) {
+    EObject _eContainer = constructorPart.eContainer();
+    ConstructorExp constructor = ((ConstructorExp) _eContainer);
+    List<ConstructorPart> _part = constructor.getPart();
+    int partNumber = _part.indexOf(constructorPart);
+    Variable contextVariable = this.getContextVariable(constructor);
+    Type csType = contextVariable.getType();
+    String _name = csType.getName();
+    String _plus = (_name + "_AST_Part");
+    return (_plus + Integer.valueOf(partNumber));
+  }
+  
+  private void generateRightHandSideEvaluator(final ConstructorPart constructorPart) {
+    try {
+      MetaModelManager mManager = this.context.getMetamodelManager();
+      Variable contextVariable = this.getContextVariable(constructorPart);
+      StringConcatenation _builder = new StringConcatenation();
+      String _visitorsPackageName = this.context.getVisitorsPackageName();
+      _builder.append(_visitorsPackageName, "");
+      _builder.append(".");
+      _builder.append(ContainmentVisitsGenerator.EVALUATORS_SUBPACKAGE, "");
+      String packageName = _builder.toString();
+      String className = this.getRightHandSideEvaluatorName(constructorPart);
+      OCLExpression _initExpression = constructorPart.getInitExpression();
+      ContextualizedOCLExpressionCodeGenerator _contextualizedOCLExpressionCodeGenerator = new ContextualizedOCLExpressionCodeGenerator(mManager, _initExpression, contextVariable);
+      ContextualizedOCLExpressionCodeGenerator generator = _contextualizedOCLExpressionCodeGenerator;
+      String javaCodeSource = generator.generateClassFile(packageName, className);
+      StringConcatenation _builder_1 = new StringConcatenation();
+      String _outputFolder = this.context.getOutputFolder();
+      _builder_1.append(_outputFolder, "");
+      _builder_1.append("/");
+      _builder_1.append(ContainmentVisitsGenerator.EVALUATORS_SUBPACKAGE, "");
+      _builder_1.append("/");
+      _builder_1.append(className, "");
+      _builder_1.append(".java");
+      String fileName = _builder_1.toString();
+      FileWriter _fileWriter = new FileWriter(fileName);
+      Writer writer = _fileWriter;
+      writer.append(javaCodeSource);
+      writer.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
   private boolean isMany(final Type type) {
     return (type instanceof CollectionType);
   }
@@ -555,5 +513,25 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     } else {
       return csStub;
     }
+  }
+  
+  private Variable getContextVariable(final Element oclExpression) {
+    boolean _equals = Objects.equal(oclExpression, null);
+    if (_equals) {
+      return null;
+    }
+    if ((oclExpression instanceof ExpressionInOCL)) {
+      return ((ExpressionInOCL) oclExpression).getContextVariable();
+    }
+    EObject container = oclExpression.eContainer();
+    Variable _xifexpression = null;
+    if ((container instanceof Element)) {
+      EObject _eContainer = oclExpression.eContainer();
+      Variable _contextVariable = this.getContextVariable(((Element) _eContainer));
+      _xifexpression = _contextVariable;
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
   }
 }
