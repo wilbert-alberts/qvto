@@ -1,7 +1,7 @@
 <project name="javadoc-project">
 	<target name="create.javadoc" depends="-setup" if="run.javadoc">
 
-		<property name="projectName" value="QVTo" />
+		<property name="projectName" value="MMT-QVTo" />
 
 		<!-- workspace defaults -->
 		<property name="output" value="./javadoc" />
