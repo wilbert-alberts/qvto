@@ -16,12 +16,17 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
@@ -47,9 +52,11 @@ import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.CollectionUtil;
 
 /**
@@ -260,7 +267,8 @@ public class EvaluationUtil {
 		return result;
 	}
 	
-	public static Object createInitialValue(EClassifier classifier, OCLStandardLibrary<EClassifier> oclstdlib) {
+	public static Object createInitialValue(EClassifier classifier, OCLStandardLibrary<EClassifier> oclstdlib,
+			EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evaluationEnv) {
 		
 		Object initialValue = null;
 		
@@ -278,6 +286,17 @@ public class EvaluationUtil {
 			@SuppressWarnings("unchecked")
 			CollectionType<EClassifier,EOperation> collType = (CollectionType<EClassifier,EOperation>) classifier;
 			initialValue = createNewCollection(collType);
+		}
+		else if (classifier instanceof TupleType<?, ?>) {
+			Map<EStructuralFeature, Object> propertyValues = new HashMap<EStructuralFeature, Object>();
+			
+			@SuppressWarnings("unchecked")
+			TupleType<EOperation, EStructuralFeature> tupleType = (TupleType<EOperation, EStructuralFeature>) classifier;
+			for (EStructuralFeature feature : tupleType.oclProperties()) {
+				propertyValues.put(feature, createInitialValue(feature.getEType(), oclstdlib, evaluationEnv));
+			}
+			
+			initialValue = evaluationEnv.createTuple(classifier, propertyValues);
 		}
 		
 		return initialValue;

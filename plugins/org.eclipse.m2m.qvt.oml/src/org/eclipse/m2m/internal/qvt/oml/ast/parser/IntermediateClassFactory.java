@@ -251,7 +251,8 @@ public class IntermediateClassFactory extends EFactoryImpl {
 				if (evalResult == null) {
 					// no init expression specified, or init expression evaluated to null 
 					EClassifier featureType = eFeature.getEType();
-					evalResult = EvaluationUtil.createInitialValue(featureType, evalVisitor.getEnvironment().getOCLStandardLibrary());
+					evalResult = EvaluationUtil.createInitialValue(featureType, evalVisitor.getEnvironment().getOCLStandardLibrary(),
+							evalVisitor.getEvaluationEnvironment());
 				}
 
 				// temporary switch off read-only property

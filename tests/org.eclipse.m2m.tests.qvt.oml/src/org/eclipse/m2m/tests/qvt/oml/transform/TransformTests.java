@@ -313,17 +313,18 @@ public class TransformTests {
         		new FileToFileData("bug397959"),  //$NON-NLS-1$
         		new FileToFileData("bug358709"), //$NON-NLS-1$
         		new FilesToFilesData("bug388801", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FileToFileData("bug254962"),
+        		new FileToFileData("bug254962"), //$NON-NLS-1$
         		new FilesToFilesData("bug325192", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FileToFileData("bug314443"),
-        		new FileToFileData("bug400720"),
-        		new FileToFileData("bug294127"),
-        		new FileToFileData("bug392429"),
-        		new FileToFileData("bug410470"),
-        		new FileToFileData("bug404647"),
-        		new FileToFileData("bug413131"),
-        		new FileToFileData("bug274105_274505"),
-        		new FileToFileData("bug414555"),
+        		new FileToFileData("bug314443"), //$NON-NLS-1$
+        		new FileToFileData("bug400720"), //$NON-NLS-1$
+        		new FileToFileData("bug294127"), //$NON-NLS-1$
+        		new FileToFileData("bug392429"), //$NON-NLS-1$
+        		new FileToFileData("bug410470"), //$NON-NLS-1$
+        		new FileToFileData("bug404647"), //$NON-NLS-1$
+        		new FileToFileData("bug413131"), //$NON-NLS-1$
+        		new FileToFileData("bug274105_274505"), //$NON-NLS-1$
+        		new FileToFileData("bug414555"), //$NON-NLS-1$
+        		new FilesToFilesData("bug414472", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		};
     }
 

@@ -1049,10 +1049,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			value = initExpression.accept(getVisitor());
 			// check that collection is initialized to empty collection in case of 'null' 
 			if(value == null && referredVariable.getType() instanceof CollectionType<?, ?>) {
-				value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary());
+				value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
+						getQVTVisitor().getEvaluationEnvironment());
 			}
 		} else { 
-			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary());
+			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
+					getQVTVisitor().getEvaluationEnvironment());
 		}
 		
         replaceInEnv(referredVariable.getName(), value, variableInitExp.getType());
