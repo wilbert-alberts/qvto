@@ -350,8 +350,5 @@ public class TransformTests {
             
             // generated ECORE models -> not applicable to dynamic models  
             "blackboxlib_annotation_java", //$NON-NLS-1$
-            
-            // 'import' statement is not properly patched
-            "bug414555", //$NON-NLS-1$
     }));
 }

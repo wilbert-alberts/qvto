@@ -54,9 +54,12 @@ public class JavalessUtil {
     	//
 		Pattern p = Pattern.compile("(import\\s*models\\." + oldName + "\\..*);"); //$NON-NLS-1$ //$NON-NLS-2$
 		Matcher m = p.matcher(content);
-		if (m.find()) {
-			content = m.replaceAll(m.group(1) + "_javaless;"); //$NON-NLS-1$
+		StringBuffer sb = new StringBuffer();
+		while (m.find()) {
+			m.appendReplacement(sb, m.group(1) + "_javaless;"); //$NON-NLS-1$
 		}
+		m.appendTail(sb);
+		content = sb.toString();
 
 		// update transformation name
 		//
