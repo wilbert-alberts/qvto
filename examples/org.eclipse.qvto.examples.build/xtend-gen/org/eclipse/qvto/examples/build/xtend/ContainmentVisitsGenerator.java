@@ -254,7 +254,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.newLineIfNotEmpty();
     _builder.append("org.eclipse.ocl.examples.domain.elements.DomainType newCS");
     _builder.append(propertyName, "");
-    _builder.append("Type = context.getMetaModelManager().getIdResolver().getStaticTypeOf(csElement);");
+    _builder.append("Type = newCS");
+    _builder.append(propertyName, "");
+    _builder.append("Evaluator.getIdResolver().getStaticTypeOf(csElement);");
     _builder.newLineIfNotEmpty();
     _builder.append(initExpTypeQName, "");
     _builder.append(" newCs");
@@ -332,7 +334,9 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     _builder.newLineIfNotEmpty();
     _builder.append("org.eclipse.ocl.examples.domain.elements.DomainType newCS");
     _builder.append(propertyName, "");
-    _builder.append("sType = context.getMetaModelManager().getIdResolver().getStaticTypeOf(csElement);");
+    _builder.append("sType = newCS");
+    _builder.append(propertyName, "");
+    _builder.append("sEvaluator.getIdResolver().getStaticTypeOf(csElement);");
     _builder.newLineIfNotEmpty();
     _builder.append(initExpTypeQName, "");
     _builder.append(" newCs");

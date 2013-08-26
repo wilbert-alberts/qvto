@@ -134,7 +134,7 @@ public interface TransformationCS extends PackageCS, ClassCS {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME .ast(),\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME ,\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}'"
 	 * @generated
 	 */
 	OperationalTransformation ast();

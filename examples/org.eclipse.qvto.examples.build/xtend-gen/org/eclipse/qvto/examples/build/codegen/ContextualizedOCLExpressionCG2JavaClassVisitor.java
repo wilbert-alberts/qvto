@@ -15,18 +15,31 @@
 package org.eclipse.qvto.examples.build.codegen;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
+import org.eclipse.ocl.examples.domain.ids.ElementId;
+import org.eclipse.ocl.examples.domain.ids.TypeId;
+import org.eclipse.ocl.examples.domain.utilities.DomainUtil;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.ocl.examples.pivot.Operation;
+import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
 /**
@@ -145,6 +158,97 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
         this.localContext = null;
       }
     }
+    return null;
+  }
+  
+  public Object visitCGBuiltInIterationCallExp(final CGBuiltInIterationCallExp cgIterationCallExp) {
+    super.visitCGBuiltInIterationCallExp(cgIterationCallExp);
+    CGValuedElement body = cgIterationCallExp.getBody();
+    boolean _and = false;
+    if (!(body instanceof CGEcoreOperationCallExp)) {
+      _and = false;
+    } else {
+      boolean _isASTCallExp = this.isASTCallExp(((CGEcoreOperationCallExp) body));
+      _and = ((body instanceof CGEcoreOperationCallExp) && _isASTCallExp);
+    }
+    if (_and) {
+      this.interceptCollectAST(cgIterationCallExp);
+    }
+    return null;
+  }
+  
+  public Object visitCGEcoreOperationCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
+    Object _xifexpression = null;
+    boolean _isASTCallExp = this.isASTCallExp(cgOperationCallExp);
+    if (_isASTCallExp) {
+      Object _interceptASTCallExp = this.interceptASTCallExp(cgOperationCallExp);
+      _xifexpression = _interceptASTCallExp;
+    } else {
+      Object _visitCGEcoreOperationCallExp = super.visitCGEcoreOperationCallExp(cgOperationCallExp);
+      _xifexpression = _visitCGEcoreOperationCallExp;
+    }
+    return _xifexpression;
+  }
+  
+  private Object interceptASTCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
+    Operation pOperation = cgOperationCallExp.getReferredOperation();
+    Type _owningType = pOperation.getOwningType();
+    TypeId _typeId = _owningType.getTypeId();
+    CGTypeId cgTypeId = this.analyzer.getTypeId(_typeId);
+    ElementId _elementId = cgTypeId.getElementId();
+    ElementId _nonNullState = DomainUtil.<ElementId>nonNullState(_elementId);
+    TypeDescriptor requiredTypeDescriptor = this.context.getTypeDescriptor(_nonNullState, false);
+    CGValuedElement _source = cgOperationCallExp.getSource();
+    CGValuedElement source = this.getExpression(_source);
+    this.js.appendLocalStatements(source);
+    this.js.appendDeclaration(cgOperationCallExp);
+    this.js.append(" = ");
+    this.js.appendClassReference(PivotUtil.class);
+    this.js.append(".getPivot(");
+    this.js.appendClassReference(cgOperationCallExp);
+    this.js.append(".class, ");
+    this.js.appendAtomicReferenceTo(requiredTypeDescriptor, source);
+    this.js.append(");\n");
+    return null;
+  }
+  
+  private boolean isASTCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
+    EOperation op = cgOperationCallExp.getEOperation();
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(op, cgOperationCallExp));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      String _name = op.getName();
+      boolean _equals = "ast".equals(_name);
+      _and = (_notEquals && _equals);
+    }
+    if (_and) {
+      return true;
+    }
+    return false;
+  }
+  
+  private Object interceptCollectAST(final CGBuiltInIterationCallExp cgIterationCallExp) {
+    CGValuedElement _body = cgIterationCallExp.getBody();
+    CGEcoreOperationCallExp body = ((CGEcoreOperationCallExp) _body);
+    Operation pOperation = body.getReferredOperation();
+    TypeId _typeId = pOperation.getTypeId();
+    CGTypeId cgTypeId = this.analyzer.getTypeId(_typeId);
+    ElementId _elementId = cgTypeId.getElementId();
+    ElementId _nonNullState = DomainUtil.<ElementId>nonNullState(_elementId);
+    TypeDescriptor requiredTypeDescriptor = this.context.getTypeDescriptor(_nonNullState, false);
+    Context _nameManagerContext = this.localContext.getNameManagerContext();
+    String _valueName = cgIterationCallExp.getValueName();
+    String _plus = ("UNBOXED_" + _valueName);
+    String newName = _nameManagerContext.getSymbolName(null, _plus);
+    this.js.appendClassReference(List.class, false, requiredTypeDescriptor);
+    this.js.append(" ");
+    this.js.append(newName);
+    this.js.append(" = new ");
+    this.js.appendClassReference(ArrayList.class, false, requiredTypeDescriptor);
+    this.js.append("();\n");
+    cgIterationCallExp.setValueName(newName);
     return null;
   }
 }

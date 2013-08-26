@@ -3015,13 +3015,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (mappingOperationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\townedParameter = signature.parameter -- .ast()\n\t\t\t}"
+			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\townedParameter = signature.parameter.ast()\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (transformationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME .ast(),\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}"
+			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME ,\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}"
 		   });
 	}
 

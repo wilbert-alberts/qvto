@@ -218,7 +218,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		result.append('''
 			// AS «propertyName» property update
 			org.eclipse.ocl.examples.domain.evaluation.DomainEvaluator newCS«propertyName»Evaluator = new org.eclipse.ocl.examples.library.ecore.EcoreExecutorManager(csElement, org.eclipse.ocl.examples.pivot.PivotTables.LIBRARY);
-			org.eclipse.ocl.examples.domain.elements.DomainType newCS«propertyName»Type = context.getMetaModelManager().getIdResolver().getStaticTypeOf(csElement);
+			org.eclipse.ocl.examples.domain.elements.DomainType newCS«propertyName»Type = newCS«propertyName»Evaluator.getIdResolver().getStaticTypeOf(csElement);
 			«initExpTypeQName» newCs«propertyName» = «rhsEvaluatorQName».INSTANCE.evaluate(newCS«propertyName»Evaluator, newCS«propertyName»Type.getTypeId(), csElement);
 			«propertyTypeQName» new«propertyName» = «getASfromCSStub(astProperty, initExp)»;
 			''');
@@ -249,7 +249,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		result.append('''
 			// AS «propertyName» property update
 			org.eclipse.ocl.examples.domain.evaluation.DomainEvaluator newCS«propertyName»sEvaluator = new org.eclipse.ocl.examples.library.ecore.EcoreExecutorManager(csElement, org.eclipse.ocl.examples.pivot.PivotTables.LIBRARY);
-			org.eclipse.ocl.examples.domain.elements.DomainType newCS«propertyName»sType = context.getMetaModelManager().getIdResolver().getStaticTypeOf(csElement);
+			org.eclipse.ocl.examples.domain.elements.DomainType newCS«propertyName»sType = newCS«propertyName»sEvaluator.getIdResolver().getStaticTypeOf(csElement);
 			«initExpTypeQName» newCs«propertyName»s = «rhsEvaluatorQName».INSTANCE.evaluate(newCS«propertyName»sEvaluator, newCS«propertyName»sType.getTypeId(), csElement);			
 			«propertyTypeQName» new«propertyName»s = new «propertyTypeImplQName»();
 			
