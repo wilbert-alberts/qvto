@@ -3009,7 +3009,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Property {\n\t\t\t\tname = name\n\t\t\t\t-- isComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
+			 "body", "ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(x | x = \'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (mappingOperationCSEClass.getEOperations().get(0), 

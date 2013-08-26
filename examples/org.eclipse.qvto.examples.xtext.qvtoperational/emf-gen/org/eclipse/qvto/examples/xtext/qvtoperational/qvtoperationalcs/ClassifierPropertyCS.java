@@ -85,7 +85,7 @@ public interface ClassifierPropertyCS
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Property {\n\t\t\t\tname = name\n\t\t\t\t-- isComposite = qualifier->exists(\'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(x | x = \'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}'"
 	 * @generated
 	 */
 	Property ast();

@@ -66,7 +66,7 @@ public class ContextualizedOCLExpressionCodeGenerator extends JavaCodeGenerator 
 	
 	public @NonNull String generateClassFile(@NonNull String packageName, @NonNull String className) {
 		CGPackage cgPackage = createCGPackage(oclExp, context, packageName, className);
-		// optimize(cgPackage);
+		optimize(cgPackage);
 		List<CGValuedElement> sortedGlobals = prepareGlobals();
 		ContextualizedOCLExpressionCG2JavaClassVisitor cg2JavaClassVisitor = new ContextualizedOCLExpressionCG2JavaClassVisitor(this, oclExp, sortedGlobals);
 		cgPackage.accept(cg2JavaClassVisitor);
