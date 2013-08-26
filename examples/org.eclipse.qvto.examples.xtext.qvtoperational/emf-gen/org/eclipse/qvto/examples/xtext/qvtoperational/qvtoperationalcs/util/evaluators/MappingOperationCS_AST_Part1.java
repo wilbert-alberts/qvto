@@ -69,6 +69,9 @@ public class MappingOperationCS_AST_Part1
             accumulator.add(ast);
         }
         List<VarParameter> UNBOXED_collect = new ArrayList<VarParameter>();
+        for (Object UNBOXED_collect_Element : collect) {
+            UNBOXED_collect.add((VarParameter)UNBOXED_collect_Element);
+        }
         return UNBOXED_collect;
     }
 }

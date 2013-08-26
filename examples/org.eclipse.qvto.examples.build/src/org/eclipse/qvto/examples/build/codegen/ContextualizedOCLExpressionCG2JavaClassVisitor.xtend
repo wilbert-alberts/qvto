@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.pivot.Operation
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil
 import java.util.ArrayList
+import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil
 
 /**
  * A CG2JavaClassVisitor supports generation of an OCL expression as the LibraryOperation INSTANCE of a Java Class.
@@ -87,8 +88,8 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 	
 
 	@Nullable
-	// FIXME Unfortunately CG2JavaVisitor::visitCGOperation arbitrariarly thinks I'm overriding an operation 
-	// so I need to reimplement it to avoid that. This @Override annotation shou should be configurable in CGOperation
+	// FIXME Unfortunately CG2JavaVisitor::visitCGOperation arbitrarily thinks I'm overriding an operation 
+	// so I need to reimplement it to avoid that. This @Override annotation should be configurable in CGOperation (isOverriding ?)
 	override Object visitCGOperation(@NonNull CGOperation cgOperation) {
 		var JavaLocalContext localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
@@ -135,27 +136,27 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 		return null;
 	}
 	
-	override visitCGBuiltInIterationCallExp(CGBuiltInIterationCallExp cgIterationCallExp) {
-		
+	@Nullable
+	override visitCGBuiltInIterationCallExp(CGBuiltInIterationCallExp cgIterationCallExp) {		
 		super.visitCGBuiltInIterationCallExp(cgIterationCallExp)
 		
 		var CGValuedElement body =  cgIterationCallExp.body;
 		if (body instanceof CGEcoreOperationCallExp
 			&& isASTCallExp(body as CGEcoreOperationCallExp)) {
-			interceptCollectAST(cgIterationCallExp);
+			interceptCollectASTCallExp(cgIterationCallExp);
 		}	
 		return null;
 	}
 	
-	
+	@Nullable
 	override visitCGEcoreOperationCallExp(CGEcoreOperationCallExp cgOperationCallExp) {
-		// EOperation op = cgOperationCallExp.EOperation;
-		//if ("ast"op.)
+
 		if (isASTCallExp(cgOperationCallExp)) {
 			interceptASTCallExp(cgOperationCallExp);
 		} else {
 			super.visitCGEcoreOperationCallExp(cgOperationCallExp);	
 		}
+		return null;
 	}
 	
 	
@@ -166,7 +167,6 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 		var TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(DomainUtil.nonNullState(cgTypeId.getElementId()), false);
 		var CGValuedElement source = getExpression(cgOperationCallExp.getSource());
 		js.appendLocalStatements(source);		
-
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		js.appendClassReference(typeof(PivotUtil));
@@ -178,32 +178,48 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 		return null;
 	}
 	
-	def private isASTCallExp(CGEcoreOperationCallExp cgOperationCallExp) {
-		var op = cgOperationCallExp.EOperation;					
-		if (op != cgOperationCallExp && "ast".equals(op.name)) {
-			return true;
-		}
-		return false;
-	}
 	
-	def private interceptCollectAST(CGBuiltInIterationCallExp cgIterationCallExp) {
+	def private interceptCollectASTCallExp(CGBuiltInIterationCallExp cgIterationCallExp) {
 		
 		var CGEcoreOperationCallExp body = cgIterationCallExp.body as CGEcoreOperationCallExp;
 		var Operation pOperation = body.getReferredOperation();
 		var CGTypeId cgTypeId = analyzer.getTypeId(pOperation.getTypeId());
 		var TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(DomainUtil.nonNullState(cgTypeId.getElementId()), false);
 		
-		var String newName = localContext.nameManagerContext.getSymbolName(null, "UNBOXED_"+cgIterationCallExp.valueName);
+		var String newCollectionName = localContext.nameManagerContext.getSymbolName(null, "UNBOXED_"+cgIterationCallExp.valueName);
+		var String newCollectionElementName = localContext.nameManagerContext.getSymbolName(null, "UNBOXED_"+cgIterationCallExp.valueName+"_element");
 		
 		js.appendClassReference(typeof(List), false, requiredTypeDescriptor);
 		js.append(' ');
-		js.append(newName);
+		js.append(newCollectionName);
 		js.append(" = new ");
 		js.appendClassReference(typeof(ArrayList), false, requiredTypeDescriptor);
 		js.append("();\n");
-		// TODO code the Boxed - Unboxed conversion
-		cgIterationCallExp.setValueName(newName); // To make use the return value
-
+		// Boxed Collection to Unboxed List conversion
+		js.append("for (Object ");
+		js.append(newCollectionElementName);
+		js.append(" : ");
+		js.appendValueName(cgIterationCallExp);
+		js.append(")\n");
+		js.pushIndentation(null);
+		js.append(newCollectionName);
+		js.append(".add((");
+		js.appendClassReference(body);
+		js.append(')');
+		js.append(newCollectionElementName)
+		js.append(");\n");
+		js.popIndentation();
+		js.append("}\n");
+		// We change the value name of the CGIterationCallExp to use the UNBOXED variable a
+		cgIterationCallExp.setValueName(newCollectionName); // To make use the return value
 		return null;
+	}
+	
+	def private isASTCallExp(CGEcoreOperationCallExp cgOperationCallExp) {
+		var op = cgOperationCallExp.EOperation;					
+		if (CS2ASGeneratorUtil.isAstOperation(op)) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup;
+import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil;
 import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx;
 import org.eclipse.qvto.examples.build.xtend.ContainmentVisitsGenerator;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -223,9 +225,8 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
   private boolean hasAstOperation(final EClass eclass) {
     EList<EOperation> _eOperations = eclass.getEOperations();
     for (final EOperation operation : _eOperations) {
-      String _name = operation.getName();
-      boolean _equals = Objects.equal(_name, "ast");
-      if (_equals) {
+      boolean _isAstOperation = CS2ASGeneratorUtil.isAstOperation(operation);
+      if (_isAstOperation) {
         return true;
       }
     }
@@ -241,15 +242,23 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
     if (_notEquals) {
       List<Operation> _ownedOperation = pClass.getOwnedOperation();
       for (final Operation operation : _ownedOperation) {
-        String _name = operation.getName();
-        boolean _equals = "ast".equals(_name);
-        if (_equals) {
-          OpaqueExpression opaqueExp = operation.getBodyExpression();
-          ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
-          OCLExpression _bodyExpression = expInOcl.getBodyExpression();
-          ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager, this.outputFolder, this.visitorPackageName);
-          ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
-          return _bodyExpression.<String>accept(_containmentVisitsGenerator);
+        {
+          EObject target = operation.getETarget();
+          boolean _and = false;
+          if (!(target instanceof EOperation)) {
+            _and = false;
+          } else {
+            boolean _isAstOperation = CS2ASGeneratorUtil.isAstOperation(((EOperation) target));
+            _and = ((target instanceof EOperation) && _isAstOperation);
+          }
+          if (_and) {
+            OpaqueExpression opaqueExp = operation.getBodyExpression();
+            ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
+            OCLExpression _bodyExpression = expInOcl.getBodyExpression();
+            ContainmentVisitsGeneratorCtx _containmentVisitsGeneratorCtx = new ContainmentVisitsGeneratorCtx(metaModelManager, this.outputFolder, this.visitorPackageName);
+            ContainmentVisitsGenerator _containmentVisitsGenerator = new ContainmentVisitsGenerator(_containmentVisitsGeneratorCtx);
+            return _bodyExpression.<String>accept(_containmentVisitsGenerator);
+          }
         }
       }
     }

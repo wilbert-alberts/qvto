@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Operation;
 import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
+import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
 /**
@@ -161,6 +162,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
     return null;
   }
   
+  @Nullable
   public Object visitCGBuiltInIterationCallExp(final CGBuiltInIterationCallExp cgIterationCallExp) {
     super.visitCGBuiltInIterationCallExp(cgIterationCallExp);
     CGValuedElement body = cgIterationCallExp.getBody();
@@ -172,22 +174,20 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
       _and = ((body instanceof CGEcoreOperationCallExp) && _isASTCallExp);
     }
     if (_and) {
-      this.interceptCollectAST(cgIterationCallExp);
+      this.interceptCollectASTCallExp(cgIterationCallExp);
     }
     return null;
   }
   
+  @Nullable
   public Object visitCGEcoreOperationCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
-    Object _xifexpression = null;
     boolean _isASTCallExp = this.isASTCallExp(cgOperationCallExp);
     if (_isASTCallExp) {
-      Object _interceptASTCallExp = this.interceptASTCallExp(cgOperationCallExp);
-      _xifexpression = _interceptASTCallExp;
+      this.interceptASTCallExp(cgOperationCallExp);
     } else {
-      Object _visitCGEcoreOperationCallExp = super.visitCGEcoreOperationCallExp(cgOperationCallExp);
-      _xifexpression = _visitCGEcoreOperationCallExp;
+      super.visitCGEcoreOperationCallExp(cgOperationCallExp);
     }
-    return _xifexpression;
+    return null;
   }
   
   private Object interceptASTCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
@@ -212,24 +212,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
     return null;
   }
   
-  private boolean isASTCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
-    EOperation op = cgOperationCallExp.getEOperation();
-    boolean _and = false;
-    boolean _notEquals = (!Objects.equal(op, cgOperationCallExp));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      String _name = op.getName();
-      boolean _equals = "ast".equals(_name);
-      _and = (_notEquals && _equals);
-    }
-    if (_and) {
-      return true;
-    }
-    return false;
-  }
-  
-  private Object interceptCollectAST(final CGBuiltInIterationCallExp cgIterationCallExp) {
+  private Object interceptCollectASTCallExp(final CGBuiltInIterationCallExp cgIterationCallExp) {
     CGValuedElement _body = cgIterationCallExp.getBody();
     CGEcoreOperationCallExp body = ((CGEcoreOperationCallExp) _body);
     Operation pOperation = body.getReferredOperation();
@@ -241,14 +224,42 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
     Context _nameManagerContext = this.localContext.getNameManagerContext();
     String _valueName = cgIterationCallExp.getValueName();
     String _plus = ("UNBOXED_" + _valueName);
-    String newName = _nameManagerContext.getSymbolName(null, _plus);
+    String newCollectionName = _nameManagerContext.getSymbolName(null, _plus);
+    Context _nameManagerContext_1 = this.localContext.getNameManagerContext();
+    String _valueName_1 = cgIterationCallExp.getValueName();
+    String _plus_1 = ("UNBOXED_" + _valueName_1);
+    String _plus_2 = (_plus_1 + "_element");
+    String newCollectionElementName = _nameManagerContext_1.getSymbolName(null, _plus_2);
     this.js.appendClassReference(List.class, false, requiredTypeDescriptor);
     this.js.append(" ");
-    this.js.append(newName);
+    this.js.append(newCollectionName);
     this.js.append(" = new ");
     this.js.appendClassReference(ArrayList.class, false, requiredTypeDescriptor);
     this.js.append("();\n");
-    cgIterationCallExp.setValueName(newName);
+    this.js.append("for (Object ");
+    this.js.append(newCollectionElementName);
+    this.js.append(" : ");
+    this.js.appendValueName(cgIterationCallExp);
+    this.js.append(")\n");
+    this.js.pushIndentation(null);
+    this.js.append(newCollectionName);
+    this.js.append(".add((");
+    this.js.appendClassReference(body);
+    this.js.append(")");
+    this.js.append(newCollectionElementName);
+    this.js.append(");\n");
+    this.js.popIndentation();
+    this.js.append("}\n");
+    cgIterationCallExp.setValueName(newCollectionName);
     return null;
+  }
+  
+  private boolean isASTCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
+    EOperation op = cgOperationCallExp.getEOperation();
+    boolean _isAstOperation = CS2ASGeneratorUtil.isAstOperation(op);
+    if (_isAstOperation) {
+      return true;
+    }
+    return false;
   }
 }

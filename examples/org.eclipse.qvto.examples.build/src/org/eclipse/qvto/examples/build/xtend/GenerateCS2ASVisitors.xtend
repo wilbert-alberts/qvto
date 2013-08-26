@@ -33,6 +33,8 @@ import org.eclipse.ocl.examples.pivot.utilities.PivotUtil
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation
 import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup
 import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil
 
 // TODO non-derived visitor is not supported, since currently 
 // the root CS2AS are not generated but manually coded. 
@@ -134,7 +136,7 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 	
 	private def boolean hasAstOperation(EClass eclass)	{
 		for (EOperation operation : eclass.EOperations) {
-			if (operation.name == "ast") {
+			if (CS2ASGeneratorUtil.isAstOperation(operation)) {
 				return true;
 			}
 		}
@@ -149,39 +151,18 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 		var Class pClass = ecore2Pivot.getPivotElement(typeof(Class), eClass);
 		if (pClass != null) {
 			for (Operation operation :  pClass.ownedOperation) {
-				if ("ast".equals(operation.name)) {
+				var EObject target = operation.ETarget;
+				if (target instanceof EOperation
+					&& CS2ASGeneratorUtil.isAstOperation(target as EOperation)){
 					// We obtain the expression to visit
 					var OpaqueExpression opaqueExp = operation.bodyExpression;
 					var ExpressionInOCL expInOcl = PivotUtil.getExpressionInOCL(operation, opaqueExp);
-					
 					// We compute the context
-//					var URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
-//					var URI genModelURI = URI.createURI(genModelFile).resolve(projectResourceURI);
-//					var GenModel csGenModel = getGenModel(genModelURI, resourceSet);
-					// var GenModel targetGenModel = getGenModel(URI.createURI(getASGenModelURI), resourceSet) // FIXME
-					
-					// We visit the expression to generate the containment visit method body
+
 					return expInOcl.bodyExpression.accept(new ContainmentVisitsGenerator(new ContainmentVisitsGeneratorCtx(metaModelManager, outputFolder, visitorPackageName)));
 				}
 			}
 		}
 		return "return null;"; // TODO case in which no pClass or no ast operation has been found
-//		return  '''
-//			csElement.ast();
-//			return null;
-//		''';
 	}
-	
-//	def private GenModel getGenModel(URI genModelURI, ResourceSet rSet) {
-//		var Resource genModelResource = resourceSet.getResource(genModelURI, true);
-//		return genModelResource.getContents().get(0) as GenModel;
-//	}
-//	
-//	def public setASGenModelURI(String asGenModelURI) {
-//		this.asGenModelURI = asGenModelURI;
-//	}
-//	
-//	def protected String getASGenModelURI () {
-//		return asGenModelURI;
-//	}
 }

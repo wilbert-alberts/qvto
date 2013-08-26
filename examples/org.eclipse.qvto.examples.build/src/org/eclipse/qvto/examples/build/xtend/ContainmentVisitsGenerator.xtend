@@ -74,37 +74,6 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		return result.toString();
 	}
 	
-//	override visitIteratorExp(IteratorExp object) {
-//		var StringBuilder result = new StringBuilder();
-//			
-//		// We process
-//		
-//		
-//		// Then the iteration body
-//		var Iteration iteration = object.referredIteration;
-//		result.append(
-//		switch (iteration.name) {
-//			case "exists": '''«object.source.accept(this)».contains(«object.body.accept(this)»)'''
-//			case "collect": '''doCollect(«object.source.accept(this)»)'''
-//			
-//			default: throw new UnsupportedOperationException('''iterator "«iteration.name»" not implemented yet in visitIteratorExp in ContainmentVisitsGenerator''')
-//		})
-//		return result.toString()
-//	}
-//	
-//	override visitStringLiteralExp(StringLiteralExp object) {
-//		return '''"«object.stringSymbol»"''' 
-//	}
-//	
-//	override visitOperationCallExp(OperationCallExp object) {
-//		if (object.name == "ast") {
-//			return "";
-//		} 
-//		// FIXME todo  
-//		 
-//		super.visitOperationCallExp(object)
-//	}
-	
 	override String visitConstructorPart(ConstructorPart object) {
 		var StringBuilder result = new StringBuilder();		
 		var Property astProperty = object.referredProperty;
@@ -123,19 +92,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 				
 		return result.toString;
 	}
-		
-//	override visitPropertyCallExp(PropertyCallExp object) {
-//		return	'''«object.source.accept(this)».«getAccessorName(object.referredProperty)»()'''; 
-//	}
-//	
-//	override visitVariableExp(VariableExp object) {		
-//		return object.referredVariable.accept(this);
-//	}
-//	
-//	override visitVariable(Variable object) {
-//		return if ("self".equals(object.name)) "csElement" else object.name; 
-//	}
-
+	
 	def private String getFactoryInstanceAccessor(Type astType) {
 		if (astType.name == "Class") { return "org.eclipse.ocl.examples.pivot.PivotFactory.eINSTANCE"};
 		// FIXME HACK for the generator:
@@ -365,10 +322,4 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		var EObject container = oclExpression.eContainer;		
 		return if (container instanceof Element) getContextVariable(oclExpression.eContainer as Element) else null;
 	}
-	
-//	def	protected ExpressionInOCL createQuery(String query, Type context) throws Exception {
-//		var OCLHelper helper = ocl.createOCLHelper();		
-//		helper.setContext(context);		
-//		return helper.createQuery(query);		
-//	}
 }
