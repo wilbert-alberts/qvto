@@ -243,7 +243,7 @@ public class InternalTransformationExecutor {
 			return;
 		}
 
-		QVTOCompiler compiler = createCompiler(unit.getResolver());
+		QVTOCompiler compiler = createCompiler();
 		try {
 			fCompiledUnit = compiler.compile(unit, null, null);
 			fCompilationRs = compiler.getResourceSet();
@@ -454,12 +454,12 @@ public class InternalTransformationExecutor {
 		return "QVTO-Executor: " + fURI; //$NON-NLS-1$
 	}
 	
-	private QVTOCompiler createCompiler(UnitResolver unitResolver) {
+	private QVTOCompiler createCompiler() {
 		if(fPackageRegistry == null) {
-			return CompilerUtils.createCompiler(unitResolver);
+			return CompilerUtils.createCompiler();
 		}
 		
-		return QVTOCompiler.createCompiler(unitResolver, fPackageRegistry);
+		return QVTOCompiler.createCompiler(fPackageRegistry);
 	}
 
 }

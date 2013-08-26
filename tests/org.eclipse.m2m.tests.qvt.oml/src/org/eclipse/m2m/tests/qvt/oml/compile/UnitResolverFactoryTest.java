@@ -137,7 +137,7 @@ public class UnitResolverFactoryTest extends TestCase {
 	
 	private void assertResolvedCompiledUnit(UnitProxy unitProxy, boolean errorsOnly) {
 		assertNotNull("Unit must be resolved", unitProxy); //$NON-NLS-1$
-		QVTOCompiler compiler = CompilerUtils.createCompiler(unitProxy.getResolver());
+		QVTOCompiler compiler = CompilerUtils.createCompiler();
 		try {
 			CompiledUnit compiledUnit = compiler.compile(unitProxy, null, null);
 			assertEquals(unitProxy.getName(), compiledUnit.getName());

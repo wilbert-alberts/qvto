@@ -601,7 +601,7 @@ class QVTColorsConfigurationBlock {
 		assert findUnit != null;
 		try {			
 			// TODO - log error on compilation errors
-			QVTOCompiler compiler = new QVTOCompiler(findUnit.getResolver(), new MetamodelRegistryProvider());
+			QVTOCompiler compiler = new QVTOCompiler(new MetamodelRegistryProvider());
 			final CompiledUnit compiledPreviewUnit = compiler.compile(findUnit, new QvtCompilerOptions(), new BasicMonitor());
 			
 			final SemanticHighlightingManager semanticHighlightingManager = new SemanticHighlightingManager() {

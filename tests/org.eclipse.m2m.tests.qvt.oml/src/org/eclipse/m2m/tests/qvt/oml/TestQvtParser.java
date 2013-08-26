@@ -221,7 +221,7 @@ public class TestQvtParser extends TestCase {
 		final String topName = folder.getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT;
 		getFile(folder, topName);
 		WorkspaceUnitResolver resolver = new WorkspaceUnitResolver(Collections.singletonList(getIFolder(folder)));
-		QVTOCompiler compiler = CompilerUtils.createCompiler(resolver);
+		QVTOCompiler compiler = CompilerUtils.createCompiler();
 		
         QvtCompilerOptions options = new QvtCompilerOptions();
         options.setGenerateCompletionData(false);

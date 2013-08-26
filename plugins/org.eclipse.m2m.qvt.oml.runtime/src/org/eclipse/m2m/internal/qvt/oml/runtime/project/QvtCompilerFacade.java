@@ -77,7 +77,7 @@ public class QvtCompilerFacade {
 				throw new MdaException("Failed to resolve compilation unit: " + ifile); //$NON-NLS-1$
 			}			
 
-			final QVTOCompiler compiler = CompilerUtils.createCompiler(sourceUnit.getResolver());
+			final QVTOCompiler compiler = CompilerUtils.createCompiler();
 			final CompiledUnit module = compiler.compile(sourceUnit, compilerOptions, 
 					new BasicMonitor.EclipseSubProgress(monitor, 0));
 			

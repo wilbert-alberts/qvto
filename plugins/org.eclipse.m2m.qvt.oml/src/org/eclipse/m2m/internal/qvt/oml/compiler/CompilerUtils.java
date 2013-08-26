@@ -117,21 +117,21 @@ public class CompilerUtils {
 		return resourceSet;
     }
     
-    public static QVTOCompiler createCompiler(UnitResolver importResolver) {
+    public static QVTOCompiler createCompiler() {
     	// FIXME - eliminate eclipse dependency here, the call should be should be responsible
     	// for setting this up, as different domains have different requirements,
     	// like editor, builders etc.
     	if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
-    		return Eclipse.createCompiler(importResolver);
+    		return Eclipse.createCompiler();
     	}
     	
-    	return QVTOCompiler.createCompiler(importResolver, EPackage.Registry.INSTANCE);
+    	return QVTOCompiler.createCompiler(EPackage.Registry.INSTANCE);
     }
     
     static class Eclipse {
 
-        static QVTOCompiler createCompiler(UnitResolver importResolver) {
-        	return new QVTOCompiler(importResolver, new WorkspaceMetamodelRegistryProvider(createResourceSet()));
+        static QVTOCompiler createCompiler() {
+        	return new QVTOCompiler(new WorkspaceMetamodelRegistryProvider(createResourceSet()));
         }    	
 
     	static Monitor createMonitor(Monitor monitor, int ticks) {

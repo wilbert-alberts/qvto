@@ -58,7 +58,7 @@ public class TestExternHelperCall extends TestCase {
 	protected void setupLibrary(String libraryName) throws MdaException {
 		TestModuleResolver importResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 
-		QVTOCompiler compiler = CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QVTOCompiler compiler = CompilerUtils.createCompiler();				
 		UnitProxy srcUnit = importResolver.resolveUnit(libraryName);
 		
 		CompiledUnit result = compiler.compile(srcUnit, new QvtCompilerOptions(), null);

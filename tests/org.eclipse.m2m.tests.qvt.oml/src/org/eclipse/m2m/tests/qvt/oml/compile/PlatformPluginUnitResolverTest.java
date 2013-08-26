@@ -116,7 +116,7 @@ public class PlatformPluginUnitResolverTest extends TestCase {
 	
 	private void assertResolvedCompiledUnit(UnitProxy unit) {
 		assertNotNull("Unit must be resolver", unit); //$NON-NLS-1$
-		QVTOCompiler compiler = CompilerUtils.createCompiler(unit.getResolver());
+		QVTOCompiler compiler = CompilerUtils.createCompiler();
 		try {
 			CompiledUnit compiledUnit = compiler.compile(unit, null, null);
 			assertTrue("Unit must not have compilation problems", compiledUnit.getProblems().isEmpty());

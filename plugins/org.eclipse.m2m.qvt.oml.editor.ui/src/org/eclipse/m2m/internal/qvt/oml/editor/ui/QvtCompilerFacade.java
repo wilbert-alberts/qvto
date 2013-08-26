@@ -72,7 +72,7 @@ public class QvtCompilerFacade {
 				UnitResolver unitResolver = unit.getResolver();
 				final UnitProxy inMemoryUnit = new InMemoryUnitProxy(unit.getNamespace(), unit.getName(), unit.getURI(), contents, unitResolver);
 				
-				QVTOCompiler compiler = CompilerUtils.createCompiler(unitResolver);				
+				QVTOCompiler compiler = CompilerUtils.createCompiler();				
                 result = compiler.compile(inMemoryUnit, options, new BasicMonitor.EclipseSubProgress(monitor, 2));
                 
                 if (result != null) {

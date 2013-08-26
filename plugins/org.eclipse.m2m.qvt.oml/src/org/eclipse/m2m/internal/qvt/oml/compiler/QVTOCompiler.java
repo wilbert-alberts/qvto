@@ -81,7 +81,6 @@ public class QVTOCompiler {
     private final Map<URI, CompiledUnit> fSource2Compiled = new HashMap<URI, CompiledUnit>();
     private final Stack<DependencyPathElement> fDependencyWalkPath = new Stack<DependencyPathElement>();    
     private final IMetamodelRegistryProvider fMetamodelRegistryProvider;
-    private final UnitResolver fUnitResolver;
     private final ResourceSet resourceSet;
     private ResourceSetImpl fExeXMIResourceSet;
     private boolean fUseCompiledXMI = false;
@@ -104,8 +103,8 @@ public class QVTOCompiler {
 	 *            reused                        
 	 * @return the compiler instance
 	 */
-    public static QVTOCompiler createCompilerWithHistory(UnitResolver importResolver, ResourceSet metamodelResourceSet) { 
-    	return new QVTOCompiler(importResolver, createMetamodelRegistryProvider(metamodelResourceSet)) {
+    public static QVTOCompiler createCompilerWithHistory(ResourceSet metamodelResourceSet) { 
+    	return new QVTOCompiler(createMetamodelRegistryProvider(metamodelResourceSet)) {
     		@Override
     		protected void afterCompileCleanup() {
     			// do nothing as we need to cross-reference cached modules on 
@@ -120,7 +119,7 @@ public class QVTOCompiler {
     	};
     }
     
-	public static QVTOCompiler createCompiler(UnitResolver unitResolver, EPackage.Registry registry) {		
+	public static QVTOCompiler createCompiler(EPackage.Registry registry) {		
 		ResourceSetImpl rs = new ResourceSetImpl();
 		if(registry != null) {
 			rs.setPackageRegistry(registry);
@@ -146,7 +145,7 @@ public class QVTOCompiler {
 		
 		IMetamodelRegistryProvider metamodelRegistryProvider = createMetamodelRegistryProvider(packageRegistryImpl, rs);
 
-		return new QVTOCompiler(unitResolver, metamodelRegistryProvider);
+		return new QVTOCompiler(metamodelRegistryProvider);
 	}
 	
 	public static CompiledUnit[] compile(Set<URI> unitURIs, EPackage.Registry registry) throws MdaException {
@@ -159,11 +158,7 @@ public class QVTOCompiler {
 		}
 
 		if(!unitProxies.isEmpty()) {
-			// TODO - take resolver that resolved any unit proxy, we need to refactor the resolver out of 
-			// the compiler constructor; the creator of unit proxies should decide which one to use and
-			// resolvers of importing units should be used to resolver imports in its scope
-			UnitResolver resolver = unitProxies.get(0).getResolver();
-			QVTOCompiler compiler = createCompiler(resolver, registry);
+			QVTOCompiler compiler = createCompiler(registry);
 			
 			QvtCompilerOptions options = new QvtCompilerOptions();
 			options.setGenerateCompletionData(true);
@@ -173,8 +168,7 @@ public class QVTOCompiler {
 		return new CompiledUnit[0];
 	}
         
-    public QVTOCompiler(UnitResolver unitResolver, IMetamodelRegistryProvider metamodelRegistryProvider) {
-	    fUnitResolver = unitResolver;	    
+    public QVTOCompiler(IMetamodelRegistryProvider metamodelRegistryProvider) {
         fMetamodelRegistryProvider = metamodelRegistryProvider;
         
         this.resourceSet = (metamodelRegistryProvider instanceof WorkspaceMetamodelRegistryProvider) ?
@@ -228,23 +222,6 @@ public class QVTOCompiler {
 		}
 		
 		return result;
-	}
-	
-	/**
-	 * 
-	 * @param qualifiedName the qualified name referring to a compilation unit
-	 * @param options compiler options
-	 * @param monitor monitor
-	 * @return compiled unit
-	 * @throws MdaException
-	 */
-	public CompiledUnit compile(String qualifiedName, QvtCompilerOptions options, Monitor monitor) throws MdaException {
-		UnitProxy unit = getImportResolver().resolveUnit(qualifiedName);
-		if(unit == null) {
-			throw new MdaException("Unresolved unit: " + qualifiedName); //$NON-NLS-1$
-		}
-		
-		return compile(unit, options, monitor);
 	}
 	
 	public CompiledUnit compile(UnitProxy source, QvtCompilerOptions options, Monitor monitor) throws MdaException {
@@ -354,10 +331,6 @@ public class QVTOCompiler {
     	return new QvtOperationalVisitorCS(parser, options);
     }    
     
-	protected UnitResolver getImportResolver() {
-		return fUnitResolver;
-	}
-
     protected void afterCompileCleanup() {
     	this.fSource2Compiled.clear();
     	this.fDependencyWalkPath.clear();

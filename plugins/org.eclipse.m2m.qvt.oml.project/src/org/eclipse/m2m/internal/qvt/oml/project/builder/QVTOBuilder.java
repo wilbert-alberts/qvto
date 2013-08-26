@@ -216,7 +216,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			}
 			
 	        WorkspaceUnitResolver resolver = WorkspaceUnitResolver.getResolver(getProject());	        
-	        QVTOCompiler compiler = CompilerUtils.createCompiler(resolver);
+	        QVTOCompiler compiler = CompilerUtils.createCompiler();
 	        
 	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
 

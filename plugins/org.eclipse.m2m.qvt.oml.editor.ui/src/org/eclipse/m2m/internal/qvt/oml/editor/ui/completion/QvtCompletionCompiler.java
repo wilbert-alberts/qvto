@@ -54,8 +54,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     private final Map<URI, CFileData> myCFileDataMap = new LinkedHashMap<URI, CFileData>();
     private QvtOperationalEnv myEnvironment;
 
-    public QvtCompletionCompiler(UnitResolver importResolver, IMetamodelRegistryProvider metamodelProvider, QvtCompletionData data) {
-        super(importResolver, metamodelProvider);
+    public QvtCompletionCompiler(IMetamodelRegistryProvider metamodelProvider, QvtCompletionData data) {
+        super(metamodelProvider);
         myData = data;
     }
     

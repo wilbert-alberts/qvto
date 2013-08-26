@@ -54,7 +54,7 @@ public class DeployedQvtModule extends QvtModule {
         		throw new MdaException(NLS.bind(CompilerMessages.importedModuleNotFound, moduleID));
         	}
         	
-            QVTOCompiler qvtCompiler = new QVTOCompiler(srcUnit.getResolver(), creatMetamodelRegistryProvider());
+            QVTOCompiler qvtCompiler = new QVTOCompiler(creatMetamodelRegistryProvider());
 
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {

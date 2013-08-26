@@ -145,7 +145,7 @@ public class TestUtil extends Assert {
 	public static Set<CompiledUnit> compileModules(String srcContainer, String[] modulePaths)  {
 		TestModuleResolver testResolver = TestModuleResolver.createdTestPluginResolver(srcContainer);
 		
-		QVTOCompiler compiler = CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(srcContainer));				
+		QVTOCompiler compiler = CompilerUtils.createCompiler();				
 		QvtCompilerOptions options = new QvtCompilerOptions();
 		options.setGenerateCompletionData(true);
 		
@@ -177,7 +177,7 @@ public class TestUtil extends Assert {
 	}
 		
 	public static QVTOCompiler createTestPluginQvtCompiler(String sourceContainerPath) {
-		return CompilerUtils.createCompiler(TestModuleResolver.createdTestPluginResolver(sourceContainerPath));
+		return CompilerUtils.createCompiler();
 	}
 	
 	public static void turnOffAutoBuilding() throws CoreException {

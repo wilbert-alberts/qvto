@@ -23,9 +23,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 
 
 /**
@@ -36,16 +33,13 @@ public class QvtEngine {
 		IProject project = resource.getProject();
 		QvtEngine engine = (QvtEngine) ourEnginesMap.get(project);
 		if(engine == null) {
-			engine = new QvtEngine(project);
+			engine = new QvtEngine();
 			//ourEnginesMap.put(project, engine);
 		}
 		return engine;
 	}
 	
-	private QvtEngine(IProject project) {
-		myProject = project;
-		UnitResolverFactory resolverFactory = UnitResolverFactory.Registry.INSTANCE.getFactory(myProject);		
-        myImportResolver = resolverFactory.getResolver(URIUtils.getResourceURI(myProject));
+	private QvtEngine() {
 		reset(null);
 	}
 	
@@ -68,11 +62,9 @@ public class QvtEngine {
 	}	
     
 	private void reset(QvtCompilerOptions options) { // TODO: QvtException
-	    myCompiler = CompilerUtils.createCompiler(myImportResolver);
+	    myCompiler = CompilerUtils.createCompiler();
 	}
 	
 	private static Map<IProject, QvtEngine> ourEnginesMap = new HashMap<IProject, QvtEngine>();
 	private QVTOCompiler myCompiler;	
-	private IProject myProject;
-    private final UnitResolver myImportResolver;
 }
