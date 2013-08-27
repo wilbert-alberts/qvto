@@ -2964,7 +2964,16 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_EXTENSION_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int MAPPING_EXTENSION_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_REF_CS__LOGICAL_PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Pivot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_EXTENSION_CS__PIVOT = BaseCSTPackage.ELEMENT_REF_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -2973,7 +2982,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_EXTENSION_CS__KIND = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int MAPPING_EXTENSION_CS__KIND = BaseCSTPackage.ELEMENT_REF_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Identifiers</b></em>' containment reference list.
@@ -2982,7 +2991,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int MAPPING_EXTENSION_CS__MAPPING_IDENTIFIERS = BaseCSTPackage.ELEMENT_REF_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Extension CS</em>' class.
@@ -2991,7 +3000,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_EXTENSION_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int MAPPING_EXTENSION_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_REF_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingInitCSImpl <em>Mapping Init CS</em>}' class.

@@ -98,7 +98,7 @@ public abstract class AbstractExtendingDelegatingQVTOperationalCSVisitor<R, C, D
 	}
 
 	public @Nullable R visitMappingExtensionCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS object) {
-		return delegate.visitElementCS(object);
+		return delegate.visitElementRefCS(object);
 	}
 
 	public @Nullable R visitMappingInitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS object) {

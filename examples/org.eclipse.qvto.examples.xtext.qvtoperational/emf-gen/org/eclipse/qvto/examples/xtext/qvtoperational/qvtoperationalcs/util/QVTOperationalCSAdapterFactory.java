@@ -484,12 +484,12 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 				return createInvocationExpCSAdapter();
 			}
 			@Override
-			public Adapter caseExpressionBlockCS(ExpressionBlockCS object) {
-				return createExpressionBlockCSAdapter();
-			}
-			@Override
 			public Adapter caseElementRefCS(ElementRefCS object) {
 				return createElementRefCSAdapter();
+			}
+			@Override
+			public Adapter caseExpressionBlockCS(ExpressionBlockCS object) {
+				return createExpressionBlockCSAdapter();
 			}
 			@Override
 			public Adapter caseTypeRefCS(TypeRefCS object) {

@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.qvto.examples.pivot.imperativeocl;bundle-version="[1.0.0,2.0.0)"
 Export-Package: org.eclipse.qvto.examples.xtext.imperativeocl,
  org.eclipse.qvto.examples.xtext.imperativeocl.cs2as,
+ org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.util,
  org.eclipse.qvto.examples.xtext.imperativeocl.formatting,
  org.eclipse.qvto.examples.xtext.imperativeocl.generator,
  org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs,

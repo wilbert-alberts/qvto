@@ -2588,7 +2588,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		mappingCallExpCSEClass.getESuperTypes().add(this.getImperativeOperationCallExpCS());
 		mappingOperationCSEClass.getESuperTypes().add(theBaseCSTPackage.getOperationCS());
 		mappingEndCSEClass.getESuperTypes().add(this.getMappingSectionCS());
-		mappingExtensionCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
+		mappingExtensionCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementRefCS());
 		mappingInitCSEClass.getESuperTypes().add(this.getMappingSectionCS());
 		mappingMethodCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());
 		mappingModuleCSEClass.getESuperTypes().add(theBaseCSTPackage.getElementCS());

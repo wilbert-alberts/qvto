@@ -491,7 +491,10 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 			case QVTOperationalCSPackage.MAPPING_EXTENSION_CS: {
 				MappingExtensionCS mappingExtensionCS = (MappingExtensionCS)theEObject;
 				T result = caseMappingExtensionCS(mappingExtensionCS);
+				if (result == null) result = caseElementRefCS(mappingExtensionCS);
+				if (result == null) result = casePivotableElementCS(mappingExtensionCS);
 				if (result == null) result = caseElementCS(mappingExtensionCS);
+				if (result == null) result = casePivotable(mappingExtensionCS);
 				if (result == null) result = caseVisitableCS(mappingExtensionCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

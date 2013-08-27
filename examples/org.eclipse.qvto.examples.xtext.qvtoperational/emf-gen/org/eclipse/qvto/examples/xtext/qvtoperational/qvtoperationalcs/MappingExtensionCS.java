@@ -4,6 +4,7 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
+import org.eclipse.ocl.examples.xtext.base.baseCST.ElementRefCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -22,7 +23,7 @@ import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
  * @generated
  */
 public interface MappingExtensionCS
-		extends ElementCS {
+		extends ElementRefCS {
 
 	/**
 	 * Returns the value of the '<em><b>Kind</b></em>' attribute.

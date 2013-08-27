@@ -101,7 +101,7 @@ public abstract class AbstractQVTOperationalCSPostOrderVisitor
 	}
 
 	public @Nullable Continuation<?> visitMappingExtensionCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingExtensionCS csElement) {
-		return visitElementCS(csElement);
+		return visitElementRefCS(csElement);
 	}
 
 	public @Nullable Continuation<?> visitMappingInitCS(@NonNull org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingInitCS csElement) {
