@@ -10,7 +10,7 @@
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
   <genPackages prefix="QVTOperational" basePackage="org.eclipse.qvto.examples.pivot"
       disposableProviderFactory="true" contentTypeIdentifier="org.eclipse.qvt.pivot.qvtoperational.1_0"
-      ecorePackage="QVTOperational.ecore#QVTOperational">
+      fileExtensions="qvtoas" ecorePackage="QVTOperational.ecore#QVTOperational">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="QVTOperational.ecore#QVTOperational.DirectionKind">
       <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#QVTOperational.DirectionKind.in"/>
       <genEnumLiterals ecoreEnumLiteral="QVTOperational.ecore#QVTOperational.DirectionKind.inout"/>

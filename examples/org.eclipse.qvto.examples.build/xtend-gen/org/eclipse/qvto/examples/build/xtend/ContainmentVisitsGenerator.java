@@ -500,12 +500,12 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
     String csStub = null;
     Iterable<? extends DomainType> _allSuperClasses = mm.getAllSuperClasses(csType);
     final Function1<DomainType,Boolean> _function = new Function1<DomainType,Boolean>() {
-        public Boolean apply(final DomainType it) {
-          String _name = it.getName();
-          boolean _equals = Objects.equal(_name, "Pivotable");
-          return Boolean.valueOf(_equals);
-        }
-      };
+      public Boolean apply(final DomainType it) {
+        String _name = it.getName();
+        boolean _equals = Objects.equal(_name, "Pivotable");
+        return Boolean.valueOf(_equals);
+      }
+    };
     boolean _exists = IterableExtensions.exists(_allSuperClasses, _function);
     if (_exists) {
       StringConcatenation _builder = new StringConcatenation();

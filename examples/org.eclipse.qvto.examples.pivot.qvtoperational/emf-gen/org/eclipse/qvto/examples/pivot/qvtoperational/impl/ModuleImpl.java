@@ -64,11 +64,11 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getImportedPackage <em>Imported Package</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNestedPackage <em>Nested Package</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNestingPackage <em>Nesting Package</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNsPrefix <em>Ns Prefix</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNsURI <em>Ns URI</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getImportedPackage <em>Imported Package</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getOwnedType <em>Owned Type</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
@@ -83,6 +83,16 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor
  * @generated
  */
 public class ModuleImpl extends ClassImpl implements Module {
+	/**
+	 * The cached value of the '{@link #getImportedPackage() <em>Imported Package</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportedPackage()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<org.eclipse.ocl.examples.pivot.Package> importedPackage;
+
 	/**
 	 * The cached value of the '{@link #getNestedPackage() <em>Nested Package</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -132,16 +142,6 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * @ordered
 	 */
 	protected String nsURI = NS_URI_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getImportedPackage() <em>Imported Package</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getImportedPackage()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<org.eclipse.ocl.examples.pivot.Package> importedPackage;
 
 	/**
 	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference list.
@@ -577,6 +577,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
+				return getImportedPackage();
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				return getNestedPackage();
 			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
@@ -585,8 +587,6 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return getNsPrefix();
 			case QVTOperationalPackage.MODULE__NS_URI:
 				return getNsURI();
-			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
-				return getImportedPackage();
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return getOwnedType();
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
@@ -617,6 +617,10 @@ public class ModuleImpl extends ClassImpl implements Module {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
+				getImportedPackage().clear();
+				getImportedPackage().addAll((Collection<? extends org.eclipse.ocl.examples.pivot.Package>)newValue);
+				return;
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				getNestedPackage().clear();
 				getNestedPackage().addAll((Collection<? extends org.eclipse.ocl.examples.pivot.Package>)newValue);
@@ -629,10 +633,6 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return;
 			case QVTOperationalPackage.MODULE__NS_URI:
 				setNsURI((String)newValue);
-				return;
-			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
-				getImportedPackage().clear();
-				getImportedPackage().addAll((Collection<? extends org.eclipse.ocl.examples.pivot.Package>)newValue);
 				return;
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
@@ -676,6 +676,9 @@ public class ModuleImpl extends ClassImpl implements Module {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
+				getImportedPackage().clear();
+				return;
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				getNestedPackage().clear();
 				return;
@@ -687,9 +690,6 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return;
 			case QVTOperationalPackage.MODULE__NS_URI:
 				setNsURI(NS_URI_EDEFAULT);
-				return;
-			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
-				getImportedPackage().clear();
 				return;
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
@@ -727,6 +727,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
+				return importedPackage != null && !importedPackage.isEmpty();
 			case QVTOperationalPackage.MODULE__NESTED_PACKAGE:
 				return nestedPackage != null && !nestedPackage.isEmpty();
 			case QVTOperationalPackage.MODULE__NESTING_PACKAGE:
@@ -735,8 +737,6 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return NS_PREFIX_EDEFAULT == null ? nsPrefix != null : !NS_PREFIX_EDEFAULT.equals(nsPrefix);
 			case QVTOperationalPackage.MODULE__NS_URI:
 				return NS_URI_EDEFAULT == null ? nsURI != null : !NS_URI_EDEFAULT.equals(nsURI);
-			case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE:
-				return importedPackage != null && !importedPackage.isEmpty();
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ownedType != null && !ownedType.isEmpty();
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
@@ -766,11 +766,11 @@ public class ModuleImpl extends ClassImpl implements Module {
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == org.eclipse.ocl.examples.pivot.Package.class) {
 			switch (derivedFeatureID) {
+				case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE: return PivotPackage.PACKAGE__IMPORTED_PACKAGE;
 				case QVTOperationalPackage.MODULE__NESTED_PACKAGE: return PivotPackage.PACKAGE__NESTED_PACKAGE;
 				case QVTOperationalPackage.MODULE__NESTING_PACKAGE: return PivotPackage.PACKAGE__NESTING_PACKAGE;
 				case QVTOperationalPackage.MODULE__NS_PREFIX: return PivotPackage.PACKAGE__NS_PREFIX;
 				case QVTOperationalPackage.MODULE__NS_URI: return PivotPackage.PACKAGE__NS_URI;
-				case QVTOperationalPackage.MODULE__IMPORTED_PACKAGE: return PivotPackage.PACKAGE__IMPORTED_PACKAGE;
 				case QVTOperationalPackage.MODULE__OWNED_TYPE: return PivotPackage.PACKAGE__OWNED_TYPE;
 				default: return -1;
 			}
@@ -787,11 +787,11 @@ public class ModuleImpl extends ClassImpl implements Module {
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == org.eclipse.ocl.examples.pivot.Package.class) {
 			switch (baseFeatureID) {
+				case PivotPackage.PACKAGE__IMPORTED_PACKAGE: return QVTOperationalPackage.MODULE__IMPORTED_PACKAGE;
 				case PivotPackage.PACKAGE__NESTED_PACKAGE: return QVTOperationalPackage.MODULE__NESTED_PACKAGE;
 				case PivotPackage.PACKAGE__NESTING_PACKAGE: return QVTOperationalPackage.MODULE__NESTING_PACKAGE;
 				case PivotPackage.PACKAGE__NS_PREFIX: return QVTOperationalPackage.MODULE__NS_PREFIX;
 				case PivotPackage.PACKAGE__NS_URI: return QVTOperationalPackage.MODULE__NS_URI;
-				case PivotPackage.PACKAGE__IMPORTED_PACKAGE: return QVTOperationalPackage.MODULE__IMPORTED_PACKAGE;
 				case PivotPackage.PACKAGE__OWNED_TYPE: return QVTOperationalPackage.MODULE__OWNED_TYPE;
 				default: return -1;
 			}

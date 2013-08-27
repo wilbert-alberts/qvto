@@ -5,6 +5,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
+import org.eclipse.ocl.examples.pivot.resource.ASResource;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCS2AS;
 
@@ -12,7 +13,7 @@ public class QVTOperationalCS2AS
 		extends ImperativeOCLCS2AS {
 
 	public QVTOperationalCS2AS(@NonNull
-	Map<? extends Resource, ? extends Resource> cs2pivotResourceMap, @NonNull
+	Map<? extends Resource, ? extends ASResource> cs2pivotResourceMap, @NonNull
 	MetaModelManager metaModelManager) {
 		super(cs2pivotResourceMap, metaModelManager);
 	}
