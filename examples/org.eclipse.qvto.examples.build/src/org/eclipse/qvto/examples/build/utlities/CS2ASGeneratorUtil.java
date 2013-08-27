@@ -23,7 +23,7 @@ public class CS2ASGeneratorUtil {
 	 * @return <code>true</code> if this the CS2AS AST operation.
 	 */
 	public static boolean isAstOperation(EOperation eOperation) {
-		if (AST_OPERATION_NAME.equals(eOperation)
+		if (AST_OPERATION_NAME.equals(eOperation.getName())
 			&& eOperation.getEParameters().size() == 0) {
 			return true;
 		}

@@ -200,7 +200,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 		js.append(newCollectionElementName);
 		js.append(" : ");
 		js.appendValueName(cgIterationCallExp);
-		js.append(")\n");
+		js.append(") {\n");
 		js.pushIndentation(null);
 		js.append(newCollectionName);
 		js.append(".add((");
