@@ -62,7 +62,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOp
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MetamodelCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModelTypeCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationParameterDeclarationCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PackageRefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.PrimitiveTypeCS;
@@ -713,12 +712,6 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 					return; 
 				}
 				else break;
-			case QVTOperationalCSPackage.OPERATION_SIMPLE_SIGNATURE_CS:
-				if(context == grammarAccess.getOperationSimpleSignatureCSRule()) {
-					sequence_OperationSimpleSignatureCS(context, (OperationSimpleSignatureCS) semanticObject); 
-					return; 
-				}
-				else break;
 			case QVTOperationalCSPackage.PACKAGE_REF_CS:
 				if(context == grammarAccess.getPackageRefCSRule()) {
 					sequence_PackageRefCS(context, (PackageRefCS) semanticObject); 
@@ -948,7 +941,7 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (name=UnrestrictedName signature=OperationSimpleSignatureCS)
+	 *     (name=UnrestrictedName (ownedParameter+=OperationParameterDeclarationCS ownedParameter+=OperationParameterDeclarationCS*)?)
 	 */
 	protected void sequence_MappingOperationHeaderCS(EObject context, MappingOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -987,15 +980,6 @@ public class QVTOperationalSemanticSequencer extends ImperativeOCLSemanticSequen
 	 *     (direction=DirectionKindCS? name=UnrestrictedName ownedType=TypeSpecCS? initPart=InitPartCS?)
 	 */
 	protected void sequence_OperationParameterDeclarationCS(EObject context, OperationParameterDeclarationCS semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     ((parameter+=OperationParameterDeclarationCS parameter+=OperationParameterDeclarationCS*)?)
-	 */
-	protected void sequence_OperationSimpleSignatureCS(EObject context, OperationSimpleSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

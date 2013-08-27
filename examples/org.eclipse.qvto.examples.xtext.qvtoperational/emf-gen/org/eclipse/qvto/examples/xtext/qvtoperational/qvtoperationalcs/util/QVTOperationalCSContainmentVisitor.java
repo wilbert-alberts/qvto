@@ -165,11 +165,11 @@ public class QVTOperationalCSContainmentVisitor
 		// AS OwnedParameter property update
 		org.eclipse.ocl.examples.domain.evaluation.DomainEvaluator newCSOwnedParametersEvaluator = new org.eclipse.ocl.examples.library.ecore.EcoreExecutorManager(csElement, org.eclipse.ocl.examples.pivot.PivotTables.LIBRARY);
 		org.eclipse.ocl.examples.domain.elements.DomainType newCSOwnedParametersType = newCSOwnedParametersEvaluator.getIdResolver().getStaticTypeOf(csElement);
-		java.util.List<org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter> newCsOwnedParameters = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MappingOperationCS_AST_Part1.INSTANCE.evaluate(newCSOwnedParametersEvaluator, newCSOwnedParametersType.getTypeId(), csElement);			
+		java.util.List<org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS> newCsOwnedParameters = org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators.MappingOperationCS_AST_Part1.INSTANCE.evaluate(newCSOwnedParametersEvaluator, newCSOwnedParametersType.getTypeId(), csElement);			
 		java.util.List<org.eclipse.ocl.examples.pivot.Parameter> newOwnedParameters = new java.util.ArrayList<org.eclipse.ocl.examples.pivot.Parameter>();
 		
-		for (org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter newCsOwnedParameter : newCsOwnedParameters) {
-			org.eclipse.ocl.examples.pivot.Parameter newOwnedParameter = newCsOwnedParameter;
+		for (org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS newCsOwnedParameter : newCsOwnedParameters) {
+			org.eclipse.ocl.examples.pivot.Parameter newOwnedParameter = PivotUtil.getPivot(org.eclipse.ocl.examples.pivot.Parameter.class, newCsOwnedParameter);
 			if (newOwnedParameter != null) {
 				newOwnedParameters.add(newOwnedParameter);
 			}

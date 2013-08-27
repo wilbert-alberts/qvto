@@ -79,9 +79,10 @@ ParameterDeclarationCS :
 	initPart=InitPartCS?
 ;
 
-OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
-	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
-;
+// TODO also remove the corresponding CS metamodel element
+//OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
+//	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
+//;
 
 OperationParameterDeclarationCS :
 	direction=DirectionKindCS? 
@@ -264,5 +265,6 @@ MappingDefinitionCS returns MappingOperationCS:
 
 MappingOperationHeaderCS returns MappingOperationCS:
 	"mapping" name=UnrestrictedName
-	signature= OperationSimpleSignatureCS
+	'(' (ownedParameter+= OperationParameterDeclarationCS (',' ownedParameter+= OperationParameterDeclarationCS)*)? ')'
+	// signature= OperationSimpleSignatureCS
 ;

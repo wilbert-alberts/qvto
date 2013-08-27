@@ -2839,22 +2839,13 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int MAPPING_OPERATION_CS__CONTEXT_TYPE = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Signature</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_OPERATION_CS__SIGNATURE = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Result</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_CS__RESULT = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 2;
+	int MAPPING_OPERATION_CS__RESULT = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Direction Kind CS</b></em>' attribute.
@@ -2863,7 +2854,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_CS__DIRECTION_KIND_CS = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 3;
+	int MAPPING_OPERATION_CS__DIRECTION_KIND_CS = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Extension</b></em>' containment reference list.
@@ -2872,7 +2863,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_CS__MAPPING_EXTENSION = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 4;
+	int MAPPING_OPERATION_CS__MAPPING_EXTENSION = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Is Query</b></em>' attribute.
@@ -2881,7 +2872,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_CS__IS_QUERY = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 5;
+	int MAPPING_OPERATION_CS__IS_QUERY = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Operation CS</em>' class.
@@ -2890,7 +2881,7 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_OPERATION_CS_FEATURE_COUNT = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 6;
+	int MAPPING_OPERATION_CS_FEATURE_COUNT = BaseCSTPackage.OPERATION_CS_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingEndCSImpl <em>Mapping End CS</em>}' class.
@@ -5676,17 +5667,6 @@ public interface QVTOperationalCSPackage extends EPackage {
 	EReference getMappingOperationCS_ContextType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getSignature <em>Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Signature</em>'.
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getSignature()
-	 * @see #getMappingOperationCS()
-	 * @generated
-	 */
-	EReference getMappingOperationCS_Signature();
-
-	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7529,14 +7509,6 @@ public interface QVTOperationalCSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_OPERATION_CS__CONTEXT_TYPE = eINSTANCE.getMappingOperationCS_ContextType();
-
-		/**
-		 * The meta object literal for the '<em><b>Signature</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPING_OPERATION_CS__SIGNATURE = eINSTANCE.getMappingOperationCS_Signature();
 
 		/**
 		 * The meta object literal for the '<em><b>Result</b></em>' containment reference list feature.

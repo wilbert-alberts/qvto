@@ -35,7 +35,6 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingOperationCSImpl#getContextType <em>Context Type</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingOperationCSImpl#getSignature <em>Signature</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingOperationCSImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingOperationCSImpl#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.MappingOperationCSImpl#getMappingExtension <em>Mapping Extension</em>}</li>
@@ -55,16 +54,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 	 * @ordered
 	 */
 	protected TypeCS contextType;
-
-	/**
-	 * The cached value of the '{@link #getSignature() <em>Signature</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected OperationSimpleSignatureCS signature;
 
 	/**
 	 * The cached value of the '{@link #getResult() <em>Result</em>}' containment reference list.
@@ -186,49 +175,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE, newContextType, newContextType));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OperationSimpleSignatureCS getSignature() {
-		return signature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSignature(OperationSimpleSignatureCS newSignature, NotificationChain msgs) {
-		OperationSimpleSignatureCS oldSignature = signature;
-		signature = newSignature;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE, oldSignature, newSignature);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSignature(OperationSimpleSignatureCS newSignature) {
-		if (newSignature != signature) {
-			NotificationChain msgs = null;
-			if (signature != null)
-				msgs = ((InternalEObject)signature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE, null, msgs);
-			if (newSignature != null)
-				msgs = ((InternalEObject)newSignature).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE, null, msgs);
-			msgs = basicSetSignature(newSignature, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE, newSignature, newSignature));
 	}
 
 	/**
@@ -360,8 +306,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE:
 				return basicSetContextType(null, msgs);
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE:
-				return basicSetSignature(null, msgs);
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				return ((InternalEList<?>)getResult()).basicRemove(otherEnd, msgs);
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__MAPPING_EXTENSION:
@@ -380,8 +324,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE:
 				return getContextType();
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE:
-				return getSignature();
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				return getResult();
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS:
@@ -405,9 +347,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)newValue);
-				return;
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE:
-				setSignature((OperationSimpleSignatureCS)newValue);
 				return;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				getResult().clear();
@@ -438,9 +377,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE:
 				setContextType((TypeCS)null);
 				return;
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE:
-				setSignature((OperationSimpleSignatureCS)null);
-				return;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				getResult().clear();
 				return;
@@ -467,8 +403,6 @@ public class MappingOperationCSImpl extends OperationCSImpl implements MappingOp
 		switch (featureID) {
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__CONTEXT_TYPE:
 				return contextType != null;
-			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__SIGNATURE:
-				return signature != null;
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__RESULT:
 				return result != null && !result.isEmpty();
 			case QVTOperationalCSPackage.MAPPING_OPERATION_CS__DIRECTION_KIND_CS:

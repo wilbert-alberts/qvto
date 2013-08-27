@@ -1243,7 +1243,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingOperationCS_Signature() {
+	public EReference getMappingOperationCS_Result() {
 		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1252,17 +1252,8 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingOperationCS_Result() {
-		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getMappingOperationCS_DirectionKindCS() {
-		return (EAttribute)mappingOperationCSEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)mappingOperationCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1271,7 +1262,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	public EReference getMappingOperationCS_MappingExtension() {
-		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(4);
+		return (EReference)mappingOperationCSEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1280,7 +1271,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	public EAttribute getMappingOperationCS_IsQuery() {
-		return (EAttribute)mappingOperationCSEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)mappingOperationCSEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2387,7 +2378,6 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		mappingOperationCSEClass = createEClass(MAPPING_OPERATION_CS);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__CONTEXT_TYPE);
-		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__SIGNATURE);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__RESULT);
 		createEAttribute(mappingOperationCSEClass, MAPPING_OPERATION_CS__DIRECTION_KIND_CS);
 		createEReference(mappingOperationCSEClass, MAPPING_OPERATION_CS__MAPPING_EXTENSION);
@@ -2736,7 +2726,6 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 
 		initEClass(mappingOperationCSEClass, MappingOperationCS.class, "MappingOperationCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMappingOperationCS_ContextType(), theBaseCSTPackage.getTypeCS(), null, "contextType", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getMappingOperationCS_Signature(), this.getOperationSimpleSignatureCS(), null, "signature", null, 1, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingOperationCS_Result(), this.getParameterDeclarationCS(), null, "result", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMappingOperationCS_DirectionKindCS(), this.getDirectionKindCS(), "directionKindCS", null, 0, 1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingOperationCS_MappingExtension(), this.getMappingExtensionCS(), null, "mappingExtension", null, 0, -1, MappingOperationCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3015,7 +3004,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (mappingOperationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\townedParameter = signature.parameter.ast()\n\t\t\t}"
+			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter -- FIXME .ast()\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (transformationCSEClass.getEOperations().get(0), 

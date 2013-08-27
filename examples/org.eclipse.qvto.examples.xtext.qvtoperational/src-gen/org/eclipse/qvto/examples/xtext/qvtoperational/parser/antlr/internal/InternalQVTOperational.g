@@ -734,84 +734,6 @@ ruleParameterDeclarationCS returns [EObject current=null]
 
 
 
-// Entry rule entryRuleOperationSimpleSignatureCS
-entryRuleOperationSimpleSignatureCS returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getOperationSimpleSignatureCSRule()); }
-	 iv_ruleOperationSimpleSignatureCS=ruleOperationSimpleSignatureCS 
-	 { $current=$iv_ruleOperationSimpleSignatureCS.current; } 
-	 EOF 
-;
-
-// Rule OperationSimpleSignatureCS
-ruleOperationSimpleSignatureCS returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getOperationSimpleSignatureCSAccess().getOperationSimpleSignatureCSAction_0(),
-            $current);
-    }
-)	otherlv_1='(' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getOperationSimpleSignatureCSAccess().getLeftParenthesisKeyword_1());
-    }
-((
-(
-		{ 
-	        newCompositeNode(grammarAccess.getOperationSimpleSignatureCSAccess().getParameterOperationParameterDeclarationCSParserRuleCall_2_0_0()); 
-	    }
-		lv_parameter_2_0=ruleOperationParameterDeclarationCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOperationSimpleSignatureCSRule());
-	        }
-       		add(
-       			$current, 
-       			"parameter",
-        		lv_parameter_2_0, 
-        		"OperationParameterDeclarationCS");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(	otherlv_3=',' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getOperationSimpleSignatureCSAccess().getCommaKeyword_2_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getOperationSimpleSignatureCSAccess().getParameterOperationParameterDeclarationCSParserRuleCall_2_1_1_0()); 
-	    }
-		lv_parameter_4_0=ruleOperationParameterDeclarationCS		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOperationSimpleSignatureCSRule());
-	        }
-       		add(
-       			$current, 
-       			"parameter",
-        		lv_parameter_4_0, 
-        		"OperationParameterDeclarationCS");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*)?	otherlv_5=')' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getOperationSimpleSignatureCSAccess().getRightParenthesisKeyword_3());
-    }
-)
-;
-
-
-
-
-
 // Entry rule entryRuleOperationParameterDeclarationCS
 entryRuleOperationParameterDeclarationCS returns [EObject current=null] 
 	:
@@ -2987,25 +2909,55 @@ ruleMappingOperationHeaderCS returns [EObject current=null]
 	    }
 
 )
-)(
+)	otherlv_2='(' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getMappingOperationHeaderCSAccess().getLeftParenthesisKeyword_2());
+    }
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMappingOperationHeaderCSAccess().getSignatureOperationSimpleSignatureCSParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getMappingOperationHeaderCSAccess().getOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_0_0()); 
 	    }
-		lv_signature_2_0=ruleOperationSimpleSignatureCS		{
+		lv_ownedParameter_3_0=ruleOperationParameterDeclarationCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMappingOperationHeaderCSRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"signature",
-        		lv_signature_2_0, 
-        		"OperationSimpleSignatureCS");
+       			"ownedParameter",
+        		lv_ownedParameter_3_0, 
+        		"OperationParameterDeclarationCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)(	otherlv_4=',' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getMappingOperationHeaderCSAccess().getCommaKeyword_3_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getMappingOperationHeaderCSAccess().getOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_1_1_0()); 
+	    }
+		lv_ownedParameter_5_0=ruleOperationParameterDeclarationCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getMappingOperationHeaderCSRule());
+	        }
+       		add(
+       			$current, 
+       			"ownedParameter",
+        		lv_ownedParameter_5_0, 
+        		"OperationParameterDeclarationCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?	otherlv_6=')' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getMappingOperationHeaderCSAccess().getRightParenthesisKeyword_4());
+    }
+)
 ;
 
 

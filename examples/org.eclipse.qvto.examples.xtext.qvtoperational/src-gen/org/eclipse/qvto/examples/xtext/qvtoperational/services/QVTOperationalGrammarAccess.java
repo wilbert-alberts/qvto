@@ -421,63 +421,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getInitPartInitPartCSParserRuleCall_3_0() { return cInitPartInitPartCSParserRuleCall_3_0; }
 	}
 
-	public class OperationSimpleSignatureCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OperationSimpleSignatureCS");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cOperationSimpleSignatureCSAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Assignment cParameterAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final RuleCall cParameterOperationParameterDeclarationCSParserRuleCall_2_0_0 = (RuleCall)cParameterAssignment_2_0.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
-		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cParameterAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cParameterOperationParameterDeclarationCSParserRuleCall_2_1_1_0 = (RuleCall)cParameterAssignment_2_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//OperationSimpleSignatureCS:
-		//
-		//	{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
-		//
-		//	parameter+=OperationParameterDeclarationCS)*)? ")";
-		public ParserRule getRule() { return rule; }
-
-		//{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
-		//
-		//parameter+=OperationParameterDeclarationCS)*)? ")"
-		public Group getGroup() { return cGroup; }
-
-		//{OperationSimpleSignatureCS}
-		public Action getOperationSimpleSignatureCSAction_0() { return cOperationSimpleSignatureCSAction_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//(parameter+=OperationParameterDeclarationCS ("," parameter+=OperationParameterDeclarationCS)*)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//parameter+=OperationParameterDeclarationCS
-		public Assignment getParameterAssignment_2_0() { return cParameterAssignment_2_0; }
-
-		//OperationParameterDeclarationCS
-		public RuleCall getParameterOperationParameterDeclarationCSParserRuleCall_2_0_0() { return cParameterOperationParameterDeclarationCSParserRuleCall_2_0_0; }
-
-		//("," parameter+=OperationParameterDeclarationCS)*
-		public Group getGroup_2_1() { return cGroup_2_1; }
-
-		//","
-		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
-
-		//parameter+=OperationParameterDeclarationCS
-		public Assignment getParameterAssignment_2_1_1() { return cParameterAssignment_2_1_1; }
-
-		//OperationParameterDeclarationCS
-		public RuleCall getParameterOperationParameterDeclarationCSParserRuleCall_2_1_1_0() { return cParameterOperationParameterDeclarationCSParserRuleCall_2_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-
 	public class OperationParameterDeclarationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OperationParameterDeclarationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -492,6 +435,13 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cInitPartAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cInitPartInitPartCSParserRuleCall_3_0 = (RuleCall)cInitPartAssignment_3.eContents().get(0);
 		
+		////OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
+		//
+		//
+		////	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
+		// //;
+		//
+		//
 		//OperationParameterDeclarationCS:
 		//
 		//	direction=DirectionKindCS? name= // FIXME Spec grammar says that you can have just a typeSpec  
@@ -1796,15 +1746,27 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cMappingKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameUnrestrictedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cSignatureAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cSignatureOperationSimpleSignatureCSParserRuleCall_2_0 = (RuleCall)cSignatureAssignment_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Assignment cOwnedParameterAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
+		private final RuleCall cOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_0_0 = (RuleCall)cOwnedParameterAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Keyword cCommaKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cOwnedParameterAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_1_1_0 = (RuleCall)cOwnedParameterAssignment_3_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//MappingOperationHeaderCS returns MappingOperationCS:
+		//// signature= OperationSimpleSignatureCS
+		// MappingOperationHeaderCS returns MappingOperationCS:
 		//
-		//	"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS;
+		//	"mapping" name=UnrestrictedName "(" (ownedParameter+=OperationParameterDeclarationCS (","
+		//
+		//	ownedParameter+=OperationParameterDeclarationCS)*)? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS
+		//"mapping" name=UnrestrictedName "(" (ownedParameter+=OperationParameterDeclarationCS (","
+		//
+		//ownedParameter+=OperationParameterDeclarationCS)*)? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"mapping"
@@ -1816,11 +1778,32 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		//UnrestrictedName
 		public RuleCall getNameUnrestrictedNameParserRuleCall_1_0() { return cNameUnrestrictedNameParserRuleCall_1_0; }
 
-		//signature=OperationSimpleSignatureCS
-		public Assignment getSignatureAssignment_2() { return cSignatureAssignment_2; }
+		//"("
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//OperationSimpleSignatureCS
-		public RuleCall getSignatureOperationSimpleSignatureCSParserRuleCall_2_0() { return cSignatureOperationSimpleSignatureCSParserRuleCall_2_0; }
+		//(ownedParameter+=OperationParameterDeclarationCS ("," ownedParameter+=OperationParameterDeclarationCS)*)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//ownedParameter+=OperationParameterDeclarationCS
+		public Assignment getOwnedParameterAssignment_3_0() { return cOwnedParameterAssignment_3_0; }
+
+		//OperationParameterDeclarationCS
+		public RuleCall getOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_0_0() { return cOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_0_0; }
+
+		//("," ownedParameter+=OperationParameterDeclarationCS)*
+		public Group getGroup_3_1() { return cGroup_3_1; }
+
+		//","
+		public Keyword getCommaKeyword_3_1_0() { return cCommaKeyword_3_1_0; }
+
+		//ownedParameter+=OperationParameterDeclarationCS
+		public Assignment getOwnedParameterAssignment_3_1_1() { return cOwnedParameterAssignment_3_1_1; }
+
+		//OperationParameterDeclarationCS
+		public RuleCall getOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_1_1_0() { return cOwnedParameterOperationParameterDeclarationCSParserRuleCall_3_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	
 	
@@ -2039,7 +2022,6 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 	private UnitTypeCSElements pUnitTypeCS;
 	private SimpleSignatureCSElements pSimpleSignatureCS;
 	private ParameterDeclarationCSElements pParameterDeclarationCS;
-	private OperationSimpleSignatureCSElements pOperationSimpleSignatureCS;
 	private OperationParameterDeclarationCSElements pOperationParameterDeclarationCS;
 	private InitPartCSElements pInitPartCS;
 	private TypeSpecCSElements pTypeSpecCS;
@@ -2290,19 +2272,13 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getParameterDeclarationCSAccess().getRule();
 	}
 
-	//OperationSimpleSignatureCS:
+	////OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
 	//
-	//	{OperationSimpleSignatureCS} "(" (parameter+=OperationParameterDeclarationCS (","
 	//
-	//	parameter+=OperationParameterDeclarationCS)*)? ")";
-	public OperationSimpleSignatureCSElements getOperationSimpleSignatureCSAccess() {
-		return (pOperationSimpleSignatureCS != null) ? pOperationSimpleSignatureCS : (pOperationSimpleSignatureCS = new OperationSimpleSignatureCSElements());
-	}
-	
-	public ParserRule getOperationSimpleSignatureCSRule() {
-		return getOperationSimpleSignatureCSAccess().getRule();
-	}
-
+	////	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
+	// //;
+	//
+	//
 	//OperationParameterDeclarationCS:
 	//
 	//	direction=DirectionKindCS? name= // FIXME Spec grammar says that you can have just a typeSpec  
@@ -2686,9 +2662,12 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getMappingDefinitionCSAccess().getRule();
 	}
 
-	//MappingOperationHeaderCS returns MappingOperationCS:
+	//// signature= OperationSimpleSignatureCS
+	// MappingOperationHeaderCS returns MappingOperationCS:
 	//
-	//	"mapping" name=UnrestrictedName signature=OperationSimpleSignatureCS;
+	//	"mapping" name=UnrestrictedName "(" (ownedParameter+=OperationParameterDeclarationCS (","
+	//
+	//	ownedParameter+=OperationParameterDeclarationCS)*)? ")";
 	public MappingOperationHeaderCSElements getMappingOperationHeaderCSAccess() {
 		return (pMappingOperationHeaderCS != null) ? pMappingOperationHeaderCS : (pMappingOperationHeaderCS = new MappingOperationHeaderCSElements());
 	}

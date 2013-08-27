@@ -16,7 +16,6 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getContextType <em>Context Type</em>}</li>
- *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getSignature <em>Signature</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getDirectionKindCS <em>Direction Kind CS</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getMappingExtension <em>Mapping Extension</em>}</li>
@@ -54,32 +53,6 @@ public interface MappingOperationCS extends OperationCS {
 	 * @generated
 	 */
 	void setContextType(TypeCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Signature</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Signature</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Signature</em>' containment reference.
-	 * @see #setSignature(OperationSimpleSignatureCS)
-	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVTOperationalCSPackage#getMappingOperationCS_Signature()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	OperationSimpleSignatureCS getSignature();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.MappingOperationCS#getSignature <em>Signature</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Signature</em>' containment reference.
-	 * @see #getSignature()
-	 * @generated
-	 */
-	void setSignature(OperationSimpleSignatureCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Result</b></em>' containment reference list.
@@ -172,7 +145,7 @@ public interface MappingOperationCS extends OperationCS {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\townedParameter = signature.parameter.ast()\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter -- FIXME .ast()\n\t\t\t}'"
 	 * @generated
 	 */
 	MappingOperation ast();
