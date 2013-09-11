@@ -39,7 +39,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLStandaloneSetup;
 import org.eclipse.qvto.examples.xtext.qvtoperational.QVTOperationalStandaloneSetup;
 
-public class AbstractQVToXtextTestCase extends XtextTestCase
+public abstract class AbstractQVToXtextTestCase extends XtextTestCase
 {	
 	
 	protected MetaModelManager metaModelManager = null;
