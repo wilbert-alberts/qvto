@@ -17,8 +17,10 @@ import org.eclipse.ocl.examples.domain.ids.CollectionTypeId;
 import org.eclipse.ocl.examples.domain.ids.IdManager;
 import org.eclipse.ocl.examples.domain.ids.NsURIPackageId;
 import org.eclipse.ocl.examples.domain.ids.TypeId;
+import org.eclipse.ocl.examples.domain.messages.EvaluatorMessages;
 import org.eclipse.ocl.examples.domain.types.IdResolver;
 import org.eclipse.ocl.examples.domain.values.OrderedSetValue;
+import org.eclipse.ocl.examples.domain.values.impl.InvalidValueException;
 import org.eclipse.ocl.examples.domain.values.util.ValuesUtil;
 import org.eclipse.ocl.examples.library.oclany.OclAnyEqualOperation;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -37,22 +39,49 @@ public class ClassifierPropertyCS_AST_Part1
         final /*@NonNull*/ /*@NonInvalid*/ IdResolver idResolver = evaluator.getIdResolver();
         final /*@NonNull*/ /*@Thrown*/ List<? extends Object> qualifier = self.getQualifier();
         final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
+        /*@Nullable*/ /*@Thrown*/ Object accumulator = ValuesUtil.FALSE_VALUE;
         /*@Nullable*/ Iterator<?> ITERATOR_x = BOXED_qualifier.iterator();
-        /*@NonNull*/ /*@Thrown*/ Boolean exists;
+        /*@Nullable*/ /*@Thrown*/ Boolean exists;
         while (true) {
             if (!ITERATOR_x.hasNext()) {
-                exists = ValuesUtil.FALSE_VALUE;
+                if ((accumulator == null) || (accumulator == ValuesUtil.FALSE_VALUE)) {
+                    exists = (Boolean)accumulator;
+                }
+                else {
+                    throw (InvalidValueException)accumulator;
+                }
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ String x = (String)ITERATOR_x.next();
             /**
              * x = 'composite'
              */
-            final /*@NonNull*/ /*@Thrown*/ Boolean eq = OclAnyEqualOperation.INSTANCE.evaluate(x, STR_composite);
+            /*@NonNull*/ /*@Caught*/ Object CAUGHT_eq;
+            try {
+                final /*@NonNull*/ /*@Thrown*/ Boolean eq = OclAnyEqualOperation.INSTANCE.evaluate(x, STR_composite);
+                CAUGHT_eq = eq;
+            }
+            catch (Exception e) {
+                CAUGHT_eq = ValuesUtil.createInvalidValue(e);
+            }
             //
-            if (eq != ValuesUtil.FALSE_VALUE) {			// Carry on till something found
-                exists = ValuesUtil.TRUE_VALUE;			// Abort after a find
-                break;
+            if (CAUGHT_eq == ValuesUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+                exists = ValuesUtil.TRUE_VALUE;
+                break;														// Stop immediately 
+            }
+            else if (CAUGHT_eq == ValuesUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+                ;															// Carry on
+            }
+            else if (CAUGHT_eq == null) {								// Abnormal null body evaluation result
+                if (accumulator == ValuesUtil.FALSE_VALUE) {
+                    accumulator = null;										// Cache a null failure
+                }
+            }
+            else if (CAUGHT_eq instanceof InvalidValueException) {		// Abnormal exception evaluation result
+                accumulator = CAUGHT_eq;									// Cache an exception failure
+            }
+            else {															// Impossible badly typed result
+                accumulator = new InvalidValueException(EvaluatorMessages.NonBooleanBody, "exists");
             }
         }
         return exists;

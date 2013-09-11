@@ -435,7 +435,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cInitPartAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cInitPartInitPartCSParserRuleCall_3_0 = (RuleCall)cInitPartAssignment_3.eContents().get(0);
 		
-		////OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
+		//// TODO also remove the corresponding CS metamodel element
+		// //OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
 		//
 		//
 		////	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
@@ -2272,7 +2273,8 @@ public class QVTOperationalGrammarAccess extends AbstractGrammarElementFinder {
 		return getParameterDeclarationCSAccess().getRule();
 	}
 
-	////OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
+	//// TODO also remove the corresponding CS metamodel element
+	// //OperationSimpleSignatureCS : {OperationSimpleSignatureCS}
 	//
 	//
 	////	'(' (parameter+= OperationParameterDeclarationCS (',' parameter+= OperationParameterDeclarationCS)*)? ')'
