@@ -6,7 +6,7 @@
     modelName="QVTOperational" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     testsDirectory="/org.eclipse.qvto.examples.xtext.qvtoperational.tests/emf-gen"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST ../../org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel#//imperativeocl ../../org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.genmodel#//imperativeoclcs ../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot ../../org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel#//qvtoperational"
+    usedGenPackages="platform:/resource/org.eclipse.ocl.examples.xtext.base/model/BaseCST.genmodel#//baseCST platform:/resource/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCST.genmodel#//essentialOCLCST platform:/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.genmodel#//imperativeocl platform:/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.genmodel#//imperativeoclcs platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel#//qvtoperational"
     importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel/ToString"/>
   <foreignModel>QVTOperationalCS.ecore</foreignModel>
@@ -153,7 +153,6 @@
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//MappingOperationCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//MappingOperationCS/contextType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//MappingOperationCS/signature"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//MappingOperationCS/result"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//MappingOperationCS/directionKindCS"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//MappingOperationCS/mappingExtension"/>
@@ -268,8 +267,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//TransformationRefineCS/simpleNameCS"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//TypeSpecCS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//TypeSpecCS/typeCS"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//TypeSpecCS/simpleNameCS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCS.ecore#//TypeSpecCS/ownedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//TypeSpecCS/extentLocation"/>
     </genClasses>
     <genClasses ecoreClass="QVTOperationalCS.ecore#//UnitCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QVTOperationalCS.ecore#//UnitCS/segment"/>
