@@ -4,13 +4,13 @@
     modelDirectory="/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen" modelPluginID="org.eclipse.qvto.examples.pivot.imperativeocl"
     modelName="ImperativeOCL" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot"
+    usedGenPackages="platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot"
     operationReflection="true">
   <foreignModel>ImperativeOCL.ecore</foreignModel>
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
   <genPackages prefix="ImperativeOCL" basePackage="org.eclipse.qvto.examples.pivot"
       disposableProviderFactory="true" contentTypeIdentifier="org.eclipse.qvto.imperativeocl"
-      ecorePackage="ImperativeOCL.ecore#ImperativeOCL">
+      fileExtensions="imperativeoclas" ecorePackage="ImperativeOCL.ecore#ImperativeOCL">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ImperativeOCL.ecore#ImperativeOCL.SeverityKind">
       <genEnumLiterals ecoreEnumLiteral="ImperativeOCL.ecore#ImperativeOCL.SeverityKind.error"/>
       <genEnumLiterals ecoreEnumLiteral="ImperativeOCL.ecore#ImperativeOCL.SeverityKind.warning"/>

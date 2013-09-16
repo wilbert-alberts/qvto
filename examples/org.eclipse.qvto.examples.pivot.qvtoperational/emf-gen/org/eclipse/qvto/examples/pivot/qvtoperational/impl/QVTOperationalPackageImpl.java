@@ -2445,163 +2445,163 @@ public class QVTOperationalPackageImpl extends EPackageImpl implements QVTOperat
 	 * @generated
 	 */
 	protected void createEmofAnnotations() {
-		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName";	
+		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName";								
 		addAnnotation
 		  (getContextualProperty_InitExpression(), 
 		   source, 
 		   new String[] {
 			 "body", "ownerProperty"
-		   });	
+		   });		
 		addAnnotation
 		  (getContextualProperty_Overridden(), 
 		   source, 
 		   new String[] {
 			 "body", "overriding"
-		   });	
+		   });																
 		addAnnotation
 		  (getImperativeOperation_Overridden(), 
 		   source, 
 		   new String[] {
 			 "body", "overriding"
-		   });	
+		   });						
 		addAnnotation
 		  (getMappingBody_EndSection(), 
 		   source, 
 		   new String[] {
 			 "body", "endOwner"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingBody_InitSection(), 
 		   source, 
 		   new String[] {
 			 "body", "initOwner"
-		   });	
+		   });						
 		addAnnotation
 		  (getMappingOperation_Disjunct(), 
 		   source, 
 		   new String[] {
 			 "body", "disjuncter"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingOperation_Inherited(), 
 		   source, 
 		   new String[] {
 			 "body", "inheriting"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingOperation_Merged(), 
 		   source, 
 		   new String[] {
 			 "body", "merging"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingOperation_RefinedRelation(), 
 		   source, 
 		   new String[] {
 			 "body", "refiningOperation"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingOperation_When(), 
 		   source, 
 		   new String[] {
 			 "body", "whenOwner"
-		   });	
+		   });		
 		addAnnotation
 		  (getMappingOperation_Where(), 
 		   source, 
 		   new String[] {
 			 "body", "whereOwner"
-		   });	
+		   });				
 		addAnnotation
 		  (getMappingParameter_ReferredDomain(), 
 		   source, 
 		   new String[] {
 			 "body", "referringParameter"
-		   });	
+		   });						
 		addAnnotation
 		  (getModelType_AdditionalCondition(), 
 		   source, 
 		   new String[] {
 			 "body", "condOwner"
-		   });	
+		   });				
 		addAnnotation
 		  (getModule_Entry(), 
 		   source, 
 		   new String[] {
 			 "body", "entryContext"
-		   });	
+		   });		
 		addAnnotation
 		  (getModule_OwnedTag(), 
 		   source, 
 		   new String[] {
 			 "body", "owner"
-		   });	
+		   });		
 		addAnnotation
 		  (getModule_OwnedVariable(), 
 		   source, 
 		   new String[] {
 			 "body", "variableOwner"
-		   });	
+		   });				
 		addAnnotation
 		  (getModuleImport_ImportedModule(), 
 		   source, 
 		   new String[] {
 			 "body", "importingElement"
-		   });	
+		   });				
 		addAnnotation
 		  (getObjectExp_ReferredObject(), 
 		   source, 
 		   new String[] {
 			 "body", "objectExpression"
-		   });	
+		   });				
 		addAnnotation
 		  (getOperationBody_Content(), 
 		   source, 
 		   new String[] {
 			 "body", "contentOwner"
-		   });	
+		   });		
 		addAnnotation
 		  (getOperationBody_Variable(), 
 		   source, 
 		   new String[] {
 			 "body", "opBody"
-		   });	
+		   });				
 		addAnnotation
 		  (getOperationalTransformation_IntermediateClass(), 
 		   source, 
 		   new String[] {
 			 "body", "transfClient"
-		   });	
+		   });		
 		addAnnotation
 		  (getOperationalTransformation_IntermediateProperty(), 
 		   source, 
 		   new String[] {
 			 "body", "tranfClient"
-		   });	
+		   });		
 		addAnnotation
 		  (getOperationalTransformation_ModelParameter(), 
 		   source, 
 		   new String[] {
 			 "body", "module"
-		   });	
+		   });		
 		addAnnotation
 		  (getOperationalTransformation_Refined(), 
 		   source, 
 		   new String[] {
 			 "body", "refinement"
-		   });	
+		   });		
 		addAnnotation
 		  (getOperationalTransformation_Relation(), 
 		   source, 
 		   new String[] {
 			 "body", "owner"
-		   });	
+		   });						
 		addAnnotation
 		  (getResolveInExp_InMapping(), 
 		   source, 
 		   new String[] {
 			 "body", "resolveExpression"
-		   });
+		   });				
 	}
 
 } //QVTOperationalPackageImpl

@@ -2930,7 +2930,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import";	
+		String source = "http://www.eclipse.org/OCL/Import";		
 		addAnnotation
 		  (this, 
 		   source, 
@@ -2941,7 +2941,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "imperativeocl", "/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore#ImperativeOCL",
 			 "imperativeoclcs", "/resource/org.eclipse.qvto.examples.xtext.imperativeocl/model/ImperativeOCLCS.ecore#/",
 			 "qvtoperational", "/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#QVTOperational"
-		   });
+		   });								
 	}
 
 	/**
@@ -2951,7 +2951,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";	
+		String source = "http://www.eclipse.org/emf/2002/Ecore";			
 		addAnnotation
 		  (this, 
 		   source, 
@@ -2959,7 +2959,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-		   });
+		   });							
 	}
 
 	/**
@@ -2969,43 +2969,43 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * @generated
 	 */
 	protected void createPivotAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";	
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";				
 		addAnnotation
 		  (topLevelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t\t \n\t\t\t\t\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (qvToClassCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "ocl::Class {\n\t\t\t\tname = name,\n\t\t\t\townedAttribute = ownedProperty, -- .ast() FIXME when BASECST implemented\n\t\t\t\townedOperation = ownedOperation -- .ast() FIXME when BASECST implemented\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (operationParameterDeclarationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "qvtoperational::VarParameter {\n\t\t\t\tname = name\n\t\t\t\t--kind = if direction = DirectionKindCS::inout then\n\t\t\t\t--\t\t\tqvtoperational::DirectionKind::inout\n\t\t\t\t--\t   else if direction = DirectionKindCS::out then\n\t\t\t\t--\t   \t\tqvtoperational::DirectionKind::out\n\t\t\t\t--\t   else \n\t\t\t\t--\t   \t\tqvtoperational::DirectionKind::_in\n\t\t\t\t--\t   endif endif\n\t\t\t\t--initExpression = if (initPart.oclIsUndefined()) then\n\t\t\t\t--\t\t\t\t\tnull\n\t\t\t\t--\t\t\t\telse\n\t\t\t\t--\t\t\t\t\tinitPart.expression -- FIXME todo .ast()\n\t\t\t\t--\t\t\t\tendif\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (metamodelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\t-- QVTo spec doesn\'t provide concrete syntax for nsPrefix\n\t\t\t\tnsURI = name,\t\t-- QVTo spec doesn\'t provide concrete syntax for nsURI. Build an internal protocol\n\t\t\t\townedType = ownedType -- .ast() FIXME when BaseCST is implemented\n\t\t\t\t-- type = TODO\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "ocl::Property {\n\t\t\t\tname = name,\n\t\t\t\tisComposite = qualifier->exists(x | x = \'composite\')\n\t\t\t\t-- type = TODO\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (mappingOperationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
 			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter -- FIXME .ast()\n\t\t\t}"
-		   });	
+		   });		
 		addAnnotation
 		  (transformationCSEClass.getEOperations().get(0), 
 		   source, 
