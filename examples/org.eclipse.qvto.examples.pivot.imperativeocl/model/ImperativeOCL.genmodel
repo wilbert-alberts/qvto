@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.qvto.examples.pivot.imperativeocl/emf-gen" modelPluginID="org.eclipse.qvto.examples.pivot.imperativeocl"
     modelName="ImperativeOCL" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    usedGenPackages="platform:/resource/org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot"
+    usedGenPackages="../../org.eclipse.ocl.examples.pivot/model/Pivot.merged.genmodel#//pivot"
     operationReflection="true">
   <foreignModel>ImperativeOCL.ecore</foreignModel>
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>

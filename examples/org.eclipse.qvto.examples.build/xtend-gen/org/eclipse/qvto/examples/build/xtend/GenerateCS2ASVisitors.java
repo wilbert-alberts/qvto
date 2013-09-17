@@ -39,19 +39,22 @@ import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil;
 import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx;
 import org.eclipse.qvto.examples.build.xtend.ContainmentVisitsGenerator;
 import org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLStandaloneSetup;
+import org.eclipse.qvto.examples.xtext.qvtoperational.QVTOperationalStandaloneSetup;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.GenerateCS2ASVisitors {
-  public void generateVisitors(final EPackage csPackage) {
-    OCLstdlib.install();
+  @Override
+  protected void doSetup() {
     EssentialOCLStandaloneSetup.doSetup();
     ImperativeOCLStandaloneSetup.doSetup();
+    QVTOperationalStandaloneSetup.doSetup();
+    OCLstdlib.install();
+  }
+  
+  public void generateVisitors(final EPackage csPackage) {
     super.generateVisitors(csPackage);
-    boolean _isDerived = this.isDerived();
-    if (_isDerived) {
-    }
     this.generateAbstractExtendingDelegatingVisitor(csPackage);
   }
   
