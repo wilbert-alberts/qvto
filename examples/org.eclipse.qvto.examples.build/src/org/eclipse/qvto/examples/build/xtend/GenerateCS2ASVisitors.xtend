@@ -35,6 +35,8 @@ import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup
 import org.eclipse.qvto.examples.build.utlities.ContainmentVisitsGeneratorCtx
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.qvto.examples.build.utlities.CS2ASGeneratorUtil
+import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator
+import org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLStandaloneSetup
 
 // TODO non-derived visitor is not supported, since currently 
 // the root CS2AS are not generated but manually coded. 
@@ -43,35 +45,39 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 //	private String asGenModelURI;
 	 
 	override void generateVisitors(EPackage csPackage) {
+		OCLstdlib.install();
+		EssentialOCLStandaloneSetup.doSetup();
+		ImperativeOCLStandaloneSetup.doSetup();
 		super.generateVisitors(csPackage);
 		if (isDerived()) {
 			// We do some required initializations	
-			OCLstdlib.install();
-			EssentialOCLStandaloneSetup.doSetup();
-			
-			// We generate the visitors
-			generateContainmentVisitor(csPackage);
-			generatePreOrderVisitor(csPackage);
-			generatePostOrderVisitor(csPackage);
-			generateLeft2RightVisitor(csPackage);
+				
 		}
 		generateAbstractExtendingDelegatingVisitor(csPackage); // FIXME remove this when bugXXX is solved
 	}
 	
 	override def void generateContainmentVisitor(@NonNull EPackage csPackage) {
-		var String visitorVariantName = "Containment";
-		var String resultTypeName =  "Continuation<?>";
-		var String visitorVariantClassName = projectPrefix + visitorVariantName + "Visitor";
-		var String variantExtendedClass = superProjectPrefix + visitorVariantName + "Visitor";
-		//		var String extendedClass = if (superVisitorClassName.length() == 0) {
-//				"AbstractExtending" + visitableClassName;
-//			} else {
-//				visitorPrefix + superVisitorClassName;
-//			}
-		var String interfaceName =  visitorClassName +'<'+resultTypeName+'>';
-		var List<String> additionalImports additionalImports = new ArrayList();
-		additionalImports.add(typeof(Continuation).name);
-		csPackage.generateContainmentVisitor(visitorVariantClassName, variantExtendedClass, interfaceName, resultTypeName, additionalImports);
+//		var String visitorVariantName = "Containment";
+//		var String resultTypeName =  "Continuation<?>";
+//		var String visitorVariantClassName = projectPrefix + visitorVariantName + "Visitor";
+//		var String variantExtendedClass = superProjectPrefix + visitorVariantName + "Visitor";
+//		//		var String extendedClass = if (superVisitorClassName.length() == 0) {
+////				"AbstractExtending" + visitableClassName;
+////			} else {
+////				visitorPrefix + superVisitorClassName;
+////			}
+//		var String interfaceName =  visitorClassName +'<'+resultTypeName+'>';
+//		var List<String> additionalImports additionalImports = new ArrayList();
+//		additionalImports.add(typeof(Continuation).name);
+//		csPackage.generateContainmentVisitor(visitorVariantClassName, variantExtendedClass, interfaceName, resultTypeName, additionalImports);
+		if (isDerived()) {
+			AutoCodeGenerator.generate(csPackage, projectPrefix, visitorPackageName, visitorClassName, 
+				superProjectPrefix, superVisitorPackageName, superVisitorClassName
+			);	
+		} else {
+			AutoCodeGenerator.generate(csPackage, projectPrefix, visitorPackageName, visitorClassName, 
+				null, null, null);
+		}
 	}
 
 	
