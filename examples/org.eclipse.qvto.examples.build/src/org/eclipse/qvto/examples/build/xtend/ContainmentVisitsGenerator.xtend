@@ -121,7 +121,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			result.append(getTypeQualifiedName((astType as CollectionType).elementType));
 			result.append('>');			
 		} else {
-			result.append(genModelHelper.getQualifiedInterfaceName(PivotUtil.getType(astType)));
+			result.append(genModelHelper.getEcoreInterfaceName(PivotUtil.getType(astType)));
 		}
 		
 		// FIXME Boxing/Unboxing		
@@ -154,7 +154,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 			result.append(getTypeQualifiedName((astType as CollectionType).elementType));
 			result.append('>');			
 		} else {
-			result.append(genModelHelper.getQualifiedClassName(PivotUtil.getType(astType)));
+			result.append(genModelHelper.getEcoreInterfaceName(PivotUtil.getType(astType)));
 		}
 		return result.toString();
 	}

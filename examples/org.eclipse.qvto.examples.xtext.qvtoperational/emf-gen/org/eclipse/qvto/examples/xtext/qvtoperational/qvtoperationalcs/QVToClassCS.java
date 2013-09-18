@@ -2,7 +2,6 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
 
 /**
@@ -52,7 +51,7 @@ public interface QVToClassCS extends ClassCS {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Class {\n\t\t\t\tname = name,\n\t\t\t\townedAttribute = ownedProperty, -- .ast() FIXME when BASECST implemented\n\t\t\t\townedOperation = ownedOperation -- .ast() FIXME when BASECST implemented\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='ocl::Class {\n\t\t\t\tname = name,\n\t\t\t\townedAttribute = ownedProperty.ast(),\n\t\t\t\townedOperation = ownedOperation.ast()\n\t\t\t}'"
 	 * @generated
 	 */
 	org.eclipse.ocl.examples.pivot.Class ast();

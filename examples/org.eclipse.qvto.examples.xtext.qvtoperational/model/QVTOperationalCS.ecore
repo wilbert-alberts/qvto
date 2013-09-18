@@ -40,7 +40,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TopLevelCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//RootPackageCS">
     <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Root">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ocl::Root {&#xA;&#x9;&#x9;&#x9;&#x9;nestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented&#xA;&#x9;&#x9;&#x9;&#x9; &#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;}"/>
+        <details key="body" value="ocl::Root {&#xA;&#x9;&#x9;&#x9;&#x9;nestedPackage = ownedNestedPackage.ast()&#xA;&#x9;&#x9;&#x9;&#x9; &#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;}"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="import" upperBound="-1"
@@ -52,7 +52,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="QVToClassCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ClassCS">
     <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ocl::Class {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;ownedAttribute = ownedProperty, -- .ast() FIXME when BASECST implemented&#xA;&#x9;&#x9;&#x9;&#x9;ownedOperation = ownedOperation -- .ast() FIXME when BASECST implemented&#xA;&#x9;&#x9;&#x9;}"/>
+        <details key="body" value="ocl::Class {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;ownedAttribute = ownedProperty.ast(),&#xA;&#x9;&#x9;&#x9;&#x9;ownedOperation = ownedOperation.ast()&#xA;&#x9;&#x9;&#x9;}"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intermediate" lowerBound="1"
@@ -93,7 +93,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MetamodelCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PackageCS">
     <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Package">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ocl::Package {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsPrefix = name,&#x9;-- QVTo spec doesn't provide concrete syntax for nsPrefix&#xA;&#x9;&#x9;&#x9;&#x9;nsURI = name,&#x9;&#x9;-- QVTo spec doesn't provide concrete syntax for nsURI. Build an internal protocol&#xA;&#x9;&#x9;&#x9;&#x9;ownedType = ownedType -- .ast() FIXME when BaseCST is implemented&#xA;&#x9;&#x9;&#x9;&#x9;-- type = TODO&#xA;&#x9;&#x9;&#x9;}"/>
+        <details key="body" value="ocl::Package {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsPrefix = name,&#x9;-- QVTo spec doesn't provide concrete syntax for nsPrefix&#xA;&#x9;&#x9;&#x9;&#x9;nsURI = name,&#x9;&#x9;-- QVTo spec doesn't provide concrete syntax for nsURI. Build an internal protocol&#xA;&#x9;&#x9;&#x9;&#x9;ownedType = ownedType.ast()&#xA;&#x9;&#x9;&#x9;&#x9;-- type = TODO&#xA;&#x9;&#x9;&#x9;}"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="metamodelKind" eType="#//MetamodelKind"/>
@@ -200,7 +200,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MappingOperationCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//OperationCS">
     <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#//MappingOperation">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="qvtoperational::MappingOperation {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;-- ownedParameter = signature.parameter.ast()&#xA;&#x9;&#x9;&#x9;&#x9;ownedParameter = ownedParameter -- FIXME .ast()&#xA;&#x9;&#x9;&#x9;}"/>
+        <details key="body" value="qvtoperational::MappingOperation {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;-- ownedParameter = signature.parameter.ast()&#xA;&#x9;&#x9;&#x9;&#x9;ownedParameter = ownedParameter.ast()&#xA;&#x9;&#x9;&#x9;}"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" eType="ecore:EClass ../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//TypeCS"
@@ -367,7 +367,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TransformationCS" eSuperTypes="../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//PackageCS ../../org.eclipse.ocl.examples.xtext.base/model/BaseCST.ecore#//ClassCS">
     <eOperations name="ast" lowerBound="1" eType="ecore:EClass ../../org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.ecore#//OperationalTransformation">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="qvtoperational::OperationalTransformation {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsPrefix = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsURI = name,&#xA;&#x9;&#x9;&#x9;&#x9;nestedPackage = ownedNestedPackage, -- FIXME ,&#xA;&#x9;&#x9;&#x9;&#x9;ownedType = ownedType, -- FIXME .ast(),&#xA;&#x9;&#x9;&#x9;&#x9;ownedOperation = ownedOperation -- FIXME .ast()&#xA;&#x9;&#x9;&#x9;}"/>
+        <details key="body" value="qvtoperational::OperationalTransformation {&#xA;&#x9;&#x9;&#x9;&#x9;name = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsPrefix = name,&#xA;&#x9;&#x9;&#x9;&#x9;nsURI = name,&#xA;&#x9;&#x9;&#x9;&#x9;nestedPackage = ownedNestedPackage.ast(),&#xA;&#x9;&#x9;&#x9;&#x9;ownedType = ownedType.ast(),&#xA;&#x9;&#x9;&#x9;&#x9;ownedOperation = ownedOperation.ast()&#xA;&#x9;&#x9;&#x9;}"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"

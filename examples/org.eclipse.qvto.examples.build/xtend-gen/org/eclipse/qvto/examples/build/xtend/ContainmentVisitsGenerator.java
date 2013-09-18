@@ -175,8 +175,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       result.append(">");
     } else {
       Type _type = PivotUtil.getType(astType);
-      String _qualifiedInterfaceName = this.genModelHelper.getQualifiedInterfaceName(_type);
-      result.append(_qualifiedInterfaceName);
+      String _ecoreInterfaceName = this.genModelHelper.getEcoreInterfaceName(_type);
+      result.append(_ecoreInterfaceName);
     }
     return result.toString();
   }
@@ -228,8 +228,8 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
       result.append(">");
     } else {
       Type _type = PivotUtil.getType(astType);
-      String _qualifiedClassName = this.genModelHelper.getQualifiedClassName(_type);
-      result.append(_qualifiedClassName);
+      String _ecoreInterfaceName = this.genModelHelper.getEcoreInterfaceName(_type);
+      result.append(_ecoreInterfaceName);
     }
     return result.toString();
   }

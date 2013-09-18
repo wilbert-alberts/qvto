@@ -2974,13 +2974,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (topLevelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage --.ast() -- FIXME when BaseCST implemented\n\t\t\t\t \n\t\t\t\t\n\t\t\t}"
+			 "body", "ocl::Root {\n\t\t\t\tnestedPackage = ownedNestedPackage.ast()\n\t\t\t\t \n\t\t\t\t\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (qvToClassCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Class {\n\t\t\t\tname = name,\n\t\t\t\townedAttribute = ownedProperty, -- .ast() FIXME when BASECST implemented\n\t\t\t\townedOperation = ownedOperation -- .ast() FIXME when BASECST implemented\n\t\t\t}"
+			 "body", "ocl::Class {\n\t\t\t\tname = name,\n\t\t\t\townedAttribute = ownedProperty.ast(),\n\t\t\t\townedOperation = ownedOperation.ast()\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (operationParameterDeclarationCSEClass.getEOperations().get(0), 
@@ -2992,7 +2992,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (metamodelCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\t-- QVTo spec doesn\'t provide concrete syntax for nsPrefix\n\t\t\t\tnsURI = name,\t\t-- QVTo spec doesn\'t provide concrete syntax for nsURI. Build an internal protocol\n\t\t\t\townedType = ownedType -- .ast() FIXME when BaseCST is implemented\n\t\t\t\t-- type = TODO\n\t\t\t}"
+			 "body", "ocl::Package {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\t-- QVTo spec doesn\'t provide concrete syntax for nsPrefix\n\t\t\t\tnsURI = name,\t\t-- QVTo spec doesn\'t provide concrete syntax for nsURI. Build an internal protocol\n\t\t\t\townedType = ownedType.ast()\n\t\t\t\t-- type = TODO\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (classifierPropertyCSEClass.getEOperations().get(0), 
@@ -3004,13 +3004,13 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		  (mappingOperationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter -- FIXME .ast()\n\t\t\t}"
+			 "body", "qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter.ast()\n\t\t\t}"
 		   });		
 		addAnnotation
 		  (transformationCSEClass.getEOperations().get(0), 
 		   source, 
 		   new String[] {
-			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage, -- FIXME ,\n\t\t\t\townedType = ownedType, -- FIXME .ast(),\n\t\t\t\townedOperation = ownedOperation -- FIXME .ast()\n\t\t\t}"
+			 "body", "qvtoperational::OperationalTransformation {\n\t\t\t\tname = name,\n\t\t\t\tnsPrefix = name,\n\t\t\t\tnsURI = name,\n\t\t\t\tnestedPackage = ownedNestedPackage.ast(),\n\t\t\t\townedType = ownedType.ast(),\n\t\t\t\townedOperation = ownedOperation.ast()\n\t\t\t}"
 		   });
 	}
 

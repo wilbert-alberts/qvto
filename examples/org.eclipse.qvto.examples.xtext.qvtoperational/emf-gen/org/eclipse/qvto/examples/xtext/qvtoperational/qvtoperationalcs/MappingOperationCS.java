@@ -145,7 +145,7 @@ public interface MappingOperationCS extends OperationCS {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter -- FIXME .ast()\n\t\t\t}'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot body='qvtoperational::MappingOperation {\n\t\t\t\tname = name,\n\t\t\t\t-- ownedParameter = signature.parameter.ast()\n\t\t\t\townedParameter = ownedParameter.ast()\n\t\t\t}'"
 	 * @generated
 	 */
 	MappingOperation ast();
