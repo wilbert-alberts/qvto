@@ -100,7 +100,7 @@ public class ContainmentVisitsGenerator extends AbstractExtendingVisitor<String,
 		// of dummy OCL library package. Two comments:
 		//     1. There is a bug around since some pivot classes are associated to this dummy OCL libary package as well.
 		// 	   It could be solved if explicitly referring to pivot metamodel however Bug 414855 prevents to import the metamodel 
-		return genModelHelper.getQualifiedFactoryInstanceAccessor(astType);		
+		return genModelHelper.getQualifiedFactoryInstanceAccessor(astType);
 	}
 		
 	def private String getTypeQualifiedName(Type astType) {

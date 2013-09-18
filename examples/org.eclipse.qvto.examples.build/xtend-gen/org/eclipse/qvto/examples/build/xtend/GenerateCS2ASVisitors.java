@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.build.xtend;
 
 import com.google.common.base.Objects;
 import java.util.List;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -23,7 +24,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
 import org.eclipse.ocl.examples.build.xtend.GenerateVisitors;
 import org.eclipse.ocl.examples.build.xtend.MergeWriter;
 import org.eclipse.ocl.examples.pivot.ExpressionInOCL;
@@ -53,20 +53,16 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
     OCLstdlib.install();
   }
   
-  public void generateVisitors(final EPackage csPackage) {
-    super.generateVisitors(csPackage);
-    this.generateAbstractExtendingDelegatingVisitor(csPackage);
+  public void generateVisitors(final GenPackage genPackage) {
+    super.generateVisitors(genPackage);
+    EPackage _ecorePackage = genPackage.getEcorePackage();
+    this.generateAbstractExtendingDelegatingVisitor(_ecorePackage);
   }
   
   public void generateContainmentVisitor(@NonNull final EPackage csPackage) {
-    boolean _isDerived = this.isDerived();
-    if (_isDerived) {
-      AutoCodeGenerator.generate(csPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
-        this.superProjectPrefix, this.superVisitorPackageName, this.superVisitorClassName);
-    } else {
-      AutoCodeGenerator.generate(csPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
-        null, null, null);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from EPackage to GenPackage"
+      + "\nType mismatch: cannot convert from EPackage to GenPackage");
   }
   
   /**
