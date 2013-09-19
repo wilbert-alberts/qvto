@@ -10,16 +10,13 @@
  */
 package	org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
-import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.pivot.utilities.PivotUtil;
-import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
+import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSContainmentVisitor;
 
 /**
  *

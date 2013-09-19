@@ -13,7 +13,7 @@ import org.eclipse.ocl.examples.domain.types.IdResolver;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
-import org.eclipse.ocl.examples.xtext.essentialocl.util.AutoEssentialOCLContainmentVisitor;
+import org.eclipse.ocl.examples.xtext.essentialocl.util.EssentialOCLContainmentVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssertExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.AssignStatementCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.BlockExpCS;
@@ -44,7 +44,7 @@ import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.WhileExpCS;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
 
 public class AutoImperativeOCLCSContainmentVisitor
-	extends AutoEssentialOCLContainmentVisitor
+	extends EssentialOCLContainmentVisitor
 	implements ImperativeOCLCSVisitor<Continuation<?>>
 {
     

@@ -52,7 +52,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalFactory;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.AutoImperativeOCLCSContainmentVisitor;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSContainmentVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -113,7 +113,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 public class AutoQVTOperationalCSContainmentVisitor
-	extends AutoImperativeOCLCSContainmentVisitor
+	extends ImperativeOCLCSContainmentVisitor
 	implements QVTOperationalCSVisitor<Continuation<?>>
 {
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", "baseCST", BaseCSTPackage.eINSTANCE);
