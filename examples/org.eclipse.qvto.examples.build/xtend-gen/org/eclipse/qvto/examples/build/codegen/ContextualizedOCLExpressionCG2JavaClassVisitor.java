@@ -66,7 +66,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
   }
   
   @Nullable
-  public Object visitCGClass(@NonNull final CGClass cgClass) {
+  public Boolean visitCGClass(@NonNull final CGClass cgClass) {
     String className = cgClass.getName();
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@SuppressWarnings(\"nls\")");
@@ -100,18 +100,18 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
     this.js.append("\n");
     List<CGOperation> _operations = cgClass.getOperations();
     for (final CGOperation cgOperation : _operations) {
-      cgOperation.<Object>accept(this);
+      cgOperation.<Boolean>accept(this);
     }
     this.js.popIndentation();
     StringConcatenation _builder_3 = new StringConcatenation();
     _builder_3.append("}");
     _builder_3.newLine();
     this.js.append(_builder_3.toString());
-    return null;
+    return Boolean.valueOf(true);
   }
   
   @Nullable
-  public Object visitCGOperation(@NonNull final CGOperation cgOperation) {
+  public Boolean visitCGOperation(@NonNull final CGOperation cgOperation) {
     JavaLocalContext localContext2 = this.globalContext.getLocalContext(cgOperation);
     boolean _notEquals = (!Objects.equal(localContext2, null));
     if (_notEquals) {
@@ -163,7 +163,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
   }
   
   @Nullable
-  public Object visitCGBuiltInIterationCallExp(final CGBuiltInIterationCallExp cgIterationCallExp) {
+  public Boolean visitCGBuiltInIterationCallExp(final CGBuiltInIterationCallExp cgIterationCallExp) {
     super.visitCGBuiltInIterationCallExp(cgIterationCallExp);
     CGValuedElement body = cgIterationCallExp.getBody();
     boolean _and = false;
@@ -180,7 +180,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
   }
   
   @Nullable
-  public Object visitCGEcoreOperationCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
+  public Boolean visitCGEcoreOperationCallExp(final CGEcoreOperationCallExp cgOperationCallExp) {
     boolean _isASTCallExp = this.isASTCallExp(cgOperationCallExp);
     if (_isASTCallExp) {
       this.interceptASTCallExp(cgOperationCallExp);

@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.domain.values.OrderedSetValue;
 import org.eclipse.ocl.examples.domain.values.SequenceValue;
 import org.eclipse.ocl.examples.domain.values.impl.InvalidValueException;
 import org.eclipse.ocl.examples.domain.values.util.ValuesUtil;
-import org.eclipse.ocl.examples.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.examples.pivot.Class;
 import org.eclipse.ocl.examples.pivot.Element;
 import org.eclipse.ocl.examples.pivot.Package;
@@ -114,10 +113,10 @@ public class AutoQVTOperationalCSContainmentVisitor
 	extends AutoImperativeOCLCSContainmentVisitor
 	implements QVTOperationalCSVisitor<Continuation<?>>
 {
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", BaseCSTPackage.eINSTANCE);
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/Pivot", PivotPackage.eINSTANCE);
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperational", QVTOperationalPackage.eINSTANCE);
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS", QVTOperationalCSPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", "baseCST", BaseCSTPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/Pivot", "pivot", PivotPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperational", "qvtoperational", QVTOperationalPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS", "qvtoperationalcs", QVTOperationalCSPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Class = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Class", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ClassifierCS = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST.getClassId("ClassifierCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ClassifierPropertyCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("ClassifierPropertyCS", 0);
@@ -204,14 +203,15 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // Root::nestedPackage
         //
-        final /*@NonNull*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
+        final /*@Nullable*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
+        assert ownedNestedPackage != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Package);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedNestedPackage.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = accumulator;
+                collect = (SequenceValue)accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ PackageCS _1 = (PackageCS)ITERATOR__1.next();
@@ -219,13 +219,14 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainPackage ast = (DomainPackage)_1.getPivot();
             //
             accumulator.add(ast);
         }
         final List<? extends DomainPackage> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainPackage.class);
+        assert UNBOXED_collect != null;
         context.refreshList(result.getNestedPackage(), UNBOXED_collect);
         // AS element comments update;
         context.refreshComments(result, self);
@@ -248,21 +249,22 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // NamedElement::name
         //
-        final /*@NonNull*/ /*@Thrown*/ String name = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name = self.getName();
         if ((name != result.getName()) && (name == null || !name.equals(result.getName()))) {
             result.setName(name);
         }
         //
         // Type::ownedAttribute
         //
-        final /*@NonNull*/ /*@Thrown*/ List<StructuralFeatureCS> ownedProperty = self.getOwnedProperty();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedProperty = idResolver.createOrderedSetOfAll(ORD_CLSSid_StructuralFeatureCS, ownedProperty);
+        final /*@Nullable*/ /*@Thrown*/ List<StructuralFeatureCS> ownedProperty = self.getOwnedProperty();
+        assert ownedProperty != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedProperty = idResolver.createOrderedSetOfAll(ORD_CLSSid_StructuralFeatureCS, ownedProperty);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Property);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedProperty.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = accumulator;
+                collect = (SequenceValue)accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ StructuralFeatureCS _1 = (StructuralFeatureCS)ITERATOR__1.next();
@@ -270,25 +272,27 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainProperty ast = (DomainProperty)_1.getPivot();
             //
             accumulator.add(ast);
         }
         final List<? extends DomainProperty> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainProperty.class);
+        assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedAttribute(), UNBOXED_collect);
         //
         // Type::ownedOperation
         //
-        final /*@NonNull*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
+        final /*@Nullable*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
+        assert ownedOperation != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_0 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Operation);
         /*@Nullable*/ Iterator<?> ITERATOR__1_0 = BOXED_ownedOperation.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
         while (true) {
             if (!ITERATOR__1_0.hasNext()) {
-                collect_0 = accumulator_0;
+                collect_0 = (SequenceValue)accumulator_0;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ OperationCS _1_0 = (OperationCS)ITERATOR__1_0.next();
@@ -296,13 +300,14 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1_0 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainOperation ast_0 = (DomainOperation)_1_0.getPivot();
             //
             accumulator_0.add(ast_0);
         }
         final List<? extends DomainOperation> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, DomainOperation.class);
+        assert UNBOXED_collect_0 != null;
         context.refreshList(result.getOwnedOperation(), UNBOXED_collect_0);
         // AS element comments update;
         context.refreshComments(result, self);
@@ -337,7 +342,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // NamedElement::name
         //
-        final /*@NonNull*/ /*@Thrown*/ String name = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name = self.getName();
         if ((name != result.getName()) && (name == null || !name.equals(result.getName()))) {
             result.setName(name);
         }
@@ -355,7 +360,7 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitMetamodelCS(/*@NonNull*/ MetamodelCS self) {
-        final /*@NonNull*/ /*@Thrown*/ String name_1 = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name_1 = self.getName();
         //
         // Package
         //
@@ -389,14 +394,15 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // Package::ownedType
         //
-        final /*@NonNull*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
+        final /*@Nullable*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
+        assert ownedType != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Type);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedType.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = accumulator;
+                collect = (SequenceValue)accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ClassifierCS _1 = (ClassifierCS)ITERATOR__1.next();
@@ -404,13 +410,14 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainType ast = (DomainType)_1.getPivot();
             //
             accumulator.add(ast);
         }
         final List<? extends DomainType> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainType.class);
+        assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedType(), UNBOXED_collect);
         // AS element comments update;
         context.refreshComments(result, self);
@@ -437,21 +444,22 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // NamedElement::name
         //
-        final /*@NonNull*/ /*@Thrown*/ String name = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name = self.getName();
         if ((name != result.getName()) && (name == null || !name.equals(result.getName()))) {
             result.setName(name);
         }
         //
         // Property::isComposite
         //
-        final /*@NonNull*/ /*@Thrown*/ List<? extends Object> qualifier = self.getQualifier();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
-        /*@Nullable*/ /*@Thrown*/ Object accumulator = ValuesUtil.FALSE_VALUE;
+        final /*@Nullable*/ /*@Thrown*/ List<? extends Object> qualifier = self.getQualifier();
+        assert qualifier != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
+        /*@NonNull*/ /*@Thrown*/ Object accumulator = ValuesUtil.FALSE_VALUE;
         /*@Nullable*/ Iterator<?> ITERATOR_x = BOXED_qualifier.iterator();
         /*@Nullable*/ /*@Thrown*/ Boolean exists;
         while (true) {
             if (!ITERATOR_x.hasNext()) {
-                if ((accumulator == null) || (accumulator == ValuesUtil.FALSE_VALUE)) {
+                if (accumulator == ValuesUtil.FALSE_VALUE) {
                     exists = (Boolean)accumulator;
                 }
                 else {
@@ -463,29 +471,14 @@ public class AutoQVTOperationalCSContainmentVisitor
             /**
              * x = 'composite'
              */
-            /*@NonNull*/ /*@Caught*/ Object CAUGHT_eq;
-            try {
-                final /*@NonNull*/ /*@Thrown*/ Boolean eq = OclAnyEqualOperation.INSTANCE.evaluate(x, STR_composite);
-                CAUGHT_eq = eq;
-            }
-            catch (Exception e) {
-                CAUGHT_eq = ValuesUtil.createInvalidValue(e);
-            }
+            final /*@NonInvalid*/ boolean eq = STR_composite.equals(x);
             //
-            if (CAUGHT_eq == ValuesUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+            if (eq == ValuesUtil.TRUE_VALUE) {					// Normal successful body evaluation result
                 exists = ValuesUtil.TRUE_VALUE;
                 break;														// Stop immediately 
             }
-            else if (CAUGHT_eq == ValuesUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+            else if (eq == ValuesUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
                 ;															// Carry on
-            }
-            else if (CAUGHT_eq == null) {								// Abnormal null body evaluation result
-                if (accumulator == ValuesUtil.FALSE_VALUE) {
-                    accumulator = null;										// Cache a null failure
-                }
-            }
-            else if (CAUGHT_eq instanceof InvalidValueException) {		// Abnormal exception evaluation result
-                accumulator = CAUGHT_eq;									// Cache an exception failure
             }
             else {															// Impossible badly typed result
                 accumulator = new InvalidValueException(EvaluatorMessages.NonBooleanBody, "exists");
@@ -583,21 +576,22 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // NamedElement::name
         //
-        final /*@NonNull*/ /*@Thrown*/ String name = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name = self.getName();
         if ((name != result.getName()) && (name == null || !name.equals(result.getName()))) {
             result.setName(name);
         }
         //
         // Operation::ownedParameter
         //
-        final /*@NonNull*/ /*@Thrown*/ List<ParameterCS> ownedParameter = self.getOwnedParameter();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedParameter = idResolver.createOrderedSetOfAll(ORD_CLSSid_ParameterCS, ownedParameter);
+        final /*@Nullable*/ /*@Thrown*/ List<ParameterCS> ownedParameter = self.getOwnedParameter();
+        assert ownedParameter != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedParameter = idResolver.createOrderedSetOfAll(ORD_CLSSid_ParameterCS, ownedParameter);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Parameter);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedParameter.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = accumulator;
+                collect = (SequenceValue)accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ParameterCS _1 = (ParameterCS)ITERATOR__1.next();
@@ -605,13 +599,14 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainTypedElement ast = (DomainTypedElement)_1.getPivot();
             //
             accumulator.add(ast);
         }
         final List<? extends DomainTypedElement> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainTypedElement.class);
+        assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedParameter(), UNBOXED_collect);
         // AS element comments update;
         context.refreshComments(result, self);
@@ -723,7 +718,7 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitTransformationCS(/*@NonNull*/ TransformationCS self) {
-        final /*@NonNull*/ /*@Thrown*/ String name_1 = self.getName();
+        final /*@Nullable*/ /*@Thrown*/ String name_1 = self.getName();
         //
         // OperationalTransformation
         //
@@ -757,14 +752,15 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // Package::nestedPackage
         //
-        final /*@NonNull*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
+        final /*@Nullable*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
+        assert ownedNestedPackage != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Package);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedNestedPackage.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = accumulator;
+                collect = (SequenceValue)accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ PackageCS _1 = (PackageCS)ITERATOR__1.next();
@@ -772,25 +768,27 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainPackage ast = (DomainPackage)_1.getPivot();
             //
             accumulator.add(ast);
         }
         final List<? extends DomainPackage> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainPackage.class);
+        assert UNBOXED_collect != null;
         context.refreshList(result.getNestedPackage(), UNBOXED_collect);
         //
         // Package::ownedType
         //
-        final /*@NonNull*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
+        final /*@Nullable*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
+        assert ownedType != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_0 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Type);
         /*@Nullable*/ Iterator<?> ITERATOR__1_0 = BOXED_ownedType.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
         while (true) {
             if (!ITERATOR__1_0.hasNext()) {
-                collect_0 = accumulator_0;
+                collect_0 = (SequenceValue)accumulator_0;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ClassifierCS _1_0 = (ClassifierCS)ITERATOR__1_0.next();
@@ -798,25 +796,27 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1_0 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainType ast_0 = (DomainType)_1_0.getPivot();
             //
             accumulator_0.add(ast_0);
         }
         final List<? extends DomainType> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, DomainType.class);
+        assert UNBOXED_collect_0 != null;
         context.refreshList(result.getOwnedType(), UNBOXED_collect_0);
         //
         // Type::ownedOperation
         //
-        final /*@NonNull*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
-        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
+        final /*@Nullable*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
+        assert ownedOperation != null;
+        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_1 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Operation);
         /*@Nullable*/ Iterator<?> ITERATOR__1_1 = BOXED_ownedOperation.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_1;
         while (true) {
             if (!ITERATOR__1_1.hasNext()) {
-                collect_1 = accumulator_1;
+                collect_1 = (SequenceValue)accumulator_1;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ OperationCS _1_1 = (OperationCS)ITERATOR__1_1.next();
@@ -824,13 +824,14 @@ public class AutoQVTOperationalCSContainmentVisitor
              * ast()
              */
             if (_1_1 == null) {
-                throw new InvalidValueException("Null source");
+                throw new InvalidValueException("Null source for \'null\'");
             }
             final /*@Nullable*/ /*@NonInvalid*/ DomainOperation ast_1 = (DomainOperation)_1_1.getPivot();
             //
             accumulator_1.add(ast_1);
         }
         final List<? extends DomainOperation> UNBOXED_collect_1 = collect_1.asEcoreObjects(idResolver, DomainOperation.class);
+        assert UNBOXED_collect_1 != null;
         context.refreshList(result.getOwnedOperation(), UNBOXED_collect_1);
         // AS element comments update;
         context.refreshComments(result, self);

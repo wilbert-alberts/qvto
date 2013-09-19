@@ -58,7 +58,7 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 	}
 
 	@Nullable 
-	override public  Object visitCGClass(@NonNull CGClass cgClass) {		
+	override public Boolean visitCGClass(@NonNull CGClass cgClass) {		
 		// Class<?> baseClass = genModelHelper.getAbstractOperationClass(expInOcl.getParameterVariable());
 		// String title = cgClass.getName() + " provides the Java implementation for\n";
 		// js.appendCommentWithOCL(title, oclExp);
@@ -83,14 +83,14 @@ public class ContextualizedOCLExpressionCG2JavaClassVisitor extends CG2JavaVisit
 		js.popIndentation();
 		js.append('''}
 				''');
-		return null;
+		return true;
 	}
 	
 
 	@Nullable
 	// FIXME Unfortunately CG2JavaVisitor::visitCGOperation arbitrarily thinks I'm overriding an operation 
 	// so I need to reimplement it to avoid that. This @Override annotation should be configurable in CGOperation (isOverriding ?)
-	override Object visitCGOperation(@NonNull CGOperation cgOperation) {
+	override Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
 		var JavaLocalContext localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;

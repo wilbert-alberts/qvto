@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.build.xtend;
 
 import com.google.common.base.Objects;
 import java.util.List;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -53,18 +54,19 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
     OCLstdlib.install();
   }
   
-  public void generateVisitors(final EPackage csPackage) {
-    super.generateVisitors(csPackage);
+  public void generateVisitors(final GenPackage genPackage) {
+    super.generateVisitors(genPackage);
+    EPackage csPackage = genPackage.getEcorePackage();
     this.generateAbstractExtendingDelegatingVisitor(csPackage);
   }
   
-  public void generateContainmentVisitor(@NonNull final EPackage csPackage) {
+  public void generateContainmentVisitor(@NonNull final GenPackage genPackage) {
     boolean _isDerived = this.isDerived();
     if (_isDerived) {
-      AutoCodeGenerator.generate(csPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
+      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
         this.superProjectPrefix, this.superVisitorPackageName, this.superVisitorClassName);
     } else {
-      AutoCodeGenerator.generate(csPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
+      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
         null, null, null);
     }
   }
