@@ -30,11 +30,14 @@ import org.eclipse.ocl.examples.domain.values.impl.InvalidValueException;
 import org.eclipse.ocl.examples.domain.values.util.ValuesUtil;
 import org.eclipse.ocl.examples.pivot.Class;
 import org.eclipse.ocl.examples.pivot.Element;
+import org.eclipse.ocl.examples.pivot.Operation;
 import org.eclipse.ocl.examples.pivot.Package;
+import org.eclipse.ocl.examples.pivot.Parameter;
 import org.eclipse.ocl.examples.pivot.PivotFactory;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
 import org.eclipse.ocl.examples.pivot.Property;
 import org.eclipse.ocl.examples.pivot.Root;
+import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
 import org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS;
 import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
@@ -198,6 +201,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = PivotFactory.eINSTANCE.createRoot();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -211,7 +215,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = (SequenceValue)accumulator;
+                collect = accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ PackageCS _1 = (PackageCS)ITERATOR__1.next();
@@ -225,7 +229,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator.add(ast);
         }
-        final List<? extends DomainPackage> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainPackage.class);
+        final List<? extends Package> UNBOXED_collect = collect.asEcoreObjects(idResolver, Package.class);
         assert UNBOXED_collect != null;
         context.refreshList(result.getNestedPackage(), UNBOXED_collect);
         // AS element comments update;
@@ -244,6 +248,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = PivotFactory.eINSTANCE.createClass();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -264,7 +269,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = (SequenceValue)accumulator;
+                collect = accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ StructuralFeatureCS _1 = (StructuralFeatureCS)ITERATOR__1.next();
@@ -278,7 +283,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator.add(ast);
         }
-        final List<? extends DomainProperty> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainProperty.class);
+        final List<? extends Property> UNBOXED_collect = collect.asEcoreObjects(idResolver, Property.class);
         assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedAttribute(), UNBOXED_collect);
         //
@@ -292,7 +297,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
         while (true) {
             if (!ITERATOR__1_0.hasNext()) {
-                collect_0 = (SequenceValue)accumulator_0;
+                collect_0 = accumulator_0;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ OperationCS _1_0 = (OperationCS)ITERATOR__1_0.next();
@@ -306,7 +311,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator_0.add(ast_0);
         }
-        final List<? extends DomainOperation> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, DomainOperation.class);
+        final List<? extends Operation> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, Operation.class);
         assert UNBOXED_collect_0 != null;
         context.refreshList(result.getOwnedOperation(), UNBOXED_collect_0);
         // AS element comments update;
@@ -337,6 +342,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = QVTOperationalFactory.eINSTANCE.createVarParameter();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -371,6 +377,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = PivotFactory.eINSTANCE.createPackage();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -402,7 +409,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = (SequenceValue)accumulator;
+                collect = accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ClassifierCS _1 = (ClassifierCS)ITERATOR__1.next();
@@ -416,7 +423,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator.add(ast);
         }
-        final List<? extends DomainType> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainType.class);
+        final List<? extends Type> UNBOXED_collect = collect.asEcoreObjects(idResolver, Type.class);
         assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedType(), UNBOXED_collect);
         // AS element comments update;
@@ -439,6 +446,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = PivotFactory.eINSTANCE.createProperty();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -571,6 +579,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = QVTOperationalFactory.eINSTANCE.createMappingOperation();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -591,7 +600,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = (SequenceValue)accumulator;
+                collect = accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ParameterCS _1 = (ParameterCS)ITERATOR__1.next();
@@ -605,7 +614,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator.add(ast);
         }
-        final List<? extends DomainTypedElement> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainTypedElement.class);
+        final List<? extends Parameter> UNBOXED_collect = collect.asEcoreObjects(idResolver, Parameter.class);
         assert UNBOXED_collect != null;
         context.refreshList(result.getOwnedParameter(), UNBOXED_collect);
         // AS element comments update;
@@ -729,6 +738,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         }
         else {
             result = QVTOperationalFactory.eINSTANCE.createOperationalTransformation();
+            assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
@@ -760,7 +770,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
         while (true) {
             if (!ITERATOR__1.hasNext()) {
-                collect = (SequenceValue)accumulator;
+                collect = accumulator;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ PackageCS _1 = (PackageCS)ITERATOR__1.next();
@@ -774,7 +784,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator.add(ast);
         }
-        final List<? extends DomainPackage> UNBOXED_collect = collect.asEcoreObjects(idResolver, DomainPackage.class);
+        final List<? extends Package> UNBOXED_collect = collect.asEcoreObjects(idResolver, Package.class);
         assert UNBOXED_collect != null;
         context.refreshList(result.getNestedPackage(), UNBOXED_collect);
         //
@@ -788,7 +798,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
         while (true) {
             if (!ITERATOR__1_0.hasNext()) {
-                collect_0 = (SequenceValue)accumulator_0;
+                collect_0 = accumulator_0;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ ClassifierCS _1_0 = (ClassifierCS)ITERATOR__1_0.next();
@@ -802,7 +812,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator_0.add(ast_0);
         }
-        final List<? extends DomainType> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, DomainType.class);
+        final List<? extends Type> UNBOXED_collect_0 = collect_0.asEcoreObjects(idResolver, Type.class);
         assert UNBOXED_collect_0 != null;
         context.refreshList(result.getOwnedType(), UNBOXED_collect_0);
         //
@@ -816,7 +826,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_1;
         while (true) {
             if (!ITERATOR__1_1.hasNext()) {
-                collect_1 = (SequenceValue)accumulator_1;
+                collect_1 = accumulator_1;
                 break;
             }
             /*@Nullable*/ /*@NonInvalid*/ OperationCS _1_1 = (OperationCS)ITERATOR__1_1.next();
@@ -830,7 +840,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             //
             accumulator_1.add(ast_1);
         }
-        final List<? extends DomainOperation> UNBOXED_collect_1 = collect_1.asEcoreObjects(idResolver, DomainOperation.class);
+        final List<? extends Operation> UNBOXED_collect_1 = collect_1.asEcoreObjects(idResolver, Operation.class);
         assert UNBOXED_collect_1 != null;
         context.refreshList(result.getOwnedOperation(), UNBOXED_collect_1);
         // AS element comments update;

@@ -6,7 +6,6 @@ import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.InitPartCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.OperationSimpleSignatureCS;
-import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.SimpleSignatureCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecCS;
 
 
@@ -15,7 +14,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecC
  * 
  * @author asbh
  */
-public class QVTOperationalCSContainmentVisitor extends org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSContainmentVisitor {
+public class QVTOperationalCSContainmentVisitor extends org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.AutoQVTOperationalCSContainmentVisitor {
 
 	public QVTOperationalCSContainmentVisitor(CS2PivotConversion context) {
 		super(context);
