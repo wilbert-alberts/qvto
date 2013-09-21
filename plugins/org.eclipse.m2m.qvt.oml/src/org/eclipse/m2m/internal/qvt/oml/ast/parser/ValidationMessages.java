@@ -62,7 +62,8 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
 	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
-    public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;    
+    public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
+    public static String QvtOperationalVisitorCS_transformationNameDuplicates;
 	public static String QvtOperationalVisitorCS_unresolvedMappingOperationReference;
     public static String QvtOperationalVisitorCS_unsupportedMetamodelComplianceKind;
     public static String QvtOperationalVisitorCS_metamodelPackageRefInconsistent;

@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -100,6 +101,18 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 		QvtOperationalStdLibrary.INSTANCE.importTo(env);		
 		return env;
 	}
+
+	public QvtOperationalModuleEnv createModuleEnvironment(final Module module, QvtOperationalFileEnv parentEnv) {
+		QvtOperationalModuleEnv moduleEnv = new QvtOperationalModuleEnv(parentEnv.getEPackageRegistry(), module.eResource());
+		moduleEnv.setFactory(this);		
+		moduleEnv.setContextModule(module);
+		QvtOperationalStdLibrary.INSTANCE.importTo(moduleEnv);
+		parentEnv.addInnerEnvironment(moduleEnv);
+		moduleEnv.setFileParent(parentEnv);
+		moduleEnv.setASTNodeToCSTNodeMap(parentEnv.getASTNodeToCSTNodeMap());
+		return moduleEnv;
+	}
+	
 	
 	@Override
 	public QvtOperationalEnv createOperationContext(

@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -342,6 +343,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
 		}
+		if (parent instanceof QvtOperationalModuleEnv && ((QvtOperationalModuleEnv)parent).getFileParent() != null) {
+			parent = ((QvtOperationalModuleEnv)parent).getFileParent();
+		}
 		
 		boolean foundSameLocation = false;
 		int msgLength = endOffset-startOffset+1;
@@ -366,6 +370,9 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		QvtOperationalEnv parent = this;
 		while (parent.getInternalParent() != null) {
 			parent = (QvtOperationalEnv) parent.getInternalParent();
+		}
+		if (parent instanceof QvtOperationalModuleEnv && ((QvtOperationalModuleEnv)parent).getFileParent() != null) {
+			parent = ((QvtOperationalModuleEnv)parent).getFileParent();
 		}
 		parent.myWarningSet.add(new QvtMessage(message, QvtMessage.SEVERITY_WARNING, startOffset, endOffset-startOffset+1, getLineNum(parent, startOffset)));
 
@@ -693,7 +700,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	public Module getModuleContextType() {
 		return getInternalParent() instanceof QvtOperationalEnv ? ((QvtOperationalEnv)getInternalParent()).getModuleContextType() : null;
 	}	
-		
+
+	
 	private void defineParameterVar(EParameter parameter) {		
 		Variable<EClassifier, EParameter> var;
 		if(parameter instanceof VarParameter) {

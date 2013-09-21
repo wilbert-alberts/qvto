@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
@@ -200,7 +201,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         		return;
         	}
             CompiledUnit compiledUnit = QvtEngine.getInstance(file).compileUnit(unit, null);
-            if(compiledUnit != null && compiledUnit.getModules().size() == 1) {
+            if(compiledUnit != null && compiledUnit.getModules().size() >= 1) {
 	            Module module = compiledUnit.getModules().get(0);
 	            ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(module);
 				if(mainOperation != null) {

@@ -325,6 +325,11 @@ public class TransformTests {
         		new FileToFileData("bug274105_274505"), //$NON-NLS-1$
         		new FileToFileData("bug414555"), //$NON-NLS-1$
         		new FilesToFilesData("bug414472", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("bug416584", new String[][] { //$NON-NLS-1$ 
+        				new String[] { "libProp", "123" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "prop", "prop" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "prop2", "prop2" }, //$NON-NLS-1$ //$NON-NLS-2$
+        		}),         		        		
         		};
     }
 

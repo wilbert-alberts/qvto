@@ -29,8 +29,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
-import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
@@ -166,15 +164,7 @@ public class QvtCompletionCompiler extends QVTOCompiler {
             cFileData.setLightweightScript(lightweightScript);
             CSTNode cstNode = LightweightParserUtil.parse(lightweightScript, cFile, LightweightParserUtil.ParserTypeEnum.LIGHTWEIGHT_PARSER);
 
-            UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();
-        	unitCS.setStartOffset(0);
-        	unitCS.setStartOffset(lexer.getILexStream().getStreamLength());
-            
-            if (cstNode instanceof MappingModuleCS) {  	
-            	unitCS.getTopLevelElements().add((MappingModuleCS) cstNode);
-            }
-            
-            cFileData.setUnitCS(unitCS);            
+            cFileData.setUnitCS((UnitCS)cstNode);            
         } catch (Exception ex) {
             Activator.log(ex);
         }

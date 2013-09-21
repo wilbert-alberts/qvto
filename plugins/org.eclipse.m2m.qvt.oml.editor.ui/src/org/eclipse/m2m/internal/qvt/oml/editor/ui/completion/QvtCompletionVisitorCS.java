@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
@@ -14,15 +15,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExternalUnitElementsProvider;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -50,9 +50,9 @@ public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
     }
     
     @Override
-    public Module visitMappingModule(MappingModuleCS moduleCS, URI unitURI, QvtOperationalFileEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {
+	public void visitModuleHeaders(MappingModuleCS moduleCS, URI unitURI, QvtOperationalModuleEnv env, ExternalUnitElementsProvider importResolver, ResourceSet resSet) throws SemanticException {        
         setEnv(env);
-        return super.visitMappingModule(moduleCS, unitURI, env, importResolver, resSet);
+        super.visitModuleHeaders(moduleCS, unitURI, env, importResolver, resSet);
     }
 
     @Override

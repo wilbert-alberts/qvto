@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 410470
+ *     Alex Paperno - bugs 410470, 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
@@ -20,6 +20,8 @@ import lpg.runtime.Token;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
@@ -88,6 +90,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.WhileExpCS;
 import org.eclipse.ocl.cst.CSTFactory;
@@ -146,7 +149,9 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected final Object setupTopLevel(EList<CSTNode> unitElements) {
 		validateTopLevelElementOrder(unitElements);
 		
-	    List<MappingModuleCS> modules = new ArrayList<MappingModuleCS>();
+		UnitCS unitCS = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createUnitCS();		
+		
+		List<MappingModuleCS> modules = new ArrayList<MappingModuleCS>();
 	    List<ModelTypeCS> modeltypes = new ArrayList<ModelTypeCS>();
 	    List<ClassifierDefCS> classifiers = new ArrayList<ClassifierDefCS>();
 	    List<ModulePropertyCS> properties = new ArrayList<ModulePropertyCS>();
@@ -205,16 +210,26 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         		trailingUnitElement.getEndToken().getTokenIndex()
 	                );
 	    }
-        // TODO: support multiple modules
-	    if (modules.size() > 1) {
-	        reportError("Multiple modules are unsupported yet!", //$NON-NLS-1$ 
-	        		startingUnitElement.getStartToken().getTokenIndex(),
-        		trailingUnitElement.getEndToken().getTokenIndex());
-	    }
         for (MappingModuleCS moduleCS : modules) {
-            // FIXME: clone imports and modeltypes for multiple modules
-            moduleCS.getImports().addAll(imports);
-            moduleCS.getMetamodels().addAll(modeltypes);
+        	// Clone modeltypes
+        	List<ModelTypeCS> modeltypesCopy = new ArrayList<ModelTypeCS>();
+            for (ModelTypeCS modeltypeCS : modeltypes) {
+            	EcoreUtil.Copier copier = new EcoreUtil.Copier();
+    		    EObject modeltypeCSCopy = copier.copy(modeltypeCS);
+    		    copier.copyReferences();
+            	modeltypesCopy.add((ModelTypeCS)modeltypeCSCopy);
+            }
+            moduleCS.getMetamodels().addAll(modeltypesCopy);
+            
+        	// Clone imports
+        	List<ImportCS> importsCopy = new ArrayList<ImportCS>();
+            for (ImportCS importCS : imports) {
+            	EcoreUtil.Copier copier = new EcoreUtil.Copier();
+    		    EObject importCSCopy = copier.copy(importCS);
+    		    copier.copyReferences();
+    		    importsCopy.add((ImportCS)importCSCopy);
+            }
+            moduleCS.getImports().addAll(importsCopy);
         }
 	    if (modules.size() == 1) {
 	        MappingModuleCS moduleCS = modules.get(0);
@@ -226,9 +241,10 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             moduleCS.getClassifierDefCS().addAll(classifiers);
             moduleCS.getTags().addAll(tags);
             setOffsets(moduleCS, startingUnitElement, trailingUnitElement);
-            return moduleCS;
 	    }
-	    return null; // TODO: support multiple modules
+
+		unitCS.getTopLevelElements().addAll(modules);
+	    return unitCS;
 	}
 	
 	protected final CSTNode createLocalPropertyCS(IToken tokenText, TypeCS sym, OCLExpressionCS sym2) {
@@ -539,6 +555,21 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	protected final ImperativeOperationCallExpCS createFeatureFQNOperationCallExpCS(SimpleNameCS moduleName, SimpleNameCS operationName, EList<OCLExpressionCS> arguments) {
 		ImperativeOperationCallExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createImperativeOperationCallExpCS();
 		return setupImperativeOperationCallExpCS(moduleName, operationName,	arguments, result);
+	}
+	
+	protected CSTNode createIfExpCSExt(OCLExpressionCS condition,
+			OCLExpressionCS thenExpression, EList<?> elifExpressions, OCLExpressionCS elseExpression) {
+		SwitchAltExpCS firstAlt = (SwitchAltExpCS) createSwitchAltExpCS(condition, thenExpression);
+		firstAlt.setStartOffset(condition.getStartOffset());
+		firstAlt.setEndOffset(thenExpression != null ? thenExpression.getEndOffset() : condition.getEndOffset());
+		
+		EList<SwitchAltExpCS> altExp = new BasicEList<SwitchAltExpCS>(elifExpressions.size()+1);
+		altExp.add(firstAlt);		
+		for (Object elifPart : elifExpressions) {
+			altExp.add((SwitchAltExpCS) elifPart);
+		}
+		
+		return createSwitchExpCS(altExp, elseExpression);
 	}
 	
 	@Override

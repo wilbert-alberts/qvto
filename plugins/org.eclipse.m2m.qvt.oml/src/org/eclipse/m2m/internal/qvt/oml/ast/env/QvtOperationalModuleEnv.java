@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -43,7 +44,8 @@ import org.eclipse.ocl.options.ProblemOption;
 
 public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 
-	private Module myContextModule;	
+	private Module myContextModule;
+	private QvtOperationalFileEnv myFileParent;
 	
 	QvtOperationalModuleEnv(EPackage.Registry registry, Resource resource) {
 		super(registry, resource != null ?
@@ -228,7 +230,7 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		return myContextModule;
 	}
     
-    @Override
+	@Override
     public String toString() {
     	if(myContextModule != null && myContextModule.getName() != null) {
     		return "Module env: <" + myContextModule.getName() + ">@" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$ //$NON-NLS-2$
@@ -281,6 +283,14 @@ public class QvtOperationalModuleEnv extends QvtOperationalEnv {
 		}
 		
 		return result;
+	}
+
+	public QvtOperationalFileEnv getFileParent() {
+		return myFileParent;
+	}
+
+	public void setFileParent(QvtOperationalFileEnv parentEnv) {
+		myFileParent = parentEnv;		
 	}
 	
 }

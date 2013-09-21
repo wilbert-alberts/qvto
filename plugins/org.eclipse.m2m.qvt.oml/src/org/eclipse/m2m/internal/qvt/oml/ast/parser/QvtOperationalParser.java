@@ -8,29 +8,24 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.io.Reader;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTParsingOptions;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
-import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOLexer;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.QVTOParser;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.SemanticException;
 
 import com.ibm.icu.lang.UCharacter;
 
@@ -46,22 +41,21 @@ public class QvtOperationalParser {
 	}
 	
 	public UnitCS parse(final Reader is, final String name, QvtOperationalEnv env) {
-		MappingModuleCS result = null;
+		UnitCS result = null;
+		int sourceLength = 0;
 		// Note:
 		// Adding compilation unit here to support multiple top-level elements
 		// Before they get supported already by the raw parser, 
 		// the compiler and the rest of the tooling can adopt it
-		UnitCS unitCS = CSTFactory.eINSTANCE.createUnitCS();		
 		try {			
 			QVTOLexer lexer = createLexer(is, name, env);
-			unitCS.setStartOffset(0);
-			unitCS.setEndOffset(lexer.getILexStream().getStreamLength());			
 
 			myParser = new RunnableQVTParser(lexer);		
 			myParser.enableCSTTokens(Boolean.TRUE.equals(env.getValue(QVTParsingOptions.ENABLE_CSTMODEL_TOKENS)));
 			
 			lexer.lexer(myParser.getIPrsStream());
-			result = (MappingModuleCS) myParser.runParser(-1);	
+			result = (UnitCS) myParser.runParser(-1);
+			sourceLength = lexer.getILexStream().getStreamLength();
 		}
 		catch (ParserException ex) {
 			env.reportError(ex.getLocalizedMessage(), 0, 0);
@@ -72,15 +66,15 @@ public class QvtOperationalParser {
 				env.reportError(NLS.bind(
 						CompilerMessages.moduleTransformationExpected, new Object[] { name }),0, 0);
 			}
+			result = CSTFactory.eINSTANCE.createUnitCS();
 		}
+		result.setStartOffset(0);
+		result.setEndOffset(sourceLength);			
 		
-		if(result != null) {
-			unitCS.getTopLevelElements().add(result);
-		}
-		
-		return unitCS;
+		return result;
 	}
 
+	/*
 	public Module analyze(AbstractQVTParser parser, final MappingModuleCS moduleCS, ExternalUnitElementsProvider importResolver, ResourceSet resSet, QvtOperationalFileEnv env, QvtCompilerOptions options) {
 		Module module = null;
 	
@@ -101,6 +95,7 @@ public class QvtOperationalParser {
 		
 		return module;
 	}
+	*/
 		
 	
 	private class RunnableQVTParser extends QVTOParser {

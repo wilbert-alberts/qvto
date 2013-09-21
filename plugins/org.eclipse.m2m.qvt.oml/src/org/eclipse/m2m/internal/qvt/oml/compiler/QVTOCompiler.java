@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
@@ -58,7 +59,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.WorkspaceMetamodelRegi
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils.Eclipse;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
-import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
@@ -66,7 +66,6 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.EmfStandaloneMetamod
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
-import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.cst.CSTNode;
@@ -292,7 +291,7 @@ public class QVTOCompiler {
 		return getContentReader(unit);
 	}
     
-	protected CSTAnalysisResult analyze(CSTParseResult parseResult, ExternalUnitElementsProvider externalUnitElementsProvider, QvtCompilerOptions options) {
+	protected CSTAnalysisResult analyze(CSTParseResult parseResult, UnitProxy unit, ExternalUnitElementsProvider externalUnitElementsProvider, QvtCompilerOptions options) {
 		QvtOperationalFileEnv env = parseResult.env;
 		env.setQvtCompilerOptions(options);
 
@@ -300,26 +299,20 @@ public class QVTOCompiler {
 		try {
 			QvtOperationalVisitorCS visitor = createAnalyzer(parseResult.parser, options);
 			UnitCS unitCS = parseResult.unitCS;
-			if(!unitCS.getModules().isEmpty()) {
-				// FIXME - need to handle multiple modules			
-				MappingModuleCS topModuleCS = unitCS.getModules().get(0);
-				Module module = visitor.visitMappingModule(topModuleCS, 
-							externalUnitElementsProvider.getImporter(), 
-							env, externalUnitElementsProvider, getResourceSet());
-				
-				result.modules = Collections.singletonList(module);
+			if(unitCS != null && !unitCS.getModules().isEmpty()) {
+				result.moduleEnvs = visitor.visitUnitCS(unitCS, unit, env, externalUnitElementsProvider, getResourceSet());
 			}
 		} catch (SemanticException e) {
 			env.reportError(e.getLocalizedMessage(), 0, 0);
 		}
 
-		if(result.modules != null) {
-			for(Module nextModule : result.modules) {
+		if(result.moduleEnvs != null) {
+			for(QvtOperationalModuleEnv moduleEnv : result.moduleEnvs) {
 				if (options.isReportErrors()) {
-					env.setCheckForDuplicateErrors(true);
-					QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(env);
-					validation.visitModule(nextModule);
-					env.setCheckForDuplicateErrors(false);
+	                moduleEnv.setCheckForDuplicateErrors(true);
+					QvtOperationalValidationVisitor validation = new QvtOperationalValidationVisitor(moduleEnv);
+					validation.visitModule(moduleEnv.getModuleContextType());
+					moduleEnv.setCheckForDuplicateErrors(false);
 				}
 			}
 		}
@@ -463,7 +456,7 @@ public class QVTOCompiler {
 	    	monitor.worked(1); 
 	
 	    	// perform CST analysis
-	    	CSTAnalysisResult analysisResult = analyze(parseResult, unitResolver, options);
+	    	CSTAnalysisResult analysisResult = analyze(parseResult, source, unitResolver, options);
 			if(options.isSourceLineNumbersEnabled()) {
 	        	addSourceLineNumberInfo(parseResult.parser, analysisResult, source);
 	    	}
@@ -555,9 +548,9 @@ public class QVTOCompiler {
 		AbstractLexer lexer = parser.getLexer();
 		if (lexer != null) {
 			URI sourceURI = source.getURI();
-			if(sourceURI != null && analysisResult.modules != null) {
-				for (Module module : analysisResult.modules) {
-					ASTBindingHelper.createModuleSourceBinding(module, sourceURI, new BasicLineNumberProvider(lexer));					
+			if(sourceURI != null && analysisResult.moduleEnvs != null) {
+				for (QvtOperationalModuleEnv moduleEnv : analysisResult.moduleEnvs) {
+					ASTBindingHelper.createModuleSourceBinding(moduleEnv.getModuleContextType(), sourceURI, new BasicLineNumberProvider(lexer));					
 				}
 			}
 		}
@@ -640,14 +633,18 @@ public class QVTOCompiler {
     	if (imports.size() < 2) {
     		return;
     	}
+    	// 'checkedImportTokens' is used to avoid false duplication report in case when multiple transformations reside 
+    	// in single compilation unit (AbstractQVTParser::setupTopLevel() creates duplicated imports in such case)
+    	Set<Object> checkedImportTokens = new HashSet<Object>(imports.size());
     	Set<Object> checkedImports = new HashSet<Object>(imports.size());
     	List<ImportCS> dupImports = new LinkedList<ImportCS>();
-    	
     	for(ImportCS nextImportCS : imports) {
-			if(nextImportCS.getAst() != null && checkedImports.contains(nextImportCS.getAst())) {
+			if(nextImportCS.getAst() != null &&
+					checkedImports.contains(nextImportCS.getAst()) && !checkedImportTokens.contains(nextImportCS.getStartToken())) {
 				dupImports.add(nextImportCS);
 			} else {
 				checkedImports.add(nextImportCS.getAst());
+				checkedImportTokens.add(nextImportCS.getStartToken());
 			}
 		}
     	
@@ -731,7 +728,7 @@ public class QVTOCompiler {
     }
     
 	protected static class CSTAnalysisResult {
-		List<Module> modules;
+		List<QvtOperationalModuleEnv> moduleEnvs;
 		List<ModelType> modelTypes;
 	}
 
@@ -748,7 +745,7 @@ public class QVTOCompiler {
 	private static class DependencyPathElement {
 		final UnitProxy importer;
 		ImportCS currentProcessedImport;
-		QvtOperationalEnv importerEnv;;		
+		QvtOperationalEnv importerEnv;		
 
 		public DependencyPathElement(UnitProxy importer) {
 			this.importer = importer;

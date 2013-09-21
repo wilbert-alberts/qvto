@@ -22,4 +22,6 @@ main() {
 mapping String :: m() : /*<error>*/Library268636/*</error>*/ {
 }
 
+mapping mm() : EClass inherits Library268636::gg {
+}
 

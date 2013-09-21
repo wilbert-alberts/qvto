@@ -8,8 +8,12 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lpg.runtime.ParseErrorCodes;
 
@@ -20,10 +24,12 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 
 	private final URI myFile;    
+	private List<QvtOperationalModuleEnv> innerEnvs;
 	
 	protected QvtOperationalFileEnv(final URI uri, EPackage.Registry registry) {
 		// TODO - revisit the null resource passed
 		super(new EPackageRegistryImpl(registry), null);
+		this.innerEnvs = new ArrayList<QvtOperationalModuleEnv>(1);
 
 		if(uri == null) {
 			throw new IllegalArgumentException("Non-null uri required"); //$NON-NLS-1$
@@ -33,6 +39,15 @@ public class QvtOperationalFileEnv extends QvtOperationalModuleEnv {
 		
     	QvtOperationalStdLibrary.INSTANCE.importTo(this);        
 	}
+	
+	public List<QvtOperationalModuleEnv> getInnerEnvironments() {
+		return innerEnvs;
+	}
+
+	public void addInnerEnvironment(QvtOperationalModuleEnv env) {
+		innerEnvs.add(env);
+	}
+	
 
 	public URI getFile() {
         return myFile;

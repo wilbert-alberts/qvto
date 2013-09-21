@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
@@ -36,6 +37,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.IModuleSourceInfo;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOTypeResolver;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExecutableXMIHelper;
@@ -251,7 +253,12 @@ public class CompiledUnit {
 	}
 	
 	public List<QvtOperationalModuleEnv> getModuleEnvironments() {
-		return moduleEnvs;
+		if (moduleEnvs.size() == 1 && moduleEnvs.get(0) instanceof QvtOperationalFileEnv) {
+			return ((QvtOperationalFileEnv) moduleEnvs.get(0)).getInnerEnvironments();
+		}
+		else {
+			return moduleEnvs;
+		}
 	}
 	
 	public List<QvtMessage> getErrors() {
@@ -282,6 +289,13 @@ public class CompiledUnit {
 	public List<Module> getModules() {
 		List<Module> modules = new ArrayList<Module>(moduleEnvs.size());
 		for (QvtOperationalModuleEnv next : moduleEnvs) {
+			if (next instanceof QvtOperationalFileEnv) {
+				for (QvtOperationalModuleEnv inner : ((QvtOperationalFileEnv)next).getInnerEnvironments()) {
+					if(inner.getModuleContextType() != null) {
+						modules.add(inner.getModuleContextType());
+					}
+				}
+			}
 			if(next.getModuleContextType() != null) {
 				modules.add(next.getModuleContextType());
 			}

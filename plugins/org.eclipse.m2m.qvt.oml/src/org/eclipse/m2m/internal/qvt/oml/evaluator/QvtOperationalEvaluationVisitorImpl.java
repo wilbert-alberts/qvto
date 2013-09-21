@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744
- *     Alex Paperno - bugs 294127
+ *     Alex Paperno - bugs 294127, 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
@@ -851,7 +852,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			// the root environment of explicitly called transformation		
 			// Empty default context, no configuration property is available
 			// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
+			// bug 416584: Now we need to access configuration properties of non-entry modules
 			Context nestedContext = EvaluationUtil.createAggregatedContext(currentEnv);
+			Map<String,Object> configProps = getOperationalEvaluationEnv().getContext().getConfigProperties(); 
+			for (String propName : configProps.keySet()) {
+				nestedContext.setConfigProperty(propName, configProps.get(propName));
+			}
 			
 			QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
 			QvtOperationalEvaluationEnv nestedEvalEnv = envFactory.createEvaluationEnvironment(nestedContext, null);
