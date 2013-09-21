@@ -330,6 +330,7 @@ public class TransformTests {
         				new String[] { "prop", "prop" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "prop2", "prop2" }, //$NON-NLS-1$ //$NON-NLS-2$
         		}),         		        		
+        		new FilesToFilesData("bug417751", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		};
     }
 

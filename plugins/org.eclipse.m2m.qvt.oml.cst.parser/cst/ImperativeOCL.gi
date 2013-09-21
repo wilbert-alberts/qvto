@@ -66,6 +66,7 @@
 	import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 	import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+	import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 	./
 %End
 
@@ -155,15 +156,11 @@
 	-- opt = optional
 	-- m = multiple
 
-    LiteralExpCS ::= primitiveTypeCS
-        /.$NewCase./
-    LiteralExpCS ::= collectionTypeCS
-        /.$NewCase./
-    LiteralExpCS ::= tupleTypeCS
-        /.$BeginCode
-                    setResult((TypeCS) getRhsSym(1));
-          $EndCode
-        ./
+	LiteralExpCS -> primitiveTypeCS
+	LiteralExpCS -> collectionTypeCS
+	LiteralExpCS -> tupleTypeCS
+
+	primaryNotNameCS -> ImperativeExpCS
 
 
 	typeCS -> listTypeCS
@@ -590,7 +587,7 @@
 
 	-- operation call and expression extension in QVT
 
-	primaryNotNameCS -> whileExpCS
+	ImperativeExpCS -> whileExpCS
 	
 
 	----- ifExp (start) -----
@@ -601,37 +598,96 @@
 	ifElsePart -> qvtErrorToken
 	ifExpression -> qvtErrorToken
 
-	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+	ifElseOpt ::= %empty
+		/.$NullAction./
+	ifElseOpt ::= else ifExpBodyCS
 		/.$BeginCode
-					CSTNode result = createIfExpCS(
-							(OCLExpressionCS)getRhsSym(2),
-							(OCLExpressionCS)getRhsSym(4),
-							(OCLExpressionCS)getRhsSym(6)
-						);
-					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+					CSTNode result = (CSTNode) getRhsSym(2);
+					setOffsets(result, getRhsIToken(1), result);
 					setResult(result);
 		  $EndCode
 		./
 
-	IfExpCS ::= if OclExpressionCS then ifExpBodyCS endif
+	ifElif_listOpt ::= %empty
+		/.$EmptyListAction./
+	ifElif_listOpt -> ifElif_list
+
+	ifElif_listElem ::= elif OclExpressionCS then ifExpBodyCS
 		/.$BeginCode
-					CSTNode result = createIfExpCS(
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) getRhsSym(2),
+							(OCLExpressionCS) getRhsSym(4)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
+					setResult(result);
+		  $EndCode
+		./
+
+	ifElif_list ::= ifElif_listElem
+		/.$BeginCode
+					EList result = new BasicEList();
+					Object element = getRhsSym(1);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	ifElif_list ::= ifElif_list ifElif_listElem 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					Object element = getRhsSym(2);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	ifElif_list ::= ifElif_list qvtErrorToken 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					setResult(result);
+		  $EndCode
+		./
+
+
+	IfExpCS ::= if OclExpressionCS then ifExpBodyCS ifElif_listOpt ifElseOpt endif
+		/.$BeginCode
+					EList elifPart = (EList)getRhsSym(5);
+					CSTNode result = null;
+
+					if (elifPart.isEmpty()) {
+						result = createIfExpCS(
 							(OCLExpressionCS)getRhsSym(2),
 							(OCLExpressionCS)getRhsSym(4),
-							null
-						);
-					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
+							(OCLExpressionCS)getRhsSym(6)
+							);
+					}
+					else {
+						result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(2),
+							(OCLExpressionCS)getRhsSym(4),
+							elifPart,
+							(OCLExpressionCS)getRhsSym(6)
+							);
+					}
+					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
 					setResult(result);
 		  $EndCode
 		./
 
 	IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifElsePart
 		/.$BeginCode
-					CSTNode result = createIfExpCS(
+					CSTNode result = createIfExpCSExt(
 							(OCLExpressionCS)getRhsSym(2),
 							(OCLExpressionCS)getRhsSym(4),
+							$EMPTY_ELIST,
 							null
-						);
+							);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(5));
 					setResult(result);
 		  $EndCode
@@ -639,11 +695,12 @@
 
 	IfExpCS ::= if OclExpressionCS then ifThenPart
 		/.$BeginCode
-					CSTNode result = createIfExpCS(
+					CSTNode result = createIfExpCSExt(
 							(OCLExpressionCS)getRhsSym(2),
 							null,
+							$EMPTY_ELIST,
 							null
-						);
+							);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
 					setResult(result);
 		  $EndCode
@@ -654,21 +711,420 @@
 					OCLExpressionCS invalidCondition = createInvalidLiteralExpCS("");
 					invalidCondition.setStartOffset(getRhsIToken(1).getEndOffset());
 					invalidCondition.setEndOffset(getRhsIToken(1).getEndOffset());
-					CSTNode result = createIfExpCS(
+					CSTNode result = createIfExpCSExt(
 							invalidCondition,
 							null,
+							$EMPTY_ELIST,
 							null
-						);
+							);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
 					setResult(result);
 		  $EndCode
 		./
 
+
+	IfExpCS_ext ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							$EMPTY_ELIST,
+							null
+							);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full endif
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							$EMPTY_ELIST,
+							null
+							);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full ifElif_ext_list endifOpt
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(EList)getRhsSym(6),
+							null
+							);
+					
+					EList listElif = (EList)getRhsSym(6);
+					CSTNode lastElif = (CSTNode)listElif.get(listElif.size()-1);
+					CSTNode endifOptCS = (CSTNode)getRhsSym(7);
+					CSTNode end = endifOptCS != null ? endifOptCS : lastElif; 
+
+					setOffsets(result, getRhsIToken(1), end);
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full else notUMinus_ifExpBodyCS endifOptOpt
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							$EMPTY_ELIST,
+							(OCLExpressionCS)getRhsSym(7)
+							);
+
+					CSTNode endifOptCS = (CSTNode)getRhsSym(8);
+					CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(7); 
+
+					setOffsets(result, getRhsIToken(1), end);
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full ifElif_ext_list else notUMinus_ifExpBodyCS endifOptOpt
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(EList)getRhsSym(6),
+							(OCLExpressionCS)getRhsSym(8)
+							);
+
+					CSTNode endifOptCS = (CSTNode)getRhsSym(9);
+					CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(8); 
+
+					setOffsets(result, getRhsIToken(1), end);
+					setResult(result);
+		  $EndCode
+		./
+
+	mandatory_elsePart ::= else notUMinus_ifExpBodyCS_full endifOptOpt
+		/.$BeginCode
+					CSTNode result = (CSTNode) getRhsSym(2);
+
+					CSTNode endifOptCS = (CSTNode)getRhsSym(3);
+					CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(2); 
+
+					setOffsets(result, getRhsIToken(1), end);
+					setResult(result);
+		  $EndCode
+		./
+
+	IfExpCS_ext_full ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full mandatory_elsePart
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							$EMPTY_ELIST,
+							(OCLExpressionCS)getRhsSym(6)
+							);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(6));
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext_full ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full ifElif_ext_list mandatory_elsePart
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(EList)getRhsSym(6),
+							(OCLExpressionCS)getRhsSym(7)
+							);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(7));
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext_full ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full endif
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							$EMPTY_ELIST,
+							null
+							);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+					setResult(result);
+		  $EndCode
+		./
+	IfExpCS_ext_full ::= if '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full ifElif_ext_list endif
+		/.$BeginCode
+					CSTNode result = createIfExpCSExt(
+							(OCLExpressionCS)getRhsSym(3),
+							(OCLExpressionCS)getRhsSym(5),
+							(EList)getRhsSym(6),
+							null
+							);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+					setResult(result);
+		  $EndCode
+		./
+
+	expression_semi_list_element -> IfExpCS_ext
+
+
+	ifElif_ext_listElem ::= elif '(' OclExpressionCS ')' notUMinus_ifExpBodyCS_full
+		/.$BeginCode
+					CSTNode result = createSwitchAltExpCS(
+							(OCLExpressionCS) getRhsSym(3),
+							(OCLExpressionCS) getRhsSym(5)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
+		  $EndCode
+		./
+
+	ifElif_ext_list ::= ifElif_ext_listElem
+		/.$BeginCode
+					EList result = new BasicEList();
+					Object element = getRhsSym(1);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	 ifElif_ext_list ::= ifElif_ext_list ifElif_ext_listElem 
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					Object element = getRhsSym(2);
+					if (element instanceof EList) {
+						result.addAll((EList) element);
+					} else {
+						result.add(element);
+					}
+					setResult(result);
+		  $EndCode
+		./
+	--ifElif_ext_list ::= ifElif_ext_list qvtErrorToken 
+	--	/.$BeginCode
+	--				EList result = (EList)getRhsSym(1);
+	--				setResult(result);
+	--	  $EndCode
+	--	./
+
+	endifOpt ::= %empty
+		/.$NullAction./
+	endifOpt ::= endif
+		/.$BeginCode
+					SimpleNameCS result = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getRhsIToken(1));
+					setOffsets(result, getRhsIToken(1));
+					setResult(result);
+		  $EndCode
+		./
+
+	-- The rule below results in 3 reduce/reduce conflicts and 5 shift/reduce conflicts during grammar generation.
+	-- However generated grammar is correct since all conflicts are reduced to optional 'endif' keyword.
+	-- In order to generate grammar without warnings uncomment the following two lines and comment the third.
+	-- In order to generate 'endif'-tolerant grammar do the opposite.
+	--endifOptOpt ::= %empty
+	--	/.$NullAction./
+	endifOptOpt -> endifOpt
+
+	notUMinus_statement -> notUMinus_OclExpressionCS
+	notUMinus_statement -> expression_block
+
+	notUMinus_ifExpBodyCS -> notUMinus_statement
+	notUMinus_ifExpBodyCS -> IfExpCS_ext
+
+	notUMinus_ifExpBodyCS_full -> notUMinus_statement
+	notUMinus_ifExpBodyCS_full -> IfExpCS_ext_full
+
+
+	notUMinus_OclExpressionCS -> notUMinus_notNameExpressionCS
+	notUMinus_OclExpressionCS -> SimpleNameExpCS
+	notUMinus_OclExpressionCS -> returnExpCS
+	notUMinus_OclExpressionCS -> var_init_exp
+	notUMinus_OclExpressionCS -> assignStatementCS
+	notUMinus_OclExpressionCS -> primaryOCLExpressionCS
+
+	notUMinus_notNameExpressionCS -> notUMinus_impliesNotNameNotLetCS
+	notUMinus_notNameExpressionCS -> notUMinus_impliesWithLetCS
+
+	notUMinus_impliesNotLetCS -> notUMinus_impliesNotNameNotLetCS
+	notUMinus_impliesNotLetCS -> SimpleNameExpCS
+	notUMinus_impliesNotNameNotLetCS -> notUMinus_xorNotNameNotLetCS
+	notUMinus_impliesNotNameNotLetCS ::= notUMinus_impliesNotLetCS implies notUMinus_xorNotLetCS
+		/.$NewCase./
+	notUMinus_impliesWithLetCS -> notUMinus_xorWithLetCS
+	notUMinus_impliesWithLetCS ::= notUMinus_impliesNotLetCS implies notUMinus_xorWithLetCS
+		/.$NewCase./
+
+	notUMinus_xorNotLetCS -> notUMinus_xorNotNameNotLetCS
+	notUMinus_xorNotLetCS -> SimpleNameExpCS
+	notUMinus_xorNotNameNotLetCS -> notUMinus_orNotNameNotLetCS
+	notUMinus_xorNotNameNotLetCS ::= notUMinus_xorNotLetCS xor notUMinus_orNotLetCS
+		/.$NewCase./
+	notUMinus_xorWithLetCS -> notUMinus_orWithLetCS
+	notUMinus_xorWithLetCS ::= notUMinus_xorNotLetCS xor notUMinus_orWithLetCS
+		/.$NewCase./
+
+	notUMinus_orNotLetCS -> notUMinus_orNotNameNotLetCS
+	notUMinus_orNotLetCS -> SimpleNameExpCS
+	notUMinus_orNotNameNotLetCS -> notUMinus_andNotNameNotLetCS
+	notUMinus_orNotNameNotLetCS ::= notUMinus_orNotLetCS or notUMinus_andNotLetCS
+		/.$NewCase./
+	notUMinus_orWithLetCS -> notUMinus_andWithLetCS
+	notUMinus_orWithLetCS ::= notUMinus_orNotLetCS or notUMinus_andWithLetCS
+		/.$NewCase./
+
+	notUMinus_andNotLetCS -> notUMinus_andNotNameNotLetCS
+	notUMinus_andNotLetCS -> SimpleNameExpCS
+	notUMinus_andNotNameNotLetCS -> notUMinus_equalityNotNameNotLetCS
+	notUMinus_andNotNameNotLetCS ::= notUMinus_andNotLetCS and notUMinus_equalityNotLetCS
+		/.$NewCase./
+	notUMinus_andWithLetCS -> notUMinus_equalityWithLetCS
+	notUMinus_andWithLetCS ::= notUMinus_andNotLetCS and notUMinus_equalityWithLetCS
+		/.$NewCase./
+
+	notUMinus_equalityNotLetCS -> notUMinus_equalityNotNameNotLetCS
+	notUMinus_equalityNotLetCS -> SimpleNameExpCS
+	notUMinus_equalityNotNameNotLetCS -> notUMinus_relationalNotNameNotLetCS
+	notUMinus_equalityNotNameNotLetCS ::= notUMinus_equalityNotLetCS '=' notUMinus_relationalNotLetCS
+		/.$NewCase./
+	notUMinus_equalityNotNameNotLetCS ::= notUMinus_equalityNotLetCS '<>' notUMinus_relationalNotLetCS
+		/.$NewCase./
+	notUMinus_equalityWithLetCS -> notUMinus_relationalWithLetCS
+	notUMinus_equalityWithLetCS ::= notUMinus_equalityNotLetCS '=' notUMinus_relationalWithLetCS
+		/.$NewCase./
+	notUMinus_equalityWithLetCS ::= notUMinus_equalityNotLetCS '<>' notUMinus_relationalWithLetCS
+		/.$NewCase./
+
+	notUMinus_relationalNotLetCS -> notUMinus_relationalNotNameNotLetCS
+	notUMinus_relationalNotLetCS -> SimpleNameExpCS
+	notUMinus_relationalNotNameNotLetCS -> notUMinus_additiveNotNameNotLetCS
+	notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS '>' notUMinus_additiveNotLetCS
+		/.$NewCase./
+	notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS '<' notUMinus_additiveNotLetCS
+		/.$NewCase./
+	notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS '>=' notUMinus_additiveNotLetCS
+		/.$NewCase./
+	notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS '<=' notUMinus_additiveNotLetCS
+		/.$NewCase./
+	notUMinus_relationalWithLetCS -> notUMinus_additiveWithLetCS
+	notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS '>' notUMinus_additiveWithLetCS
+		/.$NewCase./
+	notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS '<' notUMinus_additiveWithLetCS
+		/.$NewCase./
+	notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS '>=' notUMinus_additiveWithLetCS
+		/.$NewCase./
+	notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS '<=' notUMinus_additiveWithLetCS
+		/.$NewCase./
+
+	notUMinus_additiveNotLetCS -> notUMinus_additiveNotNameNotLetCS
+	notUMinus_additiveNotLetCS -> SimpleNameExpCS
+	notUMinus_additiveNotNameNotLetCS -> notUMinus_multiplicativeNotNameNotLetCS
+	notUMinus_additiveNotNameNotLetCS ::= notUMinus_additiveNotLetCS '+' notUMinus_multiplicativeNotLetCS
+		/.$NewCase./
+	notUMinus_additiveNotNameNotLetCS ::= notUMinus_additiveNotLetCS '-' notUMinus_multiplicativeNotLetCS
+		/.$NewCase./
+	notUMinus_additiveWithLetCS -> notUMinus_multiplicativeWithLetCS
+	notUMinus_additiveWithLetCS ::= notUMinus_additiveNotLetCS '+' notUMinus_multiplicativeWithLetCS
+		/.$NewCase./
+	notUMinus_additiveWithLetCS ::= notUMinus_additiveNotLetCS '-' notUMinus_multiplicativeWithLetCS
+		/.$NewCase./
+
+	notUMinus_multiplicativeNotLetCS -> notUMinus_multiplicativeNotNameNotLetCS
+	notUMinus_multiplicativeNotLetCS -> SimpleNameExpCS
+	notUMinus_multiplicativeNotNameNotLetCS -> notUMinus_unaryNotNameNotLetCS
+	notUMinus_multiplicativeNotNameNotLetCS ::= notUMinus_multiplicativeNotLetCS '*' notUMinus_unaryNotLetCS
+		/.$NewCase./
+	notUMinus_multiplicativeNotNameNotLetCS ::= notUMinus_multiplicativeNotLetCS '/' notUMinus_unaryNotLetCS
+		/.$NewCase./
+	notUMinus_multiplicativeWithLetCS -> notUMinus_unaryWithLetCS
+	notUMinus_multiplicativeWithLetCS ::= notUMinus_multiplicativeNotLetCS '*' notUMinus_unaryWithLetCS
+		/.$NewCase./
+	notUMinus_multiplicativeWithLetCS ::= notUMinus_multiplicativeNotLetCS '/' notUMinus_unaryWithLetCS
+		/.$BeginCode
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getRhsIToken(2)
+							);
+					setOffsets(simpleNameCS, getRhsIToken(2));
+					OCLExpressionCS left = (OCLExpressionCS)getRhsSym(1);
+					OCLExpressionCS right = (OCLExpressionCS)getRhsSym(3);
+					EList<OCLExpressionCS> args = new BasicEList<OCLExpressionCS>();
+					args.add(right);
+					OperationCallExpCS result = createOperationCallExpCS(
+							left,
+							simpleNameCS,
+							args
+						);
+					setOffsets(result, left, right);
+					setResult(result);
+		  $EndCode
+		./
+
+	notUMinus_unaryNotLetCS -> notUMinus_unaryNotNameNotLetCS
+	notUMinus_unaryNotLetCS -> SimpleNameExpCS
+	notUMinus_unaryNotNameNotLetCS -> notUMinus_primaryNotNameCS
+	-- notUMinus_unaryNotNameNotLetCS ::= '-' unaryNotLetCS
+	--     /.$NewCase./
+	notUMinus_unaryNotNameNotLetCS ::= not notUMinus_unaryNotLetCS
+		/.$NewCase./
+	notUMinus_unaryWithLetCS -> LetExpCS             -- OclExpressionCS[D]
+	notUMinus_unaryWithLetCS ::= not notUMinus_unaryWithLetCS
+		/.$BeginCode
+					SimpleNameCS simpleNameCS = createSimpleNameCS(
+								SimpleTypeEnum.KEYWORD_LITERAL,
+								getRhsIToken(1)
+							);
+					setOffsets(simpleNameCS, getRhsIToken(1));
+					OCLExpressionCS expr = (OCLExpressionCS)getRhsSym(2);
+					OperationCallExpCS result = createOperationCallExpCS(
+							expr,
+							simpleNameCS,
+							new BasicEList<OCLExpressionCS>()
+						);
+					setOffsets(result, simpleNameCS, expr);
+					setResult(result);
+		  $EndCode
+		./
+
+	notUMinus_primaryNotNameCS -> CallExpCS       -- OclExpressionCS[A]
+	notUMinus_primaryNotNameCS -> VariableExpCS   -- OclExpressionCS[B]
+	notUMinus_primaryNotNameCS -> notUMinus_LiteralExpCS    -- OclExpressionCS[C]
+	-- notUMinus_primaryNotNameCS -> OclMessageExpCS -- OclExpressionCS[E] is added by Complete OCL
+	notUMinus_primaryNotNameCS -> IfExpCS         -- OclExpressionCS[F]
+	notUMinus_primaryNotNameCS ::= '(' OclExpressionCS ')'
+		/.$BeginCode
+					OCLExpressionCS result = (OCLExpressionCS)getRhsSym(2);
+					if (result instanceof OperationCallExpCS) {
+						((OperationCallExpCS)result).setIsAtomic(true);
+					}
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+
+	notUMinus_primaryNotNameCS -> ImperativeExpCS
+
+	-- notUMinus_LiteralExpCS -> EnumLiteralExpCS
+	notUMinus_LiteralExpCS -> CollectionLiteralExpCS
+	notUMinus_LiteralExpCS -> TupleLiteralExpCS
+	notUMinus_LiteralExpCS -> notUMinus_PrimitiveLiteralExpCS
+	-- notUMinus_LiteralExpCS -> TypeLiteralExpCS
+	notUMinus_LiteralExpCS -> listLiteralCS
+	notUMinus_LiteralExpCS -> dictLiteralCS
+
+	notUMinus_LiteralExpCS -> primitiveTypeCS
+	notUMinus_LiteralExpCS -> collectionTypeCS
+	notUMinus_LiteralExpCS -> tupleTypeCS
+
+	notUMinus_PrimitiveLiteralExpCS -> IntegerLiteralExpCS
+	notUMinus_PrimitiveLiteralExpCS -> RealLiteralExpCS
+	notUMinus_PrimitiveLiteralExpCS -> StringLiteralExpCS
+	notUMinus_PrimitiveLiteralExpCS -> BooleanLiteralExpCS
+	-- notUMinus_PrimitiveLiteralExpCS -> UnlimitedNaturalLiteralExpCS
+	notUMinus_PrimitiveLiteralExpCS -> InvalidLiteralExpCS
+	notUMinus_PrimitiveLiteralExpCS -> NullLiteralExpCS
+
 	----- ifExp (end) -----
 
 	----- switch -----
 
-	primaryNotNameCS -> switchExpCS
+	ImperativeExpCS -> switchExpCS
 
 	switchExpCS ::= switch switchBodyExpCS
 		/.$BeginCode
@@ -957,7 +1413,7 @@
 		./
 
 
-	primaryNotNameCS -> computeExpCS
+	ImperativeExpCS -> computeExpCS
 
 	-- ComputeExp end --
 
@@ -1217,7 +1673,8 @@
 		  $EndCode
 		./
 
-	primaryNotNameCS -> newExpCS
+	ImperativeExpCS -> newExpCS
+
 	newExpCS ::= new newTypespecCS '(' argumentsCSopt ')' 
 		/.$BeginCode
 				OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) getRhsSym(2), (EList) getRhsSym(4));
@@ -1239,7 +1696,7 @@
 		
 	-- imperative BreakExp and ContinueExp registration
 		
-	primaryNotNameCS ::= break
+	breakExpCS ::= break
 		/.$BeginCode
 				OCLExpressionCS result = createBreakCS();
 				setOffsets(result, getRhsIToken(1));
@@ -1247,13 +1704,17 @@
 		  $EndCode
 		./	
 	
-	primaryNotNameCS ::= continue
+	continueExpCS ::= continue
 		/.$BeginCode
 				OCLExpressionCS result = createContinueCS();
 				setOffsets(result, getRhsIToken(1));
 				setResult(result);
 		  $EndCode
 		./	
+
+	ImperativeExpCS -> breakExpCS
+
+	ImperativeExpCS -> continueExpCS
 
 
 	--=== General purpose grammar rules (start) ===--

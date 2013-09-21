@@ -126,6 +126,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ScopedNameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 	
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;	
@@ -1839,34 +1840,12 @@ protected String getRhsTokenText(int i) {
                 setResult(result);
                       break;
             }
-     
-            //
-            // Rule 224:  LiteralExpCS ::= primitiveTypeCS
-            //
-            
-            case 224:
- 
-            //
-            // Rule 225:  LiteralExpCS ::= collectionTypeCS
-            //
-            
-            case 225:
-
-            //
-            // Rule 226:  LiteralExpCS ::= tupleTypeCS
-            //
-            case 226: {
-               //#line 164 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-                setResult((TypeCS) getRhsSym(1));
-                      break;
-            }
     
             //
-            // Rule 228:  listTypeCS ::= List ( typeCS )
+            // Rule 229:  listTypeCS ::= List ( typeCS )
             //
-            case 228: {
-               //#line 172 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 229: {
+               //#line 169 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createListTypeCS(
 						(TypeCS)getRhsSym(3)
@@ -1877,10 +1856,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 229:  listLiteralCS ::= List { CollectionLiteralPartsCSopt }
+            // Rule 230:  listLiteralCS ::= List { CollectionLiteralPartsCSopt }
             //
-            case 229: {
-               //#line 182 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 230: {
+               //#line 179 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createListLiteralExpCS((EList)getRhsSym(3));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(4));
@@ -1889,10 +1868,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 231:  dictTypeCS ::= Dict ( typeCS , typeCS )
+            // Rule 232:  dictTypeCS ::= Dict ( typeCS , typeCS )
             //
-            case 231: {
-               //#line 191 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 232: {
+               //#line 188 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDictTypeCS((TypeCS)getRhsSym(3), (TypeCS)getRhsSym(5));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
@@ -1901,10 +1880,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 232:  dictLiteralCS ::= Dict { dictLiteralPartListCSopt }
+            // Rule 233:  dictLiteralCS ::= Dict { dictLiteralPartListCSopt }
             //
-            case 232: {
-               //#line 199 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 233: {
+               //#line 196 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDictLiteralExpCS((EList<DictLiteralPartCS>)getRhsSym(3));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(4));
@@ -1913,10 +1892,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 236:  dictLiteralPartCS ::= literalSimpleCS = OclExpressionCS
+            // Rule 237:  dictLiteralPartCS ::= literalSimpleCS = OclExpressionCS
             //
-            case 236: {
-               //#line 211 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 237: {
+               //#line 208 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDictLiteralPartCS((LiteralExpCS)getRhsSym(1), (OCLExpressionCS)getRhsSym(3));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
@@ -1925,18 +1904,18 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 238:  dictLiteralPartListCSopt ::= $Empty
+            // Rule 239:  dictLiteralPartListCSopt ::= $Empty
             //
             
-            case 238:
+            case 239:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 239:  dictLiteralPartListCS ::= dictLiteralPartCS
+            // Rule 240:  dictLiteralPartListCS ::= dictLiteralPartCS
             //
-            case 239: {
-               //#line 223 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 240: {
+               //#line 220 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				result.add(getRhsSym(1));
@@ -1945,10 +1924,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 240:  dictLiteralPartListCS ::= dictLiteralPartListCS , dictLiteralPartCS
+            // Rule 241:  dictLiteralPartListCS ::= dictLiteralPartListCS , dictLiteralPartCS
             //
-            case 240: {
-               //#line 230 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 241: {
+               //#line 227 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -1957,10 +1936,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 241:  dictLiteralPartListCS ::= dictLiteralPartListCS qvtErrorToken
+            // Rule 242:  dictLiteralPartListCS ::= dictLiteralPartListCS qvtErrorToken
             //
-            case 241: {
-               //#line 237 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 242: {
+               //#line 234 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -1968,10 +1947,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 243:  returnExpCS ::= return oclExpressionCSOpt
+            // Rule 244:  returnExpCS ::= return oclExpressionCSOpt
             //
-            case 243: {
-               //#line 245 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 244: {
+               //#line 242 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			ReturnExpCS returnExpCS = createReturnExpCS((OCLExpressionCS)getRhsSym(2));
 			CSTNode result = createExpressionStatementCS(returnExpCS);
@@ -1986,87 +1965,87 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 245:  oclExpressionCSOpt ::= $Empty
+            // Rule 246:  oclExpressionCSOpt ::= $Empty
             //
-            case 245:
+            case 246:
                 setResult(null);
                 break;
 
             //
-            // Rule 247:  var_init_group_exp ::= var var_init_declarator_list
-            //
-            case 247: {
-               //#line 265 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				setResult(getRhsSym(2));
-	                  break;
-            }
-	
-            //
-            // Rule 248:  var_init_group_exp ::= var ( var_init_declarator_list )
+            // Rule 248:  var_init_group_exp ::= var var_init_declarator_list
             //
             case 248: {
-               //#line 271 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				setResult(getRhsSym(3));
-	                  break;
-            }
-	
-            //
-            // Rule 249:  var_init_group_exp ::= var ( var_init_declarator_list qvtErrorToken
-            //
-            case 249: {
-               //#line 277 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				setResult(getRhsSym(3));
-	                  break;
-            }
-	
-            //
-            // Rule 251:  var_init_exp ::= var var_init_declarator
-            //
-            case 251: {
-               //#line 285 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 262 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(2));
 	                  break;
             }
 	
             //
-            // Rule 252:  var_init_exp ::= var ( var_init_declarator )
+            // Rule 249:  var_init_group_exp ::= var ( var_init_declarator_list )
+            //
+            case 249: {
+               //#line 268 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				setResult(getRhsSym(3));
+	                  break;
+            }
+	
+            //
+            // Rule 250:  var_init_group_exp ::= var ( var_init_declarator_list qvtErrorToken
+            //
+            case 250: {
+               //#line 274 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				setResult(getRhsSym(3));
+	                  break;
+            }
+	
+            //
+            // Rule 252:  var_init_exp ::= var var_init_declarator
             //
             case 252: {
-               //#line 291 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 282 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				setResult(getRhsSym(3));
+				setResult(getRhsSym(2));
 	                  break;
             }
 	
             //
-            // Rule 253:  var_init_exp ::= var ( var_init_declarator qvtErrorToken
+            // Rule 253:  var_init_exp ::= var ( var_init_declarator )
             //
             case 253: {
-               //#line 297 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 288 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(3));
 	                  break;
             }
 	
             //
-            // Rule 254:  var_init_exp ::= var qvtErrorToken
+            // Rule 254:  var_init_exp ::= var ( var_init_declarator qvtErrorToken
             //
             case 254: {
-               //#line 303 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 294 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				setResult(getRhsSym(3));
+	                  break;
+            }
+	
+            //
+            // Rule 255:  var_init_exp ::= var qvtErrorToken
+            //
+            case 255: {
+               //#line 300 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(ourEmptyEList);
 	                  break;
             }
 	
             //
-            // Rule 255:  var_init_declarator_list ::= var_init_declarator , var_init_declarator
+            // Rule 256:  var_init_declarator_list ::= var_init_declarator , var_init_declarator
             //
-            case 255: {
-               //#line 309 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 256: {
+               //#line 306 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				result.add(getRhsSym(1));
@@ -2076,10 +2055,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 256:  var_init_declarator_list ::= var_init_declarator_list , var_init_declarator
+            // Rule 257:  var_init_declarator_list ::= var_init_declarator_list , var_init_declarator
             //
-            case 256: {
-               //#line 317 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 257: {
+               //#line 314 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -2088,10 +2067,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 257:  var_init_declarator ::= IDENTIFIER : typeCS var_init_op OclExpressionCS
+            // Rule 258:  var_init_declarator ::= IDENTIFIER : typeCS var_init_op OclExpressionCS
             //
-            case 257: {
-               //#line 326 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 258: {
+               //#line 323 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2105,10 +2084,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 258:  var_init_declarator ::= IDENTIFIER : typeCS var_init_op qvtErrorToken
+            // Rule 259:  var_init_declarator ::= IDENTIFIER : typeCS var_init_op qvtErrorToken
             //
-            case 258: {
-               //#line 338 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 259: {
+               //#line 335 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2122,10 +2101,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 259:  var_init_declarator ::= IDENTIFIER var_init_op OclExpressionCS
+            // Rule 260:  var_init_declarator ::= IDENTIFIER var_init_op OclExpressionCS
             //
-            case 259: {
-               //#line 350 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 260: {
+               //#line 347 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2139,10 +2118,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 260:  var_init_declarator ::= IDENTIFIER var_init_op qvtErrorToken
+            // Rule 261:  var_init_declarator ::= IDENTIFIER var_init_op qvtErrorToken
             //
-            case 260: {
-               //#line 362 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 261: {
+               //#line 359 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2156,10 +2135,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 261:  var_init_declarator ::= IDENTIFIER : typeCS
+            // Rule 262:  var_init_declarator ::= IDENTIFIER : typeCS
             //
-            case 261: {
-               //#line 374 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 262: {
+               //#line 371 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2173,10 +2152,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 262:  var_init_declarator ::= IDENTIFIER : qvtErrorToken
+            // Rule 263:  var_init_declarator ::= IDENTIFIER : qvtErrorToken
             //
-            case 262: {
-               //#line 386 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 263: {
+               //#line 383 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableInitializationCS(
 						getRhsIToken(1),
@@ -2190,52 +2169,52 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 263:  var_init_op ::= =
+            // Rule 264:  var_init_op ::= =
             //
             
-            case 263:
+            case 264:
 
             //
-            // Rule 264:  var_init_op ::= :=
+            // Rule 265:  var_init_op ::= :=
             //
-            case 264: {
-               //#line 401 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 265: {
+               //#line 398 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(false);
 	                  break;
             }
 	
             //
-            // Rule 265:  var_init_op ::= ::=
+            // Rule 266:  var_init_op ::= ::=
             //
-            case 265: {
-               //#line 406 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 266: {
+               //#line 403 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(true);
 	                  break;
             }
 	
             //
-            // Rule 267:  assignStatementCS ::= primaryExpCS := OclExpressionCS
-            //
-            case 267: {
-               //#line 414 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				CSTNode result = createAssignStatementCS(
-						(OCLExpressionCS)getRhsSym(1),
-						(OCLExpressionCS)getRhsSym(3),
-						false
-					);
-				setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
-				setResult(result);
-	                  break;
-            }
-	
-            //
-            // Rule 268:  assignStatementCS ::= primaryExpCS := qvtErrorToken
+            // Rule 268:  assignStatementCS ::= primaryExpCS := OclExpressionCS
             //
             case 268: {
-               //#line 425 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 411 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createAssignStatementCS(
+						(OCLExpressionCS)getRhsSym(1),
+						(OCLExpressionCS)getRhsSym(3),
+						false
+					);
+				setOffsets(result, (CSTNode)getRhsSym(1), (CSTNode)getRhsSym(3));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 269:  assignStatementCS ::= primaryExpCS := qvtErrorToken
+            //
+            case 269: {
+               //#line 422 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createAssignStatementCS(
 						(OCLExpressionCS)getRhsSym(1),
@@ -2248,10 +2227,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 269:  assignStatementCS ::= primaryExpCS += OclExpressionCS
+            // Rule 270:  assignStatementCS ::= primaryExpCS += OclExpressionCS
             //
-            case 269: {
-               //#line 437 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 270: {
+               //#line 434 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createAssignStatementCS(
 						(OCLExpressionCS)getRhsSym(1),
@@ -2264,10 +2243,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 270:  assignStatementCS ::= primaryExpCS += qvtErrorToken
+            // Rule 271:  assignStatementCS ::= primaryExpCS += qvtErrorToken
             //
-            case 270: {
-               //#line 448 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 271: {
+               //#line 445 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createAssignStatementCS(
 						(OCLExpressionCS)getRhsSym(1),
@@ -2280,10 +2259,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 272:  whileExpCS ::= while ( declarator1 ; OclExpressionCS ) whileBodyCS
+            // Rule 273:  whileExpCS ::= while ( declarator1 ; OclExpressionCS ) whileBodyCS
             //
-            case 272: {
-               //#line 464 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 273: {
+               //#line 461 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createWhileExpCS(
 						(VariableCS)getRhsSym(3),
@@ -2296,10 +2275,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 273:  whileExpCS ::= while ( assignStatementCS ; OclExpressionCS ) whileBodyCS
+            // Rule 274:  whileExpCS ::= while ( assignStatementCS ; OclExpressionCS ) whileBodyCS
             //
-            case 273: {
-               //#line 476 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 274: {
+               //#line 473 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				AssignStatementCS assignment = (AssignStatementCS)getRhsSym(3);
 				CSTNode result = createWhileExpCS(
@@ -2313,10 +2292,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 274:  whileExpCS ::= while ( OclExpressionCS ) whileBodyCS
+            // Rule 275:  whileExpCS ::= while ( OclExpressionCS ) whileBodyCS
             //
-            case 274: {
-               //#line 489 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 275: {
+               //#line 486 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createWhileExpCS(
 						null,
@@ -2329,10 +2308,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 275:  IteratorExpCS ::= primaryExpCS -> forExpCS
+            // Rule 276:  IteratorExpCS ::= primaryExpCS -> forExpCS
             //
-            case 275: {
-               //#line 503 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 276: {
+               //#line 500 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				ForExpCS forExpCS = (ForExpCS)getRhsSym(3);
@@ -2343,10 +2322,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 276:  IteratorExpCS ::= primaryExpCS -> simpleNameCS ( qvtErrorToken
+            // Rule 277:  IteratorExpCS ::= primaryExpCS -> simpleNameCS ( qvtErrorToken
             //
-            case 276: {
-               //#line 513 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 277: {
+               //#line 510 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				SimpleNameCS simpleNameCS = (SimpleNameCS)getRhsSym(3);
@@ -2363,18 +2342,18 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 277:  argumentsCS ::= qvtErrorToken
+            // Rule 278:  argumentsCS ::= qvtErrorToken
             //
             
-            case 277:
+            case 278:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 281:  forExpDeclaratorList ::= IDENTIFIER
+            // Rule 282:  forExpDeclaratorList ::= IDENTIFIER
             //
-            case 281: {
-               //#line 537 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 282: {
+               //#line 534 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		EList result = new BasicEList();
 		result.add(getRhsIToken(1));
@@ -2383,10 +2362,10 @@ protected String getRhsTokenText(int i) {
             }
     	
             //
-            // Rule 282:  forExpDeclaratorList ::= forExpDeclaratorList , IDENTIFIER
+            // Rule 283:  forExpDeclaratorList ::= forExpDeclaratorList , IDENTIFIER
             //
-            case 282: {
-               //#line 544 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 283: {
+               //#line 541 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		EList result = (EList)getRhsSym(1);
 		result.add(getRhsIToken(3));
@@ -2395,34 +2374,34 @@ protected String getRhsTokenText(int i) {
             }
     	
             //
-            // Rule 283:  forExpConditionOpt ::= $Empty
+            // Rule 284:  forExpConditionOpt ::= $Empty
             //
-            case 283:
+            case 284:
                 setResult(null);
                 break;
 
             //
-            // Rule 284:  forExpConditionOpt ::= | OclExpressionCS
+            // Rule 285:  forExpConditionOpt ::= | OclExpressionCS
             //
-            case 284: {
-               //#line 556 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 285: {
+               //#line 553 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
             	    setResult((OCLExpressionCS)getRhsSym(2));
                           break;
             }
     	
             //
-            // Rule 285:  forExpConditionOpt ::= | qvtErrorToken
+            // Rule 286:  forExpConditionOpt ::= | qvtErrorToken
             //
-            case 285:
+            case 286:
                 setResult(null);
                 break;
 
             //
-            // Rule 286:  forExpCS ::= forOpCode ( forExpDeclaratorList forExpConditionOpt ) expression_block
+            // Rule 287:  forExpCS ::= forOpCode ( forExpDeclaratorList forExpConditionOpt ) expression_block
             //
-            case 286: {
-               //#line 565 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 287: {
+               //#line 562 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createForExpCS(
 						getRhsIToken(1),
@@ -2436,10 +2415,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 287:  forExpCS ::= forOpCode qvtErrorToken
+            // Rule 288:  forExpCS ::= forOpCode qvtErrorToken
             //
-            case 287: {
-               //#line 578 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 288: {
+               //#line 575 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createForExpCS(
 						getRhsIToken(1),
@@ -2453,93 +2432,661 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 294:  IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifExpBodyCS endif
+            // Rule 295:  ifElseOpt ::= $Empty
             //
-            case 294: {
-               //#line 606 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 295:
+                setResult(null);
+                break;
+
+            //
+            // Rule 296:  ifElseOpt ::= else ifExpBodyCS
+            //
+            case 296: {
+               //#line 605 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				CSTNode result = createIfExpCS(
+				CSTNode result = (CSTNode) getRhsSym(2);
+				setOffsets(result, getRhsIToken(1), result);
+				setResult(result);
+	                  break;
+            }
+	 
+            //
+            // Rule 297:  ifElif_listOpt ::= $Empty
+            //
+            
+            case 297:
+                setResult(new BasicEList<Object>());
+                break;
+
+            //
+            // Rule 299:  ifElif_listElem ::= elif OclExpressionCS then ifExpBodyCS
+            //
+            case 299: {
+               //#line 617 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createSwitchAltExpCS(
+						(OCLExpressionCS) getRhsSym(2),
+						(OCLExpressionCS) getRhsSym(4)
+					);
+				setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(4));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 300:  ifElif_list ::= ifElif_listElem
+            //
+            case 300: {
+               //#line 628 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList result = new BasicEList();
+				Object element = getRhsSym(1);
+				if (element instanceof EList) {
+					result.addAll((EList) element);
+				} else {
+					result.add(element);
+				}
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 301:  ifElif_list ::= ifElif_list ifElif_listElem
+            //
+            case 301: {
+               //#line 640 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList result = (EList)getRhsSym(1);
+				Object element = getRhsSym(2);
+				if (element instanceof EList) {
+					result.addAll((EList) element);
+				} else {
+					result.add(element);
+				}
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 302:  ifElif_list ::= ifElif_list qvtErrorToken
+            //
+            case 302: {
+               //#line 652 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList result = (EList)getRhsSym(1);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 303:  IfExpCS ::= if OclExpressionCS then ifExpBodyCS ifElif_listOpt ifElseOpt endif
+            //
+            case 303: {
+               //#line 660 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList elifPart = (EList)getRhsSym(5);
+				CSTNode result = null;
+
+				if (elifPart.isEmpty()) {
+					result = createIfExpCS(
 						(OCLExpressionCS)getRhsSym(2),
 						(OCLExpressionCS)getRhsSym(4),
 						(OCLExpressionCS)getRhsSym(6)
-					);
+						);
+				}
+				else {
+					result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(2),
+						(OCLExpressionCS)getRhsSym(4),
+						elifPart,
+						(OCLExpressionCS)getRhsSym(6)
+						);
+				}
 				setOffsets(result, getRhsIToken(1), getRhsIToken(7));
 				setResult(result);
 	                  break;
             }
 	
             //
-            // Rule 295:  IfExpCS ::= if OclExpressionCS then ifExpBodyCS endif
+            // Rule 304:  IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifElsePart
             //
-            case 295: {
-               //#line 618 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 304: {
+               //#line 685 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				CSTNode result = createIfExpCS(
+				CSTNode result = createIfExpCSExt(
 						(OCLExpressionCS)getRhsSym(2),
 						(OCLExpressionCS)getRhsSym(4),
+						ourEmptyEList,
 						null
-					);
+						);
 				setOffsets(result, getRhsIToken(1), getRhsIToken(5));
 				setResult(result);
 	                  break;
             }
 	
             //
-            // Rule 296:  IfExpCS ::= if OclExpressionCS then ifExpBodyCS else ifElsePart
+            // Rule 305:  IfExpCS ::= if OclExpressionCS then ifThenPart
             //
-            case 296: {
-               //#line 630 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 305: {
+               //#line 698 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				CSTNode result = createIfExpCS(
-						(OCLExpressionCS)getRhsSym(2),
-						(OCLExpressionCS)getRhsSym(4),
-						null
-					);
-				setOffsets(result, getRhsIToken(1), getRhsIToken(5));
-				setResult(result);
-	                  break;
-            }
-	
-            //
-            // Rule 297:  IfExpCS ::= if OclExpressionCS then ifThenPart
-            //
-            case 297: {
-               //#line 642 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
-				
-				CSTNode result = createIfExpCS(
+				CSTNode result = createIfExpCSExt(
 						(OCLExpressionCS)getRhsSym(2),
 						null,
+						ourEmptyEList,
 						null
-					);
+						);
 				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
 				setResult(result);
 	                  break;
             }
 	
             //
-            // Rule 298:  IfExpCS ::= if ifExpression
+            // Rule 306:  IfExpCS ::= if ifExpression
             //
-            case 298: {
-               //#line 654 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 306: {
+               //#line 711 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS invalidCondition = createInvalidLiteralExpCS(""); //$NON-NLS-1$
 				invalidCondition.setStartOffset(getRhsIToken(1).getEndOffset());
 				invalidCondition.setEndOffset(getRhsIToken(1).getEndOffset());
-				CSTNode result = createIfExpCS(
+				CSTNode result = createIfExpCSExt(
 						invalidCondition,
 						null,
+						ourEmptyEList,
 						null
-					);
+						);
 				setOffsets(result, getRhsIToken(1), getRhsIToken(1));
 				setResult(result);
 	                  break;
             }
 	
             //
-            // Rule 300:  switchExpCS ::= switch switchBodyExpCS
+            // Rule 307:  IfExpCS_ext ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS
             //
-            case 300: {
-               //#line 675 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 307: {
+               //#line 728 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						ourEmptyEList,
+						null
+						);
+				setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 308:  IfExpCS_ext ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full endif
+            //
+            case 308: {
+               //#line 740 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						ourEmptyEList,
+						null
+						);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 309:  IfExpCS_ext ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full ifElif_ext_list endifOpt
+            //
+            case 309: {
+               //#line 752 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						(EList)getRhsSym(6),
+						null
+						);
+				
+				EList listElif = (EList)getRhsSym(6);
+				CSTNode lastElif = (CSTNode)listElif.get(listElif.size()-1);
+				CSTNode endifOptCS = (CSTNode)getRhsSym(7);
+				CSTNode end = endifOptCS != null ? endifOptCS : lastElif; 
+
+				setOffsets(result, getRhsIToken(1), end);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 310:  IfExpCS_ext ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full else notUMinus_ifExpBodyCS endifOptOpt
+            //
+            case 310: {
+               //#line 770 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						ourEmptyEList,
+						(OCLExpressionCS)getRhsSym(7)
+						);
+
+				CSTNode endifOptCS = (CSTNode)getRhsSym(8);
+				CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(7); 
+
+				setOffsets(result, getRhsIToken(1), end);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 311:  IfExpCS_ext ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full ifElif_ext_list else notUMinus_ifExpBodyCS endifOptOpt
+            //
+            case 311: {
+               //#line 786 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						(EList)getRhsSym(6),
+						(OCLExpressionCS)getRhsSym(8)
+						);
+
+				CSTNode endifOptCS = (CSTNode)getRhsSym(9);
+				CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(8); 
+
+				setOffsets(result, getRhsIToken(1), end);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 312:  mandatory_elsePart ::= else notUMinus_ifExpBodyCS_full endifOptOpt
+            //
+            case 312: {
+               //#line 803 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = (CSTNode) getRhsSym(2);
+
+				CSTNode endifOptCS = (CSTNode)getRhsSym(3);
+				CSTNode end = endifOptCS != null ? endifOptCS : (CSTNode)getRhsSym(2); 
+
+				setOffsets(result, getRhsIToken(1), end);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 313:  IfExpCS_ext_full ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full mandatory_elsePart
+            //
+            case 313: {
+               //#line 815 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						ourEmptyEList,
+						(OCLExpressionCS)getRhsSym(6)
+						);
+				setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(6));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 314:  IfExpCS_ext_full ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full ifElif_ext_list mandatory_elsePart
+            //
+            case 314: {
+               //#line 827 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						(EList)getRhsSym(6),
+						(OCLExpressionCS)getRhsSym(7)
+						);
+				setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(7));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 315:  IfExpCS_ext_full ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full endif
+            //
+            case 315: {
+               //#line 839 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						ourEmptyEList,
+						null
+						);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(6));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 316:  IfExpCS_ext_full ::= if ( OclExpressionCS ) notUMinus_ifExpBodyCS_full ifElif_ext_list endif
+            //
+            case 316: {
+               //#line 851 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createIfExpCSExt(
+						(OCLExpressionCS)getRhsSym(3),
+						(OCLExpressionCS)getRhsSym(5),
+						(EList)getRhsSym(6),
+						null
+						);
+				setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 318:  ifElif_ext_listElem ::= elif ( OclExpressionCS ) notUMinus_ifExpBodyCS_full
+            //
+            case 318: {
+               //#line 867 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				CSTNode result = createSwitchAltExpCS(
+						(OCLExpressionCS) getRhsSym(3),
+						(OCLExpressionCS) getRhsSym(5)
+					);
+				setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 319:  ifElif_ext_list ::= ifElif_ext_listElem
+            //
+            case 319: {
+               //#line 878 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList result = new BasicEList();
+				Object element = getRhsSym(1);
+				if (element instanceof EList) {
+					result.addAll((EList) element);
+				} else {
+					result.add(element);
+				}
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 320:  ifElif_ext_list ::= ifElif_ext_list ifElif_ext_listElem
+            //
+            case 320: {
+               //#line 890 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				EList result = (EList)getRhsSym(1);
+				Object element = getRhsSym(2);
+				if (element instanceof EList) {
+					result.addAll((EList) element);
+				} else {
+					result.add(element);
+				}
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 321:  endifOpt ::= $Empty
+            //
+            case 321:
+                setResult(null);
+                break;
+
+            //
+            // Rule 322:  endifOpt ::= endif
+            //
+            case 322: {
+               //#line 911 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				SimpleNameCS result = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getRhsIToken(1));
+				setOffsets(result, getRhsIToken(1));
+				setResult(result);
+	                  break;
+            }
+	 
+            //
+            // Rule 341:  notUMinus_impliesNotNameNotLetCS ::= notUMinus_impliesNotLetCS implies notUMinus_xorNotLetCS
+            //
+            
+            case 341:
+ 
+            //
+            // Rule 343:  notUMinus_impliesWithLetCS ::= notUMinus_impliesNotLetCS implies notUMinus_xorWithLetCS
+            //
+            
+            case 343:
+ 
+            //
+            // Rule 347:  notUMinus_xorNotNameNotLetCS ::= notUMinus_xorNotLetCS xor notUMinus_orNotLetCS
+            //
+            
+            case 347:
+ 
+            //
+            // Rule 349:  notUMinus_xorWithLetCS ::= notUMinus_xorNotLetCS xor notUMinus_orWithLetCS
+            //
+            
+            case 349:
+ 
+            //
+            // Rule 353:  notUMinus_orNotNameNotLetCS ::= notUMinus_orNotLetCS or notUMinus_andNotLetCS
+            //
+            
+            case 353:
+ 
+            //
+            // Rule 355:  notUMinus_orWithLetCS ::= notUMinus_orNotLetCS or notUMinus_andWithLetCS
+            //
+            
+            case 355:
+ 
+            //
+            // Rule 359:  notUMinus_andNotNameNotLetCS ::= notUMinus_andNotLetCS and notUMinus_equalityNotLetCS
+            //
+            
+            case 359:
+ 
+            //
+            // Rule 361:  notUMinus_andWithLetCS ::= notUMinus_andNotLetCS and notUMinus_equalityWithLetCS
+            //
+            
+            case 361:
+ 
+            //
+            // Rule 365:  notUMinus_equalityNotNameNotLetCS ::= notUMinus_equalityNotLetCS = notUMinus_relationalNotLetCS
+            //
+            
+            case 365:
+ 
+            //
+            // Rule 366:  notUMinus_equalityNotNameNotLetCS ::= notUMinus_equalityNotLetCS <> notUMinus_relationalNotLetCS
+            //
+            
+            case 366:
+ 
+            //
+            // Rule 368:  notUMinus_equalityWithLetCS ::= notUMinus_equalityNotLetCS = notUMinus_relationalWithLetCS
+            //
+            
+            case 368:
+ 
+            //
+            // Rule 369:  notUMinus_equalityWithLetCS ::= notUMinus_equalityNotLetCS <> notUMinus_relationalWithLetCS
+            //
+            
+            case 369:
+ 
+            //
+            // Rule 373:  notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS > notUMinus_additiveNotLetCS
+            //
+            
+            case 373:
+ 
+            //
+            // Rule 374:  notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS < notUMinus_additiveNotLetCS
+            //
+            
+            case 374:
+ 
+            //
+            // Rule 375:  notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS >= notUMinus_additiveNotLetCS
+            //
+            
+            case 375:
+ 
+            //
+            // Rule 376:  notUMinus_relationalNotNameNotLetCS ::= notUMinus_relationalNotLetCS <= notUMinus_additiveNotLetCS
+            //
+            
+            case 376:
+ 
+            //
+            // Rule 378:  notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS > notUMinus_additiveWithLetCS
+            //
+            
+            case 378:
+ 
+            //
+            // Rule 379:  notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS < notUMinus_additiveWithLetCS
+            //
+            
+            case 379:
+ 
+            //
+            // Rule 380:  notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS >= notUMinus_additiveWithLetCS
+            //
+            
+            case 380:
+ 
+            //
+            // Rule 381:  notUMinus_relationalWithLetCS ::= notUMinus_relationalNotLetCS <= notUMinus_additiveWithLetCS
+            //
+            
+            case 381:
+ 
+            //
+            // Rule 385:  notUMinus_additiveNotNameNotLetCS ::= notUMinus_additiveNotLetCS + notUMinus_multiplicativeNotLetCS
+            //
+            
+            case 385:
+ 
+            //
+            // Rule 386:  notUMinus_additiveNotNameNotLetCS ::= notUMinus_additiveNotLetCS - notUMinus_multiplicativeNotLetCS
+            //
+            
+            case 386:
+ 
+            //
+            // Rule 388:  notUMinus_additiveWithLetCS ::= notUMinus_additiveNotLetCS + notUMinus_multiplicativeWithLetCS
+            //
+            
+            case 388:
+ 
+            //
+            // Rule 389:  notUMinus_additiveWithLetCS ::= notUMinus_additiveNotLetCS - notUMinus_multiplicativeWithLetCS
+            //
+            
+            case 389:
+ 
+            //
+            // Rule 393:  notUMinus_multiplicativeNotNameNotLetCS ::= notUMinus_multiplicativeNotLetCS * notUMinus_unaryNotLetCS
+            //
+            
+            case 393:
+ 
+            //
+            // Rule 394:  notUMinus_multiplicativeNotNameNotLetCS ::= notUMinus_multiplicativeNotLetCS / notUMinus_unaryNotLetCS
+            //
+            
+            case 394:
+ 
+            //
+            // Rule 396:  notUMinus_multiplicativeWithLetCS ::= notUMinus_multiplicativeNotLetCS * notUMinus_unaryWithLetCS
+            //
+            
+            case 396:
+
+            //
+            // Rule 397:  notUMinus_multiplicativeWithLetCS ::= notUMinus_multiplicativeNotLetCS / notUMinus_unaryWithLetCS
+            //
+            case 397: {
+               //#line 1040 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+							SimpleTypeEnum.KEYWORD_LITERAL,
+							getRhsIToken(2)
+						);
+				setOffsets(simpleNameCS, getRhsIToken(2));
+				OCLExpressionCS left = (OCLExpressionCS)getRhsSym(1);
+				OCLExpressionCS right = (OCLExpressionCS)getRhsSym(3);
+				EList<OCLExpressionCS> args = new BasicEList<OCLExpressionCS>();
+				args.add(right);
+				OperationCallExpCS result = createOperationCallExpCS(
+						left,
+						simpleNameCS,
+						args
+					);
+				setOffsets(result, left, right);
+				setResult(result);
+	                  break;
+            }
+	 
+            //
+            // Rule 401:  notUMinus_unaryNotNameNotLetCS ::= not notUMinus_unaryNotLetCS
+            //
+            
+            case 401:
+
+            //
+            // Rule 403:  notUMinus_unaryWithLetCS ::= not notUMinus_unaryWithLetCS
+            //
+            case 403: {
+               //#line 1069 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				SimpleNameCS simpleNameCS = createSimpleNameCS(
+							SimpleTypeEnum.KEYWORD_LITERAL,
+							getRhsIToken(1)
+						);
+				setOffsets(simpleNameCS, getRhsIToken(1));
+				OCLExpressionCS expr = (OCLExpressionCS)getRhsSym(2);
+				OperationCallExpCS result = createOperationCallExpCS(
+						expr,
+						simpleNameCS,
+						new BasicEList<OCLExpressionCS>()
+					);
+				setOffsets(result, simpleNameCS, expr);
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 408:  notUMinus_primaryNotNameCS ::= ( OclExpressionCS )
+            //
+            case 408: {
+               //#line 1092 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+				
+				OCLExpressionCS result = (OCLExpressionCS)getRhsSym(2);
+				if (result instanceof OperationCallExpCS) {
+					((OperationCallExpCS)result).setIsAtomic(true);
+				}
+				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+				setResult(result);
+	                  break;
+            }
+	
+            //
+            // Rule 425:  switchExpCS ::= switch switchBodyExpCS
+            //
+            case 425: {
+               //#line 1131 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] switchBody = (Object[]) getRhsSym(2);
 
@@ -2557,10 +3104,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 302:  switchDeclaratorCS ::= IDENTIFIER
+            // Rule 427:  switchDeclaratorCS ::= IDENTIFIER
             //
-            case 302: {
-               //#line 694 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 427: {
+               //#line 1150 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -2573,10 +3120,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 303:  switchDeclaratorCS ::= IDENTIFIER = OclExpressionCS
+            // Rule 428:  switchDeclaratorCS ::= IDENTIFIER = OclExpressionCS
             //
-            case 303: {
-               //#line 706 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 428: {
+               //#line 1162 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -2589,10 +3136,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 304:  IterateExpCS ::= primaryExpCS -> object ( uninitializedVariableCS ) objectDeclCS expression_block
+            // Rule 429:  IterateExpCS ::= primaryExpCS -> object ( uninitializedVariableCS ) objectDeclCS expression_block
             //
-            case 304: {
-               //#line 720 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 429: {
+               //#line 1176 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS  blockExpCS = (BlockExpCS) getRhsSym(8);
 				ObjectExpCS objectExpCS = setupOutExpCS(
@@ -2622,10 +3169,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 305:  IterateExpCS ::= primaryExpCS -> switch ( switchDeclaratorCS ) switchBodyExpCS
+            // Rule 430:  IterateExpCS ::= primaryExpCS -> switch ( switchDeclaratorCS ) switchBodyExpCS
             //
-            case 305: {
-               //#line 752 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 430: {
+               //#line 1208 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] switchBody = (Object[]) getRhsSym(7);
 
@@ -2659,10 +3206,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 306:  switchExpCS ::= switch qvtErrorToken
+            // Rule 431:  switchExpCS ::= switch qvtErrorToken
             //
-            case 306: {
-               //#line 785 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 431: {
+               //#line 1241 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchExpCS(
 						new BasicEList(),
@@ -2674,10 +3221,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 307:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
+            // Rule 432:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt }
             //
-            case 307: {
-               //#line 796 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 432: {
+               //#line 1252 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] result = new Object[] {getRhsSym(2), getRhsSym(3), getRhsIToken(4)};
 				setResult(result);
@@ -2685,10 +3232,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 308:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
+            // Rule 433:  switchBodyExpCS ::= { switchAltExpCSList switchElseExpCSOpt qvtErrorToken
             //
-            case 308: {
-               //#line 803 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 433: {
+               //#line 1259 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] result = new Object[] {getRhsSym(2), getRhsSym(3), getRhsSym(3)};
 				setResult(result);
@@ -2696,10 +3243,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 309:  switchBodyExpCS ::= { qvtErrorToken
+            // Rule 434:  switchBodyExpCS ::= { qvtErrorToken
             //
-            case 309: {
-               //#line 810 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 434: {
+               //#line 1266 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] result = new Object[] {new BasicEList(), null, getRhsIToken(1)};
 				setResult(result);
@@ -2707,10 +3254,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 310:  switchAltExpCSList ::= switchAltExpCS
+            // Rule 435:  switchAltExpCSList ::= switchAltExpCS
             //
-            case 310: {
-               //#line 817 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 435: {
+               //#line 1273 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				result.add(getRhsSym(1));
@@ -2719,10 +3266,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 311:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
+            // Rule 436:  switchAltExpCSList ::= switchAltExpCSList switchAltExpCS
             //
-            case 311: {
-               //#line 824 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 436: {
+               //#line 1280 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(2));
@@ -2731,10 +3278,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 312:  switchAltExpCS ::= case ( OclExpressionCS ) expression_statement
+            // Rule 437:  switchAltExpCS ::= case ( OclExpressionCS ) expression_statement
             //
-            case 312: {
-               //#line 832 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 437: {
+               //#line 1288 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) getRhsSym(3),
@@ -2746,10 +3293,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 313:  switchAltExpCS ::= case ( OclExpressionCS ) qvtErrorToken
+            // Rule 438:  switchAltExpCS ::= case ( OclExpressionCS ) qvtErrorToken
             //
-            case 313: {
-               //#line 842 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 438: {
+               //#line 1298 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchAltExpCS(
 						(OCLExpressionCS) getRhsSym(3),
@@ -2761,37 +3308,37 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 314:  switchElseExpCSOpt ::= $Empty
+            // Rule 439:  switchElseExpCSOpt ::= $Empty
             //
-            case 314:
+            case 439:
                 setResult(null);
                 break;
 
             //
-            // Rule 316:  switchElseExpCS ::= else expression_statement
+            // Rule 441:  switchElseExpCS ::= else expression_statement
             //
-            case 316: {
-               //#line 857 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 441: {
+               //#line 1313 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult((CSTNode)getRhsSym(2));
 	                  break;
             }
 	
             //
-            // Rule 317:  switchElseExpCS ::= else qvtErrorToken
+            // Rule 442:  switchElseExpCS ::= else qvtErrorToken
             //
-            case 317: {
-               //#line 862 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 442: {
+               //#line 1318 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(null);
 	                  break;
             }
 	
             //
-            // Rule 318:  OclExpressionCS ::= primaryOCLExpressionCS
+            // Rule 443:  OclExpressionCS ::= primaryOCLExpressionCS
             //
-            case 318: {
-               //#line 870 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 443: {
+               //#line 1326 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createExpressionStatementCS(
 						(OCLExpressionCS)getRhsSym(1)
@@ -2802,10 +3349,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 320:  logWhenExp ::= when OclExpressionCS
+            // Rule 445:  logWhenExp ::= when OclExpressionCS
             //
-            case 320: {
-               //#line 884 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 445: {
+               //#line 1340 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			OCLExpressionCS condition = (OCLExpressionCS) getRhsSym(2);
 			setResult(condition);
@@ -2813,17 +3360,17 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 322:  logWhenExpOpt ::= $Empty
+            // Rule 447:  logWhenExpOpt ::= $Empty
             //
-            case 322:
+            case 447:
                 setResult(null);
                 break;
 
             //
-            // Rule 323:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
+            // Rule 448:  logExpCS ::= log ( argumentsCSopt ) logWhenExpOpt
             //
-            case 323: {
-               //#line 895 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 448: {
+               //#line 1351 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			OCLExpressionCS condition = (OCLExpressionCS) getRhsSym(5);
 			LogExpCS result = (LogExpCS)createLogExpCS((EList<OCLExpressionCS>)getRhsSym(3), condition);
@@ -2837,27 +3384,27 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 325:  severityKindCS ::= simpleNameCS
+            // Rule 450:  severityKindCS ::= simpleNameCS
             //
-            case 325: {
-               //#line 911 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 450: {
+               //#line 1367 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			setResult(getRhsSym(1));
 	                  break;
             }
 	
             //
-            // Rule 327:  severityKindCSOpt ::= $Empty
+            // Rule 452:  severityKindCSOpt ::= $Empty
             //
-            case 327:
+            case 452:
                 setResult(null);
                 break;
 
             //
-            // Rule 328:  assertWithLogExp ::= with logExpCS
+            // Rule 453:  assertWithLogExp ::= with logExpCS
             //
-            case 328: {
-               //#line 923 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 453: {
+               //#line 1379 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			LogExpCS logExp = (LogExpCS) getRhsSym(2);
 			setOffsets(logExp, getRhsIToken(2), logExp);
@@ -2866,17 +3413,17 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 330:  assertWithLogExpOpt ::= $Empty
+            // Rule 455:  assertWithLogExpOpt ::= $Empty
             //
-            case 330:
+            case 455:
                 setResult(null);
                 break;
 
             //
-            // Rule 331:  assertExpCS ::= assert severityKindCSOpt ( OclExpressionCS ) assertWithLogExpOpt
+            // Rule 456:  assertExpCS ::= assert severityKindCSOpt ( OclExpressionCS ) assertWithLogExpOpt
             //
-            case 331: {
-               //#line 935 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 456: {
+               //#line 1391 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			LogExpCS logExpCS = (LogExpCS)getRhsSym(6);
 			OCLExpressionCS condition = (OCLExpressionCS)getRhsSym(4);
@@ -2889,10 +3436,10 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 332:  computeExpCS ::= compute ( declarator ) expression_block
+            // Rule 457:  computeExpCS ::= compute ( declarator ) expression_block
             //
-            case 332: {
-               //#line 950 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 457: {
+               //#line 1406 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createComputeExpCS(
 					(VariableCS) getRhsSym(3),
@@ -2904,10 +3451,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 334:  IterateExpCS ::= primaryExpCS -> imperativeIterateExpCS
+            // Rule 459:  IterateExpCS ::= primaryExpCS -> imperativeIterateExpCS
             //
-            case 334: {
-               //#line 968 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 459: {
+               //#line 1424 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				ImperativeIterateExpCS iterateExpCS = (ImperativeIterateExpCS) getRhsSym(3);
@@ -2918,16 +3465,16 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 343:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken12 ( imperativeIterContents12 )
+            // Rule 468:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken12 ( imperativeIterContents12 )
             //
             
-            case 343:
+            case 468:
 
             //
-            // Rule 344:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 ( imperativeIterContents3 )
+            // Rule 469:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken3 ( imperativeIterContents3 )
             //
-            case 344: {
-               //#line 997 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 469: {
+               //#line 1453 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				String opCode = getRhsTokenText(1);
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -2957,10 +3504,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 345:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken qvtErrorToken
+            // Rule 470:  imperativeIterateExpCS ::= imperativeIteratorExpCSToken qvtErrorToken
             //
-            case 345: {
-               //#line 1026 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 470: {
+               //#line 1482 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.KEYWORD_LITERAL,
@@ -2980,10 +3527,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 346:  imperativeIterContents12 ::= OclExpressionCS
+            // Rule 471:  imperativeIterContents12 ::= OclExpressionCS
             //
-            case 346: {
-               //#line 1046 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 471: {
+               //#line 1502 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {
 						ourEmptyEList,
@@ -2994,10 +3541,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 347:  imperativeIterContents12 ::= uninitializedVariableCS | OclExpressionCS
+            // Rule 472:  imperativeIterContents12 ::= uninitializedVariableCS | OclExpressionCS
             //
-            case 347: {
-               //#line 1056 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 472: {
+               //#line 1512 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList iters = new BasicEList();
 				iters.add(getRhsSym(1));
@@ -3011,10 +3558,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 348:  imperativeIterContents12 ::= simpleNameCS , variableDeclarationListCS | OclExpressionCS
+            // Rule 473:  imperativeIterContents12 ::= simpleNameCS , variableDeclarationListCS | OclExpressionCS
             //
-            case 348: {
-               //#line 1069 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 473: {
+               //#line 1525 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 SimpleNameCS name = (SimpleNameCS)getRhsSym(1);
                 CSTNode variableCS = createVariableCS(name, null, null);
@@ -3032,10 +3579,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 349:  imperativeIterContents3 ::= variableDeclarationListCS ; initializedVariableCS | OclExpressionCS
+            // Rule 474:  imperativeIterContents3 ::= variableDeclarationListCS ; initializedVariableCS | OclExpressionCS
             //
-            case 349: {
-               //#line 1086 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 474: {
+               //#line 1542 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {
 						getRhsSym(1),
@@ -3046,10 +3593,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 350:  variableDeclarationListCS ::= uninitializedVariableCS
+            // Rule 475:  variableDeclarationListCS ::= uninitializedVariableCS
             //
-            case 350: {
-               //#line 1096 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 475: {
+               //#line 1552 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				result.add(getRhsSym(1));
@@ -3058,10 +3605,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 351:  variableDeclarationListCS ::= variableDeclarationListCS , uninitializedVariableCS
+            // Rule 476:  variableDeclarationListCS ::= variableDeclarationListCS , uninitializedVariableCS
             //
-            case 351: {
-               //#line 1103 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 476: {
+               //#line 1559 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -3070,17 +3617,17 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 352:  exclamationOpt ::= $Empty
+            // Rule 477:  exclamationOpt ::= $Empty
             //
-            case 352:
+            case 477:
                 setResult(null);
                 break;
 
             //
-            // Rule 354:  declarator_vsep ::= IDENTIFIER |
+            // Rule 479:  declarator_vsep ::= IDENTIFIER |
             //
-            case 354: {
-               //#line 1119 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 479: {
+               //#line 1575 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		CSTNode result = createVariableCS(
 					getRhsIToken(1),
@@ -3093,17 +3640,17 @@ protected String getRhsTokenText(int i) {
             }
     	
             //
-            // Rule 355:  declarator_vsepOpt ::= $Empty
+            // Rule 480:  declarator_vsepOpt ::= $Empty
             //
-            case 355:
+            case 480:
                 setResult(null);
                 break;
 
             //
-            // Rule 357:  IterateExpCS ::= primaryExpCS exclamationOpt [ declarator_vsepOpt OclExpressionCS ]
+            // Rule 482:  IterateExpCS ::= primaryExpCS exclamationOpt [ declarator_vsepOpt OclExpressionCS ]
             //
-            case 357: {
-               //#line 1136 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 482: {
+               //#line 1592 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 		if (source instanceof ImperativeIterateExpCS
@@ -3157,10 +3704,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 358:  IterateExpCS ::= primaryExpCS -> simpleNameCS
+            // Rule 483:  IterateExpCS ::= primaryExpCS -> simpleNameCS
             //
-            case 358: {
-               //#line 1190 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 483: {
+               //#line 1646 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		String opCode = "xcollect";  //$NON-NLS-1$
 		SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -3193,10 +3740,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 360:  newExpCS ::= new newTypespecCS ( argumentsCSopt )
+            // Rule 485:  newExpCS ::= new newTypespecCS ( argumentsCSopt )
             //
-            case 360: {
-               //#line 1223 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 485: {
+               //#line 1680 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) getRhsSym(2), (EList) getRhsSym(4));
 			setOffsets(result, getRhsIToken(1), getRhsIToken(5));
@@ -3205,10 +3752,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 361:  newTypespecCS ::= pathNameCS
+            // Rule 486:  newTypespecCS ::= pathNameCS
             //
-            case 361: {
-               //#line 1231 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 486: {
+               //#line 1688 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
 					(TypeCS)getRhsSym(1),
@@ -3219,10 +3766,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 362:  primaryNotNameCS ::= break
+            // Rule 487:  breakExpCS ::= break
             //
-            case 362: {
-               //#line 1244 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 487: {
+               //#line 1701 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			OCLExpressionCS result = createBreakCS();
 			setOffsets(result, getRhsIToken(1));
@@ -3231,10 +3778,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 363:  primaryNotNameCS ::= continue
+            // Rule 488:  continueExpCS ::= continue
             //
-            case 363: {
-               //#line 1252 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 488: {
+               //#line 1709 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			OCLExpressionCS result = createContinueCS();
 			setOffsets(result, getRhsIToken(1));
@@ -3243,10 +3790,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 366:  declarator1 ::= IDENTIFIER : typeCS
+            // Rule 493:  declarator1 ::= IDENTIFIER : typeCS
             //
-            case 366: {
-               //#line 1266 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 493: {
+               //#line 1727 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -3259,10 +3806,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 367:  declarator1 ::= IDENTIFIER : typeCS = OclExpressionCS
+            // Rule 494:  declarator1 ::= IDENTIFIER : typeCS = OclExpressionCS
             //
-            case 367: {
-               //#line 1278 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 494: {
+               //#line 1739 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -3275,10 +3822,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 368:  declarator1 ::= IDENTIFIER : typeCS := OclExpressionCS
+            // Rule 495:  declarator1 ::= IDENTIFIER : typeCS := OclExpressionCS
             //
-            case 368: {
-               //#line 1290 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 495: {
+               //#line 1751 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -3291,10 +3838,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 369:  declarator2 ::= IDENTIFIER := OclExpressionCS
+            // Rule 496:  declarator2 ::= IDENTIFIER := OclExpressionCS
             //
-            case 369: {
-               //#line 1302 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 496: {
+               //#line 1763 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createVariableCS(
 						getRhsIToken(1),
@@ -3307,18 +3854,18 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 372:  expression_listOpt ::= $Empty
+            // Rule 499:  expression_listOpt ::= $Empty
             //
             
-            case 372:
+            case 499:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 376:  expression_semi_list ::= expression_semi_list_element
+            // Rule 503:  expression_semi_list ::= expression_semi_list_element
             //
-            case 376: {
-               //#line 1325 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 503: {
+               //#line 1786 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
 				Object element = getRhsSym(1);
@@ -3332,10 +3879,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 377:  expression_semi_list ::= expression_semi_list ; expression_semi_list_element
+            // Rule 504:  expression_semi_list ::= expression_semi_list ; expression_semi_list_element
             //
-            case 377: {
-               //#line 1337 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 504: {
+               //#line 1798 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				Object element = getRhsSym(3);
@@ -3349,10 +3896,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 378:  expression_semi_list ::= expression_semi_list qvtErrorToken
+            // Rule 505:  expression_semi_list ::= expression_semi_list qvtErrorToken
             //
-            case 378: {
-               //#line 1349 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 505: {
+               //#line 1810 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -3360,10 +3907,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 379:  expression_block ::= { expression_listOpt }
+            // Rule 506:  expression_block ::= { expression_listOpt }
             //
-            case 379: {
-               //#line 1356 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 506: {
+               //#line 1817 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			EList bodyList = (EList) getRhsSym(2);
 			CSTNode result = createBlockExpCS(
@@ -3376,10 +3923,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 380:  expression_block ::= { qvtErrorToken
+            // Rule 507:  expression_block ::= { qvtErrorToken
             //
-            case 380: {
-               //#line 1367 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 507: {
+               //#line 1828 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			CSTNode result = createBlockExpCS(
 				ourEmptyEList
@@ -3391,20 +3938,20 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 383:  qvtErrorToken ::= ERROR_TOKEN
+            // Rule 510:  qvtErrorToken ::= ERROR_TOKEN
             //
-            case 383: {
-               //#line 1381 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 510: {
+               //#line 1842 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				diagnozeErrorToken(getRhsTokenIndex(1));
 	                  break;
             }
 	
             //
-            // Rule 384:  switchAltExpCS ::= ( OclExpressionCS ) ? OclExpressionCS ;
+            // Rule 511:  switchAltExpCS ::= ( OclExpressionCS ) ? OclExpressionCS ;
             //
-            case 384: {
-               //#line 1391 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 511: {
+               //#line 1852 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchAltExpCSDeprecated(
 						(OCLExpressionCS) getRhsSym(2),
@@ -3416,10 +3963,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 385:  switchAltExpCS ::= ( OclExpressionCS ) qvtErrorToken
+            // Rule 512:  switchAltExpCS ::= ( OclExpressionCS ) qvtErrorToken
             //
-            case 385: {
-               //#line 1401 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 512: {
+               //#line 1862 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchAltExpCSDeprecated(
 						(OCLExpressionCS) getRhsSym(2),
@@ -3431,10 +3978,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 386:  switchAltExpCS ::= ( qvtErrorToken
+            // Rule 513:  switchAltExpCS ::= ( qvtErrorToken
             //
-            case 386: {
-               //#line 1411 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 513: {
+               //#line 1872 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSwitchAltExpCSDeprecated(
 						null,
@@ -3446,10 +3993,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 387:  switchElseExpCS ::= else ? OclExpressionCS ;
+            // Rule 514:  switchElseExpCS ::= else ? OclExpressionCS ;
             //
-            case 387: {
-               //#line 1422 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 514: {
+               //#line 1883 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		    	int startOffset = getRhsIToken(1).getStartOffset();
 		    	int endOffset = getRhsIToken(4).getEndOffset();
@@ -3460,10 +4007,10 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 388:  switchElseExpCS ::= else ? OclExpressionCS qvtErrorToken
+            // Rule 515:  switchElseExpCS ::= else ? OclExpressionCS qvtErrorToken
             //
-            case 388: {
-               //#line 1431 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+            case 515: {
+               //#line 1892 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 		    	int startOffset = getRhsIToken(1).getStartOffset();
 		    	int endOffset = getRhsIToken(3).getEndOffset();
@@ -3474,9 +4021,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 389:  topLevel ::= unit_elementList
+            // Rule 516:  topLevel ::= unit_elementList
             //
-            case 389: {
+            case 516: {
                //#line 189 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<CSTNode> unitElements = (EList<CSTNode>)getRhsSym(1);
@@ -3485,9 +4032,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 391:  _import ::= import unit ;
+            // Rule 518:  _import ::= import unit ;
             //
-            case 391: {
+            case 518: {
                //#line 198 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createImportCS(
@@ -3499,9 +4046,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 393:  _import ::= import importDeclaration
+            // Rule 520:  _import ::= import importDeclaration
             //
-            case 393: {
+            case 520: {
                //#line 210 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLibraryImportCS(
@@ -3513,9 +4060,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 395:  unit_elementList ::= unit_elementList unit_element
+            // Rule 522:  unit_elementList ::= unit_elementList unit_element
             //
-            case 395: {
+            case 522: {
                //#line 224 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList list = (EList)getRhsSym(1);
@@ -3525,24 +4072,24 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 396:  unit_elementList ::= $Empty
+            // Rule 523:  unit_elementList ::= $Empty
             //
             
-            case 396:
+            case 523:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 407:  unit_element ::= qvtErrorToken
+            // Rule 534:  unit_element ::= qvtErrorToken
             //
-            case 407:
+            case 534:
                 setResult(null);
                 break;
 
             //
-            // Rule 410:  transformation_decl ::= transformation_h ;
+            // Rule 537:  transformation_decl ::= transformation_h ;
             //
-            case 410: {
+            case 537: {
                //#line 253 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				TransformationHeaderCS headerCS = (TransformationHeaderCS) getRhsSym(1);
@@ -3554,9 +4101,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 411:  transformation_def ::= transformation_h { module_elementList } semicolonOpt
+            // Rule 538:  transformation_def ::= transformation_h { module_elementList } semicolonOpt
             //
-            case 411: {
+            case 538: {
                //#line 263 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				TransformationHeaderCS headerCS = (TransformationHeaderCS) getRhsSym(1);
@@ -3567,9 +4114,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 414:  library_decl ::= library_h ;
+            // Rule 541:  library_decl ::= library_h ;
             //
-            case 414: {
+            case 541: {
                //#line 275 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				TransformationHeaderCS headerCS = (TransformationHeaderCS) getRhsSym(1);
@@ -3581,9 +4128,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 415:  library_def ::= library_h { module_elementList } semicolonOpt
+            // Rule 542:  library_def ::= library_h { module_elementList } semicolonOpt
             //
-            case 415: {
+            case 542: {
                //#line 285 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				TransformationHeaderCS headerCS = (TransformationHeaderCS) getRhsSym(1);
@@ -3594,9 +4141,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 416:  transformation_h ::= qualifierList transformation qualifiedNameCS transformation_signature transformation_usage_refineOpt
+            // Rule 543:  transformation_h ::= qualifierList transformation qualifiedNameCS transformation_signature transformation_usage_refineOpt
             //
-            case 416: {
+            case 543: {
                //#line 297 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList qualifierList = (EList) getRhsSym(1);
@@ -3635,16 +4182,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 417:  transformation_usage_refineOpt ::= $Empty
+            // Rule 544:  transformation_usage_refineOpt ::= $Empty
             //
-            case 417:
+            case 544:
                 setResult(null);
                 break;
 
             //
-            // Rule 422:  transformation_refine ::= refines moduleref
+            // Rule 549:  transformation_refine ::= refines moduleref
             //
-            case 422: {
+            case 549: {
                //#line 344 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTransformationRefineCS(
@@ -3656,9 +4203,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 423:  library_h ::= library qualifiedNameCS library_signatureOpt module_usageListOpt
+            // Rule 550:  library_h ::= library qualifiedNameCS library_signatureOpt module_usageListOpt
             //
-            case 423: {
+            case 550: {
                //#line 357 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS name = (PathNameCS)getRhsSym(2);
@@ -3683,9 +4230,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 425:  library_h ::= library libraryDeclaration
+            // Rule 552:  library_h ::= library libraryDeclaration
             //
-            case 425: {
+            case 552: {
                //#line 382 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTransformationHeaderCS(
@@ -3701,16 +4248,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 426:  library_signatureOpt ::= $Empty
+            // Rule 553:  library_signatureOpt ::= $Empty
             //
-            case 426:
+            case 553:
                 setResult(null);
                 break;
 
             //
-            // Rule 429:  module_usageList ::= module_usage
+            // Rule 556:  module_usageList ::= module_usage
             //
-            case 429: {
+            case 556: {
                //#line 404 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -3720,9 +4267,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 430:  module_usageList ::= module_usageList module_usage
+            // Rule 557:  module_usageList ::= module_usageList module_usage
             //
-            case 430: {
+            case 557: {
                //#line 411 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -3732,17 +4279,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 431:  module_usageListOpt ::= $Empty
+            // Rule 558:  module_usageListOpt ::= $Empty
             //
             
-            case 431:
+            case 558:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 435:  access_usage ::= access module_kindOpt moduleref_list
+            // Rule 562:  access_usage ::= access module_kindOpt moduleref_list
             //
-            case 435: {
+            case 562: {
                //#line 426 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList moduleRefList = (EList)getRhsSym(3);
@@ -3757,9 +4304,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 436:  extends_usage ::= extends module_kindOpt moduleref_list
+            // Rule 563:  extends_usage ::= extends module_kindOpt moduleref_list
             //
-            case 436: {
+            case 563: {
                //#line 438 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList moduleRefList = (EList)getRhsSym(3);
@@ -3774,16 +4321,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 437:  module_kindOpt ::= $Empty
+            // Rule 564:  module_kindOpt ::= $Empty
             //
-            case 437:
+            case 564:
                 setResult(null);
                 break;
 
             //
-            // Rule 439:  module_kind ::= transformation
+            // Rule 566:  module_kind ::= transformation
             //
-            case 439: {
+            case 566: {
                //#line 455 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createModuleKindCS(
@@ -3795,9 +4342,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 440:  module_kind ::= library
+            // Rule 567:  module_kind ::= library
             //
-            case 440: {
+            case 567: {
                //#line 464 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createModuleKindCS(
@@ -3809,9 +4356,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 441:  moduleref_list ::= moduleref
+            // Rule 568:  moduleref_list ::= moduleref
             //
-            case 441: {
+            case 568: {
                //#line 474 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -3821,9 +4368,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 442:  moduleref_list ::= moduleref_list , moduleref
+            // Rule 569:  moduleref_list ::= moduleref_list , moduleref
             //
-            case 442: {
+            case 569: {
                //#line 481 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -3833,9 +4380,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 443:  moduleref_list ::= moduleref_list qvtErrorToken
+            // Rule 570:  moduleref_list ::= moduleref_list qvtErrorToken
             //
-            case 443: {
+            case 570: {
                //#line 488 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -3844,9 +4391,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 444:  moduleref ::= pathNameCS simple_signatureOpt
+            // Rule 571:  moduleref ::= pathNameCS simple_signatureOpt
             //
-            case 444: {
+            case 571: {
                //#line 495 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS signature = (SimpleSignatureCS)getRhsSym(2);
@@ -3861,9 +4408,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 445:  module_elementList ::= module_elementList module_element
+            // Rule 572:  module_elementList ::= module_elementList module_element
             //
-            case 445: {
+            case 572: {
                //#line 510 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList list = (EList)getRhsSym(1);
@@ -3873,24 +4420,24 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 446:  module_elementList ::= $Empty
+            // Rule 573:  module_elementList ::= $Empty
             //
             
-            case 446:
+            case 573:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 454:  module_element ::= qvtErrorToken
+            // Rule 581:  module_element ::= qvtErrorToken
             //
-            case 454:
+            case 581:
                 setResult(null);
                 break;
 
             //
-            // Rule 455:  _modeltype ::= modeltype IDENTIFIER compliance_kindOpt uses packageref_list modeltype_whereOpt ;
+            // Rule 582:  _modeltype ::= modeltype IDENTIFIER compliance_kindOpt uses packageref_list modeltype_whereOpt ;
             //
-            case 455: {
+            case 582: {
                //#line 533 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList whereList = (EList)getRhsSym(6);
@@ -3914,9 +4461,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 457:  _modeltype ::= modeltype modeltypeDeclaration
+            // Rule 584:  _modeltype ::= modeltype modeltypeDeclaration
             //
-            case 457: {
+            case 584: {
                //#line 557 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ModelTypeCS result = createModelTypeCS(
@@ -3931,17 +4478,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 458:  modeltype_whereOpt ::= $Empty
+            // Rule 585:  modeltype_whereOpt ::= $Empty
             //
             
-            case 458:
+            case 585:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 460:  modeltype_where ::= where expression_block
+            // Rule 587:  modeltype_where ::= where expression_block
             //
-            case 460: {
+            case 587: {
                //#line 574 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
@@ -3950,9 +4497,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 461:  packageref_list ::= packageref
+            // Rule 588:  packageref_list ::= packageref
             //
-            case 461: {
+            case 588: {
                //#line 581 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -3962,9 +4509,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 462:  packageref_list ::= packageref_list , packageref
+            // Rule 589:  packageref_list ::= packageref_list , packageref
             //
-            case 462: {
+            case 589: {
                //#line 588 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -3974,9 +4521,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 463:  packageref_list ::= packageref_list qvtErrorToken
+            // Rule 590:  packageref_list ::= packageref_list qvtErrorToken
             //
-            case 463: {
+            case 590: {
                //#line 595 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -3985,9 +4532,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 464:  packageref ::= pathNameCS
+            // Rule 591:  packageref ::= pathNameCS
             //
-            case 464: {
+            case 591: {
                //#line 602 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
@@ -4000,9 +4547,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 465:  packageref ::= pathNameCS ( uri )
+            // Rule 592:  packageref ::= pathNameCS ( uri )
             //
-            case 465: {
+            case 592: {
                //#line 612 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
@@ -4015,9 +4562,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 466:  packageref ::= uri
+            // Rule 593:  packageref ::= uri
             //
-            case 466: {
+            case 593: {
                //#line 622 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
@@ -4030,16 +4577,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 467:  compliance_kindOpt ::= $Empty
+            // Rule 594:  compliance_kindOpt ::= $Empty
             //
-            case 467:
+            case 594:
                 setResult(null);
                 break;
 
             //
-            // Rule 471:  classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt { classifierFeatureListOpt } semicolonOpt
+            // Rule 598:  classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt { classifierFeatureListOpt } semicolonOpt
             //
-            case 471: {
+            case 598: {
                //#line 645 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createClassifierDefCS(
@@ -4053,17 +4600,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 472:  classifierExtensionOpt ::= $Empty
+            // Rule 599:  classifierExtensionOpt ::= $Empty
             //
             
-            case 472:
+            case 599:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 473:  classifierExtensionOpt ::= extends type_list
+            // Rule 600:  classifierExtensionOpt ::= extends type_list
             //
-            case 473: {
+            case 600: {
                //#line 659 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(2);
@@ -4072,9 +4619,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 474:  type_list ::= typeCS
+            // Rule 601:  type_list ::= typeCS
             //
-            case 474: {
+            case 601: {
                //#line 665 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -4084,9 +4631,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 475:  type_list ::= type_list , typeCS
+            // Rule 602:  type_list ::= type_list , typeCS
             //
-            case 475: {
+            case 602: {
                //#line 672 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4096,9 +4643,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 476:  type_list ::= type_list qvtErrorToken
+            // Rule 603:  type_list ::= type_list qvtErrorToken
             //
-            case 476: {
+            case 603: {
                //#line 679 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4107,17 +4654,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 477:  classifierFeatureListOpt ::= $Empty
+            // Rule 604:  classifierFeatureListOpt ::= $Empty
             //
             
-            case 477:
+            case 604:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 479:  classifierFeatureList ::= classifierFeatureCS
+            // Rule 606:  classifierFeatureList ::= classifierFeatureCS
             //
-            case 479: {
+            case 606: {
                //#line 690 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -4127,9 +4674,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 480:  classifierFeatureList ::= classifierFeatureList ; classifierFeatureCS
+            // Rule 607:  classifierFeatureList ::= classifierFeatureList ; classifierFeatureCS
             //
-            case 480: {
+            case 607: {
                //#line 697 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4139,9 +4686,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 481:  classifierFeatureList ::= classifierFeatureList qvtErrorToken
+            // Rule 608:  classifierFeatureList ::= classifierFeatureList qvtErrorToken
             //
-            case 481: {
+            case 608: {
                //#line 704 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4150,9 +4697,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 482:  classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS : typeCS multiplicityOpt ordered_prop opposite_propertyOpt init_partOpt
+            // Rule 609:  classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS : typeCS multiplicityOpt ordered_prop opposite_propertyOpt init_partOpt
             //
-            case 482: {
+            case 609: {
                //#line 711 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList stereotypeQualifiers = (EList) getRhsSym(1);
@@ -4197,16 +4744,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 484:  init_partOpt ::= $Empty
+            // Rule 611:  init_partOpt ::= $Empty
             //
-            case 484:
+            case 611:
                 setResult(null);
                 break;
 
             //
-            // Rule 485:  init_partOpt ::= = OclExpressionCS
+            // Rule 612:  init_partOpt ::= = OclExpressionCS
             //
-            case 485: {
+            case 612: {
                //#line 757 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = (CSTNode) getRhsSym(2);
@@ -4215,17 +4762,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 486:  stereotype_qualifier_list ::= $Empty
+            // Rule 613:  stereotype_qualifier_list ::= $Empty
             //
             
-            case 486:
+            case 613:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 487:  stereotype_qualifier_list ::= STEREOTYPE_QUALIFIER_OPEN identifier_list STEREOTYPE_QUALIFIER_CLOSE
+            // Rule 614:  stereotype_qualifier_list ::= STEREOTYPE_QUALIFIER_OPEN identifier_list STEREOTYPE_QUALIFIER_CLOSE
             //
-            case 487: {
+            case 614: {
                //#line 766 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(2);
@@ -4234,9 +4781,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 488:  identifier_list ::= qvtIdentifierCS
+            // Rule 615:  identifier_list ::= qvtIdentifierCS
             //
-            case 488: {
+            case 615: {
                //#line 773 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -4246,9 +4793,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 489:  identifier_list ::= identifier_list , qvtIdentifierCS
+            // Rule 616:  identifier_list ::= identifier_list , qvtIdentifierCS
             //
-            case 489: {
+            case 616: {
                //#line 780 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -4258,9 +4805,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 490:  identifier_list ::= identifier_list qvtErrorToken
+            // Rule 617:  identifier_list ::= identifier_list qvtErrorToken
             //
-            case 490: {
+            case 617: {
                //#line 787 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4269,17 +4816,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 491:  feature_key_list ::= $Empty
+            // Rule 618:  feature_key_list ::= $Empty
             //
             
-            case 491:
+            case 618:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 492:  feature_key_list ::= feature_key_list feature_key
+            // Rule 619:  feature_key_list ::= feature_key_list feature_key
             //
-            case 492: {
+            case 619: {
                //#line 796 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -4289,9 +4836,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 493:  feature_key_list ::= feature_key_list qvtErrorToken
+            // Rule 620:  feature_key_list ::= feature_key_list qvtErrorToken
             //
-            case 493: {
+            case 620: {
                //#line 803 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -4300,33 +4847,33 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 494:  feature_key ::= composes
+            // Rule 621:  feature_key ::= composes
             //
             
-            case 494:
+            case 621:
  
             //
-            // Rule 495:  feature_key ::= references
+            // Rule 622:  feature_key ::= references
             //
             
-            case 495:
+            case 622:
  
             //
-            // Rule 496:  feature_key ::= readonly
+            // Rule 623:  feature_key ::= readonly
             //
             
-            case 496:
+            case 623:
  
             //
-            // Rule 497:  feature_key ::= derived
+            // Rule 624:  feature_key ::= derived
             //
             
-            case 497:
+            case 624:
 
             //
-            // Rule 498:  feature_key ::= static
+            // Rule 625:  feature_key ::= static
             //
-            case 498: {
+            case 625: {
                //#line 818 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
@@ -4336,16 +4883,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 499:  multiplicityOpt ::= $Empty
+            // Rule 626:  multiplicityOpt ::= $Empty
             //
-            case 499:
+            case 626:
                 setResult(null);
                 break;
 
             //
-            // Rule 500:  multiplicityOpt ::= LBRACKET multiplicity_range RBRACKET
+            // Rule 627:  multiplicityOpt ::= LBRACKET multiplicity_range RBRACKET
             //
-            case 500: {
+            case 627: {
                //#line 828 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = (CSTNode) getRhsSym(2);
@@ -4354,9 +4901,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 501:  multiplicity_range ::= IntegerLiteralExpCS
+            // Rule 628:  multiplicity_range ::= IntegerLiteralExpCS
             //
-            case 501: {
+            case 628: {
                //#line 835 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMultiplicityDefCS(
@@ -4369,9 +4916,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 502:  multiplicity_range ::= UnlimitedNaturalLiteralExpCS
+            // Rule 629:  multiplicity_range ::= UnlimitedNaturalLiteralExpCS
             //
-            case 502: {
+            case 629: {
                //#line 845 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PrimitiveLiteralExpCS lowerBound = createIntegerLiteralExpCS(Integer.toString(0));
@@ -4386,27 +4933,27 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 503:  multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE IntegerLiteralExpCS
+            // Rule 630:  multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE IntegerLiteralExpCS
             //
             
-            case 503:
+            case 630:
  
             //
-            // Rule 504:  multiplicity_range ::= IntegerLiteralExpCS DOTDOT IntegerLiteralExpCS
+            // Rule 631:  multiplicity_range ::= IntegerLiteralExpCS DOTDOT IntegerLiteralExpCS
             //
             
-            case 504:
+            case 631:
  
             //
-            // Rule 505:  multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE UnlimitedNaturalLiteralExpCS
+            // Rule 632:  multiplicity_range ::= IntegerLiteralExpCS MULTIPLICITY_RANGE UnlimitedNaturalLiteralExpCS
             //
             
-            case 505:
+            case 632:
 
             //
-            // Rule 506:  multiplicity_range ::= IntegerLiteralExpCS DOTDOT UnlimitedNaturalLiteralExpCS
+            // Rule 633:  multiplicity_range ::= IntegerLiteralExpCS DOTDOT UnlimitedNaturalLiteralExpCS
             //
-            case 506: {
+            case 633: {
                //#line 863 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMultiplicityDefCS(
@@ -4419,9 +4966,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 507:  ordered_prop ::= ordered
+            // Rule 634:  ordered_prop ::= ordered
             //
-            case 507: {
+            case 634: {
                //#line 874 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
@@ -4431,9 +4978,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 508:  ordered_prop ::= $Empty
+            // Rule 635:  ordered_prop ::= $Empty
             //
-            case 508: {
+            case 635: {
                //#line 881 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
@@ -4442,16 +4989,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 509:  opposite_propertyOpt ::= $Empty
+            // Rule 636:  opposite_propertyOpt ::= $Empty
             //
-            case 509:
+            case 636:
                 setResult(null);
                 break;
 
             //
-            // Rule 510:  opposite_propertyOpt ::= opposites navigable_prop qvtIdentifierCS multiplicityOpt
+            // Rule 637:  opposite_propertyOpt ::= opposites navigable_prop qvtIdentifierCS multiplicityOpt
             //
-            case 510: {
+            case 637: {
                //#line 890 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MultiplicityDefCS multiplicityDef = (MultiplicityDefCS) getRhsSym(4);
@@ -4469,9 +5016,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 511:  navigable_prop ::= ~
+            // Rule 638:  navigable_prop ::= ~
             //
-            case 511: {
+            case 638: {
                //#line 906 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
@@ -4481,9 +5028,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 512:  navigable_prop ::= $Empty
+            // Rule 639:  navigable_prop ::= $Empty
             //
-            case 512: {
+            case 639: {
                //#line 913 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
@@ -4492,9 +5039,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 513:  _property ::= configuration property qvtIdentifierCS : typeCS ;
+            // Rule 640:  _property ::= configuration property qvtIdentifierCS : typeCS ;
             //
-            case 513: {
+            case 640: {
                //#line 922 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createConfigPropertyCS(
@@ -4507,9 +5054,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 514:  _property ::= configuration property qvtIdentifierCS : typeCS qvtErrorToken
+            // Rule 641:  _property ::= configuration property qvtIdentifierCS : typeCS qvtErrorToken
             //
-            case 514: {
+            case 641: {
                //#line 932 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createConfigPropertyCS(
@@ -4522,9 +5069,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 515:  _property ::= property qvtIdentifierCS : typeCS = OclExpressionCS ;
+            // Rule 642:  _property ::= property qvtIdentifierCS : typeCS = OclExpressionCS ;
             //
-            case 515: {
+            case 642: {
                //#line 942 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
@@ -4538,9 +5085,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 516:  _property ::= property qvtIdentifierCS = OclExpressionCS ;
+            // Rule 643:  _property ::= property qvtIdentifierCS = OclExpressionCS ;
             //
-            case 516: {
+            case 643: {
                //#line 953 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
@@ -4554,9 +5101,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 517:  _property ::= property qvtIdentifierCS : typeCS ;
+            // Rule 644:  _property ::= property qvtIdentifierCS : typeCS ;
             //
-            case 517: {
+            case 644: {
                //#line 964 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
@@ -4570,9 +5117,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 518:  _property ::= intermediate property scoped_identifier : typeCS ;
+            // Rule 645:  _property ::= intermediate property scoped_identifier : typeCS ;
             //
-            case 518: {
+            case 645: {
                //#line 975 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createContextualPropertyCS(
@@ -4586,9 +5133,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 519:  _property ::= intermediate property scoped_identifier : typeCS = OclExpressionCS ;
+            // Rule 646:  _property ::= intermediate property scoped_identifier : typeCS = OclExpressionCS ;
             //
-            case 519: {
+            case 646: {
                //#line 986 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createContextualPropertyCS(
@@ -4602,9 +5149,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 523:  helper_header ::= helper_info scoped_identifier complete_signature
+            // Rule 650:  helper_header ::= helper_info scoped_identifier complete_signature
             //
-            case 523: {
+            case 650: {
                //#line 1004 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CompleteSignatureCS completeSignature = (CompleteSignatureCS)getRhsSym(3);
@@ -4631,9 +5178,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 524:  helper_header ::= helper_info qvtErrorToken
+            // Rule 651:  helper_header ::= helper_info qvtErrorToken
             //
-            case 524: {
+            case 651: {
                //#line 1029 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] helperInfo = (Object[])getRhsSym(1);
@@ -4659,9 +5206,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 525:  helper_info ::= qualifierList helper_kind
+            // Rule 652:  helper_info ::= qualifierList helper_kind
             //
-            case 525: {
+            case 652: {
                //#line 1053 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {getRhsSym(1), getRhsIToken(2)});
@@ -4669,9 +5216,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 528:  helper_decl ::= helper_header ;
+            // Rule 655:  helper_decl ::= helper_header ;
             //
-            case 528: {
+            case 655: {
                //#line 1062 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4687,9 +5234,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 529:  helper_decl ::= helper_header qvtErrorToken
+            // Rule 656:  helper_decl ::= helper_header qvtErrorToken
             //
-            case 529: {
+            case 656: {
                //#line 1076 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4705,9 +5252,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 530:  helper_simple_def ::= helper_header = OclExpressionCS ;
+            // Rule 657:  helper_simple_def ::= helper_header = OclExpressionCS ;
             //
-            case 530: {
+            case 657: {
                //#line 1090 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4726,9 +5273,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 531:  helper_compound_def ::= helper_header expression_block semicolonOpt
+            // Rule 658:  helper_compound_def ::= helper_header expression_block semicolonOpt
             //
-            case 531: {
+            case 658: {
                //#line 1107 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4744,9 +5291,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 534:  constructor_header ::= qualifierList constructor scoped_identifier simple_signature
+            // Rule 661:  constructor_header ::= qualifierList constructor scoped_identifier simple_signature
             //
-            case 534: {
+            case 661: {
                //#line 1126 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS signature = (SimpleSignatureCS) getRhsSym(4);					
@@ -4768,9 +5315,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 535:  constructor_decl ::= constructor_header ;
+            // Rule 662:  constructor_decl ::= constructor_header ;
             //
-            case 535: {
+            case 662: {
                //#line 1146 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
@@ -4785,9 +5332,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 536:  constructor_decl ::= constructor_header qvtErrorToken
+            // Rule 663:  constructor_decl ::= constructor_header qvtErrorToken
             //
-            case 536: {
+            case 663: {
                //#line 1159 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
@@ -4802,9 +5349,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 537:  constructor_def ::= constructor_header expression_block semicolonOpt
+            // Rule 664:  constructor_def ::= constructor_header expression_block semicolonOpt
             //
-            case 537: {
+            case 664: {
                //#line 1172 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
@@ -4819,9 +5366,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 540:  entry_header ::= main simple_signature
+            // Rule 667:  entry_header ::= main simple_signature
             //
-            case 540: {
+            case 667: {
                //#line 1191 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				IToken nameToken = getRhsIToken(1);				
@@ -4842,9 +5389,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 541:  entry_header ::= main qvtErrorToken
+            // Rule 668:  entry_header ::= main qvtErrorToken
             //
-            case 541: {
+            case 668: {
                //#line 1210 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingDeclarationCS(
@@ -4859,9 +5406,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 542:  entry_decl ::= entry_header ;
+            // Rule 669:  entry_decl ::= entry_header ;
             //
-            case 542: {
+            case 669: {
                //#line 1223 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4877,9 +5424,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 543:  entry_def ::= entry_header expression_block semicolonOpt
+            // Rule 670:  entry_def ::= entry_header expression_block semicolonOpt
             //
-            case 543: {
+            case 670: {
                //#line 1237 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
@@ -4895,9 +5442,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 544:  _tag ::= tag StringLiteralExpCS scoped_identifier tag_valueOpt
+            // Rule 671:  _tag ::= tag StringLiteralExpCS scoped_identifier tag_valueOpt
             //
-            case 544: {
+            case 671: {
                //#line 1255 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS valueExpression = (OCLExpressionCS) getRhsSym(4);
@@ -4912,16 +5459,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 545:  tag_valueOpt ::= $Empty
+            // Rule 672:  tag_valueOpt ::= $Empty
             //
-            case 545:
+            case 672:
                 setResult(null);
                 break;
 
             //
-            // Rule 546:  tag_valueOpt ::= = OclExpressionCS
+            // Rule 673:  tag_valueOpt ::= = OclExpressionCS
             //
-            case 546: {
+            case 673: {
                //#line 1270 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(2));
@@ -4929,9 +5476,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 549:  mapping_decl ::= mapping_full_header ;
+            // Rule 676:  mapping_decl ::= mapping_full_header ;
             //
-            case 549: {
+            case 676: {
                //#line 1283 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
@@ -4947,9 +5494,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 550:  mapping_def ::= mapping_full_header { mapping_body } semicolonOpt
+            // Rule 677:  mapping_def ::= mapping_full_header { mapping_body } semicolonOpt
             //
-            case 550: {
+            case 677: {
                //#line 1297 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingSectionsCS mappingSections = (MappingSectionsCS)getRhsSym(3);
@@ -4978,9 +5525,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 551:  mapping_def ::= mapping_full_header { qvtErrorToken
+            // Rule 678:  mapping_def ::= mapping_full_header { qvtErrorToken
             //
-            case 551: {
+            case 678: {
                //#line 1324 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
@@ -4995,9 +5542,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 552:  mapping_full_header ::= mapping_header _whenOpt
+            // Rule 679:  mapping_full_header ::= mapping_header _whenOpt
             //
-            case 552: {
+            case 679: {
                //#line 1337 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {getRhsSym(1), getRhsSym(2)});
@@ -5005,9 +5552,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 553:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier complete_signature mapping_extraList
+            // Rule 680:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier complete_signature mapping_extraList
             //
-            case 553: {
+            case 680: {
                //#line 1343 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS directionKind = (DirectionKindCS)getRhsSym(3);
@@ -5034,9 +5581,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 554:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier qvtErrorToken
+            // Rule 681:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier qvtErrorToken
             //
-            case 554: {
+            case 681: {
                //#line 1368 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS directionKind = (DirectionKindCS)getRhsSym(3);
@@ -5060,9 +5607,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 555:  mapping_header ::= qualifierList mapping qvtErrorToken
+            // Rule 682:  mapping_header ::= qualifierList mapping qvtErrorToken
             //
-            case 555: {
+            case 682: {
                //#line 1390 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
@@ -5084,9 +5631,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 556:  mapping_extraList ::= mapping_extraList mapping_extra
+            // Rule 683:  mapping_extraList ::= mapping_extraList mapping_extra
             //
-            case 556: {
+            case 683: {
                //#line 1411 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<MappingExtensionCS> extensionList = (EList<MappingExtensionCS>)getRhsSym(1);
@@ -5096,17 +5643,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 557:  mapping_extraList ::= $Empty
+            // Rule 684:  mapping_extraList ::= $Empty
             //
             
-            case 557:
+            case 684:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 559:  mapping_extension ::= mapping_extension_key scoped_identifier_list
+            // Rule 686:  mapping_extension ::= mapping_extension_key scoped_identifier_list
             //
-            case 559: {
+            case 686: {
                //#line 1424 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingExtensionCS result = createMappingExtension(getRhsTokenText(1), (EList<ScopedNameCS>)getRhsSym(2));
@@ -5119,16 +5666,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 564:  _whenOpt ::= $Empty
+            // Rule 691:  _whenOpt ::= $Empty
             //
-            case 564:
+            case 691:
                 setResult(null);
                 break;
 
             //
-            // Rule 565:  _when ::= when { OclExpressionCS semicolonOpt }
+            // Rule 692:  _when ::= when { OclExpressionCS semicolonOpt }
             //
-            case 565: {
+            case 692: {
                //#line 1443 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS result = (OCLExpressionCS)getRhsSym(3);
@@ -5137,16 +5684,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 566:  _when ::= when qvtErrorToken
+            // Rule 693:  _when ::= when qvtErrorToken
             //
-            case 566:
+            case 693:
                 setResult(null);
                 break;
 
             //
-            // Rule 567:  mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt
+            // Rule 694:  mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt
             //
-            case 567: {
+            case 694: {
                //#line 1452 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        MappingInitCS mappingInitCS = (MappingInitCS)getRhsSym(1);
@@ -5175,16 +5722,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 568:  init_sectionOpt ::= $Empty
+            // Rule 695:  init_sectionOpt ::= $Empty
             //
-            case 568:
+            case 695:
                 setResult(null);
                 break;
 
             //
-            // Rule 570:  init_section ::= init expression_block
+            // Rule 697:  init_section ::= init expression_block
             //
-            case 570: {
+            case 697: {
                //#line 1483 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
@@ -5199,9 +5746,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 571:  init_section ::= init qvtErrorToken
+            // Rule 698:  init_section ::= init qvtErrorToken
             //
-            case 571: {
+            case 698: {
                //#line 1496 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingInitCS(
@@ -5215,9 +5762,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 572:  population_sectionOpt ::= $Empty
+            // Rule 699:  population_sectionOpt ::= $Empty
             //
-            case 572: {
+            case 699: {
                //#line 1509 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingBodyCS result = createMappingBodyCS(
@@ -5232,9 +5779,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 574:  population_section ::= expression_list
+            // Rule 701:  population_section ::= expression_list
             //
-            case 574: {
+            case 701: {
                //#line 1523 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<OCLExpressionCS> expressionList = (EList<OCLExpressionCS>) getRhsSym(1);
@@ -5256,9 +5803,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 575:  population_section ::= population expression_block
+            // Rule 702:  population_section ::= population expression_block
             //
-            case 575: {
+            case 702: {
                //#line 1543 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
@@ -5272,9 +5819,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 576:  population_section ::= population qvtErrorToken
+            // Rule 703:  population_section ::= population qvtErrorToken
             //
-            case 576: {
+            case 703: {
                //#line 1555 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingBodyCS(
@@ -5287,16 +5834,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 577:  end_sectionOpt ::= $Empty
+            // Rule 704:  end_sectionOpt ::= $Empty
             //
-            case 577:
+            case 704:
                 setResult(null);
                 break;
 
             //
-            // Rule 579:  end_section ::= end expression_block
+            // Rule 706:  end_section ::= end expression_block
             //
-            case 579: {
+            case 706: {
                //#line 1570 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
@@ -5311,9 +5858,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 580:  end_section ::= end qvtErrorToken
+            // Rule 707:  end_section ::= end qvtErrorToken
             //
-            case 580: {
+            case 707: {
                //#line 1583 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingEndCS(
@@ -5327,16 +5874,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 581:  typespecOpt ::= $Empty
+            // Rule 708:  typespecOpt ::= $Empty
             //
-            case 581:
+            case 708:
                 setResult(null);
                 break;
 
             //
-            // Rule 583:  objectDeclCS ::= typespec
+            // Rule 710:  objectDeclCS ::= typespec
             //
-            case 583: {
+            case 710: {
                //#line 1601 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createOutExpCS(null, (TypeSpecCS)getRhsSym(1));
@@ -5345,9 +5892,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 587:  objectDeclCS ::= objectIdentifierCS : typespecOpt
+            // Rule 714:  objectDeclCS ::= objectIdentifierCS : typespecOpt
             //
-            case 587: {
+            case 714: {
                //#line 1612 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getRhsIToken(1));
@@ -5358,9 +5905,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 588:  outExpCS ::= object objectDeclCS expression_block
+            // Rule 715:  outExpCS ::= object objectDeclCS expression_block
             //
-            case 588: {
+            case 715: {
                //#line 1621 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(3);
@@ -5377,9 +5924,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 589:  outExpCS ::= object objectDeclCS qvtErrorToken
+            // Rule 716:  outExpCS ::= object objectDeclCS qvtErrorToken
             //
-            case 589: {
+            case 716: {
                //#line 1635 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ObjectExpCS objectDeclCS = ((ObjectExpCS) getRhsSym(2));  
@@ -5397,9 +5944,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 590:  featureMappingCallExpCS ::= map simpleNameCS ( argumentsCSopt )
+            // Rule 717:  featureMappingCallExpCS ::= map simpleNameCS ( argumentsCSopt )
             //
-            case 590: {
+            case 717: {
                //#line 1651 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
@@ -5414,9 +5961,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 591:  featureMappingCallExpCS ::= xmap simpleNameCS ( argumentsCSopt )
+            // Rule 718:  featureMappingCallExpCS ::= xmap simpleNameCS ( argumentsCSopt )
             //
-            case 591: {
+            case 718: {
                //#line 1663 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
@@ -5431,9 +5978,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 592:  featureMappingCallExpCS ::= map simpleNameCS :: simpleNameCS ( argumentsCSopt )
+            // Rule 719:  featureMappingCallExpCS ::= map simpleNameCS :: simpleNameCS ( argumentsCSopt )
             //
-            case 592: {
+            case 719: {
                //#line 1676 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
@@ -5448,9 +5995,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 593:  featureMappingCallExpCS ::= xmap simpleNameCS :: simpleNameCS ( argumentsCSopt )
+            // Rule 720:  featureMappingCallExpCS ::= xmap simpleNameCS :: simpleNameCS ( argumentsCSopt )
             //
-            case 593: {
+            case 720: {
                //#line 1688 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
@@ -5465,9 +6012,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 594:  mappingCallExpCS ::= map pathNameCS ( argumentsCSopt )
+            // Rule 721:  mappingCallExpCS ::= map pathNameCS ( argumentsCSopt )
             //
-            case 594: {
+            case 721: {
                //#line 1701 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingCallExpCS(
@@ -5481,9 +6028,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 595:  mappingCallExpCS ::= xmap pathNameCS ( argumentsCSopt )
+            // Rule 722:  mappingCallExpCS ::= xmap pathNameCS ( argumentsCSopt )
             //
-            case 595: {
+            case 722: {
                //#line 1712 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingCallExpCS(
@@ -5497,16 +6044,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 596:  resolveConditionOpt ::= $Empty
+            // Rule 723:  resolveConditionOpt ::= $Empty
             //
-            case 596:
+            case 723:
                 setResult(null);
                 break;
 
             //
-            // Rule 597:  resolveConditionOpt ::= | OclExpressionCS
+            // Rule 724:  resolveConditionOpt ::= | OclExpressionCS
             //
-            case 597: {
+            case 724: {
                //#line 1729 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 setResult((OCLExpressionCS)getRhsSym(2));
@@ -5514,23 +6061,23 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 598:  resolveConditionOpt ::= | qvtErrorToken
+            // Rule 725:  resolveConditionOpt ::= | qvtErrorToken
             //
-            case 598:
+            case 725:
                 setResult(null);
                 break;
 
             //
-            // Rule 599:  IDENTIFIEROpt ::= $Empty
+            // Rule 726:  IDENTIFIEROpt ::= $Empty
             //
-            case 599:
+            case 726:
                 setResult(null);
                 break;
 
             //
-            // Rule 600:  IDENTIFIEROpt ::= IDENTIFIER :
+            // Rule 727:  IDENTIFIEROpt ::= IDENTIFIER :
             //
-            case 600: {
+            case 727: {
                //#line 1741 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 setResult(getRhsIToken(1));
@@ -5538,16 +6085,16 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 601:  resolveOpArgsExpCSOpt ::= $Empty
+            // Rule 728:  resolveOpArgsExpCSOpt ::= $Empty
             //
-            case 601:
+            case 728:
                 setResult(null);
                 break;
 
             //
-            // Rule 603:  resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
+            // Rule 730:  resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
             //
-            case 603: {
+            case 730: {
                //#line 1752 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveOpArgsExpCS(
@@ -5560,16 +6107,16 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 608:  lateOpt ::= $Empty
+            // Rule 735:  lateOpt ::= $Empty
             //
-            case 608:
+            case 735:
                 setResult(null);
                 break;
 
             //
-            // Rule 610:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt )
+            // Rule 737:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt )
             //
-            case 610: {
+            case 737: {
                //#line 1772 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
@@ -5582,9 +6129,9 @@ protected String getRhsTokenText(int i) {
             }
         
             //
-            // Rule 611:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt qvtErrorToken
+            // Rule 738:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt qvtErrorToken
             //
-            case 611: {
+            case 738: {
                //#line 1783 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
@@ -5597,9 +6144,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 612:  resolveExpCS ::= lateOpt resolveOp qvtErrorToken
+            // Rule 739:  resolveExpCS ::= lateOpt resolveOp qvtErrorToken
             //
-            case 612: {
+            case 739: {
                //#line 1794 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
@@ -5612,9 +6159,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 613:  resolveExpCS ::= late qvtErrorToken
+            // Rule 740:  resolveExpCS ::= late qvtErrorToken
             //
-            case 613: {
+            case 740: {
                //#line 1805 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
     			IToken lateToken = getRhsIToken(1);
@@ -5628,9 +6175,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 618:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCS )
+            // Rule 745:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCS )
             //
-            case 618: {
+            case 745: {
                //#line 1822 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
@@ -5644,9 +6191,9 @@ protected String getRhsTokenText(int i) {
             }
         
             //
-            // Rule 619:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier )
+            // Rule 746:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier )
             //
-            case 619: {
+            case 746: {
                //#line 1834 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
@@ -5660,9 +6207,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 620:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCSOpt qvtErrorToken
+            // Rule 747:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCSOpt qvtErrorToken
             //
-            case 620: {
+            case 747: {
                //#line 1847 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
@@ -5676,9 +6223,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 621:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier qvtErrorToken
+            // Rule 748:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier qvtErrorToken
             //
-            case 621: {
+            case 748: {
                //#line 1859 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
@@ -5692,9 +6239,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 622:  resolveInExpCS ::= lateOpt resolveInOp ( qvtErrorToken
+            // Rule 749:  resolveInExpCS ::= lateOpt resolveInOp ( qvtErrorToken
             //
-            case 622: {
+            case 749: {
                //#line 1871 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                     CSTNode result = createResolveInExpCS(
@@ -5708,9 +6255,9 @@ protected String getRhsTokenText(int i) {
             }
         
             //
-            // Rule 623:  resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
+            // Rule 750:  resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
             //
-            case 623: {
+            case 750: {
                //#line 1883 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
@@ -5724,9 +6271,9 @@ protected String getRhsTokenText(int i) {
             }
     
             //
-            // Rule 626:  OperationCallExpCS ::= primaryExpCS -> resolveResolveInExpCS
+            // Rule 753:  OperationCallExpCS ::= primaryExpCS -> resolveResolveInExpCS
             //
-            case 626: {
+            case 753: {
                //#line 1899 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
@@ -5738,9 +6285,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 627:  OperationCallExpCS ::= primaryExpCS . resolveResolveInExpCS
+            // Rule 754:  OperationCallExpCS ::= primaryExpCS . resolveResolveInExpCS
             //
-            case 627: {
+            case 754: {
                //#line 1908 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
@@ -5752,9 +6299,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 629:  OperationCallExpCS ::= primaryExpCS -> featureMappingCallExpCS
+            // Rule 756:  OperationCallExpCS ::= primaryExpCS -> featureMappingCallExpCS
             //
-            case 629: {
+            case 756: {
                //#line 1925 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
@@ -5766,9 +6313,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 630:  OperationCallExpCS ::= primaryExpCS . featureMappingCallExpCS
+            // Rule 757:  OperationCallExpCS ::= primaryExpCS . featureMappingCallExpCS
             //
-            case 630: {
+            case 757: {
                //#line 1934 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
@@ -5780,15 +6327,15 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 633:  simpleNameCS ::= this
+            // Rule 760:  simpleNameCS ::= this
             //
             
-            case 633:
+            case 760:
 
             //
-            // Rule 634:  simpleNameCS ::= result
+            // Rule 761:  simpleNameCS ::= result
             //
-            case 634: {
+            case 761: {
                //#line 1950 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(
@@ -5801,9 +6348,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 635:  letExpSubCS3 ::= untypedInitializedVariableCS
+            // Rule 762:  letExpSubCS3 ::= untypedInitializedVariableCS
             //
-            case 635: {
+            case 762: {
                //#line 1964 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -5813,9 +6360,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 636:  letExpSubCS3 ::= letExpSubCS3 , untypedInitializedVariableCS
+            // Rule 763:  letExpSubCS3 ::= letExpSubCS3 , untypedInitializedVariableCS
             //
-            case 636: {
+            case 763: {
                //#line 1971 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -5825,9 +6372,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 637:  LetExpCS ::= let letExpSubCS3 in OclExpressionCS
+            // Rule 764:  LetExpCS ::= let letExpSubCS3 in OclExpressionCS
             //
-            case 637: {
+            case 764: {
                //#line 1979 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList variables = (EList)getRhsSym(2);
@@ -5841,9 +6388,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 638:  LetExpCS ::= let letExpSubCS3 in qvtErrorToken
+            // Rule 765:  LetExpCS ::= let letExpSubCS3 in qvtErrorToken
             //
-            case 638: {
+            case 765: {
                //#line 1990 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList variables = (EList)getRhsSym(2);
@@ -5857,15 +6404,15 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 639:  equalityNotNameNotLetCS ::= equalityNotLetCS != relationalNotLetCS
+            // Rule 766:  equalityNotNameNotLetCS ::= equalityNotLetCS != relationalNotLetCS
             //
             
-            case 639:
+            case 766:
 
             //
-            // Rule 640:  equalityWithLetCS ::= equalityNotLetCS != relationalWithLetCS
+            // Rule 767:  equalityWithLetCS ::= equalityNotLetCS != relationalWithLetCS
             //
-            case 640: {
+            case 767: {
                //#line 2007 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
@@ -5886,9 +6433,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 641:  newTypespecCS ::= pathNameCS @ IDENTIFIER
+            // Rule 768:  newTypespecCS ::= pathNameCS @ IDENTIFIER
             //
-            case 641: {
+            case 768: {
                //#line 2029 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
@@ -5900,9 +6447,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 642:  _import ::= import library unit ;
+            // Rule 769:  _import ::= import library unit ;
             //
-            case 642: {
+            case 769: {
                //#line 2043 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLibraryImportCS(
@@ -5914,9 +6461,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 643:  transformation_h ::= qualifierList transformation qualifiedNameCS
+            // Rule 770:  transformation_h ::= qualifierList transformation qualifiedNameCS
             //
-            case 643: {
+            case 770: {
                //#line 2053 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList qualifierList = (EList) getRhsSym(1);
@@ -5937,9 +6484,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 645:  renaming ::= rename typeCS . qvtIdentifierCS = StringLiteralExpCS ;
+            // Rule 772:  renaming ::= rename typeCS . qvtIdentifierCS = StringLiteralExpCS ;
             //
-            case 645: {
+            case 772: {
                //#line 2073 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createRenameCS(
@@ -5953,17 +6500,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 646:  qualifierList ::= $Empty
+            // Rule 773:  qualifierList ::= $Empty
             //
             
-            case 646:
+            case 773:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 647:  qualifierList ::= qualifierList qualifier
+            // Rule 774:  qualifierList ::= qualifierList qualifier
             //
-            case 647: {
+            case 774: {
                //#line 2093 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
@@ -5973,21 +6520,21 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 648:  qualifier ::= blackbox
+            // Rule 775:  qualifier ::= blackbox
             //
             
-            case 648:
+            case 775:
  
             //
-            // Rule 649:  qualifier ::= abstract
+            // Rule 776:  qualifier ::= abstract
             //
             
-            case 649:
+            case 776:
 
             //
-            // Rule 650:  qualifier ::= static
+            // Rule 777:  qualifier ::= static
             //
-            case 650: {
+            case 777: {
                //#line 2105 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
@@ -5997,17 +6544,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 651:  colon_param_listOpt ::= $Empty
+            // Rule 778:  colon_param_listOpt ::= $Empty
             //
             
-            case 651:
+            case 778:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 652:  colon_param_listOpt ::= : param_list
+            // Rule 779:  colon_param_listOpt ::= : param_list
             //
-            case 652: {
+            case 779: {
                //#line 2116 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(2));
@@ -6015,9 +6562,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 653:  complete_signature ::= simple_signature colon_param_listOpt
+            // Rule 780:  complete_signature ::= simple_signature colon_param_listOpt
             //
-            case 653: {
+            case 780: {
                //#line 2122 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)getRhsSym(1);
@@ -6030,16 +6577,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 654:  simple_signatureOpt ::= $Empty
+            // Rule 781:  simple_signatureOpt ::= $Empty
             //
-            case 654:
+            case 781:
                 setResult(null);
                 break;
 
             //
-            // Rule 656:  simple_signature ::= ( param_listOpt )
+            // Rule 783:  simple_signature ::= ( param_listOpt )
             //
-            case 656: {
+            case 783: {
                //#line 2137 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)getRhsSym(2));
@@ -6049,17 +6596,17 @@ protected String getRhsTokenText(int i) {
             }
 	 
             //
-            // Rule 657:  param_listOpt ::= $Empty
+            // Rule 784:  param_listOpt ::= $Empty
             //
             
-            case 657:
+            case 784:
                 setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 659:  param_list ::= param_list , param
+            // Rule 786:  param_list ::= param_list , param
             //
-            case 659: {
+            case 786: {
                //#line 2149 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -6069,9 +6616,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 660:  param_list ::= param_list , qvtErrorToken
+            // Rule 787:  param_list ::= param_list , qvtErrorToken
             //
-            case 660: {
+            case 787: {
                //#line 2156 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -6080,9 +6627,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 661:  param_list ::= param
+            // Rule 788:  param_list ::= param
             //
-            case 661: {
+            case 788: {
                //#line 2162 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -6092,9 +6639,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 662:  param_list ::= qvtErrorToken
+            // Rule 789:  param_list ::= qvtErrorToken
             //
-            case 662: {
+            case 789: {
                //#line 2169 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -6103,9 +6650,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 663:  param ::= param_directionOpt IDENTIFIER : typespec
+            // Rule 790:  param ::= param_directionOpt IDENTIFIER : typespec
             //
-            case 663: {
+            case 790: {
                //#line 2176 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
@@ -6123,9 +6670,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 664:  param ::= param_directionOpt typespec
+            // Rule 791:  param ::= param_directionOpt typespec
             //
-            case 664: {
+            case 791: {
                //#line 2192 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
@@ -6144,16 +6691,16 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 665:  param_directionOpt ::= $Empty
+            // Rule 792:  param_directionOpt ::= $Empty
             //
-            case 665:
+            case 792:
                 setResult(null);
                 break;
 
             //
-            // Rule 667:  param_direction ::= in
+            // Rule 794:  param_direction ::= in
             //
-            case 667: {
+            case 794: {
                //#line 2213 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
@@ -6165,9 +6712,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 668:  param_direction ::= out
+            // Rule 795:  param_direction ::= out
             //
-            case 668: {
+            case 795: {
                //#line 2222 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
@@ -6179,9 +6726,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 669:  param_direction ::= inout
+            // Rule 796:  param_direction ::= inout
             //
-            case 669: {
+            case 796: {
                //#line 2231 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
@@ -6193,9 +6740,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 670:  typespec ::= typeCS
+            // Rule 797:  typespec ::= typeCS
             //
-            case 670: {
+            case 797: {
                //#line 2242 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
@@ -6207,9 +6754,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 671:  typespec ::= typeCS @ IDENTIFIER
+            // Rule 798:  typespec ::= typeCS @ IDENTIFIER
             //
-            case 671: {
+            case 798: {
                //#line 2251 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
@@ -6221,9 +6768,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 677:  scoped_identifier ::= typeCS2 :: IDENTIFIER
+            // Rule 804:  scoped_identifier ::= typeCS2 :: IDENTIFIER
             //
-            case 677: {
+            case 804: {
                //#line 2268 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), getRhsTokenText(3));		
@@ -6233,9 +6780,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 678:  scoped_identifier ::= typeCS2 :: qvtErrorToken
+            // Rule 805:  scoped_identifier ::= typeCS2 :: qvtErrorToken
             //
-            case 678: {
+            case 805: {
                //#line 2275 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), ""); 		 //$NON-NLS-1$
@@ -6245,9 +6792,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 679:  scoped_identifier ::= scoped_identifier2
+            // Rule 806:  scoped_identifier ::= scoped_identifier2
             //
-            case 679: {
+            case 806: {
                //#line 2282 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS pathNameCS = (PathNameCS)getRhsSym(1);
@@ -6266,9 +6813,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 680:  scoped_identifier2 ::= IDENTIFIER
+            // Rule 807:  scoped_identifier2 ::= IDENTIFIER
             //
-            case 680: {
+            case 807: {
                //#line 2298 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
@@ -6278,9 +6825,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 681:  scoped_identifier2 ::= main
+            // Rule 808:  scoped_identifier2 ::= main
             //
-            case 681: {
+            case 808: {
                //#line 2305 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
@@ -6290,9 +6837,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 682:  scoped_identifier2 ::= scoped_identifier2 :: IDENTIFIER
+            // Rule 809:  scoped_identifier2 ::= scoped_identifier2 :: IDENTIFIER
             //
-            case 682: {
+            case 809: {
                //#line 2312 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
@@ -6303,9 +6850,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 683:  scoped_identifier2 ::= scoped_identifier2 :: qvtErrorToken
+            // Rule 810:  scoped_identifier2 ::= scoped_identifier2 :: qvtErrorToken
             //
-            case 683: {
+            case 810: {
                //#line 2320 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
@@ -6316,9 +6863,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 684:  scoped_identifier_list ::= scoped_identifier
+            // Rule 811:  scoped_identifier_list ::= scoped_identifier
             //
-            case 684: {
+            case 811: {
                //#line 2328 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = new BasicEList();
@@ -6328,9 +6875,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 685:  scoped_identifier_list ::= scoped_identifier_list , scoped_identifier
+            // Rule 812:  scoped_identifier_list ::= scoped_identifier_list , scoped_identifier
             //
-            case 685: {
+            case 812: {
                //#line 2335 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -6340,9 +6887,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 686:  scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
+            // Rule 813:  scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
             //
-            case 686: {
+            case 813: {
                //#line 2342 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
@@ -6351,9 +6898,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 687:  qualifiedNameCS ::= qvtIdentifierCS
+            // Rule 814:  qualifiedNameCS ::= qvtIdentifierCS
             //
-            case 687: {
+            case 814: {
                //#line 2349 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
@@ -6363,9 +6910,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 688:  qualifiedNameCS ::= qualifiedNameCS . qvtIdentifierCS
+            // Rule 815:  qualifiedNameCS ::= qualifiedNameCS . qvtIdentifierCS
             //
-            case 688: {
+            case 815: {
                //#line 2356 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
@@ -6376,9 +6923,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 689:  qualifiedNameCS ::= qualifiedNameCS . qvtErrorToken
+            // Rule 816:  qualifiedNameCS ::= qualifiedNameCS . qvtErrorToken
             //
-            case 689: {
+            case 816: {
                //#line 2364 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
@@ -6389,9 +6936,9 @@ protected String getRhsTokenText(int i) {
             }
 	
             //
-            // Rule 690:  qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
+            // Rule 817:  qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
             //
-            case 690: {
+            case 817: {
                //#line 2372 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);

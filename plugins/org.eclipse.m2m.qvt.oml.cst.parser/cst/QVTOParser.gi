@@ -1914,7 +1914,7 @@
 		./
 	        
 	-- case with no source of resolveIn
-	primaryNotNameCS -> resolveResolveInExpCS
+	ImperativeExpCS -> resolveResolveInExpCS
     
 	-- Resolve family ends here
 
@@ -1939,9 +1939,9 @@
 		  $EndCode
 		./
 
-	primaryNotNameCS -> mappingCallExpCS
+	ImperativeExpCS -> mappingCallExpCS
     
-	primaryNotNameCS -> outExpCS 
+	ImperativeExpCS -> outExpCS 
 			
 	simpleNameCS ::= this
 		/.$NewCase./
