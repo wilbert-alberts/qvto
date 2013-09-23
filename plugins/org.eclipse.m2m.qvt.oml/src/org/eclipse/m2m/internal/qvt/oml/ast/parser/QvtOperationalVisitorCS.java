@@ -1061,6 +1061,14 @@ public class QvtOperationalVisitorCS
 				}
 			}				
 		}		
+		if (container instanceof SwitchAltExpCS) {
+			SwitchAltExpCS containerSwitchAlt = (SwitchAltExpCS) container;
+			if (containerSwitchAlt.getBody() == operationCallExpCS) {
+				if (isBlockNode(containerSwitchAlt.eContainer().eContainer())) {
+					return true;
+				}
+			}
+		}
 
 		return false;
 	}

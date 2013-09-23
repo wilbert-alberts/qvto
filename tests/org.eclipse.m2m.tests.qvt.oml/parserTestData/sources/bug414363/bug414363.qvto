@@ -2,6 +2,8 @@ modeltype Ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 
 transformation bug414363(in srcModel:Ecore,out dest:Ecore);
 
+main(){}
+
 mapping EClass::foo2atombar () : atom:EClass, bar:EClass
 	when {self.name = "2"}
 {
@@ -71,6 +73,15 @@ mapping EClass::foo2atombar () : atom:EClass, bar:EClass
 			index /*<warn>*/=/*</warn>*/ 0;
 			};
 	};
+
+	var swv = switch {
+		case(index = 0) index = 0;
+		};
+
+	switch {
+		case(index = 0) index /*<warn>*/=/*</warn>*/ 0;
+		};
+
 }
 
 mapping EClass::foo2atombar2 () : atom:EClass, bar:EClass {
