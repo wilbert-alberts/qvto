@@ -10,8 +10,8 @@ import org.eclipse.ocl.examples.pivot.resource.ASResource;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.examples.xtext.essentialocl.cs2as.EssentialOCLCS2Pivot;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSContainmentVisitor;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.cs2as.ImperativeOCLCSContainmentVisitor;
 
 public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	

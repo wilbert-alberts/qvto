@@ -28,15 +28,21 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.qvto.examples.xtext.qvtoperational,
- org.eclipse.qvto.examples.xtext.qvtoperational.services,
+ org.eclipse.qvto.examples.xtext.qvtoperational.cs2as,
+ org.eclipse.qvto.examples.xtext.qvtoperational.cs2as.attributions,
+ org.eclipse.qvto.examples.xtext.qvtoperational.cs2as.util,
+ org.eclipse.qvto.examples.xtext.qvtoperational.formatting,
+ org.eclipse.qvto.examples.xtext.qvtoperational.generator,
+ org.eclipse.qvto.examples.xtext.qvtoperational.parser.antlr,
+ org.eclipse.qvto.examples.xtext.qvtoperational.parser.antlr.internal,
  org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs,
  org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl,
  org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util,
- org.eclipse.qvto.examples.xtext.qvtoperational.serializer,
- org.eclipse.qvto.examples.xtext.qvtoperational.parser.antlr,
- org.eclipse.qvto.examples.xtext.qvtoperational.parser.antlr.internal,
- org.eclipse.qvto.examples.xtext.qvtoperational.validation,
+ org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.cs2as,
+ org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.evaluators,
  org.eclipse.qvto.examples.xtext.qvtoperational.scoping,
- org.eclipse.qvto.examples.xtext.qvtoperational.generator,
- org.eclipse.qvto.examples.xtext.qvtoperational.formatting
+ org.eclipse.qvto.examples.xtext.qvtoperational.serializer,
+ org.eclipse.qvto.examples.xtext.qvtoperational.services,
+ org.eclipse.qvto.examples.xtext.qvtoperational.utilities,
+ org.eclipse.qvto.examples.xtext.qvtoperational.validation
 

@@ -7,10 +7,11 @@
  * Do not edit it.
  */
 
-package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util;
+package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.cs2as;
 
 import java.util.Iterator;
 import java.util.List;
+
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.ocl.examples.domain.elements.DomainOperation;
 import org.eclipse.ocl.examples.domain.elements.DomainPackage;
@@ -52,7 +53,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalFactory;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.cs2as.ImperativeOCLCSContainmentVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;

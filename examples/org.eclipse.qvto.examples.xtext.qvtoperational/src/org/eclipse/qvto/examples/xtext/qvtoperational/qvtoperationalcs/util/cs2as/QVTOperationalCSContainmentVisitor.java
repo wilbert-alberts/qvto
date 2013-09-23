@@ -1,4 +1,4 @@
-package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
+package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -14,7 +14,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TypeSpecC
  * 
  * @author asbh
  */
-public class QVTOperationalCSContainmentVisitor extends org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.AutoQVTOperationalCSContainmentVisitor {
+public class QVTOperationalCSContainmentVisitor extends AutoQVTOperationalCSContainmentVisitor {
 
 	public QVTOperationalCSContainmentVisitor(CS2PivotConversion context) {
 		super(context);
