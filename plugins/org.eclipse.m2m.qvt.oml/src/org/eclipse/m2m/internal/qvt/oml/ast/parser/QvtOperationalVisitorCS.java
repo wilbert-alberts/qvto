@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
- *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363
+ *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -1724,6 +1724,7 @@ public class QvtOperationalVisitorCS
         objectExp.setBody(body);
 
         QvtOperationalEnv tempEnv = env.getFactory().createEnvironment(env);
+        tempEnv.setParentLocal();
         org.eclipse.ocl.ecore.Variable elem = objectExp.getReferredObject();
         if (elem == null) { // new object creation
             elem = EcoreFactory.eINSTANCE.createVariable();
@@ -3294,18 +3295,28 @@ public class QvtOperationalVisitorCS
 			throws SemanticException {
 		methodCS.setAst(declaredOperation);
 		
+		QvtOperationalEnv methodEnv = env.getFactory().createOperationContext(env, declaredOperation);
+		// put parameters to local map
+	    MappingDeclarationCS mappingDeclarationCS = methodCS.getMappingDeclarationCS();
+		if (mappingDeclarationCS != null) {
+			for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
+				VarParameter param = (VarParameter)paramCS.getAst();
+				methodEnv.addElement(param.getName(), param, true);
+			}
+		}
+		
 		if (methodCS instanceof ConstructorCS) {
-			visitConstructorCS((ConstructorCS) methodCS, env, declaredOperation);
+			visitConstructorCS((ConstructorCS) methodCS, env, methodEnv, declaredOperation);
 		}
 		else if (methodCS instanceof MappingRuleCS) {
-			visitMappingRuleCS((MappingRuleCS) methodCS, env, (MappingOperation)declaredOperation);
+			visitMappingRuleCS((MappingRuleCS) methodCS, env, methodEnv, (MappingOperation)declaredOperation);
 		}
 		else {
-			visitMappingQueryCS((MappingQueryCS) methodCS, env, declaredOperation);
+			visitMappingQueryCS((MappingQueryCS) methodCS, env, methodEnv, declaredOperation);
 		}
 	}
 
-	private void visitConstructorCS(ConstructorCS methodCS, QvtOperationalEnv env, ImperativeOperation constructor) throws SemanticException {
+	private void visitConstructorCS(ConstructorCS methodCS, QvtOperationalEnv env, QvtOperationalEnv newEnv, ImperativeOperation constructor) throws SemanticException {
 		constructor.setEndPosition(methodCS.getEndOffset());
 
 		if (constructor.getContext() == null) {
@@ -3317,7 +3328,6 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		QvtOperationalEnv newEnv = env.getFactory().createOperationContext(env, constructor);
 		newEnv.deleteElement(Environment.SELF_VARIABLE_NAME);
 		
 		VarParameter varResult = ExpressionsFactory.eINSTANCE.createVarParameter();
@@ -3356,7 +3366,7 @@ public class QvtOperationalVisitorCS
 		//
 	}
 
-	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, final MappingOperation operation)
+	private ImperativeOperation visitMappingRuleCS(MappingRuleCS methodCS, QvtOperationalEnv env, QvtOperationalEnv newEnv, final MappingOperation operation)
 			throws SemanticException {
 		env.registerMappingOperation(operation);
 		operation.setEndPosition(methodCS.getEndOffset());
@@ -3366,7 +3376,6 @@ public class QvtOperationalVisitorCS
 					.getDirectionKindCS());
 		}
 
-		QvtOperationalEnv newEnv = env.getFactory().createOperationContext(env, operation);		
         if(myCompilerOptions.isGenerateCompletionData()) {          
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
         }        
@@ -3462,7 +3471,7 @@ public class QvtOperationalVisitorCS
 		}		
 	}
 
-	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, ImperativeOperation helper)
+	private void visitMappingQueryCS(MappingQueryCS methodCS, QvtOperationalEnv env, QvtOperationalEnv newEnv, ImperativeOperation helper)
 			throws SemanticException {
 		helper.setEndPosition(methodCS.getEndOffset());
 
@@ -3471,7 +3480,6 @@ public class QvtOperationalVisitorCS
 					.getSimpleNameCS());
 		}
 
-		QvtOperationalEnv newEnv = env.getFactory().createOperationContext(env, helper);
 		//newEnv.defineOperationParameters(helper);
 
         if(myCompilerOptions.isGenerateCompletionData()) {          

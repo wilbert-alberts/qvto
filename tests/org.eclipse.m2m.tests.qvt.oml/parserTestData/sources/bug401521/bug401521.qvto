@@ -1,0 +1,14 @@
+modeltype Ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation bug401521;
+
+main() {
+	var resList := List{1.0,2.0,3.0,4.0}->map m(2);
+}
+
+
+mapping List(Real) :: m(i:Integer) : EClass {
+	var d = self->collect(/*<error>*/i/*</error>*/| i);
+}
+
+

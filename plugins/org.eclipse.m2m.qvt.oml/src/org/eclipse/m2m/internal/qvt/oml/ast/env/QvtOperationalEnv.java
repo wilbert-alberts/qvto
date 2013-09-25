@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 416584
+ *     Alex Paperno - bugs 416584, 401521
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -84,6 +84,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	private final Set<QvtMessage> myErrorSet = new LinkedHashSet<QvtMessage>(2);
 	private boolean myCheckForDuplicateErrors;
 	private QvtCompilerOptions myCompilerOptions;
+	private boolean myParentLocal = false;
 	
 	private final Map<String, ModelType> myModelTypeRegistry;
 	
@@ -95,6 +96,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
             return QvtOperationalEnv.super.lookupClassifier(names);
         }
     };
+    
 
     private final LookupPackageableElementDelegate<EPackage> LOOKUP_PACKAGE_DELEGATE = new LookupPackageableElementDelegate<EPackage>() {
         public EPackage lookupPackageableElement(List<String> names) {
@@ -192,6 +194,22 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		
 		super.setFactory(factory);
 	}
+	
+	public void setParentLocal() {
+		myParentLocal = true;
+	}
+	 
+    @Override
+    public Variable<EClassifier, EParameter> lookupLocal(String name) {
+        // support operation parameters whose names need to be escaped in OCL
+        Variable<EClassifier, EParameter> result = super.lookupLocal(name);
+        
+        if (result == null && myParentLocal) {
+            result = getInternalParent().lookupLocal(name);
+        }
+        
+        return result;
+    }	
 
 	public EStructuralFeature lookupPropertyAlias(EClassifier owner, String aliasName) {
 		Module module = getModuleContextType();

@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636, 413130, 404647, 414363
+ *     Alex Paperno - bugs 272869, 268636, 413130, 404647, 414363, 401521
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
@@ -209,5 +209,6 @@ public class ParserTests {
     	TestData.createSourceChecked("bug413130", 0, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug404647_2", 1, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug414363", 0, 27), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug401521", 1, 0), //$NON-NLS-1$
     };
 }
