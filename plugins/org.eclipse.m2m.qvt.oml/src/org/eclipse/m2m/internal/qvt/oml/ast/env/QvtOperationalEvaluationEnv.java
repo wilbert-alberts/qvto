@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bug 392153
- *     Alex Paperno - bugs 400720
+ *     Alex Paperno - bugs 400720, 415029
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -215,8 +215,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			// module property of direct OCL collection type => override the super impl which coerce the result value 
 			// and takes only the first element and returns from navigate call
             EObject eTarget = (EObject) target;
-            if (eTarget.eClass().getEAllStructuralFeatures().contains(property)) {
-                return eTarget.eGet(property, true);
+            if (eTarget.eClass().getEAllStructuralFeatures().contains(resolvedProperty)) {
+                return eTarget.eGet(resolvedProperty, true);
             }
 		}
 		
