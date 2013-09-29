@@ -465,7 +465,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         
         Object value = rawValue;
         if (!context.getConfigProperties().containsKey(configProperty.getName())) {
-        	value = EvaluationUtil.createInitialValue(propertyType, getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
+        	//leave non-specified configuration property as undefined
+        	//value = EvaluationUtil.createInitialValue(propertyType, getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
         }
         else if(rawValue instanceof String && propertyType != getEnvironment().getOCLStandardLibrary().getString()) {
 			value = createFromString(propertyType, (String) rawValue);

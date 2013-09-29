@@ -45,11 +45,11 @@ main() {
 
 	assert fatal(c1->size() = 0);
 	assert fatal(c2->size() = 0);
-	assert fatal(c3.name = "");
+	assert fatal(c3 = null); // speecial case for undefined configuration property
 	assert fatal(c4->size() = 0);
-	assert fatal(c5 = 0);
-	assert fatal(c6 = "");
-	assert fatal(not c7);
+	assert fatal(c5 = null); // speecial case for undefined configuration property
+	assert fatal(c6 = null); // speecial case for undefined configuration property
+	assert fatal(c7 = null); // speecial case for undefined configuration property
 	
 	assert fatal(p1->size() = 0);
 	assert fatal(p2->size() = 0);
