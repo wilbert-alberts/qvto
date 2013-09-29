@@ -26,8 +26,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
@@ -183,7 +183,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if (property instanceof ContextualProperty) {
 			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
 														property.getEContainingClass(), (ContextualProperty)property, target);
-			target = shadow.getPropertyRuntimeOwner(target);
+			target = shadow.getPropertyRuntimeOwner(target, this);
 			resolvedProperty = shadow.getProperty();
 		}
 		
@@ -225,7 +225,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		catch (IllegalArgumentException e) {
             internalEnv().throwQVTException(
-                	new QvtRuntimeException("Unknown property '" + property.getName() + "'")); //$NON-NLS-1$ //$NON-NLS-2$
+                	new QvtRuntimeException("Unknown property '" + property.getName() + "'", e)); //$NON-NLS-1$ //$NON-NLS-2$
 			return getInvalidResult();
 		}
 	}
@@ -529,7 +529,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		if (eStructuralFeature instanceof ContextualProperty) {
 			IntermediatePropertyModelAdapter.ShadowEntry shadow = IntermediatePropertyModelAdapter.getPropertyHolder(
 										eStructuralFeature.getEContainingClass(), (ContextualProperty)eStructuralFeature, owner);
-			owner = shadow.getPropertyRuntimeOwner(owner);
+			owner = shadow.getPropertyRuntimeOwner(owner, this);
 			eStructuralFeature = shadow.getProperty();
 		}
 

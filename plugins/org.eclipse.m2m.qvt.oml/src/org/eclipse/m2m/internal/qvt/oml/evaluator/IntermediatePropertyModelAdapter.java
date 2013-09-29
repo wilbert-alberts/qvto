@@ -19,17 +19,16 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
-import org.eclipse.ocl.types.CollectionType;
 
 /**
  * @author sboyko
@@ -75,16 +74,9 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
 		return runtimeShadow;
 	}
     
-    private static Object getInitialValue(EStructuralFeature feature) {
-		//Object inittialValue = myInitExpression.accept(evalVisitor);
-
-		if (feature.getEType() instanceof CollectionType<?,?>) {
-			@SuppressWarnings("unchecked")
-			CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) feature.getEType();
-			return EvaluationUtil.createNewCollection(collectionType);
-		}
-    	
-    	return null;
+    private static Object getInitialValue(EStructuralFeature feature, QvtOperationalEvaluationEnv evalEnv) {
+		//return myInitExpression.accept(evalVisitor);
+    	return EvaluationUtil.createInitialValue(feature.getEType(), QvtOperationalStdLibrary.INSTANCE.getOCLStdLib(), evalEnv);
     }
 
 	private final Map<ContextualProperty, ShadowEntry> myProp2HolderMap = new IdentityHashMap<ContextualProperty, ShadowEntry>(2);
@@ -104,7 +96,7 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
 			return myFeature;
 		}
 		
-		public EObject getPropertyRuntimeOwner(Object shadowedInstance) {
+		public EObject getPropertyRuntimeOwner(Object shadowedInstance, QvtOperationalEvaluationEnv evalEnv) {
 			EObject owner = myOwner2ShadowMap.get(shadowedInstance);
 			if (owner == null) {
 				EClass ownerClass = myFeature.getEContainingClass();
@@ -112,7 +104,7 @@ public class IntermediatePropertyModelAdapter extends AbstractGenericAdapter<Int
 				owner = eFactory.create(ownerClass);
 				myOwner2ShadowMap.put(shadowedInstance, owner);				
 
-		    	Object initialValue = getInitialValue(myFeature);
+		    	Object initialValue = getInitialValue(myFeature, evalEnv);
 		    	if (initialValue != null) {
 		    		owner.eSet(myFeature, initialValue);
 		    	}												

@@ -332,6 +332,7 @@ public class TransformTests {
         		}),         		        		
         		new FilesToFilesData("bug417751", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug415029", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug417996", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		};
     }
 

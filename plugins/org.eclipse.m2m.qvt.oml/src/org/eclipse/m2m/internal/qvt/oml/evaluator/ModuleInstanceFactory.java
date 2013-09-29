@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,10 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
@@ -34,7 +30,6 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.ecore.TupleType;
-import org.eclipse.ocl.types.CollectionType;
 
 /**
  * @since 2.0
@@ -132,8 +127,6 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 			moduleInstance.setOverrideMap(overrideMap);
 		}
 		
-		initProperties(moduleInstance);
-
 		ModuleInstanceFactory factory = this; 
 		if(module.getEFactoryInstance() instanceof ModuleInstanceFactory) {
 			factory = (ModuleInstanceFactory) module.getEFactoryInstance();
@@ -155,15 +148,4 @@ public class ModuleInstanceFactory extends EFactoryImpl {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static void initProperties(ModuleInstanceImpl instance) {
-		// initializes module properties of OCL Collection type as empty and non-null
-		for (EStructuralFeature eStructuralFeature : instance.eClass().getEAllStructuralFeatures()) {
-			if (eStructuralFeature.getEType() instanceof CollectionType) {
-				CollectionType<EClassifier, EOperation> collectionType = (CollectionType<EClassifier, EOperation>) eStructuralFeature.getEType();
-				Collection<Object> currentValues = EvaluationUtil.createNewCollection(collectionType);
-				instance.eSet(eStructuralFeature, currentValues);
-			}
-		}
-	}
 }

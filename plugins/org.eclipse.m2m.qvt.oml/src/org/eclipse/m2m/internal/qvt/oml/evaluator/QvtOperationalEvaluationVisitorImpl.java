@@ -463,8 +463,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         Object rawValue = context.getConfigProperty(configProperty.getName());
         EClassifier propertyType = configProperty.getEType();
         
-        Object value = rawValue;        
-        if(rawValue instanceof String && propertyType != getEnvironment().getOCLStandardLibrary().getString()) {
+        Object value = rawValue;
+        if (!context.getConfigProperties().containsKey(configProperty.getName())) {
+        	value = EvaluationUtil.createInitialValue(propertyType, getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
+        }
+        else if(rawValue instanceof String && propertyType != getEnvironment().getOCLStandardLibrary().getString()) {
 			value = createFromString(propertyType, (String) rawValue);
         }
 
@@ -1547,7 +1550,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             if(initExp != null) {
             	propValue = initExp.accept(getVisitor());                
             }
-			// FIXME - should not be set if no init expression is defined
+            else {
+            	propValue = EvaluationUtil.createInitialValue(feature.getEType(), getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
+            }
 			env.callSetter(moduleInstance, feature, propValue, isUndefined(propValue), true);        
         }
         
