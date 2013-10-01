@@ -37,7 +37,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
@@ -229,7 +228,7 @@ public class InternalTransformationExecutor {
 	}
 	
 	protected void handleExecutionTraces(Trace traces) {
-		// nothing intersting here
+		// nothing interesting here
 	}
 
 	private void doLoad() {

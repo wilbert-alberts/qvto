@@ -14,12 +14,9 @@ package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -27,9 +24,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
-import org.eclipse.emf.common.util.AbstractEList;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -37,6 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.m2m.internal.qvt.oml.ModelExtentHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.BaseProcess;
@@ -233,40 +228,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         switch(targetData.getTargetType()) {
         	case NEW_MODEL: {
         		try {
-            		URI modelUri = outUri.trimFragment();
-           	    	Resource outExtent = resSet.getResource(modelUri, false);
-           	    	if(outExtent == null) {
-           	    		outExtent = EmfUtil.createResource(modelUri, resSet);       	    	
-               			resSet.getResources().add(outExtent);
-           	    	}
-
-       	    		Set<EObject> essentialRootElements = getEssentialRootElements(extent.getAllRootElements());
-       	    		if (essentialRootElements.isEmpty()) {
-	       	 			for (TreeIterator<EObject> it = outExtent.getAllContents(); it.hasNext();) {
-	       					EObject eObject = it.next();
-       						eObject.eAdapters().clear();
-	       				}
-       	    			outExtent.getContents().clear();
-       	    		}
-       	    		else if (outExtent.getContents().isEmpty()) {
-       	    			addAllContents(outExtent.getContents(), essentialRootElements);
-       	    		}
-       	    		else {
-       	    			Set<EObject> resolvedRootElements = getResolvedContent(essentialRootElements, outExtent.getContents().get(0));
-       	    			
-	       	 			for (TreeIterator<EObject> it = outExtent.getAllContents(); it.hasNext();) {
-	       					EObject eObject = it.next();
-	       					if (!resolvedRootElements.contains(eObject)) {
-	       						eObject.eAdapters().clear();
-	       					}
-	       				}
-       	    			
-           	    		outExtent.getContents().retainAll(resolvedRootElements);
-           	    		resolvedRootElements.removeAll(outExtent.getContents());
-      	    			addAllContents(outExtent.getContents(), resolvedRootElements);
-       	    		}
-           	    	
-        			EmfUtil.saveModel(outExtent, modelUri, EmfUtil.DEFAULT_SAVE_OPTIONS);
+            		ModelExtentHelper.saveExtentToResources(extent.getAllRootElements(), resSet, outUri);
         		}
         		catch(EmfException e) {
         			throw new MdaException(e);
@@ -327,33 +289,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.refresh(outUri);
     }
 
-	private static Set<EObject> getResolvedContent(Collection<EObject> content, EObject metamodel) {
-		ResourceSet rs = (metamodel != null && metamodel.eResource() != null ? metamodel.eResource().getResourceSet() : null);
-		Set<EObject> resolvedObjs = new LinkedHashSet<EObject>(content.size());
-		for (EObject obj : content) {
-			EObject resolved = null;
-			try {
-				resolved = EmfUtil.resolveSource(obj, rs);
-			}
-			catch (Exception ex) {				
-			}
-			resolvedObjs.add(resolved != null ? resolved : obj);
-		}
-		return resolvedObjs;
-	}
-    
-    private static Set<EObject> getEssentialRootElements(List<EObject> allRootElements) {
-    	Set<EObject> roots = new LinkedHashSet<EObject>();
-    	for (EObject e : allRootElements) {
-    		EObject nextRoot = e;
-    		while (nextRoot.eContainer() instanceof EObject && nextRoot.eContainer().eResource() == e.eResource()) {
-    			nextRoot = nextRoot.eContainer();
-    		}
-    		roots.add(nextRoot);
-    	}
-		return roots;
-	}
-
 	private static void saveResource(EObject obj) throws IOException {
     	Resource resource = obj.eResource();
     	if(resource == null) {
@@ -371,15 +306,6 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         }
         
         return uri;
-    }
-    
-    private static void addAllContents(EList<EObject> contents, Set<EObject> elements) {
-   		if (contents instanceof AbstractEList<?>) {
-   			((AbstractEList<EObject>) contents).addAllUnique(elements);
-   		}
-   		else {
-   			contents.addAll(elements);
-   		}
     }
     
 }

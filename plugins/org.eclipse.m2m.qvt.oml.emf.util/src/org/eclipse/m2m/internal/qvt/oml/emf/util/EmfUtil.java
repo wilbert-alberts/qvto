@@ -160,7 +160,7 @@ public class EmfUtil {
         return false;
 	}
 
-	private static boolean isDynamic(EObject eObject) {
+	public static boolean isDynamic(EObject eObject) {
 		return eObject instanceof EStructuralFeature.Internal.DynamicValueHolder;
 	}
 	
@@ -185,9 +185,7 @@ public class EmfUtil {
         }
     }
     
-	public static void saveModel(Resource modelExtent, URI uri, Map opts) throws EmfException {    
-		modelExtent.setURI(uri);
-
+	public static void saveModel(Resource modelExtent, Map opts) throws EmfException {    
         Map options = new HashMap(opts);
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
         options.put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_DISCARD);       
@@ -201,7 +199,7 @@ public class EmfUtil {
         try {
         	modelExtent.save(options);
         } catch (Exception e) {
-            throw new EmfException(NLS.bind(Messages.EmfUtil_1, uri), e);
+            throw new EmfException(NLS.bind(Messages.EmfUtil_1, modelExtent.getURI()), e);
         }
     }
 	
