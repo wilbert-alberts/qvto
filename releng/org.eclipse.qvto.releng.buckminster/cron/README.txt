@@ -20,7 +20,7 @@ logon to build.eclipse.org
 cd downloads/mmt/qvto/updates/milestones/3.4.0
 ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=S201210020848
 
-Check that Install New Software from http://download.eclipse.org/mmt/qvto/updates/milestones/3.4.0 shows the new build.
+Check that Install New Software from http://download.eclipse.org/mmt/qvto/updates/milestones shows the new build.
 
 ----
 
