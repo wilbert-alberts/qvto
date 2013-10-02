@@ -1942,6 +1942,8 @@ public class QvtOperationalVisitorCS
 		}
 		
 		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module);
+
+		env.setContextModule(module); // update model's parameters registration
 	}
 
 		
