@@ -219,6 +219,16 @@ public final class ValidationMessages extends NLS {
 	public static String NonStd_Operation_;
 	public static String QvtOperationalVisitorCS_libraryCantExtendNonLibrary;
 	public static String QvtOperationalVisitorCS_possibleEqualityInsteadOfAssignment;
+	public static String QvtOperationalVisitorCS_iterateExpIncomplete;
+	public static String QvtOperationalVisitorCS_TypeConformanceIteratorResult_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceCollectSequence_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceCollectBag_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceSelectReject_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceIteratorBodyBoolean_ERROR_;
+	public static String QvtOperationalVisitorCS_IteratorSource_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceClosure_ERROR_;
+	public static String QvtOperationalVisitorCS_IterateExpLoopVarInit_ERROR_;
+	public static String QvtOperationalVisitorCS_TypeConformanceIteratorExpLoopVar_ERROR_;
     
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);

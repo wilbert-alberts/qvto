@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - 414616
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -94,11 +95,16 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.lpg.FormattingHelper;
 import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.options.ProblemOption;
 import org.eclipse.ocl.parser.ValidationVisitor;
+import org.eclipse.ocl.types.BagType;
+import org.eclipse.ocl.types.OrderedSetType;
+import org.eclipse.ocl.types.SequenceType;
+import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
@@ -139,7 +145,6 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 					e.accept(myOclValidationVisitor);
 				}
 				catch (UnsupportedOperationException ex) {
-					
 				}
 			}
 		}
@@ -1050,6 +1055,204 @@ final class CustomOclValidationVisitor extends
             }
 		}
 		
+		return Boolean.TRUE;
+	}
+	
+
+	String getUMLName(Object element) {
+		return (element == null)? null : uml.getName(element);
+	}
+
+	//@Override
+	public Boolean visitIteratorExp(
+			org.eclipse.ocl.expressions.IteratorExp<EClassifier, EParameter> ie) {
+		EClassifier type = ie.getType();
+		OCLExpression<EClassifier> body = ie.getBody();
+		OCLExpression<EClassifier> source = ie.getSource();
+		List<Variable<EClassifier, EParameter>> iterators = ie.getIterator();
+		String name = ie.getName();
+
+		if (type == null || name == null || source == null || body == null || iterators.isEmpty()) {
+			QvtOperationalUtil.reportError(myEnv,
+					NLS.bind(ValidationMessages.QvtOperationalVisitorCS_iterateExpIncomplete, new Object[] { }),
+					ie.getStartPosition(), ie.getEndPosition());
+			return Boolean.TRUE;
+		}
+		
+		int opcode = 0;
+		if (source.getType() instanceof PredefinedType<?>) {
+			opcode = OCLStandardLibraryUtil.getOperationCode(name);
+		}
+		
+		// Validate all of the iterate parts
+		source.accept(this);
+		body.accept(this);
+
+		switch (opcode) {
+		case PredefinedType.FOR_ALL:
+		case PredefinedType.EXISTS:
+		case PredefinedType.IS_UNIQUE:
+			if (type != env.getOCLStandardLibrary().getBoolean()) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceIteratorResult_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+		}
+		
+		if (opcode == PredefinedType.COLLECT) {
+			if (source.getType() instanceof SequenceType<?, ?>
+				|| source.getType() instanceof OrderedSetType<?, ?>
+				|| source.getType() instanceof ListType) {
+				if (!(type instanceof SequenceType<?, ?>)) {
+					QvtOperationalUtil.reportError(myEnv,
+							NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceCollectSequence_ERROR_, new Object[] { }),
+							ie.getStartPosition(), ie.getEndPosition());
+					return Boolean.TRUE;
+				}
+			} else if (!(type instanceof BagType<?, ?>)) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceCollectBag_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+		}
+		
+		switch (opcode) {
+		case PredefinedType.SELECT:
+		case PredefinedType.REJECT:
+			if (!TypeUtil.exactTypeMatch(env, type, source.getType())) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceSelectReject_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+		}
+
+		switch (opcode) {
+		case PredefinedType.SELECT:
+		case PredefinedType.REJECT:
+		case PredefinedType.FOR_ALL:
+		case PredefinedType.ANY:
+		case PredefinedType.EXISTS:
+		case PredefinedType.ONE:
+			if (body.getType() != env.getOCLStandardLibrary().getBoolean()) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceIteratorBodyBoolean_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+		}
+
+		EClassifier sourceType = source.getType();
+		if (!(sourceType instanceof org.eclipse.ocl.types.CollectionType<?, ?>)) {
+			QvtOperationalUtil.reportError(myEnv,
+					NLS.bind(ValidationMessages.QvtOperationalVisitorCS_IteratorSource_ERROR_, new Object[] { }),
+					ie.getStartPosition(), ie.getEndPosition());
+			return Boolean.TRUE;
+		}
+		
+		if (opcode == PredefinedType.CLOSURE) {
+			// check settings for using non-standard closure iterator
+			ProblemHandler.Severity sev = ProblemHandler.Severity.OK;
+			BasicEnvironment benv = OCLUtil.getAdapter(env, BasicEnvironment.class);
+			
+			if (benv != null) {
+				sev = benv.getValue(ProblemOption.CLOSURE_ITERATOR);
+				if ((sev != null) && (sev != ProblemHandler.Severity.OK)) {
+					@SuppressWarnings("restriction")
+					String message = OCLMessages.bind(OCLMessages.NonStd_Iterator_, PredefinedType.CLOSURE_NAME);
+	                benv.problem(sev, ProblemHandler.Phase.VALIDATOR, message, "iteratorExp", ie); //$NON-NLS-1$
+	            }
+			}
+			
+			if (!(type instanceof SetType<?, ?>) && !(type instanceof OrderedSetType<?, ?>)) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceClosure_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+			
+			// recursive reference must be to a type conforming
+			//   to the source, otherwise it isn't recursive
+			
+			// checked above that the source is a collection type
+			@SuppressWarnings("unchecked")
+			org.eclipse.ocl.types.CollectionType<EClassifier, EOperation> sourceCT = (org.eclipse.ocl.types.CollectionType<EClassifier, EOperation>) source.getType();
+			@SuppressWarnings("unchecked")
+			org.eclipse.ocl.types.CollectionType<EClassifier, EOperation> bodyCT = (org.eclipse.ocl.types.CollectionType<EClassifier, EOperation>) type;
+			
+			EClassifier sourceElementType = sourceCT.getElementType();
+			EClassifier bodyType = bodyCT.getElementType();
+			
+			if (!TypeUtil.compatibleTypeMatch(env, bodyType, sourceElementType)) {
+				@SuppressWarnings("restriction")
+				String message = OCLMessages.bind(
+						OCLMessages.ElementTypeConformanceClosure_ERROR_,
+						getUMLName(bodyType),
+						getUMLName(sourceElementType));
+					return validatorError(ie, message,  "visitIteratorExp");//$NON-NLS-1$
+			}
+		}
+        
+        if (opcode == PredefinedType.SORTED_BY) {
+            // the body type must be comparable (in OCL terms, it must
+            //   define the '<' operation)
+            
+            if (!uml.isComparable(body.getType())) {
+                // FIXME: Should be more specifically about the sortedBy iterator
+                @SuppressWarnings("restriction")
+				String message = OCLMessages.bind(
+                    OCLMessages.OperationNotFound_ERROR_,
+                    PredefinedType.LESS_THAN_NAME,
+                    getUMLName(body.getType()));
+                return validatorError(ie, message, "visitIteratorExp");//$NON-NLS-1$
+            }
+        }
+
+        // validate the number of iterators
+        switch (opcode) {
+        case PredefinedType.FOR_ALL:
+        case PredefinedType.EXISTS:
+            if (iterators.size() > 2) {
+                @SuppressWarnings("restriction")
+				String message = OCLMessages.bind(
+                    OCLMessages.TooManyIteratorVariables_ERROR_,
+                    ie.getName());
+                return validatorError(ie, message, "visitIteratorExp");//$NON-NLS-1$
+            }
+            break;
+        default:
+            if (iterators.size() > 1) {
+                @SuppressWarnings("restriction")
+				String message = OCLMessages.bind(
+                    OCLMessages.TooManyIteratorVariables_ERROR_,
+                    ie.getName());
+                return validatorError(ie, message, "visitIteratorExp");//$NON-NLS-1$
+            }
+        }
+        
+		for (Variable<EClassifier, EParameter> loopiter : iterators) {
+			// Validate the iterator expressions
+			loopiter.accept(this);
+			if (loopiter.getInitExpression() != null) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_IterateExpLoopVarInit_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+			
+			@SuppressWarnings("unchecked")
+			org.eclipse.ocl.types.CollectionType<EClassifier, EOperation> ct = (org.eclipse.ocl.types.CollectionType<EClassifier, EOperation>) sourceType;
+			
+			if (!TypeUtil.exactTypeMatch(env, loopiter.getType(), ct.getElementType())) {
+				QvtOperationalUtil.reportError(myEnv,
+						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceIteratorExpLoopVar_ERROR_, new Object[] { }),
+						ie.getStartPosition(), ie.getEndPosition());
+				return Boolean.TRUE;
+			}
+		}
+
 		return Boolean.TRUE;
 	}
 }
