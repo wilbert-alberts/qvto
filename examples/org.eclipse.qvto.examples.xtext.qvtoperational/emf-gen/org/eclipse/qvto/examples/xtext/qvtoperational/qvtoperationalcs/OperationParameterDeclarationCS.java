@@ -2,7 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ParameterCS;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
 
 /**

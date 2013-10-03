@@ -1,4 +1,4 @@
-package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.cs2as;
+package org.eclipse.qvto.examples.xtext.imperativeocl.cs2as;
 
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 
@@ -8,9 +8,9 @@ import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
  *  
  * @author adolfosbh
  */
-public class ImperativeOCLCSContainmentVisitor extends AutoImperativeOCLCSContainmentVisitor {
+public class NewImperativeOCLCSContainmentVisitor extends AutoImperativeOCLCSContainmentVisitor {
 
-	public ImperativeOCLCSContainmentVisitor(CS2PivotConversion context) {
+	public NewImperativeOCLCSContainmentVisitor(CS2PivotConversion context) {
 		super(context);
 	}
 }

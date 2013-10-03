@@ -3,7 +3,7 @@
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.impl.ExpCSImpl;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialoclcs.impl.ExpCSImpl;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.ImperativeOCLCSPackage;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.StatementCS;
 

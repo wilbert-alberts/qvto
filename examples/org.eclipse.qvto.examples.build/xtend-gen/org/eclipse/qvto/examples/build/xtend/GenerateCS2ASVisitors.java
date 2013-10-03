@@ -63,10 +63,10 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
   public void generateContainmentVisitor(@NonNull final GenPackage genPackage) {
     boolean _isDerived = this.isDerived();
     if (_isDerived) {
-      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
-        this.superProjectPrefix, this.superVisitorPackageName, this.superVisitorClassName);
+      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.projectName, this.visitorPackageName, this.visitorClassName, 
+        this.superProjectPrefix, this.superProjectName, this.superVisitorClassName);
     } else {
-      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.visitorPackageName, this.visitorClassName, 
+      AutoCodeGenerator.generate(genPackage, this.projectPrefix, this.projectName, this.visitorPackageName, this.visitorClassName, 
         null, null, null);
     }
   }

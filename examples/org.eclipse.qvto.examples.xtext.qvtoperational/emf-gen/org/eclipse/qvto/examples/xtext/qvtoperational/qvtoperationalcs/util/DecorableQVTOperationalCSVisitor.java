@@ -16,5 +16,5 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public interface DecorableQVTOperationalCSVisitor<R> extends QVTOperationalCSVisitor<R>, org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.DecorableImperativeOCLCSVisitor<R>
 {
-	void setUndecoratedVisitor(@NonNull org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor<R> visitor);
+	void setUndecoratedVisitor(@NonNull org.eclipse.ocl.examples.xtext.base.basecs.util.BaseCSVisitor<R> visitor);
 }

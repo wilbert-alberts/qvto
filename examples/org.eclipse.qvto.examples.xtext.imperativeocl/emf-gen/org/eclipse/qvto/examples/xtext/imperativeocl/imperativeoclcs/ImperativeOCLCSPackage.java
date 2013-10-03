@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.EssentialOCLCSTPackage;
+import org.eclipse.ocl.examples.xtext.base.basecs.BaseCSPackage;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialoclcs.EssentialOCLCSPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,7 +74,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+	int STATEMENT_CS__LOGICAL_PARENT = EssentialOCLCSPackage.EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -83,7 +83,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+	int STATEMENT_CS__PIVOT = EssentialOCLCSPackage.EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -92,7 +92,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+	int STATEMENT_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -101,7 +101,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+	int STATEMENT_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -110,7 +110,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+	int STATEMENT_CS__CSI = EssentialOCLCSPackage.EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -119,7 +119,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+	int STATEMENT_CS__PARENT = EssentialOCLCSPackage.EXP_CS__PARENT;
 
 	/**
 	 * The number of structural features of the '<em>Statement CS</em>' class.
@@ -128,7 +128,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEMENT_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+	int STATEMENT_CS_FEATURE_COUNT = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.AssertExpCSImpl <em>Assert Exp CS</em>}' class.
@@ -429,7 +429,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+	int DICT_LITERAL_EXP_CS__LOGICAL_PARENT = EssentialOCLCSPackage.EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -438,7 +438,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+	int DICT_LITERAL_EXP_CS__PIVOT = EssentialOCLCSPackage.EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -447,7 +447,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+	int DICT_LITERAL_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -456,7 +456,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+	int DICT_LITERAL_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -465,7 +465,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+	int DICT_LITERAL_EXP_CS__CSI = EssentialOCLCSPackage.EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -474,7 +474,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+	int DICT_LITERAL_EXP_CS__PARENT = EssentialOCLCSPackage.EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parts</b></em>' containment reference list.
@@ -483,7 +483,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS__OWNED_PARTS = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+	int DICT_LITERAL_EXP_CS__OWNED_PARTS = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Dict Literal Exp CS</em>' class.
@@ -492,7 +492,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 1;
+	int DICT_LITERAL_EXP_CS_FEATURE_COUNT = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictLiteralPartCSImpl <em>Dict Literal Part CS</em>}' class.
@@ -511,7 +511,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int DICT_LITERAL_PART_CS__LOGICAL_PARENT = BaseCSPackage.ELEMENT_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' containment reference.
@@ -520,7 +520,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_CS__KEY = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int DICT_LITERAL_PART_CS__KEY = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -529,7 +529,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_CS__VALUE = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int DICT_LITERAL_PART_CS__VALUE = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Dict Literal Part CS</em>' class.
@@ -538,7 +538,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int DICT_LITERAL_PART_CS_FEATURE_COUNT = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.DictTypeCSImpl <em>Dict Type CS</em>}' class.
@@ -557,7 +557,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS__LOGICAL_PARENT = BaseCSTPackage.TYPED_REF_CS__LOGICAL_PARENT;
+	int DICT_TYPE_CS__LOGICAL_PARENT = BaseCSPackage.TYPED_REF_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -566,7 +566,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS__PIVOT = BaseCSTPackage.TYPED_REF_CS__PIVOT;
+	int DICT_TYPE_CS__PIVOT = BaseCSPackage.TYPED_REF_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Multiplicity</b></em>' containment reference.
@@ -575,7 +575,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS__MULTIPLICITY = BaseCSTPackage.TYPED_REF_CS__MULTIPLICITY;
+	int DICT_TYPE_CS__MULTIPLICITY = BaseCSPackage.TYPED_REF_CS__MULTIPLICITY;
 
 	/**
 	 * The feature id for the '<em><b>Key Type</b></em>' containment reference.
@@ -584,7 +584,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS__KEY_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
+	int DICT_TYPE_CS__KEY_TYPE = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Value Type</b></em>' containment reference.
@@ -593,7 +593,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS__VALUE_TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
+	int DICT_TYPE_CS__VALUE_TYPE = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Dict Type CS</em>' class.
@@ -602,7 +602,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_TYPE_CS_FEATURE_COUNT = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 2;
+	int DICT_TYPE_CS_FEATURE_COUNT = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ExpressionBlockCSImpl <em>Expression Block CS</em>}' class.
@@ -621,7 +621,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+	int EXPRESSION_BLOCK_CS__LOGICAL_PARENT = EssentialOCLCSPackage.EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -630,7 +630,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+	int EXPRESSION_BLOCK_CS__PIVOT = EssentialOCLCSPackage.EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -639,7 +639,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+	int EXPRESSION_BLOCK_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -648,7 +648,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+	int EXPRESSION_BLOCK_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -657,7 +657,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+	int EXPRESSION_BLOCK_CS__CSI = EssentialOCLCSPackage.EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -666,7 +666,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+	int EXPRESSION_BLOCK_CS__PARENT = EssentialOCLCSPackage.EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference list.
@@ -675,7 +675,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS__BODY = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+	int EXPRESSION_BLOCK_CS__BODY = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Expression Block CS</em>' class.
@@ -684,7 +684,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_BLOCK_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 1;
+	int EXPRESSION_BLOCK_CS_FEATURE_COUNT = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ComputeExpCSImpl <em>Compute Exp CS</em>}' class.
@@ -794,7 +794,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__LOGICAL_PARENT;
+	int IMPERATIVE_LOOP_EXP_CS__LOGICAL_PARENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -803,7 +803,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__PIVOT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__PIVOT;
+	int IMPERATIVE_LOOP_EXP_CS__PIVOT = EssentialOCLCSPackage.INVOCATION_EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -812,7 +812,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.INVOCATION_EXP_CS__OWNED_ANNOTATION;
+	int IMPERATIVE_LOOP_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.INVOCATION_EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -821,7 +821,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.INVOCATION_EXP_CS__ORIGINAL_XMI_ID;
+	int IMPERATIVE_LOOP_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.INVOCATION_EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -830,7 +830,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__CSI = EssentialOCLCSTPackage.INVOCATION_EXP_CS__CSI;
+	int IMPERATIVE_LOOP_EXP_CS__CSI = EssentialOCLCSPackage.INVOCATION_EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -839,7 +839,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__PARENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__PARENT;
+	int IMPERATIVE_LOOP_EXP_CS__PARENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Name Exp</b></em>' containment reference.
@@ -848,7 +848,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__NAME_EXP = EssentialOCLCSTPackage.INVOCATION_EXP_CS__NAME_EXP;
+	int IMPERATIVE_LOOP_EXP_CS__NAME_EXP = EssentialOCLCSPackage.INVOCATION_EXP_CS__NAME_EXP;
 
 	/**
 	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
@@ -857,7 +857,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__ARGUMENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__ARGUMENT;
+	int IMPERATIVE_LOOP_EXP_CS__ARGUMENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__ARGUMENT;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -866,7 +866,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS__CONDITION = EssentialOCLCSTPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 0;
+	int IMPERATIVE_LOOP_EXP_CS__CONDITION = EssentialOCLCSPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Imperative Loop Exp CS</em>' class.
@@ -875,7 +875,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 1;
+	int IMPERATIVE_LOOP_EXP_CS_FEATURE_COUNT = EssentialOCLCSPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ImperativeIterateExpCSImpl <em>Imperative Iterate Exp CS</em>}' class.
@@ -1185,7 +1185,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXCEPT_CS__LOGICAL_PARENT = BaseCSTPackage.ELEMENT_CS__LOGICAL_PARENT;
+	int EXCEPT_CS__LOGICAL_PARENT = BaseCSPackage.ELEMENT_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Except</b></em>' reference list.
@@ -1194,7 +1194,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXCEPT_CS__EXCEPT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 0;
+	int EXCEPT_CS__EXCEPT = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -1203,7 +1203,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXCEPT_CS__BODY = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 1;
+	int EXCEPT_CS__BODY = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Except CS</em>' class.
@@ -1212,7 +1212,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXCEPT_CS_FEATURE_COUNT = BaseCSTPackage.ELEMENT_CS_FEATURE_COUNT + 2;
+	int EXCEPT_CS_FEATURE_COUNT = BaseCSPackage.ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ExpressionStatementCSImpl <em>Expression Statement CS</em>}' class.
@@ -1413,7 +1413,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_CS__LOGICAL_PARENT = BaseCSTPackage.TYPED_REF_CS__LOGICAL_PARENT;
+	int LIST_TYPE_CS__LOGICAL_PARENT = BaseCSPackage.TYPED_REF_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -1422,7 +1422,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_CS__PIVOT = BaseCSTPackage.TYPED_REF_CS__PIVOT;
+	int LIST_TYPE_CS__PIVOT = BaseCSPackage.TYPED_REF_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Multiplicity</b></em>' containment reference.
@@ -1431,7 +1431,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_CS__MULTIPLICITY = BaseCSTPackage.TYPED_REF_CS__MULTIPLICITY;
+	int LIST_TYPE_CS__MULTIPLICITY = BaseCSPackage.TYPED_REF_CS__MULTIPLICITY;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -1440,7 +1440,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_CS__TYPE = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
+	int LIST_TYPE_CS__TYPE = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>List Type CS</em>' class.
@@ -1449,7 +1449,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_TYPE_CS_FEATURE_COUNT = BaseCSTPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
+	int LIST_TYPE_CS_FEATURE_COUNT = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.ListLiteralExpCSImpl <em>List Literal Exp CS</em>}' class.
@@ -1468,7 +1468,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+	int LIST_LITERAL_EXP_CS__LOGICAL_PARENT = EssentialOCLCSPackage.EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -1477,7 +1477,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+	int LIST_LITERAL_EXP_CS__PIVOT = EssentialOCLCSPackage.EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -1486,7 +1486,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+	int LIST_LITERAL_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -1495,7 +1495,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+	int LIST_LITERAL_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -1504,7 +1504,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+	int LIST_LITERAL_EXP_CS__CSI = EssentialOCLCSPackage.EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -1513,7 +1513,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+	int LIST_LITERAL_EXP_CS__PARENT = EssentialOCLCSPackage.EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parts</b></em>' containment reference list.
@@ -1522,7 +1522,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS__OWNED_PARTS = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+	int LIST_LITERAL_EXP_CS__OWNED_PARTS = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>List Literal Exp CS</em>' class.
@@ -1531,7 +1531,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIST_LITERAL_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 1;
+	int LIST_LITERAL_EXP_CS_FEATURE_COUNT = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.LogExpCSImpl <em>Log Exp CS</em>}' class.
@@ -1550,7 +1550,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__LOGICAL_PARENT;
+	int LOG_EXP_CS__LOGICAL_PARENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -1559,7 +1559,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__PIVOT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__PIVOT;
+	int LOG_EXP_CS__PIVOT = EssentialOCLCSPackage.INVOCATION_EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -1568,7 +1568,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.INVOCATION_EXP_CS__OWNED_ANNOTATION;
+	int LOG_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.INVOCATION_EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -1577,7 +1577,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.INVOCATION_EXP_CS__ORIGINAL_XMI_ID;
+	int LOG_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.INVOCATION_EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -1586,7 +1586,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__CSI = EssentialOCLCSTPackage.INVOCATION_EXP_CS__CSI;
+	int LOG_EXP_CS__CSI = EssentialOCLCSPackage.INVOCATION_EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -1595,7 +1595,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__PARENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__PARENT;
+	int LOG_EXP_CS__PARENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Name Exp</b></em>' containment reference.
@@ -1604,7 +1604,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__NAME_EXP = EssentialOCLCSTPackage.INVOCATION_EXP_CS__NAME_EXP;
+	int LOG_EXP_CS__NAME_EXP = EssentialOCLCSPackage.INVOCATION_EXP_CS__NAME_EXP;
 
 	/**
 	 * The feature id for the '<em><b>Argument</b></em>' containment reference list.
@@ -1613,7 +1613,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__ARGUMENT = EssentialOCLCSTPackage.INVOCATION_EXP_CS__ARGUMENT;
+	int LOG_EXP_CS__ARGUMENT = EssentialOCLCSPackage.INVOCATION_EXP_CS__ARGUMENT;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -1622,7 +1622,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS__CONDITION = EssentialOCLCSTPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 0;
+	int LOG_EXP_CS__CONDITION = EssentialOCLCSPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Log Exp CS</em>' class.
@@ -1631,7 +1631,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 1;
+	int LOG_EXP_CS_FEATURE_COUNT = EssentialOCLCSPackage.INVOCATION_EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.QuitExpCSImpl <em>Quit Exp CS</em>}' class.
@@ -1814,7 +1814,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__LOGICAL_PARENT = EssentialOCLCSTPackage.EXP_CS__LOGICAL_PARENT;
+	int RETURN_EXP_CS__LOGICAL_PARENT = EssentialOCLCSPackage.EXP_CS__LOGICAL_PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Pivot</b></em>' reference.
@@ -1823,7 +1823,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__PIVOT = EssentialOCLCSTPackage.EXP_CS__PIVOT;
+	int RETURN_EXP_CS__PIVOT = EssentialOCLCSPackage.EXP_CS__PIVOT;
 
 	/**
 	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
@@ -1832,7 +1832,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSTPackage.EXP_CS__OWNED_ANNOTATION;
+	int RETURN_EXP_CS__OWNED_ANNOTATION = EssentialOCLCSPackage.EXP_CS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Original Xmi Id</b></em>' attribute.
@@ -1841,7 +1841,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSTPackage.EXP_CS__ORIGINAL_XMI_ID;
+	int RETURN_EXP_CS__ORIGINAL_XMI_ID = EssentialOCLCSPackage.EXP_CS__ORIGINAL_XMI_ID;
 
 	/**
 	 * The feature id for the '<em><b>Csi</b></em>' attribute.
@@ -1850,7 +1850,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__CSI = EssentialOCLCSTPackage.EXP_CS__CSI;
+	int RETURN_EXP_CS__CSI = EssentialOCLCSPackage.EXP_CS__CSI;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -1859,7 +1859,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__PARENT = EssentialOCLCSTPackage.EXP_CS__PARENT;
+	int RETURN_EXP_CS__PARENT = EssentialOCLCSPackage.EXP_CS__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -1868,7 +1868,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS__VALUE = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 0;
+	int RETURN_EXP_CS__VALUE = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Return Exp CS</em>' class.
@@ -1877,7 +1877,7 @@ public interface ImperativeOCLCSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RETURN_EXP_CS_FEATURE_COUNT = EssentialOCLCSTPackage.EXP_CS_FEATURE_COUNT + 1;
+	int RETURN_EXP_CS_FEATURE_COUNT = EssentialOCLCSPackage.EXP_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.impl.SwitchAltCSImpl <em>Switch Alt CS</em>}' class.

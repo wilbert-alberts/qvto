@@ -18,21 +18,21 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ConstraintCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PathNameCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.TemplateSignatureCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.TemplateableElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.impl.PackageCSImpl;
-import org.eclipse.ocl.examples.xtext.base.util.BaseCSVisitor;
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.StringLiteralExpCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.BaseCSPackage;
+import org.eclipse.ocl.examples.xtext.base.basecs.ClassCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ClassifierCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ConstraintCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.OperationCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.PackageCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.PathNameCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.StructuralFeatureCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TemplateSignatureCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TemplateableElementCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TypeCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TypedRefCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.impl.PackageCSImpl;
+import org.eclipse.ocl.examples.xtext.base.basecs.util.BaseCSVisitor;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ModuleUsageCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ParameterDeclarationCS;
@@ -269,9 +269,9 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 		if (newOwnedTemplateSignature != ownedTemplateSignature) {
 			NotificationChain msgs = null;
 			if (ownedTemplateSignature != null)
-				msgs = ((InternalEObject)ownedTemplateSignature).eInverseRemove(this, BaseCSTPackage.TEMPLATE_SIGNATURE_CS__OWNING_TEMPLATE_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)ownedTemplateSignature).eInverseRemove(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_TEMPLATE_ELEMENT, TemplateSignatureCS.class, msgs);
 			if (newOwnedTemplateSignature != null)
-				msgs = ((InternalEObject)newOwnedTemplateSignature).eInverseAdd(this, BaseCSTPackage.TEMPLATE_SIGNATURE_CS__OWNING_TEMPLATE_ELEMENT, TemplateSignatureCS.class, msgs);
+				msgs = ((InternalEObject)newOwnedTemplateSignature).eInverseAdd(this, BaseCSPackage.TEMPLATE_SIGNATURE_CS__OWNING_TEMPLATE_ELEMENT, TemplateSignatureCS.class, msgs);
 			msgs = basicSetOwnedTemplateSignature(newOwnedTemplateSignature, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -312,7 +312,7 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, BaseCSTPackage.PACKAGE_CS__OWNED_TYPE, PackageCS.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, BaseCSPackage.PACKAGE_CS__OWNED_TYPE, PackageCS.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -427,7 +427,7 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 	 */
 	public EList<OperationCS> getOwnedOperation() {
 		if (ownedOperation == null) {
-			ownedOperation = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION, BaseCSTPackage.OPERATION_CS__OWNING_CLASS);
+			ownedOperation = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION, BaseCSPackage.OPERATION_CS__OWNING_CLASS);
 		}
 		return ownedOperation;
 	}
@@ -439,7 +439,7 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 	 */
 	public EList<StructuralFeatureCS> getOwnedProperty() {
 		if (ownedProperty == null) {
-			ownedProperty = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY, BaseCSTPackage.STRUCTURAL_FEATURE_CS__OWNER);
+			ownedProperty = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY, BaseCSPackage.STRUCTURAL_FEATURE_CS__OWNER);
 		}
 		return ownedProperty;
 	}
@@ -732,7 +732,7 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNER:
-				return eInternalContainer().eInverseRemove(this, BaseCSTPackage.PACKAGE_CS__OWNED_TYPE, PackageCS.class, msgs);
+				return eInternalContainer().eInverseRemove(this, BaseCSPackage.PACKAGE_CS__OWNED_TYPE, PackageCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -948,25 +948,25 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 		}
 		if (baseClass == TemplateableElementCS.class) {
 			switch (derivedFeatureID) {
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_TEMPLATE_SIGNATURE: return BaseCSTPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_TEMPLATE_SIGNATURE;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_TEMPLATE_SIGNATURE: return BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_TEMPLATE_SIGNATURE;
 				default: return -1;
 			}
 		}
 		if (baseClass == ClassifierCS.class) {
 			switch (derivedFeatureID) {
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNER: return BaseCSTPackage.CLASSIFIER_CS__OWNER;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__INSTANCE_CLASS_NAME: return BaseCSTPackage.CLASSIFIER_CS__INSTANCE_CLASS_NAME;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_CONSTRAINT: return BaseCSTPackage.CLASSIFIER_CS__OWNED_CONSTRAINT;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__QUALIFIER: return BaseCSTPackage.CLASSIFIER_CS__QUALIFIER;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNER: return BaseCSPackage.CLASSIFIER_CS__OWNER;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__INSTANCE_CLASS_NAME: return BaseCSPackage.CLASSIFIER_CS__INSTANCE_CLASS_NAME;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_CONSTRAINT: return BaseCSPackage.CLASSIFIER_CS__OWNED_CONSTRAINT;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__QUALIFIER: return BaseCSPackage.CLASSIFIER_CS__QUALIFIER;
 				default: return -1;
 			}
 		}
 		if (baseClass == ClassCS.class) {
 			switch (derivedFeatureID) {
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_SUPER_TYPE: return BaseCSTPackage.CLASS_CS__OWNED_SUPER_TYPE;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION: return BaseCSTPackage.CLASS_CS__OWNED_OPERATION;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY: return BaseCSTPackage.CLASS_CS__OWNED_PROPERTY;
-				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_META_TYPE: return BaseCSTPackage.CLASS_CS__OWNED_META_TYPE;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_SUPER_TYPE: return BaseCSPackage.CLASS_CS__OWNED_SUPER_TYPE;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION: return BaseCSPackage.CLASS_CS__OWNED_OPERATION;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY: return BaseCSPackage.CLASS_CS__OWNED_PROPERTY;
+				case QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_META_TYPE: return BaseCSPackage.CLASS_CS__OWNED_META_TYPE;
 				default: return -1;
 			}
 		}
@@ -987,25 +987,25 @@ public class TransformationCSImpl extends PackageCSImpl implements Transformatio
 		}
 		if (baseClass == TemplateableElementCS.class) {
 			switch (baseFeatureID) {
-				case BaseCSTPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_TEMPLATE_SIGNATURE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_TEMPLATE_SIGNATURE;
+				case BaseCSPackage.TEMPLATEABLE_ELEMENT_CS__OWNED_TEMPLATE_SIGNATURE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_TEMPLATE_SIGNATURE;
 				default: return -1;
 			}
 		}
 		if (baseClass == ClassifierCS.class) {
 			switch (baseFeatureID) {
-				case BaseCSTPackage.CLASSIFIER_CS__OWNER: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNER;
-				case BaseCSTPackage.CLASSIFIER_CS__INSTANCE_CLASS_NAME: return QVTOperationalCSPackage.TRANSFORMATION_CS__INSTANCE_CLASS_NAME;
-				case BaseCSTPackage.CLASSIFIER_CS__OWNED_CONSTRAINT: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_CONSTRAINT;
-				case BaseCSTPackage.CLASSIFIER_CS__QUALIFIER: return QVTOperationalCSPackage.TRANSFORMATION_CS__QUALIFIER;
+				case BaseCSPackage.CLASSIFIER_CS__OWNER: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNER;
+				case BaseCSPackage.CLASSIFIER_CS__INSTANCE_CLASS_NAME: return QVTOperationalCSPackage.TRANSFORMATION_CS__INSTANCE_CLASS_NAME;
+				case BaseCSPackage.CLASSIFIER_CS__OWNED_CONSTRAINT: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_CONSTRAINT;
+				case BaseCSPackage.CLASSIFIER_CS__QUALIFIER: return QVTOperationalCSPackage.TRANSFORMATION_CS__QUALIFIER;
 				default: return -1;
 			}
 		}
 		if (baseClass == ClassCS.class) {
 			switch (baseFeatureID) {
-				case BaseCSTPackage.CLASS_CS__OWNED_SUPER_TYPE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_SUPER_TYPE;
-				case BaseCSTPackage.CLASS_CS__OWNED_OPERATION: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION;
-				case BaseCSTPackage.CLASS_CS__OWNED_PROPERTY: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY;
-				case BaseCSTPackage.CLASS_CS__OWNED_META_TYPE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_META_TYPE;
+				case BaseCSPackage.CLASS_CS__OWNED_SUPER_TYPE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_SUPER_TYPE;
+				case BaseCSPackage.CLASS_CS__OWNED_OPERATION: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_OPERATION;
+				case BaseCSPackage.CLASS_CS__OWNED_PROPERTY: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_PROPERTY;
+				case BaseCSPackage.CLASS_CS__OWNED_META_TYPE: return QVTOperationalCSPackage.TRANSFORMATION_CS__OWNED_META_TYPE;
 				default: return -1;
 			}
 		}

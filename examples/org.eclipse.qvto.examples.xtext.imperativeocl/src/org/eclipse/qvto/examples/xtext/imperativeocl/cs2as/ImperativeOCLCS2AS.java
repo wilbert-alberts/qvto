@@ -11,7 +11,6 @@ import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.examples.xtext.essentialocl.cs2as.EssentialOCLCS2Pivot;
 import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.ImperativeOCLCSVisitor;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.cs2as.ImperativeOCLCSContainmentVisitor;
 
 public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	
@@ -27,7 +26,7 @@ public class ImperativeOCLCS2AS extends EssentialOCLCS2Pivot {
 	protected @NonNull
 	ImperativeOCLCSVisitor<Continuation<?>> createContainmentVisitor(
 			@NonNull CS2PivotConversion converter) {
-		return new ImperativeOCLCSContainmentVisitor(converter);
+		return new NewImperativeOCLCSContainmentVisitor(converter);
 	}
 	
 	@Override

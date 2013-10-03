@@ -1,4 +1,4 @@
-package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.cs2as;
+package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;

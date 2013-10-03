@@ -3,8 +3,8 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.OperationCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TypeCS;
 import org.eclipse.qvto.examples.pivot.qvtoperational.MappingOperation;
 
 /**

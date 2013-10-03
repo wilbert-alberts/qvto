@@ -2,7 +2,8 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.ClassCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ClassCS;
+
 
 /**
  * <!-- begin-user-doc -->

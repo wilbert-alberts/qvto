@@ -74,11 +74,11 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 //		additionalImports.add(typeof(Continuation).name);
 //		csPackage.generateContainmentVisitor(visitorVariantClassName, variantExtendedClass, interfaceName, resultTypeName, additionalImports);
 		if (isDerived()) {
-			AutoCodeGenerator.generate(genPackage, projectPrefix, visitorPackageName, visitorClassName,
-				superProjectPrefix, superVisitorPackageName, superVisitorClassName
+			AutoCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
+				superProjectPrefix, superProjectName, superVisitorClassName
 			);	
 		} else {
-			AutoCodeGenerator.generate(genPackage, projectPrefix, visitorPackageName, visitorClassName,
+			AutoCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
 				null, null, null);
 		}
 	}

@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * suitable first super class, the method delegates to visiting().
  */
 public abstract class AbstractExtendingImperativeOCLCSVisitor<R, C>
-	extends org.eclipse.ocl.examples.xtext.essentialocl.util.AbstractExtendingEssentialOCLCSVisitor<R, C>
+	extends org.eclipse.ocl.examples.xtext.essentialocl.essentialoclcs.util.AbstractExtendingEssentialOCLCSVisitor<R, C>
 	implements ImperativeOCLCSVisitor<R>
 {
 	/**

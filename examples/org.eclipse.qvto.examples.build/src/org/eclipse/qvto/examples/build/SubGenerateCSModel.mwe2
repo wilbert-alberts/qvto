@@ -43,6 +43,11 @@ var projectPrefix
 var superProjectName
 
 /**
+ * The name of the inherited model (the package name in the Ecore model); e.g. "basecs"
+ */
+var superModelName
+
+/**
  * The prefix of the inherited project hosting the generated models; e.g. "EssentialOCL", "" for a base visitor.
  */
 var superProjectPrefix = ""
@@ -53,9 +58,14 @@ var superProjectPrefix = ""
 var modelPackageName = "${projectName}.${modelName}"
 
 /**
- * (Optional) The project-relative genmodel file; default: "model/${projectPrefix}CST.genmodel".
+ * (Optional) The super package for generated model interfaces; default: "${superProjectName}.${superModelName}".
  */
-var genModelFile = "model/${projectPrefix}CST.genmodel"
+var superModelPackageName = "${superProjectName}.${superModelName}"
+
+/**
+ * (Optional) The project-relative genmodel file; default: "model/${projectPrefix}.genmodel".
+ */
+var genModelFile = "model/${projectPrefix}.genmodel"
 
 /**
  * (Optional) The Java source folder for generated packages; default: "emf-gen".
@@ -65,27 +75,27 @@ var javaFolder = "emf-gen"
 /**
  * (Optional) The package of the visitor; default: "${projectName}.util".
  */
-var visitorPackageName = "${projectName}.util"
+var visitorPackageName = "${modelPackageName}.util"
 
 /**
  * (Optional) The class of the visitor; default: "${projectPrefix}CSVisitor".
  */
-var visitorClassName = "${projectPrefix}CSVisitor"
+var visitorClassName = "${projectPrefix}Visitor"
 
 /**
  * (Optional) The package of the inherited visitor; default: "${superProjectName}.util". "" for a base visitor.
  */
-var superVisitorPackageName = "${superProjectName}.util"
+var superVisitorPackageName = "${superModelPackageName}.util"
 
 /**
  * (Optional) The class of the inherited visitor; default: "${superProjectPrefix}CSVisitor". "" for a base visitor.
  */
-var superVisitorClassName = "${superProjectPrefix}CSVisitor"
+var superVisitorClassName = "${superProjectPrefix}Visitor"
 
 /**
- * (Optional) The package of the visitable interface class; default: "org.eclipse.ocl.examples.xtext.base.util"
+ * (Optional) The package of the visitable interface class; default: "org.eclipse.ocl.examples.xtext.base.basecs.util"
  */
-var visitablePackageName = "org.eclipse.ocl.examples.xtext.base.util"
+var visitablePackageName = "org.eclipse.ocl.examples.xtext.base.basecs.util"
 
 /**
  * (Optional) The name of the visitable interface class; default: "VisitableCS"

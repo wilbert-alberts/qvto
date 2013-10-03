@@ -2,7 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypedRefCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TypedRefCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '

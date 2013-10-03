@@ -31,8 +31,8 @@ public class InternalImperativeOCLParser extends AbstractInternalContentAssistPa
     public static final int T__69=69;
     public static final int T__66=66;
     public static final int T__67=67;
-    public static final int T__29=29;
     public static final int T__64=64;
+    public static final int T__29=29;
     public static final int T__65=65;
     public static final int T__28=28;
     public static final int T__27=27;

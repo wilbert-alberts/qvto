@@ -2,7 +2,7 @@
  */
 package org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs;
 
-import org.eclipse.ocl.examples.xtext.essentialocl.essentialOCLCST.ExpCS;
+import org.eclipse.ocl.examples.xtext.essentialocl.essentialoclcs.ExpCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '

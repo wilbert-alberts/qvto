@@ -7,7 +7,7 @@
  * Do not edit it.
  */
 
-package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.cs2as;
+package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
 
 import java.util.Iterator;
 import java.util.List;
@@ -37,14 +37,13 @@ import org.eclipse.ocl.examples.pivot.Parameter;
 import org.eclipse.ocl.examples.pivot.PivotFactory;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
 import org.eclipse.ocl.examples.pivot.Property;
-import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.pivot.Type;
-import org.eclipse.ocl.examples.xtext.base.baseCST.BaseCSTPackage;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ClassifierCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.OperationCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.PackageCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ParameterCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.StructuralFeatureCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.BaseCSPackage;
+import org.eclipse.ocl.examples.xtext.base.basecs.ClassifierCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.OperationCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.PackageCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ParameterCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.StructuralFeatureCS;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2Pivot;
 import org.eclipse.ocl.examples.xtext.base.cs2as.CS2PivotConversion;
 import org.eclipse.ocl.examples.xtext.base.cs2as.Continuation;
@@ -53,7 +52,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalFactory;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
-import org.eclipse.qvto.examples.xtext.imperativeocl.imperativeoclcs.util.cs2as.ImperativeOCLCSContainmentVisitor;
+import org.eclipse.qvto.examples.xtext.imperativeocl.cs2as.NewImperativeOCLCSContainmentVisitor;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierDefCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierProperty2CS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.ClassifierPropertyCS;
@@ -114,10 +113,10 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.UnitCS;
 import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTOperationalCSVisitor;
 
 public class AutoQVTOperationalCSContainmentVisitor
-	extends ImperativeOCLCSContainmentVisitor
+	extends NewImperativeOCLCSContainmentVisitor
 	implements QVTOperationalCSVisitor<Continuation<?>>
 {
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", "baseCST", BaseCSTPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", "basecs", BaseCSPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/Pivot", "pivot", PivotPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperational", "qvtoperational", QVTOperationalPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS", "qvtoperationalcs", QVTOperationalCSPackage.eINSTANCE);
@@ -137,7 +136,6 @@ public class AutoQVTOperationalCSContainmentVisitor
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ParameterCS = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST.getClassId("ParameterCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Property = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Property", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_QVToClassCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("QVToClassCS", 0);
-    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Root = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Root", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_StructuralFeatureCS = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST.getClassId("StructuralFeatureCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_TopLevelCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("TopLevelCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_TransformationCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("TransformationCS", 0);
@@ -193,24 +191,24 @@ public class AutoQVTOperationalCSContainmentVisitor
     
     public /*@Nullable*/ Continuation<?> visitTopLevelCS(/*@NonNull*/ TopLevelCS self) {
         //
-        // Root
+        // Package
         //
-        Root result;
+        Package result;
         Element element = converter.getPivotElement(self);
-        if ((element != null) && (element.getClass() == Root.class)) {
-            result = (Root)element;
+        if ((element != null) && (element.getClass() == Package.class)) {
+            result = (Package)element;
         }
         else {
-            result = PivotFactory.eINSTANCE.createRoot();
+            result = PivotFactory.eINSTANCE.createPackage();
             assert result != null;
             converter.installPivotDefinition(self, result);
         }
         //
-        // Root::nestedPackage
+        // Package::nestedPackage
         //
         final /*@Nullable*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
         assert ownedNestedPackage != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Package);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedNestedPackage.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
@@ -226,7 +224,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainPackage ast = (DomainPackage)_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainPackage ast = (DomainPackage)_1.getPivot();
             //
             accumulator.add(ast);
         }
@@ -264,7 +262,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<StructuralFeatureCS> ownedProperty = self.getOwnedProperty();
         assert ownedProperty != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedProperty = idResolver.createOrderedSetOfAll(ORD_CLSSid_StructuralFeatureCS, ownedProperty);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedProperty = idResolver.createOrderedSetOfAll(ORD_CLSSid_StructuralFeatureCS, ownedProperty);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Property);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedProperty.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
@@ -280,7 +278,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainProperty ast = (DomainProperty)_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainProperty ast = (DomainProperty)_1.getPivot();
             //
             accumulator.add(ast);
         }
@@ -292,7 +290,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
         assert ownedOperation != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_0 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Operation);
         /*@Nullable*/ Iterator<?> ITERATOR__1_0 = BOXED_ownedOperation.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
@@ -308,7 +306,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1_0 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainOperation ast_0 = (DomainOperation)_1_0.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainOperation ast_0 = (DomainOperation)_1_0.getPivot();
             //
             accumulator_0.add(ast_0);
         }
@@ -404,7 +402,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
         assert ownedType != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Type);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedType.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
@@ -420,7 +418,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainType ast = (DomainType)_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainType ast = (DomainType)_1.getPivot();
             //
             accumulator.add(ast);
         }
@@ -462,7 +460,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<? extends Object> qualifier = self.getQualifier();
         assert qualifier != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
         /*@NonNull*/ /*@Thrown*/ Object accumulator = ValuesUtil.FALSE_VALUE;
         /*@Nullable*/ Iterator<?> ITERATOR_x = BOXED_qualifier.iterator();
         /*@Nullable*/ /*@Thrown*/ Boolean exists;
@@ -595,7 +593,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<ParameterCS> ownedParameter = self.getOwnedParameter();
         assert ownedParameter != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedParameter = idResolver.createOrderedSetOfAll(ORD_CLSSid_ParameterCS, ownedParameter);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedParameter = idResolver.createOrderedSetOfAll(ORD_CLSSid_ParameterCS, ownedParameter);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Parameter);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedParameter.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
@@ -611,7 +609,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainTypedElement ast = (DomainTypedElement)_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainTypedElement ast = (DomainTypedElement)_1.getPivot();
             //
             accumulator.add(ast);
         }
@@ -765,7 +763,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<PackageCS> ownedNestedPackage = self.getOwnedNestedPackage();
         assert ownedNestedPackage != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedNestedPackage = idResolver.createOrderedSetOfAll(ORD_CLSSid_PackageCS, ownedNestedPackage);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Package);
         /*@Nullable*/ Iterator<?> ITERATOR__1 = BOXED_ownedNestedPackage.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect;
@@ -781,7 +779,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainPackage ast = (DomainPackage)_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainPackage ast = (DomainPackage)_1.getPivot();
             //
             accumulator.add(ast);
         }
@@ -793,7 +791,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<ClassifierCS> ownedType = self.getOwnedType();
         assert ownedType != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedType = idResolver.createOrderedSetOfAll(ORD_CLSSid_ClassifierCS, ownedType);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_0 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Type);
         /*@Nullable*/ Iterator<?> ITERATOR__1_0 = BOXED_ownedType.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_0;
@@ -809,7 +807,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1_0 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainType ast_0 = (DomainType)_1_0.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainType ast_0 = (DomainType)_1_0.getPivot();
             //
             accumulator_0.add(ast_0);
         }
@@ -821,7 +819,7 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         final /*@Nullable*/ /*@Thrown*/ List<OperationCS> ownedOperation = self.getOwnedOperation();
         assert ownedOperation != null;
-        final /*@Nullable*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
+        final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_ownedOperation = idResolver.createOrderedSetOfAll(ORD_CLSSid_OperationCS, ownedOperation);
         /*@NonNull*/ /*@Thrown*/ SequenceValue.Accumulator accumulator_1 = ValuesUtil.createSequenceAccumulatorValue(SEQ_CLSSid_Operation);
         /*@Nullable*/ Iterator<?> ITERATOR__1_1 = BOXED_ownedOperation.iterator();
         /*@NonNull*/ /*@Thrown*/ SequenceValue collect_1;
@@ -837,7 +835,7 @@ public class AutoQVTOperationalCSContainmentVisitor
             if (_1_1 == null) {
                 throw new InvalidValueException("Null source for \'null\'");
             }
-            final /*@Nullable*/ /*@NonInvalid*/ DomainOperation ast_1 = (DomainOperation)_1_1.getPivot();
+            final /*@Nullable*/ /*@Thrown*/ DomainOperation ast_1 = (DomainOperation)_1_1.getPivot();
             //
             accumulator_1.add(ast_1);
         }

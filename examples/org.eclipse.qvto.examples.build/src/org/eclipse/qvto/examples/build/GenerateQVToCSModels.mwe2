@@ -32,20 +32,24 @@ var platformURI = ".."
  */
 var oclXtextBaseProjectName = "org.eclipse.ocl.examples.xtext.base"
 var oclXtextBaseProjectURI = "platform:/resource/${oclXtextBaseProjectName}"
-var oclXtextBaseEcoreProjectPath = "model/BaseCST.ecore"
+var oclXtextBaseProjectPrefix = "BaseCS"
+var oclXtextBaseModelName = "basecs"
+var oclXtextBaseEcoreProjectPath = "model/${oclXtextBaseProjectPrefix}.ecore"
 var oclXtextBaseEcoreURI = "${oclXtextBaseProjectURI}/${oclXtextBaseEcoreProjectPath}"
-var oclXtextBaseVisitorPackage = "${oclXtextBaseProjectName}.util"
-var oclXtextBaseVisitorName = "BaseCSVisitor"
+var oclXtextBaseVisitorPackage = "${oclXtextBaseProjectName}.${oclXtextBaseModelName}.util"
+var oclXtextBaseVisitorName = "${oclXtextBaseProjectPrefix}Visitor"
 var oclXtextBaseVisitorQualifiedName = "${oclXtextBaseVisitorPackage}.${oclXtextBaseVisitorName}"
 var oclXtextBaseVisitablePackage = "${oclXtextBaseVisitorPackage}"
 var oclXtextBaseVisitableName = "VisitableCS"
 
 var essentialOclXtextProjectName = "org.eclipse.ocl.examples.xtext.essentialocl"
 var essentialOclXtextProjectURI = "platform:/resource/${essentialOclXtextProjectName}"
-var essentialOclXtextEcoreProjectPath = "model/EssentialOCLCST.ecore"
+var essentialOclXtextProjectPrefix = "EssentialOCLCS"
+var essentialOclXtextModelName = "essentialoclcs"
+var essentialOclXtextEcoreProjectPath = "model/${essentialOclXtextProjectPrefix}.ecore"
 var essentialOclXtextEcoreURI = "${essentialOclXtextProjectURI}/${essentialOclXtextEcoreProjectPath}"
-var essentialOclXtextVisitorPackage = "${essentialOclXtextProjectName}.util"
-var essentialOclXtextVisitorName = "EssentialOCLCSVisitor"
+var essentialOclXtextVisitorPackage = "${essentialOclXtextProjectName}.${essentialOclXtextModelName}.util"
+var essentialOclXtextVisitorName = "${essentialOclXtextProjectPrefix}Visitor"
 var essentialOclXtextVisitorQualifiedName = "${essentialOclXtextVisitorPackage}.${essentialOclXtextVisitorName}"
 
 /*
@@ -54,8 +58,10 @@ var essentialOclXtextVisitorQualifiedName = "${essentialOclXtextVisitorPackage}.
 var imperativeOclXtextProjectName = "org.eclipse.qvto.examples.xtext.imperativeocl"
 var imperativeOclXtextProjectURI = "platform:/resource/${imperativeOclXtextProjectName}"
 var imperativeOclXtextProjectPrefix = "ImperativeOCLCS"
+var imperativeOclXtextModelName = "imperativeoclcs"
 var imperativeOclXtextSuperProjectName = "${essentialOclXtextProjectName}"
-var imperativeOclXtextSuperProjectPrefix = "EssentialOCL" 
+var imperativeOclXtextSuperProjectPrefix = "${essentialOclXtextProjectPrefix}"
+var imperativeOclXtextSuperModelName = "${essentialOclXtextModelName}"
 var imperativeOclXtextEcoreName = "${imperativeOclXtextProjectPrefix}"
 var imperativeOclXtextEcoreProjectPath = "model/${imperativeOclXtextEcoreName}.ecore"
 var imperativeOclXtextEcoreURI = "${imperativeOclXtextProjectURI}/${imperativeOclXtextEcoreProjectPath}"
@@ -68,8 +74,10 @@ var imperativeOclXtextGenModelPath = "${imperativeOclXtextProjectName}/${imperat
 var qvtOperationalXtextProjectName = "org.eclipse.qvto.examples.xtext.qvtoperational"
 var qvtOperationalXtextProjectURI = "platform:/resource/${qvtOperationalXtextProjectName}"
 var qvtOperationalXtextProjectPrefix = "QVTOperationalCS"
+var qvtOperationalXtextModelName = "qvtoperationalcs"
 var qvtOperationalXtextSuperProjectName = "${imperativeOclXtextProjectName}"
 var qvtOperationalXtextSuperProjectPrefix = "${imperativeOclXtextProjectPrefix}"
+var qvtOperationalXtextSuperModelName = "${imperativeOclXtextModelName}"
 var qvtOperationalXtextEcoreName = "${qvtOperationalXtextProjectPrefix}"
 var qvtOperationalXtextEcoreProjectPath = "model/${qvtOperationalXtextEcoreName}.ecore"
 var qvtOperationalXtextEcoreURI = "${qvtOperationalXtextProjectURI}/${qvtOperationalXtextEcoreProjectPath}"
@@ -142,28 +150,20 @@ Workflow {
     component = @qvto.SubGenerateCSModel { resourceSet = resourceSet
     	projectName = imperativeOclXtextProjectName
     	projectPrefix = imperativeOclXtextProjectPrefix
-    	modelName = imperativeOclXtextEcoreName
-    	genModelFile = imperativeOclXtextGenModelProjectPath
+    	modelName = imperativeOclXtextModelName
     	superProjectName = imperativeOclXtextSuperProjectName
     	superProjectPrefix = imperativeOclXtextSuperProjectPrefix
-    	modelPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs"
-    	visitorPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
-    	visitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"
+    	superModelName = imperativeOclXtextSuperModelName
 //    	asGenModelURI = "platform:/resource/org.eclipse.qvto.examples.pivot.imperaticeocl/model/ImperativeOCL.genmodel"
     }
     
     component = @qvto.SubGenerateCSModel { resourceSet = resourceSet
     	projectName = qvtOperationalXtextProjectName
     	projectPrefix = qvtOperationalXtextProjectPrefix
-    	modelName = qvtOperationalXtextEcoreName
-    	genModelFile = qvtOperationalXtextGenModelProjectPath
+    	modelName = qvtOperationalXtextModelName
     	superProjectName = qvtOperationalXtextSuperProjectName
     	superProjectPrefix = qvtOperationalXtextSuperProjectPrefix
-		modelPackageName = "${qvtOperationalXtextProjectName}.qvtoperationalcs"
-    	visitorPackageName = "${qvtOperationalXtextProjectName}.qvtoperationalcs.util"
-    	visitorClassName = "${qvtOperationalXtextProjectPrefix}Visitor"
-    	superVisitorPackageName = "${imperativeOclXtextProjectName}.imperativeoclcs.util"
-    	superVisitorClassName = "${imperativeOclXtextProjectPrefix}Visitor"  
+		superModelName = qvtOperationalXtextSuperModelName
 //    	asGenModelURI = "platform:/resource/org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel"
     }
     

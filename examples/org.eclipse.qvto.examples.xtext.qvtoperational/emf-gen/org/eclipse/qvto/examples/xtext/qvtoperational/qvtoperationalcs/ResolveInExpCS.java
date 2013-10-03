@@ -2,7 +2,8 @@
  */
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
-import org.eclipse.ocl.examples.xtext.base.baseCST.TypeCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.TypeCS;
+
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '

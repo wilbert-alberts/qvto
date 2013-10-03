@@ -3,8 +3,7 @@
 package org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementCS;
-import org.eclipse.ocl.examples.xtext.base.baseCST.ElementRefCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.ElementRefCS;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '

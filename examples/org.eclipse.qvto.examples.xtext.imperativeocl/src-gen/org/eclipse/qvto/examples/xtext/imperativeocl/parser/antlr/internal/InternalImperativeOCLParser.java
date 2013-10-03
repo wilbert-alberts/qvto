@@ -30,8 +30,8 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
     public static final int T__69=69;
     public static final int T__66=66;
     public static final int T__67=67;
-    public static final int T__29=29;
     public static final int T__64=64;
+    public static final int T__29=29;
     public static final int T__65=65;
     public static final int T__28=28;
     public static final int T__27=27;
@@ -15001,7 +15001,7 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
     static final String DFA53_acceptS =
         "\21\uffff\1\2\1\1";
     static final String DFA53_specialS =
-        "\1\uffff\1\16\1\6\1\10\1\15\1\3\1\1\1\14\1\12\1\4\1\17\1\2\1\5"+
+        "\1\uffff\1\16\1\6\1\10\1\15\1\3\1\1\1\14\1\12\1\5\1\17\1\2\1\4"+
         "\1\11\1\13\1\0\1\7\2\uffff}>";
     static final String[] DFA53_transitionS = {
             "\1\21\1\uffff\1\21\1\uffff\1\21\3\uffff\1\21\1\11\1\uffff\1"+
@@ -15125,21 +15125,6 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA53_9 = input.LA(1);
-
-                         
-                        int index53_9 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred94_InternalImperativeOCL()) ) {s = 18;}
-
-                        else if ( (true) ) {s = 17;}
-
-                         
-                        input.seek(index53_9);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 5 : 
                         int LA53_12 = input.LA(1);
 
                          
@@ -15152,6 +15137,21 @@ public class InternalImperativeOCLParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index53_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA53_9 = input.LA(1);
+
+                         
+                        int index53_9 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred94_InternalImperativeOCL()) ) {s = 18;}
+
+                        else if ( (true) ) {s = 17;}
+
+                         
+                        input.seek(index53_9);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
