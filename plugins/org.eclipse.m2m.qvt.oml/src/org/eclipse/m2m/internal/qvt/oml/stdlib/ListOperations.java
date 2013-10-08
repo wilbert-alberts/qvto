@@ -19,6 +19,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.util.CollectionUtil;
 
 
 public class ListOperations extends AbstractContextualOperations {
@@ -28,6 +29,11 @@ public class ListOperations extends AbstractContextualOperations {
 	public static final String PREPEND_NAME = "prepend"; //$NON-NLS-1$
 	public static final String INSERT_AT_NAME = "insertAt"; //$NON-NLS-1$	
 	public static final String JOINFIELDS_NAME = "joinfields"; //$NON-NLS-1$	
+	public static final String AS_SET_NAME = "asSet"; //$NON-NLS-1$	
+	public static final String AS_ORDERED_SET_NAME = "asOrderedSet"; //$NON-NLS-1$
+	public static final String AS_SEQUENCE_NAME = "asSequence"; //$NON-NLS-1$
+	public static final String AS_BAG_NAME = "asBag"; //$NON-NLS-1$
+	public static final String FLATTEN_NAME = "flatten"; //$NON-NLS-1$
 	
 	static CallHandler ADD = new CallHandlerMutator() {
 		@SuppressWarnings("unchecked")
@@ -79,6 +85,46 @@ public class ListOperations extends AbstractContextualOperations {
 		}
 	};
 	
+	static CallHandler AS_SET = new CallHandler() {
+		@SuppressWarnings("unchecked")
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			MutableList<Object> list = (MutableList<Object>) source;
+			return CollectionUtil.createNewSet(list);
+		}
+	};
+	
+	static CallHandler AS_ORDERED_SET = new CallHandler() {
+		@SuppressWarnings("unchecked")
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			MutableList<Object> list = (MutableList<Object>) source;
+			return CollectionUtil.createNewOrderedSet(list);
+		}
+	};
+	
+	static CallHandler AS_SEQUENCE = new CallHandler() {
+		@SuppressWarnings("unchecked")
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			MutableList<Object> list = (MutableList<Object>) source;
+			return CollectionUtil.createNewSequence(list);
+		}
+	};
+	
+	static CallHandler AS_BAG = new CallHandler() {
+		@SuppressWarnings("unchecked")
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			MutableList<Object> list = (MutableList<Object>) source;
+			return CollectionUtil.createNewBag(list);
+		}
+	};
+	
+	static CallHandler FLATTEN = new CallHandler() {
+		@SuppressWarnings("unchecked")
+		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+			MutableList<Object> list = (MutableList<Object>) source;
+			return CollectionUtil.flatten(list);
+		}
+	};
+	
 
 	public ListOperations(AbstractQVTStdlib library) {
 		super(library, library.getList());
@@ -94,8 +140,12 @@ public class ListOperations extends AbstractContextualOperations {
 			new OperationProvider(INSERT_AT, INSERT_AT_NAME, new String[] { "object", "pos"}, oclStdlib.getOclVoid(), //$NON-NLS-1$ //$NON-NLS-2$ 
 					oclStdlib.getT(), oclStdlib.getInteger()),
 			new OperationProvider(JOINFIELDS, JOINFIELDS_NAME, new String[] { "sep", "begin", "end" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$  
-					oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString())			
-			
+					oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString(), oclStdlib.getString()),			
+			new OperationProvider(AS_SET, AS_SET_NAME, new String[] {}, oclStdlib.getSet()),
+			new OperationProvider(AS_ORDERED_SET, AS_ORDERED_SET_NAME, new String[] {}, oclStdlib.getOrderedSet()),
+			new OperationProvider(AS_SEQUENCE, AS_SEQUENCE_NAME, new String[] {}, oclStdlib.getSequence()),
+			new OperationProvider(AS_BAG, AS_BAG_NAME, new String[] {}, oclStdlib.getBag()),
+			new OperationProvider(FLATTEN, FLATTEN_NAME, new String[] {}, oclStdlib.getSequence()),
 		};
 	}	
 }

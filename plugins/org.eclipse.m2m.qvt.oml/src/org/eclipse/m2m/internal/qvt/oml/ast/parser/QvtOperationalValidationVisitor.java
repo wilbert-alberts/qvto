@@ -1121,7 +1121,10 @@ final class CustomOclValidationVisitor extends
 		switch (opcode) {
 		case PredefinedType.SELECT:
 		case PredefinedType.REJECT:
-			if (!TypeUtil.exactTypeMatch(env, type, source.getType())) {
+			if (source.getType() instanceof ListType && type instanceof SequenceType<?, ?>) {
+				// OK
+			}
+			else if (!TypeUtil.exactTypeMatch(env, type, source.getType())) {
 				QvtOperationalUtil.reportError(myEnv,
 						NLS.bind(ValidationMessages.QvtOperationalVisitorCS_TypeConformanceSelectReject_ERROR_, new Object[] { }),
 						ie.getStartPosition(), ie.getEndPosition());

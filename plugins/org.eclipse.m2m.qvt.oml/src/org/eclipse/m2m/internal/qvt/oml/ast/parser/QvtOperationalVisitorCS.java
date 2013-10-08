@@ -222,12 +222,10 @@ import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.parser.AbstractOCLAnalyzer;
 import org.eclipse.ocl.parser.OCLLexer;
 import org.eclipse.ocl.parser.OCLParser;
-import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
-import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
@@ -1261,6 +1259,56 @@ public class QvtOperationalVisitorCS
 		return result;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	protected IteratorExp<EClassifier, EParameter> iteratorExpCS(
+			IteratorExpCS iteratorExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		IteratorExp<EClassifier, EParameter> iterExp = super.iteratorExpCS(iteratorExpCS, env);
+		if (iterExp == null) {
+			return iterExp;
+		}
+		OCLExpression<EClassifier> source = iterExp.getSource();
+		if (source == null || false == source.getType() instanceof ListType) {
+			return iterExp;
+		}
+		if (false == iterExp.getType() instanceof CollectionType<?, ?>) {
+			return iterExp;
+		}
+		
+		String name = iterExp.getName();
+		EClassifier elementType = ((CollectionType<EClassifier, EOperation>) iterExp.getType()).getElementType();
+		
+		if ("select".equals(name) || "reject".equals(name)) {//$NON-NLS-2$//$NON-NLS-1$
+			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
+		} else if ("collect".equals(name)) {//$NON-NLS-1$
+			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
+		} else if ("collectNested".equals(name)) {//$NON-NLS-1$
+			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
+		} else if ("sortedBy".equals(name)) {//$NON-NLS-1$
+			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
+		} else if ("closure".equals(name)) {//$NON-NLS-1$
+			iterExp.setType(resolveCollectionType(env, CollectionKind.ORDERED_SET_LITERAL, elementType));
+		}
+		
+		return iterExp;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	protected IteratorExp<EClassifier, EParameter> createImplicitCollect(
+			OCLExpression<EClassifier> source,
+			FeatureCallExp<EClassifier> propertyCall,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			CSTNode cstNode) {
+		IteratorExp<EClassifier, EParameter> implicitCollect = super.createImplicitCollect(source, propertyCall, env, cstNode);
+		if (source.getType() instanceof ListType) {
+			EClassifier elementType = ((CollectionType<EClassifier, EOperation>) implicitCollect.getType()).getElementType();
+			implicitCollect.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
+		}		
+		return implicitCollect;
+	}
+    
     /**
      * Creates an implicit <code>xcollect</code> iterator expression for a
      * property call on a collection-type source expression.
@@ -1272,12 +1320,11 @@ public class QvtOperationalVisitorCS
      * @return the xcollect expression
      * @throws TerminateException 
      */
-    protected ImperativeIterateExp createImplicitXCollect(OCLExpression<EClassifier> source,
-            FeatureCallExp<EClassifier> propertyCall,
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature,
-			EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint,
-			EClass, EObject> env,
-            CSTNode cstNode) {
+	protected ImperativeIterateExp createImplicitXCollect(
+			OCLExpression<EClassifier> source,
+			FeatureCallExp<EClassifier> propertyCall,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			CSTNode cstNode) {
         
         @SuppressWarnings("unchecked")
         EClassifier sourceElementType = ((CollectionType<EClassifier, EOperation>) source.getType())
@@ -1313,8 +1360,9 @@ public class QvtOperationalVisitorCS
         
         EClassifier bodyType = propertyCall.getType();
         
-        if (source.getType() instanceof SequenceType<?, ?> ||
-                source.getType() instanceof OrderedSetType<?, ?>) {
+		if (source.getType() instanceof SequenceType<?, ?>
+				|| source.getType() instanceof OrderedSetType<?, ?>
+				|| source.getType() instanceof ListType) {
             EClassifier c = resolveCollectionType(
                     env,
                     CollectionKind.SEQUENCE_LITERAL,
@@ -1942,7 +1990,7 @@ public class QvtOperationalVisitorCS
 		}
 		
 		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module);
-
+		
 		env.setContextModule(module); // update model's parameters registration
 	}
 
@@ -4693,12 +4741,15 @@ public class QvtOperationalVisitorCS
         if (name.equals("selectOne") || name.equals("collectOne") || name.equals("collectselectOne")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             astNode.setType(resultElementType);        
         } else if (name.equals("xselect")) { //$NON-NLS-1$
-            EClassifier resultCollectionType = resolveCollectionType(env, sourceCollectionType.getKind(), resultElementType);
+            EClassifier resultCollectionType = resolveCollectionType(env,
+            		sourceCollectionType instanceof ListType ? CollectionKind.SEQUENCE_LITERAL : sourceCollectionType.getKind(), resultElementType);
             astNode.setType(resultCollectionType);        
         } else { // xcollect and collectselect
-            EClassifier resultCollectionType = ((sourceCollectionType instanceof SetType<?, ?>) || (sourceCollectionType instanceof BagType<?, ?>)) ?
-            		resolveCollectionType(env, CollectionKind.BAG_LITERAL, resultElementType)
-                    : resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, resultElementType);
+			boolean isSequenceType = (sourceCollectionType instanceof SequenceType<?, ?> 
+					|| sourceCollectionType instanceof OrderedSetType<?, ?>
+					|| sourceCollectionType instanceof ListType);
+			EClassifier resultCollectionType = isSequenceType ? resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, resultElementType)
+					: resolveCollectionType(env, CollectionKind.BAG_LITERAL, resultElementType);
             astNode.setType(resultCollectionType);        
         }
 
@@ -5367,4 +5418,3 @@ public class QvtOperationalVisitorCS
 		return null;
 	}
 }
-	
