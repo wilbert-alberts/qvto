@@ -1,4 +1,4 @@
-package org.eclipse.qvto.examples.build.utlities;
+package org.eclipse.qvto.examples.build.utilities;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.jdt.annotation.Nullable;
