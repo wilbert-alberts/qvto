@@ -336,6 +336,7 @@ public class TransformTests {
         		new FilesToFilesData("bug417779", Arrays.asList("in.ecore", "in2.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("bug418512", Collections.singletonList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
         		new FilesToFilesData("bug415209", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug415315", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		};
     }
 
