@@ -17,11 +17,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.m2m.qvt.oml.ExecutionStackTraceElement;
+import org.eclipse.ocl.EvaluationHaltedException;
 
 /**
 * Represents a runtime (unchecked) exception possibly thrown during QVT code execution.
 */
-public class QvtRuntimeException extends RuntimeException {
+public class QvtRuntimeException extends EvaluationHaltedException {
 
 	private static final long serialVersionUID = -8903219155434276631L;
 	
@@ -29,15 +30,15 @@ public class QvtRuntimeException extends RuntimeException {
 	
 	
 	public QvtRuntimeException() {
-		super();
+		this(null,null);
 	}	
 	
 	public QvtRuntimeException(String message) {
-		super(message);
+		this(message,null);
 	}
 		
 	public QvtRuntimeException(Throwable cause) {
-		super(cause);
+		this(null,cause);
 	}
 
 	public QvtRuntimeException(String message, Throwable cause) {

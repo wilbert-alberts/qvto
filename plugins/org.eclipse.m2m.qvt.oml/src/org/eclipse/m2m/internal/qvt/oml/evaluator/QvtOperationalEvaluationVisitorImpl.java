@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315
  *     Alex Paperno - bugs 294127, 416584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -194,8 +194,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
 		Dictionary<Object, Object> result = new DictionaryImpl<Object, Object>();
 		for (DictLiteralPart part : dictLiteralExp.getPart()) {
-			Object key = part.getKey().accept(getVisitor());
-			Object value = part.getValue().accept(getVisitor());
+			Object key = visitExpression(part.getKey());
+			Object value = visitExpression(part.getValue());
 			if(key != getInvalid() && value != getInvalid())
 			result.put(key, value);
 		}
@@ -308,28 +308,22 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		// get condition
 		OCLExpression<EClassifier> condition = ie.getCondition();
 
-		// evaluate condition`
-		Object condRawVal = condition.accept(getVisitor());
-		Boolean condVal = (condRawVal != getInvalid()) ? (Boolean) condRawVal : Boolean.FALSE;
-
-		if (condVal != null && condVal.booleanValue()) {
-            return ie.getThenExpression().accept(getVisitor());
+		// evaluate condition
+		Object condVal = visitExpression(condition);		
+		if (isUndefined(condVal)) {
+			return getInvalid();
+		}
+		
+		Boolean condValBool = (Boolean) condVal;
+		if (condValBool.booleanValue()) {
+			return visitExpression(ie.getThenExpression());
         }
 		if (ie.getElseExpression() != null) {
-			return ie.getElseExpression().accept(getVisitor());
+			return visitExpression(ie.getElseExpression());
 		}
 		return null;
 	}
 
-	@Override
-	public Object visitExpression(OCLExpression<EClassifier> expression) {
-		// Override the super implementation as we need our supported exception to be propagated
-		// but super type catches it
-		// TODO - needs to be secured in a general contract from MDT OCL as any place at OCL might
-		// decide to perform the catch
-		return expression.accept(getVisitor());
-	}
-    
     @SuppressWarnings("unchecked")
 	public Object visitAssignExp(final AssignExp assignExp) {
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
@@ -352,7 +346,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 
         Object exprValue = null;
         for (OCLExpression<EClassifier> exp : assignExp.getValue()) {
-            exprValue = exp.accept(getVisitor());
+        	exprValue = visitExpression(exp);
         }
 
         if(isDeferred) {
@@ -433,7 +427,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             @SuppressWarnings("unchecked")
             PropertyCallExp<EClassifier, EParameter> propertyCallExp = (PropertyCallExp<EClassifier, EParameter>) lValue;
             OCLExpression<EClassifier> sourceExp = propertyCallExp.getSource();
-            Object owner = sourceExp.accept(getVisitor());
+            Object owner = visitExpression(sourceExp);
                         
             // obtain correct owner for features of modules, which are possibly defined in an extended module that is not an explicit supertype (fixed by bug 302594/310991)
             if (owner instanceof ModuleInstance) {
@@ -524,7 +518,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     public Object visitLocalProperty(EStructuralFeature property) {
     	OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(property);
     	if(initExp != null) {
-    		return initExp.accept(getVisitor());
+    		return visitExpression(initExp);
     	}
     	
     	return null;
@@ -532,7 +526,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
 	public Object visitContextualProperty(ContextualProperty contextualProperty) {
 		if(contextualProperty.getInitExpression() != null) {
-			return contextualProperty.getInitExpression().accept(getVisitor());
+			return visitExpression(contextualProperty.getInitExpression());
 		}
 		return null;
 	}
@@ -542,7 +536,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     		return true;
     	}
     	for (OCLExpression<EClassifier> nextCond : mappingOperation.getWhen()) {
-    		if(!Boolean.TRUE.equals(nextCond.accept(getVisitor()))) {
+    		if(!Boolean.TRUE.equals(visitExpression(nextCond))) {
     			return false;
     		}
 		}
@@ -575,7 +569,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		setupInitialResultVariables(mappingBody);
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
-            initExp.accept(getVisitor());
+        	visitExpression(initExp);
         }
                 
         if(!mappingBody.getInitSection().isEmpty()) {
@@ -604,7 +598,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
         // TODO investigate possibility to modify result
         for (OCLExpression<EClassifier> endExp : mappingBody.getEndSection()) {
-            endExp.accept(getVisitor());
+        	visitExpression(endExp);
         }
         
 		// call merged mappings
@@ -648,7 +642,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 
         boolean isImperative = QvtOperationalUtil.isImperativeOperation(referredOperation);
 		if (isImperative && !CallHandler.Access.hasHandler(referredOperation)) {
-            Object source = operationCallExp.getSource().accept(getVisitor());
+			Object source = visitExpression(operationCallExp.getSource());
             List<Object> args = makeArgs(operationCallExp);
             // does not make sense continue at all, call on null or invalid results in invalid 
         	if(isUndefined(source)) {
@@ -691,9 +685,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	throw e;
 		}
         catch (RuntimeException ex) {
-        	if(canBePropagated(ex)) {
-        		throw ex;
-        	}
             //Logger.getLogger().log(Logger.WARNING, "QvtEvaluator: failed to evaluate oclOperationCall", ex);//$NON-NLS-1$
         	result = getInvalid();
         }
@@ -842,7 +833,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			List<ModelInstance> actualArguments = new ArrayList<ModelInstance>(formalArguments.size());
 	
 			for (OCLExpression<EClassifier> nextArg : formalArguments) {
-				Object argVal = nextArg.accept(getVisitor());
+				Object argVal = visitExpression(nextArg);	
 				if(argVal instanceof ModelInstance == false) {
 					throwQVTException(new QvtRuntimeException(EvaluationMessages.QvtOperationalEvaluationVisitorImpl_UndefModelParamInTransf));
 				}
@@ -896,7 +887,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				List<Object> actualArguments = new ArrayList<Object>(formalArguments.size());
 		
 				for (OCLExpression<EClassifier> nextArg : formalArguments) {
-					Object argVal = nextArg.accept(getVisitor());
+					Object argVal = visitExpression(nextArg);	
 					actualArguments.add(argVal); 
 				}
 
@@ -999,7 +990,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	if(objectExp.getBody() != null) {
     		EList<org.eclipse.ocl.ecore.OCLExpression> contents = objectExp.getBody().getContent();        
 	        for (OCLExpression<EClassifier> exp : contents) {
-	            exp.accept(getVisitor());
+	        	visitExpression(exp);    	
 	        }
     	}
     	
@@ -1017,7 +1008,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	Object value = null;
     	OCLExpression<EClassifier> valueExp = returnExp.getValue();
     	if(valueExp != null) {
-    		value = valueExp.accept(getVisitor());    		
+    		value = visitExpression(valueExp);
     	}
     	
 		OperationBody body = QvtOperationalParserUtil.findParentElement(returnExp, OperationBody.class);
@@ -1037,7 +1028,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     public Object visitOperationBody(OperationBody operationBody) {
         Object result = null;
         for (OCLExpression<EClassifier> exp : operationBody.getContent()) {
-            result = exp.accept(getVisitor());
+        	result = visitExpression(exp);
         }
         
         ImperativeOperation operation = operationBody.getOperation();
@@ -1056,7 +1047,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         OCLExpression<EClassifier> initExpression = referredVariable.getInitExpression();
         Object value = null;
 		if(initExpression != null) {
-			value = initExpression.accept(getVisitor());
+			value = visitExpression(initExpression);
 			// check that collection is initialized to empty collection in case of 'null' 
 			if(value == null && referredVariable.getType() instanceof CollectionType<?, ?>) {
 				value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
@@ -1085,7 +1076,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         		scopeVars.add(varInitExp.getName());
         	}
         	
-            exp.accept(getVisitor());
+        	visitExpression(exp);
         }
         
         if(scopeVars != null) {
@@ -1103,21 +1094,21 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         Object initExpressionValue = null;
         OCLExpression<EClassifier> initExpression = returnedElement.getInitExpression();
         if (initExpression != null) {
-            initExpressionValue = initExpression.accept(getVisitor());
+        	initExpressionValue = visitExpression(initExpression);
         }
         replaceInEnv(returnedElement.getName(), initExpressionValue, returnedElement.getType());
         
-        computeExp.getBody().accept(getVisitor());
+        visitExpression(computeExp.getBody());
 
         return getEvaluationEnvironment().remove(returnedElement.getName());
     }
 
     public Object visitWhileExp(WhileExp whileExp) {
         while (true) {
-            Object condition = whileExp.getCondition().accept(getVisitor());
-            if (Boolean.TRUE.equals(condition)) {
+        	Object condition = visitExpression(whileExp.getCondition());
+        	if (Boolean.TRUE.equals(condition)) {
             	try {
-            		whileExp.getBody().accept(getVisitor());
+            		visitExpression(whileExp.getBody());
             	}
             	catch (QvtTransitionReachedException ex) {
             		if (ex.getReason() == QvtTransitionReachedException.REASON_BREAK) {
@@ -1142,16 +1133,16 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
     public Object visitAltExp(AltExp switchAltExp) {
 		SwitchAltExpResult result = new SwitchAltExpResult();
-		result.myCondition = switchAltExp.getCondition().accept(getVisitor());
+		result.myCondition = visitExpression(switchAltExp.getCondition());
 		if (Boolean.TRUE.equals(result.myCondition)) {
-			result.myResult = switchAltExp.getBody().accept(getVisitor());
+			result.myResult = visitExpression(switchAltExp.getBody());
 		}
 		return result;
     }
 
     public Object visitSwitchExp(SwitchExp switchExp) {
         for (AltExp altExp : switchExp.getAlternativePart()) {
-        	Object altResult = altExp.accept(getVisitor());
+        	Object altResult = visitExpression(altExp);	
         	if (altResult instanceof SwitchAltExpResult) {
             	if (Boolean.TRUE.equals(((SwitchAltExpResult) altResult).myCondition)) {
                     return ((SwitchAltExpResult) altResult).myResult;
@@ -1163,7 +1154,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         }
         OCLExpression<EClassifier> elsePart = switchExp.getElsePart();
         if (elsePart != null) {
-            return elsePart.accept(getVisitor());
+        	return visitExpression(elsePart);
         }
         return null;
     }
@@ -1204,7 +1195,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
 	
 	private String doVisitLogExp(LogExp logExp, Log logger, String messagePrefix) {
-		if(logExp.getCondition() != null && !Boolean.TRUE.equals(logExp.getCondition().accept(getVisitor()))) {
+		if(logExp.getCondition() != null && !Boolean.TRUE.equals(visitExpression(logExp.getCondition()))) {
 			return null;
 		}
 		InternalEvaluationEnv internalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);		
@@ -1214,11 +1205,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		Integer level = null;
 		EList<OCLExpression<EClassifier>> args = logExp.getArgument();
 		if(args.size() > 2) {
-			Object levelObj = args.get(2).accept(getVisitor());
+			Object levelObj = visitExpression(args.get(2));
 			level = NumberConversions.strictConvertNumber(levelObj, Integer.class);
 		}
 
-		Object message = args.get(0).accept(getVisitor());
+		Object message = visitExpression(args.get(0));
 		if(message == null) {
 			message = "<null>"; //$NON-NLS-1$
 		} else if(message == invalid) {
@@ -1233,7 +1224,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		Object element = null;
 		Object formatedElement = null;
 		if(args.size() > 1) {
-			element = args.get(1).accept(getVisitor());
+			element = visitExpression(args.get(1));
 			if(element == invalid) {
 				formatedElement = invalidRepr;
 			} else {
@@ -1259,7 +1250,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
 	
 	public Object visitAssertExp(AssertExp assertExp) {		
-		Object assertionValue = assertExp.getAssertion().accept(getVisitor());		
+		Object assertionValue = visitExpression(assertExp.getAssertion());
 		
 		if(!Boolean.TRUE.equals(assertionValue)) {	
 			InternalEvaluationEnv internEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
@@ -1308,7 +1299,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     public Object visitForExp(ForExp forExp) {
-        Object sourceValue = forExp.getSource().accept(getVisitor());
+    	Object sourceValue = visitExpression(forExp.getSource());
         
         if (!isUndefined(sourceValue)) {
             // generate a name for the result variable and add it to the environment
@@ -1339,7 +1330,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         EClassifier sourceType = imperativeIterateExp.getSource().getType();
         
         if (sourceType instanceof PredefinedType<?>) {
-            Object sourceValue = imperativeIterateExp.getSource().accept(getVisitor());
+        	Object sourceValue = visitExpression(imperativeIterateExp.getSource());
             
             // value of iteration expression is undefined if the source is
             //   null or OclInvalid
@@ -1549,7 +1540,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	OCLExpression<EClassifier> initExp = QvtOperationalParserUtil.getInitExpression(feature);
 			Object propValue = null;
             if(initExp != null) {
-            	propValue = initExp.accept(getVisitor());                
+            	propValue = visitExpression(initExp);                
             }
             else {
             	propValue = EvaluationUtil.createInitialValue(feature.getEType(), getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
@@ -1678,10 +1669,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
        		throw e;
         }
         catch (RuntimeException e) {
-        	if(canBePropagated(e)) {
-        		throw e;
-        	} 
-        	
         	String errorMessage = EvaluationMessages.QvtOperationalEvaluationVisitorImpl_unexpectedRuntimeExc;
 			QvtPlugin.error(errorMessage, e);
 			
@@ -1764,18 +1751,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	
     }
     
-
-    /**
-     * Subclasses may indicate whether the given runtime exception caught is known and 
-     * should be propagated. 
-     */
-    protected boolean canBePropagated(RuntimeException exception) {
-    	// Allow the return event to be propagated from Essential OCL expressions
-    	// The current m2m QVT concrete syntax does not allow this but in principal, 
-    	// the QVT specification does not prohibit this
-    	return exception instanceof ReturnExpEvent;
-    }
-    
     protected final void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException {
 		getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class)
 				.throwQVTException(exception);
@@ -1834,7 +1809,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					// CollectionItem part
 					CollectionItem<EClassifier> item = (CollectionItem<EClassifier>) part;
 					OCLExpression<EClassifier> itemExp = item.getItem();
-					Object itemVal = itemExp.accept(getVisitor());
+					Object itemVal = visitExpression(itemExp);
 					if (itemVal != null) {
 						// add it to the result set
 						result.add(itemVal);
@@ -1846,8 +1821,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					OCLExpression<EClassifier> last = range.getLast();
 
 					// evaluate first value
-					Integer firstVal = (Integer) first.accept(getVisitor());
-					Integer lastVal = (Integer) last.accept(getVisitor());
+					Integer firstVal = (Integer) visitExpression(first);
+					Integer lastVal = (Integer) visitExpression(last);
 					if (!((firstVal == null) || (lastVal == null))) {
 						// TODO: enhance IntegerRangeList to support multiple ranges
 						// add values between first and last inclusive
@@ -2047,7 +2022,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {
         List<Object> argValues = new ArrayList<Object>();
         for (OCLExpression<EClassifier> arg : operationCallExp.getArgument()) {
-            Object value = arg.accept(getVisitor());
+        	Object value = visitExpression(arg);
             argValues.add(value);
         }
 
@@ -2264,7 +2239,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	 * Though, if the last statement in a body is return expression, no exception is thrown, we
 	 * should try to avoid this cost to be paid in general
 	 */
-	private static class ReturnExpEvent extends RuntimeException {
+	private static class ReturnExpEvent extends QvtRuntimeException {
 		private static final long serialVersionUID = 2971434369853642555L;		
 		private final OperationCallResult fResult;
 		
