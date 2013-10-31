@@ -23,14 +23,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.IVirtualOperationTable;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.VirtualTable;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.VirtualTableAdapter;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Constructor;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.ocl.ecore.OperationCallExp;
+import org.eclipse.ocl.ecore.Variable;
 
 /**
  * This helper class solves the problem of serialization/deserialization of 
@@ -47,6 +50,7 @@ public class ExecutableXMIHelper {
 	private static final String STATIC_SOURCE = SOURCE_URI_BASE + "/static"; //$NON-NLS-1$
 	private static final String OPERATION_CALL_SOURCE = SOURCE_URI_BASE + "/opCall"; //$NON-NLS-1$
 	private static final String OPERATION_CALL_DETAILS_OPCODE = "opCode"; //$NON-NLS-1$
+	private static final String CATCH_VAR_SOURCE = SOURCE_URI_BASE + "/catchVar"; //$NON-NLS-1$
 
 	public static void fixResourceOnLoad(Resource resource) {
 		TreeIterator<EObject> it = resource.getAllContents();
@@ -68,6 +72,8 @@ public class ExecutableXMIHelper {
 				loadStaticFeatureFromAnnotation((EStructuralFeature) nextObj);
 			} else if(nextObj instanceof OperationCallExp) {
 				loadOperationCallDetails((OperationCallExp) nextObj);
+			} else if(nextObj instanceof CatchExp) {
+				loadCatchDetails((CatchExp) nextObj);
 			}
 		}
 	}
@@ -84,6 +90,8 @@ public class ExecutableXMIHelper {
 				saveStaticFeature((EStructuralFeature) nextObj);
 			} else if(nextObj instanceof OperationCallExp) {
 				saveOperationCallDetails((OperationCallExp) nextObj);
+			} else if(nextObj instanceof CatchExp) {
+				saveCatchDetails((CatchExp) nextObj);
 			}
 		}
 	}	
@@ -175,6 +183,30 @@ public class ExecutableXMIHelper {
 		}
 		catch (NumberFormatException e) {
 		}
+	}
+
+	private static void saveCatchDetails(CatchExp catchExp) {
+		Variable catchVar = ASTBindingHelper.getCatchVariable(catchExp);
+		if (catchVar == null) {
+			return;
+		}
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(CATCH_VAR_SOURCE);
+		annotation.getContents().add(ASTBindingHelper.getCatchVariable(catchExp));
+		catchExp.getEAnnotations().add(annotation);
+	}
+
+	private static void loadCatchDetails(CatchExp catchExp) {
+		EAnnotation annotation = catchExp.getEAnnotation(CATCH_VAR_SOURCE);
+		if (annotation == null) {
+			return;
+		}
+		if (annotation.getContents().isEmpty() || false == annotation.getContents().get(0) instanceof Variable) {
+			return;
+		}
+		Variable catchVar = (Variable) annotation.getContents().get(0);
+		annotation.getContents().clear();
+		ASTBindingHelper.setCatchVariable(catchExp, catchVar);
 	}
 
 }

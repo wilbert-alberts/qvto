@@ -39,10 +39,12 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolverFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtInterruptedExecutionException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackOverFlowError;
@@ -56,6 +58,7 @@ import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -177,6 +180,9 @@ public class InternalTransformationExecutor {
 			return doExecute(modelParameters,
 					createInternalContext(executionContext));
 		} catch (QvtRuntimeException e) {
+			Log logger = executionContext.getLog();
+			logger.log(EvaluationMessages.TerminatingExecution);
+
 			return createExecutionFailure(e);
 		}
 	}
@@ -371,6 +377,8 @@ public class InternalTransformationExecutor {
 
 		if (qvtRuntimeException instanceof QvtAssertionFailed) {
 			code = ExecutionDiagnostic.FATAL_ASSERTION;
+		} else if (qvtRuntimeException instanceof QvtException) {
+			code = ExecutionDiagnostic.EXCEPTION_THROWN;
 		} else if (qvtRuntimeException instanceof QvtInterruptedExecutionException) {
 			code = ExecutionDiagnostic.USER_INTERRUPTED;
 			severity = Diagnostic.CANCEL;

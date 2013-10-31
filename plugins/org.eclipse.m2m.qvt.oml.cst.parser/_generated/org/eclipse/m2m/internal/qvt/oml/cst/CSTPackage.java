@@ -1168,6 +1168,206 @@ public interface CSTPackage extends EPackage {
 	int CLASSIFIER_PROPERTY_CS_FEATURE_COUNT = LOCAL_PROPERTY_CS_FEATURE_COUNT + 5;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.IntermediateClassDefCSImpl <em>Intermediate Class Def CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.IntermediateClassDefCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getIntermediateClassDefCS()
+	 * @generated
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS = 11;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__START_OFFSET = CLASSIFIER_DEF_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__END_OFFSET = CLASSIFIER_DEF_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__START_TOKEN = CLASSIFIER_DEF_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__END_TOKEN = CLASSIFIER_DEF_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__AST = CLASSIFIER_DEF_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__SIMPLE_NAME_CS = CLASSIFIER_DEF_CS__SIMPLE_NAME_CS;
+
+	/**
+	 * The feature id for the '<em><b>Extends</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__EXTENDS = CLASSIFIER_DEF_CS__EXTENDS;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__PROPERTIES = CLASSIFIER_DEF_CS__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS__TAGS = CLASSIFIER_DEF_CS__TAGS;
+
+	/**
+	 * The number of structural features of the '<em>Intermediate Class Def CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CLASS_DEF_CS_FEATURE_COUNT = CLASSIFIER_DEF_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ExceptionDefCSImpl <em>Exception Def CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ExceptionDefCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getExceptionDefCS()
+	 * @generated
+	 */
+	int EXCEPTION_DEF_CS = 12;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__START_OFFSET = CLASSIFIER_DEF_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__END_OFFSET = CLASSIFIER_DEF_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__START_TOKEN = CLASSIFIER_DEF_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__END_TOKEN = CLASSIFIER_DEF_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__AST = CLASSIFIER_DEF_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__SIMPLE_NAME_CS = CLASSIFIER_DEF_CS__SIMPLE_NAME_CS;
+
+	/**
+	 * The feature id for the '<em><b>Extends</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__EXTENDS = CLASSIFIER_DEF_CS__EXTENDS;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__PROPERTIES = CLASSIFIER_DEF_CS__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS__TAGS = CLASSIFIER_DEF_CS__TAGS;
+
+	/**
+	 * The number of structural features of the '<em>Exception Def CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXCEPTION_DEF_CS_FEATURE_COUNT = CLASSIFIER_DEF_CS_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OppositePropertyCSImpl <em>Opposite Property CS</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1175,7 +1375,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getOppositePropertyCS()
 	 * @generated
 	 */
-	int OPPOSITE_PROPERTY_CS = 11;
+	int OPPOSITE_PROPERTY_CS = 13;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1266,7 +1466,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMultiplicityDefCS()
 	 * @generated
 	 */
-	int MULTIPLICITY_DEF_CS = 12;
+	int MULTIPLICITY_DEF_CS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1348,7 +1548,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingDeclarationCS()
 	 * @generated
 	 */
-	int MAPPING_DECLARATION_CS = 13;
+	int MAPPING_DECLARATION_CS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1484,7 +1684,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getParameterDeclarationCS()
 	 * @generated
 	 */
-	int PARAMETER_DECLARATION_CS = 14;
+	int PARAMETER_DECLARATION_CS = 16;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1575,7 +1775,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSimpleSignatureCS()
 	 * @generated
 	 */
-	int SIMPLE_SIGNATURE_CS = 15;
+	int SIMPLE_SIGNATURE_CS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1648,7 +1848,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getCompleteSignatureCS()
 	 * @generated
 	 */
-	int COMPLETE_SIGNATURE_CS = 16;
+	int COMPLETE_SIGNATURE_CS = 18;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1730,7 +1930,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingMethodCS()
 	 * @generated
 	 */
-	int MAPPING_METHOD_CS = 17;
+	int MAPPING_METHOD_CS = 19;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1812,7 +2012,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingRuleCS()
 	 * @generated
 	 */
-	int MAPPING_RULE_CS = 18;
+	int MAPPING_RULE_CS = 20;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -1912,7 +2112,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingQueryCS()
 	 * @generated
 	 */
-	int MAPPING_QUERY_CS = 19;
+	int MAPPING_QUERY_CS = 21;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2012,7 +2212,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getConstructorCS()
 	 * @generated
 	 */
-	int CONSTRUCTOR_CS = 20;
+	int CONSTRUCTOR_CS = 22;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2103,7 +2303,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingSectionCS()
 	 * @generated
 	 */
-	int MAPPING_SECTION_CS = 21;
+	int MAPPING_SECTION_CS = 23;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2203,7 +2403,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingInitCS()
 	 * @generated
 	 */
-	int MAPPING_INIT_CS = 22;
+	int MAPPING_INIT_CS = 24;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2303,7 +2503,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingEndCS()
 	 * @generated
 	 */
-	int MAPPING_END_CS = 23;
+	int MAPPING_END_CS = 25;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2403,7 +2603,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingSectionsCS()
 	 * @generated
 	 */
-	int MAPPING_SECTIONS_CS = 24;
+	int MAPPING_SECTIONS_CS = 26;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2494,7 +2694,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getStatementCS()
 	 * @generated
 	 */
-	int STATEMENT_CS = 25;
+	int STATEMENT_CS = 27;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2558,7 +2758,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBlockExpCS()
 	 * @generated
 	 */
-	int BLOCK_EXP_CS = 26;
+	int BLOCK_EXP_CS = 28;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2631,7 +2831,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getComputeExpCS()
 	 * @generated
 	 */
-	int COMPUTE_EXP_CS = 27;
+	int COMPUTE_EXP_CS = 29;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2713,7 +2913,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getWhileExpCS()
 	 * @generated
 	 */
-	int WHILE_EXP_CS = 28;
+	int WHILE_EXP_CS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2804,7 +3004,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeLoopExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_LOOP_EXP_CS = 29;
+	int IMPERATIVE_LOOP_EXP_CS = 31;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -2931,7 +3131,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getForExpCS()
 	 * @generated
 	 */
-	int FOR_EXP_CS = 30;
+	int FOR_EXP_CS = 32;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3058,7 +3258,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeIterateExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_ITERATE_EXP_CS = 31;
+	int IMPERATIVE_ITERATE_EXP_CS = 33;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3194,7 +3394,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchExpCS()
 	 * @generated
 	 */
-	int SWITCH_EXP_CS = 32;
+	int SWITCH_EXP_CS = 34;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3276,7 +3476,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getSwitchAltExpCS()
 	 * @generated
 	 */
-	int SWITCH_ALT_EXP_CS = 33;
+	int SWITCH_ALT_EXP_CS = 35;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3358,7 +3558,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getVariableInitializationCS()
 	 * @generated
 	 */
-	int VARIABLE_INITIALIZATION_CS = 34;
+	int VARIABLE_INITIALIZATION_CS = 36;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3458,7 +3658,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssignStatementCS()
 	 * @generated
 	 */
-	int ASSIGN_STATEMENT_CS = 35;
+	int ASSIGN_STATEMENT_CS = 37;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3549,7 +3749,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getBreakExpCS()
 	 * @generated
 	 */
-	int BREAK_EXP_CS = 36;
+	int BREAK_EXP_CS = 38;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3613,7 +3813,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getContinueExpCS()
 	 * @generated
 	 */
-	int CONTINUE_EXP_CS = 37;
+	int CONTINUE_EXP_CS = 39;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3677,7 +3877,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getExpressionStatementCS()
 	 * @generated
 	 */
-	int EXPRESSION_STATEMENT_CS = 38;
+	int EXPRESSION_STATEMENT_CS = 40;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3750,7 +3950,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingBodyCS()
 	 * @generated
 	 */
-	int MAPPING_BODY_CS = 39;
+	int MAPPING_BODY_CS = 41;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3859,7 +4059,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getInstantiationExpCS()
 	 * @generated
 	 */
-	int INSTANTIATION_EXP_CS = 59;
+	int INSTANTIATION_EXP_CS = 61;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -3941,7 +4141,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getObjectExpCS()
 	 * @generated
 	 */
-	int OBJECT_EXP_CS = 40;
+	int OBJECT_EXP_CS = 42;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4068,7 +4268,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImperativeOperationCallExpCS()
 	 * @generated
 	 */
-	int IMPERATIVE_OPERATION_CALL_EXP_CS = 42;
+	int IMPERATIVE_OPERATION_CALL_EXP_CS = 44;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4204,7 +4404,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingCallExpCS()
 	 * @generated
 	 */
-	int MAPPING_CALL_EXP_CS = 41;
+	int MAPPING_CALL_EXP_CS = 43;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4349,7 +4549,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindCS()
 	 * @generated
 	 */
-	int DIRECTION_KIND_CS = 43;
+	int DIRECTION_KIND_CS = 45;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4422,7 +4622,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getElementWithBody()
 	 * @generated
 	 */
-	int ELEMENT_WITH_BODY = 44;
+	int ELEMENT_WITH_BODY = 46;
 
 	/**
 	 * The feature id for the '<em><b>Body Start Location</b></em>' attribute.
@@ -4459,7 +4659,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveExpCS()
 	 * @generated
 	 */
-	int RESOLVE_EXP_CS = 45;
+	int RESOLVE_EXP_CS = 47;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4595,7 +4795,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveInExpCS()
 	 * @generated
 	 */
-	int RESOLVE_IN_EXP_CS = 46;
+	int RESOLVE_IN_EXP_CS = 48;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4749,7 +4949,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModelTypeCS()
 	 * @generated
 	 */
-	int MODEL_TYPE_CS = 47;
+	int MODEL_TYPE_CS = 49;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4867,7 +5067,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getPackageRefCS()
 	 * @generated
 	 */
-	int PACKAGE_REF_CS = 48;
+	int PACKAGE_REF_CS = 50;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -4949,7 +5149,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationHeaderCS()
 	 * @generated
 	 */
-	int TRANSFORMATION_HEADER_CS = 49;
+	int TRANSFORMATION_HEADER_CS = 51;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5058,7 +5258,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindCS()
 	 * @generated
 	 */
-	int MODULE_KIND_CS = 50;
+	int MODULE_KIND_CS = 52;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5131,7 +5331,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleRefCS()
 	 * @generated
 	 */
-	int MODULE_REF_CS = 51;
+	int MODULE_REF_CS = 53;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5213,7 +5413,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleUsageCS()
 	 * @generated
 	 */
-	int MODULE_USAGE_CS = 52;
+	int MODULE_USAGE_CS = 54;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5304,7 +5504,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTransformationRefineCS()
 	 * @generated
 	 */
-	int TRANSFORMATION_REFINE_CS = 53;
+	int TRANSFORMATION_REFINE_CS = 55;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5386,7 +5586,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTypeSpecCS()
 	 * @generated
 	 */
-	int TYPE_SPEC_CS = 54;
+	int TYPE_SPEC_CS = 56;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5468,7 +5668,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getLogExpCS()
 	 * @generated
 	 */
-	int LOG_EXP_CS = 55;
+	int LOG_EXP_CS = 57;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5604,7 +5804,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getAssertExpCS()
 	 * @generated
 	 */
-	int ASSERT_EXP_CS = 56;
+	int ASSERT_EXP_CS = 58;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5695,7 +5895,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getReturnExpCS()
 	 * @generated
 	 */
-	int RETURN_EXP_CS = 57;
+	int RETURN_EXP_CS = 59;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5768,7 +5968,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_CS = 58;
+	int MAPPING_EXTENSION_CS = 60;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5850,7 +6050,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getListTypeCS()
 	 * @generated
 	 */
-	int LIST_TYPE_CS = 60;
+	int LIST_TYPE_CS = 62;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5923,7 +6123,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getListLiteralExpCS()
 	 * @generated
 	 */
-	int LIST_LITERAL_EXP_CS = 61;
+	int LIST_LITERAL_EXP_CS = 63;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -5996,7 +6196,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictionaryTypeCS()
 	 * @generated
 	 */
-	int DICTIONARY_TYPE_CS = 62;
+	int DICTIONARY_TYPE_CS = 64;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6078,7 +6278,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralExpCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_EXP_CS = 63;
+	int DICT_LITERAL_EXP_CS = 65;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6151,7 +6351,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDictLiteralPartCS()
 	 * @generated
 	 */
-	int DICT_LITERAL_PART_CS = 64;
+	int DICT_LITERAL_PART_CS = 66;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6233,7 +6433,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTagCS()
 	 * @generated
 	 */
-	int TAG_CS = 65;
+	int TAG_CS = 67;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6324,7 +6524,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getUnitCS()
 	 * @generated
 	 */
-	int UNIT_CS = 66;
+	int UNIT_CS = 68;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6424,7 +6624,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getResolveOpArgsExpCS()
 	 * @generated
 	 */
-	int RESOLVE_OP_ARGS_EXP_CS = 67;
+	int RESOLVE_OP_ARGS_EXP_CS = 69;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6506,7 +6706,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getScopedNameCS()
 	 * @generated
 	 */
-	int SCOPED_NAME_CS = 68;
+	int SCOPED_NAME_CS = 70;
 
 	/**
 	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
@@ -6581,6 +6781,261 @@ public interface CSTPackage extends EPackage {
 	int SCOPED_NAME_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TryExpCSImpl <em>Try Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TryExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTryExpCS()
+	 * @generated
+	 */
+	int TRY_EXP_CS = 71;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Try Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__TRY_BODY = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Except Clauses</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS__EXCEPT_CLAUSES = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Try Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.CatchExpCSImpl <em>Catch Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CatchExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getCatchExpCS()
+	 * @generated
+	 */
+	int CATCH_EXP_CS = 72;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__START_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__END_OFFSET = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__START_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__END_TOKEN = org.eclipse.ocl.cst.CSTPackage.CST_NODE__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__BODY = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Exceptions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__EXCEPTIONS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Simple Name CS</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS__SIMPLE_NAME_CS = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Catch Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP_CS_FEATURE_COUNT = org.eclipse.ocl.cst.CSTPackage.CST_NODE_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.RaiseExpCSImpl <em>Raise Exp CS</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.RaiseExpCSImpl
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getRaiseExpCS()
+	 * @generated
+	 */
+	int RAISE_EXP_CS = 73;
+
+	/**
+	 * The feature id for the '<em><b>Start Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__START_OFFSET = STATEMENT_CS__START_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>End Offset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__END_OFFSET = STATEMENT_CS__END_OFFSET;
+
+	/**
+	 * The feature id for the '<em><b>Start Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__START_TOKEN = STATEMENT_CS__START_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>End Token</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__END_TOKEN = STATEMENT_CS__END_TOKEN;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__AST = STATEMENT_CS__AST;
+
+	/**
+	 * The feature id for the '<em><b>Exception</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__EXCEPTION = STATEMENT_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Argument</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS__ARGUMENT = STATEMENT_CS_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Raise Exp CS</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP_CS_FEATURE_COUNT = STATEMENT_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6588,7 +7043,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getDirectionKindEnum()
 	 * @generated
 	 */
-	int DIRECTION_KIND_ENUM = 69;
+	int DIRECTION_KIND_ENUM = 74;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ModuleKindEnum <em>Module Kind Enum</em>}' enum.
@@ -6598,7 +7053,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getModuleKindEnum()
 	 * @generated
 	 */
-	int MODULE_KIND_ENUM = 70;
+	int MODULE_KIND_ENUM = 75;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum <em>Import Kind Enum</em>}' enum.
@@ -6608,7 +7063,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getImportKindEnum()
 	 * @generated
 	 */
-	int IMPORT_KIND_ENUM = 71;
+	int IMPORT_KIND_ENUM = 76;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS <em>Mapping Extension Kind CS</em>}' enum.
@@ -6618,7 +7073,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getMappingExtensionKindCS()
 	 * @generated
 	 */
-	int MAPPING_EXTENSION_KIND_CS = 72;
+	int MAPPING_EXTENSION_KIND_CS = 77;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS <em>Qualifier Kind CS</em>}' enum.
@@ -6628,7 +7083,7 @@ public interface CSTPackage extends EPackage {
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getQualifierKindCS()
 	 * @generated
 	 */
-	int QUALIFIER_KIND_CS = 73;
+	int QUALIFIER_KIND_CS = 78;
 
 
 	/**
@@ -7048,6 +7503,26 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getClassifierPropertyCS_IsOrdered();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS <em>Intermediate Class Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Intermediate Class Def CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS
+	 * @generated
+	 */
+	EClass getIntermediateClassDefCS();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS <em>Exception Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Exception Def CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS
+	 * @generated
+	 */
+	EClass getExceptionDefCS();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS <em>Opposite Property CS</em>}'.
@@ -8895,6 +9370,113 @@ public interface CSTPackage extends EPackage {
 	EAttribute getScopedNameCS_Name();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS <em>Try Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Try Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS
+	 * @generated
+	 */
+	EClass getTryExpCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS#getTryBody <em>Try Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Try Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS#getTryBody()
+	 * @see #getTryExpCS()
+	 * @generated
+	 */
+	EReference getTryExpCS_TryBody();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS#getExceptClauses <em>Except Clauses</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Except Clauses</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS#getExceptClauses()
+	 * @see #getTryExpCS()
+	 * @generated
+	 */
+	EReference getTryExpCS_ExceptClauses();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS <em>Catch Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Catch Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS
+	 * @generated
+	 */
+	EClass getCatchExpCS();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getBody()
+	 * @see #getCatchExpCS()
+	 * @generated
+	 */
+	EReference getCatchExpCS_Body();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getExceptions <em>Exceptions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Exceptions</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getExceptions()
+	 * @see #getCatchExpCS()
+	 * @generated
+	 */
+	EReference getCatchExpCS_Exceptions();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getSimpleNameCS <em>Simple Name CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Simple Name CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS#getSimpleNameCS()
+	 * @see #getCatchExpCS()
+	 * @generated
+	 */
+	EReference getCatchExpCS_SimpleNameCS();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS <em>Raise Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Raise Exp CS</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS
+	 * @generated
+	 */
+	EClass getRaiseExpCS();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS#getException <em>Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Exception</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS#getException()
+	 * @see #getRaiseExpCS()
+	 * @generated
+	 */
+	EReference getRaiseExpCS_Exception();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS#getArgument <em>Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Argument</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS#getArgument()
+	 * @see #getRaiseExpCS()
+	 * @generated
+	 */
+	EReference getRaiseExpCS_Argument();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9299,6 +9881,26 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CLASSIFIER_PROPERTY_CS__IS_ORDERED = eINSTANCE.getClassifierPropertyCS_IsOrdered();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.IntermediateClassDefCSImpl <em>Intermediate Class Def CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.IntermediateClassDefCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getIntermediateClassDefCS()
+		 * @generated
+		 */
+		EClass INTERMEDIATE_CLASS_DEF_CS = eINSTANCE.getIntermediateClassDefCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ExceptionDefCSImpl <em>Exception Def CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.ExceptionDefCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getExceptionDefCS()
+		 * @generated
+		 */
+		EClass EXCEPTION_DEF_CS = eINSTANCE.getExceptionDefCS();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.OppositePropertyCSImpl <em>Opposite Property CS</em>}' class.
@@ -10799,6 +11401,92 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCOPED_NAME_CS__NAME = eINSTANCE.getScopedNameCS_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.TryExpCSImpl <em>Try Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.TryExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getTryExpCS()
+		 * @generated
+		 */
+		EClass TRY_EXP_CS = eINSTANCE.getTryExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Try Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRY_EXP_CS__TRY_BODY = eINSTANCE.getTryExpCS_TryBody();
+
+		/**
+		 * The meta object literal for the '<em><b>Except Clauses</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRY_EXP_CS__EXCEPT_CLAUSES = eINSTANCE.getTryExpCS_ExceptClauses();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.CatchExpCSImpl <em>Catch Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CatchExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getCatchExpCS()
+		 * @generated
+		 */
+		EClass CATCH_EXP_CS = eINSTANCE.getCatchExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATCH_EXP_CS__BODY = eINSTANCE.getCatchExpCS_Body();
+
+		/**
+		 * The meta object literal for the '<em><b>Exceptions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATCH_EXP_CS__EXCEPTIONS = eINSTANCE.getCatchExpCS_Exceptions();
+
+		/**
+		 * The meta object literal for the '<em><b>Simple Name CS</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATCH_EXP_CS__SIMPLE_NAME_CS = eINSTANCE.getCatchExpCS_SimpleNameCS();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.RaiseExpCSImpl <em>Raise Exp CS</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.RaiseExpCSImpl
+		 * @see org.eclipse.m2m.internal.qvt.oml.cst.impl.CSTPackageImpl#getRaiseExpCS()
+		 * @generated
+		 */
+		EClass RAISE_EXP_CS = eINSTANCE.getRaiseExpCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Exception</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAISE_EXP_CS__EXCEPTION = eINSTANCE.getRaiseExpCS_Exception();
+
+		/**
+		 * The meta object literal for the '<em><b>Argument</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAISE_EXP_CS__ARGUMENT = eINSTANCE.getRaiseExpCS_Argument();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum <em>Direction Kind Enum</em>}' enum.

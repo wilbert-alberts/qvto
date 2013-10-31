@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 410470, 416584
+ *     Alex Paperno - bugs 410470, 416584, 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
@@ -38,6 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
+import org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
@@ -45,6 +47,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
@@ -76,6 +79,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
@@ -89,6 +93,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
@@ -950,8 +955,42 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	protected CSTNode createClassifierDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<CSTNode> featureList) {
-		ClassifierDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createClassifierDefCS();
+	protected CSTNode createRaiseExpCS(TypeCS excType, OCLExpressionCS argumentCS) {
+		RaiseExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createRaiseExpCS();
+		if (excType == null) {
+			SimpleNameCS excNameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "Exception");
+			excType = createPathNameCS(excNameCS);			
+		}
+    	result.setException(excType);
+    	result.setArgument(argumentCS);
+		return result;
+	}
+	
+	protected CSTNode createTryExpCS(BlockExpCS tryBody, EList<CatchExpCS> catchExpList) {
+		TryExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTryExpCS();
+		result.setTryBody(tryBody);
+		if (catchExpList != null) {
+			result.getExceptClauses().addAll(catchExpList);
+		}
+		return result;
+	}
+	
+	protected CSTNode createCatchExpCS(IToken nameToken, EList<TypeCS> exceptionTypeList, BlockExpCS body) {
+		CatchExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createCatchExpCS();
+		result.setBody(body);
+		if (nameToken != null) {
+			SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
+			setOffsets(nameCS, nameToken);
+			result.setSimpleNameCS(nameCS);
+		}		
+		if (exceptionTypeList != null) {
+			result.getExceptions().addAll(exceptionTypeList);
+		}			
+		return result;
+	}	
+	
+	protected CSTNode createIntermediateClassDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<CSTNode> featureList) {
+		IntermediateClassDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createIntermediateClassDefCS();
 		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
 		setOffsets(nameCS, nameToken);
 		result.setSimpleNameCS(nameCS);
@@ -969,6 +1008,26 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
+	protected CSTNode createExceptionDefCS(IToken nameToken, EList<TypeCS> extentionList, EList<CSTNode> featureList) {
+		ExceptionDefCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createExceptionDefCS();
+		SimpleNameCS nameCS = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, nameToken);
+		setOffsets(nameCS, nameToken);
+		result.setSimpleNameCS(nameCS);
+		result.getExtends().addAll(extentionList);
+		
+		for (CSTNode nodeCS : featureList) {
+			if (nodeCS instanceof ClassifierPropertyCS) {
+				result.getProperties().add((ClassifierPropertyCS) nodeCS);
+			}
+			if (nodeCS instanceof TagCS) {
+				result.getTags().add((TagCS) nodeCS);
+			}
+		}
+		
+		return result;
+	}
+
+	
 	protected CSTNode createClassifierPropertyCS(EList<IToken> stereotypeQualifieres, EList<SimpleNameCS> featureKeys,
 			IToken nameToken, TypeCS typeSpecCS, boolean isOrdered, OCLExpressionCS initPartCS, MultiplicityDefCS multiplicityDefCS,
 			OppositePropertyCS oppositePropertyCS) {

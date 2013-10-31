@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
+import org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CompleteSignatureCS;
@@ -43,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.ElementWithBody;
+import org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
@@ -51,6 +53,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
@@ -82,6 +85,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
@@ -95,6 +99,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
@@ -190,6 +195,20 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * @generated
 	 */
 	private EClass classifierPropertyCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass intermediateClassDefCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass exceptionDefCSEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -602,6 +621,27 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass tryExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass catchExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass raiseExpCSEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum directionKindEnumEEnum = null;
 
 	/**
@@ -659,20 +699,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link CSTPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -684,7 +714,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		if (isInited) return (CSTPackage)EPackage.Registry.INSTANCE.getEPackage(CSTPackage.eNS_URI);
 
 		// Obtain or create and register package
-		CSTPackageImpl theCSTPackage = (CSTPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof CSTPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new CSTPackageImpl());
+		CSTPackageImpl theCSTPackage = (CSTPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CSTPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CSTPackageImpl());
 
 		isInited = true;
 
@@ -700,6 +730,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCSTPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(CSTPackage.eNS_URI, theCSTPackage);
 		return theCSTPackage;
 	}
 
@@ -1052,6 +1085,24 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 */
 	public EAttribute getClassifierPropertyCS_IsOrdered() {
 		return (EAttribute)classifierPropertyCSEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getIntermediateClassDefCS() {
+		return intermediateClassDefCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getExceptionDefCS() {
+		return exceptionDefCSEClass;
 	}
 
 	/**
@@ -2616,6 +2667,96 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTryExpCS() {
+		return tryExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTryExpCS_TryBody() {
+		return (EReference)tryExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTryExpCS_ExceptClauses() {
+		return (EReference)tryExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCatchExpCS() {
+		return catchExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCatchExpCS_Body() {
+		return (EReference)catchExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCatchExpCS_Exceptions() {
+		return (EReference)catchExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCatchExpCS_SimpleNameCS() {
+		return (EReference)catchExpCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRaiseExpCS() {
+		return raiseExpCSEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRaiseExpCS_Exception() {
+		return (EReference)raiseExpCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRaiseExpCS_Argument() {
+		return (EReference)raiseExpCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDirectionKindEnum() {
 		return directionKindEnumEEnum;
 	}
@@ -2733,6 +2874,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__MULTIPLICITY);
 		createEReference(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__OPPOSITE);
 		createEAttribute(classifierPropertyCSEClass, CLASSIFIER_PROPERTY_CS__IS_ORDERED);
+
+		intermediateClassDefCSEClass = createEClass(INTERMEDIATE_CLASS_DEF_CS);
+
+		exceptionDefCSEClass = createEClass(EXCEPTION_DEF_CS);
 
 		oppositePropertyCSEClass = createEClass(OPPOSITE_PROPERTY_CS);
 		createEAttribute(oppositePropertyCSEClass, OPPOSITE_PROPERTY_CS__IS_NAVIGABLE);
@@ -2965,6 +3110,19 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(scopedNameCSEClass, SCOPED_NAME_CS__TYPE_CS);
 		createEAttribute(scopedNameCSEClass, SCOPED_NAME_CS__NAME);
 
+		tryExpCSEClass = createEClass(TRY_EXP_CS);
+		createEReference(tryExpCSEClass, TRY_EXP_CS__TRY_BODY);
+		createEReference(tryExpCSEClass, TRY_EXP_CS__EXCEPT_CLAUSES);
+
+		catchExpCSEClass = createEClass(CATCH_EXP_CS);
+		createEReference(catchExpCSEClass, CATCH_EXP_CS__BODY);
+		createEReference(catchExpCSEClass, CATCH_EXP_CS__EXCEPTIONS);
+		createEReference(catchExpCSEClass, CATCH_EXP_CS__SIMPLE_NAME_CS);
+
+		raiseExpCSEClass = createEClass(RAISE_EXP_CS);
+		createEReference(raiseExpCSEClass, RAISE_EXP_CS__EXCEPTION);
+		createEReference(raiseExpCSEClass, RAISE_EXP_CS__ARGUMENT);
+
 		// Create enums
 		directionKindEnumEEnum = createEEnum(DIRECTION_KIND_ENUM);
 		moduleKindEnumEEnum = createEEnum(MODULE_KIND_ENUM);
@@ -3015,6 +3173,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		contextualPropertyCSEClass.getESuperTypes().add(this.getModulePropertyCS());
 		classifierDefCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		classifierPropertyCSEClass.getESuperTypes().add(this.getLocalPropertyCS());
+		intermediateClassDefCSEClass.getESuperTypes().add(this.getClassifierDefCS());
+		exceptionDefCSEClass.getESuperTypes().add(this.getClassifierDefCS());
 		oppositePropertyCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		multiplicityDefCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		mappingDeclarationCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
@@ -3076,6 +3236,9 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		unitCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		resolveOpArgsExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
 		scopedNameCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		tryExpCSEClass.getESuperTypes().add(this.getStatementCS());
+		catchExpCSEClass.getESuperTypes().add(theCSTPackage_1.getCSTNode());
+		raiseExpCSEClass.getESuperTypes().add(this.getStatementCS());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingModuleCSEClass, MappingModuleCS.class, "MappingModuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -3127,6 +3290,10 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getClassifierPropertyCS_Multiplicity(), this.getMultiplicityDefCS(), null, "multiplicity", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getClassifierPropertyCS_Opposite(), this.getOppositePropertyCS(), null, "opposite", null, 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getClassifierPropertyCS_IsOrdered(), ecorePackage.getEBoolean(), "isOrdered", "true", 0, 1, ClassifierPropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(intermediateClassDefCSEClass, IntermediateClassDefCS.class, "IntermediateClassDefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(exceptionDefCSEClass, ExceptionDefCS.class, "ExceptionDefCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(oppositePropertyCSEClass, OppositePropertyCS.class, "OppositePropertyCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getOppositePropertyCS_IsNavigable(), ecorePackage.getEBoolean(), "isNavigable", "true", 0, 1, OppositePropertyCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
@@ -3358,6 +3525,19 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEClass(scopedNameCSEClass, ScopedNameCS.class, "ScopedNameCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getScopedNameCS_TypeCS(), theCSTPackage_1.getTypeCS(), null, "typeCS", null, 0, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getScopedNameCS_Name(), ecorePackage.getEString(), "name", null, 1, 1, ScopedNameCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(tryExpCSEClass, TryExpCS.class, "TryExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getTryExpCS_TryBody(), this.getBlockExpCS(), null, "tryBody", null, 1, 1, TryExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTryExpCS_ExceptClauses(), this.getCatchExpCS(), null, "exceptClauses", null, 1, -1, TryExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(catchExpCSEClass, CatchExpCS.class, "CatchExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getCatchExpCS_Body(), this.getBlockExpCS(), null, "body", null, 1, 1, CatchExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getCatchExpCS_Exceptions(), theCSTPackage_1.getTypeCS(), null, "exceptions", null, 0, -1, CatchExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getCatchExpCS_SimpleNameCS(), theCSTPackage_1.getSimpleNameCS(), null, "simpleNameCS", null, 0, 1, CatchExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(raiseExpCSEClass, RaiseExpCS.class, "RaiseExpCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getRaiseExpCS_Exception(), theCSTPackage_1.getTypeCS(), null, "exception", null, 1, 1, RaiseExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRaiseExpCS_Argument(), theCSTPackage_1.getOCLExpressionCS(), null, "argument", null, 0, 1, RaiseExpCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(directionKindEnumEEnum, DirectionKindEnum.class, "DirectionKindEnum"); //$NON-NLS-1$

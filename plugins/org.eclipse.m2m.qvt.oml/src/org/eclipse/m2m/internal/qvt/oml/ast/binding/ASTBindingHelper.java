@@ -23,9 +23,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 
 public class ASTBindingHelper {
@@ -307,5 +309,40 @@ public class ASTBindingHelper {
 			
 			return null;
 		}
-	}		
+	}
+	
+	public static void setCatchVariable(CatchExp catchExp, Variable catchVar) {
+		Adapter adapter = EcoreUtil.getAdapter(catchExp.eAdapters(), CatchVariableAdapter.class);
+		if(adapter != null) {
+			catchExp.eAdapters().remove(adapter);
+		}
+		
+		catchExp.eAdapters().add(new CatchVariableAdapter(catchVar));
+	}
+	
+	public static Variable getCatchVariable(CatchExp catchExp) {
+		Adapter adapter = EcoreUtil.getAdapter(catchExp.eAdapters(), CatchVariableAdapter.class);
+		if(adapter instanceof CatchVariableAdapter) {
+			return ((CatchVariableAdapter) adapter).getCatchVar();
+		}
+		return null;
+	}
+	
+	private static class CatchVariableAdapter extends AdapterImpl {
+		
+		private final Variable catchVariable;
+		
+		CatchVariableAdapter(Variable var) {
+			catchVariable = var;
+		}
+		
+		Variable getCatchVar() {
+			return catchVariable;
+		}
+		
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == CatchVariableAdapter.class;
+		}
+	}
 }

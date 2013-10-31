@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bug 419299
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -39,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CollectionOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.ExceptionOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.IntegerOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ListOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ModelOperations;
@@ -78,6 +80,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 	private final EClass TRANSFORMATION;
 	private EClass STATUS;
 	private EClass EXCEPTION;
+	private EClass ASSERTION_FAILED;
 	private EClassifier LIST;
 	private EClassifier KEY_T;
 	private DictionaryType DICTIONARY;
@@ -104,7 +107,9 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		fStdlibModule.eResource().setURI(URI.createURI(fStdlibModule.getNsURI()));		
 
 		ELEMENT = createClass("Element", true); //$NON-NLS-1$
-		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$		
+		EXCEPTION = createClass("Exception", false); //$NON-NLS-1$
+		ASSERTION_FAILED = createClass("AssertionFailed", false); //$NON-NLS-1$
+		ASSERTION_FAILED.getESuperTypes().add(EXCEPTION);
 		MODEL = createClass("Model", true); //$NON-NLS-1$
 		ORDERED_TUPLE = createOrderedTuple();		
 		OBJECT = createClass("Object", true); //$NON-NLS-1$		
@@ -137,6 +142,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		define(new StatusOperations(this));
 		define(new ListOperations(this));
 		define(new DictionaryOperations(this));
+		define(new ExceptionOperations(this));		
 
 		define(CollectionOperations.getAllOperations(this));		
 		
@@ -227,7 +233,11 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 	 */
 	public EClass getExceptionClass() {
 		return EXCEPTION;
-	}	
+	}
+	
+	public EClass getAssertionFailedClass() {
+		return ASSERTION_FAILED;
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOStandardLibrary#getTransformationClass()
@@ -327,7 +337,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		
 		EClass result = EcoreFactory.eINSTANCE.createEClass();
 		result.setName(name);
-		result.setAbstract(true);
+		result.setAbstract(isAbstract);
 		fStdlibModule.getEClassifiers().add(result);
 
 		return result;

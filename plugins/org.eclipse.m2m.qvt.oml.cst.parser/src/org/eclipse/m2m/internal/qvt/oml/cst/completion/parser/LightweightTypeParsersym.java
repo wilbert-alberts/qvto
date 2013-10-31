@@ -34,7 +34,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
-*   Alex Paperno - bugs 314443, 274105, 274505
+*   Alex Paperno - bugs 314443, 274105, 274505, 419299 
 *
 * </copyright>
 *
@@ -42,7 +42,7 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006, 2013 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -51,7 +51,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
-*   Alex Paperno - bugs 392429
+*   Alex Paperno - bugs 392429, 419299 
 *
 * </copyright>
 *

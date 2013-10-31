@@ -20,6 +20,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.m2m.internal.qvt.oml.cst.*;
 
 import org.eclipse.ocl.cst.CSTNode;
@@ -44,7 +46,7 @@ import org.eclipse.ocl.cst.TypeCS;
  * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage
  * @generated
  */
-public class CSTSwitch<T> {
+public class CSTSwitch<T> extends Switch<T> {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -73,14 +75,16 @@ public class CSTSwitch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @parameter ePackage the package in question.
+	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
-	public T doSwitch(EObject theEObject) {
-		return doSwitch(theEObject.eClass(), theEObject);
+	@Override
+	protected boolean isSwitchFor(EPackage ePackage) {
+		return ePackage == modelPackage;
 	}
 
 	/**
@@ -90,26 +94,7 @@ public class CSTSwitch<T> {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	protected T doSwitch(EClass theEClass, EObject theEObject) {
-		if (theEClass.eContainer() == modelPackage) {
-			return doSwitch(theEClass.getClassifierID(), theEObject);
-		}
-		else {
-			List<EClass> eSuperTypes = theEClass.getESuperTypes();
-			return
-				eSuperTypes.isEmpty() ?
-					defaultCase(theEObject) :
-					doSwitch(eSuperTypes.get(0), theEObject);
-		}
-	}
-
-	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the first non-null result returned by a <code>caseXXX</code> call.
-	 * @generated
-	 */
+	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 			case CSTPackage.MAPPING_MODULE_CS: {
@@ -193,6 +178,22 @@ public class CSTSwitch<T> {
 				if (result == null) result = caseLocalPropertyCS(classifierPropertyCS);
 				if (result == null) result = caseModulePropertyCS(classifierPropertyCS);
 				if (result == null) result = caseCSTNode(classifierPropertyCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.INTERMEDIATE_CLASS_DEF_CS: {
+				IntermediateClassDefCS intermediateClassDefCS = (IntermediateClassDefCS)theEObject;
+				T result = caseIntermediateClassDefCS(intermediateClassDefCS);
+				if (result == null) result = caseClassifierDefCS(intermediateClassDefCS);
+				if (result == null) result = caseCSTNode(intermediateClassDefCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.EXCEPTION_DEF_CS: {
+				ExceptionDefCS exceptionDefCS = (ExceptionDefCS)theEObject;
+				T result = caseExceptionDefCS(exceptionDefCS);
+				if (result == null) result = caseClassifierDefCS(exceptionDefCS);
+				if (result == null) result = caseCSTNode(exceptionDefCS);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -683,6 +684,31 @@ public class CSTSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CSTPackage.TRY_EXP_CS: {
+				TryExpCS tryExpCS = (TryExpCS)theEObject;
+				T result = caseTryExpCS(tryExpCS);
+				if (result == null) result = caseStatementCS(tryExpCS);
+				if (result == null) result = caseOCLExpressionCS(tryExpCS);
+				if (result == null) result = caseCSTNode(tryExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.CATCH_EXP_CS: {
+				CatchExpCS catchExpCS = (CatchExpCS)theEObject;
+				T result = caseCatchExpCS(catchExpCS);
+				if (result == null) result = caseCSTNode(catchExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CSTPackage.RAISE_EXP_CS: {
+				RaiseExpCS raiseExpCS = (RaiseExpCS)theEObject;
+				T result = caseRaiseExpCS(raiseExpCS);
+				if (result == null) result = caseStatementCS(raiseExpCS);
+				if (result == null) result = caseOCLExpressionCS(raiseExpCS);
+				if (result == null) result = caseCSTNode(raiseExpCS);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -849,6 +875,36 @@ public class CSTSwitch<T> {
 	 * @generated
 	 */
 	public T caseClassifierPropertyCS(ClassifierPropertyCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Intermediate Class Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Intermediate Class Def CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIntermediateClassDefCS(IntermediateClassDefCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Exception Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Exception Def CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExceptionDefCS(ExceptionDefCS object) {
 		return null;
 	}
 
@@ -1723,6 +1779,51 @@ public class CSTSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Try Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Try Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTryExpCS(TryExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Catch Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Catch Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCatchExpCS(CatchExpCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Raise Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Raise Exp CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRaiseExpCS(RaiseExpCS object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1853,6 +1954,7 @@ public class CSTSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
+	@Override
 	public T defaultCase(EObject object) {
 		return null;
 	}

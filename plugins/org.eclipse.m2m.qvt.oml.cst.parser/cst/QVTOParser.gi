@@ -76,7 +76,7 @@
 	/./**
  * <copyright>
  *
- * Copyright (c) 2006, 2007 Borland Inc.
+ * Copyright (c) 2006, 2013 Borland Inc.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -85,7 +85,7 @@
  * Contributors:
  *   Borland - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
- *   Alex Paperno - bugs 392429
+ *   Alex Paperno - bugs 392429, 419299 
  *
  * </copyright>
  *
@@ -642,12 +642,24 @@
 
 	classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
 		/.$BeginCode
-					CSTNode result = createClassifierDefCS(
-							getRhsIToken(3),
-							(EList) getRhsSym(4),
-							(EList) getRhsSym(6)
-						);
+					CSTNode result = createIntermediateClassDefCS(
+						getRhsIToken(3),
+						(EList) getRhsSym(4),
+						(EList) getRhsSym(6)
+					);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(7));
+					setResult(result);
+		  $EndCode
+		./
+	
+	classifierDefCS ::= exception qvtIdentifierCS classifierExtensionOpt '{' classifierFeatureListOpt '}' semicolonOpt 
+		/.$BeginCode
+					CSTNode result = createExceptionDefCS(
+						getRhsIToken(2),
+						(EList) getRhsSym(3),
+						(EList) getRhsSym(5)
+					);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(6));
 					setResult(result);
 		  $EndCode
 		./
@@ -2033,6 +2045,7 @@
 					setResult(result);
 		  $EndCode
 		./
+
 
 	--=== // Expressions (end) ===--
 

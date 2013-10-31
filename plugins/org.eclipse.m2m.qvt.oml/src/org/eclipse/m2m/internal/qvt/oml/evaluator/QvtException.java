@@ -1,26 +1,32 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *   
  * Contributors:
- *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bug 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import org.eclipse.emf.ecore.EClass;
 
+public class QvtException extends QvtRuntimeException {
+	private static final long serialVersionUID = -4611540417238844821L;
 
-/**
-* Thrown if the condition of <code>assertion</code> with severity <code>fatal</code> fails.
-*/
-public class QvtAssertionFailed extends QvtException {
-	private static final long serialVersionUID = -1690018812250274122L;
-
-	public QvtAssertionFailed(String message, EClass exceptionType) {
-		super(message, exceptionType);
+	public QvtException(String message, EClass exceptionType) {
+		super(message);
+		this.exceptionType = exceptionType;
 	}
+
+	/**
+	 * @return the exceptionType
+	 */
+	public EClass getExceptionType() {
+		return exceptionType;
+	}
+
+	private final EClass exceptionType;
 }

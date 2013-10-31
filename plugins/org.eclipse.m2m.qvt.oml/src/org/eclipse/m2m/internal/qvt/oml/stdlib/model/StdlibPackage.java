@@ -24,6 +24,8 @@ public interface StdlibPackage {
 
 	EClass getExceptionClass();
 
+	EClass getAssertionFailedClass();
+
 	EClass getTransformationClass();
 
 	EClass getModuleType();

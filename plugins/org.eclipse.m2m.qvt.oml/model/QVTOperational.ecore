@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperational"
-    nsURI="http://www.eclipse.org/qvt/1.0.0/Operational" nsPrefix="qvtoperational">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperational" nsURI="http://www.eclipse.org/qvt/1.0.0/Operational"
+    nsPrefix="qvtoperational">
   <eSubpackages name="expressions" nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"
       nsPrefix="qvtoperational.expr">
     <eClassifiers xsi:type="ecore:EClass" name="Constructor" eSuperTypes="#//expressions/ImperativeOperation">
@@ -146,7 +145,7 @@
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isQuery" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ImperativeCallExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OperationCallExp ../../org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
+    <eClassifiers xsi:type="ecore:EClass" name="ImperativeCallExp" eSuperTypes="platform:/plugin/org.eclipse.ocl.ecore/model/OCLEcore.ecore#//ecore/OperationCallExp platform:/plugin/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//ImperativeExpression">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVirtual" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
           defaultValueLiteral="true"/>
     </eClassifiers>
@@ -432,7 +431,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//expressions/Module"
           transient="true" eOpposite="#//expressions/Module/moduleImport"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="../../org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//InstantiationExp">
+    <eClassifiers xsi:type="ecore:EClass" name="ObjectExp" eSuperTypes="platform:/plugin/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore#//InstantiationExp">
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="if(v instanceof org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) {&#xD;&#xA;  @SuppressWarnings(&quot;unchecked&quot;)    &#x9;&#x9;&#xD;&#xA;  org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor&lt;T> visitorExt = (org.eclipse.m2m.internal.qvt.oml.expressions.util.QVTOperationalVisitor) v;    &#x9;&#xD;&#xA;  return visitorExt.visitObjectExp(this);&#xD;&#xA;}&#xD;&#xA;return org.eclipse.m2m.internal.qvt.oml.expressions.util.ForeignVisitorDefaultValue.getDefaultValueForVisitor(v);"/>

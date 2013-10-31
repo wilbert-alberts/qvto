@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import lpg.runtime.ParseErrorCodes;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
@@ -51,6 +53,9 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.internal.l10n.OCLMessages;
+import org.eclipse.ocl.lpg.ProblemHandler;
+import org.eclipse.ocl.lpg.ProblemHandler.Severity;
 import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
@@ -724,4 +729,62 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
         myTemporaryNameGeneratorInt++;
         return TEMPORARY_NAME_GENERATOR_UNIQUE_PREFIX + myTemporaryNameGeneratorInt;
     }
+
+    @Override
+	public void parserError(int errorCode, int leftToken, int rightToken, String tokenText) {
+		ProblemHandler problemHandler = getProblemHandler();
+		if (problemHandler == null) {
+            return;
+        }
+		int leftTokenLoc = (leftToken > rightToken ? rightToken : leftToken);
+		int rightTokenLoc = rightToken;
+		int startOffset = getParser().getIPrsStream().getStartOffset(leftTokenLoc);
+		int endOffset = getParser().getIPrsStream().getEndOffset(rightTokenLoc);
+		int line = leftTokenLoc >= 0 ? getParser().getIPrsStream().getLine(leftTokenLoc) : -1;
+		String message;
+        if (line <= 0) {
+        	message = OCLMessages.InvalidOCL_ERROR_;
+		} else {
+			String locInfo = ""; //$NON-NLS-1$
+			String messageTemplate = ProblemHandler.ERROR_MESSAGES[errorCode].substring(4);
+			String inputText = '"' + getParser().computeInputString(startOffset, endOffset) + '"';
+			switch (errorCode) {
+				case ParseErrorCodes.EOF_CODE:
+				case ParseErrorCodes.MISPLACED_CODE:
+				case ParseErrorCodes.DELETION_CODE:
+				case ParseErrorCodes.INVALID_TOKEN_CODE:
+					message = OCLMessages.bind(
+						messageTemplate,
+						locInfo,
+						inputText);
+					break;
+	
+				case ParseErrorCodes.MERGE_CODE:
+				case ParseErrorCodes.BEFORE_CODE:
+				case ParseErrorCodes.INSERTION_CODE:
+				case ParseErrorCodes.SUBSTITUTION_CODE: // includes SECONDARY_CODE
+					message = OCLMessages.bind(
+						messageTemplate,
+						new Object[]{
+							locInfo,
+							tokenText,
+							inputText
+						});
+					break;
+					
+				case ParseErrorCodes.SCOPE_CODE:
+					if (leftToken != rightToken) {
+						message = OCLMessages.bind(messageTemplate, locInfo, tokenText);
+						problemHandler.parserProblem(Severity.ERROR, message, null, startOffset, getParser().getIPrsStream().getEndOffset(leftTokenLoc));
+					}
+					startOffset = getParser().getIPrsStream().getStartOffset(rightTokenLoc);
+	
+				default:
+					message = OCLMessages.bind(messageTemplate, locInfo, tokenText);
+					break;
+			}
+		}
+		problemHandler.parserProblem(Severity.ERROR, message, null, startOffset, endOffset);
+		
+	}
 }

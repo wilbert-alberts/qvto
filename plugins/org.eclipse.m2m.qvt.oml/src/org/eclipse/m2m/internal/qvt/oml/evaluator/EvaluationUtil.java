@@ -9,11 +9,10 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 388801, 358709
+ *     Alex Paperno - bug 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -162,13 +161,7 @@ public class EvaluationUtil {
     static Object formatLoggedElement(Object element) {
     	if(element instanceof ExceptionInstance) {
     		ExceptionInstance exception = (ExceptionInstance) element;    		
-    		
-    		StringWriter contents = new StringWriter();
-			PrintWriter pw = new PrintWriter(contents);
-			pw.println(exception);
-			QvtRuntimeException.printQvtStackTrace(pw, exception.getStackElements());
-			
-			return contents.toString(); 
+    		return exception.toString();
     	}
     	
     	return element;

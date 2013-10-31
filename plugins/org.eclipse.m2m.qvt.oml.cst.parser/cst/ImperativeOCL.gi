@@ -84,7 +84,7 @@
  * Contributors:
  *   Borland - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
- *   Alex Paperno - bugs 314443, 274105, 274505
+ *   Alex Paperno - bugs 314443, 274105, 274505, 419299 
  *
  * </copyright>
  *
@@ -235,6 +235,92 @@
 					setResult(result);
 		  $EndCode
 		./
+
+
+	ImperativeExpCS -> RaiseExpCS
+	ImperativeExpCS -> TryExpCS	
+
+	RaiseExpCS ::= raise pathNameCS raise_arg_opt
+		/.$BeginCode
+				CSTNode result = createRaiseExpCS((TypeCS)getRhsSym(2), (OCLExpressionCS)getRhsSym(3));
+				setOffsets(result, getRhsIToken(1), getRhsIToken(3));			
+				setResult(result);
+		  $EndCode
+		./
+		
+	RaiseExpCS ::= raise StringLiteralExpCS
+		/.$BeginCode
+				CSTNode result = createRaiseExpCS(null, (OCLExpressionCS)getRhsSym(2));
+				setOffsets(result, getRhsIToken(1), getRhsIToken(2));			
+				setResult(result);
+		  $EndCode
+		./
+
+	raise_arg_opt -> raise_arg
+	raise_arg_opt ::= %empty
+		/.$NullAction./
+		
+	raise_arg ::= '(' oclExpressionCSOpt ')'
+		/.$BeginCode
+					setResult(getRhsSym(2));
+		  $EndCode
+		./
+
+
+	TryExpCS ::= try expression_block CatchExp_list
+		/.$BeginCode
+					CSTNode result = createTryExpCS(
+							(BlockExpCS)getRhsSym(2),
+							(EList)getRhsSym(3)
+						);
+					setOffsets(result, getRhsIToken(1), getRhsIToken(3));
+					setResult(result);
+		  $EndCode
+		./
+	
+	CatchExp_list ::= CatchExp
+		/.$BeginCode
+					EList result = new BasicEList();
+					result.add(getRhsSym(1));
+					setResult(result);
+		  $EndCode
+		./
+	CatchExp_list ::= CatchExp_list CatchExp
+		/.$BeginCode
+					EList result = (EList)getRhsSym(1);
+					result.add(getRhsSym(2));
+					setResult(result);
+		  $EndCode
+		./
+
+	CatchExp ::= except '(' except_type_list_opt ')' expression_block
+		/.$BeginCode
+					CSTNode result = createCatchExpCS(
+							null,
+							(EList)getRhsSym(3),
+							(BlockExpCS)getRhsSym(5)							
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(5));
+					setResult(result);
+		  $EndCode
+		./
+
+	CatchExp ::= except '(' IDENTIFIER ':' type_list ')' expression_block
+		/.$BeginCode
+					CSTNode result = createCatchExpCS(
+							getRhsIToken(3),
+							(EList)getRhsSym(5),
+							(BlockExpCS)getRhsSym(7)
+						);
+					setOffsets(result, getRhsIToken(1), (CSTNode)getRhsSym(7));
+					setResult(result);
+		  $EndCode
+		./
+
+	except_type_list_opt -> type_list 
+	except_type_list_opt ::= %empty
+		/.$EmptyListAction./
+		
 
 	OclExpressionCS -> returnExpCS 	
 	returnExpCS ::= return oclExpressionCSOpt

@@ -34,7 +34,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
-*   Alex Paperno - bugs 314443, 274105, 274505
+*   Alex Paperno - bugs 314443, 274105, 274505, 419299 
 *
 * </copyright>
 *
@@ -42,7 +42,7 @@
 /**
 * <copyright>
 *
-* Copyright (c) 2006, 2007 Borland Inc.
+* Copyright (c) 2006, 2013 Borland Inc.
 * All rights reserved.   This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -51,7 +51,7 @@
 * Contributors:
 *   Borland - Initial API and implementation
 *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (297966)
-*   Alex Paperno - bugs 392429
+*   Alex Paperno - bugs 392429, 419299 
 *
 * </copyright>
 *
@@ -61,59 +61,59 @@ package org.eclipse.m2m.internal.qvt.oml.cst.parser;
 
 public interface QVTOParsersym {
     public final static int
-      TK_QUOTED_IDENTIFIER = 5,
+      TK_QUOTED_IDENTIFIER = 6,
       TK_INTEGER_LITERAL = 27,
       TK_REAL_LITERAL = 28,
       TK_STRING_LITERAL = 24,
-      TK_PLUS = 68,
-      TK_MINUS = 6,
+      TK_PLUS = 70,
+      TK_MINUS = 9,
       TK_MULTIPLY = 4,
-      TK_DIVIDE = 69,
-      TK_GREATER = 73,
-      TK_LESS = 74,
-      TK_EQUAL = 65,
-      TK_GREATER_EQUAL = 75,
-      TK_LESS_EQUAL = 76,
-      TK_NOT_EQUAL = 78,
+      TK_DIVIDE = 71,
+      TK_GREATER = 75,
+      TK_LESS = 76,
+      TK_EQUAL = 68,
+      TK_GREATER_EQUAL = 77,
+      TK_LESS_EQUAL = 78,
+      TK_NOT_EQUAL = 80,
       TK_LPAREN = 1,
-      TK_RPAREN = 9,
-      TK_LBRACE = 64,
-      TK_RBRACE = 72,
-      TK_LBRACKET = 60,
-      TK_RBRACKET = 109,
-      TK_ARROW = 61,
-      TK_BAR = 79,
-      TK_COMMA = 66,
-      TK_COLON = 71,
-      TK_COLONCOLON = 77,
-      TK_SEMICOLON = 63,
-      TK_DOT = 51,
-      TK_DOTDOT = 110,
-      TK_RESET_ASSIGN = 67,
-      TK_ADD_ASSIGN = 70,
-      TK_EXCLAMATION_MARK = 62,
-      TK_COLONCOLONEQUAL = 111,
-      TK_QUESTIONMARK = 112,
-      TK_SINGLE_LINE_COMMENT = 148,
-      TK_MULTI_LINE_COMMENT = 149,
-      TK_STEREOTYPE_QUALIFIER_OPEN = 113,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 122,
-      TK_MULTIPLICITY_RANGE = 123,
-      TK_TILDE_SIGN = 124,
-      TK_NOT_EQUAL_EXEQ = 87,
-      TK_AT_SIGN = 114,
+      TK_RPAREN = 5,
+      TK_LBRACE = 66,
+      TK_RBRACE = 74,
+      TK_LBRACKET = 62,
+      TK_RBRACKET = 112,
+      TK_ARROW = 63,
+      TK_BAR = 81,
+      TK_COMMA = 67,
+      TK_COLON = 72,
+      TK_COLONCOLON = 79,
+      TK_SEMICOLON = 65,
+      TK_DOT = 53,
+      TK_DOTDOT = 113,
+      TK_RESET_ASSIGN = 69,
+      TK_ADD_ASSIGN = 73,
+      TK_EXCLAMATION_MARK = 64,
+      TK_COLONCOLONEQUAL = 114,
+      TK_QUESTIONMARK = 115,
+      TK_SINGLE_LINE_COMMENT = 152,
+      TK_MULTI_LINE_COMMENT = 153,
+      TK_STEREOTYPE_QUALIFIER_OPEN = 116,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 126,
+      TK_MULTIPLICITY_RANGE = 127,
+      TK_TILDE_SIGN = 128,
+      TK_NOT_EQUAL_EXEQ = 89,
+      TK_AT_SIGN = 117,
       TK_self = 36,
       TK_if = 40,
-      TK_then = 115,
-      TK_else = 80,
-      TK_endif = 81,
-      TK_and = 82,
-      TK_or = 83,
-      TK_xor = 85,
+      TK_then = 118,
+      TK_else = 82,
+      TK_endif = 83,
+      TK_and = 84,
+      TK_or = 85,
+      TK_xor = 87,
       TK_not = 37,
-      TK_implies = 88,
+      TK_implies = 90,
       TK_let = 41,
-      TK_in = 91,
+      TK_in = 93,
       TK_true = 29,
       TK_false = 30,
       TK_null = 31,
@@ -136,92 +136,92 @@ public interface QVTOParsersym {
       TK_List = 26,
       TK_break = 42,
       TK_switch = 38,
-      TK_case = 116,
-      TK_xselect = 125,
-      TK_xcollect = 126,
-      TK_selectOne = 127,
-      TK_collectOne = 128,
-      TK_collectselect = 129,
-      TK_collectselectOne = 130,
-      TK_forEach = 131,
-      TK_forOne = 132,
+      TK_case = 119,
+      TK_xselect = 129,
+      TK_xcollect = 130,
+      TK_selectOne = 131,
+      TK_collectOne = 132,
+      TK_collectselect = 133,
+      TK_collectselectOne = 134,
+      TK_forEach = 135,
+      TK_forOne = 136,
       TK_compute = 43,
-      TK_return = 48,
-      TK_var = 49,
+      TK_return = 50,
+      TK_var = 51,
       TK_while = 44,
       TK_continue = 45,
-      TK_log = 47,
-      TK_assert = 50,
-      TK_with = 133,
+      TK_log = 49,
+      TK_assert = 52,
+      TK_with = 137,
       TK_new = 46,
-      TK_static = 92,
-      TK_init = 134,
-      TK_end = 93,
-      TK_out = 102,
+      TK_static = 94,
+      TK_init = 138,
+      TK_end = 95,
+      TK_out = 104,
       TK_object = 39,
-      TK_transformation = 104,
-      TK_import = 135,
-      TK_library = 105,
-      TK_metamodel = 150,
-      TK_mapping = 94,
-      TK_query = 95,
-      TK_helper = 96,
-      TK_inout = 103,
-      TK_when = 106,
-      TK_configuration = 107,
-      TK_intermediate = 108,
-      TK_property = 97,
-      TK_opposites = 136,
-      TK_class = 137,
-      TK_population = 117,
+      TK_transformation = 106,
+      TK_import = 139,
+      TK_library = 107,
+      TK_metamodel = 154,
+      TK_mapping = 96,
+      TK_query = 97,
+      TK_helper = 98,
+      TK_inout = 105,
+      TK_when = 108,
+      TK_configuration = 109,
+      TK_intermediate = 110,
+      TK_property = 99,
+      TK_opposites = 140,
+      TK_class = 141,
+      TK_population = 120,
       TK_map = 33,
       TK_xmap = 34,
       TK_late = 35,
-      TK_resolve = 52,
-      TK_resolveone = 53,
-      TK_resolveIn = 54,
-      TK_resolveoneIn = 55,
-      TK_invresolve = 56,
-      TK_invresolveone = 57,
-      TK_invresolveIn = 58,
-      TK_invresolveoneIn = 59,
-      TK_modeltype = 138,
-      TK_uses = 139,
-      TK_where = 140,
-      TK_refines = 141,
-      TK_access = 89,
-      TK_extends = 86,
-      TK_blackbox = 98,
-      TK_abstract = 99,
+      TK_resolve = 54,
+      TK_resolveone = 55,
+      TK_resolveIn = 56,
+      TK_resolveoneIn = 57,
+      TK_invresolve = 58,
+      TK_invresolveone = 59,
+      TK_invresolveIn = 60,
+      TK_invresolveoneIn = 61,
+      TK_modeltype = 142,
+      TK_uses = 143,
+      TK_where = 144,
+      TK_refines = 145,
+      TK_access = 91,
+      TK_extends = 88,
+      TK_blackbox = 100,
+      TK_abstract = 101,
       TK_result = 7,
-      TK_main = 90,
+      TK_main = 92,
       TK_this = 8,
-      TK_rename = 142,
-      TK_disjuncts = 118,
-      TK_merges = 119,
-      TK_inherits = 120,
-      TK_composes = 143,
-      TK_constructor = 100,
-      TK_datatype = 151,
-      TK_default = 152,
-      TK_derived = 144,
-      TK_do = 153,
-      TK_elif = 84,
-      TK_enum = 154,
-      TK_except = 155,
-      TK_exception = 156,
-      TK_from = 157,
-      TK_literal = 158,
-      TK_ordered = 145,
-      TK_primitive = 159,
-      TK_raise = 160,
-      TK_readonly = 146,
-      TK_references = 147,
-      TK_tag = 101,
-      TK_try = 161,
+      TK_rename = 146,
+      TK_disjuncts = 121,
+      TK_merges = 122,
+      TK_inherits = 123,
+      TK_composes = 147,
+      TK_constructor = 102,
+      TK_datatype = 155,
+      TK_default = 156,
+      TK_derived = 148,
+      TK_do = 157,
+      TK_elif = 86,
+      TK_enum = 158,
+      TK_except = 124,
+      TK_exception = 111,
+      TK_from = 159,
+      TK_literal = 160,
+      TK_ordered = 149,
+      TK_primitive = 161,
+      TK_raise = 47,
+      TK_readonly = 150,
+      TK_references = 151,
+      TK_tag = 103,
+      TK_try = 48,
       TK_typedef = 162,
       TK_unlimited = 163,
-      TK_EOF_TOKEN = 121,
+      TK_EOF_TOKEN = 125,
       TK_IDENTIFIER = 3,
       TK_ERROR_TOKEN = 2;
 
@@ -231,11 +231,11 @@ public interface QVTOParsersym {
                  "ERROR_TOKEN", //$NON-NLS-1$
                  "IDENTIFIER", //$NON-NLS-1$
                  "MULTIPLY", //$NON-NLS-1$
+                 "RPAREN", //$NON-NLS-1$
                  "QUOTED_IDENTIFIER", //$NON-NLS-1$
-                 "MINUS", //$NON-NLS-1$
                  "result", //$NON-NLS-1$
                  "this", //$NON-NLS-1$
-                 "RPAREN", //$NON-NLS-1$
+                 "MINUS", //$NON-NLS-1$
                  "Set", //$NON-NLS-1$
                  "Bag", //$NON-NLS-1$
                  "Sequence", //$NON-NLS-1$
@@ -273,6 +273,8 @@ public interface QVTOParsersym {
                  "while", //$NON-NLS-1$
                  "continue", //$NON-NLS-1$
                  "new", //$NON-NLS-1$
+                 "raise", //$NON-NLS-1$
+                 "try", //$NON-NLS-1$
                  "log", //$NON-NLS-1$
                  "return", //$NON-NLS-1$
                  "var", //$NON-NLS-1$
@@ -291,13 +293,13 @@ public interface QVTOParsersym {
                  "EXCLAMATION_MARK", //$NON-NLS-1$
                  "SEMICOLON", //$NON-NLS-1$
                  "LBRACE", //$NON-NLS-1$
-                 "EQUAL", //$NON-NLS-1$
                  "COMMA", //$NON-NLS-1$
+                 "EQUAL", //$NON-NLS-1$
                  "RESET_ASSIGN", //$NON-NLS-1$
                  "PLUS", //$NON-NLS-1$
                  "DIVIDE", //$NON-NLS-1$
-                 "ADD_ASSIGN", //$NON-NLS-1$
                  "COLON", //$NON-NLS-1$
+                 "ADD_ASSIGN", //$NON-NLS-1$
                  "RBRACE", //$NON-NLS-1$
                  "GREATER", //$NON-NLS-1$
                  "LESS", //$NON-NLS-1$
@@ -335,6 +337,7 @@ public interface QVTOParsersym {
                  "when", //$NON-NLS-1$
                  "configuration", //$NON-NLS-1$
                  "intermediate", //$NON-NLS-1$
+                 "exception", //$NON-NLS-1$
                  "RBRACKET", //$NON-NLS-1$
                  "DOTDOT", //$NON-NLS-1$
                  "COLONCOLONEQUAL", //$NON-NLS-1$
@@ -347,6 +350,7 @@ public interface QVTOParsersym {
                  "disjuncts", //$NON-NLS-1$
                  "merges", //$NON-NLS-1$
                  "inherits", //$NON-NLS-1$
+                 "except", //$NON-NLS-1$
                  "EOF_TOKEN", //$NON-NLS-1$
                  "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
                  "MULTIPLICITY_RANGE", //$NON-NLS-1$
@@ -381,13 +385,9 @@ public interface QVTOParsersym {
                  "default", //$NON-NLS-1$
                  "do", //$NON-NLS-1$
                  "enum", //$NON-NLS-1$
-                 "except", //$NON-NLS-1$
-                 "exception", //$NON-NLS-1$
                  "from", //$NON-NLS-1$
                  "literal", //$NON-NLS-1$
                  "primitive", //$NON-NLS-1$
-                 "raise", //$NON-NLS-1$
-                 "try", //$NON-NLS-1$
                  "typedef", //$NON-NLS-1$
                  "unlimited" //$NON-NLS-1$
              };

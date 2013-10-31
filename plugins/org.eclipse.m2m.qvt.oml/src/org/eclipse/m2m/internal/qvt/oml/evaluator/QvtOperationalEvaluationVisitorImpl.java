@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315
- *     Alex Paperno - bugs 294127, 416584
+ *     Alex Paperno - bugs 294127, 416584, 419299
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -53,10 +53,13 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory.ExceptionClassInstance;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateCollectSelect;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateForExp;
@@ -96,6 +99,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
@@ -788,7 +792,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			StringWriter strWriter = new StringWriter();
 			PrintWriter printWriter = new PrintWriter(strWriter);
 			e.printQvtStackTrace(printWriter);
-			getContext().getLog().log(strWriter.getBuffer().toString());
+
+			Log logger = getContext().getLog();
+			logger.log(EvaluationMessages.TerminatingExecution);
+			logger.log(strWriter.getBuffer().toString());
+			
 			throw e;
 		} finally {
 			IntermediatePropertyModelAdapter.cleanup(module);
@@ -1064,10 +1072,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
 
     public Object visitBlockExp(BlockExp blockExp) {
+        return visitBlockExpImpl(blockExp.getBody(), blockExp.eContainer() instanceof ImperativeOperation);
+    }
+
+    private Object visitBlockExpImpl(EList<org.eclipse.ocl.ecore.OCLExpression> expList, boolean isInImperativeOper) {
     	List<String> scopeVars = null;
-    	boolean isInImperativeOper = blockExp.eContainer() instanceof ImperativeOperation;
     	
-        for (OCLExpression<EClassifier> exp : blockExp.getBody()) {
+        for (OCLExpression<EClassifier> exp : expList) {
         	if((exp instanceof VariableInitExp) && !isInImperativeOper) {
         		if(scopeVars == null) {
         			scopeVars = new LinkedList<String>();
@@ -1281,12 +1292,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 			
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
-				logger.log(EvaluationMessages.TerminatingExecution);
-			}
-				
-			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
-				throwQVTException(new QvtAssertionFailed(EvaluationMessages.FatalAssertionFailed 
-						+ (logMessage == null ? "" : " : " + logMessage))); //$NON-NLS-1$ //$NON-NLS-2$
+				String msg = (logMessage == null ? EvaluationMessages.FatalAssertionFailed : logMessage);
+				throwQVTException(new QvtAssertionFailed(msg, QvtOperationalStdLibrary.INSTANCE.getAssertionFailedClass()));
 			}		
 				
 		}			
@@ -1436,14 +1443,75 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return null;
 	}
 
-	public Object visitRaiseExp(RaiseExp astNode) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object visitRaiseExp(RaiseExp raiseExp) {
+    	Object value = null;
+    	if(raiseExp.getArgument() != null) {
+    		value = visitExpression(raiseExp.getArgument());
+    	}
+    	String argument = (value instanceof String) ? (String)value : null;
+		QvtException exception = new QvtException(argument, (EClass)raiseExp.getException());
+		exception.setStackQvtTrace(new QvtStackTraceBuilder(getOperationalEvaluationEnv()).buildStackTrace());
+		throw exception;
 	}
 
-	public Object visitTryExp(TryExp astNode) {
-		// TODO Auto-generated method stub
+	public Object visitTryExp(TryExp tryExp) {
+		try {
+            return visitBlockExpImpl(tryExp.getTryBody(), tryExp.eContainer() instanceof ImperativeOperation);
+		}
+		catch (QvtException exception) {
+			boolean processed = false;
+			
+			OUTERMOST: for (CatchExp catchExp : tryExp.getExceptClause()) {
+				for (EClassifier excType : catchExp.getException()) {
+					if (EmfUtil.isAssignableFrom(excType, exception.getExceptionType())) { 
+						processed = processCatch(catchExp, exception);
+						break OUTERMOST;
+					}
+				}
+				if (catchExp.getException().isEmpty()) { // catch all
+					processed = processCatch(catchExp, exception);
+					break OUTERMOST;
+				}
+			}
+			
+			if (!processed) {
+				throw exception;
+			}
+		}
+		
 		return null;
+	}
+	
+	private boolean processCatch(CatchExp catchExp, QvtException exception) {
+		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+		String varName = null;
+
+		org.eclipse.ocl.ecore.Variable catchVariable = ASTBindingHelper.getCatchVariable(catchExp);
+		if (catchVariable != null) {
+			ExceptionInstance excObject = null;
+			if (exception.getExceptionType() == QvtOperationalStdLibrary.INSTANCE.getExceptionClass()) {
+				excObject = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createException(exception.getMessage(), exception.getQvtStackTrace());
+			}
+			else if (exception instanceof QvtAssertionFailed) {
+				excObject = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createAssertionFailed(exception.getMessage(), exception.getQvtStackTrace());
+			}
+			else {
+				ExceptionClassInstance exceptionImpl = (ExceptionClassInstance) createInstance(exception.getExceptionType(), null);
+				exceptionImpl.setArgument(exception.getMessage());
+				exceptionImpl.setStackElements(exception.getQvtStackTrace());
+				excObject = exceptionImpl;
+			}
+
+			varName = catchVariable.getName();
+			evalEnv.add(varName, excObject);
+		}
+		
+		visitBlockExpImpl(catchExp.getBody(), catchExp.eContainer() instanceof ImperativeOperation);
+		
+		if (varName != null) {
+			evalEnv.remove(varName);
+		}
+		return true;
 	}
 
 	public Object visitUnlinkExp(UnlinkExp astNode) {

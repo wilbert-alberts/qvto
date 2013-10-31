@@ -132,6 +132,24 @@ public interface CSTFactory extends EFactory {
 	ClassifierPropertyCS createClassifierPropertyCS();
 
 	/**
+	 * Returns a new object of class '<em>Intermediate Class Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Intermediate Class Def CS</em>'.
+	 * @generated
+	 */
+	IntermediateClassDefCS createIntermediateClassDefCS();
+
+	/**
+	 * Returns a new object of class '<em>Exception Def CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Exception Def CS</em>'.
+	 * @generated
+	 */
+	ExceptionDefCS createExceptionDefCS();
+
+	/**
 	 * Returns a new object of class '<em>Opposite Property CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -616,6 +634,33 @@ public interface CSTFactory extends EFactory {
 	 * @generated
 	 */
 	ScopedNameCS createScopedNameCS();
+
+	/**
+	 * Returns a new object of class '<em>Try Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Try Exp CS</em>'.
+	 * @generated
+	 */
+	TryExpCS createTryExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Catch Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Catch Exp CS</em>'.
+	 * @generated
+	 */
+	CatchExpCS createCatchExpCS();
+
+	/**
+	 * Returns a new object of class '<em>Raise Exp CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Raise Exp CS</em>'.
+	 * @generated
+	 */
+	RaiseExpCS createRaiseExpCS();
 
 	/**
 	 * Returns the package supported by this factory.

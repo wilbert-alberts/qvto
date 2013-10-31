@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperational"
-    nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational" nsPrefix="qvtoperational">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qvtoperational" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational"
+    nsPrefix="qvtoperational">
   <eSubpackages name="cst" nsURI="http://www.eclipse.org/QVT2/1.0.0/Operational/cst"
       nsPrefix="qvtoperational.cst">
     <eClassifiers xsi:type="ecore:EClass" name="MappingModuleCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
@@ -86,6 +85,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOrdered" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="true"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IntermediateClassDefCS" eSuperTypes="#//cst/ClassifierDefCS"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ExceptionDefCS" eSuperTypes="#//cst/ClassifierDefCS"/>
     <eClassifiers xsi:type="ecore:EClass" name="OppositePropertyCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNavigable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="true"/>
@@ -467,6 +468,26 @@
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TryExpCS" eSuperTypes="#//cst/StatementCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tryBody" lowerBound="1"
+          eType="#//cst/BlockExpCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exceptClauses" lowerBound="1"
+          upperBound="-1" eType="#//cst/CatchExpCS" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CatchExpCS" eSuperTypes="platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/CSTNode">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1"
+          eType="#//cst/BlockExpCS" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exceptions" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simpleNameCS" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/SimpleNameCS"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RaiseExpCS" eSuperTypes="#//cst/StatementCS">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exception" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/TypeCS"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="argument" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

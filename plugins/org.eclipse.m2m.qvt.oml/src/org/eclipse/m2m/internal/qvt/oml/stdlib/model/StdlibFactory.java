@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,16 +8,16 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bug 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory.ExceptionClassInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
@@ -69,41 +69,19 @@ public class StdlibFactory {
 	}
 	
 	public ExceptionInstance createException(String argument, List<QVTStackTraceElement> stackElements) {
-		ExceptionImpl exception = new ExceptionImpl(argument, stackElements);
-		exception.eSetClass(fStdlibPackage.getExceptionClass());
+		ExceptionClassInstance exception = new ExceptionClassInstance(fStdlibPackage.getExceptionClass());
+		exception.setArgument(argument);
+		exception.setStackElements(Collections.unmodifiableList(stackElements));
 		return exception;
 	}	
 	
-	private static class ExceptionImpl extends DynamicEObjectImpl implements ExceptionInstance {
-		
-		private final String fArgument;
-		private final List<QVTStackTraceElement> fStackElements;		
-		
-		public ExceptionImpl(String argument, List<QVTStackTraceElement> stackElements) {
-			fArgument = argument;
-			fStackElements = Collections.unmodifiableList(new ArrayList<QVTStackTraceElement>(stackElements));
-		}
-		
-		public String getArgument() {		
-			return fArgument;
-		}
-		
-		public List<QVTStackTraceElement> getStackElements() {
-			return (fStackElements != null) ? fStackElements : Collections.<QVTStackTraceElement>emptyList();
-		}
-		
-		@Override
-		public String toString() {
-			StringBuilder buf = new StringBuilder();
-			buf.append(eClass.getName());
-			if(getArgument() != null) {
-				buf.append(" : ").append(fArgument); //$NON-NLS-1$
-			}
-			
-			return buf.toString();
-		}
-	}
-
+	public ExceptionInstance createAssertionFailed(String argument, List<QVTStackTraceElement> stackElements) {
+		ExceptionClassInstance exception = new ExceptionClassInstance(fStdlibPackage.getAssertionFailedClass());
+		exception.setArgument(argument);
+		exception.setStackElements(Collections.unmodifiableList(stackElements));
+		return exception;
+	}	
+	
 	private static class Status extends EObjectImpl implements StatusInstance {
 		private boolean fIsSuccess;
 		private ExceptionInstance fException;

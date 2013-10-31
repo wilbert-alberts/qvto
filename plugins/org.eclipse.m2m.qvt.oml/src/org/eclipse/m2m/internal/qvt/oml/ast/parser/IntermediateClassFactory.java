@@ -9,13 +9,18 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bug 388801
+ *     Alex Paperno - bug 419299
  *******************************************************************************/
 
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,14 +34,19 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.cst.adapters.AbstractGenericAdapter;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.ocl.expressions.OCLExpression;
 
 /**
@@ -137,7 +147,12 @@ public class IntermediateClassFactory extends EFactoryImpl {
 			cacheClassifierInitExp(class_);
 		}
 
-		return new IntermediateClassInstance(class_);
+		if (EmfUtil.isAssignableFrom(QvtOperationalStdLibrary.INSTANCE.getExceptionClass(), class_)) {
+			return new ExceptionClassInstance(class_);
+		}
+		else {
+			return new IntermediateClassInstance(class_);
+		}
 	}
 
 	public EClass createIntermediateClassifier() {
@@ -323,6 +338,46 @@ public class IntermediateClassFactory extends EFactoryImpl {
 		}
 	}
 
+	public static class ExceptionClassInstance extends IntermediateClassInstance implements ExceptionInstance{
+		private String argument;
+		private List<QVTStackTraceElement> stackElements;		
+		
+		public ExceptionClassInstance(EClass eClass) {
+			super(eClass);
+		}
+
+		public String getArgument() {		
+			return argument;
+		}
+		
+		public void setArgument(String argumentNew) {		
+			argument = argumentNew;
+		}
+
+		public void setStackElements(List<QVTStackTraceElement> stackElementsNew) {
+			stackElements = stackElementsNew;
+		}
+		
+		public List<QVTStackTraceElement> getStackElements() {
+			return (stackElements != null) ? stackElements : Collections.<QVTStackTraceElement>emptyList();
+		}
+		
+		@Override
+		public String toString() {
+    		StringWriter contents = new StringWriter();
+    		contents.write(eClass().getName());
+			if(getArgument() != null) {
+				contents.write(" : "); //$NON-NLS-1$
+				contents.write(argument);
+				contents.write(System.lineSeparator()); //$NON-NLS-1$
+			}
+			PrintWriter pw = new PrintWriter(contents);
+			QvtRuntimeException.printQvtStackTrace(pw, getStackElements());
+			return contents.toString(); 
+		}
+	}
+
+	
 	private static class IntermediateStaticFieldAdapter extends
 			AbstractGenericAdapter<IntermediateStaticFieldAdapter> {
 

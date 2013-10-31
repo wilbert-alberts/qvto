@@ -75,9 +75,11 @@ public class DebugTransformationRunner extends TransformationRunner {
 		if(stackTrace != null && execDiagnostic.getCode() != ExecutionDiagnostic.USER_INTERRUPTED) {
 			fErrorLog.println(execDiagnostic);
 			
-			fErrorLog.println("[QVTO Stack trace:]");				
-			execDiagnostic.printStackTrace(fErrorLog);
-			fErrorLog.println();				
+			if (!stackTrace.isEmpty()) {
+				fErrorLog.println("[QVTO Stack trace:]");				
+				execDiagnostic.printStackTrace(fErrorLog);
+				fErrorLog.println();
+			}
 		}
 		
 		if(execDiagnostic.getException() != null) {

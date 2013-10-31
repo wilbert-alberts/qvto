@@ -48,7 +48,7 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	 */
 	public static CSTFactory init() {
 		try {
-			CSTFactory theCSTFactory = (CSTFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/QVT2/1.0.0/Operational/cst"); //$NON-NLS-1$ 
+			CSTFactory theCSTFactory = (CSTFactory)EPackage.Registry.INSTANCE.getEFactory(CSTPackage.eNS_URI);
 			if (theCSTFactory != null) {
 				return theCSTFactory;
 			}
@@ -87,6 +87,8 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.CONTEXTUAL_PROPERTY_CS: return createContextualPropertyCS();
 			case CSTPackage.CLASSIFIER_DEF_CS: return createClassifierDefCS();
 			case CSTPackage.CLASSIFIER_PROPERTY_CS: return createClassifierPropertyCS();
+			case CSTPackage.INTERMEDIATE_CLASS_DEF_CS: return createIntermediateClassDefCS();
+			case CSTPackage.EXCEPTION_DEF_CS: return createExceptionDefCS();
 			case CSTPackage.OPPOSITE_PROPERTY_CS: return createOppositePropertyCS();
 			case CSTPackage.MULTIPLICITY_DEF_CS: return createMultiplicityDefCS();
 			case CSTPackage.MAPPING_DECLARATION_CS: return createMappingDeclarationCS();
@@ -141,6 +143,9 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 			case CSTPackage.UNIT_CS: return createUnitCS();
 			case CSTPackage.RESOLVE_OP_ARGS_EXP_CS: return createResolveOpArgsExpCS();
 			case CSTPackage.SCOPED_NAME_CS: return createScopedNameCS();
+			case CSTPackage.TRY_EXP_CS: return createTryExpCS();
+			case CSTPackage.CATCH_EXP_CS: return createCatchExpCS();
+			case CSTPackage.RAISE_EXP_CS: return createRaiseExpCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -290,6 +295,26 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ClassifierPropertyCS createClassifierPropertyCS() {
 		ClassifierPropertyCSImpl classifierPropertyCS = new ClassifierPropertyCSImpl();
 		return classifierPropertyCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IntermediateClassDefCS createIntermediateClassDefCS() {
+		IntermediateClassDefCSImpl intermediateClassDefCS = new IntermediateClassDefCSImpl();
+		return intermediateClassDefCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ExceptionDefCS createExceptionDefCS() {
+		ExceptionDefCSImpl exceptionDefCS = new ExceptionDefCSImpl();
+		return exceptionDefCS;
 	}
 
 	/**
@@ -830,6 +855,36 @@ public class CSTFactoryImpl extends EFactoryImpl implements CSTFactory {
 	public ScopedNameCS createScopedNameCS() {
 		ScopedNameCSImpl scopedNameCS = new ScopedNameCSImpl();
 		return scopedNameCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TryExpCS createTryExpCS() {
+		TryExpCSImpl tryExpCS = new TryExpCSImpl();
+		return tryExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CatchExpCS createCatchExpCS() {
+		CatchExpCSImpl catchExpCS = new CatchExpCSImpl();
+		return catchExpCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RaiseExpCS createRaiseExpCS() {
+		RaiseExpCSImpl raiseExpCS = new RaiseExpCSImpl();
+		return raiseExpCS;
 	}
 
 	/**

@@ -141,6 +141,14 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createClassifierPropertyCSAdapter();
 			}
 			@Override
+			public Adapter caseIntermediateClassDefCS(IntermediateClassDefCS object) {
+				return createIntermediateClassDefCSAdapter();
+			}
+			@Override
+			public Adapter caseExceptionDefCS(ExceptionDefCS object) {
+				return createExceptionDefCSAdapter();
+			}
+			@Override
 			public Adapter caseOppositePropertyCS(OppositePropertyCS object) {
 				return createOppositePropertyCSAdapter();
 			}
@@ -373,6 +381,18 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 				return createScopedNameCSAdapter();
 			}
 			@Override
+			public Adapter caseTryExpCS(TryExpCS object) {
+				return createTryExpCSAdapter();
+			}
+			@Override
+			public Adapter caseCatchExpCS(CatchExpCS object) {
+				return createCatchExpCSAdapter();
+			}
+			@Override
+			public Adapter caseRaiseExpCS(RaiseExpCS object) {
+				return createRaiseExpCSAdapter();
+			}
+			@Override
 			public Adapter caseCSTNode(CSTNode object) {
 				return createCSTNodeAdapter();
 			}
@@ -575,6 +595,34 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassifierPropertyCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS <em>Intermediate Class Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS
+	 * @generated
+	 */
+	public Adapter createIntermediateClassDefCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS <em>Exception Def CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS
+	 * @generated
+	 */
+	public Adapter createExceptionDefCSAdapter() {
 		return null;
 	}
 
@@ -1387,6 +1435,48 @@ public class CSTAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createScopedNameCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS <em>Try Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS
+	 * @generated
+	 */
+	public Adapter createTryExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS <em>Catch Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS
+	 * @generated
+	 */
+	public Adapter createCatchExpCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS <em>Raise Exp CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS
+	 * @generated
+	 */
+	public Adapter createRaiseExpCSAdapter() {
 		return null;
 	}
 

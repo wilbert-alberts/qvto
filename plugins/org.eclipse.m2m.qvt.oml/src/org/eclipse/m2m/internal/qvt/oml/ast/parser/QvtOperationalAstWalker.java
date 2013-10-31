@@ -571,9 +571,11 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
 		return null;
 	}
 
-	public Object visitCatchtExp(CatchExp astNode) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object visitCatchtExp(CatchExp catchExp) {
+        for (OCLExpression<EClassifier> exp : catchExp.getBody()) {
+            doProcess(exp, catchExp);
+        }
+        return null;
 	}
 
 	public Object visitContinueExp(ContinueExp astNode) {
@@ -601,9 +603,14 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
 		return null;
 	}
 
-	public Object visitTryExp(TryExp astNode) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object visitTryExp(TryExp tryExp) {
+        for (OCLExpression<EClassifier> exp : tryExp.getTryBody()) {
+            doProcess(exp, tryExp);
+        }
+        for (CatchExp catchExp : tryExp.getExceptClause()) {
+        	visitCatchtExp(catchExp);
+        }
+        return null;
 	}
 
 	public Object visitUnlinkExp(UnlinkExp astNode) {

@@ -8,7 +8,8 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
- *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521
+ *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
+ *                         419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -63,6 +64,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssignStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.BreakExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.CatchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ClassifierPropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ComputeExpCS;
@@ -74,6 +76,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictLiteralPartCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DictionaryTypeCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.DirectionKindEnum;
+import org.eclipse.m2m.internal.qvt.oml.cst.ExceptionDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ExpressionStatementCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ForExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeIterateExpCS;
@@ -81,6 +84,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.ImperativeOperationCallExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ImportKindEnum;
 import org.eclipse.m2m.internal.qvt.oml.cst.InstantiationExpCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.IntermediateClassDefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.LibraryImportCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ListLiteralExpCS;
@@ -109,6 +113,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.OppositePropertyCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.PackageRefCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.RaiseExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.RenameCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ResolveInExpCS;
@@ -118,6 +123,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.SwitchAltExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.SwitchExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TagCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.TryExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TypeSpecCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.VariableInitializationCS;
@@ -159,6 +165,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BlockExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.BreakExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ComputeExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ContinueExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralExp;
@@ -170,9 +177,11 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLFactory;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.RaiseExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ReturnExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SeverityKind;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.SwitchExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.TryExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.ocl.Environment;
@@ -661,6 +670,12 @@ public class QvtOperationalVisitorCS
 	        if (oclExpressionCS instanceof SwitchExpCS) {
 	            return visitSwitchExpCS((SwitchExpCS) oclExpressionCS, env);
 	        }
+	        if (oclExpressionCS instanceof RaiseExpCS) {
+	            return visitRaiseExpCS((RaiseExpCS) oclExpressionCS, env);
+	        }
+	        if (oclExpressionCS instanceof TryExpCS) {
+	            return visitTryExpCS((TryExpCS) oclExpressionCS, env);
+	        }
 	        if (oclExpressionCS instanceof ObjectExpCS) {
                 return visitObjectExpCS((ObjectExpCS) oclExpressionCS, toQVTOperationalEnv(env), true);
 	        }
@@ -758,7 +773,103 @@ public class QvtOperationalVisitorCS
 	    return (org.eclipse.ocl.ecore.OCLExpression)createDummyInvalidLiteralExp(env, oclExpressionCS);
 	}
 	
-    private org.eclipse.ocl.ecore.OCLExpression visitContinueExpCS(
+	private org.eclipse.ocl.ecore.OCLExpression visitRaiseExpCS(
+			RaiseExpCS raiseExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		RaiseExp raiseExp = ImperativeOCLFactory.eINSTANCE.createRaiseExp();
+		initStartEndPositions(raiseExp, raiseExpCS);
+
+		TypeCS excTypeCS = raiseExpCS.getException();
+		if(excTypeCS != null) {
+			EClassifier excType = visitTypeCS(excTypeCS, null, env);
+			if (!EmfUtil.isAssignableFrom(QvtOperationalStdLibrary.INSTANCE.getExceptionClass(), excType)) {
+				String typeName = QvtOperationalParserUtil.safeGetQualifiedName(toQVTOperationalEnv(env), excType);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.CannotRaiseNonException, typeName), excTypeCS);
+			}
+
+	        if (raiseExpCS.getArgument() != null) {
+	        	org.eclipse.ocl.ecore.OCLExpression value = oclExpressionCS(raiseExpCS.getArgument(), env);
+	        	raiseExp.setArgument(value);
+	        	if (value.getEType() != env.getOCLStandardLibrary().getString()) {
+					QvtOperationalUtil.reportError(env, ValidationMessages.StringTypeMessageExcArgumentError, raiseExpCS.getArgument());
+	        	}
+	        }
+			if (excType != null) {
+				raiseExp.setException(excType);
+			}
+		}
+		
+		return raiseExp;
+	}
+	
+	private org.eclipse.ocl.ecore.OCLExpression visitTryExpCS(
+			TryExpCS tryExpCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		Set<EClassifier> handledExceptions = new HashSet<EClassifier>(2);
+
+    	TryExp tryExp = ImperativeOCLFactory.eINSTANCE.createTryExp();
+		initStartEndPositions(tryExp, tryExpCS);
+		tryExp.getTryBody().add(oclExpressionCS(tryExpCS.getTryBody(), env));
+		for (CatchExpCS catchExpCS : tryExpCS.getExceptClauses()) {
+			tryExp.getExceptClause().add((CatchExp)visitCatchExpCS(catchExpCS, handledExceptions, env));
+		}
+		
+		return tryExp;
+	}
+
+	private org.eclipse.ocl.ecore.OCLExpression visitCatchExpCS(
+			CatchExpCS catchExpCS,
+			Set<EClassifier> handledExceptions,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+
+		CatchExp catchExp = ImperativeOCLFactory.eINSTANCE.createCatchExp();
+		initStartEndPositions(catchExp, catchExpCS);
+		EClass rootExcType = QvtOperationalStdLibrary.INSTANCE.getExceptionClass();
+		
+		EClassifier catchVarType = null;
+		for (TypeCS typeCS : catchExpCS.getExceptions()) {
+			EClassifier excType = visitTypeCS(typeCS, null, env);
+			if (!EmfUtil.isAssignableFrom(rootExcType, excType)) {
+				String typeName = QvtOperationalParserUtil.safeGetQualifiedName(toQVTOperationalEnv(env), excType);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.CannotCatchNonException, typeName), typeCS);
+			}
+			for (EClassifier handledExc : handledExceptions) {
+				if (EmfUtil.isAssignableFrom(handledExc, excType)) {
+					QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.UncatchableCatchBlock, excType.getName(), handledExc.getName()), typeCS);
+				}
+			}
+			catchExp.getException().add(excType);
+			handledExceptions.add(excType);
+			if (catchVarType == null) { // use exact type
+				catchVarType = excType;
+			} else { // use compatible type
+				catchVarType = rootExcType;
+			}
+		}
+		
+		if (catchExpCS.getExceptions().size() == 0) {
+			handledExceptions.add(rootExcType);
+		}
+
+		SimpleNameCS nameCS = catchExpCS.getSimpleNameCS();
+		if (nameCS != null) {
+			Variable<EClassifier, EParameter> catchVar = genVariableDeclaration(nameCS, "visitCatchExp", env,//$NON-NLS-1$
+            		nameCS.getValue(), catchVarType, null, true, true, false);
+			ASTBindingHelper.setCatchVariable(catchExp, (org.eclipse.ocl.ecore.Variable)catchVar);
+		}
+		
+		catchExp.getBody().add(oclExpressionCS(catchExpCS.getBody(), env));
+		
+		if (nameCS != null) {
+			env.deleteElement(nameCS.getValue());
+		}
+
+		return catchExp;
+	}
+
+	private org.eclipse.ocl.ecore.OCLExpression visitContinueExpCS(
 			ContinueExpCS continueExpCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 
@@ -2194,8 +2305,14 @@ public class QvtOperationalVisitorCS
 		final Map<EClass, CSTNode> cstIntermClassesMap = new LinkedHashMap<EClass, CSTNode>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
 			if (false == module instanceof OperationalTransformation) {
-	            env.reportError(NLS.bind(ValidationMessages.IntermediateClassifierNotAllowed,
-	            		new Object[] {}), classifierDefCS);
+				if (classifierDefCS instanceof IntermediateClassDefCS) {
+					env.reportError(NLS.bind(ValidationMessages.IntermediateClassifierNotAllowed,
+							new Object[] {}), classifierDefCS);
+				}
+				else {
+					env.reportError(NLS.bind(ValidationMessages.ExceptionDefNotAllowed,
+							new Object[] {}), classifierDefCS);
+				}
 			}
 			if (createdIntermClasses.containsKey(classifierDefCS.getSimpleNameCS().getValue())) {
 	            env.reportError(NLS.bind(ValidationMessages.DuplicateClassifier,
@@ -2228,7 +2345,7 @@ public class QvtOperationalVisitorCS
 
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {
 			String className = classifierDefCS.getSimpleNameCS().getValue();
-			EClass rootClass = createdIntermClasses.get(className);			
+			EClass rootClass = createdIntermClasses.get(className);
 			for (TypeCS typeCS : classifierDefCS.getExtends()) {
 				
 				if (typeCS instanceof PathNameCS && ((PathNameCS) typeCS).getSimpleNames().size() == 1) {
@@ -2241,9 +2358,17 @@ public class QvtOperationalVisitorCS
 				}
 				
 				EClassifier extendType = visitTypeCS(typeCS, null, env);
+
 				if (extendType == null) {
 					// error reported by visitTypeCS(..)
 					continue;
+				}
+				else if (extendType == QvtOperationalStdLibrary.INSTANCE.getExceptionClass()) {
+					if (false == classifierDefCS instanceof ExceptionDefCS) {
+						env.reportError(NLS.bind(ValidationMessages.CannotExtendExceptionExplicitly,
+								new Object[] {}),
+								typeCS);
+					}
 				}
 				else if (!QVTUMLReflection.isUserModelElement(extendType)) {
 					env.reportError(NLS.bind(ValidationMessages.InvalidClassifierForExtend,
@@ -2254,7 +2379,12 @@ public class QvtOperationalVisitorCS
 					rootClass.getESuperTypes().add((EClass) extendType);
 				}
 			}
+			
+			if (classifierDefCS instanceof ExceptionDefCS) {
+				rootClass.getESuperTypes().add(QvtOperationalStdLibrary.INSTANCE.getExceptionClass());
+			}
 		}
+		
 
 		Map<ClassifierPropertyCS, EStructuralFeature> createdProperties = new IdentityHashMap<ClassifierPropertyCS, EStructuralFeature>();
 		for (ClassifierDefCS classifierDefCS : moduleCS.getClassifierDefCS()) {

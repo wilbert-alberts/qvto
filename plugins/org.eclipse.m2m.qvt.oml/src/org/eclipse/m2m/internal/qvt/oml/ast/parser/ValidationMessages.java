@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636, 414363
+ *     Alex Paperno - bugs 272869, 268636, 414363, 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -163,6 +163,7 @@ public final class ValidationMessages extends NLS {
 	public static String IntermediatePropertyAlreadyDefined;
 	public static String IntermediatePropertyNotAllowed;
 	public static String IntermediateClassifierNotAllowed;
+	public static String ExceptionDefNotAllowed;
 	public static String DuplicateProperty;
 	public static String DuplicateClassifier;
 	public static String InvalidClassifierForExtend;
@@ -229,6 +230,11 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_TypeConformanceClosure_ERROR_;
 	public static String QvtOperationalVisitorCS_IterateExpLoopVarInit_ERROR_;
 	public static String QvtOperationalVisitorCS_TypeConformanceIteratorExpLoopVar_ERROR_;
+	public static String CannotExtendExceptionExplicitly;
+	public static String CannotCatchNonException;
+	public static String CannotRaiseNonException;
+	public static String StringTypeMessageExcArgumentError;
+	public static String UncatchableCatchBlock;
     
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ValidationMessages.class);
