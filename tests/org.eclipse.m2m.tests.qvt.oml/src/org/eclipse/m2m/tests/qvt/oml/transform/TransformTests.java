@@ -338,7 +338,7 @@ public class TransformTests {
         		new FilesToFilesData("bug415209", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug415315", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug415661", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug415310", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		//new FilesToFilesData("bug415310", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug419299", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		};
     }
