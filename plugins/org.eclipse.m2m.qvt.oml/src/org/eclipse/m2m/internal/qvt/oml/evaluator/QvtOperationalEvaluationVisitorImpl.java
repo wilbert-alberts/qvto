@@ -366,7 +366,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 String varName = referredVariable.getName();
                 Object oldValue = getRuntimeValue(varName);
                 EClassifier variableType = lValue.getType();
-                if (variableType instanceof CollectionType) {
+                if (variableType instanceof CollectionType && exprValue != getInvalid()) {
                     Collection<Object> leftOclCollection = null;
                 	if (oldValue instanceof Collection) {
 	                    Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
