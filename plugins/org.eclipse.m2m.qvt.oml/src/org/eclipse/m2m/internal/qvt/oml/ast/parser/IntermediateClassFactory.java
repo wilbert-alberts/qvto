@@ -369,7 +369,7 @@ public class IntermediateClassFactory extends EFactoryImpl {
 			if(getArgument() != null) {
 				contents.write(" : "); //$NON-NLS-1$
 				contents.write(argument);
-				contents.write(System.lineSeparator()); //$NON-NLS-1$
+				contents.write(System.getProperty("line.separator")); //$NON-NLS-1$
 			}
 			PrintWriter pw = new PrintWriter(contents);
 			QvtRuntimeException.printQvtStackTrace(pw, getStackElements());
