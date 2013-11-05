@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 
 
 /**
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 public class QvtAssertionFailed extends QvtException {
 	private static final long serialVersionUID = -1690018812250274122L;
 
-	public QvtAssertionFailed(String message, EClass exceptionType) {
-		super(message, exceptionType);
+	public QvtAssertionFailed(String message) {
+		super(message, QvtOperationalStdLibrary.INSTANCE.getAssertionFailedClass());
 	}
 }

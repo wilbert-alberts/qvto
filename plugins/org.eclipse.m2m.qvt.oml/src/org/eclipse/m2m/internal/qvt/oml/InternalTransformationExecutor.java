@@ -32,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
@@ -43,7 +44,6 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationMessages;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelParameterHelper;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtAssertionFailed;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtInterruptedExecutionException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
@@ -375,10 +375,9 @@ public class InternalTransformationExecutor {
 		String message = qvtRuntimeException.getLocalizedMessage();
 		Object[] data = null;
 
-		if (qvtRuntimeException instanceof QvtAssertionFailed) {
-			code = ExecutionDiagnostic.FATAL_ASSERTION;
-		} else if (qvtRuntimeException instanceof QvtException) {
-			code = ExecutionDiagnostic.EXCEPTION_THROWN;
+		if (qvtRuntimeException instanceof QvtException) {
+			code = ((QvtException) qvtRuntimeException).getExceptionType() == QvtOperationalStdLibrary.INSTANCE.getAssertionFailedClass() ?
+					ExecutionDiagnostic.FATAL_ASSERTION : ExecutionDiagnostic.EXCEPTION_THROWN;
 		} else if (qvtRuntimeException instanceof QvtInterruptedExecutionException) {
 			code = ExecutionDiagnostic.USER_INTERRUPTED;
 			severity = Diagnostic.CANCEL;

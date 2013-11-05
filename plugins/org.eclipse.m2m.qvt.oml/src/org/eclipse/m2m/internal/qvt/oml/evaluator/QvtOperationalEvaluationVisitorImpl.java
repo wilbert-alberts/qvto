@@ -677,7 +677,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             		}
             	}
 
-            	return executeImperativeOperation(method, source, args, false).myResult;
+            	OperationCallResult opResult = executeImperativeOperation(method, source, args, false);
+            	if (operationCallExp instanceof MappingCallExp && opResult instanceof MappingCallResult) {
+            		if (((MappingCallExp) operationCallExp).isIsStrict()
+            				&& ((MappingCallResult) opResult).isPreconditionFailed()) {
+            			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.MappingPreconditionFailed, method.getName())));
+            		}
+            	}
+            	return opResult.myResult;
             }
         }
 
@@ -1293,7 +1300,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			
 			if(SeverityKind.FATAL.equals(assertExp.getSeverity())) {
 				String msg = (logMessage == null ? EvaluationMessages.FatalAssertionFailed : logMessage);
-				throwQVTException(new QvtAssertionFailed(msg, QvtOperationalStdLibrary.INSTANCE.getAssertionFailedClass()));
+				throwQVTException(new QvtAssertionFailed(msg));
 			}		
 				
 		}			
@@ -1489,11 +1496,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		org.eclipse.ocl.ecore.Variable catchVariable = ASTBindingHelper.getCatchVariable(catchExp);
 		if (catchVariable != null) {
 			ExceptionInstance excObject = null;
-			if (exception.getExceptionType() == QvtOperationalStdLibrary.INSTANCE.getExceptionClass()) {
-				excObject = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createException(exception.getMessage(), exception.getQvtStackTrace());
-			}
-			else if (exception instanceof QvtAssertionFailed) {
-				excObject = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createAssertionFailed(exception.getMessage(), exception.getQvtStackTrace());
+			if (exception.getExceptionType().getEPackage() == QvtOperationalStdLibrary.INSTANCE.getStdLibModule()) {
+				excObject = QvtOperationalStdLibrary.INSTANCE.getStdlibFactory().createException(exception.getExceptionType(),
+						exception.getMessage(), exception.getQvtStackTrace());
 			}
 			else {
 				ExceptionClassInstance exceptionImpl = (ExceptionClassInstance) createInstance(exception.getExceptionType(), null);

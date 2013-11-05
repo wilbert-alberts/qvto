@@ -15,6 +15,7 @@ package org.eclipse.m2m.internal.qvt.oml.stdlib.model;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory.ExceptionClassInstance;
@@ -68,15 +69,8 @@ public class StdlibFactory {
 		return status;
 	}
 	
-	public ExceptionInstance createException(String argument, List<QVTStackTraceElement> stackElements) {
-		ExceptionClassInstance exception = new ExceptionClassInstance(fStdlibPackage.getExceptionClass());
-		exception.setArgument(argument);
-		exception.setStackElements(Collections.unmodifiableList(stackElements));
-		return exception;
-	}	
-	
-	public ExceptionInstance createAssertionFailed(String argument, List<QVTStackTraceElement> stackElements) {
-		ExceptionClassInstance exception = new ExceptionClassInstance(fStdlibPackage.getAssertionFailedClass());
+	public ExceptionInstance createException(EClass exceptionClass, String argument, List<QVTStackTraceElement> stackElements) {
+		ExceptionClassInstance exception = new ExceptionClassInstance(exceptionClass);
 		exception.setArgument(argument);
 		exception.setStackElements(Collections.unmodifiableList(stackElements));
 		return exception;

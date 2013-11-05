@@ -41,6 +41,7 @@ public class TransformTests {
         ModelTestData[] datas = createTestData();
 
         suite.addTest(new TestFailedTransformation(new FileToFileData("scr878"))); //$NON-NLS-1$
+        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug301134", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
 
         for (ModelTestData data : datas) {
             suite.addTest(new TestQvtInterpreter(data));

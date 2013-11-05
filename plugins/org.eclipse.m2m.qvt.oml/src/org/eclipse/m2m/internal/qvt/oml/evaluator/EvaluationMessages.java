@@ -29,6 +29,7 @@ public class EvaluationMessages extends NLS {
 	public static String QvtOperationalEvaluationVisitorImpl_unexpectedRuntimeExc;
 	public static String TerminatingExecution;
 	public static String UknownSourceLabel;
+	public static String MappingPreconditionFailed;
 	
 	public static String IteratorNotImpl;
     

@@ -1367,6 +1367,11 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
+		if (result instanceof MappingCallExp && operationCallExpCS instanceof MappingCallExpCS) {
+			MappingCallExp mappingCall = (MappingCallExp) result;
+			mappingCall.setIsStrict(((MappingCallExpCS) operationCallExpCS).isStrict());
+		}
+		
 		return result;
 	}
 

@@ -71,7 +71,8 @@ public class TransformationOperations extends AbstractContextualOperations {
 			    	evalEnv.getAdapter(InternalEvaluationEnv.class).setException(e);
 			    	throw e;
 			    } catch(QvtRuntimeException e) {
-					ExceptionInstance raisedException = stdlibFactory.createException(e.getLocalizedMessage(), e.getQvtStackTrace());					
+					ExceptionInstance raisedException = stdlibFactory.createException(QvtOperationalStdLibrary.INSTANCE.getExceptionClass(),
+							e.getLocalizedMessage(), e.getQvtStackTrace());					
 			    	StatusInstance status = stdlibFactory.createFailure(raisedException);
 			    	return status;
 			    }
