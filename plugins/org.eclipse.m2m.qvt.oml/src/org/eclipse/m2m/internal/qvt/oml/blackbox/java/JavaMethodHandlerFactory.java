@@ -19,9 +19,11 @@ import java.util.Arrays;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
@@ -93,17 +95,25 @@ class JavaMethodHandlerFactory {
 			catch (IllegalArgumentException e) {
 				fFatalErrorCount++;
 				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);
+				evalEnv.getAdapter(InternalEvaluationEnv.class).throwQVTException(
+						new QvtRuntimeException(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e));
 				return CallHandlerAdapter.getInvalidResult(evalEnv);			
 			} 
 			catch (IllegalAccessException e) {
 				fFatalErrorCount++;				
 				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
+				evalEnv.getAdapter(InternalEvaluationEnv.class).throwQVTException(
+						new QvtRuntimeException(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e));
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			} 
 			catch (InvocationTargetException e) {
 				fFatalErrorCount++;
-				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
+				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e.getTargetException());				
 				// should not happen at all, as we do not support QVT exception in signature yet
+				String localized = "\nCaused by: " + e.getTargetException().getClass().getName() + //$NON-NLS-1$ 
+						(e.getTargetException().getLocalizedMessage() == null ? "" : ": " + e.getTargetException().getLocalizedMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				evalEnv.getAdapter(InternalEvaluationEnv.class).throwQVTException(
+						new QvtRuntimeException(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod) + localized, e.getTargetException()));
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
 			} finally {
 				clearArguments();

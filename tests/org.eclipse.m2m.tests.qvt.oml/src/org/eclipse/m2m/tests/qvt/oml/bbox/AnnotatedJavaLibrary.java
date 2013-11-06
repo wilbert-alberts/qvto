@@ -408,4 +408,9 @@ public class AnnotatedJavaLibrary {
 		}
 	}
 	
+	@Operation (kind=Kind.QUERY)
+	public void testThrowRuntimeException() {
+		throw new RuntimeException("Exception from bbox library"); //$NON-NLS-1$
+	}	
+	
 }
