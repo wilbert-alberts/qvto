@@ -4,5 +4,6 @@ transformation bug413130;
 
 mapping Tuple(name:String) :: m() : EClass {
 	var t1 : Tuple(name : String, size : Integer) = Tuple { name = 'bob', size = 10};
-	var t2 := Tuple(name : String, size : Integer) = Tuple { name = 'bob', size = 10};
+	var t2 := /*<error>*/Tuple(name : String, size : Integer) = Tuple { name = 'bob', size = 10}/*</error>*/;
+	var t3 := Tuple { name = 'bob', size = 10.0} = Tuple { name = 'bob', size = 10};
 }

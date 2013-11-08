@@ -342,19 +342,6 @@ public class QvtOperationalParserUtil {
 		return (TypeUtil.getRelationship(env, variableType, initialiserType) & UMLReflection.SUPERTYPE) != 0;
 	}
 
-	public static boolean isAssignableElementToFrom(EClassifier variableType, EClassifier initialiserType) {
-		if (variableType == null)
-			return false;
-		if (initialiserType == null)
-			return false;
-		if (variableType == initialiserType)
-			return true;
-		if ((initialiserType instanceof EClass) && (variableType instanceof EClass)
-				&& ((EClass) variableType).isSuperTypeOf((EClass) initialiserType))
-			return true;
-		return false;
-	}
-
 	/**
 	 * Get the moduleAST simple name as the last element of possible qualified
 	 * name.

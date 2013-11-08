@@ -9,7 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299 
+ *                         419299, 414619
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -240,6 +240,7 @@ import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.OCLUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.ASTNode;
+import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
 
@@ -4956,7 +4957,23 @@ public class QvtOperationalVisitorCS
 				}
 			}
 		}
-		
+
+		if (PredefinedType.EQUAL_NAME.equals(opCallCS.getSimpleNameCS().getValue())
+				|| PredefinedType.NOT_EQUAL_NAME.equals(opCallCS.getSimpleNameCS().getValue())) {
+			if (operationCallExp.getSource() != null && operationCallExp.getArgument().size() == 1) {
+				EClassifier sourceType = operationCallExp.getSource().getType();
+				EClassifier argumentType = ((OCLExpression<EClassifier>) operationCallExp.getArgument().get(0))
+						.getType();
+				
+				if (!QvtOperationalParserUtil.isAssignableToFrom(env, sourceType, argumentType)
+						&& !QvtOperationalParserUtil.isAssignableToFrom(env, argumentType, sourceType)) {
+					QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.TypesDoNotConform, new Object[] {
+					        QvtOperationalTypesUtil.getTypeFullName(argumentType),
+					        QvtOperationalTypesUtil.getTypeFullName(sourceType) }), opCallCS);
+				}
+			}
+		}
+
 		if (QvtOperationalUtil.isMappingOperation(operationCallExp.getReferredOperation())) {
 			if (false == opCallCS instanceof MappingCallExpCS) {
 				QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_mapKeywordNotUsed,

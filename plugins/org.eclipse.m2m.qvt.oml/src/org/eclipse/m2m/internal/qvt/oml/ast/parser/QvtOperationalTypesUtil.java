@@ -20,6 +20,7 @@ import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.OrderedSetType;
 import org.eclipse.ocl.types.SequenceType;
 import org.eclipse.ocl.types.SetType;
+import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.VoidType;
 
 /**
@@ -42,6 +43,9 @@ public class QvtOperationalTypesUtil {
             }
             parent = parent.eContainer();
         }
+        if (type instanceof TypeType<?, ?>) {
+        	fullName = TypeType.SINGLETON_NAME + "(" + fullName + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+        }
         return fullName;
     }
     
@@ -54,7 +58,7 @@ public class QvtOperationalTypesUtil {
     }
     
     // Workaround for CollectionType.getName
-    public static final String getCollectionTypeName(CollectionType collectionType) {
+    private static final String getCollectionTypeName(CollectionType collectionType) {
         StringBuffer sbName = new StringBuffer();
 
         switch (collectionType.getKind()) {

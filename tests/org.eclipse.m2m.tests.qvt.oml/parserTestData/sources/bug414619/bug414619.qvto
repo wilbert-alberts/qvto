@@ -1,0 +1,36 @@
+modeltype Ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation bug414619;
+
+main() {
+	var i:Boolean;
+
+	i := /*<error>*/(helper_Int() != helper_String())/*</error>*/;
+	i := /*<error>*/(helper_Int() <> helper_String())/*</error>*/;
+	i := /*<error>*/(helper_Int() = helper_String())/*</error>*/;
+	i := /*<error>*/Tuple { name = 1, size = 10} = Tuple { name = 'bob', size = 10}/*</error>*/;
+
+	i := (helper_Int() != helper_Real());
+	i := (helper_Int() <> helper_Real());
+	i := (helper_Int() = helper_Real());
+	i := Tuple { name = 'alice', size = 10.0} = Tuple { name = 'bob', size = 10};
+
+	if /*<error>*/(object EClass{} != "foo")/*</error>*/ then
+	{		
+		log("ha-ha!")
+	}
+	endif;
+}
+
+helper helper_String() : String {
+	return "1";
+}
+
+helper helper_Int() : Integer {
+	return 1;
+}
+
+helper helper_Real() : Real {
+	return 1.0;
+}
+
