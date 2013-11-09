@@ -894,23 +894,26 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		else {
 	        Object owner = createInstance(objectExp.getType(), (ModelParameter) objectExp.getExtent());
 
+			EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
+			List<Object> actualArguments = new ArrayList<Object>(formalArguments.size());
+	
+			for (OCLExpression<EClassifier> nextArg : formalArguments) {
+				Object argVal = visitExpression(nextArg);	
+				actualArguments.add(argVal); 
+			}
+
 			Adapter adapter = EcoreUtil.getAdapter(objectExp.eAdapters(), ConstructorOperationAdapter.class);
 			if (adapter != null) {
 				Constructor constructorOp = ((ConstructorOperationAdapter) adapter).getReferredConstructor();
-
-				EList<org.eclipse.ocl.ecore.OCLExpression> formalArguments = objectExp.getArgument();		
-				List<Object> actualArguments = new ArrayList<Object>(formalArguments.size());
-		
-				for (OCLExpression<EClassifier> nextArg : formalArguments) {
-					Object argVal = visitExpression(nextArg);	
-					actualArguments.add(argVal); 
-				}
 
 				executeImperativeOperation(constructorOp, owner, actualArguments, false);
 			}
 			else {
 				if (objectExp.getArgument().isEmpty()) {
 					// it's OK since default constructor is called
+				}
+				else if (objectExp.getEType() instanceof CollectionType<?,?> && owner instanceof Collection<?>) {
+					((Collection<Object>) owner).addAll(actualArguments);
 				}
 				else {
 					throwQVTException(new QvtRuntimeException("Undefined constructor is called")); //$NON-NLS-1$
@@ -1883,10 +1886,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					CollectionItem<EClassifier> item = (CollectionItem<EClassifier>) part;
 					OCLExpression<EClassifier> itemExp = item.getItem();
 					Object itemVal = visitExpression(itemExp);
-					if (itemVal != null) {
-						// add it to the result set
-						result.add(itemVal);
+					if (itemVal == getInvalid()) {
+						return getInvalid(); // can't have an invalid element in a collection
 					}
+					result.add(itemVal);
 				} else {
 					// Collection range
 					CollectionRange<EClassifier> range = (CollectionRange<EClassifier>) part;
@@ -1894,13 +1897,16 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					OCLExpression<EClassifier> last = range.getLast();
 
 					// evaluate first value
-					Integer firstVal = (Integer) visitExpression(first);
-					Integer lastVal = (Integer) visitExpression(last);
-					if (!((firstVal == null) || (lastVal == null))) {
+					Object firstVal = visitExpression(first);
+					Object lastVal = visitExpression(last);
+					if (firstVal == getInvalid() || lastVal == getInvalid()) {
+						return getInvalid(); // can't have an invalid element in a collection
+					}
+					if (firstVal instanceof Integer && lastVal instanceof Integer) {
 						// TODO: enhance IntegerRangeList to support multiple ranges
 						// add values between first and last inclusive
-						int firstInt = firstVal.intValue();
-						int lastInt = lastVal.intValue();
+						int firstInt = ((Integer) firstVal).intValue();
+						int lastInt = ((Integer) lastVal).intValue();
 						for (int i = firstInt; i <= lastInt; i++) {
                             result.add(new Integer(i));
                         }
