@@ -112,8 +112,8 @@ T__39=39
 RULE_WS=23
 'out'=114
 '>='=74
-'primitive'=43
 '~'=49
+'primitive'=43
 '/'=70
 'Sequence'=94
 'then'=104
@@ -189,8 +189,8 @@ RULE_WS=23
 '<<'=50
 '<='=75
 'false'=99
-'<'=73
 'List'=64
+'<'=73
 'invalid'=100
 'OclAny'=89
 'modeltype'=61

@@ -117,24 +117,6 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int TOP_LEVEL_CS__CSI = BaseCSPackage.ROOT_PACKAGE_CS__CSI;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOP_LEVEL_CS__NAME = BaseCSPackage.ROOT_PACKAGE_CS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOP_LEVEL_CS__OWNED_TYPE = BaseCSPackage.ROOT_PACKAGE_CS__OWNED_TYPE;
-
-	/**
 	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -144,22 +126,13 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int TOP_LEVEL_CS__OWNED_NESTED_PACKAGE = BaseCSPackage.ROOT_PACKAGE_CS__OWNED_NESTED_PACKAGE;
 
 	/**
-	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS__NS_PREFIX = BaseCSPackage.ROOT_PACKAGE_CS__NS_PREFIX;
-
-	/**
-	 * The feature id for the '<em><b>Ns URI</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOP_LEVEL_CS__NS_URI = BaseCSPackage.ROOT_PACKAGE_CS__NS_URI;
+	int TOP_LEVEL_CS__NAME = BaseCSPackage.ROOT_PACKAGE_CS__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Owned Import</b></em>' containment reference list.
@@ -198,13 +171,22 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int TOP_LEVEL_CS__UNIT = BaseCSPackage.ROOT_PACKAGE_CS_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_LEVEL_CS__OWNED_TYPE = BaseCSPackage.ROOT_PACKAGE_CS_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Top Level CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSPackage.ROOT_PACKAGE_CS_FEATURE_COUNT + 2;
+	int TOP_LEVEL_CS_FEATURE_COUNT = BaseCSPackage.ROOT_PACKAGE_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.QVToClassCSImpl <em>QV To Class CS</em>}' class.
@@ -1062,6 +1044,15 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int METAMODEL_CS__CSI = BaseCSPackage.PACKAGE_CS__CSI;
 
 	/**
+	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METAMODEL_CS__OWNED_NESTED_PACKAGE = BaseCSPackage.PACKAGE_CS__OWNED_NESTED_PACKAGE;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1078,15 +1069,6 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @ordered
 	 */
 	int METAMODEL_CS__OWNED_TYPE = BaseCSPackage.PACKAGE_CS__OWNED_TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int METAMODEL_CS__OWNED_NESTED_PACKAGE = BaseCSPackage.PACKAGE_CS__OWNED_NESTED_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
@@ -4200,6 +4182,15 @@ public interface QVTOperationalCSPackage extends EPackage {
 	int TRANSFORMATION_CS__CSI = BaseCSPackage.PACKAGE_CS__CSI;
 
 	/**
+	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFORMATION_CS__OWNED_NESTED_PACKAGE = BaseCSPackage.PACKAGE_CS__OWNED_NESTED_PACKAGE;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4216,15 +4207,6 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSFORMATION_CS__OWNED_TYPE = BaseCSPackage.PACKAGE_CS__OWNED_TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Owned Nested Package</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFORMATION_CS__OWNED_NESTED_PACKAGE = BaseCSPackage.PACKAGE_CS__OWNED_NESTED_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Ns Prefix</b></em>' attribute.
@@ -4964,6 +4946,17 @@ public interface QVTOperationalCSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTopLevelCS_Unit();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS#getOwnedType <em>Owned Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Type</em>'.
+	 * @see org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.TopLevelCS#getOwnedType()
+	 * @see #getTopLevelCS()
+	 * @generated
+	 */
+	EReference getTopLevelCS_OwnedType();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.QVToClassCS <em>QV To Class CS</em>}'.
@@ -6928,6 +6921,14 @@ public interface QVTOperationalCSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOP_LEVEL_CS__UNIT = eINSTANCE.getTopLevelCS_Unit();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Type</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOP_LEVEL_CS__OWNED_TYPE = eINSTANCE.getTopLevelCS_OwnedType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.QVToClassCSImpl <em>QV To Class CS</em>}' class.

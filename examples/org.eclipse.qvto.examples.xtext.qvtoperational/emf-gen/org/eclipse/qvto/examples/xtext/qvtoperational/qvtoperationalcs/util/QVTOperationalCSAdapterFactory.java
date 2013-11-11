@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.xtext.base.basecs.NamedElementCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.NamespaceCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.OperationCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.PackageCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.PackageOwnerCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.ParameterCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.RootCS;
@@ -396,20 +397,16 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 				return createModelElementCSAdapter();
 			}
 			@Override
+			public Adapter casePackageOwnerCS(PackageOwnerCS object) {
+				return createPackageOwnerCSAdapter();
+			}
+			@Override
 			public Adapter caseNameable(Nameable object) {
 				return createNameableAdapter();
 			}
 			@Override
 			public Adapter caseNamedElementCS(NamedElementCS object) {
 				return createNamedElementCSAdapter();
-			}
-			@Override
-			public Adapter caseNamespaceCS(NamespaceCS object) {
-				return createNamespaceCSAdapter();
-			}
-			@Override
-			public Adapter casePackageCS(PackageCS object) {
-				return createPackageCSAdapter();
 			}
 			@Override
 			public Adapter caseRootCS(RootCS object) {
@@ -432,6 +429,10 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 				return createClassifierCSAdapter();
 			}
 			@Override
+			public Adapter caseNamespaceCS(NamespaceCS object) {
+				return createNamespaceCSAdapter();
+			}
+			@Override
 			public Adapter caseClassCS(ClassCS object) {
 				return createClassCSAdapter();
 			}
@@ -450,6 +451,10 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseParameterCS(ParameterCS object) {
 				return createParameterCSAdapter();
+			}
+			@Override
+			public Adapter casePackageCS(PackageCS object) {
+				return createPackageCSAdapter();
 			}
 			@Override
 			public Adapter caseDataTypeCS(DataTypeCS object) {
@@ -1370,6 +1375,20 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createModelElementCSAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.base.basecs.PackageOwnerCS <em>Package Owner CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.xtext.base.basecs.PackageOwnerCS
+	 * @generated
+	 */
+	public Adapter createPackageOwnerCSAdapter() {
 		return null;
 	}
 

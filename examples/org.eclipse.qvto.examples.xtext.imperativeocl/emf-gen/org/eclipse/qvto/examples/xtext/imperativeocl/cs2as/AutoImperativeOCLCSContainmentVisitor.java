@@ -63,110 +63,110 @@ public class AutoImperativeOCLCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitAssertExpCS(/*@NonNull*/ AssertExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitAssertExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitAssignStatementCS(/*@NonNull*/ AssignStatementCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitAssignStatementCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitBlockExpCS(/*@NonNull*/ BlockExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitBlockExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitDictLiteralExpCS(/*@NonNull*/ DictLiteralExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitDictLiteralExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitDictLiteralPartCS(/*@NonNull*/ DictLiteralPartCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitDictLiteralPartCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitDictTypeCS(/*@NonNull*/ DictTypeCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitDictTypeCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitComputeExpCS(/*@NonNull*/ ComputeExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitComputeExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitImperativeIterateExpCS(/*@NonNull*/ ImperativeIterateExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitImperativeIterateExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitImperativeLoopExpCS(/*@NonNull*/ ImperativeLoopExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitImperativeLoopExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitInstantiationExpCS(/*@NonNull*/ InstantiationExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitInstantiationExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitDoExpCS(/*@NonNull*/ DoExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitDoExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitExceptCS(/*@NonNull*/ ExceptCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitExceptCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitExpressionBlockCS(/*@NonNull*/ ExpressionBlockCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitExpressionBlockCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitExpressionStatementCS(/*@NonNull*/ ExpressionStatementCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitExpressionStatementCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitForExpCS(/*@NonNull*/ ForExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitForExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitListTypeCS(/*@NonNull*/ ListTypeCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitListTypeCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitListLiteralExpCS(/*@NonNull*/ ListLiteralExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitListLiteralExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitLogExpCS(/*@NonNull*/ LogExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitLogExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitQuitExpCS(/*@NonNull*/ QuitExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitQuitExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitRaiseExpCS(/*@NonNull*/ RaiseExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitRaiseExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitReturnExpCS(/*@NonNull*/ ReturnExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitReturnExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitStatementCS(/*@NonNull*/ StatementCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitStatementCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitSwitchAltCS(/*@NonNull*/ SwitchAltCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitSwitchAltCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitSwitchExpCS(/*@NonNull*/ SwitchExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitSwitchExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitTryExpCS(/*@NonNull*/ TryExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitTryExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitVariableInitializationCS(/*@NonNull*/ VariableInitializationCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitVariableInitializationCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitWhileExpCS(/*@NonNull*/ WhileExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitWhileExpCS is not supported by " + getClass().getName());
     }
 }

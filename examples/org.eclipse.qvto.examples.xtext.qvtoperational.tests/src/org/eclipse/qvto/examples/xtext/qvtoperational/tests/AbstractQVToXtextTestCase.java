@@ -63,7 +63,7 @@ public abstract class AbstractQVToXtextTestCase extends XtextTestCase
 				try {
 					BaseCSResource xtextResource = (BaseCSResource) resourceSet.getResource(inputURI, true);
 					assertNoResourceErrors("Load failed", xtextResource);
-					adapter = CS2PivotResourceAdapter.getAdapter(xtextResource, null);
+					adapter = xtextResource.getCS2ASAdapter(null);
 					Resource pivotResource = adapter.getASResource(xtextResource);
 		//			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
@@ -89,17 +89,17 @@ public abstract class AbstractQVToXtextTestCase extends XtextTestCase
 				}
 	}
 
-	protected Resource doLoadFromString(@NonNull String fileName, @NonNull String testFile) throws Exception {
+	@Override
+	protected void doLoadFromString(@NonNull String fileName, @NonNull String testFile) throws Exception {
 		URI libraryURI = getProjectFileURI(fileName);
 		ModelContext modelContext = new ModelContext(metaModelManager, libraryURI);
 		BaseCSResource xtextResource = (BaseCSResource) modelContext.createBaseResource(testFile);
 		assertNoResourceErrors("Load failed", xtextResource);
-		CS2PivotResourceAdapter adapter = CS2PivotResourceAdapter.getAdapter(xtextResource, null);
+		CS2PivotResourceAdapter adapter = xtextResource.getCS2ASAdapter(null);
 		Resource pivotResource = adapter.getASResource(xtextResource);
 		assertNoResourceErrors("File Model", pivotResource);
 		assertNoUnresolvedProxies("File Model", pivotResource);
 		assertNoValidationErrors("File Model", pivotResource);
-		return pivotResource;
 	}
 	
 	protected void saveAsXMI(Resource resource, URI xmiURI) throws IOException {

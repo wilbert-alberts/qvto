@@ -11,7 +11,6 @@ package org.eclipse.qvto.examples.xtext.qvtoperational.cs2as;
 
 import java.util.Iterator;
 import java.util.List;
-
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.ocl.examples.domain.elements.DomainOperation;
 import org.eclipse.ocl.examples.domain.elements.DomainPackage;
@@ -37,6 +36,7 @@ import org.eclipse.ocl.examples.pivot.Parameter;
 import org.eclipse.ocl.examples.pivot.PivotFactory;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
 import org.eclipse.ocl.examples.pivot.Property;
+import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.xtext.base.basecs.BaseCSPackage;
 import org.eclipse.ocl.examples.xtext.base.basecs.ClassifierCS;
@@ -117,7 +117,7 @@ public class AutoQVTOperationalCSContainmentVisitor
 	implements QVTOperationalCSVisitor<Continuation<?>>
 {
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/BaseCST", "basecs", BaseCSPackage.eINSTANCE);
-    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/Pivot", "pivot", PivotPackage.eINSTANCE);
+    public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/3.1.0/Pivot", "ocl", PivotPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperational", "qvtoperational", QVTOperationalPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS = IdManager.getNsURIPackageId("http://www.eclipse.org/qvt/pivot/1.0/QVTOperationalCS", "qvtoperationalcs", QVTOperationalCSPackage.eINSTANCE);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Class = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Class", 0);
@@ -136,6 +136,7 @@ public class AutoQVTOperationalCSContainmentVisitor
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ParameterCS = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST.getClassId("ParameterCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Property = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Property", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_QVToClassCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("QVToClassCS", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Root = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_Pivot.getClassId("Root", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_StructuralFeatureCS = PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_3_1_0_s_BaseCST.getClassId("StructuralFeatureCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_TopLevelCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("TopLevelCS", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_TransformationCS = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperationalCS.getClassId("TransformationCS", 0);
@@ -174,32 +175,32 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitClassifierKind(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitClassifierKind is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitFeatureKey(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitFeatureKey is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitInitOp(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitInitOp is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMetamodelKind(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMetamodelKind is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitTopLevelCS(/*@NonNull*/ TopLevelCS self) {
         //
-        // Package
+        // Root
         //
-        Package result;
+        Root result;
         Element element = converter.getPivotElement(self);
-        if ((element != null) && (element.getClass() == Package.class)) {
-            result = (Package)element;
+        if ((element != null) && (element.getClass() == Root.class)) {
+            result = (Root)element;
         }
         else {
-            result = PivotFactory.eINSTANCE.createPackage();
+            result = PivotFactory.eINSTANCE.createRoot();
             assert result != null;
             converter.installPivotDefinition(self, result);
         }
@@ -319,15 +320,15 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitQVToImportCS(/*@NonNull*/ QVToImportCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitQVToImportCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitQVToLibraryCS(/*@NonNull*/ QVToLibraryCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitQVToLibraryCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitQVToOperationCS(/*@NonNull*/ QVToOperationCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitQVToOperationCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitOperationParameterDeclarationCS(/*@NonNull*/ OperationParameterDeclarationCS self) {
@@ -357,11 +358,11 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitOperationSimpleSignatureCS(/*@NonNull*/ OperationSimpleSignatureCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitOperationSimpleSignatureCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitInitPartCS(/*@NonNull*/ InitPartCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitInitPartCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMetamodelCS(/*@NonNull*/ MetamodelCS self) {
@@ -431,7 +432,7 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitPrimitiveTypeCS(/*@NonNull*/ PrimitiveTypeCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitPrimitiveTypeCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitClassifierPropertyCS(/*@NonNull*/ ClassifierPropertyCS self) {
@@ -458,12 +459,12 @@ public class AutoQVTOperationalCSContainmentVisitor
         //
         // Property::isComposite
         //
-        final /*@Nullable*/ /*@Thrown*/ List<? extends Object> qualifier = self.getQualifier();
+        final /*@Nullable*/ /*@Thrown*/ List<String> qualifier = self.getQualifier();
         assert qualifier != null;
         final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_qualifier = idResolver.createOrderedSetOfAll(ORD_PRIMid_String, qualifier);
         /*@NonNull*/ /*@Thrown*/ Object accumulator = ValuesUtil.FALSE_VALUE;
         /*@Nullable*/ Iterator<?> ITERATOR_x = BOXED_qualifier.iterator();
-        /*@Nullable*/ /*@Thrown*/ Boolean exists;
+        /*@Thrown*/ Boolean exists;
         while (true) {
             if (!ITERATOR_x.hasNext()) {
                 if (accumulator == ValuesUtil.FALSE_VALUE) {
@@ -500,71 +501,71 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitStereotypeQualifierCS(/*@NonNull*/ StereotypeQualifierCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitStereotypeQualifierCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitTagCS(/*@NonNull*/ TagCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitTagCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitExceptionCS(/*@NonNull*/ ExceptionCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitExceptionCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitClassifierDefCS(/*@NonNull*/ ClassifierDefCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitClassifierDefCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitClassifierProperty2CS(/*@NonNull*/ ClassifierProperty2CS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitClassifierProperty2CS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitCompleteSignatureCS(/*@NonNull*/ CompleteSignatureCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitCompleteSignatureCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitConfigPropertyCS(/*@NonNull*/ ConfigPropertyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitConfigPropertyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitConstructorCS(/*@NonNull*/ ConstructorCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitConstructorCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitContextualPropertyCS(/*@NonNull*/ ContextualPropertyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitContextualPropertyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitDirectionKindCS(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitDirectionKindCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitElementWithBody(/*@NonNull*/ ElementWithBody self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitElementWithBody is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitImperativeOperationCallExpCS(/*@NonNull*/ ImperativeOperationCallExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitImperativeOperationCallExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitImportKindEnum(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitImportKindEnum is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitLibraryImportCS(/*@NonNull*/ LibraryImportCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitLibraryImportCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitLocalPropertyCS(/*@NonNull*/ LocalPropertyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitLocalPropertyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingBodyCS(/*@NonNull*/ MappingBodyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingBodyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingCallExpCS(/*@NonNull*/ MappingCallExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingCallExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingOperationCS(/*@NonNull*/ MappingOperationCS self) {
@@ -622,107 +623,107 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingEndCS(/*@NonNull*/ MappingEndCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingEndCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingExtensionCS(/*@NonNull*/ MappingExtensionCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingExtensionCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingExtensionKindCS(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingExtensionKindCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingInitCS(/*@NonNull*/ MappingInitCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingInitCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingMethodCS(/*@NonNull*/ MappingMethodCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingMethodCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingModuleCS(/*@NonNull*/ MappingModuleCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingModuleCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingQueryCS(/*@NonNull*/ MappingQueryCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingQueryCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingRuleCS(/*@NonNull*/ MappingRuleCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingRuleCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingSectionCS(/*@NonNull*/ MappingSectionCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingSectionCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMappingSectionsCS(/*@NonNull*/ MappingSectionsCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMappingSectionsCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModuleKindCS(/*@NonNull*/ ModuleKindCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModuleKindCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModuleKindEnum(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModuleKindEnum is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModuleRefCS(/*@NonNull*/ ModuleRefCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModuleRefCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModelTypeCS(/*@NonNull*/ ModelTypeCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModelTypeCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModulePropertyCS(/*@NonNull*/ ModulePropertyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModulePropertyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitModuleUsageCS(/*@NonNull*/ ModuleUsageCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitModuleUsageCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitMultiplicityDefCS(/*@NonNull*/ MultiplicityDefCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitMultiplicityDefCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitObjectExpCS(/*@NonNull*/ ObjectExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitObjectExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitOppositePropertyCS(/*@NonNull*/ OppositePropertyCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitOppositePropertyCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitQualifierKindCS(/*@NonNull*/ Enumerator self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitQualifierKindCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitParameterDeclarationCS(/*@NonNull*/ ParameterDeclarationCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitParameterDeclarationCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitRenameCS(/*@NonNull*/ RenameCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitRenameCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitResolveOpArgsExpCS(/*@NonNull*/ ResolveOpArgsExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitResolveOpArgsExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitPackageRefCS(/*@NonNull*/ PackageRefCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitPackageRefCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitScopedNameCS(/*@NonNull*/ ScopedNameCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitScopedNameCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitSimpleSignatureCS(/*@NonNull*/ SimpleSignatureCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitSimpleSignatureCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitTransformationCS(/*@NonNull*/ TransformationCS self) {
@@ -848,22 +849,22 @@ public class AutoQVTOperationalCSContainmentVisitor
     }
     
     public /*@Nullable*/ Continuation<?> visitTransformationRefineCS(/*@NonNull*/ TransformationRefineCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitTransformationRefineCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitTypeSpecCS(/*@NonNull*/ TypeSpecCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitTypeSpecCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitUnitCS(/*@NonNull*/ UnitCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitUnitCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitResolveExpCS(/*@NonNull*/ ResolveExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitResolveExpCS is not supported by " + getClass().getName());
     }
     
     public /*@Nullable*/ Continuation<?> visitResolveInExpCS(/*@NonNull*/ ResolveInExpCS self) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("visitResolveInExpCS is not supported by " + getClass().getName());
     }
 }

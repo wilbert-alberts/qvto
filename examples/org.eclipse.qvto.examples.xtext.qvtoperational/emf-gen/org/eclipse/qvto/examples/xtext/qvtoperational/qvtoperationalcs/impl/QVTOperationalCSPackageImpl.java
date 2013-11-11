@@ -640,6 +640,15 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTopLevelCS_OwnedType() {
+		return (EReference)topLevelCSEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getQVToClassCS() {
 		return qvToClassCSEClass;
 	}
@@ -2286,6 +2295,7 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		topLevelCSEClass = createEClass(TOP_LEVEL_CS);
 		createEReference(topLevelCSEClass, TOP_LEVEL_CS__IMPORT);
 		createEReference(topLevelCSEClass, TOP_LEVEL_CS__UNIT);
+		createEReference(topLevelCSEClass, TOP_LEVEL_CS__OWNED_TYPE);
 
 		qvToClassCSEClass = createEClass(QV_TO_CLASS_CS);
 		createEAttribute(qvToClassCSEClass, QV_TO_CLASS_CS__INTERMEDIATE);
@@ -2624,8 +2634,9 @@ public class QVTOperationalCSPackageImpl extends EPackageImpl implements QVTOper
 		initEClass(topLevelCSEClass, TopLevelCS.class, "TopLevelCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTopLevelCS_Import(), theBaseCSPackage.getElementCS(), null, "import", null, 0, -1, TopLevelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTopLevelCS_Unit(), theBaseCSPackage.getElementCS(), null, "unit", null, 0, -1, TopLevelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTopLevelCS_OwnedType(), thePivotPackage.getType(), null, "ownedType", null, 0, -1, TopLevelCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(topLevelCSEClass, thePivotPackage.getPackage(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(topLevelCSEClass, thePivotPackage.getRoot(), "ast", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(qvToClassCSEClass, QVToClassCS.class, "QVToClassCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getQVToClassCS_Intermediate(), ecorePackage.getEBoolean(), "intermediate", null, 1, 1, QVToClassCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

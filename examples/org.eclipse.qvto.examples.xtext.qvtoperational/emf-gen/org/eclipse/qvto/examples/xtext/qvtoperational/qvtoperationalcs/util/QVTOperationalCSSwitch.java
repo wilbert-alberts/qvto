@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.xtext.base.basecs.NamedElementCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.NamespaceCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.OperationCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.PackageCS;
+import org.eclipse.ocl.examples.xtext.base.basecs.PackageOwnerCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.ParameterCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.PivotableElementCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.RootCS;
@@ -155,13 +156,12 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				TopLevelCS topLevelCS = (TopLevelCS)theEObject;
 				T result = caseTopLevelCS(topLevelCS);
 				if (result == null) result = caseRootPackageCS(topLevelCS);
-				if (result == null) result = casePackageCS(topLevelCS);
+				if (result == null) result = casePackageOwnerCS(topLevelCS);
 				if (result == null) result = caseRootCS(topLevelCS);
-				if (result == null) result = caseNamespaceCS(topLevelCS);
 				if (result == null) result = caseNamedElementCS(topLevelCS);
 				if (result == null) result = caseModelElementCS(topLevelCS);
-				if (result == null) result = caseNameable(topLevelCS);
 				if (result == null) result = casePivotableElementCS(topLevelCS);
+				if (result == null) result = caseNameable(topLevelCS);
 				if (result == null) result = caseElementCS(topLevelCS);
 				if (result == null) result = casePivotable(topLevelCS);
 				if (result == null) result = caseVisitableCS(topLevelCS);
@@ -255,11 +255,12 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				MetamodelCS metamodelCS = (MetamodelCS)theEObject;
 				T result = caseMetamodelCS(metamodelCS);
 				if (result == null) result = casePackageCS(metamodelCS);
+				if (result == null) result = casePackageOwnerCS(metamodelCS);
 				if (result == null) result = caseNamespaceCS(metamodelCS);
 				if (result == null) result = caseNamedElementCS(metamodelCS);
 				if (result == null) result = caseModelElementCS(metamodelCS);
-				if (result == null) result = caseNameable(metamodelCS);
 				if (result == null) result = casePivotableElementCS(metamodelCS);
+				if (result == null) result = caseNameable(metamodelCS);
 				if (result == null) result = caseElementCS(metamodelCS);
 				if (result == null) result = casePivotable(metamodelCS);
 				if (result == null) result = caseVisitableCS(metamodelCS);
@@ -699,14 +700,15 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 				T result = caseTransformationCS(transformationCS);
 				if (result == null) result = casePackageCS(transformationCS);
 				if (result == null) result = caseClassCS(transformationCS);
+				if (result == null) result = casePackageOwnerCS(transformationCS);
 				if (result == null) result = caseNamespaceCS(transformationCS);
 				if (result == null) result = caseClassifierCS(transformationCS);
 				if (result == null) result = caseNamedElementCS(transformationCS);
 				if (result == null) result = caseTypeCS(transformationCS);
 				if (result == null) result = caseTemplateableElementCS(transformationCS);
 				if (result == null) result = caseModelElementCS(transformationCS);
-				if (result == null) result = caseNameable(transformationCS);
 				if (result == null) result = casePivotableElementCS(transformationCS);
+				if (result == null) result = caseNameable(transformationCS);
 				if (result == null) result = caseElementCS(transformationCS);
 				if (result == null) result = casePivotable(transformationCS);
 				if (result == null) result = caseVisitableCS(transformationCS);
@@ -1689,6 +1691,21 @@ public class QVTOperationalCSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseModelElementCS(ModelElementCS object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Package Owner CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Package Owner CS</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePackageOwnerCS(PackageOwnerCS object) {
 		return null;
 	}
 

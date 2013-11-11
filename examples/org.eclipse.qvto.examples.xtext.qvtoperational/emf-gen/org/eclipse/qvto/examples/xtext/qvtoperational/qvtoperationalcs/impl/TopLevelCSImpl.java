@@ -13,6 +13,8 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.ocl.examples.pivot.Root;
+import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.xtext.base.basecs.ElementCS;
 import org.eclipse.ocl.examples.xtext.base.basecs.impl.RootPackageCSImpl;
 import org.eclipse.ocl.examples.xtext.base.basecs.util.BaseCSVisitor;
@@ -28,6 +30,7 @@ import org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.util.QVTO
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TopLevelCSImpl#getImport <em>Import</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TopLevelCSImpl#getUnit <em>Unit</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.xtext.qvtoperational.qvtoperationalcs.impl.TopLevelCSImpl#getOwnedType <em>Owned Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,6 +57,16 @@ public class TopLevelCSImpl
 	 * @ordered
 	 */
 	protected EList<ElementCS> unit;
+
+	/**
+	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedType()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Type> ownedType;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -95,6 +108,18 @@ public class TopLevelCSImpl
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Type> getOwnedType() {
+		if (ownedType == null) {
+			ownedType = new EObjectContainmentEList<Type>(Type.class, this, QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE);
+		}
+		return ownedType;
+	}
+
+	/**
 	 * The cached invocation delegate for the '{@link #ast() <em>Ast</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -109,9 +134,9 @@ public class TopLevelCSImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public org.eclipse.ocl.examples.pivot.Package ast() {
+	public Root ast() {
 		try {
-			return (org.eclipse.ocl.examples.pivot.Package)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
+			return (Root)AST__EINVOCATION_DELEGATE.dynamicInvoke(this, null);
 		}
 		catch (InvocationTargetException ite) {
 			throw new WrappedException(ite);
@@ -150,6 +175,8 @@ public class TopLevelCSImpl
 				return ((InternalEList<?>)getImport()).basicRemove(otherEnd, msgs);
 			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return ((InternalEList<?>)getUnit()).basicRemove(otherEnd, msgs);
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE:
+				return ((InternalEList<?>)getOwnedType()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -165,6 +192,8 @@ public class TopLevelCSImpl
 				return getImport();
 			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return getUnit();
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE:
+				return getOwnedType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,6 +214,10 @@ public class TopLevelCSImpl
 				getUnit().clear();
 				getUnit().addAll((Collection<? extends ElementCS>)newValue);
 				return;
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE:
+				getOwnedType().clear();
+				getOwnedType().addAll((Collection<? extends Type>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -202,6 +235,9 @@ public class TopLevelCSImpl
 			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				getUnit().clear();
 				return;
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE:
+				getOwnedType().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -217,6 +253,8 @@ public class TopLevelCSImpl
 				return import_ != null && !import_.isEmpty();
 			case QVTOperationalCSPackage.TOP_LEVEL_CS__UNIT:
 				return unit != null && !unit.isEmpty();
+			case QVTOperationalCSPackage.TOP_LEVEL_CS__OWNED_TYPE:
+				return ownedType != null && !ownedType.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

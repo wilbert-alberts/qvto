@@ -162,8 +162,8 @@ RULE_WS=23
 '|'=115
 'class'=75
 '::='=58
-'exception'=73
 'OrderedSet'=56
+'exception'=73
 'UnlimitedNatural'=48
 'intermediate'=112
 'null'=98

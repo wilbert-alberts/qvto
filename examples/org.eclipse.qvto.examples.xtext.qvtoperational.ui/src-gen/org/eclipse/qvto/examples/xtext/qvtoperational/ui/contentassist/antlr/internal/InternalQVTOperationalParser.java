@@ -55945,11 +55945,11 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         state.failed=false;
         return success;
     }
-    public final boolean synpred175_InternalQVTOperational() {
+    public final boolean synpred26_InternalQVTOperational() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred175_InternalQVTOperational_fragment(); // can never throw exception
+            synpred26_InternalQVTOperational_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -55959,11 +55959,11 @@ public class InternalQVTOperationalParser extends AbstractInternalContentAssistP
         state.failed=false;
         return success;
     }
-    public final boolean synpred26_InternalQVTOperational() {
+    public final boolean synpred175_InternalQVTOperational() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred26_InternalQVTOperational_fragment(); // can never throw exception
+            synpred175_InternalQVTOperational_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
