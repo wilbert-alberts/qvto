@@ -401,20 +401,20 @@ public class QVTOperationalCSAdapterFactory extends AdapterFactoryImpl {
 				return createPackageOwnerCSAdapter();
 			}
 			@Override
-			public Adapter caseNameable(Nameable object) {
-				return createNameableAdapter();
-			}
-			@Override
-			public Adapter caseNamedElementCS(NamedElementCS object) {
-				return createNamedElementCSAdapter();
-			}
-			@Override
 			public Adapter caseRootCS(RootCS object) {
 				return createRootCSAdapter();
 			}
 			@Override
 			public Adapter caseRootPackageCS(RootPackageCS object) {
 				return createRootPackageCSAdapter();
+			}
+			@Override
+			public Adapter caseNameable(Nameable object) {
+				return createNameableAdapter();
+			}
+			@Override
+			public Adapter caseNamedElementCS(NamedElementCS object) {
+				return createNamedElementCSAdapter();
 			}
 			@Override
 			public Adapter caseTypeCS(TypeCS object) {
