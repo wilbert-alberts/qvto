@@ -400,7 +400,9 @@ public class QvtOperationalVisitorCS
 	        }
 		}
 		
-  		if (type instanceof Library && !(typeCS.eContainer() instanceof ScopedNameCS)) {
+  		if (type instanceof Library 
+  				&& !(typeCS.eContainer() instanceof ScopedNameCS)
+  				&& !(typeCS.eContainer() instanceof ResolveInExpCS)) {
   			QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalVisitorCS_cantUseLibraryAsType, QvtOperationalTypesUtil.getTypeFullName(type)),
 					typeCS.getStartOffset(), typeCS.getEndOffset());
   			return null;

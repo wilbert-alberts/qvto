@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - Bug 390088
  *     Alex Paperno - bugs 416584, 401521
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
@@ -778,8 +779,8 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	    } else {
 			EClassifier ownerType = QvtOperationalParserUtil.getContextualType(operation);
 			if (ownerType == null) {
-				ownerType = getModuleContextType();
-	            if(ownerType == null) {
+				ownerType = getUMLReflection().getOwningClassifier(operation);
+				if(ownerType == null) {
 	            	return;
 	            }
 			}
@@ -807,15 +808,17 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	        for (Map.Entry<ResolveInExp, MappingsMapKey> entry : myResolveInExps.entrySet()) {
 	            MappingsMapKey mappingsMapKey = entry.getValue();
 	            List<MappingOperation> sameNameAndContextOperations = myMappingsMap.get(mappingsMapKey);
+	            ResolveInExp resolveInExp = entry.getKey();
 	            if (sameNameAndContextOperations != null) {
 	                for (MappingOperation mappingOperation : sameNameAndContextOperations) {
-	                    ResolveInExp resolveInExp = entry.getKey();
 	                    if(resolveInExp.getInMapping() == null) {
 	                    	// Keep only the first occurence found
 	                    	resolveInExp.setInMapping(mappingOperation);
 	                    }
 	                }
 	            }
+	            // assert inMapping has been set, otherwise parse error should have been reported
+	            assert resolveInExp.getInMapping() != null;
 	        }
 	    } else {
 	    	((QvtOperationalEnv)getInternalParent()).resolveResolveInExpInMappings();
