@@ -265,7 +265,15 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 	public Object visitInstantiationExp(InstantiationExp instantiationExp) {
 		Boolean result = Boolean.TRUE;
 		EClass instantiatedClass = instantiationExp.getInstantiatedClass();
+		Variable<EClassifier, EParameter> referredObject = null;
+		if (instantiationExp.eContainer() instanceof Variable<?, ?>) {
+			referredObject = (Variable<EClassifier, EParameter>) instantiationExp.eContainer();
+		}
 
+		if(instantiatedClass == null && (referredObject != null && QVTUMLReflection.isUserModelElement(referredObject.getType()))) {
+			instantiatedClass = (EClass)referredObject.getType();
+		}
+		
 		// declared constructors
 		Adapter adapter = EcoreUtil.getAdapter(instantiationExp.eAdapters(), ConstructorOperationAdapter.class);
 		if (adapter != null) {
@@ -303,12 +311,16 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 
 		// transformation instantiation
 		if(instantiatedClass == null || QvtOperationalStdLibrary.INSTANCE.getTransformationClass().isSuperTypeOf(instantiatedClass) == false) {
-			fEnv.reportError(NLS.bind(
-					ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 
-					fEnv.getFormatter().formatType(instantiatedClass)), 
-					instantiationExp.getStartPosition(), 
-					instantiationExp.getEndPosition());
-			result = Boolean.FALSE;
+			if(referredObject != null)	{ 
+				if(referredObject.getType() != null && (referredObject.getType() instanceof org.eclipse.ocl.types.CollectionType<?,?> == false)) { 
+					fEnv.reportError(NLS.bind(
+							ValidationMessages.QvtOperationalValidationVisitor_invalidInstantiatedType, 
+							fEnv.getFormatter().formatType(instantiatedClass)), 
+							instantiationExp.getStartPosition(), 
+							instantiationExp.getEndPosition());
+					result = Boolean.FALSE;
+				}
+			}
 		} else {
 			ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation((Module) instantiatedClass);
 			if(mainOperation instanceof EntryOperation == false || 

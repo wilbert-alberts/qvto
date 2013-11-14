@@ -97,18 +97,18 @@ public interface LightweightParsersym {
       TK_SINGLE_LINE_COMMENT = 152,
       TK_MULTI_LINE_COMMENT = 153,
       TK_STEREOTYPE_QUALIFIER_OPEN = 116,
-      TK_STEREOTYPE_QUALIFIER_CLOSE = 126,
-      TK_MULTIPLICITY_RANGE = 127,
-      TK_TILDE_SIGN = 128,
+      TK_STEREOTYPE_QUALIFIER_CLOSE = 125,
+      TK_MULTIPLICITY_RANGE = 126,
+      TK_TILDE_SIGN = 127,
       TK_NOT_EQUAL_EXEQ = 89,
-      TK_AT_SIGN = 117,
+      TK_AT_SIGN = 128,
       TK_and = 82,
       TK_implies = 90,
       TK_not = 36,
       TK_or = 85,
       TK_xor = 87,
       TK_if = 40,
-      TK_then = 118,
+      TK_then = 117,
       TK_else = 83,
       TK_endif = 84,
       TK_let = 41,
@@ -136,7 +136,7 @@ public interface LightweightParsersym {
       TK_List = 26,
       TK_break = 42,
       TK_switch = 38,
-      TK_case = 119,
+      TK_case = 118,
       TK_xselect = 129,
       TK_xcollect = 130,
       TK_selectOne = 131,
@@ -173,7 +173,7 @@ public interface LightweightParsersym {
       TK_property = 99,
       TK_opposites = 140,
       TK_class = 141,
-      TK_population = 120,
+      TK_population = 119,
       TK_map = 33,
       TK_xmap = 34,
       TK_late = 35,
@@ -197,9 +197,9 @@ public interface LightweightParsersym {
       TK_main = 92,
       TK_this = 8,
       TK_rename = 146,
-      TK_disjuncts = 121,
-      TK_merges = 122,
-      TK_inherits = 123,
+      TK_disjuncts = 120,
+      TK_merges = 121,
+      TK_inherits = 122,
       TK_composes = 147,
       TK_constructor = 102,
       TK_datatype = 155,
@@ -208,7 +208,7 @@ public interface LightweightParsersym {
       TK_do = 157,
       TK_elif = 86,
       TK_enum = 158,
-      TK_except = 124,
+      TK_except = 123,
       TK_exception = 111,
       TK_from = 159,
       TK_literal = 160,
@@ -223,7 +223,7 @@ public interface LightweightParsersym {
       TK_unlimited = 163,
       TK_ERROR_TOKEN = 2,
       TK_IDENTIFIER = 3,
-      TK_EOF_TOKEN = 125;
+      TK_EOF_TOKEN = 124;
 
     public final static String orderedTerminalSymbols[] = {
                  "", //$NON-NLS-1$
@@ -343,7 +343,6 @@ public interface LightweightParsersym {
                  "COLONCOLONEQUAL", //$NON-NLS-1$
                  "QUESTIONMARK", //$NON-NLS-1$
                  "STEREOTYPE_QUALIFIER_OPEN", //$NON-NLS-1$
-                 "AT_SIGN", //$NON-NLS-1$
                  "then", //$NON-NLS-1$
                  "case", //$NON-NLS-1$
                  "population", //$NON-NLS-1$
@@ -355,6 +354,7 @@ public interface LightweightParsersym {
                  "STEREOTYPE_QUALIFIER_CLOSE", //$NON-NLS-1$
                  "MULTIPLICITY_RANGE", //$NON-NLS-1$
                  "TILDE_SIGN", //$NON-NLS-1$
+                 "AT_SIGN", //$NON-NLS-1$
                  "xselect", //$NON-NLS-1$
                  "xcollect", //$NON-NLS-1$
                  "selectOne", //$NON-NLS-1$

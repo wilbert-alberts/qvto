@@ -1761,7 +1761,7 @@
 
 	ImperativeExpCS -> newExpCS
 
-	newExpCS ::= new newTypespecCS '(' argumentsCSopt ')' 
+	newExpCS ::= new typespec '(' argumentsCSopt ')' 
 		/.$BeginCode
 				OCLExpressionCS result = createNewRuleCallExpCS((TypeSpecCS) getRhsSym(2), (EList) getRhsSym(4));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(5));
@@ -1769,16 +1769,6 @@
 		  $EndCode
 		./	
 
-	newTypespecCS ::= pathNameCS
-		/.$BeginCode
-					CSTNode result = createTypeSpecCS(
-						(TypeCS)getRhsSym(1),
-						null
-						);
-					setResult(result);
-		  $EndCode
-		./
-	
 		
 	-- imperative BreakExp and ContinueExp registration
 		

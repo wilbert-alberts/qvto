@@ -2034,19 +2034,6 @@
 		./
 
 
-	----- QVTo type extension for InstantiationExp
-
-	newTypespecCS ::= pathNameCS '@' IDENTIFIER
-		/.$BeginCode
-					CSTNode result = createTypeSpecCS(
-						(TypeCS)getRhsSym(1),
-						getRhsIToken(3)
-						);
-					setResult(result);
-		  $EndCode
-		./
-
-
 	--=== // Expressions (end) ===--
 
 
