@@ -139,11 +139,11 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     public static List<URI> doLaunch(final QvtTransformation transformation, final List<ModelContent> inObjs,
-    		List<TargetUriData> targetData, Map<String, Object> configProps, final String traceFileName) throws Exception {
+    		List<TargetUriData> targetData, Map<String, String> configProps, final String traceFileName) throws Exception {
     	return doLaunch(transformation, inObjs, targetData, traceFileName, QvtLaunchUtil.createContext(configProps));
     }
 
-    public static void doLaunch(QvtTransformation transformation, List<ModelContent> inObjs, Map<String, Object> configProps,
+    public static void doLaunch(QvtTransformation transformation, List<ModelContent> inObjs, Map<String, String> configProps,
     		List<ModelExtentContents> outExtents, List<EObject> outMainParams, List<Trace> outTraces, List<String> outConsole) throws MdaException {
 
         IStatus status = QvtValidator.validateTransformation(transformation, inObjs, null);                    

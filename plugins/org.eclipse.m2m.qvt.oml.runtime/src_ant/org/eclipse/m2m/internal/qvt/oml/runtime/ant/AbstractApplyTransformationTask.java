@@ -372,8 +372,8 @@ public abstract class AbstractApplyTransformationTask extends Task {
         }
     }
     
-    protected Map<String, Object> getConfiguration() {
-        Map<String, Object> props = new HashMap<String, Object>();
+    protected Map<String, String> getConfiguration() {
+        Map<String, String> props = new HashMap<String, String>();
         for (ConfigurationProperty property : myConfigurationProperties) {
             props.put(property.getName(), property.getValue());
         }

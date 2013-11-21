@@ -448,7 +448,7 @@ public class InternalTransformationExecutor {
 		ctx.setMonitor(executionContext.getMonitor());
 
 		for (String key : executionContext.getConfigPropertyNames()) {
-			Object value = executionContext.getConfigProperty(key);
+			String value = executionContext.getConfigProperty(key);
 			ctx.setConfigProperty(key, value);
 		}
 

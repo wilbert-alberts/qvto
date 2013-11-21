@@ -60,11 +60,11 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 		return runQvtModuleTestCase(testCaseName, null);
 	}
 	
-	protected QvtRuntimeException runQvtModuleTestCase(String testCaseName, Map<String, Object> configProperties) throws Exception {
+	protected QvtRuntimeException runQvtModuleTestCase(String testCaseName, Map<String, String> configProperties) throws Exception {
 	    ITransformer transformer = createTransformer();
 		try {
-			Map<String, Object> passedProps = (configProperties == null) ? Collections.<String, Object>emptyMap() : configProperties;
-			Map<String, Object> extProps = new HashMap<String, Object>(passedProps);
+			Map<String, String> passedProps = (configProperties == null) ? Collections.<String, String>emptyMap() : configProperties;
+			Map<String, String> extProps = new HashMap<String, String>(passedProps);
 			extProps.put("testcase", testCaseName);		//$NON-NLS-1$		
 			IContext context = QvtLaunchUtil.createContext(extProps);
 			

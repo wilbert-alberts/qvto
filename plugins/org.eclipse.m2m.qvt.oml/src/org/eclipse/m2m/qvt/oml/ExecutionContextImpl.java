@@ -29,7 +29,7 @@ import org.eclipse.m2m.qvt.oml.util.Log;
  */
 public final class ExecutionContextImpl implements ExecutionContext {
 
-	private Map<String, Object> fConfigProperties = new HashMap<String, Object>(
+	private Map<String, String> fConfigProperties = new HashMap<String, String>(
 			5);
 
 	private EvaluationMonitor fMonitor;
@@ -51,7 +51,7 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	 * org.eclipse.m2m.qvt.oml.ExecutionContext#getConfigProperty(java.lang.
 	 * String)
 	 */
-	public Object getConfigProperty(String name) {
+	public String getConfigProperty(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
 		}
@@ -67,7 +67,7 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	 * @param value
 	 *            the value object
 	 */
-	public void setConfigProperty(String name, Object value) {
+	public void setConfigProperty(String name, String value) {
 		if (name == null) {
 			throw new IllegalArgumentException("null config property name"); //$NON-NLS-1$
 		}

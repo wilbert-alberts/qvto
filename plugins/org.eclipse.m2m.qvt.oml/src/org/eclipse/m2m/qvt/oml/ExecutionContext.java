@@ -48,7 +48,7 @@ public interface ExecutionContext {
 	 *         {@link #getConfigPropertyNames}
 	 * 
 	 */
-	Object getConfigProperty(String name);
+	String getConfigProperty(String name);
 
 	/**
 	 * Gets the logger implementation assigned to this context.

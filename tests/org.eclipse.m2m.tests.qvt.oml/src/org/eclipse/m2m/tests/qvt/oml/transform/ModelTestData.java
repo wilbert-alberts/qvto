@@ -225,7 +225,7 @@ public abstract class ModelTestData {
     }
     
     protected static IContext makeFileContext(String[][] props) {
-        Map<String, Object> cfgMap = new HashMap<String, Object>();
+        Map<String, String> cfgMap = new HashMap<String, String>();
         for (int i = 0; i < props.length; i++) {
             cfgMap.put(props[i][0], props[i][1]);
         }

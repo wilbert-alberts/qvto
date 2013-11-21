@@ -41,7 +41,7 @@ public interface IContext {
 	 */
     EvaluationMonitor getMonitor();
 		
-    Map<String, Object> getConfigProperties();
+    Map<String, String> getConfigProperties();
     
     Object getConfigProperty(String name);
     

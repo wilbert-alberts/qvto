@@ -147,13 +147,13 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION, myTransformation);
+        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION, myTransformation.toString());
 
         myTransformationParametersPage.applyConfiguration(workingCopy);
         
 		if (myTransformationParametersPage.isOpenInEditor()) {
 			List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(workingCopy);
-			InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(targetUris));
+			InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(targetUris).toString());
 		}
         
         workingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, myTransformationData.getConfiguration());

@@ -870,7 +870,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
 			// bug 416584: Now we need to access configuration properties of non-entry modules
 			Context nestedContext = EvaluationUtil.createAggregatedContext(currentEnv);
-			Map<String,Object> configProps = getOperationalEvaluationEnv().getContext().getConfigProperties(); 
+			Map<String,String> configProps = getOperationalEvaluationEnv().getContext().getConfigProperties(); 
 			for (String propName : configProps.keySet()) {
 				nestedContext.setConfigProperty(propName, configProps.get(propName));
 			}

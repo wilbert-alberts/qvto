@@ -41,7 +41,7 @@ public class InMemoryLaunchUtils {
         return listValue.iterator().next();
     }
     
-    public static void setAttribute(ILaunchConfigurationWorkingCopy config, String name, Object value) {
+    public static void setAttribute(ILaunchConfigurationWorkingCopy config, String name, String value) {
         List<String> list;
         if(value == null) {
             list = Collections.<String>emptyList(); 

@@ -25,14 +25,14 @@ import org.eclipse.m2m.qvt.oml.util.Log;
  */
 public class Context implements IContext {
 
-    private final Map<String, Object>  myConfiguration;
+    private final Map<String, String>  myConfiguration;
     private SessionDataImpl myData;
 
     private Log myLog;
     private EvaluationMonitor myMonitor;
     
     public Context() {
-    	myConfiguration = new HashMap<String, Object>();
+    	myConfiguration = new HashMap<String, String>();
     	myLog = Log.NULL_LOG;
 		myMonitor = new DefaultMonitor();
 		myData = new SessionDataImpl();
@@ -73,7 +73,7 @@ public class Context implements IContext {
     	return myData;
     }
     
-    public Map<String, Object> getConfigProperties() {    
+    public Map<String, String> getConfigProperties() {    
     	return Collections.unmodifiableMap(myConfiguration);
     }
     
@@ -84,7 +84,7 @@ public class Context implements IContext {
     	return myConfiguration.get(name);
     }
     
-    public void setConfigProperty(String name, Object value) {    
+    public void setConfigProperty(String name, String value) {    
     	if(name == null) {
     		throw new IllegalArgumentException("null config property name"); //$NON-NLS-1$
     	}

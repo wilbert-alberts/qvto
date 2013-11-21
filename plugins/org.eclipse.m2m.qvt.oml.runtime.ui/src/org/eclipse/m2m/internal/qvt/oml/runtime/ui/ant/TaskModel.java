@@ -142,7 +142,7 @@ public class TaskModel {
 			result += "\n";
 			result += INDENT + "<configProperty\n";
 		}
-		for (Entry<String, Object> entry : myConfigProps.entrySet()) {
+		for (Entry<String, String> entry : myConfigProps.entrySet()) {
 			Object value = entry.getValue();
 			if (value != null && value.toString() != "") { //$NON-NLS-1$
 				result += INDENT + INDENT + "name=\"" + entry.getKey() + "\"\n";
@@ -185,7 +185,7 @@ public class TaskModel {
 	private final String myTraceFile;
 	private final boolean myIsUseTraceFile;
 	private final List<TargetUriData> myTargetUris;
-	private final Map<String, Object> myConfigProps;
+	private final Map<String, String> myConfigProps;
 	private final QvtTransformation myTransformation;
 	private final Map<String, Object> myAttributes;
 	

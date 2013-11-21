@@ -441,7 +441,7 @@ public class QvtoAntTransformationTask extends Task {
 		return myTrace.getURI(project).toString();
 	}
 	
-	private Map<String, Object> getConfiguration() {
+	private Map<String, String> getConfiguration() {
 	    return myConfigProperties;
 	}
 	
@@ -471,7 +471,7 @@ public class QvtoAntTransformationTask extends Task {
 	private Trace myTrace;
 	
 	private final List<ModelParameter> myModelParameters = new ArrayList<ModelParameter>(3);
-	private final Map<String, Object> myConfigProperties = new LinkedHashMap<String, Object>(3);
+	private final Map<String, String> myConfigProperties = new LinkedHashMap<String, String>(3);
 	
 	//private static final String SYSTEM_FS = System.getProperty("file.separator"); //$NON-NLS-1$
 	private static final String MSDOS_FS = "\\"; //$NON-NLS-1$

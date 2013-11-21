@@ -116,16 +116,16 @@ public class QvtLaunchUtil {
         return URI.createPlatformResourceURI(traceFilePath.toOSString().toString(), false).toString();
     }
     
-    public static Map<String, Object> getConfigurationProperty(ILaunchConfiguration configuration) {
+    public static Map<String, String> getConfigurationProperty(ILaunchConfiguration configuration) {
         return loadConfigurationProperties(configuration);
     }
     
     public static Context createContext(ILaunchConfiguration configuration) {
-    	Map<String, Object> configProps = getConfigurationProperty(configuration);
+    	Map<String, String> configProps = getConfigurationProperty(configuration);
     	return createContext(configProps);
     }
 
-	public static Context createContext(Map<String, Object> configProps) {
+	public static Context createContext(Map<String, String> configProps) {
 		Context context = new Context();
 		if (configProps != null) {
 	    	for (String name : configProps.keySet()) {
@@ -136,14 +136,13 @@ public class QvtLaunchUtil {
 	}
     
 
-    @SuppressWarnings("unchecked")
-    public static Map<String, Object> loadConfigurationProperties(ILaunchConfiguration configuration) {
-        Map<String, Object> map;
+    public static Map<String, String> loadConfigurationProperties(ILaunchConfiguration configuration) {
+        Map<String, String> map;
         try {
             Map<String, String> configProps = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());
-            map = new LinkedHashMap<String, Object>(configProps);
+            map = new LinkedHashMap<String, String>(configProps);
         } catch (CoreException e) {
-            map = Collections.<String, Object>emptyMap();
+            map = Collections.<String, String>emptyMap();
             QvtRuntimePlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e)); 
         }
         return map;

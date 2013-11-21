@@ -90,7 +90,7 @@ public class InvocationTest extends TestCase {
 	}
 	
 	public void testAssertFailed() throws Exception {
-		fContext.setConfigProperty("assertFail", Boolean.TRUE); //$NON-NLS-1$		
+		fContext.setConfigProperty("assertFail", Boolean.TRUE.toString()); //$NON-NLS-1$		
 		ExecutionDiagnostic  diagnostic = fExecutor.execute(fContext, fInput, fOutput);		
 		
 		assertEquals(Diagnostic.ERROR, diagnostic.getSeverity());
@@ -101,7 +101,7 @@ public class InvocationTest extends TestCase {
 	
 	public void testStackTrace() throws Exception {
 		// provoke an exception
-		fContext.setConfigProperty("assertFail", Boolean.TRUE); //$NON-NLS-1$		
+		fContext.setConfigProperty("assertFail", Boolean.TRUE.toString()); //$NON-NLS-1$		
 		ExecutionDiagnostic diagnostic = fExecutor.execute(fContext, fInput, fOutput);
 		assertEquals(2, diagnostic.getStackTrace().size());
 		
@@ -119,7 +119,7 @@ public class InvocationTest extends TestCase {
 	}
 
 	public void testMutlipleOutObjects() throws Exception {
-		fContext.setConfigProperty("createTwoObjects", true);
+		fContext.setConfigProperty("createTwoObjects", "true");
 		ExecutionDiagnostic  diagnostic = fExecutor.execute(fContext, fInput, fOutput);		
 		assertEquals(Diagnostic.OK, diagnostic.getSeverity());
 		assertOutputObject(fOutput);

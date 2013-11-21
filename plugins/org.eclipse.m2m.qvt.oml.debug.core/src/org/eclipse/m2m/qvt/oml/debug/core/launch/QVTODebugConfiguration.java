@@ -91,9 +91,9 @@ public class QVTODebugConfiguration extends QvtLaunchConfigurationDelegate {
 	
 	private ExecutionContextImpl createExecutionContext(ILaunchConfiguration configuration) {
 		ExecutionContextImpl context = new ExecutionContextImpl();
-		Map<String, Object> configProperties = QvtLaunchUtil.loadConfigurationProperties(configuration);
+		Map<String, String> configProperties = QvtLaunchUtil.loadConfigurationProperties(configuration);
 		for (String name : configProperties.keySet()) {
-			Object value = configProperties.get(name);
+			String value = configProperties.get(name);
 			context.setConfigProperty(name, value);
 		}
 		return context;

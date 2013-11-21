@@ -61,7 +61,7 @@ public class ExecTransformationTestCase extends ApiTestCase {
 				: inObjects.get(0).eResource().getResourceSet();
 		TransfExecutionResult execResult = new QvtoTransformationHelper(
 				scriptUri).executeTransformation(inObjects, Collections
-				.<String, Object> emptyMap(), metamodelResourceSet);
+				.<String, String> emptyMap(), metamodelResourceSet);
 
 		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents()
 				.iterator();
