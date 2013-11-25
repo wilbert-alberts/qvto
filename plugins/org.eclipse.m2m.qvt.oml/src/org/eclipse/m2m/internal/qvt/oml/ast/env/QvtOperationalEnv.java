@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - Bug 390088
- *     Alex Paperno - bugs 416584, 401521
+ *     Alex Paperno - bugs 416584, 401521, 403440
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -259,7 +259,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		return TypeUtil.findOperationMatching(this, owner, name, args);
 	}
 	
-    public List<EOperation> lookupMappingOperations(EClassifier owner, String name) {
+    public List<MappingOperation> lookupMappingOperations(EClassifier owner, String name) {
         if (owner == null) {
             owner = getModuleContextType();
             if(owner == null) {
@@ -269,10 +269,10 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 
         UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> uml = getUMLReflection();
         List<EOperation> operations = TypeUtil.getOperations(this, owner);
-        List<EOperation> result = new ArrayList<EOperation>();
+        List<MappingOperation> result = new ArrayList<MappingOperation>();
 		for (EOperation operation : operations) {
 		    if (uml.getName(operation).equals(name) && QvtOperationalUtil.isMappingOperation(operation)) {
-		        result.add(operation);
+		        result.add((MappingOperation)operation);
 		    }
 		}
 

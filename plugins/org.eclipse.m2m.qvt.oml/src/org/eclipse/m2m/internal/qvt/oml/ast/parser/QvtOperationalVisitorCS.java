@@ -9,7 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299, 414619
+ *                         419299, 414619, 403440
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -3728,8 +3728,8 @@ public class QvtOperationalVisitorCS
 	/**
 	 * TODO - make a common resolution operation, reusable in for ResolveInExp too. 
 	 */
-	private List<EOperation> resolveMappingOperationReference(ScopedNameCS identifierCS, QvtOperationalEnv env) {
-		List<EOperation> result = Collections.emptyList();
+	private List<MappingOperation> resolveMappingOperationReference(ScopedNameCS identifierCS, QvtOperationalEnv env) {
+		List<MappingOperation> result = Collections.emptyList();
 		
 		TypeCS typeCS = identifierCS.getTypeCS();
 		EClassifier owningType = null;		
@@ -3745,8 +3745,8 @@ public class QvtOperationalVisitorCS
 		}
 		// filter out inherited mappings
 		if(!result.isEmpty()) {
-			List<EOperation> ownerLocalOpers = new ArrayList<EOperation>(result.size());
-	        for (EOperation operation : result) {
+			List<MappingOperation> ownerLocalOpers = new ArrayList<MappingOperation>(result.size());
+	        for (MappingOperation operation : result) {
 	            EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
 	            if ((typeCS == null && owner == null) || (TypeUtil.resolveType(env, owner) == owningType)) {
 	                ownerLocalOpers.add(operation);
@@ -3777,10 +3777,10 @@ public class QvtOperationalVisitorCS
 				MappingExtensionKindCS kind = extensionCS.getKind();
 				
 				for (ScopedNameCS identifierCS : extensionCS.getMappingIdentifiers()) {
-					List<EOperation> mappings = resolveMappingOperationReference(identifierCS, env);
+					List<MappingOperation> mappings = resolveMappingOperationReference(identifierCS, env);
 					if(mappings.size() == 1) {
 						boolean isAdded = false;
-						MappingOperation extendedMapping = (MappingOperation)mappings.get(0);
+						MappingOperation extendedMapping = mappings.get(0);
 						if(kind == MappingExtensionKindCS.INHERITS) {
 							isAdded = operation.getInherited().add(extendedMapping);
 							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);
@@ -4567,14 +4567,20 @@ public class QvtOperationalVisitorCS
         EClassifier eClassifier = (contextTypeCS == null) ? null : visitTypeCS(contextTypeCS, null, env); // mapping context type
         eClassifier = eClassifier != null ? eClassifier : env.getModuleContextType();
         String mappingName = resolveInExpCS.getInMappingName().getValue();
-        List<EOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, mappingName);
-        List<EOperation> mappingOperations = new ArrayList<EOperation>();
+        List<MappingOperation> rawMappingOperations = env.lookupMappingOperations(eClassifier, mappingName);
+        List<MappingOperation> unfilteredMappingOperations = new ArrayList<MappingOperation>(2);
+        List<MappingOperation> mappingOperations = new ArrayList<MappingOperation>(2);
         
-        for (EOperation operation : rawMappingOperations) {
+        for (MappingOperation operation : rawMappingOperations) {
             EClassifier owner = env.getUMLReflection().getOwningClassifier(operation);
             if (((contextTypeCS == null) && (owner == null))
                     || (TypeUtil.resolveType(env, owner) == eClassifier)) {
-                mappingOperations.add(operation);
+            	unfilteredMappingOperations.add(operation);
+            }
+        }
+        for (MappingOperation operation : unfilteredMappingOperations) {
+            if (!unfilteredMappingOperations.contains(operation.getOverridden())) {
+            	mappingOperations.add(operation);
             }
         }
         if (mappingOperations.size() == 1) {

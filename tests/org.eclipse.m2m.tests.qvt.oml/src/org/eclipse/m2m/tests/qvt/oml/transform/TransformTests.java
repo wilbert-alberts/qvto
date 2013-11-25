@@ -11,7 +11,7 @@
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
  *                         397215, 397959, 358709, 388801, 254962, 414555
  *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131,
- *                         274105, 274505, 415029, 419299
+ *                         274105, 274505, 415029, 419299, 403440
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -344,6 +344,7 @@ public class TransformTests {
         		new FilesToFilesData("bug419299", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug224094", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FilesToFilesData("bug390088", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FileToFileData("bug403440"), //$NON-NLS-1$
         		};
     }
 
