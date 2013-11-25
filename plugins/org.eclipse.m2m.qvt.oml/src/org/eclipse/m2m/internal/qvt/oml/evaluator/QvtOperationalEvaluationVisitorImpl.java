@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642
  *     Alex Paperno - bugs 294127, 416584, 419299
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -1359,9 +1359,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             @SuppressWarnings("unchecked")
             CollectionType<EClassifier, EOperation> collType = (CollectionType<EClassifier, EOperation>) imperativeIterateExp.getSource().getType();
             
+            
             Object initResultVal = null;
             if (imperativeIterateExp.getName().equals("xselect")) { //$NON-NLS-1$
-                initResultVal = EvaluationUtil.createNewCollection(collType);
+                initResultVal = EvaluationUtil.createNewCollectionOfSameKind((Collection<?>) sourceValue);
             } else if (imperativeIterateExp.getName().equals("xcollect")  //$NON-NLS-1$
                     || imperativeIterateExp.getName().equals("collectselect")) { //$NON-NLS-1$
                 initResultVal = ((collType instanceof SetType<?,?>) || (collType instanceof BagType<?,?>)) ?
