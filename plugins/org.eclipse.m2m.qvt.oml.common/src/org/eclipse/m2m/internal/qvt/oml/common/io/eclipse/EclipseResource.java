@@ -13,10 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.common.io.eclipse;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -28,20 +25,6 @@ import org.eclipse.m2m.internal.qvt.oml.common.io.CResource;
 public class EclipseResource implements CResource {
 	public EclipseResource(IResource resource) {
 		myResource = resource;
-	}
-	
-	public IFileStore getFileStore() throws IOException {
-		try {
-			URI locationURI = myResource.getLocationURI();
-			if(locationURI == null) {
-				throw new IOException(myResource + " not found"); //$NON-NLS-1$
-			}
-			return EFS.getStore(locationURI);
-		} catch (CoreException e) {
-			IOException io = new IOException();
-			io.initCause(e);
-			throw io;
-		}
 	}
 	
 	public String getName() {

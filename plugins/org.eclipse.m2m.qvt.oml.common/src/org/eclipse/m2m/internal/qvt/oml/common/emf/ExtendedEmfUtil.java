@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.emf;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -33,12 +32,8 @@ public class ExtendedEmfUtil {
     private ExtendedEmfUtil() {}
     
 	public static ModelContent loadModel(CFile modelFile) {
-		try {
-			URI uri = URI.createURI(modelFile.getFileStore().toURI().toString());
-			return EmfUtil.loadModel(uri);
-		} catch (IOException e) {
-			return null;
-		}
+		URI uri = URI.createFileURI(modelFile.getFullPath());
+		return EmfUtil.loadModel(uri);
     }
     
     public static void saveModel(EObject eObject, URI uri, Map<?,?> options) throws MdaException {

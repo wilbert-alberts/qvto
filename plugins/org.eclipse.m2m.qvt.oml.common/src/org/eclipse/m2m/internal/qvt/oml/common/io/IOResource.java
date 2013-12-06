@@ -14,24 +14,11 @@ package org.eclipse.m2m.internal.qvt.oml.common.io;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 
 public class IOResource implements CResource {
 	public IOResource(File file) {
 		myFile = file.getAbsoluteFile();
-	}
-	
-	public IFileStore getFileStore() throws IOException {
-		try {
-			return EFS.getStore(myFile.toURI());
-		} catch (CoreException e) {
-			IOException io = new IOException();
-			io.initCause(e);
-			throw io;
-		}
 	}
 	
 	public String getName() {

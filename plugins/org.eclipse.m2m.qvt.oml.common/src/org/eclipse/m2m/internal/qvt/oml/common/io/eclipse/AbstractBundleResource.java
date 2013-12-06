@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.common.io.eclipse;
 
 import java.io.IOException;
 
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CResource;
 
@@ -43,10 +42,6 @@ public abstract class AbstractBundleResource implements CResource {
 	public String getExtension() {
 		return resourcePath.getFileExtension();		
 	}	
-
-	public IFileStore getFileStore() throws IOException {
-		throw new UnsupportedOperationException("IFileStore for bundle-file is not supported"); //$NON-NLS-1$		
-	}
 
 	public String getFullPath() {
 		return resourcePath.toOSString(); 

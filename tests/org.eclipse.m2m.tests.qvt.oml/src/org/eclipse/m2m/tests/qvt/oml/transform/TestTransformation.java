@@ -282,7 +282,7 @@ public abstract class TestTransformation extends TestCase {
 			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
 				if (inUri == null) {
 			        CFile outFile = getModelExtentFile(eclipseFile, transfParam);	    			        
-			        inUri = URI.createURI(outFile.getFileStore().toURI().toString());
+			        inUri = URI.createFileURI(outFile.getFullPath());
 			        ++outExtentCount;
 				}
 				targetData.add(new TargetUriData(TargetType.NEW_MODEL, inUri.toString(), null, false));

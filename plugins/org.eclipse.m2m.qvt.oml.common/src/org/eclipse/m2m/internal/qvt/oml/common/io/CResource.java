@@ -13,10 +13,7 @@ package org.eclipse.m2m.internal.qvt.oml.common.io;
 
 import java.io.IOException;
 
-import org.eclipse.core.filesystem.IFileStore;
-
 public interface CResource {
-	IFileStore getFileStore() throws IOException;
 	String getName();
     String getExtension();
 	String getFullPath();
