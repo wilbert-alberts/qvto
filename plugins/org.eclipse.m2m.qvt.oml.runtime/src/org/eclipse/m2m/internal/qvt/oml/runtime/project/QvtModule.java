@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 267917
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -50,6 +51,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation.TransformationParameter;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.EMFType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.ConversionUtils;
 import org.eclipse.ocl.types.VoidType;
 import org.eclipse.osgi.util.NLS;
 
@@ -304,12 +306,14 @@ public abstract class QvtModule {
         for (EStructuralFeature property : module.getConfigProperty()) {
                 EClassifier type = property.getEType();
                 if (type instanceof EDataType) {
+                	ConversionUtils.setupConversionDelegate(type);
                     propSet.add(
                             new QvtConfigurationProperty(
                                     property.getName(), 
                                     new EMFType((EDataType) type)
                             )
                     );
+                    
                 } else if (QvtOperationalUtil.isPrimitiveType(type)) {
                     propSet.add(
                             new QvtConfigurationProperty(

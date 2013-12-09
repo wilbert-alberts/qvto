@@ -22,7 +22,7 @@ import org.eclipse.m2m.qvt.oml.util.Dictionary;
 
 public class DictionaryImpl<KeyT, T> implements Dictionary<KeyT, T> {
 
-	private Map<KeyT, T> fMap;
+	private final Map<KeyT, T> fMap;
 	
 	public DictionaryImpl() {
 		fMap = new HashMap<KeyT, T>();
@@ -146,4 +146,21 @@ public class DictionaryImpl<KeyT, T> implements Dictionary<KeyT, T> {
 	public String toString() {	
 		return "Dict" + fMap.toString(); //$NON-NLS-1$
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof DictionaryImpl))
+            return false;
+
+        return fMap.equals(((DictionaryImpl) o).fMap);
+    }
+	
+	@Override
+    public int hashCode() {
+		return fMap.hashCode();
+    }
+    
 }

@@ -11,7 +11,7 @@
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
  *                         397215, 397959, 358709, 388801, 254962, 414555
  *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131,
- *                         274105, 274505, 415029, 419299, 403440
+ *                         274105, 274505, 415029, 419299, 403440, 267917
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -346,6 +346,25 @@ public class TransformTests {
         		new FilesToFilesData("bug390088", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
         		new FileToFileData("bug403440"), //$NON-NLS-1$
         		new FileToFileData("bug414642"), //$NON-NLS-1$
+        		new FilesToFilesData("bug267917", Collections.<String>emptyList(), Collections.<String>emptyList(), new String[][] { //$NON-NLS-1$ 
+        				new String[] { "optionsDict1", "b=b1, c=c1, a=a1" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict2", "b=10, c=100, a=-1" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict3", "true=false, false=true" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict4", "b=2.2, c=3.3, a=1.1" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict5", "1=a, 2=b, 3=c" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict6", "1=true, 2=false" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict7", null }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsSet", "1.0, 1.1, 1.2" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsList", "foo, bar" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsSequence", "-1, 10" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsOrderedSet", "bar, foo" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedDict1", "[a\\\\a=[a, b], a\\,a=[b, c], a\\[\\[a=[b, c]]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedDict2", "[[3.0=]=[4=4.0], [1.0=a]=[2=2.0]]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedSet1", "[[1.0]]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedSet2", "[[1.1], [2.2], [0.0, 3.3]]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedSet3", "[]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "nestedSet4", "[[]]" }, //$NON-NLS-1$ //$NON-NLS-2$
+        		}),         		        		
         		};
     }
 

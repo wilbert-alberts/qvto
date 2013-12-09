@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642
- *     Alex Paperno - bugs 294127, 416584, 419299
+ *     Alex Paperno - bugs 294127, 416584, 419299, 267917
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -32,7 +32,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EModelElement;
@@ -97,6 +96,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.LateResolveInTask;
 import org.eclipse.m2m.internal.qvt.oml.library.LateResolveTask;
 import org.eclipse.m2m.internal.qvt.oml.library.QvtResolveUtil;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.ConversionUtils;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
@@ -158,7 +158,6 @@ import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.types.BagType;
 import org.eclipse.ocl.types.CollectionType;
-import org.eclipse.ocl.types.PrimitiveType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
@@ -167,6 +166,7 @@ import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
+
 
 public class QvtOperationalEvaluationVisitorImpl
 	extends EvaluationVisitorImpl<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter,
@@ -467,7 +467,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	//value = EvaluationUtil.createInitialValue(propertyType, getEnvironment().getOCLStandardLibrary(), getEvaluationEnvironment());
         }
         else if(rawValue instanceof String && propertyType != getEnvironment().getOCLStandardLibrary().getString()) {
-			value = createFromString(propertyType, (String) rawValue);
+        	try {
+        		value = ConversionUtils.createFromString(propertyType, (String) rawValue);
+        	}
+        	catch (IllegalArgumentException e) {
+        		value = getInvalid();
+        	}
+        	
         }
 
         if(value == getInvalid()) {
@@ -2271,47 +2277,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return (QvtOperationalEvaluationVisitor)getVisitor();
     }
     
-	private Object createFromString(final EClassifier type, final String stringValue) {
-		if(stringValue == null) {
-			return null;
-		}
-		
-        if (!QvtOperationalUtil.isCreateFromStringSupported(type)) {
-            return getInvalid();
-        }
-        
-        // QVT primitive type
-        // FIXME - should rather used primitive type singletons from the Standard library
-        try {
-	        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.INTEGER_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
-	            return new Integer(stringValue);
-	        } 
-	        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.REAL_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
-	            return new Double(stringValue);
-	        }
-        } catch (NumberFormatException e) {
-        	return getInvalid();
-		}
-        
-        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.STRING_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
-            return new String(stringValue);
-        } 
-        
-        if (type instanceof org.eclipse.ocl.ecore.PrimitiveType && PrimitiveType.BOOLEAN_NAME.equals(((org.eclipse.ocl.ecore.PrimitiveType) type).getName())) {
-            return Boolean.valueOf(stringValue);
-        } 
-        // Enumeration
-        if (type instanceof EDataType) {
-        	if(type.getEPackage() != null && type.getEPackage().getEFactoryInstance() != null) {
-	            Object value = type.getEPackage().getEFactoryInstance().createFromString((EDataType) type, stringValue);
-	            if (value != null) {
-	            	return value;
-	            }
-			}
-        }
-        
-        return getInvalid();
-	}
     
 	/**
 	 * TODO - Avoid using this exception return expression to interrupt execution flow for 
