@@ -9,7 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299, 414619, 403440
+ *                         419299, 414619, 403440, 415024
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -214,6 +214,7 @@ import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.SendSignalAction;
+import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.CollectionLiteralPart;
@@ -4034,6 +4035,13 @@ public class QvtOperationalVisitorCS
 	                    VariableExp<EClassifier, EParameter> sourceExp = (VariableExp<EClassifier, EParameter>) source;
 	                    Variable<EClassifier, EParameter> sourceVariable = sourceExp.getReferredVariable();
 	                    QvtOperationalParserUtil.validateVariableModification(sourceVariable, lValueCS, property, env, false);
+	                }
+	                else if (source instanceof PropertyCallExp) {
+	                	PropertyCallExp<EClassifier, EParameter> sourceExp = (PropertyCallExp<EClassifier, EParameter>) source;
+	                	if (sourceExp.getType() instanceof TupleType) {
+	            	        QvtOperationalUtil.reportError(env, ValidationMessages.notAnLValueError, lValueCS);
+	            	        return null;
+	                	}
 	                }
 	                QvtOperationalParserUtil.validateAssignment(true, property.getName(), env.getUMLReflection().getOCLType(property),
 	                		rightExpr.getType(), expressionCS.isIncremental(), lValueCS, env);
