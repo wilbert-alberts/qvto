@@ -75,7 +75,7 @@ public class ConversionDictionary implements ConversionDelegate {
 		}
 
 		literal = literal.trim();
-		if (!literal.isEmpty() && literal.charAt(0) == '[') {
+		if ((literal.length() > 0) && literal.charAt(0) == '[') {
 			if (literal.charAt(literal.length()-1) != ']') {
 				throw new IllegalArgumentException("Invalid datatype: " + elementType.getName()); //$NON-NLS-1$
 			}
