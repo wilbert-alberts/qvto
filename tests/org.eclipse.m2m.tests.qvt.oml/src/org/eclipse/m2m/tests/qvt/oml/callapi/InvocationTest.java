@@ -283,4 +283,31 @@ public class InvocationTest extends TestCase {
 		assertEquals(Diagnostic.OK, diagnostic.getSeverity());
 		assertEquals(0, diagnostic.getCode());
 	}	
+
+	public void testConfigProperties() throws Exception {
+		URI uri = URI.createPlatformPluginURI("org.eclipse.m2m.tests.qvt.oml/parserTestData/models/bug267917/bug267917.qvto", false); //$NON-NLS-1$
+		fExecutor = new TransformationExecutor(uri);
+		
+		fContext.setConfigProperty("optionsDict1", "b=b1, c=c1, a=a1"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict2", "b=10, c=100, a=-1"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict3", "true=false, false=true"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict4", "b=2.2, c=3.3, a=1.1"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict5", "1=a, 2=b, 3=c"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict6", "1=true, 2=false"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsDict7", null); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsSet", "1.0, 1.1, 1.2"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsList", "foo, bar"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsSequence", "-1, 10"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("optionsOrderedSet", "bar, foo"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedDict1", "[a\\\\a=[a, b], a\\,a=[b, c], a\\[\\[a=[b, c]]"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedDict2", "[[3.0=]=[4=4.0], [1.0=a]=[2=2.0]]"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedSet1", "[[1.0]]"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedSet2", "[[1.1], [2.2], [0.0, 3.3]]"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedSet3", "[]"); //$NON-NLS-1$ //$NON-NLS-2$
+		fContext.setConfigProperty("nestedSet4", "[[]]"); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		final ExecutionDiagnostic  diagnostic = fExecutor.execute(fContext);		
+		assertEquals(Diagnostic.OK, diagnostic.getSeverity());
+	}
+
 }
