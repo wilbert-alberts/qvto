@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619 
+ *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -146,6 +146,7 @@ public final class ValidationMessages extends NLS {
 	public static String OutParamsNotSupported;
 	public static String OutParamWithoutExtent;
 	public static String mappingGuardNotBooleanError;
+	public static String ModelTypeWhereNotBooleanError;
 	
 	public static String ContextlessConstructor;
 	public static String ConstructorNameMismatch;

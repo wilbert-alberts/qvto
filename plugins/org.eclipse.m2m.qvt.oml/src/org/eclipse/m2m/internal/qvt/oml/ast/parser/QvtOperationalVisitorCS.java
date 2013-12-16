@@ -9,7 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299, 414619, 403440, 415024
+ *                         419299, 414619, 403440, 415024, 420970
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -2107,6 +2107,8 @@ public class QvtOperationalVisitorCS
 				env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_modeltypeDeprecatedSyntax, new Object[] { }),
 						modelTypeCS);
 			}
+
+			checkModelTypeConstraints(modelTypeCS, env);
 		}
 		
 		visitTransformationHeaderCS(moduleCS.getHeaderCS(), env, module);
@@ -2114,6 +2116,31 @@ public class QvtOperationalVisitorCS
 		env.setContextModule(module); // update model's parameters registration
 	}
 
+	
+	private void checkModelTypeConstraints(ModelTypeCS modelTypeCS, QvtOperationalModuleEnv env) {
+		ModelType modelType = (ModelType)modelTypeCS.getAst();
+		
+		for (OCLExpressionCS conditionCS : modelTypeCS.getWhereStatements()) {
+			org.eclipse.ocl.ecore.Variable referredVar = EcoreFactory.eINSTANCE.createVariable();
+			referredVar.setName(Environment.SELF_VARIABLE_NAME);
+			referredVar.setType(modelType);
+	        QvtOperationalEnv tempEnv = env.getFactory().createEnvironment(env);
+	        tempEnv.setParentLocal();
+	        tempEnv.addElement(referredVar.getName(), referredVar, false);
+	    	org.eclipse.ocl.ecore.OCLExpression condition = visitOclExpressionCS(conditionCS, tempEnv);
+			if (condition != null) {
+				EClassifier conditionType = condition.getType();
+				if (conditionType != env.getOCLStandardLibrary().getBoolean()) {
+					env.reportError(NLS.bind(ValidationMessages.ModelTypeWhereNotBooleanError,
+							new Object[] { QvtOperationalTypesUtil.getTypeFullName(conditionType) }), conditionCS);
+				}
+				else {
+					modelType.getAdditionalCondition().add(condition);
+				}
+			}
+		}
+	}
+	
 		
 	public HashMap<MappingMethodCS, ImperativeOperation> visitMethodHeaders(MappingModuleCS moduleCS, QvtOperationalModuleEnv env) throws SemanticException {
 		Module module = (Module) moduleCS.getAst();
@@ -3314,16 +3341,11 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		if (!modelTypeCS.getWhereStatements().isEmpty()) {
-			int startOffset = modelTypeCS.getWhereStatements().get(0).getStartOffset();
-			int endOffset = modelTypeCS.getWhereStatements().get(modelTypeCS.getWhereStatements().size()-1).getEndOffset();
-			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_metamodelConditionsNotSupported,
-					new Object[] { }), startOffset, endOffset);
-		}
-		
 		if (modelType.getMetamodel().isEmpty()) {
 			return null;
 		}
+		
+		modelTypeCS.setAst(modelType);		
 		return modelType;
 	}
 

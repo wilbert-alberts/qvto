@@ -11,7 +11,7 @@
  *     Christopher Gerking - bugs 302594, 309762, 377882, 388325, 392080, 392153
  *                         397215, 397959, 358709, 388801, 254962, 414555
  *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131,
- *                         274105, 274505, 415029, 419299, 403440, 267917
+ *                         274105, 274505, 415029, 419299, 403440, 267917, 420970
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -364,7 +364,8 @@ public class TransformTests {
         				new String[] { "nestedSet2", "[[1.1], [2.2], [0.0, 3.3]]" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "nestedSet3", "[]" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "nestedSet4", "[[]]" }, //$NON-NLS-1$ //$NON-NLS-2$
-        		}),         		        		
+        		}),
+        		new FilesToFilesData("bug420970", Arrays.asList("test1.ecore", "test2.ecore", "in.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		};
     }
 

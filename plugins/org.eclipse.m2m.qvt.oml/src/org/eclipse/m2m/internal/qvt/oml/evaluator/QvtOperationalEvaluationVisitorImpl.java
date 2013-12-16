@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642
- *     Alex Paperno - bugs 294127, 416584, 419299, 267917
+ *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -225,7 +225,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 					return thisObj;
 				}
 			}
-		} else if(vd instanceof ModelParameter) {
+		} else if(vd instanceof ModelParameter || value instanceof ModelParameter) {
+			// Handling of 'self'->Param->ModelInstance in WHERE clauses
+			if (value instanceof ModelParameter) {
+				vd = (ModelParameter)value;
+			}
+			
 			OperationalTransformation transformation = (OperationalTransformation) vd.eContainer();
 			TransformationInstance transformationInstance = (TransformationInstance)evalEnv.getThisOfType(transformation);
 			assert transformationInstance != null;
@@ -2263,6 +2268,22 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 	public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
 		ImperativeOperation entryOperation = QvtOperationalParserUtil.getMainOperation(transformation);				
+		
+		for (ModelParameter parameter : transformation.getModelParameter()) {
+			if (parameter.getEType() instanceof ModelType && parameter.getKind() != DirectionKind.OUT) {
+				ModelType parameterType = (ModelType) parameter.getEType();
+				for (OCLExpression<EClassifier> whereExpression : parameterType.getAdditionalCondition()) {
+					myEvalEnv.add(Environment.SELF_VARIABLE_NAME, parameter);
+					boolean isConditionMet = Boolean.TRUE.equals(visitExpression(whereExpression));
+					myEvalEnv.remove(Environment.SELF_VARIABLE_NAME);
+		    		if(!isConditionMet) {
+		    			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.ModelTypeConstraintFailed, 
+		    					parameter.getName(), transformation.getName())));
+		    		}
+		    		
+				}
+			}
+		}
 		
 		OperationCallResult result = executeImperativeOperation(entryOperation, null, args, false);        	        					
 		processDeferredTasks();

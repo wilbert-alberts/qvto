@@ -73,7 +73,7 @@ public class DebugTransformationRunner extends TransformationRunner {
 	protected void handleExecution(org.eclipse.m2m.qvt.oml.ExecutionDiagnostic execDiagnostic) {
 		List<ExecutionStackTraceElement> stackTrace = execDiagnostic.getStackTrace();
 		if(stackTrace != null && execDiagnostic.getCode() != ExecutionDiagnostic.USER_INTERRUPTED) {
-			fErrorLog.println(execDiagnostic);
+			//fErrorLog.println(execDiagnostic);
 			
 			if (!stackTrace.isEmpty()) {
 				fErrorLog.println("[QVTO Stack trace:]");				
@@ -110,9 +110,9 @@ public class DebugTransformationRunner extends TransformationRunner {
 				
 				Diagnostic execDiagnostic = DebugTransformationRunner.this.execute(context);
 				
-				if(execDiagnostic.getSeverity() != Diagnostic.OK) {
+				//if(execDiagnostic.getSeverity() != Diagnostic.OK) {
 					fErrorLog.println(execDiagnostic);
-				}
+				//}
 
 				return execDiagnostic;
 			}

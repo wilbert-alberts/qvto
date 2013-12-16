@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 420970
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -30,6 +31,7 @@ public class EvaluationMessages extends NLS {
 	public static String TerminatingExecution;
 	public static String UknownSourceLabel;
 	public static String MappingPreconditionFailed;
+	public static String ModelTypeConstraintFailed;
 	
 	public static String IteratorNotImpl;
     

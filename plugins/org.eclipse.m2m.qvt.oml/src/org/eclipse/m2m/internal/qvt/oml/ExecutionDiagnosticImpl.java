@@ -73,4 +73,56 @@ public final class ExecutionDiagnosticImpl extends BasicDiagnostic implements Ex
 			QvtRuntimeException.printQvtStackTrace(writer, fStackTrace);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append("Diagnostic "); //$NON-NLS-1$
+		switch (severity) {
+		case OK: {
+			result.append("OK"); //$NON-NLS-1$
+			break;
+		}
+		case INFO: {
+			result.append("INFO"); //$NON-NLS-1$
+			break;
+		}
+		case WARNING: {
+			result.append("WARNING"); //$NON-NLS-1$
+			break;
+		}
+		case ERROR: {
+			result.append("ERROR"); //$NON-NLS-1$
+			break;
+		}
+		case CANCEL: {
+			result.append("CANCEL"); //$NON-NLS-1$
+			break;
+		}
+		default: {
+			result.append(Integer.toHexString(severity));
+			break;
+		}
+		}
+
+		result.append(" source="); //$NON-NLS-1$
+		result.append(source);
+
+		result.append(" code="); //$NON-NLS-1$
+		result.append(code);
+
+		result.append(": "); //$NON-NLS-1$
+		result.append(message);
+
+		if (data != null && !data.isEmpty()) {
+			result.append(" data="); //$NON-NLS-1$
+			result.append(data);
+		}
+		if (children != null && !children.isEmpty()) {
+			result.append(' ');
+			result.append(children);
+		}
+
+		return result.toString();
+	}
 }
