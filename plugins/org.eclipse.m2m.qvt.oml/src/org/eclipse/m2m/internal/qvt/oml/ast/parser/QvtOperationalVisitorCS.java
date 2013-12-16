@@ -9,7 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299, 414619, 403440, 415024, 420970
+ *                         419299, 414619, 403440, 415024, 420970, 413391
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -4193,10 +4193,15 @@ public class QvtOperationalVisitorCS
 		}
 		
 		if(hasExplicitInitExpression) {
-			org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(varInitCS.getOclExpressionCS(), env);
+			OCLExpressionCS initExpCS = varInitCS.getOclExpressionCS();
+			org.eclipse.ocl.ecore.OCLExpression exp = visitOclExpressionCS(initExpCS, env);
 		    referredVar.setInitExpression(exp);
 		    if(exp != null) {
 		    	derivedInitType = referredVar.getInitExpression().getType();
+				if (derivedInitType instanceof TypeType<?, ?>) {
+					QvtOperationalUtil.reportError(env, ValidationMessages.VariableTypeTypeError, 
+							initExpCS.getStartOffset(), initExpCS.getEndOffset());
+				}
 		    }
 		}
 
@@ -4208,7 +4213,7 @@ public class QvtOperationalVisitorCS
 	    	org.eclipse.ocl.ecore.OCLExpression defaultInitializationValue = createDefaultInitializationValue(declaredType, env);	        
 	        referredVar.setInitExpression(defaultInitializationValue);
 		}
-				
+		
 		OCLExpression<EClassifier> initExpression = referredVar.getInitExpression();		
 		if (declaredType != null && derivedInitType != null) {
 			if(!QvtOperationalParserUtil.isAssignableToFrom(env, declaredType, derivedInitType)) {
@@ -4456,8 +4461,15 @@ public class QvtOperationalVisitorCS
 		
 		OCLExpression<EClassifier> exp = null;
 		if (propCS.getOclExpressionCS() != null) {
-			exp = visitOclExpressionCS(propCS.getOclExpressionCS(), env);
+			OCLExpressionCS initExpCS = propCS.getOclExpressionCS();
+			exp = visitOclExpressionCS(initExpCS, env);
 			QvtOperationalParserUtil.setInitExpression(prop, exp);			
+		    if(exp != null) {
+				if (exp.getType() instanceof TypeType<?, ?>) {
+					QvtOperationalUtil.reportError(env, ValidationMessages.PropertyTypeTypeError, 
+							initExpCS.getStartOffset(), initExpCS.getEndOffset());
+				}
+		    }
 		}
 		
 		if (prop.getEType() == null && exp != null) {

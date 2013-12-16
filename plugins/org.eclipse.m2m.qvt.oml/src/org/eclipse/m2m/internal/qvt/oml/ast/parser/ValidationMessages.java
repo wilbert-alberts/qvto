@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970 
+ *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -159,6 +159,8 @@ public final class ValidationMessages extends NLS {
 	
 	public static String NameAlreadyDefinedError;
 	public static String TypeMismatchError;
+	public static String VariableTypeTypeError;
+	public static String PropertyTypeTypeError;
 	
 	public static String ModulePropertyAlreadyDefined;
 	public static String IntermediatePropertiesInitNotSupported;
