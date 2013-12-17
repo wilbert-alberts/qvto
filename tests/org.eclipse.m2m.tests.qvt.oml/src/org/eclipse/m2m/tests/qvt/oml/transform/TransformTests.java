@@ -366,6 +366,7 @@ public class TransformTests {
         				new String[] { "nestedSet4", "[[]]" }, //$NON-NLS-1$ //$NON-NLS-2$
         		}),
         		new FilesToFilesData("bug420970", Arrays.asList("test1.ecore", "test2.ecore", "in.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        		new FileToFileData("bug392156"), //$NON-NLS-1$
         		};
     }
 

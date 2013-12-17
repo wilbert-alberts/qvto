@@ -22,12 +22,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
-import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ResolveExp;
@@ -36,8 +34,9 @@ import org.eclipse.m2m.internal.qvt.oml.trace.EMappingResults;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
+import org.eclipse.ocl.ecore.OperationCallExp;
 import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.util.CollectionUtil;
@@ -81,7 +80,6 @@ public class QvtResolveUtil {
 	 * @return <code>true</code> if the assignment is to receive a future
 	 *         value from late resolve; <code>false</code> otherwise
 	 */
-	@SuppressWarnings("unchecked")
 	public static boolean hasDeferredRightSideValue(AssignExp assignExp) {
 		if(assignExp.getValue().isEmpty()) {
 			return false;
@@ -93,7 +91,7 @@ public class QvtResolveUtil {
 		}
 		
 		if(rightValue instanceof OperationCallExp) {
-			OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>) rightValue;
+			OperationCallExp operCall = (OperationCallExp) rightValue;
 			return isLateResolveResultConversion(operCall);
 		}
 		return false;
@@ -128,7 +126,6 @@ public class QvtResolveUtil {
 	 *         or by using a collection type conversion. Otherwise,
 	 *         <code>null</code> is returned.
 	 */
-	@SuppressWarnings("unchecked")
 	public static AssignExp getDeferredAssignmentFor(ResolveExp resolveExp) {
 		if(!resolveExp.isIsDeferred()) {
 			return null;
@@ -141,7 +138,7 @@ public class QvtResolveUtil {
 				return assignExp;
 			}
 		} else if(resolveContainer instanceof OperationCallExp) {
-			OperationCallExp<EClassifier, EOperation> operCall = (OperationCallExp<EClassifier, EOperation>) resolveContainer;
+			OperationCallExp operCall = (OperationCallExp) resolveContainer;
 			if(!isLateResolveResultConversion(operCall)) {
 				return null;
 			}
@@ -165,7 +162,7 @@ public class QvtResolveUtil {
 	 * Indicate whether a operation call expression is supported collection
 	 * type conversion for late resolve results. 
 	 */	
-	private static boolean isLateResolveResultConversion(OperationCallExp<EClassifier, EOperation> operCall) {
+	private static boolean isLateResolveResultConversion(OperationCallExp operCall) {
 		if(operCall.getSource() instanceof ResolveExp) {
 			ResolveExp resolveExp = (ResolveExp) operCall.getSource();
 			if(!resolveExp.isIsDeferred()) {
@@ -180,7 +177,7 @@ public class QvtResolveUtil {
 	/**
 	 * Indicate whether a operation call expression is collection type conversion. 
 	 */
-	private static boolean isCollectionConversionCall(OperationCallExp<EClassifier, EOperation> operCall) {
+	private static boolean isCollectionConversionCall(OperationCallExp operCall) {
 		switch(operCall.getOperationCode()) {
 		case PredefinedType.AS_BAG :
 		case PredefinedType.AS_SEQUENCE :
@@ -192,7 +189,6 @@ public class QvtResolveUtil {
 		return false;
 	}
 	
-    @SuppressWarnings("unchecked")
 	private static Object coerceResultValue(ResolveExp resolveExp, Object resolveRawResult) {
     	// always return non-null if collection type is expected
     	if(resolveRawResult == null) {
@@ -246,25 +242,22 @@ public class QvtResolveUtil {
 	 * @return resolved object or collection of objects
 	 */
     static final Object resolveNow(ResolveExp resolveExp, QvtOperationalEvaluationVisitor visitor, QvtOperationalEvaluationEnv env, SavedSourceObjectHolder savedSrcObj) {
+    	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
+        Trace trace = internEnv.getTraces();
+        EMap<Object, EList<TraceRecord>> map = chooseKeyToTraceRecordMap(resolveExp, trace);
         OCLExpression<EClassifier> source = resolveExp.getSource();
-        if (source != null) {
-        	InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
-            Trace trace = internEnv.getTraces();
-            EMap<Object, EList<TraceRecord>> map = chooseKeyToTraceRecordMap(resolveExp, trace);
-            Object sourceEval = (savedSrcObj == null) ? source.accept(visitor) : savedSrcObj.getSourceObj();
-            List<TraceRecord> traceRecords = lookupTraceRecordsBySource(sourceEval, source.getType(), map);
-            if (traceRecords == null) {
-                return createEmptyCollectionOrNull(resolveExp);
-            }
-            Object result = searchByTypeAndCondition(resolveExp, traceRecords, visitor, env);
-            if(savedSrcObj != null && savedSrcObj.isInDeferredExecution() && resolveExp.isIsDeferred()) {
-            	// Note: executing immediately but at deferred execution time, this is possible for instance if late resolve is called from with a condition 
-            	result = coerceResultValue(resolveExp, result);
-            }
-            return result;
-            
+        Object sourceEval = (savedSrcObj == null) ? (source == null ? null : source.accept(visitor)) : savedSrcObj.getSourceObj();
+        EClassifier sourceType = (source == null) ? null : source.getType();
+        List<TraceRecord> traceRecords = lookupTraceRecordsBySource(sourceEval, sourceType, map);
+        if (traceRecords == null) {
+            return createEmptyCollectionOrNull(resolveExp);
         }
-        return null;
+        Object result = searchByTypeAndCondition(resolveExp, traceRecords, visitor, env);
+        if(savedSrcObj != null && savedSrcObj.isInDeferredExecution() && resolveExp.isIsDeferred()) {
+        	// Note: executing immediately but at deferred execution time, this is possible for instance if late resolve is called from with a condition 
+        	result = coerceResultValue(resolveExp, result);
+        }
+        return result;
     }
 
     /**
@@ -334,23 +327,34 @@ public class QvtResolveUtil {
     
     private static List<TraceRecord> lookupTraceRecordsBySource(Object source, EClassifier declaredSourceType, EMap<Object, EList<TraceRecord>> source2RecordMap) {
     	List<TraceRecord> result = null;
-    	// Remark: Should be removed as soon as implict collect is support on resolve too
-        if(declaredSourceType instanceof CollectionType<?, ?> && source instanceof Collection<?>) {
-        	Collection<?> srcCol = (Collection<?>)source;
-        	for (Object nextSrc : srcCol) {
-        		EList<TraceRecord> nextPart = source2RecordMap.get(nextSrc);
-
-        		if(nextPart != null) {
-            		if(result == null) {
-            			result = new BasicEList<TraceRecord>();
-            		}        			
-        			result.addAll(nextPart);
-        		}
-			}	            	
-        } else {
-        	result = source2RecordMap.get(source);
-        }
-        
+    	
+    	if (source == null) {
+    		for (EList<TraceRecord> rec : source2RecordMap.values()) {
+        		if(result == null) {
+        			result = new BasicEList<TraceRecord>();
+        		}        			
+    			result.addAll(rec);
+    		}
+    	}
+    	else {
+	    	// Remark: Should be removed as soon as implict collect is support on resolve too
+	        if(declaredSourceType instanceof CollectionType<?, ?> && source instanceof Collection<?>) {
+	        	Collection<?> srcCol = (Collection<?>)source;
+	        	for (Object nextSrc : srcCol) {
+	        		EList<TraceRecord> nextPart = source2RecordMap.get(nextSrc);
+	
+	        		if(nextPart != null) {
+	            		if(result == null) {
+	            			result = new BasicEList<TraceRecord>();
+	            		}        			
+	        			result.addAll(nextPart);
+	        		}
+				}	            	
+	        } else {
+	        	result = source2RecordMap.get(source);
+	        }
+    	}
+    	
         return (result != null) ? Collections.unmodifiableList(result) : Collections.<TraceRecord>emptyList();
     }
     	

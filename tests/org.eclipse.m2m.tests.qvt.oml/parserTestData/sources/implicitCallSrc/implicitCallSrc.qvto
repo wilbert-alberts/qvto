@@ -77,9 +77,9 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 	name := self.map importedMyMapping().name;
 	
 	end {
-		/*<error>*/resolve(EClass)/*</error>*/;
+		resolve(EClass);
 		self.resolve();
-		Bag{ self }->any(/*<error>*/resolve()/*</error>*/  <> null);	
+		Bag{ self }->any(resolve() <> null);	
 			
 		resolveIn(nonContextualMapping, e : EPackage | e <> null 
 				and /*<error>*/_abstract/*</error>*/ <> null);
@@ -100,7 +100,7 @@ mapping ecore::EClass::myMapping() : ecore::EPackage {
 mapping nonContextualMapping(in par : EClass) : EPackage {
 	init {
 		par.resolve(EClass);
-		/*<error>*/resolve(EClass)/*</error>*/;
+		resolve(EClass);
 		resolveIn(nonContextualMapping, EClass);
 		
 		var isKindOf := this.oclIsKindOf(OclAny);
@@ -132,7 +132,7 @@ main() {
 		p := eClass.map importedMyMapping();
 
 		eClass.resolve(EClass);
-		/*<error>*/resolve(EClass)/*</error>*/;
+		resolve(EClass);
 		resolveIn(nonContextualMapping, EClass);
 
 		

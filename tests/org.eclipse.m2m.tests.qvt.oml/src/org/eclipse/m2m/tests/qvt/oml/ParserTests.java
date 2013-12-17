@@ -13,10 +13,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
-import java.util.Collections;
-
-import org.eclipse.m2m.tests.qvt.oml.transform.FilesToFilesData;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -128,7 +124,7 @@ public class ParserTests {
         TestData.createSourceChecked("bug2732_wrongcondition", 1, 1), //$NON-NLS-1$      
         TestData.createSourceChecked("varscope", 10, 0), //$NON-NLS-1$      
     	TestData.createSourceChecked("_while", 12, 0), //$NON-NLS-1$
-    	TestData.createSourceChecked("implicitCallSrc", 20, 4), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("implicitCallSrc", 16, 4), //$NON-NLS-1$    	
     	TestData.createSourceChecked("libraryWithModuleElements", 2, 0), //$NON-NLS-1$    	
     	new TestData("assert_log", 0), //$NON-NLS-1$    	
         new TestData("opersignatureparamclash", 1), //$NON-NLS-1$    	
@@ -207,7 +203,7 @@ public class ParserTests {
         new TestData("mm_header7", 1), //$NON-NLS-1$
         new TestData("entryOpDupl", 1), //$NON-NLS-1$
         new TestData("resolveIn_ambiguity", 1), //$NON-NLS-1$
-        new TestData("bug205303_2", 3), //$NON-NLS-1$
+        new TestData("bug205303_2", 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug325192", 8, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug268636", 5, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug272869", 1, 0), //$NON-NLS-1$

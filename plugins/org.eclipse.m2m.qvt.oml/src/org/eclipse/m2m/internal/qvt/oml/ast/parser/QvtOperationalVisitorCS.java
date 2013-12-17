@@ -4583,9 +4583,9 @@ public class QvtOperationalVisitorCS
 
     private org.eclipse.ocl.ecore.OCLExpression visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env) {
         ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
-        if (resolveExp.getSource() == null) {
-            env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
-        }
+//        if (resolveExp.getSource() == null) {
+//            env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
+//        }
         
         DeprecatedImplicitSourceCallHelper.validateCallExp(resolveExpCS, resolveExp, env);
         
