@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,4 +33,8 @@ public class CategoryImageConstants {
     public static final String QVT_QUERY = "qvt-query"; //$NON-NLS-1$
     public static final String QVT_MAPPING = "qvt-mapping"; //$NON-NLS-1$
     public static final String QVT_SRC_FILE = "qvt_src_file"; //$NON-NLS-1$
+
+    // copied from 'org.eclipse.jdt.ui.ISharedImages' in order to remove dependencies on "org.eclipse.jdt.ui" plug-in
+    public static final String IMG_OBJS_IMPCONT = "impc_obj.gif"; //$NON-NLS-1$
+    public static final String IMG_OBJS_IMPDECL = "imp_obj.gif"; //$NON-NLS-1$
 }

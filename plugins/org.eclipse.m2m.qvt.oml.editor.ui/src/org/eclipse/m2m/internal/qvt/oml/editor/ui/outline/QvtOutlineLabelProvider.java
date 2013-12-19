@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,8 +18,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jdt.ui.ISharedImages;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalTypesUtil;
@@ -59,6 +57,8 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     public static final String PROPERTIES_NODE = "properties"; //$NON-NLS-1$
     public static final String LIBRARY_NODE = "library"; //$NON-NLS-1$
     
+    
+    
 	public QvtOutlineLabelProvider() {
 	}
 	
@@ -66,9 +66,9 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
     	OutlineNode node = (OutlineNode)element;
     	switch (node.getType()) {
 			case QvtOutlineNodeType.IMPORTED_METAMODELS:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.IMPORTED_MODULES:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.METAMODEL:
 				return CompletionProposalUtil.getImage(CategoryImageConstants.PACKAGE);
 				
@@ -79,11 +79,11 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 			case QvtOutlineNodeType.UNIT:
 				return CompletionProposalUtil.getImage(CategoryImageConstants.QVT_SRC_FILE);				
 			case QvtOutlineNodeType.TAGS:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.TAG:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPDECL);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPDECL);
 			case QvtOutlineNodeType.PROPERTIES:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPCONT);
 			case QvtOutlineNodeType.PROPERTY:
 				return CompletionProposalUtil.getImage(CategoryImageConstants.PROPERTY);
 			case QvtOutlineNodeType.MAPPING_RULE: {				
@@ -100,7 +100,7 @@ public class QvtOutlineLabelProvider implements ILabelProvider {
 				
 			}
 			case QvtOutlineNodeType.IMPORTED_LIBRARY:
-				return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_IMPCONT);
+				return CompletionProposalUtil.getImage(CategoryImageConstants.IMG_OBJS_IMPCONT);
 			default:
 				return null;
 		}

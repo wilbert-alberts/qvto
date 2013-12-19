@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DocumentEvent;
@@ -83,6 +82,10 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
     protected final static char[] BRACKETS= { '{', '}', '(', ')', '[', ']' };
     
 	private static final String QVT_EDITOR_UI_CONTEXT = "org.eclipse.m2m.qvt.oml.editor.ui.context"; //$NON-NLS-1$
+	
+	// copied from 'org.eclipse.jdt.ui.JavaUI' in order to remove dependencies on "org.eclipse.jdt.ui" plug-in
+	private static final String ID_PACKAGES = "org.eclipse.jdt.ui.PackageExplorer"; //$NON-NLS-1$
+
 
 	
     private ProjectionSupport myProjectionSupport;    
@@ -249,7 +252,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
 		setStatusLineMessage(null);
 	}
     
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Class required) {
         if (IContentOutlinePage.class.equals(required)) {
@@ -261,7 +264,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
                 public String[] getShowInTargetIds() {
                     return new String[] {
                             IPageLayout.ID_PROJECT_EXPLORER,
-                            JavaUI.ID_PACKAGES
+                            ID_PACKAGES
                     };
                 }
                 
@@ -691,7 +694,7 @@ public class QvtEditor extends TextEditor implements IQVTReconcilingListener {
 		public void prependTextPresentationListener(ITextPresentationListener listener) {
 
     		if (fTextPresentationListeners == null)
-    			fTextPresentationListeners = new ArrayList();
+    			fTextPresentationListeners = new ArrayList<Object>();
 
     		fTextPresentationListeners.remove(listener);
     		fTextPresentationListeners.add(0, listener);
