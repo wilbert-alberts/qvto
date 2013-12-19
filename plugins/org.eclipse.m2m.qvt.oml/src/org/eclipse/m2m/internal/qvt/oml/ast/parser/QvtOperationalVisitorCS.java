@@ -3591,19 +3591,18 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, operation, newEnv);
         }        
 
-		org.eclipse.ocl.ecore.OCLExpression guard;
-		if (methodCS.getGuard() != null) {
-			guard = visitOclExpressionCS(methodCS.getGuard(), newEnv);
+		for (OCLExpressionCS guardExp : methodCS.getGuards()) {
+			org.eclipse.ocl.ecore.OCLExpression guard = visitOclExpressionCS(guardExp, newEnv);
 			if (guard != null) {
 				EClassifier guardType = guard.getType();
 				if (guardType != newEnv.getOCLStandardLibrary().getBoolean()) {
 					newEnv.reportError(NLS.bind(ValidationMessages.mappingGuardNotBooleanError,
-							new Object[] { QvtOperationalTypesUtil.getTypeFullName(guardType) }), methodCS.getGuard());
-					guard = null;
+							new Object[] { QvtOperationalTypesUtil.getTypeFullName(guardType) }), guardExp);
+				}
+				else {
+					operation.getWhen().add(guard);
 				}
 			}
-		} else {
-			guard = null;
 		}
 
 		List<org.eclipse.ocl.ecore.OCLExpression> inits = Collections.emptyList();
@@ -3640,9 +3639,6 @@ public class QvtOperationalVisitorCS
 			ends = visitMappingSectionCS(methodCS.getMappingBody().getMappingEndCS(), newEnv);
 		}
 
-		if (guard != null) {
-			operation.getWhen().add(guard);
-		}
 		operation.setBody(body);
 				
 		if (body != null) {

@@ -5611,7 +5611,7 @@ protected String getRhsTokenText(int i) {
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 				MappingRuleCS result = createMappingRuleCS(
 						(MappingDeclarationCS)mappingFullHeader[0],
-						(OCLExpressionCS)mappingFullHeader[1],
+						(EList)mappingFullHeader[1],
 						null
 					);
 				result.setBlackBox(true);
@@ -5642,7 +5642,7 @@ protected String getRhsTokenText(int i) {
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 				MappingRuleCS result = createMappingRuleCS(
 						(MappingDeclarationCS)mappingFullHeader[0],
-						(OCLExpressionCS)mappingFullHeader[1],
+						(EList)mappingFullHeader[1],
 						mappingSections
 					);
 				result.setBlackBox(false);
@@ -5660,7 +5660,7 @@ protected String getRhsTokenText(int i) {
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 				MappingRuleCS result = createMappingRuleCS(
 						(MappingDeclarationCS)mappingFullHeader[0],
-						null,
+						ourEmptyEList,
 						null
 					);
 				setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
@@ -5791,30 +5791,32 @@ protected String getRhsTokenText(int i) {
 				setResult(result);
 	                  break;
             }
-	
+	 
             //
             // Rule 705:  _whenOpt ::= $Empty
             //
+            
             case 705:
-                setResult(null);
+                setResult(new BasicEList<Object>());
                 break;
 
             //
-            // Rule 706:  _when ::= when { OclExpressionCS semicolonOpt }
+            // Rule 706:  _when ::= when expression_block
             //
             case 706: {
                //#line 1455 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				OCLExpressionCS result = (OCLExpressionCS)getRhsSym(3);
-				setResult(result);
+				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
+				setResult(blockExpCS.getBodyExpressions());
 	                  break;
             }
-	
+	 
             //
             // Rule 707:  _when ::= when qvtErrorToken
             //
+            
             case 707:
-                setResult(null);
+                setResult(new BasicEList<Object>());
                 break;
 
             //

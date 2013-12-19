@@ -13,6 +13,7 @@ package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -22,6 +23,10 @@ import org.eclipse.m2m.qvt.oml.util.IContext;
 
 public class FilesToFilesData extends ModelTestData {
 
+	public FilesToFilesData(String name) {
+        this(name, Collections.<String>emptyList(), Collections.<String>emptyList(), new String[][] {});
+    }
+    
 	public FilesToFilesData(String name, List<String> fromFiles, List<String> expectedFiles) {
         this(name, fromFiles, expectedFiles, new String[][] {});
     }

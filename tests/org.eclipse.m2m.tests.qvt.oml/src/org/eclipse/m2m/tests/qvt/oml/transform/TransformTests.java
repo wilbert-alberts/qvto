@@ -41,8 +41,8 @@ public class TransformTests {
         ModelTestData[] datas = createTestData();
 
         suite.addTest(new TestFailedTransformation(new FileToFileData("scr878"))); //$NON-NLS-1$
-        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug301134", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
-        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug323915", Collections.<String>emptyList(), Collections.<String>emptyList()))); //$NON-NLS-1$
+        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug301134"))); //$NON-NLS-1$
+        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug323915"))); //$NON-NLS-1$
 
         for (ModelTestData data : datas) {
             suite.addTest(new TestQvtInterpreter(data));
@@ -85,7 +85,7 @@ public class TransformTests {
     
     public static ModelTestData[] createTestData() {
         return new ModelTestData[] {        		
-        		new FilesToFilesData("dicttype", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("dicttype"), //$NON-NLS-1$
         		new FileToFileData("transf_inheritance"), //$NON-NLS-1$
         		new FilesToFilesData("uml2_stereotypeApplication", Collections.singletonList("in.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
@@ -144,7 +144,7 @@ public class TransformTests {
                 new FileToFileData("intermediateprop_resolve", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new FileToFileData("intermediateprop_trace", "in.simpleuml", "expected.simpleuml"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         		new FilesToFilesData("multiresultpars", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),        		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        		new FilesToFilesData("simpletag", Collections.<String>emptyList(), Collections.<String>emptyList()),           		 //$NON-NLS-1$
+        		new FilesToFilesData("simpletag"),           		 //$NON-NLS-1$
         		new FileToFileData("stdlibString"), //$NON-NLS-1$
         		new FilesToFilesData("stdlibelement", Collections.singletonList("in.ecore"), Arrays.asList("expected_x.ecore", "expected_y.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FileToFileData("mapDisjuncts"), //$NON-NLS-1$ 
@@ -299,24 +299,24 @@ public class TransformTests {
                 new FileToFileData("bug204126_7"), //$NON-NLS-1$        
                 new FileToFileData("bug205303_1"), //$NON-NLS-1$        
                 new FileToFileData("bug219075_1"), //$NON-NLS-1$        
-        		new FilesToFilesData("continue_break", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("continue_break"), //$NON-NLS-1$
         		new FileToFileData("continue_perf"), //$NON-NLS-1$
         		new FilesToFilesData("unspecified_multiplicity", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
         			.includeMetamodelFile("MyUnbound.ecore"), //$NON-NLS-1$
         		new FilesToFilesData("nullableEnum", Collections.<String>emptyList(), Collections.singletonList("expected.xmi")) //$NON-NLS-1$ //$NON-NLS-2$
         			.includeMetamodelFile("NullableEnumTest.ecore"), //$NON-NLS-1$
-        		new FilesToFilesData("bug302594", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug302594"), //$NON-NLS-1$
         		new FileToFileData("bug309762"), //$NON-NLS-1$
-        		new FilesToFilesData("bug377882", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug388325", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug377882"), //$NON-NLS-1$
+        		new FilesToFilesData("bug388325"), //$NON-NLS-1$
         		new FileToFileData("bug392080"), //$NON-NLS-1$
         		new FileToFileData("bug392153"), //$NON-NLS-1$
         		new FileToFileData("bug397215"), //$NON-NLS-1$
         		new FileToFileData("bug397959"),  //$NON-NLS-1$
         		new FileToFileData("bug358709"), //$NON-NLS-1$
-        		new FilesToFilesData("bug388801", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug388801"), //$NON-NLS-1$
         		new FileToFileData("bug254962"), //$NON-NLS-1$
-        		new FilesToFilesData("bug325192", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug325192"), //$NON-NLS-1$
         		new FileToFileData("bug314443"), //$NON-NLS-1$
         		new FileToFileData("bug400720"), //$NON-NLS-1$
         		new FileToFileData("bug294127"), //$NON-NLS-1$
@@ -326,24 +326,24 @@ public class TransformTests {
         		new FileToFileData("bug413131"), //$NON-NLS-1$
         		new FileToFileData("bug274105_274505"), //$NON-NLS-1$
         		new FileToFileData("bug414555"), //$NON-NLS-1$
-        		new FilesToFilesData("bug414472", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug414472"), //$NON-NLS-1$
         		new FileToFileData("bug416584", new String[][] { //$NON-NLS-1$ 
         				new String[] { "libProp", "123" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "prop", "prop" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "prop2", "prop2" }, //$NON-NLS-1$ //$NON-NLS-2$
         		}),         		        		
-        		new FilesToFilesData("bug417751", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug415029", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug417996", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug417751"), //$NON-NLS-1$
+        		new FilesToFilesData("bug415029"), //$NON-NLS-1$
+        		new FilesToFilesData("bug417996"), //$NON-NLS-1$
         		new FilesToFilesData("bug417779", Arrays.asList("in.ecore", "in2.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("bug418512", Collections.singletonList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
-        		new FilesToFilesData("bug415209", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug415315", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug415661", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug415310", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug419299", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug224094", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
-        		new FilesToFilesData("bug390088", Collections.<String>emptyList(), Collections.<String>emptyList()), //$NON-NLS-1$
+        		new FilesToFilesData("bug415209"), //$NON-NLS-1$
+        		new FilesToFilesData("bug415315"), //$NON-NLS-1$
+        		new FilesToFilesData("bug415661"), //$NON-NLS-1$
+        		new FilesToFilesData("bug415310"), //$NON-NLS-1$
+        		new FilesToFilesData("bug419299"), //$NON-NLS-1$
+        		new FilesToFilesData("bug224094"), //$NON-NLS-1$
+        		new FilesToFilesData("bug390088"), //$NON-NLS-1$
         		new FileToFileData("bug403440"), //$NON-NLS-1$
         		new FileToFileData("bug414642"), //$NON-NLS-1$
         		new FilesToFilesData("bug267917", Collections.<String>emptyList(), Collections.<String>emptyList(), new String[][] { //$NON-NLS-1$ 
@@ -353,7 +353,7 @@ public class TransformTests {
         				new String[] { "optionsDict4", "b=2.2, c=3.3, a=1.1" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "optionsDict5", "1=a, 2=b, 3=c" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "optionsDict6", "1=true, 2=false" }, //$NON-NLS-1$ //$NON-NLS-2$
-        				new String[] { "optionsDict7", null }, //$NON-NLS-1$ //$NON-NLS-2$
+        				new String[] { "optionsDict7", null }, //$NON-NLS-1$
         				new String[] { "optionsSet", "1.0, 1.1, 1.2" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "optionsList", "foo, bar" }, //$NON-NLS-1$ //$NON-NLS-2$
         				new String[] { "optionsSequence", "-1, 10" }, //$NON-NLS-1$ //$NON-NLS-2$
@@ -367,6 +367,7 @@ public class TransformTests {
         		}),
         		new FilesToFilesData("bug420970", Arrays.asList("test1.ecore", "test2.ecore", "in.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FileToFileData("bug392156"), //$NON-NLS-1$
+        		new FilesToFilesData("bug424086"), //$NON-NLS-1$
         		};
     }
 

@@ -15,6 +15,7 @@
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
@@ -25,7 +26,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuard <em>Guard</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuards <em>Guards</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}</li>
  * </ul>
  * </p>
@@ -43,30 +44,20 @@ public interface MappingRuleCS extends MappingMethodCS {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Guard</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.cst.OCLExpressionCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Guards</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guard</em>' containment reference.
-	 * @see #setGuard(OCLExpressionCS)
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_Guard()
+	 * @return the value of the '<em>Guards</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_Guards()
 	 * @model containment="true"
 	 * @generated
 	 */
-	OCLExpressionCS getGuard();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuard <em>Guard</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Guard</em>' containment reference.
-	 * @see #getGuard()
-	 * @generated
-	 */
-	void setGuard(OCLExpressionCS value);
+	EList<OCLExpressionCS> getGuards();
 
 	/**
 	 * Returns the value of the '<em><b>Mapping Body</b></em>' containment reference.

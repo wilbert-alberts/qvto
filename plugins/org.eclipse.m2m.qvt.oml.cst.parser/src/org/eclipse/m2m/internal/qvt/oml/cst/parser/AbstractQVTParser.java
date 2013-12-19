@@ -356,11 +356,11 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return query;
 	}
 
-	protected final MappingRuleCS createMappingRuleCS(MappingDeclarationCS mappingDecl, OCLExpressionCS guard,
+	protected final MappingRuleCS createMappingRuleCS(MappingDeclarationCS mappingDecl, EList<OCLExpressionCS> guards,
 			MappingSectionsCS mappingBody) {
 		MappingRuleCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingRuleCS();
 		result.setMappingDeclarationCS(mappingDecl);
-		result.setGuard(guard);
+		result.getGuards().addAll(guards);
 		result.setMappingBody(mappingBody);
 		return result;
 	}

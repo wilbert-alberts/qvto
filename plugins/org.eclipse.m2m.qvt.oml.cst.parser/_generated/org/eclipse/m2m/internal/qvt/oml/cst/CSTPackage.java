@@ -2078,13 +2078,13 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_RULE_CS__MAPPING_DECLARATION_CS = MAPPING_METHOD_CS__MAPPING_DECLARATION_CS;
 
 	/**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS__GUARD = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
+	int MAPPING_RULE_CS__GUARDS = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mapping Body</b></em>' containment reference.
@@ -7836,15 +7836,15 @@ public interface CSTPackage extends EPackage {
 	EClass getMappingRuleCS();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuards <em>Guards</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Guard</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuard()
+	 * @return the meta object for the containment reference list '<em>Guards</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuards()
 	 * @see #getMappingRuleCS()
 	 * @generated
 	 */
-	EReference getMappingRuleCS_Guard();
+	EReference getMappingRuleCS_Guards();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}'.
@@ -10151,12 +10151,12 @@ public interface CSTPackage extends EPackage {
 		EClass MAPPING_RULE_CS = eINSTANCE.getMappingRuleCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING_RULE_CS__GUARD = eINSTANCE.getMappingRuleCS_Guard();
+		EReference MAPPING_RULE_CS__GUARDS = eINSTANCE.getMappingRuleCS_Guards();
 
 		/**
 		 * The meta object literal for the '<em><b>Mapping Body</b></em>' containment reference feature.

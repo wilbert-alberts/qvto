@@ -547,9 +547,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	}
     
     protected boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
-    	if(mappingOperation.getWhen().isEmpty()) {
-    		return true;
-    	}
     	for (OCLExpression<EClassifier> nextCond : mappingOperation.getWhen()) {
     		if(!Boolean.TRUE.equals(visitExpression(nextCond))) {
     			return false;

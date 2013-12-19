@@ -1295,7 +1295,7 @@
 		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
-							(OCLExpressionCS)mappingFullHeader[1],
+							(EList)mappingFullHeader[1],
 							null
 						);
 					result.setBlackBox(true);
@@ -1322,7 +1322,7 @@
 		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
-							(OCLExpressionCS)mappingFullHeader[1],
+							(EList)mappingFullHeader[1],
 							mappingSections
 						);
 					result.setBlackBox(false);
@@ -1336,7 +1336,7 @@
 		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
-							null,
+							$EMPTY_ELIST,
 							null
 						);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
@@ -1448,16 +1448,16 @@
 
 	_whenOpt -> _when
 	_whenOpt ::= %empty	 
-		/.$NullAction./
+		/.$EmptyListAction./
 
-	_when ::= when '{' OclExpressionCS semicolonOpt '}'
+	_when ::= when expression_block
 		/.$BeginCode
-					OCLExpressionCS result = (OCLExpressionCS)getRhsSym(3);
-					setResult(result);
+					BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
+					setResult(blockExpCS.getBodyExpressions());
 		  $EndCode
 		./
 	_when ::= when qvtErrorToken
-		/.$NullAction./
+		/.$EmptyListAction./
 
 	mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt
 		/.$BeginCode

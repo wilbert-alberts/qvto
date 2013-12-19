@@ -148,7 +148,8 @@
           eType="#//cst/MappingDeclarationCS" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingRuleCS" eSuperTypes="#//cst/MappingMethodCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingBody" eType="#//cst/MappingSectionsCS"
           containment="true"/>
