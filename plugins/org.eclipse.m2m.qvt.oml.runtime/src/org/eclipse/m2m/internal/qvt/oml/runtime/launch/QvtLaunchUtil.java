@@ -136,7 +136,6 @@ public class QvtLaunchUtil {
 	}
     
 
-    @SuppressWarnings("unchecked")
     public static Map<String, Object> loadConfigurationProperties(ILaunchConfiguration configuration) {
         Map<String, Object> map;
         try {

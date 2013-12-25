@@ -31,6 +31,7 @@ public class Messages extends NLS {
 	public static String QvtValidator_SuperfluousInputTransfParam;
 	public static String QvtValidator_IncompatibleInputMetamodels;
 	public static String QvtValidator_DestinationReadonly;
+	public static String QvtValidator_DestinationReadonlyParam;
 	public static String QvtValidator_DestinationExistsNonEObject;
 	public static String QvtValidator_TransformaionMissedEntryOp;
 
@@ -40,6 +41,7 @@ public class Messages extends NLS {
 	
 	public static String QvtValidator_InvalidUri;
 	public static String QvtValidator_UriNotFile;
+	public static String QvtValidator_UriNotFileParam;
 	public static String QvtValidator_UriCorrupted;
 	public static String QvtValidator_InplaceConfigNotSupported;
 	

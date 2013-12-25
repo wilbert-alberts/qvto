@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -45,7 +43,6 @@ import org.eclipse.osgi.util.NLS;
 /**
  * @author pkobiakov
  */
-@SuppressWarnings("unchecked")
 public class EmfUtil {
     private EmfUtil() {}
 
@@ -59,7 +56,7 @@ public class EmfUtil {
     	return loadModel(uri, getDefaultLoadOptions(), rs);
     }    
     
-    private static ModelContent loadModel(URI uri, Map options, ResourceSet rs) {
+    private static ModelContent loadModel(URI uri, Map<Object, Object> options, ResourceSet rs) {
         if(uri == null) {
             return null;
         }
@@ -83,7 +80,7 @@ public class EmfUtil {
     	return safeLoadModel(uri, getDefaultLoadOptions(), rs);
     }
     
-    private static ModelContent safeLoadModel(URI uri, Map options, ResourceSet rs) {
+    private static ModelContent safeLoadModel(URI uri, Map<Object, Object> options, ResourceSet rs) {
         try {
             return loadModel(uri, options, rs);
         }
@@ -96,7 +93,7 @@ public class EmfUtil {
         return createResourceSet(getDefaultLoadOptions()).getResource(uri, true);
     }
     
-	private static ResourceSet createResourceSet(Map options) {
+	private static ResourceSet createResourceSet(Map<Object, Object> options) {
 		ResourceSet resourceSet = new ResourceSetImpl() {
 			
 			@Override
@@ -144,20 +141,14 @@ public class EmfUtil {
         return in;
     }
 	
-	public static boolean isUriExistsAsEObject(String textUri, ResourceSet rs) {
-        URI destUri = makeUri(textUri);
-        if (destUri != null) {
-        	ModelContent loadModel = null;
-        	try {
-        		loadModel = loadModel(destUri, rs);
-        	}
-        	catch (Exception e) {
-        	}
-            if (loadModel != null) {
-            	return true;
-            }
-        }
-        return false;
+	public static boolean isUriExistsAsEObject(URI uri, ResourceSet rs) {
+    	ModelContent loadModel = null;
+    	try {
+    		loadModel = loadModel(uri, rs);
+    	}
+    	catch (Exception e) {
+    	}
+        return loadModel != null;
 	}
 
 	public static boolean isDynamic(EObject eObject) {
@@ -165,13 +156,13 @@ public class EmfUtil {
 	}
 	
 
-	public static void saveModel(EObject eObject, URI uri, Map opts) throws EmfException {    
+	public static void saveModel(EObject eObject, URI uri, Map<Object, Object> opts) throws EmfException {    
         ResourceSet resourceSet = getOutputResourceSet();
 
         Resource resource = resourceSet.createResource(uri);
         resource.getContents().add(eObject);
 
-        Map options = new HashMap(opts);
+        Map<Object, Object> options = new HashMap<Object, Object>(opts);
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
         
         if(isDynamic(eObject)) {
@@ -185,8 +176,8 @@ public class EmfUtil {
         }
     }
     
-	public static void saveModel(Resource modelExtent, Map opts) throws EmfException {    
-        Map options = new HashMap(opts);
+	public static void saveModel(Resource modelExtent, Map<Object, Object> opts) throws EmfException {    
+        Map<Object, Object> options = new HashMap<Object, Object>(opts);
         options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
         options.put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_DISCARD);       
         for (EObject eObject : modelExtent.getContents()) {
@@ -318,9 +309,7 @@ public class EmfUtil {
         
         MAIN: 
         for(int i = 1; i < fullName.length-1; i++) {
-            List subPackages = root.getESubpackages();
-            for (Iterator it = subPackages.iterator(); it.hasNext();) {
-                EPackage pack = (EPackage) it.next();
+            for (EPackage pack : root.getESubpackages()) {
                 if(fullName[i].equals(pack.getName())) {
                     root = pack;
                     continue MAIN;
@@ -365,8 +354,8 @@ public class EmfUtil {
     	return ((EClass) from).getEAllSuperTypes().contains(type);
     }
 
-    public static Map getDefaultLoadOptions() {
-    	Map options = new HashMap();
+    public static Map<Object, Object> getDefaultLoadOptions() {
+    	Map<Object, Object> options = new HashMap<Object, Object>();
     	// create new session to avoid problems with parallel filling of containments lists (#31662, etc.) 
     	return options;
     }
@@ -433,20 +422,11 @@ public class EmfUtil {
 		if (uriConverter.exists(uri, Collections.emptyMap())) {
 			return true;
 		}
-		
-		ResourceSet checkRs = (rs != null ? rs : createResourceSet(Collections.emptyMap()));
-		Resource checkedResource = checkRs.getResource(uri, false);
-		if (checkedResource == null) {
-			checkedResource = checkRs.getResource(uri.trimFragment(), false);
-		}
-		if (checkedResource == null) {
-			checkedResource = checkRs.createResource(uri, ContentHandler.UNSPECIFIED_CONTENT_TYPE);
-		}
-		return checkedResource != null;
+		return isUriExistsAsEObject(uri, rs);
 	}
 	
 	
-    public static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
+    public static final Map<Object, Object> DEFAULT_SAVE_OPTIONS = new HashMap<Object, Object>();
     static {
     	DEFAULT_SAVE_OPTIONS.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
     }

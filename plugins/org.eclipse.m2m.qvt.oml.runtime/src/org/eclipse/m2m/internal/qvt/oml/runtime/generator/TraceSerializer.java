@@ -49,7 +49,7 @@ public class TraceSerializer {
 	}
 
     public void saveTraceModel(URI traceUri) throws MdaException {
-        Map<String, String> options = new HashMap<String, String>();
+        Map<Object, Object> options = new HashMap<Object, Object>();
         options.put(XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD);
         ExtendedEmfUtil.saveModel(myTrace, traceUri, options);
     }

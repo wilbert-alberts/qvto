@@ -36,7 +36,7 @@ public class ExtendedEmfUtil {
 		return EmfUtil.loadModel(uri);
     }
     
-    public static void saveModel(EObject eObject, URI uri, Map<?,?> options) throws MdaException {
+    public static void saveModel(EObject eObject, URI uri, Map<Object, Object> options) throws MdaException {
         try {
 			EmfUtil.saveModel(eObject, uri, options);
 		} catch (EmfException e) {
