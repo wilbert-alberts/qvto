@@ -847,6 +847,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return result.myResult;
 	}
     
+	@SuppressWarnings("unchecked")
 	public Object visitInstantiationExp(InstantiationExp objectExp) { 
 		// should instantiate the module transformation
 		EClass _class = objectExp.getInstantiatedClass();
@@ -1841,7 +1842,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				.throwQVTException(exception);
     }
     
-    @SuppressWarnings("unchecked")
 	@Override
     protected Object call(EOperation operation, OCLExpression<EClassifier> body, Object target, Object[] args) {
     	if(target instanceof EObject) {
@@ -1854,10 +1854,13 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	    				OCLExpression<EClassifier> actualOperBody = getOperationBody(actualOperation);
 	    				
 	    				if(actualOperBody != null) {
-	    					Environment myEnv = getEnvironment();
-	    					EnvironmentFactory factory = myEnv.getFactory();
-	    			    	// create a nested evaluation environment for this operation call
-	    			    	EvaluationEnvironment nested = factory.createEvaluationEnvironment(getEvaluationEnvironment());	    			    	
+							Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> myEnv = getEnvironment();
+							EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> factory = myEnv
+									.getFactory();
+							// create a nested evaluation environment for this
+							// operation call
+							EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> nested = factory
+									.createEvaluationEnvironment(getEvaluationEnvironment());
 	    			    	// bind "self"
 	    			    	nested.add(Environment.SELF_VARIABLE_NAME, target);	    			    	
 	    			    	// add the parameter bindings to the local variables
@@ -1869,7 +1872,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	    			    		}
 	    			    	}
 	    			    	
-	    			    	EvaluationVisitor visitor = factory.createEvaluationVisitor(myEnv, nested, getExtentMap());
+							EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> visitor = factory
+									.createEvaluationVisitor(myEnv, nested, getExtentMap());
 	    			    	if(visitor instanceof QvtOperationalEvaluationVisitorImpl) {
 	    			    		// ensure shared instance of oclAnnotationSupport to avoid repeated OCL parsing	    			    		
 	    			    		((QvtOperationalEvaluationVisitorImpl)visitor).oclAnnotationSupport = getOCLAnnotationSupport();
@@ -1927,17 +1931,19 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return super.visitCollectionLiteralExp(cl);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected Object navigate(EStructuralFeature property, OCLExpression<EClassifier> derivation, Object target) {
-		Environment myEnv = getEnvironment(); 
-		EnvironmentFactory factory = myEnv.getFactory();
-    	// create a nested evaluation environment for this property call
-    	EvaluationEnvironment nested = factory.createEvaluationEnvironment(getEvaluationEnvironment());    	
+		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> myEnv = getEnvironment();
+		EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> factory = myEnv
+				.getFactory();
+		// create a nested evaluation environment for this property call
+		EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> nested = factory
+				.createEvaluationEnvironment(getEvaluationEnvironment());
     	// bind "self"
     	nested.add(Environment.SELF_VARIABLE_NAME, target);
     	
-    	EvaluationVisitor visitor = factory.createEvaluationVisitor(myEnv, nested, getExtentMap());
+		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> visitor = factory
+				.createEvaluationVisitor(myEnv, nested, getExtentMap());
     	if(visitor instanceof QvtOperationalEvaluationVisitorImpl) {
     		// ensure shared instance of oclAnnotationSupport to avoid repeated OCL parsing
     		((QvtOperationalEvaluationVisitorImpl)visitor).oclAnnotationSupport = getOCLAnnotationSupport();

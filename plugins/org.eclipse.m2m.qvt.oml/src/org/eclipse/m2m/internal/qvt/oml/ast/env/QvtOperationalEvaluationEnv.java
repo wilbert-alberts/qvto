@@ -165,6 +165,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		return super.callOperation(operation, opcode, source, args);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object navigateProperty(EStructuralFeature property, List<?> qualifiers, Object target) throws IllegalArgumentException {
 		if(target instanceof ModuleInstance) {

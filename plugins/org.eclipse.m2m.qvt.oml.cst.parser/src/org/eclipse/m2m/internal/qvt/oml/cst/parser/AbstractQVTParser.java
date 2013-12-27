@@ -563,15 +563,15 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 	}
 	
 	protected CSTNode createIfExpCSExt(OCLExpressionCS condition,
-			OCLExpressionCS thenExpression, EList<?> elifExpressions, OCLExpressionCS elseExpression) {
+			OCLExpressionCS thenExpression, EList<SwitchAltExpCS> elifExpressions, OCLExpressionCS elseExpression) {
 		SwitchAltExpCS firstAlt = (SwitchAltExpCS) createSwitchAltExpCS(condition, thenExpression);
 		firstAlt.setStartOffset(condition.getStartOffset());
 		firstAlt.setEndOffset(thenExpression != null ? thenExpression.getEndOffset() : condition.getEndOffset());
 		
 		EList<SwitchAltExpCS> altExp = new BasicEList<SwitchAltExpCS>(elifExpressions.size()+1);
 		altExp.add(firstAlt);		
-		for (Object elifPart : elifExpressions) {
-			altExp.add((SwitchAltExpCS) elifPart);
+		for (SwitchAltExpCS elifPart : elifExpressions) {
+			altExp.add(elifPart);
 		}
 		
 		return createSwitchExpCS(altExp, elseExpression);

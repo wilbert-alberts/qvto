@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2011 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,18 +13,25 @@ package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 
 /**
  * Virtual table class grouping related virtual operations to the table  owning operation.
@@ -62,13 +69,17 @@ public abstract class VirtualTable implements IVirtualOperationTable {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")	
-	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, InternalEvaluationEnv evalEnv) {
+	public EOperation lookupActualOperation(
+			EClassifier actualContextType,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			InternalEvaluationEnv evalEnv) {
 		return lookupActualOperation(actualContextType, env, null, evalEnv);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope, InternalEvaluationEnv evalEnv) {
+	public EOperation lookupActualOperation(
+			EClassifier actualContextType,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			Module scope, InternalEvaluationEnv evalEnv) {
 		if(actualContextType == null || env == null) {
 			throw new IllegalArgumentException();
 		}

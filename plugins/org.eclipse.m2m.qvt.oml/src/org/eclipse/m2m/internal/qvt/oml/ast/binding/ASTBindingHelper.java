@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,14 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.util.LineNumberProvider;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingModuleCS;
@@ -26,7 +33,10 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.CatchExp;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.cst.CSTNode;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.utilities.ASTNode;
 
@@ -75,14 +85,19 @@ public class ASTBindingHelper {
 		createCST2ASTBinding(cstNode, astNode, true, null);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode, Environment env) {
+	public static void createCST2ASTBinding(
+			CSTNode cstNode,
+			ASTNode astNode,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		createCST2ASTBinding(cstNode, astNode, true, env);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static void createCST2ASTBinding(CSTNode cstNode, ASTNode astNode, boolean isBidirectional, Environment env) {
-		ASTAdapter astAdapter = new ASTAdapter(cstNode, astNode, (EcoreEnvironment)env);
+	public static void createCST2ASTBinding(
+			CSTNode cstNode,
+			ASTNode astNode,
+			boolean isBidirectional,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+		ASTAdapter<ASTNode> astAdapter = new ASTAdapter<ASTNode>(cstNode, astNode, (EcoreEnvironment)env);
 		if(isBidirectional) {
 			astNode.eAdapters().add(astAdapter);
 		}

@@ -144,6 +144,8 @@ public class ElementOperations extends AbstractContextualOperations {
 	
 	private static class IntermediatePropertyCopier extends EcoreUtil.Copier {
 		
+		private static final long serialVersionUID = 1L;
+		
 		private QvtOperationalEvaluationEnv evalEnv;
 		
 		public IntermediatePropertyCopier(QvtOperationalEvaluationEnv evalEnv) {

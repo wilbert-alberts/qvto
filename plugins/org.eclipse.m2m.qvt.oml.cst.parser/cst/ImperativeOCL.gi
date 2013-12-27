@@ -95,8 +95,7 @@
 
 %Headers
 	/.
-		@SuppressWarnings("unchecked")
-		private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);								
+		private static final EList ourEmptyEList = new BasicEList.UnmodifiableEList(0, new Object[0]);
 								
 		
 		private void diagnozeErrorToken(int token_index) {
@@ -217,7 +216,7 @@
 		
 	dictLiteralPartListCS ::= dictLiteralPartCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -280,7 +279,7 @@
 	
 	CatchExp_list ::= CatchExp
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -389,7 +388,7 @@
 
 	var_init_declarator_list ::= var_init_declarator ',' var_init_declarator
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					result.add(getRhsSym(3));
 					setResult(result);
@@ -617,7 +616,7 @@
 
 	forExpDeclaratorList ::= IDENTIFIER
         	/.$BeginCode
-			EList result = new BasicEList();
+			EList<Object> result = new BasicEList<Object>();
 			result.add(getRhsIToken(1));
 			setResult(result);
 	          $EndCode
@@ -711,7 +710,7 @@
 
 	ifElif_list ::= ifElif_listElem
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					Object element = getRhsSym(1);
 					if (element instanceof EList) {
 						result.addAll((EList) element);
@@ -961,7 +960,7 @@
 
 	ifElif_ext_list ::= ifElif_ext_listElem
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					Object element = getRhsSym(1);
 					if (element instanceof EList) {
 						result.addAll((EList) element);
@@ -1325,7 +1324,7 @@
 	switchExpCS ::= switch qvtErrorToken
 		/.$BeginCode
 					CSTNode result = createSwitchExpCS(
-							new BasicEList(),
+							$EMPTY_ELIST,
 							null
 						);
 					setOffsets(result, getRhsIToken(1), getRhsIToken(1));
@@ -1349,14 +1348,14 @@
 
 	switchBodyExpCS ::= '{' qvtErrorToken
 		/.$BeginCode
-					Object[] result = new Object[] {new BasicEList(), null, getRhsIToken(1)};
+					Object[] result = new Object[] {$EMPTY_ELIST, null, getRhsIToken(1)};
 					setResult(result);
 		  $EndCode
 		./
 
 	switchAltExpCSList ::= switchAltExpCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -1595,7 +1594,7 @@
 	
 	imperativeIterContents12 ::= uninitializedVariableCS '|' OclExpressionCS
 		/.$BeginCode
-					EList iters = new BasicEList();
+					EList<Object> iters = new BasicEList<Object>();
 					iters.add(getRhsSym(1));
 					
 					setResult(new Object[] {
@@ -1635,7 +1634,7 @@
 
 	variableDeclarationListCS ::= uninitializedVariableCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -1741,7 +1740,7 @@
 					source,
 					null,
 					featureNameCS,
-					new BasicEList(),
+					$EMPTY_ELIST,
 					null
 					);
 			setOffsets(featureCallExpCS, source, featureNameCS);
@@ -1859,7 +1858,7 @@
 	expression_semi_list_element -> OclExpressionCS
 	expression_semi_list ::= expression_semi_list_element
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					Object element = getRhsSym(1);
 					if (element instanceof EList) {
 						result.addAll((EList) element);

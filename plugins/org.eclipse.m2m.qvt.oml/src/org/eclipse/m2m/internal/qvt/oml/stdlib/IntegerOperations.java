@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2012 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
-import org.eclipse.ocl.types.OCLStandardLibrary;
 
 
 public class IntegerOperations extends AbstractContextualOperations {
@@ -34,7 +30,7 @@ public class IntegerOperations extends AbstractContextualOperations {
 	
 	@Override
 	protected OperationProvider[] getOperations() {
-		OCLStandardLibrary<EClassifier> oclStdlib = getStdlib().getEnvironment().getOCLStandardLibrary();
+		//OCLStandardLibrary<EClassifier> oclStdlib = getStdlib().getEnvironment().getOCLStandardLibrary();
 		return new OperationProvider[] {
 //			new OperationProvider(TO_STRING, TO_STRING_NAME, oclStdlib.getString())
 		};

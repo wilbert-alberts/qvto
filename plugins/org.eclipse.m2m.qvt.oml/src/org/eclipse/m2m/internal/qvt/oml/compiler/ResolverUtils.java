@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2011 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -69,11 +69,9 @@ public class ResolverUtils {
     	URI result;
     	if(".".equals(ns)) { //$NON-NLS-1$
     		result = uri.trimSegments(1);
-    	} else if(ns != null) {
+    	} else {
     		String[] segments = getNameSegments(ns);
     		result = uri.trimSegments(segments.length + 1);
-    	} else {
-    		return null;
     	}
     	// add trailing / as for directories
     	return result.appendSegment("").trimQuery(); //$NON-NLS-1$

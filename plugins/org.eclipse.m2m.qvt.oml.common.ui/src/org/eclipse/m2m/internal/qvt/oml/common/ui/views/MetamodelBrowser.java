@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -763,7 +763,7 @@ public class MetamodelBrowser  implements IAdaptable {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "rawtypes" })
 	public Object getAdapter(Class key) {
         if (key.equals(IPropertySheetPage.class)) {
             return getPropertySheetPage();

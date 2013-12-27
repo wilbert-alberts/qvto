@@ -401,7 +401,7 @@
 	--=== // import of transformation and library (start) ===--
 	module_usageList ::= module_usage
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -471,7 +471,7 @@
 	
 	moduleref_list ::= moduleref
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -578,7 +578,7 @@
 
 	packageref_list ::= packageref
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -674,7 +674,7 @@
 		./	
 	type_list ::= typeCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -699,7 +699,7 @@
 	
 	classifierFeatureList ::= classifierFeatureCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -782,7 +782,7 @@
 
 	identifier_list ::= qvtIdentifierCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsIToken(1));
 					setResult(result);
 		  $EndCode
@@ -1101,7 +1101,7 @@
 		/.$BeginCode
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 					OCLExpressionCS expression = (OCLExpressionCS)getRhsSym(3);
-					EList<OCLExpressionCS> expressionList = new BasicEList();
+					EList<OCLExpressionCS> expressionList = new BasicEList<OCLExpressionCS>();
 					expressionList.add(expression);
 					MappingQueryCS result = createMappingQueryCS(
 							false,
@@ -1973,7 +1973,7 @@
 
 	letExpSubCS3 ::= untypedInitializedVariableCS
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
@@ -2021,8 +2021,8 @@
 								OCLStandardLibraryUtil.getOperationName(PredefinedType.NOT_EQUAL)
 							);
 					setOffsets(simpleNameCS, getRhsIToken(2));
-					EList args = new BasicEList();
-					args.add(getRhsSym(3));
+					EList<OCLExpressionCS> args = new BasicEList<OCLExpressionCS>();
+					args.add((OCLExpressionCS) getRhsSym(3));
 					CSTNode result = createOperationCallExpCS(
 							(OCLExpressionCS)getRhsSym(1),
 							simpleNameCS,
@@ -2159,14 +2159,14 @@
 		./
 	param_list ::= param
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode
 		./
 	param_list ::= qvtErrorToken
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					setResult(result);
 		  $EndCode
 		./
@@ -2325,7 +2325,7 @@
 		./
 	scoped_identifier_list ::= scoped_identifier
 		/.$BeginCode
-					EList result = new BasicEList();
+					EList<Object> result = new BasicEList<Object>();
 					result.add(getRhsSym(1));
 					setResult(result);
 		  $EndCode

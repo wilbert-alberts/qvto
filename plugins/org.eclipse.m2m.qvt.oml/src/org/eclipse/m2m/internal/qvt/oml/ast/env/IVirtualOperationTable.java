@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +11,19 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.ecore.CallOperationAction;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.SendSignalAction;
 
 public interface IVirtualOperationTable {
 
@@ -61,8 +70,10 @@ public interface IVirtualOperationTable {
 	 *         found.
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
-	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, InternalEvaluationEnv evalEnv);
+	public abstract EOperation lookupActualOperation(
+			EClassifier actualContextType,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			InternalEvaluationEnv evalEnv);
 
 	/**
 	 * Performs actual operation lookup according to virtual semantics for the
@@ -87,6 +98,9 @@ public interface IVirtualOperationTable {
 	 *         found.
 	 * @see #addOperationInModule(EOperation, Module)
 	 */
-	@SuppressWarnings("unchecked")
-	public abstract EOperation lookupActualOperation(EClassifier actualContextType, Environment env, Module scope, InternalEvaluationEnv evalEnv);	
+	public abstract EOperation lookupActualOperation(
+			EClassifier actualContextType,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			Module scope, InternalEvaluationEnv evalEnv);
+
 }
