@@ -26,7 +26,6 @@ import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.tree.NodeClassCont
 
 
 /** @author pkobiakov */
-@SuppressWarnings("unchecked")
 public class EmfFeatureMapReferenceComparatorTreeNode extends ComparatorTreeNode {
 	public EmfFeatureMapReferenceComparatorTreeNode(ComparatorTreeNode parent, EAttribute attr, FeatureMap map) {
 		super(parent);
@@ -35,17 +34,17 @@ public class EmfFeatureMapReferenceComparatorTreeNode extends ComparatorTreeNode
 	}
 
     @Override
-	public List<Object> getChildrenImpl() {
+	public List<ComparatorTreeNode> getChildrenImpl() {
         return getValues();
     }
     
     @Override
-	public List<Object> getNoncontainmentRefsImpl() {
+	public List<ComparatorTreeNode> getNoncontainmentRefsImpl() {
         return Collections.emptyList();
     }
 	
-
-	public List<Object> getValues() {
+    @SuppressWarnings("unchecked")
+	public List<ComparatorTreeNode> getValues() {
 		List<Object> emfChildren = new ArrayList<Object>();
 		
 		for(FeatureMap.Entry entry : myMap) {
@@ -62,7 +61,7 @@ public class EmfFeatureMapReferenceComparatorTreeNode extends ComparatorTreeNode
             }
         }
 		
-		List<Object> children = new ArrayList<Object>();
+		List<ComparatorTreeNode> children = new ArrayList<ComparatorTreeNode>();
 		for(Object child : emfChildren) {
 			children.add(new EmfObjectComparatorTreeNode(this, (EObject) child));
 		}

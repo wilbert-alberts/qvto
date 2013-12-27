@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,7 +42,6 @@ import org.eclipse.ocl.expressions.IntegerLiteralExp;
  * This test class is to check for MDT OCL implementation dependant semantics, not covered in detail by
  * the OCL specification.   
  */
-@SuppressWarnings("unchecked")
 public class TestOCLSemantics extends TestCase {
 
 	private CheckPointVisitor checkPointVisitor;
@@ -97,7 +96,7 @@ public class TestOCLSemantics extends TestCase {
 			}
 		};
 		
-		EvaluationVisitor ev =
+		EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> ev =
 			environmentFactory.createEvaluationVisitor(
 					environmentFactory.createEnvironment(),
 					environmentFactory.createEvaluationEnvironment(),
@@ -114,15 +113,15 @@ public class TestOCLSemantics extends TestCase {
 		return this.checkPointVisitor;
 	}
 	
-	private static class CheckPointVisitor extends EvaluationVisitorDecorator {
+	private static class CheckPointVisitor extends EvaluationVisitorDecorator<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> {
 		boolean intLiteralCalled = false;
 		
-		CheckPointVisitor(EvaluationVisitor decorated) {
+		CheckPointVisitor(EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> decorated) {
 			super(decorated);
 		}
 
 		@Override
-		public Object visitIntegerLiteralExp(IntegerLiteralExp literalExp) {		
+		public Object visitIntegerLiteralExp(IntegerLiteralExp<EClassifier> literalExp) {		
 			intLiteralCalled = true;
 			return super.visitIntegerLiteralExp(literalExp);
 		}

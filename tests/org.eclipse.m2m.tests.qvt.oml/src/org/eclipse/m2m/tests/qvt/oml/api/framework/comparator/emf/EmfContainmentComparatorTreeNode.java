@@ -30,33 +30,39 @@ public class EmfContainmentComparatorTreeNode extends ComparatorTreeNode {
 	}
 
 	@Override
-	public List<?> getChildrenImpl() {
-		return myRef.isContainment() ? getValues() : Collections.EMPTY_LIST;
+	public List<ComparatorTreeNode> getChildrenImpl() {
+		return myRef.isContainment() ? getValues() : Collections.<ComparatorTreeNode>emptyList();
 	}
 	
 	@Override
-	public List<?> getNoncontainmentRefsImpl() {
-		return !myRef.isContainment() ? getValues() : Collections.EMPTY_LIST;
+	public List<ComparatorTreeNode> getNoncontainmentRefsImpl() {
+		return !myRef.isContainment() ? getValues() : Collections.<ComparatorTreeNode>emptyList();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Object> getValues() {
-		List<Object> emfChildren = new ArrayList<Object>();
+	public List<ComparatorTreeNode> getValues() {
+		List<EObject> emfChildren = new ArrayList<EObject>();
 		
 		EObject node = ((EmfObjectComparatorTreeNode)getParent()).getNode();
 		Object value = node.eGet(myRef);
-		if(value != null) {
-			if(myRef.isMany()) {
-				emfChildren.addAll((List<Object>)value);
+		if(myRef.isMany()) {
+			if (value instanceof List<?>) {
+				for (Object o : (List<Object>) value) {
+					if (o instanceof EObject) {
+						emfChildren.add((EObject) o);
+					}
+				}
 			}
-			else {
-				emfChildren.add(value);
+		}
+		else {
+			if (value instanceof EObject) {
+				emfChildren.add((EObject) value);
 			}
 		}
 		
-		List<Object> children = new ArrayList<Object>();
-		for(Object child : emfChildren) {
-			children.add(new EmfObjectComparatorTreeNode(this, (EObject) child));
+		List<ComparatorTreeNode> children = new ArrayList<ComparatorTreeNode>();
+		for(EObject child : emfChildren) {
+			children.add(new EmfObjectComparatorTreeNode(this, child));
 		}
 		
 		return children;

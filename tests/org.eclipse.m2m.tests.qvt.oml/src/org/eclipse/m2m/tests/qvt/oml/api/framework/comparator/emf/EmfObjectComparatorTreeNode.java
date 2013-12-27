@@ -42,7 +42,7 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 	public EObject getNode() { return myNode; }
 
 	@Override
-	public List<?> getChildrenImpl() {
+	public List<ComparatorTreeNode> getChildrenImpl() {
 		List<ComparatorTreeNode> children = getRefs(true);
 		children.addAll(getRefs(false));
         children.addAll(getFeatureMapRefs());
@@ -50,8 +50,8 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 	}
 	
 	@Override
-	public List<?> getNoncontainmentRefsImpl() {
-		return Collections.EMPTY_LIST;
+	public List<ComparatorTreeNode> getNoncontainmentRefsImpl() {
+		return Collections.emptyList();
 	}
 	
 	private List<ComparatorTreeNode> getRefs(boolean containment) {
