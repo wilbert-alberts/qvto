@@ -1389,25 +1389,33 @@ public class QvtOperationalVisitorCS
 			return iterExp;
 		}
 		OCLExpression<EClassifier> source = iterExp.getSource();
-		if (source == null || false == source.getType() instanceof ListType) {
+		if (source == null) {
 			return iterExp;
 		}
-		if (false == iterExp.getType() instanceof CollectionType<?, ?>) {
+
+		String name = iterExp.getName();
+		if (PredefinedType.CLOSURE_NAME.equals(name)) {
+			if (source.getType() instanceof SequenceType<?, ?> || source.getType() instanceof OrderedSetType<?, ?>) {
+				CollectionType<EClassifier, EOperation> ct = (CollectionType<EClassifier, EOperation>) source.getType();
+				iterExp.setType(getOrderedSetType(iteratorExpCS.getBody(), env, ct.getElementType()));
+			}
+		}
+
+		if (false == source.getType() instanceof ListType || false == iterExp.getType() instanceof CollectionType<?, ?>) {
 			return iterExp;
 		}
 		
-		String name = iterExp.getName();
 		EClassifier elementType = ((CollectionType<EClassifier, EOperation>) iterExp.getType()).getElementType();
 		
-		if ("select".equals(name) || "reject".equals(name)) {//$NON-NLS-2$//$NON-NLS-1$
+		if (PredefinedType.SELECT_NAME.equals(name) || PredefinedType.REJECT_NAME.equals(name)) {
 			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
-		} else if ("collect".equals(name)) {//$NON-NLS-1$
+		} else if (PredefinedType.COLLECT_NAME.equals(name)) {
 			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
-		} else if ("collectNested".equals(name)) {//$NON-NLS-1$
+		} else if (PredefinedType.COLLECT_NESTED_NAME.equals(name)) {
 			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
-		} else if ("sortedBy".equals(name)) {//$NON-NLS-1$
+		} else if (PredefinedType.SORTED_BY_NAME.equals(name)) {
 			iterExp.setType(resolveCollectionType(env, CollectionKind.SEQUENCE_LITERAL, elementType));
-		} else if ("closure".equals(name)) {//$NON-NLS-1$
+		} else if (PredefinedType.CLOSURE_NAME.equals(name)) {
 			iterExp.setType(resolveCollectionType(env, CollectionKind.ORDERED_SET_LITERAL, elementType));
 		}
 		

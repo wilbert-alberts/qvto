@@ -407,11 +407,13 @@ public class EmfUtil {
 //			res.getContents().clear();
 //			res.eAdapters().clear();
 
-			for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
-				EObject eObject = it.next();
-				((InternalEObject) eObject).eSetProxyURI(uri);
+			if (res.isLoaded()) {
+				for (TreeIterator<EObject> it = res.getAllContents(); it.hasNext();) {
+					EObject eObject = it.next();
+					((InternalEObject) eObject).eSetProxyURI(uri);
+				}
+				res.unload();
 			}
-			res.unload();
 		}
 		rs.getResources().clear();
 		rs.eAdapters().clear();
