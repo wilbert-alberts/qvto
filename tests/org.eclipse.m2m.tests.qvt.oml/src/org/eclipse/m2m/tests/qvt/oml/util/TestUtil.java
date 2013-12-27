@@ -27,7 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;

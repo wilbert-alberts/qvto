@@ -100,7 +100,6 @@ public class TestProject {
         }
     }	
 
-	@SuppressWarnings("unchecked")
 	public static Path findFileInPlugin(final String plugin, final String file) throws IOException {
 		Bundle bundle = Platform.getBundle(plugin);
         if(bundle == null) {

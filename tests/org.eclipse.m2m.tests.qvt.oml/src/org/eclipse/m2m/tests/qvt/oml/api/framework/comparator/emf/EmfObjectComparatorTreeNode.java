@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -139,14 +139,14 @@ public class EmfObjectComparatorTreeNode extends ComparatorTreeNode {
 
         if(!leftValue.equals(rightValue)) {
             if(leftValue instanceof Comparable) {
-                cmp = ((Comparable)leftValue).compareTo(rightValue);
+                cmp = ((Comparable<Object>)leftValue).compareTo(rightValue);
                 if(cmp != 0) {
                     return new AttrContentChange(myNode, attr, leftValue, rightValue, cmp);
                 }
             }
             
             if(rightValue instanceof Comparable) {
-                cmp = ((Comparable)rightValue).compareTo(leftValue);
+                cmp = ((Comparable<Object>)rightValue).compareTo(leftValue);
                 if(cmp != 0) {
                     return new AttrContentChange(myNode, attr, leftValue, rightValue, cmp);
                 }

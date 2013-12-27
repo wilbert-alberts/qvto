@@ -62,7 +62,8 @@ public class TestQvtAntScript extends TestCase {
     	
     	IFile outUri = getIFile("out.uri.txt"); //$NON-NLS-1$
     	byte[] buffer = new byte[10000];
-    	int count = new FileInputStream(outUri.getRawLocation().toOSString()).read(buffer);
+    	FileInputStream fileInputStream = new FileInputStream(outUri.getRawLocation().toOSString());
+    	int count = fileInputStream.read(buffer);
     	String content = new String(buffer, 0, count, ModelTestData.ENCODING);
     	int index = 0;
     	for (String strUri : content.split(FIELD_DELIM)) {
@@ -75,6 +76,7 @@ public class TestQvtAntScript extends TestCase {
 			myData.compareWithExpected(expectedObject, loadObj);
             index++;
     	}
+    	fileInputStream.close();
     }
     
     @Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -56,7 +56,6 @@ public class TestModuleResolver implements UnitResolver {
 			throw new IllegalArgumentException("Not existinging bundle" + bundleSymbolicName); //$NON-NLS-1$
 		}
 
-		@SuppressWarnings("unchecked")
 		Enumeration<java.net.URL> qvtFiles = bundle.findEntries(sourceContainerPath, "*" + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, true); //$NON-NLS-1$
 		
 		List<IPath> pathList = new ArrayList<IPath>();

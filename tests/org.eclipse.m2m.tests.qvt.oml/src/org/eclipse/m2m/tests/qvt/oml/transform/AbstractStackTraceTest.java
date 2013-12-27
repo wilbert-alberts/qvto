@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2012 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -112,6 +112,8 @@ public abstract class AbstractStackTraceTest extends TestTransformation {
 	        buf.flip();
 	        result.append(buf);
 	    }
+	    
+	    freader.close();
 	    
 		return result.toString();
 	}

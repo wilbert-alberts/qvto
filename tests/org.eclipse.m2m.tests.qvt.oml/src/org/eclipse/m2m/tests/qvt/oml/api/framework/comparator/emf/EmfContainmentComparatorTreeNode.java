@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ package org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.emf;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -41,24 +40,23 @@ public class EmfContainmentComparatorTreeNode extends ComparatorTreeNode {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List getValues() {
-		List emfChildren = new ArrayList();
+	public List<Object> getValues() {
+		List<Object> emfChildren = new ArrayList<Object>();
 		
 		EObject node = ((EmfObjectComparatorTreeNode)getParent()).getNode();
 		Object value = node.eGet(myRef);
 		if(value != null) {
 			if(myRef.isMany()) {
-				emfChildren.addAll((List)value);
+				emfChildren.addAll((List<Object>)value);
 			}
 			else {
 				emfChildren.add(value);
 			}
 		}
 		
-		List children = new ArrayList();
-		for(Iterator childIt = emfChildren.iterator(); childIt.hasNext(); ) {
-			EObject child = (EObject)childIt.next();
-			children.add(new EmfObjectComparatorTreeNode(this, child));
+		List<Object> children = new ArrayList<Object>();
+		for(Object child : emfChildren) {
+			children.add(new EmfObjectComparatorTreeNode(this, (EObject) child));
 		}
 		
 		return children;
