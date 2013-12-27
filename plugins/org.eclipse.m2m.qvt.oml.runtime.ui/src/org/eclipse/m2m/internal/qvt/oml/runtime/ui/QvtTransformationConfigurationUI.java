@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,6 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -223,12 +222,6 @@ public class QvtTransformationConfigurationUI {
             return myValues.toArray(new ConfigurationPropertyValue[] {});
         }
         
-        public Map<String, String> toMap() {
-            Map<String, String> valueMap = new HashMap<String, String>();
-            fillMap(valueMap);
-            return valueMap;
-        }
-
         public void fillMap(Map<String, String> valueMap) {
             for (ConfigurationPropertyValue value : myValues) {
                 if (value.getValue() != QvtConfigurationPropertyType.NOT_SET) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -83,8 +83,7 @@ public class QVTColorsPreferencePage extends PreferencePage implements IWorkbenc
 	public boolean performOk() {
 		fOverlayStore.propagate();
 		try {
-			// deprecated - Activator.getDefault().savePluginPreferences();			
-			new InstanceScope().getNode(Activator.PLUGIN_ID).flush();			
+			InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).flush();			
 		} catch (BackingStoreException e) {
 			Activator.log(e);
 		}

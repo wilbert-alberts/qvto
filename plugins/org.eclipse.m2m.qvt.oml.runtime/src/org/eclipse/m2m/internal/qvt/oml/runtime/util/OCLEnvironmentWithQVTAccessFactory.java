@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2011 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -203,7 +203,8 @@ public final class OCLEnvironmentWithQVTAccessFactory extends EcoreEnvironmentFa
 
 		EvaluationVisitorDecorator<EPackage, EClassifier, EOperation, 
 		EStructuralFeature, EEnumLiteral, EParameter, EObject, 
-		CallOperationAction, SendSignalAction, Constraint, EClass, EObject> decorator = new EvaluationVisitorDecorator(super.createEvaluationVisitor(env, evalEnv, extentMap)) 
+		CallOperationAction, SendSignalAction, Constraint, EClass, EObject> decorator = 
+			new EvaluationVisitorDecorator<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>(super.createEvaluationVisitor(env, evalEnv, extentMap)) 
 		{
 			@Override
 			public Object visitVariableExp(VariableExp variableExp) {

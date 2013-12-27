@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -103,10 +103,6 @@ public class BracketInserter implements VerifyKeyListener, ILinkedModeListener {
 	}
 
 	private static class BracketLevel {
-		int fOffset;
-
-		int fLength;
-
 		LinkedModeUI fUI;
 
 		Position fFirstPosition;
@@ -193,15 +189,6 @@ public class BracketInserter implements VerifyKeyListener, ILinkedModeListener {
 			}
 		}
 
-		/**
-		 * Returns the position category.
-		 * 
-		 * @return the position category
-		 */
-		public String getCategory() {
-			return fCategory;
-		}
-
 	}
 
 	public BracketInserter(ISourceViewer viewer) {
@@ -271,9 +258,6 @@ public class BracketInserter implements VerifyKeyListener, ILinkedModeListener {
 			model.addLinkingListener(this);
 			model.addGroup(group);
 			model.forceInstall();
-
-			level.fOffset = offset;
-			level.fLength = 2;
 
 			// set up position tracking for our magic peers
 			if (fBracketLevelStack.size() == 1) {

@@ -77,7 +77,6 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
         Dialog.applyDialogFont(composite);
     }
 
-    @SuppressWarnings("unchecked")
     public void initializeFrom(ILaunchConfiguration configuration) {
         String fileName = ""; //$NON-NLS-1$
         try {

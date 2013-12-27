@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,15 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
 import org.eclipse.ocl.OCLInput;
 import org.eclipse.ocl.ParserException;
+import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.OCL;
+import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.types.AnyType;
@@ -147,9 +154,9 @@ class QvtLibraryOperation {
 		return result;
 	}
 		
-	@SuppressWarnings("unchecked")
 	private static boolean isOclVoidTypeName(String typeName, QvtOperationalEnv env) {
-		UMLReflection umlReflection = env.getUMLReflection();
+		UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> umlReflection = env
+				.getUMLReflection();
 		EClassifier oclVoid = env.getOCLStandardLibrary().getOclVoid();
 		String simpleName = umlReflection.getName(oclVoid);
 		String qName = umlReflection.getQualifiedName(oclVoid);
