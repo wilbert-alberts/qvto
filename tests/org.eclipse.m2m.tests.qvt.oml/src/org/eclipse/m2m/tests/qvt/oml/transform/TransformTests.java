@@ -369,6 +369,7 @@ public class TransformTests {
         		new FileToFileData("bug392156"), //$NON-NLS-1$
         		new FilesToFilesData("bug424086"), //$NON-NLS-1$
         		new FilesToFilesData("bug422315"), //$NON-NLS-1$
+        		new FilesToFilesData("bug424740"), //$NON-NLS-1$
         		};
     }
 
