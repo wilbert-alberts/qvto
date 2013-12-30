@@ -1207,6 +1207,19 @@
 
 	----- ifExp (end) -----
 
+	----- do ---------
+
+	ImperativeExpCS -> blockExpCS
+
+	blockExpCS ::= do expression_block
+		/.$BeginCode
+					BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
+					setOffsets(blockExpCS, getRhsIToken(1), blockExpCS);
+					setResult(blockExpCS);
+		  $EndCode
+		./
+
+
 	----- switch -----
 
 	ImperativeExpCS -> switchExpCS
