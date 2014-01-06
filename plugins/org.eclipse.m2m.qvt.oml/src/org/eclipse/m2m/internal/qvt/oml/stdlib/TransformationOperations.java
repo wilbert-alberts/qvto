@@ -13,7 +13,6 @@
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
@@ -67,8 +66,6 @@ public class TransformationOperations extends AbstractContextualOperations {
 			    try {
 			    	mainHandler.invoke(moduleInstance, source, args, evalEnv);
 			    } catch(QvtInterruptedExecutionException e) {
-			    	// ensure the stop exception gets propagated
-			    	evalEnv.getAdapter(InternalEvaluationEnv.class).setException(e);
 			    	throw e;
 			    } catch(QvtRuntimeException e) {
 					ExceptionInstance raisedException = stdlibFactory.createException(QvtOperationalStdLibrary.INSTANCE.getExceptionClass(),

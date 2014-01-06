@@ -733,18 +733,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
     public ImperativeOperation getOperation() {
 		return myOperation;
 	}
-    
-    private void saveThrownException(QvtRuntimeException exception) {
-    	assert exception != null;
-    	
-    	QvtOperationalEvaluationEnv rootEnv = getRoot();
-    	Internal internRootEnv = rootEnv.internalEnv();    	
-    	assert internRootEnv instanceof RootInternal : "Internal env of root evaluation env must be RootInternal"; //$NON-NLS-1$
-
-    	RootInternal root = (RootInternal)  internRootEnv;
-    	root.myException = exception;
-    }
-    
+        
     /**
      * The root evaluation environment, refers to <code>this</code> if this is the root environment
      */
@@ -783,7 +772,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    private ModelParameterExtent myUnboundExtent;
 	    private TransformationInstance myThisTransformation;
 	    private boolean myIsDefferedExecution;
-	    private QvtRuntimeException myException;
 	    private Trace myTraces;
 
 	    RootInternal(IContext context) {
@@ -801,17 +789,11 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			myUnboundExtent = another.myUnboundExtent;
 			myThisTransformation = another.myThisTransformation;
 			myIsDefferedExecution = another.myIsDefferedExecution;
-			myException = another.myException;
 		}
 
 	    @Override
 	    IContext getContext() {
 	    	return myContext;
-	    }
-	    
-	    @Override
-	    public QvtRuntimeException getException() {
-	    	return myException;
 	    }
 	    
 	    @Override
@@ -914,14 +896,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    public Internal clone() {
 	    	return new Internal(this);
 	    }
-
-	    public QvtRuntimeException getException() {
-	    	return getRoot().internalEnv().getException();
-	    }
-
-	    public void setException(QvtRuntimeException exception) {
-	    	saveThrownException(exception);
-	    }
 	    	    
 		public TransformationInstance getCurrentTransformation() {
 			return getRoot().internalEnv().getCurrentTransformation();
@@ -987,7 +961,6 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	    
 		public void throwQVTException(QvtRuntimeException exception) throws QvtRuntimeException {
 			try {
-				saveThrownException(exception);
 				exception.setStackQvtTrace(getStackTraceElements());
 			} catch (Exception e) {
 				QvtPlugin.error("Failed to build QVT stack trace", e); //$NON-NLS-1$

@@ -714,18 +714,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         	result = getInvalid();
         }
         
-        // Note: we have to check for QVT exception caught by MDT OCL, those turned into invalid result, resolved
-        // as failed operation calls, but QVT need some exceptions to propagate to the main running transformation,
-        // for instance QVTInterruptedExecutionException        
-    	if(result == getInvalid()) {
-    		// check whether we have got exception from explicit call to 'Transformation::transform()'
-    		QvtRuntimeException e = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class).getException();
-    		if(e != null) {
-        		// propagate upward the stack in the current transformation    			
-        		throw e;
-    		}    		
-    	}
-        
         return result;
     }
 

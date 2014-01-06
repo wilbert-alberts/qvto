@@ -104,29 +104,6 @@ public interface InternalEvaluationEnv {
     void setLastAssignmentLvalueEval(EObjectEStructuralFeaturePair lvalue);
     
     ModelParameterExtent getUnboundExtent();
-
-	/**
-	 * Gets the exception thrown in the context of the current evaluation
-	 * environment stack
-	 * 
-	 * @return the exception or <code>null</code>, if no exception has been set.
-	 * 
-	 * @see #setException(QvtRuntimeException)
-	 */
-	QvtRuntimeException getException();	
-
-	/**
-	 * Sets the exception thrown in the context of the current evaluation
-	 * environment stack.</p> Single exception can be assigned per the whole
-	 * stack.</br> Note: This is used to workaround exception catches in the MDT
-	 * OCL operation call processing, which swallows all exceptions as failure
-	 * and returns invalid object.
-	 * 
-	 * @return the exception or <code>null</code>, if no exception has been set.
-	 * 
-	 * @see #getException(QvtRuntimeException)
-	 */
-	void setException(QvtRuntimeException exception);
 	
 	/**
 	 * Get traces for the transformation execution associated with this
