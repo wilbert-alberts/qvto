@@ -115,6 +115,7 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictLiteralPart;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ForExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeIterateExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeLoopExp;
+import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.InstantiationExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.LogExp;
@@ -143,6 +144,7 @@ import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreFactory;
+import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionItem;
 import org.eclipse.ocl.expressions.CollectionKind;
@@ -655,6 +657,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         boolean isImperative = QvtOperationalUtil.isImperativeOperation(referredOperation);
 		if (isImperative && !CallHandler.Access.hasHandler(referredOperation)) {
 			Object source = visitExpression(operationCallExp.getSource());
+			if (((ImperativeOperation) referredOperation).getContext() != null) {
+				source = doImplicitListCoercion(((ImperativeOperation) referredOperation).getContext().getEType(), source);
+			}
             List<Object> args = makeArgs(operationCallExp);
             // does not make sense continue at all, call on null or invalid results in invalid 
         	if(isUndefined(source)) {
@@ -692,7 +697,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.MappingPreconditionFailed, method.getName())));
             		}
             	}
-            	return opResult.myResult;
+            	
+            	return doImplicitListCoercion(referredOperation.getEType(), opResult.myResult);
             }
         }
 
@@ -749,6 +755,30 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 		}
 		return actualOperation;
+	}
+	
+	/**
+	 * Performs implicit coercion of instances of List type into Sequence type and vice versa.
+	 * See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=418961 
+	 * @param declaredType Expected type of expression
+	 * @param actualValue Actual value of expression
+	 * @return In case coercion is needed then converted value is returned. Otherwise returns 'actualValue'.
+	 */
+	@SuppressWarnings("unchecked")
+	private Object doImplicitListCoercion(EClassifier declaredType, Object actualValue) {
+		if (declaredType instanceof CollectionType<?, ?> && actualValue instanceof Collection<?>) {
+			if (declaredType.eClass() == ImperativeOCLPackage.eINSTANCE.getListType() && false == actualValue instanceof MutableList<?>) {
+				Collection<Object> newCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) declaredType);
+				newCollection.addAll((Collection<Object>) actualValue);
+				return newCollection;
+			}
+			if (declaredType.eClass() == EcorePackage.eINSTANCE.getSequenceType() && actualValue instanceof MutableList<?>) {
+				Collection<Object> newCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) declaredType);
+				newCollection.addAll((Collection<Object>) actualValue);
+				return newCollection;
+			}
+		}
+		return actualValue;
 	}
         
     @Override
@@ -2113,11 +2143,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         return null;
     }
 
-    private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {
+	private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {
+    	EOperation referredOperation = operationCallExp.getReferredOperation();
+    	Iterator<EParameter> iterParam = referredOperation.getEParameters().iterator();
         List<Object> argValues = new ArrayList<Object>();
         for (OCLExpression<EClassifier> arg : operationCallExp.getArgument()) {
         	Object value = visitExpression(arg);
-            argValues.add(value);
+        	EParameter param = iterParam.next();
+            argValues.add(doImplicitListCoercion(param.getEType(), value));
         }
 
         return argValues;

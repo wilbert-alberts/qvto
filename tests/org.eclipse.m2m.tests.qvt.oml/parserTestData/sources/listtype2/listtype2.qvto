@@ -7,15 +7,15 @@ helper testCase() : Boolean {
 	var c : Collection(String) := Set { 'a', 'b'};
 	var setElements : Set(String) := /*<error>*/newList(c)/*</error>*/;
 	var bagElements : Bag(String) := /*<error>*/newList(c)/*</error>*/;
-	var seqElements : Sequence(String) := /*<error>*/newList(c)/*</error>*/;	
+	var seqElements : Sequence(String) := newList(c);	
 	var oSetElements : OrderedSet(String) := /*<error>*/newList(c)/*</error>*/;	
 	
 	var chars := OrderedSet{ 'a', 'b', 'c'  };
 	var listElements : List(String) := newList(chars);
-	/*<error>*/listElements/*</error>*/ := Set { '' };
-	/*<error>*/listElements/*</error>*/ := Bag { '' }; 
-	/*<error>*/listElements/*</error>*/ := Sequence { '' };
-	/*<error>*/listElements/*</error>*/ := OrderedSet { '' };
+	listElements := /*<error>*/Set { '' }/*</error>*/;
+	listElements := /*<error>*/Bag { '' }/*</error>*/; 
+	listElements := Sequence { '' };
+	listElements := /*<error>*/OrderedSet { '' }/*</error>*/;
 
 	-- correct samples
 	var conformantCollection : Collection(OclAny) := listElements;

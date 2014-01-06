@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,10 @@
  *     Alex Paperno - bugs 413131
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
+
+import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
+import static org.eclipse.ocl.utilities.UMLReflection.STRICT_SUBTYPE;
+import static org.eclipse.ocl.utilities.UMLReflection.SUBTYPE;
 
 import java.util.Collections;
 import java.util.List;
@@ -101,8 +105,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 
 		// special handling for null and invalid values, whose types conform
 		// to all others
-		OCLStandardLibrary<EClassifier> lib = getEnvironment().getOCLStandardLibrary();
-		if ((owner == lib.getOclVoid()) || (owner == lib.getOclInvalid())) {
+		if ((owner == fOCLStdlib.getOclVoid()) || (owner == fOCLStdlib.getOclInvalid())) {
 			return findOperationForVoidOrInvalid(owner, name, args);
 		}
 
@@ -222,6 +225,12 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 						((ListType)type2).getElementType(), col1.getElementType())) {
 					return UMLReflection.STRICT_SUPERTYPE;
 				}				
+
+				if(col1.eClass() == EcorePackage.eINSTANCE.getSequenceType() &&
+						TypeUtil.compatibleTypeMatch(getEnvironment(), 
+							((ListType)type2).getElementType(), col1.getElementType())) {
+					return UMLReflection.SUPERTYPE;
+				}				
 			} else if(!isList2 && type2 instanceof CollectionType<?, ?>) {
 				@SuppressWarnings("unchecked")
 				CollectionType<EClassifier, EOperation> col2 = (CollectionType<EClassifier, EOperation>) type2;
@@ -229,7 +238,13 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				if(col2.eClass() == EcorePackage.eINSTANCE.getCollectionType() &&
 					TypeUtil.compatibleTypeMatch(getEnvironment(), 
 						((ListType)type1).getElementType(), col2.getElementType())) {
-					return UMLReflection.STRICT_SUBTYPE	;
+					return UMLReflection.STRICT_SUBTYPE;
+				}				
+
+				if(col2.eClass() == EcorePackage.eINSTANCE.getSequenceType() &&
+						TypeUtil.compatibleTypeMatch(getEnvironment(), 
+							((ListType)type1).getElementType(), col2.getElementType())) {
+					return UMLReflection.SUBTYPE;
 				}				
 			}
 			
@@ -330,6 +345,17 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		}	
 		
 		return super.getRelationship(type1, type2);
+	}
+	
+	public boolean compatibleTypeMatch(EClassifier type1, EClassifier type2) {
+		switch (getRelationship(type1, type2)) {
+		case SAME_TYPE:
+		case STRICT_SUBTYPE:
+		case SUBTYPE:
+			return true;
+		default:
+			return false;
+		}
 	}
 	
 	EOperation getMostSpecificOperation(List<EOperation> matchingOpers, List<? extends TypedElement<EClassifier>> args) throws LookupException {
@@ -470,9 +496,8 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 			} 
 			else if(nextParamRel == Relation.UNRELATED) {
 				TypedElement<EClassifier> actualArg = args.get(i);
-				OCLStandardLibrary<EClassifier> oclStdLibrary = getEnvironment().getOCLStandardLibrary(); 						
-				if(oclStdLibrary.getOclVoid() == actualArg.getType() || 
-					oclStdLibrary.getOclInvalid() == actualArg.getType()) {
+				if(fOCLStdlib.getOclVoid() == actualArg.getType() || 
+						fOCLStdlib.getOclInvalid() == actualArg.getType()) {
 					// unrelated parameter types but both matching the given argument (void, invalid)
 					// => we can't make a more specific decision
 					return Relation.AMBIGUOUS;

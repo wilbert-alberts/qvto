@@ -423,13 +423,13 @@ public class QvtOperationalParserUtil {
 	}
 
 	public static boolean validateAssignment(boolean isProperty, String leftName, EClassifier leftType,
-			EClassifier rightType, boolean isIncremental, CSTNode cstNode, 
+			EClassifier rightType, boolean isIncremental, CSTNode lValueCS, CSTNode rValueCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
 			EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
 		
 		if (isIncremental) {
 			if (leftType instanceof CollectionType == false) {
-				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_3, new Object[] { leftName }), cstNode);
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_3, new Object[] { leftName }), lValueCS);
 				return false;
 			}
 
@@ -442,7 +442,7 @@ public class QvtOperationalParserUtil {
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, baseType, actualType)) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_5, 
 						new Object[] { leftName, QvtOperationalTypesUtil.getTypeFullName(baseType),
-							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
+							QvtOperationalTypesUtil.getTypeFullName(actualType) }), rValueCS);
 				return false;
 			}
 		}
@@ -456,7 +456,7 @@ public class QvtOperationalParserUtil {
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, baseType, actualType)) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_5, 
 						new Object[] { leftName, QvtOperationalTypesUtil.getTypeFullName(baseType),
-							QvtOperationalTypesUtil.getTypeFullName(actualType) }), cstNode);
+							QvtOperationalTypesUtil.getTypeFullName(actualType) }), rValueCS);
 				return false;
 			}
 		}
@@ -464,7 +464,7 @@ public class QvtOperationalParserUtil {
 			if (!QvtOperationalParserUtil.isAssignableToFrom(env, leftType, rightType)) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.SemanticUtil_8, new Object[] { leftName,
 				        QvtOperationalTypesUtil.getTypeFullName(leftType),
-				        QvtOperationalTypesUtil.getTypeFullName(rightType) }), cstNode);
+				        QvtOperationalTypesUtil.getTypeFullName(rightType) }), rValueCS);
 				return false;
 			}
 		}

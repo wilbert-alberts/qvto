@@ -211,9 +211,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             return null;
 	    }
 	    if ((modules.size() > 1) && (unitElements.size() != modules.size() + imports.size() + modeltypes.size())) {
-	        reportError(Messages.MultipleModulesExtraUnitElements, startingUnitElement.getStartToken().getTokenIndex(),
-        		trailingUnitElement.getEndToken().getTokenIndex()
-	                );
+	        reportError(Messages.MultipleModulesExtraUnitElements, startingUnitElement.getStartOffset(), trailingUnitElement.getEndOffset());
 	    }
         for (MappingModuleCS moduleCS : modules) {
         	// Clone modeltypes
