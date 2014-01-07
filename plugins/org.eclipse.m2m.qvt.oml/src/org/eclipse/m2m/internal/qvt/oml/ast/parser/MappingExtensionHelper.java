@@ -55,19 +55,23 @@ class MappingExtensionHelper {
 		boolean validate(QvtOperationalEnv env) {
 			boolean result = true; 
 			MappingBody body = (MappingBody)fOperation.getBody();
-			
-			boolean nonEmptyBody = body != null &&
-					(!body.getContent().isEmpty() || 
-					!body.getInitSection().isEmpty() ||
-					!body.getEndSection().isEmpty());
-			
-			if(nonEmptyBody) {
-				// TODO - required changes in building AST, as body + ObjectExp AST gets always created
-//				env.reportWarning(NLS.bind(ValidationMessages.MappingExtension_disjunctingMappingBodyNotExecuted, 
-//					QvtOperationalParserUtil.safeGetMappingQualifiedName(env, fOperation)),
-//					body.getStartPosition(), body.getEndPosition());
-			}
 
+			if (body != null) {
+				boolean isEmptyBody = body.getContent().isEmpty() ||
+						(body.getContent().size() == 1
+							&& body.getContent().get(0).getStartPosition() == body.getStartPosition()
+							&& body.getContent().get(0).getEndPosition() == body.getEndPosition());
+				boolean nonEmptyMapping = !isEmptyBody
+						|| !body.getInitSection().isEmpty()
+						|| !body.getEndSection().isEmpty();
+				
+				if(nonEmptyMapping) {
+					env.reportWarning(NLS.bind(ValidationMessages.MappingExtension_disjunctingMappingBodyNotExecuted, 
+						QvtOperationalParserUtil.safeGetMappingQualifiedName(env, fOperation)),
+						body.getStartPosition(), body.getEndPosition());
+				}
+			}
+			
 			result &= reportInvalidExtensionsInDisjunctingMapping(env, fOperation.getInherited(), MappingExtensionKindCS.INHERITS);
 			result &= reportInvalidExtensionsInDisjunctingMapping(env, fOperation.getMerged(), MappingExtensionKindCS.MERGES);
 			

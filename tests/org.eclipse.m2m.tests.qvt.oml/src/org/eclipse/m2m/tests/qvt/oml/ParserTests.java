@@ -213,8 +213,9 @@ public class ParserTests {
     	TestData.createSourceChecked("bug401521", 1, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug414616", 2, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug419299", 8, 0), //$NON-NLS-1$
-    	TestData.createSourceChecked("bug414619", 5, 0), //$NON-NLS-1$    	
-    	TestData.createSourceChecked("bug415024", 1, 0), //$NON-NLS-1$    	
-    	TestData.createSourceChecked("bug413391", 10, 0), //$NON-NLS-1$    	
+    	TestData.createSourceChecked("bug414619", 5, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug415024", 1, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug413391", 10, 0), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug424912", 0, 6), //$NON-NLS-1$
     };
 }

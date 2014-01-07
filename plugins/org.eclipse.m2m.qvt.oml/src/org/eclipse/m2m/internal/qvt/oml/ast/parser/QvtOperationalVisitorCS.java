@@ -3635,6 +3635,8 @@ public class QvtOperationalVisitorCS
 						methodCS.getMappingDeclarationCS());
 						*/
 				}
+				body.setStartPosition(methodCS.getMappingBody().getStartOffset());
+				body.setEndPosition(methodCS.getMappingBody().getEndOffset());
 			}
 		} else {
 			body = ExpressionsFactory.eINSTANCE.createMappingBody();
