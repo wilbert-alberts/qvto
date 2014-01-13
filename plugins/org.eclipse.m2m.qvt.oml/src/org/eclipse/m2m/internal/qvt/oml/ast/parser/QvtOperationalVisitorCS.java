@@ -278,9 +278,11 @@ public class QvtOperationalVisitorCS
 	
     @Override
     protected void initStartEndPositions(ASTNode astNode, CSTNode cstNode) {
-        // FIXME - temp workaround after OCL 1.2 migration    	
-    	astNode.setStartPosition(cstNode.getStartOffset());
-    	astNode.setEndPosition(cstNode.getEndOffset());
+        // FIXME - temp workaround after OCL 1.2 migration 
+    	if ((astNode != null) && (cstNode != null)) {
+    		astNode.setStartPosition(cstNode.getStartOffset());
+    		astNode.setEndPosition(cstNode.getEndOffset());
+    	}
     }
     
     protected InstantiationExp instantiationExpCS(InstantiationExpCS newCallExp, 

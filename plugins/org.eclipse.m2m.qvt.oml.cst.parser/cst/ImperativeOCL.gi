@@ -594,12 +594,14 @@
 		/.$BeginCode
 					OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 					SimpleNameCS simpleNameCS = (SimpleNameCS)getRhsSym(3);
+					OCLExpressionCS invalidBody = createInvalidLiteralExpCS("");
+					setOffsets(invalidBody, getRhsIToken(4), getRhsIToken(5));
 					CSTNode result = createIteratorExpCS(
 							source,
 							simpleNameCS,
 							null,
 							null,
-							null
+							invalidBody
 						);
 					setOffsets(result, source, getRhsIToken(4));
 					setResult(result);
@@ -1741,31 +1743,23 @@
 	-- xcollect shorthand
 	IterateExpCS ::= primaryExpCS '->' simpleNameCS
 		/.$BeginCode
-			String opCode = "xcollect"; 
-			SimpleNameCS simpleNameCS = createSimpleNameCS(
-					SimpleTypeEnum.KEYWORD_LITERAL,
-					opCode
-					);
-
 			OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 			SimpleNameCS featureNameCS = (SimpleNameCS)getRhsSym(3);
-			OCLExpressionCS featureCallExpCS = createFeatureCallExpCS(
-					source,
-					null,
+			VariableExpCS variableCS = createVariableExpCS(
 					featureNameCS,
 					$EMPTY_ELIST,
 					null
-					);
-			setOffsets(featureCallExpCS, source, featureNameCS);
+			);
+			setOffsets(variableCS, featureNameCS);
 
 			ImperativeIterateExpCS result = createImperativeIterateExpCS(
-					simpleNameCS,
+					createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, "xcollect"),  //$NON-NLS-1$
 					$EMPTY_ELIST,
 					null,
-					null,
+					variableCS,
 					null
 					);
-			result.setSource(featureCallExpCS);
+			result.setSource(source);
 			setOffsets(result, getRhsIToken(1), getRhsIToken(3));
 			setResult(result);
 		  $EndCode
