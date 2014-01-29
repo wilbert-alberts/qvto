@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.blackbox.java;
 
@@ -42,6 +43,16 @@ public @interface Operation {
 		 * The operation is defined as<code>query</code>, a side-effect free imperative operation.  
 		 */				
 		QUERY,
+		/**
+		 * The operation is defined as operational<code>mapping</code>.  
+		 * @since 3.4
+		 */				
+		MAPPING,
+		/**
+		 * The operation is defined as contextual<code>constructor</code>.  
+		 * @since 3.4
+		 */				
+		CONSTRUCTOR,
 		/**
 		 *  The operation is defined as normal operation. If the associated operation is defined as 
 		 *  <code>contextual</code>, the Typedef class is used to represent it as additional operation

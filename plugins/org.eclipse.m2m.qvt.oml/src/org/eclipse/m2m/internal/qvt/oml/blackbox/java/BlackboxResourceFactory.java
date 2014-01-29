@@ -13,7 +13,6 @@ package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +25,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents.ModelContents;
+import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 
 public class BlackboxResourceFactory implements Resource.Factory {
 	
@@ -63,7 +62,7 @@ public class BlackboxResourceFactory implements Resource.Factory {
     	ModelContents contents = (ModelContents) unit.getContents();
 
     	List<EObject> topElements = contents.loadElements(rs.getPackageRegistry());
-    	List<QvtOperationalModuleEnv> modelEnvs = new ArrayList<QvtOperationalModuleEnv>(topElements.size());
+//    	List<QvtOperationalModuleEnv> modelEnvs = new ArrayList<QvtOperationalModuleEnv>(topElements.size());
     	
     	for (EObject nextElement : topElements) {
     		QvtOperationalModuleEnv nextEnv = ASTBindingHelper.getEnvironment(nextElement, QvtOperationalModuleEnv.class);
@@ -72,10 +71,10 @@ public class BlackboxResourceFactory implements Resource.Factory {
     			// clear the environment problems, for now we do not consider errors
     			// like duplicate operation definitions to cause the importing unit to fail
     			nextEnv.clearProblems();
-    			modelEnvs.add(nextEnv);
+//    			modelEnvs.add(nextEnv);
     			
-    			Resource resource = nextEnv.getModuleContextType().eResource();    			
-				resource.setURI(unit.getURI());				
+//    			Resource resource = nextEnv.getModuleContextType().eResource();    			
+//				resource.setURI(unit.getURI());				
     		}
 		}
     	

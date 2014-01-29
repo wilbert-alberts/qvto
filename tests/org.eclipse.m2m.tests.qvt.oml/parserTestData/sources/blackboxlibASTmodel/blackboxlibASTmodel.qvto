@@ -10,7 +10,7 @@ main() {
 	
 	'a::b::c'.split('::');
 	
-	true.oclAnyMyOperation();
+	true.legacyOclAnyAsSet();
 	
 	'aString'.length(); -- oclstdlib operation	
 }

@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -61,7 +62,12 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_ContextualPropertyTypeIsMissed;
 	public static String QvtOperationalVisitorCS_duplicateMappingRereferenceInExtensionKind;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnOperation;
-	public static String QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType;
+	public static String QvtOperationalVisitorCS_unsupportedInheritedBlackboxMapping;
+	public static String QvtOperationalVisitorCS_unsupportedMergedBlackboxMapping;
+	public static String QvtOperationalVisitorCS_unsupportedInheritanceOnBlackboxMapping;
+	public static String QvtOperationalVisitorCS_noBlackboxImplementationFound;
+	public static String QvtOperationalVisitorCS_ambiguousBlackboxImplementationFound;
+	public static String QvtOperationalVisitorCS_instantiatedTypeDoesNotConformToReferredType;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_transformationNameDuplicates;
 	public static String QvtOperationalVisitorCS_unresolvedMappingOperationReference;
@@ -99,6 +105,10 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_resultParamNameNotAllowed;
 	public static String QvtOperationalVisitorCS_SeeErrorLogForDetails;
 	public static String QvtOperationalVisitorCS_unsupportedQualifierOnOperation;
+	public static String QvtOperationalVisitorCS_blackboxOperationWithBodyNotAllowed;
+	public static String QvtOperationalVisitorCS_unsupportedQualifierOnConstructor;
+	public static String QvtOperationalVisitorCS_blackboxConstructorWithBodyNotAllowed;
+	public static String QvtOperationalVisitorCS_unsupportedBlackboxQualifierOnDisjunctiveMapping;
     public static String QvtOperationalVisitorCS_WrongImperativeIteratorConditionType;
     public static String QvtOperationalVisitorCS_incrementalAssignmentResultNotAllowed;
     public static String QvtOperationalVisitorCS_assignmentResultNotAllowed;

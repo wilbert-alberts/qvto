@@ -39,8 +39,10 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 
 public class BlackboxUnitResolver implements UnitResolver {
 	
+	public static final URI GLOBAL_CONTEXT = URI.createURI("/"); //$NON-NLS-1$ 
+
 	// the global scope black-box resolver
-	public static final BlackboxUnitResolver DEFAULT = new BlackboxUnitResolver(URI.createURI("/")); //$NON-NLS-1$
+	public static final BlackboxUnitResolver DEFAULT = new BlackboxUnitResolver(GLOBAL_CONTEXT);
 	
 	private ResolutionContext fContext;
 	

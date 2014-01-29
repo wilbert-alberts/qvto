@@ -62,4 +62,6 @@ when {false}
 }
 
 mapping m3() : EPackage
-when {true} ;
+when {true}
+{
+}

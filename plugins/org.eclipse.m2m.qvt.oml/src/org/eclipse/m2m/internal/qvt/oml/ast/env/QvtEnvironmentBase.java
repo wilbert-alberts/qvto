@@ -17,14 +17,17 @@ import static org.eclipse.ocl.utilities.UMLReflection.SAME_TYPE;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import lpg.runtime.ParseErrorCodes;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -113,7 +116,8 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
     private QVTUMLReflection fQVUMLReflection;
 	private List<QvtEnvironmentBase> fByAccess;
 	private List<QvtEnvironmentBase> fByExtension;
-	private List<QvtEnvironmentBase> fAllExtendedModuleEnvs;	
+	private List<QvtEnvironmentBase> fAllExtendedModuleEnvs;
+	private Map<URI, Set<String>> fImportedNativeLibs;
 	private Set<EOperation> fOperationsHolder;	
 
 	protected QvtEnvironmentBase(QvtEnvironmentBase parent) {
@@ -414,7 +418,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 		
 		if(importedEnv == null || importedEnv == this || isOneOfParents(importedEnv)) {
-			throw new IllegalArgumentException("Illegal import environemnt"); //$NON-NLS-1$
+			throw new IllegalArgumentException("Illegal import environment: " + String.valueOf(importedEnv)); //$NON-NLS-1$
 		}
 		
 		List<QvtEnvironmentBase> container;
@@ -430,6 +434,7 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 			container = fByExtension;
 			fAllExtendedModuleEnvs = null;			
 		}
+		fImportedNativeLibs = null;
 
 		assert container != null;
 		container.add(importedEnv);
@@ -474,6 +479,38 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 		
 		return fByExtension != null ? fByExtension : Collections.<QvtEnvironmentBase>emptyList();	
+	}
+	
+	public Map<URI, Set<String>> getImportedNativeLibs() {
+		QvtEnvironmentBase rootEnv = getRootEnv();
+		if(rootEnv != this) {
+			return rootEnv.getImportedNativeLibs();
+		}
+		
+		if(fImportedNativeLibs == null) {
+	    	Collection<QvtEnvironmentBase> imports = new LinkedHashSet<QvtEnvironmentBase>();
+	    	imports.addAll(getImportsByExtends());
+	    	imports.addAll(getImportsByAccess());    	
+	    	
+	    	Map<URI, Set<String>> result = new LinkedHashMap<URI, Set<String>>(imports.size());
+			for (QvtEnvironmentBase sibling : imports) {
+    			Module module = sibling.getModuleContextType();
+    			if (module == null || module.eResource() == null) {
+    				continue;
+    			}
+    			URI uri = module.eResource().getURI();
+    			Set<String> names = result.get(uri);
+    			if (names == null) {
+    				names = new LinkedHashSet<String>();
+    				result.put(uri, names);
+    			}
+    			names.add(module.getName());
+			}    	    	
+			
+			fImportedNativeLibs = Collections.unmodifiableMap(result);			
+		}
+		
+		return fImportedNativeLibs;
 	}
 		
 	protected final CollisionStatus findCollidingOperation(EClassifier ownerType, ImperativeOperation operation) {

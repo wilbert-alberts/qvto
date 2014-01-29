@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryCreationException;
 import org.eclipse.m2m.internal.qvt.oml.ocl.transformations.LibraryOperation;
@@ -45,7 +46,7 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 class QvtLibraryOperation {
 	
-	QvtLibraryOperation(QvtOperationalEnv parseEnv, LibraryOperation libOp) throws LibraryCreationException {
+	QvtLibraryOperation(QvtOperationalModuleEnv parseEnv, LibraryOperation libOp) throws LibraryCreationException {
         String fakeOperation = getFakeOperation(libOp);
         ExpressionInOCL<EClassifier, EParameter> exprInOcl = parseConstraintUnvalidated(fakeOperation, parseEnv, libOp);
         
@@ -65,7 +66,8 @@ class QvtLibraryOperation {
                     ValidationMessages.LibOperationAnalyser_OperationParsingError,
                     fakeOperation));
         }
-        myContextType = exprInOcl.getContextVariable().getType();
+        myContextType = exprInOcl.getContextVariable().getType() == parseEnv.getOCLStandardLibrary().getOclVoid() ?
+        		parseEnv.getModuleContextType() : exprInOcl.getContextVariable().getType();
         
         if (exprInOcl.getBodyExpression() == null) {
             throw new LibraryCreationException(MessageFormat.format(

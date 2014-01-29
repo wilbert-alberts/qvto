@@ -121,6 +121,10 @@ public class TestQvtInterpreter extends TestTransformation {
 					return myResourceSet;
 				}
 				
+				@Override
+				public void cleanup() {
+				}
+				
 				private ResourceSet myResourceSet;
 			};
 

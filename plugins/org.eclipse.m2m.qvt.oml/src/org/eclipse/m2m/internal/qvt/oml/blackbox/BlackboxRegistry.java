@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,12 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +23,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 /*
  * TODO - handle collisions of multiple descriptors of the same qualified name
@@ -110,4 +115,19 @@ public class BlackboxRegistry {
 	        return providers;
 	    }
 	}
+	
+	public Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation operation, QvtOperationalModuleEnv env) {
+		Collection<CallHandler> result = Collections.emptyList();
+		for (AbstractBlackboxProvider provider : fProviders) {			
+			Collection<CallHandler> handlers = provider.getBlackboxCallHandler(operation, env);
+			if (!handlers.isEmpty()) {
+				if (result.isEmpty()) {
+					result = new LinkedList<CallHandler>();
+				}
+				result.addAll(handlers);
+			}			
+		}		
+		return result;
+	}
+	
 }

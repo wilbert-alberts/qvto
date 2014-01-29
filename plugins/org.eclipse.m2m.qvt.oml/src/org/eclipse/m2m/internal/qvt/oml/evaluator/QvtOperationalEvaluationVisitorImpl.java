@@ -52,12 +52,14 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtEvaluationResult;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ConstructorOperationAdapter;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.IntermediateClassFactory.ExceptionClassInstance;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance.InternalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.iterators.QvtIterationTemplateCollectSelect;
@@ -143,6 +145,7 @@ import org.eclipse.ocl.EvaluationVisitorImpl;
 import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
@@ -166,6 +169,7 @@ import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
+import org.eclipse.ocl.utilities.ASTNode;
 import org.eclipse.ocl.utilities.PredefinedType;
 import org.eclipse.ocl.utilities.UMLReflection;
 
@@ -498,6 +502,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
     public Object visitHelper(Helper helper) {
         visitImperativeOperation(helper);
+        
+        if (helper.isIsBlackbox()) {
+        	Object result = doVisitBlackboxOperation(helper);        	
+        	return new OperationCallResult(result, getOperationalEvaluationEnv());
+        }
+        
         return new OperationCallResult(visitOperationBody(helper.getBody()), getOperationalEvaluationEnv());
     }
 
@@ -526,6 +536,31 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
 		pushedStack(getOperationalEvaluationEnv());
         return null;
+    }
+    
+    private Object doVisitBlackboxOperation(ImperativeOperation operation) {
+    	
+    	assert operation.isIsBlackbox() : "Blackbox operation expected"; //$NON-NLS-1$
+    	
+    	EcoreEnvironment moduleEnv = ASTBindingHelper.resolveEnvironment((ASTNode) operation.eContainer());
+    	if (false == moduleEnv instanceof QvtOperationalModuleEnv) {
+    		moduleEnv = ASTBindingHelper.getEnvironment(operation.eContainer(), QvtOperationalModuleEnv.class);
+    	}
+    	
+		Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler(operation,
+				//getOperationalEnv().getAdapter(QvtOperationalModuleEnv.class));
+				(QvtOperationalModuleEnv) moduleEnv);
+    	if (handlers.isEmpty()) {
+        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.NoBlackboxOperationFound,
+        			QvtOperationalParserUtil.safeGetMappingQualifiedName(getOperationalEnv(), operation))));
+    	}
+    	if (handlers.size() > 1) {
+        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.AmbiguousBlackboxOperationFound,
+        			QvtOperationalParserUtil.safeGetMappingQualifiedName(getOperationalEnv(), operation))));
+    	}
+
+    	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
+		return handlers.iterator().next().invoke(evalEnv.getThisOfType(QvtOperationalParserUtil.getOwningModule(operation)), evalEnv.getOperationSelf(), evalEnv.getOperationArgs().toArray(), evalEnv);
     }
 
     public Object visitLibrary(Library library) {
@@ -616,23 +651,24 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         }
         
 		// call merged mappings
-		if(!currentMappingCalled.getMerged().isEmpty()) {
-			for (MappingOperation extendedMapping : currentMappingCalled.getMerged()) {
-				
-				// consider overriding mapping
-	    		ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), extendedMapping);
-	    		if (overridingOper instanceof MappingOperation) {
-	    			extendedMapping = (MappingOperation) overridingOper;
-	    		}
-				
-				executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
-			}
-		}
+		callMergedMappings(currentMappingCalled, evalEnv);
 		
 		// result may have changed in body, end section, or merged mappings, so retrieve it again (fixed by bug 388325)
 		result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
 
         return result;
+    }
+    
+    private void callMergedMappings(MappingOperation mappingOperation, QvtOperationalEvaluationEnv evalEnv) {
+		for (MappingOperation extendedMapping : mappingOperation.getMerged()) {
+			// consider overriding mapping
+    		ImperativeOperation overridingOper = EvaluationUtil.getOverridingOperation(getOperationalEvaluationEnv(), extendedMapping);
+    		if (overridingOper instanceof MappingOperation) {
+    			extendedMapping = (MappingOperation) overridingOper;
+    		}
+			
+			executeImperativeOperation(extendedMapping, evalEnv.getOperationSelf(), evalEnv.getOperationArgs(), true);				
+		}
     }
 
     public Object visitMappingCallExp(MappingCallExp mappingCallExp) {
@@ -800,9 +836,25 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if(!mappingOperation.getDisjunct().isEmpty()) {
 			return dispatchDisjunctMapping(mappingOperation);
 		}
-                        		
-        return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()),
-        				evalEnv, MappingCallResult.BODY_EXECUTED);
+        
+        if (mappingOperation.isIsBlackbox()) {        	
+        	Object result = doVisitBlackboxOperation(mappingOperation);        	
+        	if (isUndefined(result)) {
+        		throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.BlackboxMappingFailedToAssignResult,
+        				QvtOperationalParserUtil.safeGetMappingQualifiedName(getOperationalEnv(), mappingOperation))));
+        	}
+        	
+			replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
+	        TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
+	        
+	        // call merged mappings
+			callMergedMappings(mappingOperation, evalEnv);
+	        
+	        return new MappingCallResult(result, evalEnv, MappingCallResult.BODY_EXECUTED);        	
+        }
+                                        		
+		return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()), evalEnv,
+				MappingCallResult.BODY_EXECUTED);
     }
 
     public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
@@ -932,6 +984,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			Adapter adapter = EcoreUtil.getAdapter(objectExp.eAdapters(), ConstructorOperationAdapter.class);
 			if (adapter != null) {
 				Constructor constructorOp = ((ConstructorOperationAdapter) adapter).getReferredConstructor();
+				
+				for (int i = 0, in = constructorOp.getEParameters().size(); i < in; ++i) {
+					actualArguments.set(i, doImplicitListCoercion(constructorOp.getEParameters().get(i).getEType(), actualArguments.get(i)));
+				}
 
 				executeImperativeOperation(constructorOp, owner, actualArguments, false);
 			}
@@ -1444,9 +1500,16 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     
 	public Object visitConstructor(Constructor constructor) {
         visitImperativeOperation(constructor);
+        
         QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
+        
+        if (constructor.isIsBlackbox()) {
+        	Object result = doVisitBlackboxOperation(constructor);        	        	
+        	return new OperationCallResult(result, env);
+        }
+        
         env.add(Environment.RESULT_VARIABLE_NAME, env.remove(Environment.SELF_VARIABLE_NAME));
-        return new OperationCallResult(visitOperationBody(constructor.getBody()), getOperationalEvaluationEnv());
+        return new OperationCallResult(visitOperationBody(constructor.getBody()), env);
 	}
 
 	public Object visitConstructorBody(ConstructorBody constructorBody) {
@@ -1715,11 +1778,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     private OperationCallResult executeImperativeOperation(ImperativeOperation method, Object source, List<Object> args, boolean isReusingMappingCall) {    	
-        if (method.isIsBlackbox() && method.getBody() == null) {
-            throw new IllegalArgumentException(
-                    "Can't execute blackbox operation" + method.getName()); //$NON-NLS-1$
-        }
-
         QvtOperationalEvaluationEnv oldEvalEnv = getOperationalEvaluationEnv();
         
     	boolean isMapping = method instanceof MappingOperation;    	

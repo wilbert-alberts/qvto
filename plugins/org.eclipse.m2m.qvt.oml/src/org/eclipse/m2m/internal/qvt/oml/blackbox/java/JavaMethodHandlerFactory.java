@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -24,6 +25,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.TransformationInstance;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
@@ -86,7 +88,7 @@ class JavaMethodHandlerFactory {
 				boolean isStatic = Modifier.isStatic(fMethod.getModifiers());
 				if(!isStatic) {
 					Class<?> moduleJavaClass = fMethod.getDeclaringClass();					
-					javaCallSource = module.getAdapter(moduleJavaClass);
+					javaCallSource = getJavaCallSource(module, moduleJavaClass, evalEnv); //module.getAdapter(moduleJavaClass);					
 					assert javaCallSource != null;
 				}
 								
@@ -105,7 +107,14 @@ class JavaMethodHandlerFactory {
 				evalEnv.getAdapter(InternalEvaluationEnv.class).throwQVTException(
 						new QvtRuntimeException(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e));
 				return CallHandlerAdapter.getInvalidResult(evalEnv);
-			} 
+			}
+			catch (InstantiationException e) {
+				fFatalErrorCount++;				
+				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e);				
+				evalEnv.getAdapter(InternalEvaluationEnv.class).throwQVTException(
+						new QvtRuntimeException(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e));
+				return CallHandlerAdapter.getInvalidResult(evalEnv);
+			}
 			catch (InvocationTargetException e) {
 				fFatalErrorCount++;
 				QvtPlugin.error(NLS.bind(JavaBlackboxMessages.MethodInvocationError, fMethod), e.getTargetException());				
@@ -118,6 +127,27 @@ class JavaMethodHandlerFactory {
 			} finally {
 				clearArguments();
 			}
+		}
+						
+		private Object getJavaCallSource(ModuleInstance moduleInstance, Class<?> javaClass, QvtOperationalEvaluationEnv evalEnv)
+				throws IllegalAccessException, InstantiationException {
+
+			Object callSource = moduleInstance.getAdapter(javaClass);
+			if (callSource != null) {
+				return callSource;
+			}
+
+			TransformationInstance rootTransformation = evalEnv.getRoot().getAdapter(InternalEvaluationEnv.class).getCurrentTransformation();
+
+			callSource = rootTransformation.getAdapter(javaClass);
+			if (callSource == null) {
+				callSource = javaClass.newInstance();
+				rootTransformation.getAdapter(ModuleInstance.Internal.class).addAdapter(callSource);
+			}
+
+			moduleInstance.getAdapter(ModuleInstance.Internal.class).addAdapter(callSource);
+
+			return callSource;
 		}
 		
 		boolean isDisabled() {

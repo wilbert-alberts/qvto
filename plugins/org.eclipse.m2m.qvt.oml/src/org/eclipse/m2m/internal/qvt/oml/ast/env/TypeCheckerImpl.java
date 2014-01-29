@@ -206,6 +206,9 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		if(type1 == type2) {
 			return UMLReflection.SAME_TYPE;
 		}
+		if (type1 == null) {
+			return UMLReflection.UNRELATED_TYPE;
+		}
 		
 		boolean isList1 = type1 instanceof ListType;
 		boolean isList2 = type2 instanceof ListType;

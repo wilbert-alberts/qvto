@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,11 +31,11 @@ public class LibrariesRegistryImpl implements LibrariesRegistry {
     private final Collection<Library> myLibraries;
 
     public LibrariesRegistryImpl(IConfigurationElement[] configurations) {
-        myLibraries = load(configurations);
+        myLibraries = Collections.unmodifiableCollection(load(configurations));
     }
 
     public Collection<Library> getLibraries() {
-        return Collections.unmodifiableCollection(myLibraries);
+        return myLibraries;
     }
     
     public Library getLibrary(String id) {

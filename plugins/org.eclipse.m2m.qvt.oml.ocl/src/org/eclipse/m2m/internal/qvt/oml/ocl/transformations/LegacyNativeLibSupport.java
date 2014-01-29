@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2011 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,33 +11,31 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
-import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
-import org.eclipse.ocl.expressions.ExpressionsFactory;
-import org.eclipse.ocl.expressions.TypeExp;
-import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.types.TypeType;
-import org.eclipse.ocl.util.TypeUtil;
-import org.eclipse.ocl.utilities.TypedElement;
+import org.eclipse.ocl.Environment;
 
 /**
  * This class facilitates registration and invocation of legacy java native
@@ -52,32 +50,36 @@ public class LegacyNativeLibSupport {
 	private LegacyNativeLibSupport() {
 	}
 	
-	public QvtOperationalModuleEnv defineLibrary(Library lib) throws LibraryCreationException {
+	public QvtOperationalModuleEnv defineLibrary(Library lib, Map<String, List<EOperation>> definedOperations) throws LibraryCreationException {
 		org.eclipse.m2m.internal.qvt.oml.expressions.Library libModule = QvtOperationalStdLibrary.createLibrary(lib.getId());		
 		// FIXME - set isBlackBox=TRUE, as soon is it gets into the AST metamodel
 				
-        // must set the instance factory as a QVT module is also a Package 
-        //libModule.setEFactoryInstance(new ExpressionsFactoryImpl());
-		
         QvtOperationalModuleEnv libEnv = initLibEnvironment(lib, libModule);
-		libModule.eResource().setURI(URI.createURI("qvto://blackbox/" + lib.getId()));		 //$NON-NLS-1$
-        		
-		for (LibraryOperation libOp : lib.getLibraryOperations()) {
-	        QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(libEnv, libOp);
-	        EClassifier ctxType = qvtLibOp.getContextType();
-	        // OclVoid mapped as module owned
-	        if(ctxType  == libEnv.getOCLStandardLibrary().getOclVoid()) {
-	        	ctxType = libModule;
-	        }
+        URI libUri = URI.createHierarchicalURI(AbstractCompilationUnitDescriptor.URI_SCHEME, AbstractCompilationUnitDescriptor.URI_AUTHORITY,
+        		null, new String[] {LegacyNativeLibraryProviderAdapter.PROVIDER_ID, lib.getId()}, null, null);
+		libModule.eResource().setURI(libUri);
 
-	        defineOperation(libEnv, libOp, ctxType, qvtLibOp.getReturnType(), qvtLibOp.getParamTypes());
+		org.eclipse.m2m.internal.qvt.oml.expressions.Library opModule = QvtOperationalStdLibrary.createLibrary(lib.getId());
+		QvtOperationalModuleEnv opEnv = initLibEnvironment(lib, opModule);
+		
+		for (LibraryOperation libOp : lib.getLibraryOperations()) {
+	        Helper helper = defineOperation(opModule, opEnv, libOp); 
+	        
+			libEnv.defineImperativeOperation(helper, false, true);
+			
+			List<EOperation> listOp = definedOperations.get(helper.getName());
+			if (listOp == null) {
+				listOp = new LinkedList<EOperation>();
+				definedOperations.put(helper.getName(), listOp);
+			}
+			listOp.add(helper);
 		}
 		
 		// FIXME - workaround to make Environment available with the module
 		ASTBindingHelper.createCST2ASTBinding(CSTFactory.eINSTANCE.createLibraryCS(), libEnv.getModuleContextType(), libEnv);		
 		return libEnv;
 	}
-		
+
 	private static QvtOperationalModuleEnv initLibEnvironment(Library lib, Module libModule) {
 		EPackage.Registry registry = new EPackageRegistryImpl();
 		QvtOperationalModuleEnv libEnv = new QvtOperationalEnvFactory(registry).createModuleEnvironment(libModule);
@@ -151,41 +153,35 @@ public class LegacyNativeLibSupport {
         return result;
 	}
 	
-	private static EOperation defineOperation(QvtOperationalEnv env, LibraryOperation libOperation, 
-			EClassifier contextType, EClassifier returnType, EClassifier... paramTypes) {
+	private Helper defineOperation(org.eclipse.m2m.internal.qvt.oml.expressions.Library opModule, QvtOperationalModuleEnv opEnv,
+			LibraryOperation libOp) throws LibraryCreationException {
+		QvtLibraryOperation qvtLibOp = new QvtLibraryOperation(opEnv, libOp);
 		
-		List<TypedElement<EClassifier>> stringArgList = new ArrayList<TypedElement<EClassifier>>();
-		for (EClassifier cls : paramTypes) {
-			if (cls instanceof TypeType<?, ?>) {
-				TypeExp<EClassifier> typeExp = ExpressionsFactory.eINSTANCE.createTypeExp();
-				typeExp.setName(cls.getName());
-				typeExp.setType(cls);
-				stringArgList.add(typeExp);
-			}
-			else {
-				Variable<EClassifier, EParameter> stringVariable = ExpressionsFactory.eINSTANCE.createVariable();
-				stringVariable.setName(cls.getName());
-				stringVariable.setType(cls);
-				stringArgList.add(stringVariable);
-			}
+		Helper helper = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createHelper();
+		helper.setName(libOp.getName());
+		helper.setEType(qvtLibOp.getReturnType());
+		int index = 1;
+		for (EClassifier type : qvtLibOp.getParamTypes()) {
+			VarParameter varParam = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter();
+			varParam.setKind(DirectionKind.IN);
+			varParam.setEType(type);
+			varParam.setName("arg" + index); //$NON-NLS-1$;
+			++index;		        
+			helper.getEParameters().add(varParam);
+		}
+		if (qvtLibOp.getContextType() != opModule) {
+			VarParameter varParam = org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsFactory.eINSTANCE.createVarParameter();
+			varParam.setKind(DirectionKind.IN);
+			varParam.setEType(qvtLibOp.getContextType());
+			varParam.setName(Environment.SELF_VARIABLE_NAME);
+			helper.setContext(varParam);
 		}
 		
-		String opName = libOperation.getName();
-		EOperation operation = TypeUtil.findOperationMatching(env, contextType, opName, stringArgList);
-		if (operation != null) {
-			for (EParameter	eParameter : operation.getEParameters()) {
-				eParameter.setName(eParameter.getEType().getName());
-			}
-			
-			Class<?> returnClass = (returnType != null) ? returnType.getInstanceClass() : null;
-			CallHandlerAdapter.attach(operation, new Handler(libOperation, returnClass)); 
-		} else {
-			// TODO - log error
-		}
-
-		return operation;
+		Class<?> returnClass = (helper.getEType() != null) ? helper.getEType().getInstanceClass() : null;
+		CallHandlerAdapter.attach(helper, new Handler(libOp, returnClass));
+		return helper;
 	}
-        
+		
 	private static LegacyNativeLibSupport createInstance() {
 		LegacyNativeLibSupport lib = new LegacyNativeLibSupport();
 		return lib;

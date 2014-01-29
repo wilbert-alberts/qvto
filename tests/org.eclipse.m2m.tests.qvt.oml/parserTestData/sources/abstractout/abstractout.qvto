@@ -7,10 +7,10 @@ main() {
  /*<error>*/object EClassifier {}/*</error>*/;
 }
 
-/*<error>*/mapping base(): ecore::ENamedElement {
+/*<error>*/mapping base(): ecore::ENamedElement/*</error>*/ {
  population {
     object result:ecore::ENamedElement {
         name := 'simple'
     }
  }
-}/*</error>*/
+}

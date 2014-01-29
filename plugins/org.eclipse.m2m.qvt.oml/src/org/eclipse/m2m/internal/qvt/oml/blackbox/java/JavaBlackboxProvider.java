@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,16 +8,20 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -35,9 +39,13 @@ import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescript
 import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxException;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.CompilationUnit;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.OperationMatcher;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 
 
 public class JavaBlackboxProvider extends AbstractBlackboxProvider {
@@ -58,7 +66,8 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 	private static final String METAMODEL_ELEM = "metamodel"; //$NON-NLS-1$
 	private static final String NSURI_ATTR = "nsURI"; //$NON-NLS-1$	
 		
-	private final Map<String, Descriptor> fDescriptorMap;
+	private final Map<String, AbstractCompilationUnitDescriptor> fDescriptorMap;
+	private final Map<Descriptor, CompilationUnit> fBlackboxUnits = new LinkedHashMap<Descriptor, CompilationUnit>();
 	
 	public JavaBlackboxProvider() {
 		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -80,11 +89,9 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 	}	
 
 	@Override
-	public List<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext resolutionContext) {
+	public Collection<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext resolutionContext) {
 		// TODO - Should we necessarily be available in all contexts ?
-		ArrayList<AbstractCompilationUnitDescriptor> result = new ArrayList<AbstractCompilationUnitDescriptor>(fDescriptorMap.size());
-		result.addAll(fDescriptorMap.values());
-		return Collections.unmodifiableList(result);
+		return fDescriptorMap.values();
 	}
 
 	@Override
@@ -92,15 +99,20 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		if(descriptor instanceof Descriptor == false) {
 			throw new IllegalArgumentException("Invalid descriptor"); //$NON-NLS-1$
 		}
-
 		Descriptor libDescriptor = (Descriptor) descriptor;
+		
+		CompilationUnit compilationUnit = fBlackboxUnits.get(libDescriptor);
+		if (compilationUnit != null) {
+			return compilationUnit;
+		}
+		
 		JavaModuleLoader javaModuleLoader = createJavaModuleLoader();
 
 		BasicDiagnostic errors = null;
 		List<QvtOperationalModuleEnv> loadedModules = new LinkedList<QvtOperationalModuleEnv>();
 		
-		for (ModuleHandle nextModuleHandle : libDescriptor.fModules) {
-			Diagnostic diagnostic = javaModuleLoader.loadModule(nextModuleHandle);
+		for (Map.Entry<ModuleHandle, Map<String, List<EOperation>>> nextEntry : libDescriptor.fModules.entrySet()) {
+			Diagnostic diagnostic = javaModuleLoader.loadModule(nextEntry.getKey(), nextEntry.getValue());
 			
 			if(DiagnosticUtil.isSuccess(diagnostic)) {
 				QvtOperationalModuleEnv nextModuleEnv = javaModuleLoader.getLoadedModule();
@@ -125,9 +137,11 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			throw new BlackboxException(errors);
 		}
 
-		return createCompilationUnit(loadedModules);
+		compilationUnit = createCompilationUnit(loadedModules);
+		fBlackboxUnits.put(libDescriptor, compilationUnit);
+		return compilationUnit;
 	}
-
+	
 	private JavaModuleLoader createJavaModuleLoader() {
 		return new JavaModuleLoader() {
 			JavaMethodHandlerFactory handlerFactory;		
@@ -149,7 +163,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			}
 		};
 	}
-
+	
 	static InstanceAdapterFactory createInstanceAdapterFactory(final Class<?> javaModuleClass) {
 		return new InstanceAdapterFactory() {												
 			public Object createAdapter(EObject moduleInstance) {
@@ -157,7 +171,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 					return javaModuleClass.newInstance();
 				} catch (InstantiationException e) {
 					// FIXME - choose a better exception
-					throw new IllegalArgumentException("Illegal adapter instance", e);								 //$NON-NLS-1$
+					throw new IllegalArgumentException("Illegal adapter instance", e); //$NON-NLS-1$
 				} catch (IllegalAccessException e) {
 					// FIXME - choose a better exception
 					throw new IllegalArgumentException("Illegal adapter instance", e); //$NON-NLS-1$
@@ -166,8 +180,8 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		};
 	}
 		
-    private Map<String, Descriptor> readDescriptors() {
-    	Map<String, Descriptor> providers = new HashMap<String, Descriptor>();
+    private Map<String, AbstractCompilationUnitDescriptor> readDescriptors() {
+    	Map<String, AbstractCompilationUnitDescriptor> providers = new HashMap<String, AbstractCompilationUnitDescriptor>();
         
         IConfigurationElement[] configs = Platform.getExtensionRegistry()
         		.getConfigurationElementsFor(QvtPlugin.ID, EXTENSION_POINT);
@@ -232,7 +246,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 	}	
 	
 	private class Descriptor extends AbstractCompilationUnitDescriptor {		
-		private List<ModuleHandle> fModules = Collections.emptyList();
+		private Map<ModuleHandle, Map<String, List<EOperation>>> fModules = Collections.emptyMap();
 		private String fContributingBundleId; 
 
 		Descriptor(IConfigurationElement configurationElement, String unitQualifiedName, String description) {
@@ -250,6 +264,33 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				}
 			}
 		}
+		
+		public Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation imperativeOp, QvtOperationalModuleEnv env) {
+			Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
+			Collection<CallHandler> result = Collections.emptyList();
+
+			for(Map.Entry<ModuleHandle, Map<String, List<EOperation>>> nextEntry : fModules.entrySet()) {
+				if (!importedLibs.contains(nextEntry.getKey().getModuleName())) {
+					continue;
+				}
+				
+				List<EOperation> listOp = nextEntry.getValue().get(imperativeOp.getName());
+				if (listOp == null) {
+					continue;
+				}
+				
+				for (EOperation libraryOp : listOp) {
+					if (OperationMatcher.matchOperation(env, imperativeOp, libraryOp)) {
+						if (result.isEmpty()) {
+							result = new LinkedList<CallHandler>();
+						}
+						result.add(CallHandlerAdapter.getDispatcher(libraryOp));
+					}
+				}
+			}
+			
+			return result;			
+		}
 
 		String getContributorId() {
 			return fContributingBundleId;
@@ -257,7 +298,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		
 		private void addModuleHandle(IConfigurationElement moduleElement) {
 			if(fModules.isEmpty()) {
-				fModules = new LinkedList<ModuleHandle>();
+				fModules = new LinkedHashMap<ModuleHandle, Map<String, List<EOperation>>>();
 			}
 			
 			String bundleId = moduleElement.getContributor().getName();
@@ -269,7 +310,7 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			}
 			
 			ModuleHandle moduleHandle = new BundleModuleHandle(bundleId, className, moduleName, readUsedPackagesNsURIs(moduleElement));
-			fModules.add(moduleHandle);
+			fModules.put(moduleHandle, new LinkedHashMap<String, List<EOperation>>());
 		}
 		
 		private List<String> readUsedPackagesNsURIs(IConfigurationElement moduleConfigElement) {

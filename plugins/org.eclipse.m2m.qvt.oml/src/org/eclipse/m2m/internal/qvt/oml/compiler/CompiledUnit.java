@@ -45,6 +45,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.cst.UnitCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.ocl.Environment;
@@ -116,18 +117,28 @@ public class CompiledUnit {
 		this.fImports = new UniqueEList<CompiledUnit>();		
 
 		unitMap.put(fUri, this);
-
-		computeImports(unitXMIResource, unitMap);
+		
+		if (!BlackboxUnitResolver.isBlackboxUnitURI(fUri)) {
+			computeImports(unitXMIResource, unitMap);
+		}
 		
 		// Note: Environment initialization should be optional as it make sense to be used
 		// only in case this unit is to be a compilation dependency to parsed CST Unit  
 		for(EObject rootElement : new ArrayList<EObject>(unitXMIResource.getContents())) {
-			if(rootElement instanceof Module) {
-				Module nextModule = (Module) rootElement;
-				QvtOperationalModuleEnv nextModuleEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(nextModule);
+			if(false == rootElement instanceof Module) {
+				continue;
+			}
+			Module nextModule = (Module) rootElement;
+			QvtOperationalModuleEnv nextModuleEnv = null;
+			
+			if (BlackboxUnitResolver.isBlackboxUnitURI(fUri)) {
+				nextModuleEnv = (QvtOperationalModuleEnv) ASTBindingHelper.resolveEnvironment(nextModule);
+			}
+			else {
+				nextModuleEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(nextModule);
 				QVTOTypeResolver typeResolver = nextModuleEnv.getTypeResolver();
- 
-				// FIXME - 
+	 
+					// FIXME - 
 				// 1) workaround to make Environment available with the module for
 				// non-transformation execution context
 				// 2) move this initialization code to QVTEnvironment related classes
@@ -142,8 +153,14 @@ public class CompiledUnit {
 					}
 				}
 				
-				this.moduleEnvs.add(nextModuleEnv);
+				for (CompiledUnit importedUnit : getCompiledImports()) {
+					for (QvtOperationalModuleEnv importedEnv : importedUnit.moduleEnvs) {
+						nextModuleEnv.addImport(ImportKind.ACCESS, importedEnv);
+					}					
+				}
 			}
+			
+			this.moduleEnvs.add(nextModuleEnv);
 		}
 
 		//validate(unitXMIResource, this.fAllProblems);
@@ -228,10 +245,10 @@ public class CompiledUnit {
 						unitMap.put(importedResourceURI, importedUnit);
 					} 
 
-					fImports.add(new CompiledUnit(importedResource, unitMap));					
+					fImports.add(importedUnit);					
 				}
 			} else {
-				throw new IllegalArgumentException("imported module must be in a resource"); //$NON-NLS-1$ 
+				throw new IllegalArgumentException("imported module must be in a resource: " + String.valueOf(importedModule)); //$NON-NLS-1$ 
 			}
 		}
 	}

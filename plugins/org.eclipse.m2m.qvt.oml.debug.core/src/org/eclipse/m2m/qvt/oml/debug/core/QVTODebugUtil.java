@@ -23,10 +23,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
@@ -109,12 +107,7 @@ public class QVTODebugUtil {
 	}
 
 	public static QvtOperationalModuleEnv getEnvironment(Module module) {
-		Adapter adapter = EcoreUtil.getExistingAdapter(module, EnvAdapter.class);
-		if(adapter instanceof EnvAdapter) {
-			EnvAdapter envAdapter = (EnvAdapter) adapter;
-			return envAdapter.fEnv;
-		}
-		return null;
+		return ASTBindingHelper.getEnvironment(module, QvtOperationalModuleEnv.class);
 	}
 
 	public static void attachEnvironment(CompiledUnit unit) {
@@ -125,27 +118,10 @@ public class QVTODebugUtil {
 			for(QvtOperationalModuleEnv moduleEnv : nextUnit.getModuleEnvironments()) {
 				Module module = moduleEnv.getModuleContextType();
 				if(module != null) {
-					module.eAdapters().add(new EnvAdapter(moduleEnv));
+					ASTBindingHelper.setEnvironment(module, moduleEnv);
 				}
 			}
 		}
 	}
 		
-	private static class EnvAdapter extends AdapterImpl {
-
-		private QvtOperationalModuleEnv fEnv;
-		
-		EnvAdapter(QvtOperationalModuleEnv env) {
-			if(env == null) {
-				throw new IllegalArgumentException();
-			}
-			
-			fEnv = env;
-		}
-		
-		@Override
-		public boolean isAdapterForType(Object type) {
-			return EnvAdapter.class.equals(type);
-		}
-	}
 }

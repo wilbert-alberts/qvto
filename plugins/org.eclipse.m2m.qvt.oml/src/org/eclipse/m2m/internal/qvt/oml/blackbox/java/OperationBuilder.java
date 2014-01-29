@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -29,8 +30,8 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Helper;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
-import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
+import org.eclipse.m2m.qvt.oml.blackbox.java.Parameter;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.ocl.Environment;
 
@@ -73,24 +74,33 @@ class OperationBuilder {
     				method), method);
     	}
     		
-    	Operation.Kind operKind = (operAnnotation != null) ? operAnnotation.kind() : Operation.Kind.OPERATION;
-    	if(operKind == Kind.OPERATION) {
-    		// FIXME - avoid this, create typedef on the keeping this operation instead
-    		operKind = Kind.HELPER;
-    	}
+    	Operation.Kind operKind = getOperationKind(operAnnotation);
     	
-        EOperation operation;
-        if(operKind == Kind.OPERATION) { 
-        	operation = EcoreFactory.eINSTANCE.createEOperation();
-        } else if(operKind == Kind.QUERY || operKind == Kind.HELPER) {
-        	Helper helper = ExpressionsFactory.eINSTANCE.createHelper();
-        	helper.setIsQuery(operKind == Kind.QUERY);
-        	operation = helper;
-        } else {
-        	assert false : "unsupported operation kind"; //$NON-NLS-1$
-        	operation = EcoreFactory.eINSTANCE.createEOperation();
-        }
-        
+        EOperation operation = null;        
+        switch (operKind) {
+			case OPERATION:
+				operation = EcoreFactory.eINSTANCE.createEOperation();
+				break;
+			case MAPPING:
+				operation = ExpressionsFactory.eINSTANCE.createMappingOperation();
+				break;	
+			case CONSTRUCTOR:
+				if (!isContextual) {
+					reportError(NLS.bind(JavaBlackboxMessages.ConstructorRequiresContextualOperation, method.getName()), method);
+				}
+				operation = ExpressionsFactory.eINSTANCE.createConstructor();
+				break;
+			case QUERY: case HELPER:
+				Helper helper = ExpressionsFactory.eINSTANCE.createHelper();
+        		helper.setIsQuery(operKind == Kind.QUERY);
+        		operation = helper;
+				break;	
+			default:
+				assert false : "unsupported operation kind"; //$NON-NLS-1$
+    			operation = EcoreFactory.eINSTANCE.createEOperation();
+				break;
+		}
+                
         operation.setName(name);
         operation.setEType(fTypeResolver.toEClassifier(resultType));
         if(operation.getEType() == null) {
@@ -150,9 +160,18 @@ class OperationBuilder {
 		} else if(contextType != null) {
 			environment.getTypeResolver().resolveAdditionalOperation(contextType, operation);			
 		}
-		
+				
         return operation;
-    }	
+    }
+    
+	static Kind getOperationKind(Operation operAnnotation) {
+    	Operation.Kind operKind = (operAnnotation != null) ? operAnnotation.kind() : Operation.Kind.OPERATION;
+    	if(operKind == Kind.OPERATION) {
+    		// FIXME - avoid this, create typedef on the keeping this operation instead
+    		operKind = Kind.HELPER;
+    	}
+		return operKind;
+	}	
     
     private static Parameter getParameterAnnotation(Annotation[] allAnnotations) {
     	for (Annotation annotation : allAnnotations) {

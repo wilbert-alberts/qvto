@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -15,7 +16,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -46,7 +49,7 @@ abstract class JavaModuleLoader {
 		return (fDiagnostics != null) ? fDiagnostics : Diagnostic.OK_INSTANCE;
 	}
 	
-	public Diagnostic loadModule(ModuleHandle moduleHandle) {
+	public Diagnostic loadModule(ModuleHandle moduleHandle, Map<String, List<EOperation>> definedOperations) {
 		fDiagnostics = DiagnosticUtil.createRootDiagnostic(NLS.bind(JavaBlackboxMessages.LoadModuleDiagnostics, moduleHandle));
 		Class<?> javaClass;
 		try {
@@ -82,6 +85,13 @@ abstract class JavaModuleLoader {
 			Diagnostic operationStatus = fOperBuilder.getDiagnostics();
 			if(DiagnosticUtil.isSuccess(operationStatus)) {
 				loadOperation(operation, method);
+				
+				List<EOperation> listOp = definedOperations.get(operation.getName());
+				if (listOp == null) {
+					listOp = new LinkedList<EOperation>();
+					definedOperations.put(operation.getName(), listOp);
+				}
+				listOp.add(operation);
 			}
 
 			if(operationStatus.getSeverity() != Diagnostic.OK) {
@@ -95,7 +105,7 @@ abstract class JavaModuleLoader {
 	protected abstract void loadModule(QvtOperationalModuleEnv moduleEnv, Class<?> javaModule);
 	protected abstract void loadOperation(EOperation eOperation, Method javaOperation);
 	
-	private boolean isLibraryOperation(Method method) {
+	private static boolean isLibraryOperation(Method method) {
 		return Modifier.isPublic(method.getModifiers());
 	}
 	

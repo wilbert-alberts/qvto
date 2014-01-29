@@ -5,7 +5,7 @@ modeltype ECORE uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 
 transformation A(inout m:ECORE)
 	access library Lib()
-	extends library org::bar::Foo()
+	extends library org::bar::Foo::FooJavaLib()
 	;
 
 main() {

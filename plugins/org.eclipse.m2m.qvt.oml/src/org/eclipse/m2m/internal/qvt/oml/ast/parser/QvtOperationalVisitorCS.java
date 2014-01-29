@@ -7,7 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991
+ *     Christopher Gerking - bugs 302594, 310991, 289982
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391
  *******************************************************************************/
@@ -57,6 +57,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalFileEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
@@ -2209,29 +2210,56 @@ public class QvtOperationalVisitorCS
 			}
 			
 			// process operation qualifiers
-			EList<QualifierKindCS> qualifiersCS = (methodCS.getMappingDeclarationCS() == null) ? null 
+			List<QualifierKindCS> qualifiersCS = (methodCS.getMappingDeclarationCS() == null) ? Collections.<QualifierKindCS>emptyList() 
 			        : methodCS.getMappingDeclarationCS().getQualifiers();
 			
-			if(imperativeOp instanceof MappingOperation) {
-			    if (qualifiersCS != null) {
-		            for (QualifierKindCS nextQualifierCS : qualifiersCS) {
-		                if(nextQualifierCS != QualifierKindCS.ABSTRACT) {
-		                    // only 'abstract' qualifier for mapping is currently supported 
-		                    String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnOperation, 
-		                            nextQualifierCS.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
-		                    env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
-		                } else {
-		                    QvtOperationalParserUtil.markAsAbstractMappingOperation((MappingOperation) imperativeOp);
-		                }
-		            }
-			    }
-			}
+            for (QualifierKindCS nextQualifierCS : qualifiersCS) {                
+            	switch (nextQualifierCS) {
+				case ABSTRACT:
+					if(imperativeOp instanceof MappingOperation) {
+						QvtOperationalParserUtil.markAsAbstractOperation(imperativeOp);
+					}
+					if(imperativeOp instanceof Constructor) {
+						// only 'blackbox' qualifier for constructor is currently supported
+						String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnConstructor, nextQualifierCS.getName(),
+								QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+						env.reportWarning(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
+					}
+					break;
+				case BLACKBOX:
+					if (QvtOperationalParserUtil.hasOperationBody(methodCS)) {
+						if(imperativeOp instanceof Constructor) {
+							String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_blackboxConstructorWithBodyNotAllowed,
+									QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+							env.reportError(errMessage, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+						}
+						else {
+							String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_blackboxOperationWithBodyNotAllowed, 
+		                            QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+		                    env.reportError(errMessage, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+						}
+					}
+					if (QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS)) {
+						String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedBlackboxQualifierOnDisjunctiveMapping, 
+	                            QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+	                    env.reportError(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
+					}
+					imperativeOp.setIsBlackbox(true);
+					break;
+				case STATIC:
+					String msg = (imperativeOp instanceof Constructor) ? ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnConstructor
+							: ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnOperation;
+					String errMessage = NLS.bind(msg, nextQualifierCS.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+					env.reportWarning(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
+	                break;
+				}
+            }
 			
 			Collection<QualifierKindCS> qualifierDups = QvtOperationalParserUtil.selectDuplicateQualifiers(qualifiersCS);
 			for(QualifierKindCS duplicate : qualifierDups) {
 				String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_duplicateQualifierOnOperation, 
 						duplicate.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));			
-				env.reportError(errMessage, QvtOperationalParserUtil.getImperativeOperationProblemNode(methodCS));
+				env.reportError(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
 			}
 			
 	        if(myCompilerOptions.isGenerateCompletionData()) {
@@ -3535,6 +3563,20 @@ public class QvtOperationalVisitorCS
 		else {
 			visitMappingQueryCS((MappingQueryCS) methodCS, env, methodEnv, declaredOperation);
 		}
+		
+		if(declaredOperation.isIsBlackbox() && !QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS)) {
+			Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler(declaredOperation, env.getAdapter(QvtOperationalModuleEnv.class));
+			if (handlers.isEmpty()) {
+				String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_noBlackboxImplementationFound,
+						QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+				env.reportWarning(warning, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+			}
+			if (handlers.size() > 1) {
+				String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ambiguousBlackboxImplementationFound,
+						QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+				env.reportWarning(warning, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+			}
+		}
 	}
 
 	private void visitConstructorCS(ConstructorCS methodCS, QvtOperationalEnv env, QvtOperationalEnv newEnv, ImperativeOperation constructor) throws SemanticException {
@@ -3658,13 +3700,13 @@ public class QvtOperationalVisitorCS
 			body.getEndSection().addAll(ends);
 		}
 
-		checkAbstractOutParamsInitialized(operation.getResult(), methodCS, env);
+		checkAbstractOutParamsInitialized(operation, methodCS, env);
 
 		processMappingExtensions(methodCS, operation, env);
-		
+				
 		// adjust implicit variables for serialization
 		consolidateImplicitVariables(newEnv);
-		//		
+			
 		return operation;
 	}
 
@@ -3813,12 +3855,27 @@ public class QvtOperationalVisitorCS
 						boolean isAdded = false;
 						MappingOperation extendedMapping = mappings.get(0);
 						if(kind == MappingExtensionKindCS.INHERITS) {
+							if (operation.isIsBlackbox()) {
+								env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedInheritanceOnBlackboxMapping,  
+										QvtOperationalParserUtil.getStringRepresentation(identifierCS), QvtOperationalParserUtil.getMappingStringRepresentation(mappingCS)),
+										identifierCS);
+							}							
+							if (extendedMapping.isIsBlackbox()) {
+								env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedInheritedBlackboxMapping,  
+										QvtOperationalParserUtil.getStringRepresentation(identifierCS), QvtOperationalParserUtil.getMappingStringRepresentation(mappingCS)),
+										identifierCS);
+							}
 							isAdded = operation.getInherited().add(extendedMapping);
 							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);
 						} 
 						else if(kind == MappingExtensionKindCS.MERGES) {
+							if (extendedMapping.isIsBlackbox()) {
+								env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedMergedBlackboxMapping,  
+										QvtOperationalParserUtil.getStringRepresentation(identifierCS), QvtOperationalParserUtil.getMappingStringRepresentation(mappingCS)),
+										identifierCS);
+							}
 							isAdded = operation.getMerged().add(extendedMapping);
-							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);							
+							MappingExtensionHelper.bind2SourceElement(operation, identifierCS, kind);
 						} 
 						else if(kind == MappingExtensionKindCS.DISJUNCTS) {
 							isAdded = operation.getDisjunct().add(extendedMapping);
@@ -3846,7 +3903,7 @@ public class QvtOperationalVisitorCS
 		if (mappingDeclarationCS == null) {
 			return false;
 		}
-		mappingDeclarationCS.setAst(operation);
+		mappingDeclarationCS.setAst(operation);					
 		operation.setIsBlackbox(mappingMethodCS.isBlackBox());
 		operation.setStartPosition(mappingDeclarationCS.getStartOffset());
 		operation.setEndPosition(mappingDeclarationCS.getEndOffset());
@@ -4385,7 +4442,7 @@ public class QvtOperationalVisitorCS
 				if(referredType != null && (TypeUtil.getRelationship(env, actualType, referredType) & UMLReflection.SAME_TYPE) == 0) {				
 					String actualTypeName = QvtOperationalParserUtil.safeGetQualifiedName(env, actualType);
 					String referredTypeName = QvtOperationalParserUtil.safeGetQualifiedName(env, referredType);
-					String errorMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_instatiatedTypeDoesNotConformToReferredType,  
+					String errorMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_instantiatedTypeDoesNotConformToReferredType,  
 							actualTypeName, referredTypeName);
 	
 					env.reportError(errorMessage, getStartOffset(objectExp, problemCS), getEndOffset(objectExp, problemCS));
@@ -5125,8 +5182,8 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-    private void checkAbstractOutParamsInitialized(EList<VarParameter> result, MappingRuleCS methodCS, QvtOperationalEnv env) {
-        for (VarParameter varParameter : result) {
+    private void checkAbstractOutParamsInitialized(MappingOperation operation, MappingRuleCS methodCS, QvtOperationalEnv env) {
+        for (VarParameter varParameter : operation.getResult()) {
             EClassifier type = varParameter.getEType();
             if (type instanceof EClass) {
                 EClass eClass = (EClass) type;
@@ -5136,16 +5193,11 @@ public class QvtOperationalVisitorCS
                         // TODO: The check could be more accurate
                         return;
                     }
-                    if((methodCS.getMappingDeclarationCS() != null) && !(methodCS.getMappingDeclarationCS().getQualifiers().contains(QualifierKindCS.ABSTRACT))) {
-                    	boolean hasDisjunct = false;
-                    	for (MappingExtensionCS extensionCS : methodCS.getMappingDeclarationCS().getMappingExtension()) {
-							if(extensionCS.getKind() == MappingExtensionKindCS.DISJUNCTS) {
-								hasDisjunct = true;
-								break;
-							}
-						}
+                    boolean isAbstract = (methodCS.getMappingDeclarationCS() != null && methodCS.getMappingDeclarationCS().getQualifiers().contains(QualifierKindCS.ABSTRACT));
+                    if(!operation.isIsBlackbox() && !isAbstract) {
+                    	boolean hasDisjunct = QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS);
                     	if(!hasDisjunct) {
-                    		env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, methodCS);
+                    		env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
                     	}
                     }
                 }

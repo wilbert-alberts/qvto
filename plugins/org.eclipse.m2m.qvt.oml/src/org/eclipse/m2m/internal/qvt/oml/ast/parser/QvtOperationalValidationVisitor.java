@@ -431,8 +431,8 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 		if(mappingCallExp.getReferredOperation() instanceof MappingOperation) {
 			MappingOperation mappingOperation = (MappingOperation) mappingCallExp.getReferredOperation();
 			
-			if(QvtOperationalUtil.hasAbstractOutputParamerter(mappingOperation) && 
-					QvtOperationalParserUtil.isAbstractMappingOperation(mappingOperation) &&
+			if(QvtOperationalUtil.hasAbstractOutputParameter(mappingOperation) && 
+					QvtOperationalParserUtil.isAbstractOperation(mappingOperation) &&
 					mappingOperation.getDisjunct().isEmpty()) {
 				String errMessage = NLS.bind(ValidationMessages.directCallToAbstractMappingDisallowed,
 						QvtOperationalParserUtil.safeGetMappingQualifiedName(fEnv, mappingOperation));

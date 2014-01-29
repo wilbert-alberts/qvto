@@ -110,7 +110,7 @@ public class ParserTests {
     	TestData.createSourceChecked("listtype2", 7, 0), //$NON-NLS-1$   	
         //new TestData("orderedsetdoesnotconformtoset", 1), //$NON-NLS-1$
         TestData.createSourceChecked("computeExp_252269", 3, 1), //$NON-NLS-1$       
-    	new TestData("implicitsource_ocl_234354", 6, 0), //$NON-NLS-1$
+    	new TestData("implicitsource_ocl_234354", 7, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("duplicateModelTypeDef", 1, 0),    	 //$NON-NLS-1$
     	TestData.createSourceChecked("blackboxlib_annotation_java", 1, 2), //$NON-NLS-1$
     	TestData.createSourceChecked("dupImportFileUnit", 0, 1),    	 //$NON-NLS-1$
@@ -217,5 +217,8 @@ public class ParserTests {
     	TestData.createSourceChecked("bug415024", 1, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug413391", 10, 0), //$NON-NLS-1$
     	TestData.createSourceChecked("bug424912", 0, 6), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug289982_ambiguousLib", 0, 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug289982_undefinedLib", 0, 1), //$NON-NLS-1$
+    	TestData.createSourceChecked("bug289982_validation", 7, 7), //$NON-NLS-1$
     };
 }

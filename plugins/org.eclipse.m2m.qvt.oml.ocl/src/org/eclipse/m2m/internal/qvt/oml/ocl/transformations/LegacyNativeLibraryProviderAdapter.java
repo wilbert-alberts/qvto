@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,22 +8,38 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractBlackboxProvider;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.AbstractCompilationUnitDescriptor;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxException;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.CompilationUnit;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.OperationMatcher;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 
 public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider {
+	
+	static final String PROVIDER_ID = "legacy"; //$NON-NLS-1$
+	
+	private Map<String, AbstractCompilationUnitDescriptor> fDescriptorMap;
+	private final Map<LibraryDescriptor, CompilationUnit> fBlackboxUnits = new LinkedHashMap<LibraryDescriptor, CompilationUnit>();
 	
 	public LegacyNativeLibraryProviderAdapter() {
 		super();
@@ -31,30 +47,17 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 
 	@Override
 	protected String getProviderID() {
-		return "legacy"; //$NON-NLS-1$
+		return PROVIDER_ID;
 	}	
 	
 	@Override
-	public List<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext loadContext) {
-		LibrariesRegistry registry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
-		
-		final Collection<Library> rawLibs = registry.getLibraries();
-		List<AbstractCompilationUnitDescriptor> libDescriptors = new ArrayList<AbstractCompilationUnitDescriptor>(rawLibs.size());
-		for (final Library lib : rawLibs) {
-			libDescriptors.add(new LibraryDescriptor(lib));			
-		}
-		return libDescriptors;
+	public Collection<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext loadContext) {
+		return getDescriptorMap().values();
 	}
 	
 	@Override
 	public AbstractCompilationUnitDescriptor getModuleDescriptor(String qualifiedName, ResolutionContext resolutionContext) {
-		LibrariesRegistry registry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
-		Library library = registry.getLibrary(qualifiedName);
-		if(library != null) {
-			return new LibraryDescriptor(library);
-		}
-		
-		return null;		
+		return getDescriptorMap().get(qualifiedName);		
 	}
 	
 	@Override
@@ -62,30 +65,76 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 		if(descriptor instanceof LibraryDescriptor == false) {
 			throw new IllegalArgumentException("Descriptor not recognized by provider"); //$NON-NLS-1$
 		}
+		LibraryDescriptor libDescriptor = (LibraryDescriptor) descriptor;
 		
-		try {
-			LibraryDescriptor libraryDescriptor = (LibraryDescriptor) descriptor;
-			return createCompilationUnit(LegacyNativeLibSupport.INSTANCE.defineLibrary(libraryDescriptor.fLibrary));			
-		} catch (LibraryCreationException e) {
-			new BlackboxException(e.getMessage(), e);			
+		CompilationUnit compilationUnit = fBlackboxUnits.get(libDescriptor);
+		if (compilationUnit != null) {
+			return compilationUnit;
 		}
 		
-		return null;
-	}		
+		try {
+			compilationUnit = createCompilationUnit(LegacyNativeLibSupport.INSTANCE.defineLibrary(libDescriptor.fLibrary, libDescriptor.fDefinedOperations));			
+			fBlackboxUnits.put(libDescriptor, compilationUnit);
+			return compilationUnit;
+		} catch (LibraryCreationException e) {
+			throw new BlackboxException(e.getMessage(), e);			
+		}
+	}
+	
+	private Map<String, AbstractCompilationUnitDescriptor> getDescriptorMap() {
+		if (fDescriptorMap != null) {
+			return fDescriptorMap;
+		}
+		
+		LibrariesRegistry registry = OclQvtoPlugin.getDefault().getLibrariesRegistry();
 
+		fDescriptorMap = new LinkedHashMap<String, AbstractCompilationUnitDescriptor>(registry.getLibraries().size());
+		for (final Library lib : registry.getLibraries()) {
+			fDescriptorMap.put(lib.getId(), new LibraryDescriptor(lib));			
+		}
+		
+		return fDescriptorMap;
+	}
+	
 	
 	private class LibraryDescriptor extends AbstractCompilationUnitDescriptor {
 
-		private Library fLibrary;
+		private final Library fLibrary;
+		private final Map<String, List<EOperation>> fDefinedOperations;
 		
 		protected LibraryDescriptor(Library library) {
 			super(LegacyNativeLibraryProviderAdapter.this, library.getId());
 			fLibrary = library;
+			fDefinedOperations = new LinkedHashMap<String, List<EOperation>>();
 		}
 				
 		@Override
 		public String getDescription() {
 			return fLibrary.getLibraryClassName();
+		}
+		
+		public Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation imperativeOp, QvtOperationalModuleEnv env) {
+			Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
+			if (!importedLibs.contains(fLibrary.getId())) {
+				return Collections.emptyList();
+			}
+
+			List<EOperation> listOp = fDefinedOperations.get(imperativeOp.getName());
+			if (listOp == null) {
+				return Collections.emptyList();
+			}
+			
+			Collection<CallHandler> result = Collections.emptyList();
+			for (EOperation libraryOp : listOp) {
+				if (OperationMatcher.matchOperation(env, imperativeOp, libraryOp)) {
+					if (result.isEmpty()) {
+						result = new LinkedList<CallHandler>();
+					}
+					result.add(CallHandlerAdapter.getDispatcher(libraryOp));
+				}
+			}
+			
+			return result;
 		}
 		
 	}	

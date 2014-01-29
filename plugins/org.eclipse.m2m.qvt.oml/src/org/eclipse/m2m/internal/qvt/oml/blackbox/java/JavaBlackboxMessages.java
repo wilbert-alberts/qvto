@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2013 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -19,6 +20,7 @@ public class JavaBlackboxMessages extends NLS {
 
 	public static String FirstContextualOperationParameterRequired;
 	public static String QvtoContextParameterRequired;
+	public static String ConstructorRequiresContextualOperation;
 
 	public static String InvalidJavaClassForModule;
 

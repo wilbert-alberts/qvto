@@ -6,11 +6,11 @@ transformation blackboxlib_237781(in model : ECORE, out modelOut : ECORE);
 
 main() {
 		var name := 'Foo';
-		var r := asRenamedSetSingleton(object EClass {}, name);	
+		var r := legacyAsRenamedSet(object EClass {}, name);	
 		assert fatal (r->asSequence()->at(1).name = name) 
 			with log('The java library operation did give expected result');
 
-		var r2 : Set(OclAny) := 'selfString'.oclAnyMyOperation();	
+		var r2 : Set(OclAny) := 'selfString'.legacyOclAnyAsSet();
 		assert fatal (r2->asSequence()->at(1) = 'selfString') 
-			with log('The java library operation \'oclAnyMyOperation\' did give expected result');			
+			with log('The java library operation \'legacyOclAnyAsSet\' did give expected result');			
 }

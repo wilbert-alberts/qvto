@@ -25,9 +25,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
@@ -49,6 +51,7 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
@@ -100,14 +103,13 @@ public class TestUtil extends Assert {
 		
 		HashMap<CompiledUnit, Resource> resourceMap = new HashMap<CompiledUnit, Resource>();
 		for (CompiledUnit nextModule : all) {
-			resourceMap.put(nextModule, confineInResource(nextModule));
+			if(!BlackboxUnitResolver.isBlackboxUnitURI(nextModule.getURI())) {
+				resourceMap.put(nextModule, confineInResource(nextModule));
+			}
 		}
 		
-		for (CompiledUnit nextUnit : all) {
-			Resource res = resourceMap.get(nextUnit);
-			if(!"qvto".equals(res.getURI().scheme())) {
-				assertPersistableAST(nextUnit, res);
-			}
+		for (Map.Entry<CompiledUnit, Resource> nextUnit : resourceMap.entrySet()) {
+			assertPersistableAST(nextUnit.getKey(), nextUnit.getValue());
 		}
 	}
 	
