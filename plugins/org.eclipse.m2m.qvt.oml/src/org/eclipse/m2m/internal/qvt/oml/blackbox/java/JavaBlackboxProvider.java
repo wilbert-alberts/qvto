@@ -101,9 +101,8 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		}
 		Descriptor libDescriptor = (Descriptor) descriptor;
 		
-		CompilationUnit compilationUnit = fBlackboxUnits.get(libDescriptor);
-		if (compilationUnit != null) {
-			return compilationUnit;
+		if (fBlackboxUnits.containsKey(libDescriptor)) {
+			return fBlackboxUnits.get(libDescriptor);
 		}
 		
 		JavaModuleLoader javaModuleLoader = createJavaModuleLoader();
@@ -133,11 +132,12 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 		}
 		
 		if(errors != null) {
+			fBlackboxUnits.put(libDescriptor, null);
 			assert errors.getSeverity() == Diagnostic.ERROR;
 			throw new BlackboxException(errors);
 		}
 
-		compilationUnit = createCompilationUnit(loadedModules);
+		CompilationUnit compilationUnit = createCompilationUnit(loadedModules);
 		fBlackboxUnits.put(libDescriptor, compilationUnit);
 		return compilationUnit;
 	}
@@ -270,8 +270,10 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 			Collection<CallHandler> result = Collections.emptyList();
 
 			for(Map.Entry<ModuleHandle, Map<String, List<EOperation>>> nextEntry : fModules.entrySet()) {
-				if (!importedLibs.contains(nextEntry.getKey().getModuleName())) {
-					continue;
+				if (!env.getImportedNativeLibs().isEmpty()) {
+					if (!importedLibs.contains(nextEntry.getKey().getModuleName())) {
+						continue;
+					}
 				}
 				
 				List<EOperation> listOp = nextEntry.getValue().get(imperativeOp.getName());

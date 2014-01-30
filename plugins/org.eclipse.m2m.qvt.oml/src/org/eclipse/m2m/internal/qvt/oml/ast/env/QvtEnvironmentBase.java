@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
@@ -499,6 +500,10 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
     				continue;
     			}
     			URI uri = module.eResource().getURI();
+    			if (!BlackboxUnitResolver.isBlackboxUnitURI(uri)) {
+    				continue;
+    			}
+    			
     			Set<String> names = result.get(uri);
     			if (names == null) {
     				names = new LinkedHashSet<String>();

@@ -17,10 +17,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.ValidationMessages;
 import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstanceFactory;
@@ -100,9 +104,27 @@ public abstract class AbstractBlackboxProvider {
 	public Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation operation, QvtOperationalModuleEnv env) {
 		Collection<CallHandler> result = Collections.emptyList();
 		for (AbstractCompilationUnitDescriptor d : getModuleDescriptors(GLOBAL_RESOLUTION_CONTEXT)) {
-			if (!env.getImportedNativeLibs().containsKey(d.getURI())) {
-				continue;
+			if (env.getImportedNativeLibs().isEmpty()) {
+				try {
+					loadCompilationUnit(d, new LoadContext(env.getEPackageRegistry()));
+				} catch (BlackboxException e) {
+					Diagnostic diagnostic = e.getDiagnostic();
+					if(diagnostic != null) {
+						QvtPlugin.logDiagnostic(diagnostic);					
+					} else {
+						QvtPlugin.error(NLS.bind(ValidationMessages.FailedToLoadUnit, 
+								new Object[] { d.getQualifiedName() }), e);
+					}
+					
+					continue;
+				}
 			}
+			else {
+				if (!env.getImportedNativeLibs().containsKey(d.getURI())) {
+					continue;
+				}
+			}
+			
 			Collection<CallHandler> handlers = d.getBlackboxCallHandler(operation, env);
 			if (!handlers.isEmpty()) {
 				if (result.isEmpty()) {

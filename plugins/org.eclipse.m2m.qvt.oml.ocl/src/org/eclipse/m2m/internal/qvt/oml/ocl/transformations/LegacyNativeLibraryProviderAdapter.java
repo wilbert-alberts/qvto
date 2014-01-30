@@ -67,16 +67,16 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 		}
 		LibraryDescriptor libDescriptor = (LibraryDescriptor) descriptor;
 		
-		CompilationUnit compilationUnit = fBlackboxUnits.get(libDescriptor);
-		if (compilationUnit != null) {
-			return compilationUnit;
+		if (fBlackboxUnits.containsKey(libDescriptor)) {
+			return fBlackboxUnits.get(libDescriptor);
 		}
 		
 		try {
-			compilationUnit = createCompilationUnit(LegacyNativeLibSupport.INSTANCE.defineLibrary(libDescriptor.fLibrary, libDescriptor.fDefinedOperations));			
+			CompilationUnit compilationUnit = createCompilationUnit(LegacyNativeLibSupport.INSTANCE.defineLibrary(libDescriptor.fLibrary, libDescriptor.fDefinedOperations));			
 			fBlackboxUnits.put(libDescriptor, compilationUnit);
 			return compilationUnit;
 		} catch (LibraryCreationException e) {
+			fBlackboxUnits.put(libDescriptor, null);
 			throw new BlackboxException(e.getMessage(), e);			
 		}
 	}
@@ -114,11 +114,13 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 		}
 		
 		public Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation imperativeOp, QvtOperationalModuleEnv env) {
-			Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
-			if (!importedLibs.contains(fLibrary.getId())) {
-				return Collections.emptyList();
+			if (!env.getImportedNativeLibs().isEmpty()) {
+				Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
+				if (!importedLibs.contains(fLibrary.getId())) {
+					return Collections.emptyList();
+				}
 			}
-
+			
 			List<EOperation> listOp = fDefinedOperations.get(imperativeOp.getName());
 			if (listOp == null) {
 				return Collections.emptyList();
