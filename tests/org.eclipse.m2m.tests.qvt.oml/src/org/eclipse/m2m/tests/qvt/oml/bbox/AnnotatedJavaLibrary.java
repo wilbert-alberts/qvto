@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.bbox;
 
+import generics.GenericCls;
+import generics.GenericsFactory;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -411,6 +414,27 @@ public class AnnotatedJavaLibrary {
 	@Operation (kind=Kind.QUERY)
 	public void testThrowRuntimeException() {
 		throw new RuntimeException("Exception from bbox library"); //$NON-NLS-1$
-	}	
+	}
 	
+	// EMF generic test
+	//
+	@Operation (kind=Kind.QUERY)
+	public GenericCls<?> getGenericClsWildcard() {
+		GenericCls<Integer> genericCls = GenericsFactory.eINSTANCE.<Integer>createGenericCls();
+		genericCls.getValues().add(1);
+		return genericCls;
+	}
+
+	@Operation (kind=Kind.QUERY)
+	public GenericCls<Integer> getGenericClsInteger() {
+		GenericCls<Integer> genericCls = GenericsFactory.eINSTANCE.<Integer>createGenericCls();
+		genericCls.getValues().add(1);
+		return genericCls;
+	}
+
+	@Operation (kind=Kind.QUERY)
+	public <E extends Number> GenericCls<E> getGenericClsType() {
+		return GenericsFactory.eINSTANCE.createGenericCls();
+	}
+
 }

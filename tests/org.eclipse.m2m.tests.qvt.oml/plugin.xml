@@ -2,15 +2,20 @@
 <?eclipse version="3.2"?>
 <plugin>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package 
+            uri="http://www.eclipse.org/m2m/qvt/oml/testqvt" 
+            class="testqvt.TestqvtPackage"
+            genModel=""/> 
+   </extension>
 
-   
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/m2m/qvt/oml/testqvt" 
-       class = "testqvt.TestqvtPackage"
-       genModel = "" /> 
-  </extension>
-  
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.eclipse.org/m2m/qvt/oml/generics"
+            class="generics.GenericsPackage"
+            genModel=""/>
+   </extension>
+
    <extension
          point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
       <transformation
@@ -43,7 +48,8 @@
     		<library name="FooJavaLib" class="org.eclipse.m2m.tests.qvt.oml.bbox.AnnotatedJavaLibrary">
 				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/examples/simpleuml"/>	    		
     			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
-				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"/>				
+				<metamodel nsURI="http://www.eclipse.org/qvt/1.0.0/Operational/Expressions"/>
+				<metamodel nsURI="http://www.eclipse.org/m2m/qvt/oml/generics"/>
     		</library>
 
     		<library name="Bug289982_Lib" class="org.eclipse.m2m.tests.qvt.oml.bbox.Bug289982_Library">

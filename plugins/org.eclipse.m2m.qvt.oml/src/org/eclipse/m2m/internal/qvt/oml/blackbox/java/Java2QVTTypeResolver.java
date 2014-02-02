@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 400233
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -30,7 +31,6 @@ import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.expressions.CollectionKind;
-import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.Bag;
 
@@ -70,7 +70,7 @@ class Java2QVTTypeResolver {
 	private EClassifier type2EClassifier(Type type) {
 		if(type instanceof ParameterizedType) {
 			ParameterizedType parameterizedType = (ParameterizedType) type;
-			return (EClassifier)handleParameterizedType(parameterizedType);			
+			return handleParameterizedType(parameterizedType);			
 		} 
 		else if(type instanceof Class<?>) {
 			return handleType((Class<?>)type);
@@ -89,8 +89,8 @@ class Java2QVTTypeResolver {
 		
 		return null;
 	}
-	
-	private CollectionType<EClassifier, EOperation> handleParameterizedType(ParameterizedType parameterizedType) {	
+		
+	private EClassifier handleParameterizedType(ParameterizedType parameterizedType) {	
 		Type rawType = parameterizedType.getRawType();
 		Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
 		
@@ -103,10 +103,10 @@ class Java2QVTTypeResolver {
 			return null;
 		}
 		
-		Type actualElementType2 = actualTypeArguments.length > 1 ? actualTypeArguments[1] : null;
 		Class<?> rawClass = (Class<?>) rawType;
 		if(rawClass == Dictionary.class) {
 			EClassifier keyType = toEClassifier(actualElementType);
+			Type actualElementType2 = actualTypeArguments.length > 1 ? actualTypeArguments[1] : null;
 			if(keyType != null && actualElementType2 != null) {
 				EClassifier elementType = toEClassifier(actualElementType2);
 				if(elementType != null) {
@@ -137,11 +137,11 @@ class Java2QVTTypeResolver {
 			return resolveCollectionType(CollectionKind.COLLECTION_LITERAL, actualElementType);
 		}
 		
-		return null;
+		return lookupByInstanceClass(parameterizedType);
 	}
 	
 	
-	private CollectionType<EClassifier, EOperation> resolveCollectionType(CollectionKind kind, Type elementType) {
+	private EClassifier resolveCollectionType(CollectionKind kind, Type elementType) {
 		TypeResolver<EClassifier, EOperation, EStructuralFeature> typeResolver = fEnv.getTypeResolver();
 
 		EClassifier actualElementClassifier = null;
@@ -166,7 +166,7 @@ class Java2QVTTypeResolver {
 		}
 		
 		if(actualElementClassifier != null) {
-			return typeResolver.resolveCollectionType(kind, actualElementClassifier);
+			return (EClassifier) typeResolver.resolveCollectionType(kind, actualElementClassifier);
 		}
 		
 		return null;
@@ -203,6 +203,20 @@ class Java2QVTTypeResolver {
 		for (EPackage ePackage : fPackages) {
 			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if(type == eClassifier.getInstanceClass()) {
+					return eClassifier;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private EClassifier lookupByInstanceClass(ParameterizedType type) {
+		assert type != null;
+		
+		for (EPackage ePackage : fPackages) {
+			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+				if(type.getRawType() == eClassifier.getInstanceClass()) {
 					return eClassifier;
 				}
 			}
