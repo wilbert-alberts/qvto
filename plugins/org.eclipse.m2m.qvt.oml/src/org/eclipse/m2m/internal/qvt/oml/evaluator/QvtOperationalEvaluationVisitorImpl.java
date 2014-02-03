@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642
- *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970
+ *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -526,7 +527,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             VarParameter param = (VarParameter) nextParam;
             Object arg = argIt.next();
 
-            addToEnv(param.getName(), arg, param.getEType());
+            if (param.getKind() != DirectionKind.OUT) {
+            	addToEnv(param.getName(), arg, param.getEType());
+            }
         }
 
         EClassifier contextType = QvtOperationalParserUtil.getContextualType(imperativeOperation);
@@ -592,7 +595,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return true;
     }
     
-    private void setupInitialResultVariables(MappingBody mappingBody) {
+    private void setupInitialResultValue(MappingBody mappingBody) {
     	ImperativeOperation operation = mappingBody.getOperation();
     	QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
 		// Note: the variables for result parameters may not be set or existing yet
@@ -615,7 +618,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		QvtOperationalEvaluationEnv evalEnv = getOperationalEvaluationEnv();
         MappingOperation currentMappingCalled = (MappingOperation) mappingBody.getOperation();
 		
-		setupInitialResultVariables(mappingBody);
+		setupInitialResultValue(mappingBody);
     	
         for (OCLExpression<EClassifier> initExp : mappingBody.getInitSection()) {
         	visitExpression(initExp);
@@ -628,6 +631,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         }
         
 		Object result = createOrGetResult(currentMappingCalled);
+		createOutParams(currentMappingCalled);		
+		setOutParamsValues(currentMappingCalled, myEvalEnv.getOperationArgs());
+        TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), currentMappingCalled);
 		
 		// call inherited mappings
 		if(!currentMappingCalled.getInherited().isEmpty()) {
@@ -726,15 +732,18 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             		}
             	}
 
-            	OperationCallResult opResult = executeImperativeOperation(method, source, args, false);
-            	if (operationCallExp instanceof MappingCallExp && opResult instanceof MappingCallResult) {
-            		if (((MappingCallExp) operationCallExp).isIsStrict()
-            				&& ((MappingCallResult) opResult).isPreconditionFailed()) {
-            			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.MappingPreconditionFailed, method.getName())));
-            		}
-            	}
-            	
-            	return doImplicitListCoercion(referredOperation.getEType(), opResult.myResult);
+				OperationCallResult opResult = executeImperativeOperation(method, source, args, false);
+				if (operationCallExp instanceof MappingCallExp && opResult instanceof MappingCallResult
+						&& method instanceof MappingOperation) {
+					if (((MappingCallExp) operationCallExp).isIsStrict() && ((MappingCallResult) opResult).isPreconditionFailed()) {
+						throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.MappingPreconditionFailed,
+								method.getName())));
+					}
+					retrieveOutArgs(operationCallExp, ((MappingCallResult) opResult).myEvalEnv.getOperationArgs(),
+							(MappingOperation) method);
+				}
+
+				return doImplicitListCoercion(referredOperation.getEType(), opResult.myResult);
             }
         }
 
@@ -1745,9 +1754,45 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
             }
         }
         
-        TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
         return result;
     }
+
+    private void createOutParams(MappingOperation mappingOperation) {
+        for (EParameter nextParam : mappingOperation.getEParameters()) {
+            VarParameter param = (VarParameter) nextParam;
+            Object paramValue = getRuntimeValue(param.getName());
+            if (isUndefined(paramValue) && param.getKind() == DirectionKind.OUT) {
+            	paramValue = createInstance(param.getType(), ((MappingParameter) param).getExtent());
+                replaceInEnv(param.getName(), paramValue, param.getType());
+            }
+        }
+    }
+    
+    private void createOutParamsDisjunct(MappingOperation operation, List<Object> argValues) {
+		Iterator<EParameter> itParams = operation.getEParameters().iterator();
+		Iterator<Object> itValue = argValues.iterator();
+		while (itParams.hasNext()) {
+			MappingParameter param = (MappingParameter) itParams.next();
+			Object argValue = itValue.next();
+            if (param.getKind() == DirectionKind.OUT) {
+                replaceInEnv(param.getName(), argValue, param.getType());
+            }
+        }
+    }
+
+    private void setOutParamsValues(MappingOperation operation, List<Object> argValues) {
+		Iterator<EParameter> itParams = operation.getEParameters().iterator();
+		ListIterator<Object> itArgument = argValues.listIterator();
+		while (itArgument.hasNext()) {
+			MappingParameter mappingParam = (MappingParameter) itParams.next();
+			itArgument.next();
+			if (mappingParam.getKind() != DirectionKind.OUT) {
+				continue;
+			}
+			itArgument.set(getRuntimeValue(mappingParam.getName()));
+		}
+    }
+    
 
     protected static class OperationCallResult {
     	public Object myResult;
@@ -1882,6 +1927,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     			
     			// add trace record for disjuncting mapping (fixed by bug 377882) 
     			replaceInEnv(Environment.RESULT_VARIABLE_NAME, result.myResult, method.getEType());
+        		//retrieveOutArgs((OperationCallExp<EClassifier, EOperation>)source, result.myEvalEnv.getOperationArgs(), nextDisjunct);
+    			createOutParamsDisjunct(method, result.myEvalEnv.getOperationArgs());
+    			setOutParamsValues(method, args);
+   			
     			TraceUtil.addTraceRecord(evalEnv, method);
     			
     			return result;
@@ -2200,6 +2249,44 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         }
 
         return argValues;
+    }
+    
+    private void retrieveOutArgs(OperationCallExp<EClassifier, EOperation> operationCallExp, List<Object> argValues, MappingOperation operation) {
+		Iterator<OCLExpression<EClassifier>> itArgument = operationCallExp.getArgument().iterator();
+		Iterator<EParameter> itParams = operation.getEParameters().iterator();
+		Iterator<Object> itValue = argValues.iterator();
+		while (itArgument.hasNext()) {
+			OCLExpression<EClassifier> arg = itArgument.next();
+			MappingParameter mappingParam = (MappingParameter) itParams.next();
+			Object argValue = itValue.next();
+			 
+			if (mappingParam.getKind() != DirectionKind.OUT) {
+				continue;
+			}
+			
+			if (arg instanceof VariableExp<?, ?>) {
+			    @SuppressWarnings("unchecked")
+				VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) arg;
+			    Variable<EClassifier, EParameter> referredVariable = varExp.getReferredVariable();
+			    if (referredVariable != null) {
+			        String varName = referredVariable.getName();
+			        EClassifier variableType = arg.getType();
+			        replaceInEnv(varName, argValue, variableType);
+			    }
+			} else if (arg instanceof PropertyCallExp<?, ?>) {
+			    Object ownerObj = getAssignExpLValueOwner(arg);
+			    if (ownerObj instanceof EObject) {
+			    	@SuppressWarnings("unchecked")
+					PropertyCallExp<EClassifier, EStructuralFeature> propCallExp = ((PropertyCallExp<EClassifier, EStructuralFeature>) arg);
+			        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
+			        EObject oldIP = setCurrentEnvInstructionPointer(operationCallExp);
+			        env.callSetter((EObject) ownerObj, propCallExp.getReferredProperty(), argValue, isUndefined(argValue), true);
+			        setCurrentEnvInstructionPointer(oldIP);
+			    }
+			} else {
+			    throw new UnsupportedOperationException("Unsupported LValue type: " + ((arg == null) ? null : arg.getType())); //$NON-NLS-1$
+			}
+		}
     }
     
 	private List<Object> makeEntryOperationArgs(ImperativeOperation entryPoint, OperationalTransformation module) {

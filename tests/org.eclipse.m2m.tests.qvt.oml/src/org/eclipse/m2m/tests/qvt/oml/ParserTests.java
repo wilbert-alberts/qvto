@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 272869, 268636, 413130, 404647, 414363, 401521,
- *                         414616, 419299, 414619, 415024, 413391
+ *                         414616, 419299, 414619, 415024, 413391, 424584
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml;
 
@@ -220,5 +220,6 @@ public class ParserTests {
     	TestData.createSourceChecked("bug289982_ambiguousLib", 0, 1), //$NON-NLS-1$
     	TestData.createSourceChecked("bug289982_undefinedLib", 0, 1), //$NON-NLS-1$
     	TestData.createSourceChecked("bug289982_validation", 7, 7), //$NON-NLS-1$
+    	new TestData("bug424584", 10), //$NON-NLS-1$
     };
 }

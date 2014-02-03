@@ -8,13 +8,16 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.BasicEList;
@@ -31,6 +34,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.internal.qvt.oml.trace.EDirectionKind;
@@ -106,7 +110,8 @@ public class TraceUtil {
                     if (param instanceof VarParameter) {
                     	paramKind = ((VarParameter) param).getKind();
                     }
-                    if (!isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), paramKind, evalEnv)) {
+                    if (paramKind != DirectionKind.OUT
+                    		&& !isOclEqual(paramValue, traceParamVal.getValue().getOclObject(), paramKind, evalEnv)) {
                         continue traceCheckCycle;
                     }
                 }
@@ -209,7 +214,20 @@ public class TraceUtil {
     	if (resultParams.isEmpty()) {
             return null;
         }
-
+    	
+		Iterator<EParameter> itParams = operation.getEParameters().iterator();
+		ListIterator<Object> itArgument = evalEnv.getOperationArgs().listIterator();
+		Iterator<VarParameterValue> itValues = trace.getParameters().getParameters().iterator();
+		while (itArgument.hasNext()) {
+			MappingParameter mappingParam = (MappingParameter) itParams.next();
+			VarParameterValue value = itValues.next();
+			itArgument.next();
+			if (mappingParam.getKind() != DirectionKind.OUT) {
+				continue;
+			}
+			itArgument.set(value.getValue().getOclObject());
+		}
+    	
     	EList<VarParameterValue> traceResult = trace.getResult().getResult();    	
 		if(resultParams.size() == 1) {
     		return traceResult.get(0).getValue().getOclObject();

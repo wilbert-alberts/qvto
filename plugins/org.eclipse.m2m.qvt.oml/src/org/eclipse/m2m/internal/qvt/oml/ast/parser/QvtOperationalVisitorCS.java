@@ -9,7 +9,8 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991, 289982
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
- *                         419299, 414619, 403440, 415024, 420970, 413391
+ *                         419299, 414619, 403440, 415024, 420970, 413391,
+ *                         424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -3526,18 +3527,28 @@ public class QvtOperationalVisitorCS
 
 	private List<org.eclipse.ocl.ecore.OCLExpression> visitMappingSectionCS(MappingSectionCS mappingSectionCS,
 			QvtOperationalEnv env) throws SemanticException {
-		List<org.eclipse.ocl.ecore.OCLExpression> statements = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(mappingSectionCS
-				.getStatements().size());
-		for (OCLExpressionCS statementCS : mappingSectionCS.getStatements()) {
-			if (statementCS == null) {
-				continue;
+		try {
+			if (mappingSectionCS instanceof MappingInitCS) {
+				env.enterInitMappingSection();
 			}
-			org.eclipse.ocl.ecore.OCLExpression statement = visitOclExpressionCS(statementCS, env);
-			if (statement != null) {
-				statements.add(statement);
+			List<org.eclipse.ocl.ecore.OCLExpression> statements = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(mappingSectionCS
+					.getStatements().size());
+			for (OCLExpressionCS statementCS : mappingSectionCS.getStatements()) {
+				if (statementCS == null) {
+					continue;
+				}
+				org.eclipse.ocl.ecore.OCLExpression statement = visitOclExpressionCS(statementCS, env);
+				if (statement != null) {
+					statements.add(statement);
+				}
+			}
+			return statements;
+		}
+		finally {
+			if (mappingSectionCS instanceof MappingInitCS) {
+				env.exitInitMappingSection();
 			}
 		}
-		return statements;
 	}
 
 	protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation declaredOperation)
@@ -3700,7 +3711,15 @@ public class QvtOperationalVisitorCS
 			body.getEndSection().addAll(ends);
 		}
 
-		checkAbstractOutParamsInitialized(operation, methodCS, env);
+		for (EParameter parameter : operation.getEParameters()) {
+			VarParameter varParameter = (VarParameter) parameter;
+			if (varParameter.getKind() == DirectionKind.OUT) {
+				checkAbstractOutParamsInitialized(varParameter, operation, methodCS, env);
+			}
+		}
+		for (VarParameter varParameter : operation.getResult()) {
+			checkAbstractOutParamsInitialized(varParameter, operation, methodCS, env);
+		}
 
 		processMappingExtensions(methodCS, operation, env);
 				
@@ -3934,7 +3953,7 @@ public class QvtOperationalVisitorCS
 		
 		List<EParameter> params = operation.getEParameters();
 		for (ParameterDeclarationCS paramCS : mappingDeclarationCS.getParameters()) {
-			VarParameter param = visitParameterDeclarationCS(paramCS, createMappingParams, env, isEntryPoint);
+			VarParameter param = visitParameterDeclarationCS(paramCS, createMappingParams, env);
 			if (param == null) {
 				return false;
 			}
@@ -4104,7 +4123,13 @@ public class QvtOperationalVisitorCS
 		        return null;
 		    }
 		    
-	        QvtOperationalParserUtil.validateVariableModification(variable, lValueCS, null, env, true);         
+			boolean isAssignment = true;
+			if (expressionCS.isIncremental()) {
+				if (variable.getType() instanceof ListType || variable.getType() instanceof DictionaryType) {
+					isAssignment = false;
+				}
+			}
+			QvtOperationalParserUtil.validateVariableModification(variable, lValueCS, null, env, isAssignment);
 	        QvtOperationalParserUtil.validateAssignment(false, variable.getName(), variable.getType(), rightExpr.getType(),
 	        		expressionCS.isIncremental(), lValueCS, expressionCS.getOclExpressionCS(), env);
 	    } else if (lValue instanceof PropertyCallExp<?, ?>) {
@@ -4166,7 +4191,7 @@ public class QvtOperationalVisitorCS
 	}
 
 	private VarParameter visitParameterDeclarationCS(ParameterDeclarationCS paramCS, boolean createMappingParam, 
-			QvtOperationalModuleEnv env, boolean isOutAllowed) throws SemanticException {
+			QvtOperationalModuleEnv env) throws SemanticException {
 		DirectionKindEnum directionKindEnum = paramCS.getDirectionKind();
 		if (directionKindEnum == DirectionKindEnum.DEFAULT) {
 		    directionKindEnum = DirectionKindEnum.IN;
@@ -4215,10 +4240,6 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		if (!isOutAllowed && varParam.getKind() == DirectionKind.OUT) {
-			env.reportError(ValidationMessages.OutParamsNotSupported, paramCS);
-		}
-
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {		
 			ASTBindingHelper.createCST2ASTBinding(paramCS, varParam);
@@ -5182,28 +5203,29 @@ public class QvtOperationalVisitorCS
 		}
 	}
 
-    private void checkAbstractOutParamsInitialized(MappingOperation operation, MappingRuleCS methodCS, QvtOperationalEnv env) {
-        for (VarParameter varParameter : operation.getResult()) {
-            EClassifier type = varParameter.getEType();
-            if (type instanceof EClass) {
-                EClass eClass = (EClass) type;
-                if (!QvtOperationalUtil.isInstantiable(eClass)) {
-                    MappingInitCS init = (methodCS.getMappingBody() == null) ? null : methodCS.getMappingBody().getMappingInitCS();
-                    if (init != null) {
-                        // TODO: The check could be more accurate
-                        return;
-                    }
-                    boolean isAbstract = (methodCS.getMappingDeclarationCS() != null && methodCS.getMappingDeclarationCS().getQualifiers().contains(QualifierKindCS.ABSTRACT));
-                    if(!operation.isIsBlackbox() && !isAbstract) {
-                    	boolean hasDisjunct = QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS);
-                    	if(!hasDisjunct) {
-                    		env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
-                    	}
-                    }
-                }
-            }
-        }
-    }
+	private void checkAbstractOutParamsInitialized(VarParameter varParameter, MappingOperation operation, MappingRuleCS methodCS,
+			QvtOperationalEnv env) {
+		EClassifier type = varParameter.getEType();
+		if (type instanceof EClass) {
+			EClass eClass = (EClass) type;
+			if (!QvtOperationalUtil.isInstantiable(eClass)) {
+				MappingInitCS init = (methodCS.getMappingBody() == null) ? null : methodCS.getMappingBody().getMappingInitCS();
+				if (init != null) {
+					// TODO: The check could be more accurate
+					return;
+				}
+				boolean isAbstract = (methodCS.getMappingDeclarationCS() != null && methodCS.getMappingDeclarationCS()
+						.getQualifiers().contains(QualifierKindCS.ABSTRACT));
+				if (!operation.isIsBlackbox() && !isAbstract) {
+					boolean hasDisjunct = QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS);
+					if (!hasDisjunct) {
+						env.reportError(ValidationMessages.QvtOperationalVisitorCS_AbstractTypesNotInitialized,
+								QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+					}
+				}
+			}
+		}
+	}
     
 //	private boolean validateInitializedValueCS(VariableInitializationCS varInitCS, VariableInitExp result, 
 //			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 

@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bug 289982
+ *     Alex Paperno - bugs 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -62,6 +63,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
@@ -501,8 +503,11 @@ public class QvtOperationalParserUtil {
 		EParameter representedParameter = variable.getRepresentedParameter();
 		if (representedParameter instanceof VarParameter) {
 			VarParameter parameter = (VarParameter) representedParameter;
-			// detect whether an [inout] parameter variable is to be assigned a new value 
-			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && isDirectModification;
+			// detect whether an [inout] parameter variable is to be assigned a new value
+			boolean isInsideMapping = env.getContextOperation() instanceof MappingOperation;
+			boolean isDirectInoutModification = parameter.getKind() == DirectionKind.INOUT && isDirectModification && isInsideMapping;
+			boolean isDirectOutModificationOutsideInit = parameter.getKind() == DirectionKind.OUT && isDirectModification && isInsideMapping 
+					&& (env instanceof QvtOperationalEnv) && !((QvtOperationalEnv)env).isWithinInitMappingSection();
 			boolean isContextualPropertyAccessed = varPathNamePropertyASTopt instanceof ContextualProperty;
 			
 			if(isDirectInoutModification) {
@@ -511,6 +516,12 @@ public class QvtOperationalParserUtil {
 				return false;
 			}
 			
+			if(isDirectOutModificationOutsideInit) {
+				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.QvtOperationalParserUtil_outParamAssignmentError, parameter.getName()),
+						varNodeCS);
+				return false;
+			}
+
 			if (parameter.getKind() != DirectionKind.OUT && parameter.getKind() != DirectionKind.INOUT && isContextualPropertyAccessed == false) {
 				QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.inputParameterModificationError, variable.getName()),
 						varNodeCS);

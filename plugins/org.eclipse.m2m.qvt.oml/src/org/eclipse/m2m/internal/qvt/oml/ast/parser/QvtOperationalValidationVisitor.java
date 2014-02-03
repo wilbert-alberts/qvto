@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - 414616
+ *     Alex Paperno - 414616, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -43,6 +43,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingCallExp;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
@@ -95,6 +96,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
+import org.eclipse.ocl.expressions.VariableExp;
 import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.lpg.BasicEnvironment;
 import org.eclipse.ocl.lpg.FormattingHelper;
@@ -439,6 +441,24 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				
 				fEnv.reportError(errMessage,  mappingCallExp.getStartPosition(), mappingCallExp.getEndPosition());
 			}
+			
+			Iterator<OCLExpression<EClassifier>> itArgument = mappingCallExp.getArgument().iterator();
+			Iterator<EParameter> itParams = mappingOperation.getEParameters().iterator();
+			while (itArgument.hasNext()) {
+				OCLExpression<EClassifier> arg = itArgument.next();
+				MappingParameter mappingParam = (MappingParameter) itParams.next();
+				if (mappingParam.getKind() != DirectionKind.OUT) {
+					continue;
+				}
+
+				if (!(arg instanceof VariableExp<?, ?> || arg instanceof PropertyCallExp<?, ?>)) {
+					fEnv.reportError(ValidationMessages.outParamNotAnLValueError, arg.getStartPosition(), arg.getEndPosition());
+				}
+				
+				if (arg.getType() != mappingParam.getEType()) {
+					fEnv.reportError(ValidationMessages.outParamNotSameTypeError, arg.getStartPosition(), arg.getEndPosition());
+				}
+			}			
 		}
 		return super.visitMappingCallExp(mappingCallExp);
 	}

@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - Bug 390088
- *     Alex Paperno - bugs 416584, 401521, 403440
+ *     Alex Paperno - bugs 416584, 401521, 403440, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -86,6 +86,7 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 	private boolean myCheckForDuplicateErrors;
 	private QvtCompilerOptions myCompilerOptions;
 	private boolean myParentLocal = false;
+	private boolean myIsWithinInitMappingSection = false;
 	
 	private final Map<String, ModelType> myModelTypeRegistry;
 	
@@ -200,7 +201,19 @@ public class QvtOperationalEnv extends QvtEnvironmentBase { //EcoreEnvironment {
 		myParentLocal = true;
 	}
 	 
-    @Override
+	public void enterInitMappingSection() {
+		myIsWithinInitMappingSection = true;
+	}
+
+	public void exitInitMappingSection() {
+		myIsWithinInitMappingSection = false;
+	}
+
+	public boolean isWithinInitMappingSection() {
+		return myIsWithinInitMappingSection;
+	}
+	
+	@Override
     public Variable<EClassifier, EParameter> lookupLocal(String name) {
         // support operation parameters whose names need to be escaped in OCL
         Variable<EClassifier, EParameter> result = super.lookupLocal(name);

@@ -8,7 +8,8 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391
+ *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391,
+ *                    424584
  *     Christopher Gerking - bug 289982
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
@@ -40,9 +41,11 @@ public final class ValidationMessages extends NLS {
 	public static String MappingExtension_disjunctingMappingBodyNotExecuted;
 	public static String MappingExtension_illegalExtensionKindOnDisjunctingMapping;
 	public static String MappingExtension_nonConformantSignatureForMappingExtension;
+	public static String MappingExtension_illegalOutParamDisjunctingMapping;
 	public static String mappingOperationExpected;
 	public static String MissingMessageLogExpArgumentError;
 	public static String QvtOperationalParserUtil_inoutParamAssignmentError;
+	public static String QvtOperationalParserUtil_outParamAssignmentError;
     public static String QvtOperationalValidationVisitor_CannotDeclareVariables;
 	public static String QvtOperationalValidationVisitor_incompatibleArgumentModelType;
 	public static String QvtOperationalValidationVisitor_invalidContextualType;
@@ -143,6 +146,8 @@ public final class ValidationMessages extends NLS {
 	public static String propertyAlreadyExistsInTypeError;
 	public static String bodyTypeNotCompatibleWithReturnTypeError;
     public static String notAnLValueError;
+    public static String outParamNotAnLValueError;
+    public static String outParamNotSameTypeError;
 	public static String CantAssignToSelf;
 	public static String CantAssignToThis;	
 	public static String unresolvedNameError;

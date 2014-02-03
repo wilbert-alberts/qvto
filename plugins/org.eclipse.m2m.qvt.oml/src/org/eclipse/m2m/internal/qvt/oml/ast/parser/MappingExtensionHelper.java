@@ -8,12 +8,14 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Alex Paperno - bugs 424584,
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -27,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.cst.MappingExtensionKindCS;
 import org.eclipse.m2m.internal.qvt.oml.expressions.DirectionKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingBody;
 import org.eclipse.m2m.internal.qvt.oml.expressions.MappingOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.MappingParameter;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.util.TypeUtil;
@@ -75,7 +78,49 @@ class MappingExtensionHelper {
 			result &= reportInvalidExtensionsInDisjunctingMapping(env, fOperation.getInherited(), MappingExtensionKindCS.INHERITS);
 			result &= reportInvalidExtensionsInDisjunctingMapping(env, fOperation.getMerged(), MappingExtensionKindCS.MERGES);
 			
+			result &= repornInvalidOutParameters(env);
+			
 			return result && super.validate(env);
+		}
+
+		private boolean repornInvalidOutParameters(QvtOperationalEnv env) {
+			boolean result = true;
+			int pos = 0;
+			for (MappingOperation extended : fOperation.getDisjunct()) {
+				Iterator<EParameter> itParams = fOperation.getEParameters().iterator();
+				Iterator<EParameter> itExtendedParams = extended.getEParameters().iterator();
+				while (itParams.hasNext()) {
+
+					MappingParameter mappingParam = (MappingParameter) itParams.next();
+					MappingParameter mappingParamExtended = (MappingParameter) itExtendedParams.next();
+					if (mappingParam.getKind() != DirectionKind.OUT) {
+						continue;
+					}
+
+					if (mappingParamExtended.getType() != mappingParam.getEType()) {
+						result = false;
+						ExtensionSourceRefAdapter adapter = getSrcAdapter();
+						if (adapter != null) {
+							int startOffset = extended.getStartPosition();
+							int endOffset = extended.getEndPosition();
+							MappingSourceReference ref = safeGetSourceRef(adapter.getDisjunctReferences(), pos++);
+							if (ref != null) {
+								startOffset = ref.getStartOffset();
+								endOffset = ref.getEndOffset();
+							}
+
+							env.reportError(
+									NLS.bind(
+											ValidationMessages.MappingExtension_illegalOutParamDisjunctingMapping,
+											new Object[] { QvtOperationalParserUtil.safeGetMappingQualifiedName(env, fOperation),
+													mappingParam.getName(),
+													QvtOperationalParserUtil.safeGetMappingQualifiedName(env, extended), }),
+									startOffset, endOffset);
+						}
+					}
+				}
+			}
+			return result;
 		}
 
 		private boolean reportInvalidExtensionsInDisjunctingMapping(QvtOperationalEnv env, EList<MappingOperation> extendedOperations, MappingExtensionKindCS kind) {
