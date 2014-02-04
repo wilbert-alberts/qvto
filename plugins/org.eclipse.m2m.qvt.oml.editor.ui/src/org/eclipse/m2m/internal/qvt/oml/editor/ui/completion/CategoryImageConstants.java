@@ -35,6 +35,6 @@ public class CategoryImageConstants {
     public static final String QVT_SRC_FILE = "qvt_src_file"; //$NON-NLS-1$
 
     // copied from 'org.eclipse.jdt.ui.ISharedImages' in order to remove dependencies on "org.eclipse.jdt.ui" plug-in
-    public static final String IMG_OBJS_IMPCONT = "impc_obj.gif"; //$NON-NLS-1$
-    public static final String IMG_OBJS_IMPDECL = "imp_obj.gif"; //$NON-NLS-1$
+    public static final String IMG_OBJS_IMPCONT = "impc_obj"; //$NON-NLS-1$
+    public static final String IMG_OBJS_IMPDECL = "imp_obj"; //$NON-NLS-1$
 }
