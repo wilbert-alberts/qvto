@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,13 +11,16 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -111,6 +114,20 @@ public class TestQvtInterpreter extends TestTransformation {
 				        EPackageRegistryImpl root = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
 						root.putAll(fRegistry);
 						myResourceSet.setPackageRegistry(root);
+
+						Map<URI, Resource> uriResourceMap = new HashMap<URI, Resource>();
+						for(Object nextEntry : fRegistry.values()) {				
+							if(nextEntry instanceof EPackage) {
+								EPackage ePackage = (EPackage) nextEntry;
+								Resource resource = ePackage.eResource();
+								if(resource != null) {
+									uriResourceMap.put(resource.getURI(), resource);
+								}
+							}				
+						}						
+						if(!uriResourceMap.isEmpty()) {
+							((ResourceSetImpl) myResourceSet).setURIResourceMap(uriResourceMap);
+						}
 			        }
 			        
         			return new CompiledUnit(binURI, myResourceSet);       			

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,15 +27,11 @@ public class CollectionOperations extends AbstractContextualOperations {
 		
 		public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 			if(source instanceof Collection<?>) {
-				if(source instanceof Collection<?>) {
-					@SuppressWarnings("unchecked")					
-					Collection<Object> collection = (Collection<Object>) source;
-					return new MutableListImpl<Object>(collection);
-				}
-				return CallHandlerAdapter.getInvalidResult(evalEnv);
+				@SuppressWarnings("unchecked")					
+				Collection<Object> collection = (Collection<Object>) source;
+				return new MutableListImpl<Object>(collection);
 			}
-			
-			return String.valueOf(source);
+			return CallHandlerAdapter.getInvalidResult(evalEnv);
 		}
 	};	
 			
@@ -50,7 +46,7 @@ public class CollectionOperations extends AbstractContextualOperations {
 			new CollectionOperations(library, environment.getOCLStandardLibrary().getSequence()),
 			new CollectionOperations(library, environment.getOCLStandardLibrary().getSet()),
 			// Note: skip this as OrderSet is taken as Set sub-type, is asList() operation is 
-			// intherited. 
+			// inherited. 
 			// Watch the http://www.omg.org/issues/issue12947.txt
 			//new CollectionOperations(library, environment.getOCLStandardLibrary().getOrderedSet())			
 		};		

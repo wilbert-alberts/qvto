@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,12 +11,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 
@@ -43,20 +43,20 @@ public class FilesToFilesData extends ModelTestData {
     
     @Override
 	public List<URI> getIn(IProject project) { 
-        File destFolder = getDestFolder(project);
         List<URI> inUris = new ArrayList<URI>(myFromFiles.size());
         for (String inFile : myFromFiles) {
-        	inUris.add(URI.createFileURI(getFile(destFolder, inFile).getAbsolutePath()));
+        	IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(inFile);
+        	inUris.add(URI.createPlatformResourceURI(filePath.toString(), true));
         }
         return inUris;
     }
     
     @Override
 	public List<URI> getExpected(IProject project) {
-        File destFolder = getDestFolder(project);
         List<URI> outUris = new ArrayList<URI>(myExpectedFiles.size());
         for (String outFile : myExpectedFiles) {
-        	outUris.add(URI.createFileURI(getFile(destFolder, outFile).getAbsolutePath()));
+        	IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(outFile);
+        	outUris.add(URI.createPlatformResourceURI(filePath.toString(), true));
         }
         return outUris; 
     }

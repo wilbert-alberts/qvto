@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -54,6 +54,9 @@ import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.emf.EmfObjectCompa
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 public abstract class ModelTestData {
+	
+	public static final String MODEL_FOLDER = "models"; //$NON-NLS-1$
+	
     public ModelTestData(String name, IContext context) {
         myName = name;
         myContext = context;
@@ -150,7 +153,7 @@ public abstract class ModelTestData {
     	for (URI ecoreFileURI : ecoreFileMetamodels) { 
     		URI absoluteURI = ecoreFileURI;
     		if(ecoreFileURI.isRelative()) {
-        		 IPath ecoreFilePath = project.getProject().getFullPath().append("models").append(myName).append(ecoreFileURI.toString()); //$NON-NLS-1$
+        		 IPath ecoreFilePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(myName).append(ecoreFileURI.toString());
         		 absoluteURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), true);  
     		}
         	

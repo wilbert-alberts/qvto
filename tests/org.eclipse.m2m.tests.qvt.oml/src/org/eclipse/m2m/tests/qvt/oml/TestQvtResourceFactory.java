@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,12 +17,13 @@ import java.util.Collections;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.tests.qvt.oml.transform.FileToFileData;
+import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.transform.TestTransformation;
 
 /**
@@ -38,9 +39,9 @@ public class TestQvtResourceFactory extends TestTransformation {
 
         	@Override
         	protected void runTest() throws Throwable {
-        		IFile testFile = getProject().getFile(
-        				"models/" + getName() + "/" + getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
-        		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
+				IPath filePath = getProject().getFullPath().append(ModelTestData.MODEL_FOLDER).append(getName())
+						.append(getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
+        		checkResourceByUri(URI.createPlatformResourceURI(filePath.toString(), true));
         	}
         	
         });
@@ -60,9 +61,9 @@ public class TestQvtResourceFactory extends TestTransformation {
 
         	@Override
         	protected void runTest() throws Throwable {
-        		IFile testFile = getProject().getFile(
-        				"models/" + getName() + "/" + getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT); //$NON-NLS-1$ //$NON-NLS-2$
-        		checkResourceByUri(URI.createFileURI(testFile.getFullPath().toOSString()));
+				IPath filePath = getProject().getFullPath().append(ModelTestData.MODEL_FOLDER).append(getName())
+						.append(getName() + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT);
+        		checkResourceByUri(URI.createPlatformResourceURI(filePath.toString(), true));
         	}
         	
         });

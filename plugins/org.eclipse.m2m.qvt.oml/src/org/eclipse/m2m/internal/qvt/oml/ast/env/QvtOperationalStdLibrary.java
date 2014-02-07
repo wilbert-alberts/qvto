@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.impl.ModuleImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractContextualOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.AbstractQVTStdlib;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CollectionOperations;
+import org.eclipse.m2m.internal.qvt.oml.stdlib.CollectionTypeOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.DictionaryOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ElementOperations;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.ExceptionOperations;
@@ -91,8 +92,6 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 	
 	private final QvtOperationalModuleEnv fEnv;
 	private final Map<String, EClassifier> fTypeAliasMap;
-	private final ModelOperations modelOperations;
-	private final OclAnyOperations anyOperations;
 	
 
 	private QvtOperationalStdLibrary() {
@@ -121,18 +120,14 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 
 		fTypeAliasMap = createTypeAliasMap(fEnv);		
 		
-		// add non-standard legacy operations
-		modelOperations = new ModelOperations(this);
-		anyOperations = new OclAnyOperations(this);		
-		
 		// register stdlib package  
 		EPackage.Registry.INSTANCE.put(fStdlibModule.getNsURI(), fStdlibModule);
 	}	
 	
 	private void defineStandardOperations() {
 		define(new StringOperations(this));
-		define(modelOperations);
-		define(anyOperations);
+		define(new ModelOperations(this));
+		define(new OclAnyOperations(this)); // non-standard legacy operations
 		define(new ObjectOperations(this));		
 		define(new ElementOperations(this));
 		define(new StdlibModuleOperations(this));
@@ -145,6 +140,7 @@ public class QvtOperationalStdLibrary extends AbstractQVTStdlib implements QVTOS
 		define(new ExceptionOperations(this));		
 
 		define(CollectionOperations.getAllOperations(this));		
+		define(CollectionTypeOperations.getAllOperations(this));		
 		
 		((ModuleImpl)fStdlibModule).freeze();		
 	}

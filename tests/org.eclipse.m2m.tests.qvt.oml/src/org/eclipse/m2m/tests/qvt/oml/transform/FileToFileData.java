@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 
@@ -44,15 +44,15 @@ public class FileToFileData extends ModelTestData {
     }
     
     @Override
-	public List<URI> getIn(IProject project) { 
-        File destFolder = getDestFolder(project);
-        return Collections.singletonList(URI.createFileURI(getFile(destFolder, myFromFile).getAbsolutePath()));
+	public List<URI> getIn(IProject project) {
+    	IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(myFromFile);
+        return Collections.singletonList(URI.createPlatformResourceURI(filePath.toString(), true));
     }
     
     @Override
 	public List<URI> getExpected(IProject project) {
-        File destFolder = getDestFolder(project);
-        return Collections.singletonList(URI.createFileURI(getFile(destFolder, myExpectedFile).getAbsolutePath())); 
+        IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(myExpectedFile);
+        return Collections.singletonList(URI.createPlatformResourceURI(filePath.toString(), true)); 
     }
     
     public String getFromFile() {

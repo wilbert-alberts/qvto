@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,8 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.qvt.oml.runtime.util.QvtoTransformationHelper;
@@ -45,13 +43,11 @@ public class ImportedTransfTestCase extends ApiTestCase {
 		Iterator<URI> itrImported = importedTransformations.iterator();
 		List<URI> expected = getData().getExpected(getProject());
 		for (URI uri : expected) {
-			IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(uri.toFileString()));
-			URI localURI = URI.createPlatformResourceURI(ifile.getFullPath().toString(), false);
 			if (!itrImported.hasNext()) {
 				throw new Exception("Missed imported model URI"); //$NON-NLS-1$
 			}
 			URI nextImport = itrImported.next();
-			if (!nextImport.equals(localURI)) {
+			if (!nextImport.equals(uri)) {
 				throw new Exception("Unexpected imported model URI: " + nextImport); //$NON-NLS-1$
 			}
 		}

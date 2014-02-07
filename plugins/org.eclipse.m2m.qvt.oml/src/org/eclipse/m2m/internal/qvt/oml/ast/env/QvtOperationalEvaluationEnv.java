@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
@@ -65,6 +66,7 @@ import org.eclipse.ocl.ecore.EcoreEvaluationEnvironment;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.types.AnyType;
 import org.eclipse.ocl.types.CollectionType;
+import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 
 
@@ -432,15 +434,38 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 				
 		}
 		
-		
-		// The check bellow is a workarround until MDT OCL has fixed the following bug
-		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=227515
-		if(classifier.eClass().getEPackage() == EcorePackage.eINSTANCE && 
-			classifier.eClass().getClassifierID() == EcorePackage.eINSTANCE.getCollectionType().getClassifierID()) {
-			return object instanceof java.util.Collection<?>;
+		if (classifier instanceof CollectionType<?, ?> && object instanceof java.util.Collection<?>) {
+			if (!classifier.isInstance(object)) {
+				if (classifier.eClass().getEPackage() != EcorePackage.eINSTANCE
+						|| classifier.eClass().getClassifierID() != EcorePackage.eINSTANCE.getCollectionType().getClassifierID()) {
+					return false;
+				}
+			}
+
+			if (((java.util.Collection<?>) object).isEmpty()) {
+				return true;
+			}
+			return isKindOf(((java.util.Collection<?>) object).iterator().next(),
+					((org.eclipse.ocl.ecore.CollectionType) classifier).getElementType());
 		}
 		
 		return super.isKindOf(object, classifier);
+	}
+	
+	@Override
+	protected Object coerceValue(ETypedElement element, Object value, boolean copy) {
+		@SuppressWarnings("restriction")
+		EClassifier oclType = org.eclipse.ocl.ecore.internal.UMLReflectionImpl.INSTANCE.getOCLType(element);
+		if (oclType instanceof AnyType<?>) {
+			if (value instanceof Collection<?>) {
+				return copy
+					? CollectionUtil.createNewCollection((Collection<?>) value)
+					: value;
+			} else {
+				return value;
+			}
+		}
+		return super.coerceValue(element, value, copy);
 	}
 	
 	public EObject createInstance(EClassifier type, ModelParameter modelParam) {

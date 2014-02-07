@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -49,15 +50,15 @@ public class JavalessFileToFileData extends ModelTestData {
 	}
 	
     @Override
-	public List<URI> getIn(IProject project) { 
-        File destFolder = getDestFolder(project);
-        return Collections.singletonList(URI.createFileURI(getFile(destFolder, getPatchedData(project).getFromFile()).getAbsolutePath()));
+	public List<URI> getIn(IProject project) {
+    	IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(getPatchedData(project).getFromFile());
+        return Collections.singletonList(URI.createPlatformResourceURI(filePath.toString(), true));
     }
     
     @Override
 	public List<URI> getExpected(IProject project) {
-        File destFolder = getDestFolder(project);
-        return Collections.singletonList(URI.createFileURI(getFile(destFolder, getPatchedData(project).getExpectedFile()).getAbsolutePath())); 
+    	IPath filePath = project.getProject().getFullPath().append(MODEL_FOLDER).append(getName()).append(getPatchedData(project).getExpectedFile());
+        return Collections.singletonList(URI.createPlatformResourceURI(filePath.toString(), true)); 
     }
     
     @Override
@@ -70,7 +71,7 @@ public class JavalessFileToFileData extends ModelTestData {
     	if(myPatchedData == null) {
     		try {
 				myPatchedData = createPatchedData(project);
-				project.getFolder(new Path("models/" + myFileData.getName())).refreshLocal(IResource.DEPTH_INFINITE, null); //$NON-NLS-1$
+				project.getFolder(new Path(MODEL_FOLDER + "/" + myFileData.getName())).refreshLocal(IResource.DEPTH_INFINITE, null); //$NON-NLS-1$
 			} 
     		catch (Exception e) {
 				throw new RuntimeException(e);
