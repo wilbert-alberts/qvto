@@ -31,9 +31,10 @@ main() {
 	var v8 : List(EClass) = object EClass{}.map mapToListInc();
 	assert fatal (v8->size() = 2);
 	v8->add(object EClass{});
+	assert fatal (v8->size() = 3);
 	
 	var resolved8 : List(EClass) = resolveoneIn(EClass::mapToListInc, List(EClass));
-	assert fatal (resolved8->size() = 3);
+	assert fatal (resolved8->size() = 1);
 
 	var v9 : Dict(EClass, EClass) = object EClass{}.map mapToDict();
 	assert fatal (v9->size() = 1);

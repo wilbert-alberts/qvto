@@ -192,9 +192,9 @@ mapping inout EClass :: m2(out outParam : EClass, in prefix:String) : EClass {
 
 mapping inout EClass :: m3(out outParam : List(String), in prefix:String) : EClass {
 	init {
-		// outParam := new List(String)(); 
+		outParam := new List(String)(); 
+		outParam->append(prefix + "out_name / " + self.name);
 	}
-	outParam->append(prefix + "out_name / " + self.name);
 	self.name := prefix + "self_name / " + self.name;
 	name := prefix + 'result_name';
 }

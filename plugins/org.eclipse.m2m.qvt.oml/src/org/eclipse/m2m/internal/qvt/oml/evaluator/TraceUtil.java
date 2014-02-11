@@ -15,9 +15,11 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.BasicEList;
@@ -48,6 +50,9 @@ import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceFactory;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
 import org.eclipse.m2m.internal.qvt.oml.trace.VarParameterValue;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
+import org.eclipse.m2m.qvt.oml.util.MutableList;
+import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.util.Tuple;
@@ -271,7 +276,7 @@ public class TraceUtil {
     @SuppressWarnings("unchecked")
     public static EValue createEValue(Object oclObject) {
         EValue value = TraceFactory.eINSTANCE.createEValue();
-        value.setOclObject(oclObject);
+        value.setOclObject(cloneOclObject(oclObject));
         if (oclObject != null) {
             if (oclObject instanceof Collection) {
                 Collection<Object> oclCollection = (Collection<Object>) oclObject;
@@ -306,6 +311,47 @@ public class TraceUtil {
             }
         }
         return value;
+    }
+
+	private static Object cloneOclObject(Object obj) {
+		return cloneOclObjectRec(obj, new IdentityHashMap<Object, Object>());
+	}
+	
+    @SuppressWarnings("unchecked")
+	private static Object cloneOclObjectRec(Object obj, Map<Object, Object> processed) {
+    	if (obj instanceof MutableList<?>) {
+        	if (processed.containsKey(obj)) {
+        		return processed.get(obj);
+        	}
+        	
+    		MutableList<Object> original = (MutableList<Object>) obj;
+    		
+    		MutableList<Object> result = Utils.createList();
+    		processed.put(obj, result);
+
+    		for (Object o : original) {
+    			result.add(cloneOclObjectRec(o, processed));
+    		}    		
+    		return result;
+    	}
+
+    	if (obj instanceof Dictionary<?, ?>) {
+        	if (processed.containsKey(obj)) {
+        		return processed.get(obj);
+        	}
+        	
+    		Dictionary<Object, Object> original = (Dictionary<Object, Object>) obj;
+    		
+    		Dictionary<Object, Object> result = Utils.createDictionary();
+    		processed.put(obj, result);
+
+    		for (Object k : original.keys()) {
+    			result.put(cloneOclObjectRec(k, processed), cloneOclObjectRec(original.get(k), processed));
+    		}    		
+    		return result;
+    	}
+    	
+    	return obj;
     }
 
     private static EDirectionKind getDirectionKind(DirectionKind kind) {
