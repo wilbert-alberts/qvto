@@ -48,8 +48,8 @@ public class QvtAntScriptTests {
     public static ModelTestData[] createTestData() {
     	return new ModelTestData[] {
     	new AntModelTestData("simple", Collections.<String>emptyList(), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
-    	new AntModelTestData("twomodels", Collections.<String>emptyList(), Arrays.asList("uml2rdb.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
-    	new AntModelTestData("twomodels_new", Collections.<String>emptyList(), Arrays.asList("uml2rdb.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
+    	new AntModelTestData("twomodels", Collections.<String>emptyList(), Arrays.asList("expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
+    	new AntModelTestData("twomodels_new", Collections.<String>emptyList(), Arrays.asList("expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
     	};
     }
     
