@@ -1077,7 +1077,7 @@
 							mappingDecl,
 							$EMPTY_ELIST
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1091,7 +1091,7 @@
 							mappingDecl,
 							$EMPTY_ELIST
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl);
 					setResult(result);
 		  $EndCode
@@ -1160,7 +1160,7 @@
 							mappingDecl,
 							$EMPTY_ELIST
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1173,7 +1173,7 @@
 							mappingDecl,
 							$EMPTY_ELIST
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl);
 					setResult(result);
 		  $EndCode
@@ -1238,7 +1238,7 @@
 							mappingDecl,
 							$EMPTY_ELIST
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1298,7 +1298,7 @@
 							(EList)mappingFullHeader[1],
 							null
 						);
-					result.setBlackBox(true);
+					//result.setBlackBox(true);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1325,7 +1325,7 @@
 							(EList)mappingFullHeader[1],
 							mappingSections
 						);
-					result.setBlackBox(false);
+					//result.setBlackBox(false);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(4));
 					setResult(result);
 		  $EndCode

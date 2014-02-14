@@ -221,5 +221,6 @@ public class ParserTests {
     	TestData.createSourceChecked("bug289982_undefinedLib", 0, 1), //$NON-NLS-1$
     	TestData.createSourceChecked("bug289982_validation", 7, 7), //$NON-NLS-1$
     	new TestData("bug424584", 10), //$NON-NLS-1$
+    	new TestData("bug428028", 0), //$NON-NLS-1$
     };
 }

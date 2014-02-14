@@ -5354,7 +5354,7 @@ protected String getRhsTokenText(int i) {
 						mappingDecl,
 						ourEmptyEList
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, mappingDecl, getRhsIToken(2));
 				setResult(result);
 	                  break;
@@ -5372,7 +5372,7 @@ protected String getRhsTokenText(int i) {
 						mappingDecl,
 						ourEmptyEList
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, mappingDecl);
 				setResult(result);
 	                  break;
@@ -5452,7 +5452,7 @@ protected String getRhsTokenText(int i) {
 						mappingDecl,
 						ourEmptyEList
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, mappingDecl, getRhsIToken(2));
 				setResult(result);
 	                  break;
@@ -5469,7 +5469,7 @@ protected String getRhsTokenText(int i) {
 						mappingDecl,
 						ourEmptyEList
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, mappingDecl);
 				setResult(result);
 	                  break;
@@ -5544,7 +5544,7 @@ protected String getRhsTokenText(int i) {
 						mappingDecl,
 						ourEmptyEList
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, mappingDecl, getRhsIToken(2));
 				setResult(result);
 	                  break;
@@ -5614,7 +5614,7 @@ protected String getRhsTokenText(int i) {
 						(EList)mappingFullHeader[1],
 						null
 					);
-				result.setBlackBox(true);
+				//result.setBlackBox(true);
 				setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
 				setResult(result);
 	                  break;
@@ -5645,7 +5645,7 @@ protected String getRhsTokenText(int i) {
 						(EList)mappingFullHeader[1],
 						mappingSections
 					);
-				result.setBlackBox(false);
+				//result.setBlackBox(false);
 				setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(4));
 				setResult(result);
 	                  break;
