@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.ExternalUnitElementsProvider;
+import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalVisitorCS;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.cst.MappingMethodCS;
@@ -25,7 +26,6 @@ import org.eclipse.m2m.internal.qvt.oml.cst.parser.AbstractQVTParser;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.ocl.SemanticException;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
-import org.eclipse.ocl.utilities.ASTNode;
 
 /**
  * @author aigdalov
@@ -57,14 +57,11 @@ public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
 
     @Override
     protected void visitMappingMethodCS(MappingMethodCS methodCS, QvtOperationalEnv env, ImperativeOperation operation) throws SemanticException {
-        if ((methodCS.getMappingDeclarationCS() != null) && !operation.isIsBlackbox()) {
+        if (methodCS.getMappingDeclarationCS() != null && QvtOperationalParserUtil.hasOperationBody(methodCS)) {
             super.visitMappingMethodCS(methodCS, env, operation);
-            ASTNode astNode = ASTBindingHelper.resolveASTNode(methodCS);
-            if (astNode != null) {
-                EcoreEnvironment resolvedEnvironment = ASTBindingHelper.resolveEnvironment(astNode);
-                if (resolvedEnvironment instanceof QvtOperationalEnv) {
-                    setEnv((QvtOperationalEnv) resolvedEnvironment);
-                }
+            EcoreEnvironment resolvedEnvironment = ASTBindingHelper.resolveEnvironment(operation);
+            if (resolvedEnvironment instanceof QvtOperationalEnv) {
+                setEnv((QvtOperationalEnv) resolvedEnvironment);
             }
         }
     }

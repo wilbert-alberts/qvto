@@ -15,22 +15,14 @@
  */
 package org.eclipse.m2m.internal.qvt.oml.cst.impl;
 
-import java.util.Collection;
-
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.m2m.internal.qvt.oml.cst.BlockExpCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS;
-
-import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,7 +31,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ConstructorCSImpl#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ConstructorCSImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,14 +46,14 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getExpressions()
+	 * @see #getBody()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<OCLExpressionCS> expressions;
+	protected BlockExpCS body;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,11 +79,42 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<OCLExpressionCS> getExpressions() {
-		if (expressions == null) {
-			expressions = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS);
+	public BlockExpCS getBody() {
+		return body;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBody(BlockExpCS newBody, NotificationChain msgs) {
+		BlockExpCS oldBody = body;
+		body = newBody;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CSTPackage.CONSTRUCTOR_CS__BODY, oldBody, newBody);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return expressions;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBody(BlockExpCS newBody) {
+		if (newBody != body) {
+			NotificationChain msgs = null;
+			if (body != null)
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CSTPackage.CONSTRUCTOR_CS__BODY, null, msgs);
+			if (newBody != null)
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CSTPackage.CONSTRUCTOR_CS__BODY, null, msgs);
+			msgs = basicSetBody(newBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CSTPackage.CONSTRUCTOR_CS__BODY, newBody, newBody));
 	}
 
 	/**
@@ -102,8 +125,8 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS:
-				return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
+			case CSTPackage.CONSTRUCTOR_CS__BODY:
+				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -116,8 +139,8 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS:
-				return getExpressions();
+			case CSTPackage.CONSTRUCTOR_CS__BODY:
+				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -127,13 +150,11 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS:
-				getExpressions().clear();
-				getExpressions().addAll((Collection<? extends OCLExpressionCS>)newValue);
+			case CSTPackage.CONSTRUCTOR_CS__BODY:
+				setBody((BlockExpCS)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -147,8 +168,8 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS:
-				getExpressions().clear();
+			case CSTPackage.CONSTRUCTOR_CS__BODY:
+				setBody((BlockExpCS)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -162,8 +183,8 @@ public class ConstructorCSImpl extends MappingMethodCSImpl implements Constructo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CSTPackage.CONSTRUCTOR_CS__EXPRESSIONS:
-				return expressions != null && !expressions.isEmpty();
+			case CSTPackage.CONSTRUCTOR_CS__BODY:
+				return body != null;
 		}
 		return super.eIsSet(featureID);
 	}

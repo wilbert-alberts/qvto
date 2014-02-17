@@ -1398,8 +1398,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingQueryCS_Expressions() {
-		return (EReference)mappingQueryCSEClass.getEStructuralFeatures().get(0);
+	public EAttribute getMappingQueryCS_IsSimpleDefinition() {
+		return (EAttribute)mappingQueryCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1407,8 +1407,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMappingQueryCS_IsSimpleDefinition() {
-		return (EAttribute)mappingQueryCSEClass.getEStructuralFeatures().get(1);
+	public EReference getMappingQueryCS_Body() {
+		return (EReference)mappingQueryCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1425,7 +1425,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConstructorCS_Expressions() {
+	public EReference getConstructorCS_Body() {
 		return (EReference)constructorCSEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -2919,11 +2919,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_BODY);
 
 		mappingQueryCSEClass = createEClass(MAPPING_QUERY_CS);
-		createEReference(mappingQueryCSEClass, MAPPING_QUERY_CS__EXPRESSIONS);
 		createEAttribute(mappingQueryCSEClass, MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION);
+		createEReference(mappingQueryCSEClass, MAPPING_QUERY_CS__BODY);
 
 		constructorCSEClass = createEClass(CONSTRUCTOR_CS);
-		createEReference(constructorCSEClass, CONSTRUCTOR_CS__EXPRESSIONS);
+		createEReference(constructorCSEClass, CONSTRUCTOR_CS__BODY);
 
 		mappingSectionCSEClass = createEClass(MAPPING_SECTION_CS);
 		createEReference(mappingSectionCSEClass, MAPPING_SECTION_CS__STATEMENTS);
@@ -3335,11 +3335,11 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getMappingRuleCS_MappingBody(), this.getMappingSectionsCS(), null, "mappingBody", null, 0, 1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingQueryCSEClass, MappingQueryCS.class, "MappingQueryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getMappingQueryCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getMappingQueryCS_IsSimpleDefinition(), ecorePackage.getEBoolean(), "isSimpleDefinition", null, 0, 1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingQueryCS_Body(), this.getBlockExpCS(), null, "body", null, 0, 1, MappingQueryCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(constructorCSEClass, ConstructorCS.class, "ConstructorCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getConstructorCS_Expressions(), theCSTPackage_1.getOCLExpressionCS(), null, "expressions", null, 0, -1, ConstructorCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getConstructorCS_Body(), this.getBlockExpCS(), null, "body", null, 0, 1, ConstructorCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingSectionCSEClass, MappingSectionCS.class, "MappingSectionCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMappingSectionCS_Statements(), theCSTPackage_1.getOCLExpressionCS(), null, "statements", null, 0, -1, MappingSectionCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

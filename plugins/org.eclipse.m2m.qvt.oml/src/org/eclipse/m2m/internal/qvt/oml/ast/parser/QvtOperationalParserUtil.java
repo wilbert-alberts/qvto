@@ -885,9 +885,9 @@ public class QvtOperationalParserUtil {
 	public static boolean hasOperationBody(MappingMethodCS methodCS) {
 		return
 			(methodCS instanceof MappingRuleCS  && ((MappingRuleCS) methodCS).getMappingBody() != null) ||
-			(methodCS instanceof ConstructorCS  && !((ConstructorCS) methodCS).getExpressions().isEmpty()) ||
-			(methodCS instanceof MappingQueryCS && !((MappingQueryCS) methodCS).getExpressions().isEmpty()) ||
-			(methodCS instanceof ConstructorCS  && !((ConstructorCS) methodCS).getExpressions().isEmpty());
+			(methodCS instanceof ConstructorCS  && ((ConstructorCS) methodCS).getBody() != null) ||
+			(methodCS instanceof MappingQueryCS && ((MappingQueryCS) methodCS).getBody() != null) ||
+			(methodCS instanceof ConstructorCS  && ((ConstructorCS) methodCS).getBody() != null);
 	}
 	
 	public static boolean isDisjunctiveMappingOperation(MappingMethodCS methodCS) {

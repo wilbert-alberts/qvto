@@ -15,9 +15,6 @@
  */
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.ocl.cst.OCLExpressionCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +24,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,19 +41,29 @@ public interface ConstructorCS extends MappingMethodCS {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.cst.OCLExpressionCS}.
+	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Body</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Expressions</em>' containment reference list.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getConstructorCS_Expressions()
+	 * @return the value of the '<em>Body</em>' containment reference.
+	 * @see #setBody(BlockExpCS)
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getConstructorCS_Body()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<OCLExpressionCS> getExpressions();
+	BlockExpCS getBody();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getBody <em>Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Body</em>' containment reference.
+	 * @see #getBody()
+	 * @generated
+	 */
+	void setBody(BlockExpCS value);
 
 } // ConstructorCS

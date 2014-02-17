@@ -2178,22 +2178,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_QUERY_CS__MAPPING_DECLARATION_CS = MAPPING_METHOD_CS__MAPPING_DECLARATION_CS;
 
 	/**
-	 * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_QUERY_CS__EXPRESSIONS = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Is Simple Definition</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
+	int MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_QUERY_CS__BODY = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Query CS</em>' class.
@@ -2278,13 +2278,13 @@ public interface CSTPackage extends EPackage {
 	int CONSTRUCTOR_CS__MAPPING_DECLARATION_CS = MAPPING_METHOD_CS__MAPPING_DECLARATION_CS;
 
 	/**
-	 * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRUCTOR_CS__EXPRESSIONS = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
+	int CONSTRUCTOR_CS__BODY = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Constructor CS</em>' class.
@@ -7868,17 +7868,6 @@ public interface CSTPackage extends EPackage {
 	EClass getMappingQueryCS();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#getExpressions <em>Expressions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Expressions</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#getExpressions()
-	 * @see #getMappingQueryCS()
-	 * @generated
-	 */
-	EReference getMappingQueryCS_Expressions();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#isIsSimpleDefinition <em>Is Simple Definition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7888,6 +7877,17 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getMappingQueryCS_IsSimpleDefinition();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingQueryCS#getBody()
+	 * @see #getMappingQueryCS()
+	 * @generated
+	 */
+	EReference getMappingQueryCS_Body();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS <em>Constructor CS</em>}'.
@@ -7900,15 +7900,15 @@ public interface CSTPackage extends EPackage {
 	EClass getConstructorCS();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getExpressions <em>Expressions</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Expressions</em>'.
-	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getExpressions()
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.ConstructorCS#getBody()
 	 * @see #getConstructorCS()
 	 * @generated
 	 */
-	EReference getConstructorCS_Expressions();
+	EReference getConstructorCS_Body();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingSectionCS <em>Mapping Section CS</em>}'.
@@ -10177,20 +10177,20 @@ public interface CSTPackage extends EPackage {
 		EClass MAPPING_QUERY_CS = eINSTANCE.getMappingQueryCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPING_QUERY_CS__EXPRESSIONS = eINSTANCE.getMappingQueryCS_Expressions();
-
-		/**
 		 * The meta object literal for the '<em><b>Is Simple Definition</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MAPPING_QUERY_CS__IS_SIMPLE_DEFINITION = eINSTANCE.getMappingQueryCS_IsSimpleDefinition();
+
+		/**
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_QUERY_CS__BODY = eINSTANCE.getMappingQueryCS_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.ConstructorCSImpl <em>Constructor CS</em>}' class.
@@ -10203,12 +10203,12 @@ public interface CSTPackage extends EPackage {
 		EClass CONSTRUCTOR_CS = eINSTANCE.getConstructorCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONSTRUCTOR_CS__EXPRESSIONS = eINSTANCE.getConstructorCS_Expressions();
+		EReference CONSTRUCTOR_CS__BODY = eINSTANCE.getConstructorCS_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingSectionCSImpl <em>Mapping Section CS</em>}' class.

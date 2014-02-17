@@ -1075,9 +1075,8 @@
 					MappingQueryCS result = createMappingQueryCS(
 							false,
 							mappingDecl,
-							$EMPTY_ELIST
+							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1089,9 +1088,8 @@
 					MappingQueryCS result = createMappingQueryCS(
 							false,
 							mappingDecl,
-							$EMPTY_ELIST
+							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl);
 					setResult(result);
 		  $EndCode
@@ -1103,10 +1101,12 @@
 					OCLExpressionCS expression = (OCLExpressionCS)getRhsSym(3);
 					EList<OCLExpressionCS> expressionList = new BasicEList<OCLExpressionCS>();
 					expressionList.add(expression);
+					BlockExpCS blockExpCS = createBlockExpCS(expressionList);					
+					setOffsets(blockExpCS, getRhsIToken(2), getRhsIToken(4));
 					MappingQueryCS result = createMappingQueryCS(
 							false,
 							mappingDecl,
-							expressionList
+							blockExpCS
 						);
 					result.setIsSimpleDefinition(true);
 					setOffsets(result, mappingDecl, getRhsIToken(4));
@@ -1121,7 +1121,7 @@
 					CSTNode result = createMappingQueryCS(
 							false,
 							mappingDecl,
-							blockExpCS.getBodyExpressions()
+							blockExpCS
 						);
 					setOffsets(result, mappingDecl, blockExpCS);
 					setResult(result);
@@ -1158,9 +1158,8 @@
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
 					ConstructorCS result = createConstructorCS(
 							mappingDecl,
-							$EMPTY_ELIST
+							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1171,9 +1170,8 @@
 					MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
 					ConstructorCS result = createConstructorCS(
 							mappingDecl,
-							$EMPTY_ELIST
+							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl);
 					setResult(result);
 		  $EndCode
@@ -1185,7 +1183,7 @@
 					BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 					ConstructorCS result = createConstructorCS(
 							mappingDecl,
-							blockExpCS.getBodyExpressions()
+							blockExpCS
 						);
 					setOffsets(result, mappingDecl, blockExpCS);
 					setResult(result);
@@ -1236,9 +1234,8 @@
 					MappingQueryCS result = createMappingQueryCS(
 							true,
 							mappingDecl,
-							$EMPTY_ELIST
+							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, mappingDecl, getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1251,7 +1248,7 @@
 					CSTNode result = createMappingQueryCS(
 							true,
 							mappingDecl,
-							blockExpCS.getBodyExpressions()
+							blockExpCS
 						);
 					setOffsets(result, mappingDecl, blockExpCS);
 					setResult(result);
@@ -1298,7 +1295,6 @@
 							(EList)mappingFullHeader[1],
 							null
 						);
-					//result.setBlackBox(true);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
 					setResult(result);
 		  $EndCode
@@ -1325,7 +1321,6 @@
 							(EList)mappingFullHeader[1],
 							mappingSections
 						);
-					//result.setBlackBox(false);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(4));
 					setResult(result);
 		  $EndCode

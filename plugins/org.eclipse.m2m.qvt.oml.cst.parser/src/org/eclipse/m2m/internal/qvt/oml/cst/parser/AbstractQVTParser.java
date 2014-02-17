@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -343,14 +343,14 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
         return moduleCS;
 	}
 
-	protected final MappingQueryCS createMappingQueryCS(boolean isEntryOp, MappingDeclarationCS sym, EList<OCLExpressionCS> sym2) {
+	protected final MappingQueryCS createMappingQueryCS(boolean isEntryOp, MappingDeclarationCS sym, BlockExpCS bodyCS) {
 		if (sym != null && sym.getSimpleNameCS() != null 
 				&& !isEntryOp && QVTOParsersym.orderedTerminalSymbols[QVTOParsersym.TK_main].equals(sym.getSimpleNameCS().getValue())) {
 			reportWarning(Messages.EntryOp_DisallowedDeclAsHelper, sym.getStartOffset(), sym.getEndOffset());
 		}
 		MappingQueryCS query = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createMappingQueryCS();
 		query.setMappingDeclarationCS(sym);
-		query.getExpressions().addAll(sym2);
+		query.setBody(bodyCS);
 		return query;
 	}
 
@@ -773,7 +773,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-    protected final CSTNode createBlockExpCS(EList<OCLExpressionCS> expressions) {
+    protected final BlockExpCS createBlockExpCS(EList<OCLExpressionCS> expressions) {
         BlockExpCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createBlockExpCS();
         result.getBodyExpressions().addAll(expressions);
         return result;
@@ -1133,10 +1133,10 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 	
-	protected final ConstructorCS createConstructorCS(MappingDeclarationCS methodDecl, EList<OCLExpressionCS> expressions) {
+	protected final ConstructorCS createConstructorCS(MappingDeclarationCS methodDecl, BlockExpCS bodyCS) {
 		ConstructorCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createConstructorCS();
 		result.setMappingDeclarationCS(methodDecl);
-		result.getExpressions().addAll(expressions);
+		result.setBody(bodyCS);
 		return result;
 	}
 

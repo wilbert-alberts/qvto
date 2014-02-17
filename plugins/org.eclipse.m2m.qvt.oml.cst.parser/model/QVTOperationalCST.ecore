@@ -155,14 +155,12 @@
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingQueryCS" eSuperTypes="#//cst/MappingMethodCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
-          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSimpleDefinition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//cst/BlockExpCS"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ConstructorCS" eSuperTypes="#//cst/MappingMethodCS">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//cst/BlockExpCS"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MappingSectionCS" abstract="true"

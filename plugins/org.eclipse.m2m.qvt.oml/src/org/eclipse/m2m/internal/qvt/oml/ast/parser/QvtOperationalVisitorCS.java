@@ -1159,11 +1159,14 @@ public class QvtOperationalVisitorCS
 				
 		EObject container = operationCallExpCS.eContainer();
 		if (isBlockNode(container)) {
+			if (container instanceof BlockExpCS && container.eContainer() instanceof MappingQueryCS) {
+				container = container.eContainer();
+			}
 			if (!(container instanceof MappingQueryCS)) {
 				return true;
 			}
 			// it's ok to have a '=' equality in the last expression of a query
-			EList<OCLExpressionCS> exprList = ((MappingQueryCS)container).getExpressions();
+			EList<OCLExpressionCS> exprList = ((MappingQueryCS)container).getBody().getBodyExpressions();
 			return (exprList.get(exprList.size()-1) != operationCallExpCS);
 		}		
 		if (container instanceof MappingRuleCS) {
@@ -3617,24 +3620,26 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, constructor, newEnv);
         }
 
-		OperationBody body = ExpressionsFactory.eINSTANCE.createConstructorBody();
-		constructor.setBody(body);
-		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
-		body.setEndPosition(methodCS.getEndOffset());
+        if (methodCS.getBody() != null ) {
+			OperationBody body = ExpressionsFactory.eINSTANCE.createConstructorBody();
+			constructor.setBody(body);
+			body.setStartPosition(methodCS.getBody().getStartOffset());
+			body.setEndPosition(methodCS.getBody().getEndOffset());
+	        
+	        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(methodCS.getBody().getBodyExpressions().size());
+			for (OCLExpressionCS exprCS : methodCS.getBody().getBodyExpressions()) {
+				if (exprCS == null) {
+					continue;
+				}
+				org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
+				if (expr != null) {
+					expressions.add(expr);
+				}
+			}
+	
+			body.getContent().addAll(expressions);
+        }
         
-        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>(methodCS.getExpressions().size());
-		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
-			if (exprCS == null) {
-				continue;
-			}
-			org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
-			if (expr != null) {
-				expressions.add(expr);
-			}
-		}
-
-		body.getContent().addAll(expressions);
-
 		// adjust implicit variables for serialization
 		consolidateImplicitVariables(newEnv);
 		//
@@ -3766,29 +3771,33 @@ public class QvtOperationalVisitorCS
             ASTBindingHelper.createCST2ASTBinding(methodCS, helper, newEnv);
         }
 
-		OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
-		helper.setBody(body);
 		// FIXME - use CST info to set the flag
 		//helper.setIsQuery(true);				
-		body.setStartPosition(methodCS.getMappingDeclarationCS().getEndOffset());
-		body.setEndPosition(methodCS.getEndOffset());
+
+        if (methodCS.getBody() != null) {
+			OperationBody body = ExpressionsFactory.eINSTANCE.createOperationBody();
+			helper.setBody(body);
+			body.setStartPosition(methodCS.getBody().getStartOffset());
+			body.setEndPosition(methodCS.getBody().getEndOffset());
+	        
+	        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>();
+			for (OCLExpressionCS exprCS : methodCS.getBody().getBodyExpressions()) {
+				if (exprCS == null) {
+					continue;
+				}
+				org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
+				if (expr != null) {
+					expressions.add(expr);
+				}
+			}
+	
+			body.getContent().addAll(expressions);
+        }
         
-        List<org.eclipse.ocl.ecore.OCLExpression> expressions = new ArrayList<org.eclipse.ocl.ecore.OCLExpression>();
-		for (OCLExpressionCS exprCS : methodCS.getExpressions()) {
-			if (exprCS == null) {
-				continue;
-			}
-			org.eclipse.ocl.ecore.OCLExpression expr = visitOclExpressionCS(exprCS, newEnv);
-			if (expr != null) {
-				expressions.add(expr);
-			}
-		}
-
-		body.getContent().addAll(expressions);
-
 		if (helper.getResult().size() <= 1) {
 			EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
-			EClassifier helperType = body.getContent().isEmpty() == false ? body.getContent().get(body.getContent().size() - 1).getType() : null;
+			EClassifier helperType = helper.getBody() != null && !helper.getBody().getContent().isEmpty() ? helper.getBody()
+					.getContent().get(helper.getBody().getContent().size() - 1).getType() : null;
 			if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
 					&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
 				// OK
@@ -3809,8 +3818,8 @@ public class QvtOperationalVisitorCS
 		// add warning if single expression in non-simple body definition does not use return expression
 		// as only during CST analysis we know that non-simple body variant is used
 		// => query foo() : String = 'foo'; 
- 		if(!methodCS.isIsSimpleDefinition() && helper.getResult().size() == 1 && body != null) {
- 			EList<org.eclipse.ocl.ecore.OCLExpression> contents = body.getContent(); 			
+ 		if(!methodCS.isIsSimpleDefinition() && helper.getResult().size() == 1 && helper.getBody() != null) {
+ 			EList<org.eclipse.ocl.ecore.OCLExpression> contents = helper.getBody().getContent(); 			
  			if(contents.size() == 1 && contents.get(0) instanceof ReturnExp == false) {
  				env.reportWarning(ValidationMessages.useReturnExpForOperationResult, methodCS.getMappingDeclarationCS()); 				
  			}
