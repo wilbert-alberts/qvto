@@ -871,6 +871,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     		return doVisitTransformation(transformation);
     	} finally {
     		IntermediatePropertyModelAdapter.cleanup(transformation);
+    		getOperationalEvaluationEnv().cleanup();
 		}    		
     }
     
@@ -894,6 +895,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			throw e;
 		} finally {
 			IntermediatePropertyModelAdapter.cleanup(module);
+			getOperationalEvaluationEnv().cleanup();
 		}
     }        
         
@@ -1060,6 +1062,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                 // compatibility reason, make the main() operation return value available in an extent
             	ModelParameterExtent modelParameter = new ModelParameterExtent(
             			Collections.singletonList((EObject) callResult.myResult), null, null);
+            	evaluationEnv.addModelExtent(modelParameter);
                 evalResult.getModelExtents().add(modelParameter.getContents());
             } else {
                 return callResult.myResult;

@@ -182,13 +182,15 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         TransformationRunner.In in = new TransformationRunner.In(inObjs.toArray(new ModelContent[inObjs.size()]), context);
         TransformationRunner.Out out = transformation.run(in);
 
-        ResourceSet resSet = null;
-        for (ModelContent inModel : inObjs) {
-			resSet = inModel.getResourceSet();
-			if(resSet != null) {
-				break;
+        ResourceSet resSet = transformation.getResourceSet();
+        if(resSet == null) {
+	        for (ModelContent inModel : inObjs) {
+				resSet = inModel.getResourceSet();
+				if(resSet != null) {
+					break;
+				}
 			}
-		}        
+        }
         if(resSet == null) {
         	resSet = EmfUtil.getOutputResourceSet();
         }

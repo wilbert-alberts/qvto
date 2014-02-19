@@ -84,10 +84,6 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 	@Override
 	public void dispose() {	
 		super.dispose();
-		
-		for (ModelInstance modelInst : fModelParams.values()) {
-			modelInst.getExtent().dispose();
-		}
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,7 @@
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,7 +46,7 @@ public class TransformManyModelTests {
     	new FilesToFilesData("mm_header3", Arrays.asList("in.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
     	new FilesToFilesData("mm_header4", Arrays.asList("in1.ecore", "in2.ecore", "in3.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
     	new FilesToFilesData("entryOp", Arrays.asList("in1.ecore", "in2.ecore", "in3.ecore"), Arrays.asList("expected.simpleuml", "expected.rdb")), //$NON-NLS-1$ //$NON-NLS-2$
-    	new FilesToFilesData("importedExtents", Arrays.asList("in.ecore"), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
+    	new FilesToFilesData("importedExtents", Collections.<String>emptyList(), Arrays.asList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
     	};
     }
     

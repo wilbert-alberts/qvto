@@ -89,6 +89,7 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		
 	    myBindings = new HashMap<String, Object>();
 		myOperationArgs = new ArrayList<Object>();
+		myExtents = new ArrayList<ModelParameterExtent>();
 	}
 	
 	public QvtOperationalEvaluationEnv getRoot() {
@@ -137,6 +138,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
 	public IContext getContext() {
 		return internalEnv().getContext();
+	}
+	
+	public void addModelExtent(ModelParameterExtent extent) {
+		internalEnv().addModelExtent(extent);
+	}
+	
+	public void cleanup() {
+		internalEnv().cleanup();
 	}
 		
 	@Override
@@ -768,7 +777,8 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	private final List<Object> myOperationArgs;
 	private Object myOperationSelf;
     private final Map<String, Object> myBindings;
-    private final int myStackDepth;    
+    private final int myStackDepth;
+    private final List<ModelParameterExtent> myExtents;
 	
 	private static class TypedBinding {
 		final Object value;
@@ -934,6 +944,16 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 			return getRoot().internalEnv().getUnboundExtent();
 		}	    
  		
+		public void addModelExtent(ModelParameterExtent extent) {
+			getRoot().myExtents.add(extent);
+		}
+
+		public void cleanup() {
+			for (ModelParameterExtent extent : getRoot().myExtents) {
+				extent.cleanup();
+			}
+		}
+		
 		public void setThisResolver(ThisInstanceResolver thisResolver) {
 			this.myThisResolver = thisResolver;
 		}

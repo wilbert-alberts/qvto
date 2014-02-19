@@ -70,6 +70,11 @@ public class ModelParameterExtent {
 				eObj.eAdapters().add(new ReadonlyExtentAdapter());
 			}			
 		}
+		else {
+			for (EObject eObject : myInitialEObjects) {
+				getInMemoryResource(true).getContents().add(eObject);
+			}
+		}
 		
 		// Remark: 
 		// As initial objects may have non-null containers, so can be in the middle of an object tree,
@@ -193,8 +198,8 @@ public class ModelParameterExtent {
 	public ModelExtentContents getContents() {
 		purgeContents();		
 		Set<EObject> initialObjects = new LinkedHashSet<EObject>(myInitialEObjects);		
-		Set<EObject> allRootObjects = new LinkedHashSet<EObject>(myAdditionalEObjects);
-		allRootObjects.addAll(initialObjects);
+		Set<EObject> allRootObjects = new LinkedHashSet<EObject>(myInitialEObjects);
+		allRootObjects.addAll(myAdditionalEObjects);
 		
 		Resource inMemoryResource = getInMemoryResource(false);
 		if (inMemoryResource != null) {
@@ -214,6 +219,7 @@ public class ModelParameterExtent {
 		
 		if (myInMemoryResource != null && myInMemoryResource.getResourceSet() != null) {
 			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);
+			myInMemoryResource = null;
 		}
 		
 		return new ExtentContents(new ArrayList<EObject>(initialObjects), new ArrayList<EObject>(allRootObjects));
@@ -236,7 +242,7 @@ public class ModelParameterExtent {
 		return myInitialEObjects.isEmpty() ? super.toString() : myInitialEObjects.toString();
 	}
 
-	public void dispose() {
+	private void dispose() {
 		if (isReadonly()) {
 			for (EObject eObj : myInitialEObjects) {
 				Adapter adapter = EcoreUtil.getAdapter(eObj.eAdapters(), ReadonlyExtentAdapter.class);
@@ -247,6 +253,15 @@ public class ModelParameterExtent {
 		}
 	}
 	
+	public void cleanup() {
+		dispose();
+
+		if (myInMemoryResource != null && myInMemoryResource.getResourceSet() != null) {
+			myInMemoryResource.getResourceSet().getResources().remove(myInMemoryResource);
+			myInMemoryResource = null;
+		}
+	}
+
 	public boolean isReadonly() {
 		return myModelParameter != null && myModelParameter.getKind() == DirectionKind.IN;
 	}

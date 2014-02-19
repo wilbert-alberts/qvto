@@ -136,7 +136,9 @@ public class ModelOperations extends AbstractContextualOperations {
 				throw new IllegalArgumentException();
 			}
 			ModelInstance model = (ModelInstance) source;
-	        return model.copy();
+	        ModelInstance modelCopy = model.copy();
+	        evalEnv.addModelExtent(modelCopy.getExtent());
+	        return modelCopy;
 		}
 	};
 		

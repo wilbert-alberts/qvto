@@ -310,6 +310,7 @@ public class InternalTransformationExecutor {
 				nextExtent = new ModelParameterExtent(getResourceSet());
 			}
 
+			evalEnv.addModelExtent(nextExtent);
 			extents.add(nextExtent);
 		}
 

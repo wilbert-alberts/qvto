@@ -47,9 +47,16 @@ public class ExeXMISerializer {
 				// loaded from compiled QVT XMI or java black-box library
 				continue;
 			}
+			if (nextUnit.getModuleEnvironments().isEmpty()) {
+				// nothing to save
+				continue;
+			}
 
 			URI uri = nextUnit.getURI();
 			URI xmiUnitURI = toXMIUnitURI(uri);
+
+			Resource xmiUnitResource = new ExeXMIResource(xmiUnitURI);
+			rs.getResources().add(xmiUnitResource);
 			
 			for (QvtOperationalModuleEnv nextModuleEnv : nextUnit.getModuleEnvironments()) {
 				Resource unitResource = nextModuleEnv.getTypeResolver().getResource();
@@ -57,10 +64,7 @@ public class ExeXMISerializer {
 				
 				ExecutableXMIHelper.fixResourceOnSave(unitResource);
 
-				Resource xmiUnitResource = new ExeXMIResource(xmiUnitURI);
 				xmiUnitResource.getContents().addAll(unitResource.getContents());
-				
-				rs.getResources().add(xmiUnitResource);
 			}
 		}
 		

@@ -33,8 +33,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
@@ -278,6 +280,15 @@ public abstract class TestTransformation extends TestCase {
     			inUri = itInUris.next();
 		        ModelContent inModel = transf.loadInput(inUri);
 		        inObjects.add(inModel);
+
+		        if (transfParam.getDirectionKind() == DirectionKind.IN 
+		        		&& inModel.getContent().size() == 1
+		        		&& inModel.getContent().get(0) instanceof EPackage) {
+		        	String nsURI = ((EPackage) inModel.getContent().get(0)).getNsURI();
+					if (transf.getResourceSet().getPackageRegistry().getEPackage(nsURI) == inModel.getContent().get(0)) {
+						--outExtentCount;
+					}
+				}
 			}
 			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
 				if (inUri == null) {
@@ -293,9 +304,10 @@ public abstract class TestTransformation extends TestCase {
 		URI traceURI = URI.createFileURI(((EclipseResource) getTraceFile(eclipseFile)).getResource().getLocation().toString());
 		QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, traceURI.toString(), qvtContext);
 		
-		if (!inObjects.isEmpty()) {
-			assertTrue(inoutExtentCount+outExtentCount >= transf.getResourceSet().getResources().size());
-		}
+		assertTrue(
+				NLS.bind("Unexpected number of resources. Expected ({0}), got ({1}).", inoutExtentCount + outExtentCount, //$NON-NLS-1$
+						 transf.getResourceSet().getResources().size()), 
+				inoutExtentCount + outExtentCount == transf.getResourceSet().getResources().size());
 		
 		transf.cleanup();    		
         return resultUris;

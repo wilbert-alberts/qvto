@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 
@@ -88,7 +88,7 @@ public class TransformTests {
         return new ModelTestData[] {        		
         		new FilesToFilesData("dicttype"), //$NON-NLS-1$
         		new FileToFileData("transf_inheritance"), //$NON-NLS-1$
-        		new FilesToFilesData("uml2_stereotypeApplication", Collections.singletonList("in.ecore"), Arrays.asList("expected.ecore", "expected2.ecore")),           		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        		new FilesToFilesData("uml2_stereotypeApplication", Arrays.asList("in1.ecore", "in2.ecore"), Arrays.asList("expected1.ecore", "expected2.ecore", "expected3.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         		new FilesToFilesData("subobjects", Arrays.asList("in.ecore"), Collections.<String>emptyList()), //$NON-NLS-1$ //$NON-NLS-2$
         		new FileToFileData("virtual_contextVsOverride"), //$NON-NLS-1$
                 new FileToFileData("numconversion", "in.xmi", "expected.pack").includeMetamodelFile("mm.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -319,12 +319,12 @@ public class TransformTests {
         		new FileToFileData("bug254962"), //$NON-NLS-1$
         		new FilesToFilesData("bug325192"), //$NON-NLS-1$
         		new FileToFileData("bug314443"), //$NON-NLS-1$
-        		new FileToFileData("bug400720"), //$NON-NLS-1$
-        		new FileToFileData("bug294127"), //$NON-NLS-1$
-        		new FileToFileData("bug392429"), //$NON-NLS-1$
-        		new FileToFileData("bug410470"), //$NON-NLS-1$
-        		new FileToFileData("bug404647"), //$NON-NLS-1$
-        		new FileToFileData("bug413131"), //$NON-NLS-1$
+        		new FilesToFilesData("bug400720"), //$NON-NLS-1$
+        		new FilesToFilesData("bug294127"), //$NON-NLS-1$
+        		new FilesToFilesData("bug392429"), //$NON-NLS-1$
+        		new FilesToFilesData("bug410470"), //$NON-NLS-1$
+        		new FilesToFilesData("bug404647"), //$NON-NLS-1$
+        		new FilesToFilesData("bug413131"), //$NON-NLS-1$
         		new FileToFileData("bug274105_274505"), //$NON-NLS-1$
         		new FileToFileData("bug414555"), //$NON-NLS-1$
         		new FilesToFilesData("bug414472"), //$NON-NLS-1$

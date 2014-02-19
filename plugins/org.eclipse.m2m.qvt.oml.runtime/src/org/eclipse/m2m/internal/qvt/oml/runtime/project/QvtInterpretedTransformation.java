@@ -207,6 +207,7 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 				extent = new ModelParameterExtent(compilerRS);
 			}
 			
+			evalEnv.addModelExtent(extent);
 	    	tranformArgs.add(extent);			
 		}
 
