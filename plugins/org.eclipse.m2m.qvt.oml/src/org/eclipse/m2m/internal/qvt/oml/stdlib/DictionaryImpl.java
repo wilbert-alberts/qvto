@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -72,14 +71,14 @@ public class DictionaryImpl<KeyT, T> implements Dictionary<KeyT, T> {
 	 * @see org.eclipse.m2m.qvt.oml.util.Dictionary#keys()
 	 */
 	public List<KeyT> keys() {
-		return new ArrayList<KeyT>(fMap.keySet());
+		return new MutableListImpl<KeyT>(fMap.keySet());
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.m2m.qvt.oml.util.Dictionary#values()
 	 */
 	public List<T> values() {
-		return new ArrayList<T>(fMap.values());
+		return new MutableListImpl<T>(fMap.values());
 	}	
 	
 	////// Collection interface only

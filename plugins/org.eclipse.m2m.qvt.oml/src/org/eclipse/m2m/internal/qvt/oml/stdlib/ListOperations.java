@@ -20,6 +20,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.CollectionUtil;
+import org.eclipse.ocl.util.TypeUtil;
 
 
 public class ListOperations extends AbstractContextualOperations {
@@ -145,7 +146,8 @@ public class ListOperations extends AbstractContextualOperations {
 			new OperationProvider(AS_ORDERED_SET, AS_ORDERED_SET_NAME, new String[] {}, oclStdlib.getOrderedSet()),
 			new OperationProvider(AS_SEQUENCE, AS_SEQUENCE_NAME, new String[] {}, oclStdlib.getSequence()),
 			new OperationProvider(AS_BAG, AS_BAG_NAME, new String[] {}, oclStdlib.getBag()),
-			new OperationProvider(FLATTEN, FLATTEN_NAME, new String[] {}, oclStdlib.getSequence()),
+			new OperationProvider(FLATTEN, FLATTEN_NAME, new String[] {},
+					TypeUtil.resolveSequenceType(getStdlib().getEnvironment(), oclStdlib.getT2())),
 		};
 	}	
 }

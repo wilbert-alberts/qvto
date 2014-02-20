@@ -26,6 +26,7 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.TypeType;
 import org.eclipse.ocl.types.util.TypesSwitch;
+import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 
@@ -96,6 +97,14 @@ class GenericsResolver {
 		} else {
 			if(isGeneric(formalType)) {
 				bind(formalType, actualType);
+				if (!formal2ActualBinding.containsKey(fOCLStdLib.getT2())) {
+					if (actualType instanceof CollectionType) {
+						bind(fOCLStdLib.getT2(), CollectionUtil.getFlattenedElementType((CollectionType) actualType));
+					}
+					else {
+						bind(fOCLStdLib.getT2(), actualType);
+					}
+				}
 			}			
 		}
 	}

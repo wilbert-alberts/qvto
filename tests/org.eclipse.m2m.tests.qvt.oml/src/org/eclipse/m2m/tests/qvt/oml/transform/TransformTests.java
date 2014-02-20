@@ -379,6 +379,7 @@ public class TransformTests {
         		new FilesToFilesData("bug424584", Collections.<String>emptyList(), Collections.singletonList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$
         		new FilesToFilesData("bug386115", Arrays.asList("Container.xmi", "model.ecore"), Collections.<String>emptyList()).includeMetamodelFile("model.ecore"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         		new FilesToFilesData("bug427348"), //$NON-NLS-1$
+        		new FilesToFilesData("bug428316"), //$NON-NLS-1$
         		};
     }
 

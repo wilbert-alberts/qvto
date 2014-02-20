@@ -17,7 +17,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QVTOEnvironment;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
+import org.eclipse.ocl.expressions.CollectionKind;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.CollectionUtil;
+import org.eclipse.ocl.util.TypeUtil;
 
 
 public class CollectionTypeOperations extends AbstractContextualOperations {
@@ -92,12 +95,14 @@ public class CollectionTypeOperations extends AbstractContextualOperations {
 	
 	@Override
 	protected OperationProvider[] getOperations() {
+		OCLStandardLibrary<EClassifier> oclStdlib = getStdlib().getEnvironment().getOCLStandardLibrary();
 		return new OperationProvider[] {
 				new OperationProvider(AS_SET, AS_SET_NAME, getStdlib().getOCLStdLib().getSet()),
 				new OperationProvider(AS_ORDERED_SET, AS_ORDERED_SET_NAME, getStdlib().getOCLStdLib().getOrderedSet()),
 				new OperationProvider(AS_SEQUENCE, AS_SEQUENCE_NAME, getStdlib().getOCLStdLib().getSequence()),
 				new OperationProvider(AS_BAG, AS_BAG_NAME, getStdlib().getOCLStdLib().getBag()),
-				new OperationProvider(FLATTEN, FLATTEN_NAME, getStdlib().getOCLStdLib().getCollection()),
+				new OperationProvider(FLATTEN, FLATTEN_NAME, 
+						TypeUtil.resolveCollectionType(getStdlib().getEnvironment(), CollectionKind.COLLECTION_LITERAL, oclStdlib.getT2())),
 		};
 	}
 }

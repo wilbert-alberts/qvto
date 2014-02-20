@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -24,11 +27,16 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
+import org.eclipse.m2m.qvt.oml.util.Dictionary;
+import org.eclipse.ocl.ecore.CollectionType;
+import org.eclipse.ocl.ecore.TupleType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.util.TypeUtil;
 
 
@@ -102,8 +110,7 @@ public class ElementOperations extends AbstractContextualOperations {
 					//269245: Deep clone causes breaking containment hierarchy if used with resource bound extent
 					//https://bugs.eclipse.org/bugs/show_bug.cgi?id=269245
 					// add only the top level container object
-					extent.addObject(result);
-					
+					extent.addObject(result);					
 				}
 				
 				return result;
@@ -146,15 +153,17 @@ public class ElementOperations extends AbstractContextualOperations {
 		
 		private static final long serialVersionUID = 1L;
 		
-		private QvtOperationalEvaluationEnv evalEnv;
+		private final QvtOperationalEvaluationEnv evalEnv;
+		
+		private final Map<Object, Object> qvtoObjectMap;
 		
 		public IntermediatePropertyCopier(QvtOperationalEvaluationEnv evalEnv) {
 			this.evalEnv = evalEnv;
+			qvtoObjectMap = new IdentityHashMap<Object, Object>();
 		}
 		
 		@Override
-    	public void copyReferences() {
-    		
+    	public void copyReferences() {    		
     		super.copyReferences();
     		
     		Module rootModule = evalEnv.getRoot().getAdapter(InternalEvaluationEnv.class).getCurrentModule().getModule();
@@ -170,39 +179,105 @@ public class ElementOperations extends AbstractContextualOperations {
 		
 		private void cloneIntermediateProperties(EObject source, EObject target, Module module) {
 			
-			for (EStructuralFeature feature : module.getEAllStructuralFeatures()) {
-				
-				if (feature instanceof ContextualProperty) {
-					
+			for (EStructuralFeature feature : module.getEAllStructuralFeatures()) {				
+				if (feature instanceof ContextualProperty) {					
 					ContextualProperty property = (ContextualProperty) feature;
 					
-					if (property.getContext().isSuperTypeOf(source.eClass())) {
-									
+					if (property.getContext().isSuperTypeOf(source.eClass())) {									
 						Object value = evalEnv.navigateProperty(property, null, source);
 						Object result = get(value);
+						
+						if (result == null) {
+							if ((property.getEType() instanceof CollectionType && value instanceof Collection<?>)
+									|| (property.getEType() instanceof TupleType && value instanceof Tuple<?, ?>)) {
+								
+								result = cloneOclObjects(value);
+							}
+						}
 						
 						if (useOriginalReferences && result == null) {
 							result = value;
 						}
 										
-						evalEnv.callSetter(target, property, result, QvtOperationalUtil.isUndefined(result, evalEnv), true);
-					
-					}
-					
-				}	
-				
+						evalEnv.callSetter(target, property, result, QvtOperationalUtil.isUndefined(result, evalEnv), true);					
+					}					
+				}				
 			}
 			
-			for (ModuleImport moduleImport : module.getModuleImport()) {
-				
-				Module importedModule = moduleImport.getImportedModule();
-				
-				cloneIntermediateProperties(source, target, importedModule);
-				
-			}
-			
+			for (ModuleImport moduleImport : module.getModuleImport()) {				
+				Module importedModule = moduleImport.getImportedModule();				
+				cloneIntermediateProperties(source, target, importedModule);				
+			}			
 		}
 		
+		private Object cloneOclObjects(Object value) {
+			if (value instanceof Dictionary<?, ?>) {
+				Object result = qvtoObjectMap.get(value);
+				if (result == null) {
+					result = cloneDictionary((Dictionary<?,?>) value);
+					qvtoObjectMap.put(value, result);
+				}
+				return result;
+			}
+			else if (value instanceof Collection<?>) {
+				Object result = qvtoObjectMap.get(value);
+				if (result == null) {
+					result = cloneCollection((Collection<?>) value);
+					qvtoObjectMap.put(value, result);
+				}
+				return result;
+			}
+			else if (value instanceof Tuple<?, ?>) {
+				Object result = qvtoObjectMap.get(value);
+				if (result == null) {
+					result = cloneTuple((Tuple<?, ?>) value);
+					qvtoObjectMap.put(value, result);
+				}
+				return result;
+			}
+			
+			Object result = get(value);
+			if (useOriginalReferences && result == null) {
+				result = value;
+			}
+			return result;
+		}
+
+		@SuppressWarnings("unchecked")
+		private <T> Collection<T> cloneCollection(Collection<T> collection) {			
+			Collection<T> resultCollection = EvaluationUtil.createNewCollectionOfSameKind(collection);
+			
+			for (T object : collection) {				
+				resultCollection.add((T) cloneOclObjects(object));
+			}
+			
+			return resultCollection;			
+		}
+		
+		@SuppressWarnings("unchecked")
+		private <T1,T2> Dictionary<T1,T2> cloneDictionary(Dictionary<T1, T2> dictionary) {			
+			Dictionary<T1, T2> resultDict = (Dictionary<T1, T2>) EvaluationUtil.createNewCollectionOfSameKind(dictionary);
+			
+			for (T1 key : dictionary.keys()) {
+				T2 value = dictionary.get(key);
+				resultDict.put((T1) cloneOclObjects(key), (T2) cloneOclObjects(value));				
+			}
+			
+			return resultDict;			
+		}
+		
+		@SuppressWarnings("unchecked")
+		private <T1,T2> Tuple<T1,T2> cloneTuple(Tuple<T1, T2> value) {
+			Map<T2, Object> propertyValues = new HashMap<T2, Object>();
+			
+			org.eclipse.ocl.types.TupleType<T1, T2> tupleType = value.getTupleType();
+			for (T2 part : tupleType.oclProperties()) {
+				propertyValues.put(part, cloneOclObjects(value.getValue(part)));
+			}
+			
+			return (Tuple<T1, T2>) evalEnv.createTuple((EClassifier) tupleType, (Map<EStructuralFeature, Object>) propertyValues);
+		}
+
 	}
 
 	private static final String CONTAINER_NAME = "container"; //$NON-NLS-1$  

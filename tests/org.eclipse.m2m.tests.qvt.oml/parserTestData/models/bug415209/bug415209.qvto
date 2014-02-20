@@ -112,4 +112,11 @@ main() {
 	var c91 : List(EClass) := list->asBag()->asList();
 	var c92 : List(EClass) := list->asSet()->asList();
 	var c93 : List(EClass) := list->asOrderedSet()->asList();
+	
+	var c100 : Sequence(EClass) := List{List{object EClass{}}}->flatten();
+	var c101 : Sequence(EClass) := List{object EClass{}}->flatten();
+	var c102 : Collection(Collection(EClass));
+	var c103 : Collection(EClass) := c102->flatten();
+	var c104 : Collection(EClass);
+	var c105 : Collection(EClass) := c104->flatten();
 }
