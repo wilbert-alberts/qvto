@@ -1,0 +1,16 @@
+transformation bug428618();
+
+main() {
+	var c : Collection(String);
+	
+	c := Sequence{"a"};
+	c += "b";
+	assert fatal (c = Sequence{"a", "b"});
+	assert fatal (c <> Set{"a", "b"});
+	
+	c := Set{"a"};
+	c += "b";
+	assert fatal (c = Set{"a", "b"});
+	assert fatal (c <> Sequence{"a", "b"});
+
+}

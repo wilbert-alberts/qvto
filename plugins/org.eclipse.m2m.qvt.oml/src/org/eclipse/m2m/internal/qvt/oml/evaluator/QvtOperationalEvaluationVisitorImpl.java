@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642, 428618
  *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -387,9 +387,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	                    } else {
 	                        leftOclCollection = oldOclCollection;
 	                    }
-                	}
-                	else {
-                		leftOclCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) variableType);
+                	} else {
+	                	if (oldValue == null && assignExp.isIsReset() && exprValue instanceof Collection) {
+	                		leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind((Collection<Object>) exprValue);
+	                	} else {
+	                		leftOclCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) variableType);
+	                	}
                 	}
                 	
                     final CollectionKind leftCollectionKind = getCollectionKind(leftOclCollection);
@@ -399,7 +402,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
                             LinkedHashSet<Object> values = new LinkedHashSet<Object>();
                             values.addAll(leftOclCollection);
                             values.addAll((Collection<?>)exprValue);
-                            leftOclCollection = CollectionUtil.createNewCollection(((CollectionType<?, ?>)variableType).getKind(), values);
+                            leftOclCollection = CollectionUtil.createNewOrderedSet(values);
                         } else if(leftCollectionKind != null){
                         	leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);                        	
                         } else {
