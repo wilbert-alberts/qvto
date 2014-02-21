@@ -17,10 +17,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.Messages;
-import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.osgi.util.NLS;
 
@@ -30,11 +28,6 @@ import org.eclipse.osgi.util.NLS;
  */
 public class ExtendedEmfUtil {
     private ExtendedEmfUtil() {}
-    
-	public static ModelContent loadModel(CFile modelFile) {
-		URI uri = URI.createFileURI(modelFile.getFullPath());
-		return EmfUtil.loadModel(uri);
-    }
     
     public static void saveModel(EObject eObject, URI uri, Map<Object, Object> options) throws MdaException {
         try {

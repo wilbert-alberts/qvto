@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,26 +51,24 @@ public class ExecTransformationTestCase extends ApiTestCase {
 	public void runTest() throws Exception {
 		URI scriptUri = createScriptUri(getData().getName());
 		validateScript(scriptUri);
+		
+		ResourceSet rs = new ResourceSetImpl();
 
 		List<EObject> inObjects = new ArrayList<EObject>();
 		List<URI> inputs = getData().getIn(getProject());
 		for (URI uri : inputs) {
-			ModelContent loadModel = EmfUtil.loadModel(uri);
+			ModelContent loadModel = EmfUtil.loadModel(uri, rs);
 			inObjects.add(loadModel.getContent().get(0));
 		}
-		ResourceSet metamodelResourceSet = inObjects.isEmpty() ? new ResourceSetImpl()
-				: inObjects.get(0).eResource().getResourceSet();
-		TransfExecutionResult execResult = new QvtoTransformationHelper(
-				scriptUri).executeTransformation(inObjects, Collections
-				.<String, Object> emptyMap(), metamodelResourceSet);
+		TransfExecutionResult execResult = new QvtoTransformationHelper(scriptUri).executeTransformation(
+				inObjects, Collections.<String, Object> emptyMap(), rs);
 
-		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents()
-				.iterator();
+		Iterator<ModelExtent> itrExt = execResult.getOutModelExtents().iterator();
 		for (URI uri : getData().getExpected(getProject())) {
 			if (!itrExt.hasNext()) {
 				throw new Exception("Missed execution result model extent"); //$NON-NLS-1$
 			}
-			Resource loadResource = EmfUtil.loadResource(uri);
+			Resource loadResource = rs.getResource(uri, true);
 			ModelExtent nextExtent = itrExt.next();
 			for (int i = 0; i < loadResource.getContents().size(); ++i) {
 				ModelTestData
@@ -88,7 +86,7 @@ public class ExecTransformationTestCase extends ApiTestCase {
 			if (!itrObj.hasNext()) {
 				throw new Exception("Missed execution result out parameter"); //$NON-NLS-1$
 			}
-			Resource loadResource = EmfUtil.loadResource(uri);
+			Resource loadResource = rs.getResource(uri, true);
 			ModelTestData
 					.assertEquals(
 							"Diff execution result", loadResource.getContents().get(0), itrObj.next()); //$NON-NLS-1$

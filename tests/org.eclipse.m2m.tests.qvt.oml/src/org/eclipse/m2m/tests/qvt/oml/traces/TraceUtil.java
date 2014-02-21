@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,10 +13,13 @@ package org.eclipse.m2m.tests.qvt.oml.traces;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.internal.qvt.oml.common.emf.ExtendedEmfUtil;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.io.CFile;
 import org.eclipse.m2m.internal.qvt.oml.common.io.eclipse.EclipseFile;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
@@ -42,7 +45,9 @@ public class TraceUtil {
 	}
 	
 	public static Trace loadTraceModel(CFile file) {
-		ModelContent loadModel = ExtendedEmfUtil.loadModel(file);
+		ResourceSet rs = new ResourceSetImpl();
+		URI uri = URI.createFileURI(file.getFullPath());
+		ModelContent loadModel = EmfUtil.loadModel(uri, rs);
 		EObject obj = (loadModel != null && !loadModel.getContent().isEmpty() ? loadModel.getContent().get(0) : null);
 	    if(obj instanceof Trace == false) {
 	        throw new RuntimeException("File does not contain trace model: " + file.getFullPath()); //$NON-NLS-1$	    
