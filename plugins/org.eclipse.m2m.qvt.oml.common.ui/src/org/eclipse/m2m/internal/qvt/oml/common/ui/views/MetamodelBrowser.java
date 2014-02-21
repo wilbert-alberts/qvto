@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -801,7 +801,7 @@ public class MetamodelBrowser  implements IAdaptable {
     	try {
 			ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceProxyVisitor() {
 				public boolean visit(IResourceProxy proxy) throws CoreException {
-					if(proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
+					if(proxy.getType() == IResource.FILE && MetamodelRegistry.isMetamodelFileName(proxy.getName())) {
 						result.add(proxy.requestResource());
 					}
 					return true;

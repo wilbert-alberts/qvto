@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -39,6 +38,8 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CategoryImageConsta
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalUtil;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapPackage;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
@@ -96,7 +97,7 @@ public class WorkspaceMetamodelCollector extends AbstractMetamodelCollector {
     	try {
 			ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceProxyVisitor() {
 				public boolean visit(IResourceProxy proxy) throws CoreException {
-					if(proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
+					if(proxy.getType() == IResource.FILE && MetamodelRegistry.isMetamodelFileName(proxy.getName())) {
 						result.add(proxy.requestFullPath());
 					}
 					return true;
@@ -112,13 +113,7 @@ public class WorkspaceMetamodelCollector extends AbstractMetamodelCollector {
 	private static EPackage loadPackage(URI uri) {
 		ResourceSet rs = new ResourceSetImpl();
 		Resource res = rs.getResource(uri, true);
-		if(!res.getContents().isEmpty()) {
-			EObject eObject = res.getContents().get(0);
-			if(eObject instanceof EPackage) {
-				return (EPackage)eObject;
-			}
-		}
-		return null;
+		return WorskpaceMetamodelProvider.getFirstEPackageContent(res);
 	}
 	
 	private static void addToSettings(QvtCompletionData data, URI resURI, EPackage pack) {

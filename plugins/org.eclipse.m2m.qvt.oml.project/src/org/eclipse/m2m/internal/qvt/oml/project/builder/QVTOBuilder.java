@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -54,6 +54,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.ResolverUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.project.nature.NatureUtils;
@@ -79,9 +80,8 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     }
     
     
-    @SuppressWarnings("unchecked")
 	@Override
-	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
+	protected IProject[] build(int kind, Map<String,String> args, IProgressMonitor monitor) throws CoreException {
     	if(monitor == null) {
     		monitor = new NullProgressMonitor();
     	}
@@ -186,8 +186,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 	                        return false;
 	                    }
 	                    
-	                    String fileNameExt = delta.getResource().getProjectRelativePath().getFileExtension();
-	                    if("ecore".equals(fileNameExt)) { //$NON-NLS-1$
+	                    if(delta.getResource().getType() == IResource.FILE && MetamodelRegistry.isMetamodelFileName(delta.getResource().getName())) {
 	                        rebuild[0] = true;
 	                        return false;
 	                    }

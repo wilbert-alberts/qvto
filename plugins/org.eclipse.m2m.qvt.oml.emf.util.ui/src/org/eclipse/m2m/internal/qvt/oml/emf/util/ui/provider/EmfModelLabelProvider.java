@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,9 +11,11 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
@@ -39,10 +41,10 @@ public class EmfModelLabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		if(element instanceof EmfModelContentProvider.ResourceNode) {
-			Resource resource = ((EmfModelContentProvider.ResourceNode)element).getResource();
-			if(!resource.getContents().isEmpty()) {
-				Object first = resource.getContents().get(0);
-				return myEmfProvider.getImage(first);
+			Resource res = ((EmfModelContentProvider.ResourceNode)element).getResource();
+			EPackage ePackage = WorskpaceMetamodelProvider.getFirstEPackageContent(res);
+			if(ePackage != null) {
+				return myEmfProvider.getImage(ePackage);
 			}
 		}
 		if(element instanceof EmfModelContentProvider.Node) {

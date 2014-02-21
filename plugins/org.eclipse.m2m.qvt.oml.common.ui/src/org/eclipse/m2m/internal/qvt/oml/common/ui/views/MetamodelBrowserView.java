@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
@@ -65,7 +66,7 @@ public class MetamodelBrowserView extends ViewPart implements IResourceChangeLis
     	try {
 			delta.accept(new IResourceDeltaVisitor() {
 				public boolean visit(IResourceDelta delta) throws CoreException {
-					if(isEcoreFile(delta.getResource())) {
+					if(delta.getResource().getType() == IResource.FILE && MetamodelRegistry.isMetamodelFileName(delta.getResource().getName())) {
 						if(delta.getKind() == IResourceDelta.ADDED) {
 					    	wsDelta.addAddition(delta.getFullPath());
 						} else if(delta.getKind() == IResourceDelta.REMOVED) {
@@ -92,10 +93,6 @@ public class MetamodelBrowserView extends ViewPart implements IResourceChangeLis
 				}
 			}
 		});
-    }
-    
-    private boolean isEcoreFile(IResource resource) {
-		return resource.getType() == IResource.FILE && "ecore".equals(resource.getFileExtension());		 //$NON-NLS-1$
     }
     
 	public EObject navigate(EModelElement eModelElement) {

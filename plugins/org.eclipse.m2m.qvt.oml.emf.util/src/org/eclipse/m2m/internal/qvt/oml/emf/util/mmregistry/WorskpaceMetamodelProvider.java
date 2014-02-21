@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -70,7 +70,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
     	try {
 			ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceProxyVisitor() {
 				public boolean visit(IResourceProxy proxy) throws CoreException {
-					if(proxy.getType() == IResource.FILE && proxy.getName().endsWith(".ecore")) { //$NON-NLS-1$
+					if(proxy.getType() == IResource.FILE && MetamodelRegistry.isMetamodelFileName(proxy.getName())) {
 						result.add(proxy.requestResource());
 					}
 					return true;
@@ -123,11 +123,7 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 			}
 			if (eObject == null) {
 				Resource res = rs.getResource(uri, true);
-				if(!res.getContents().isEmpty()) {
-									
-					eObject = res.getContents().get(0);
-				
-				}
+				eObject = getFirstEPackageContent(res);
 			}	
 					
 			if(eObject instanceof EPackage) {
@@ -136,4 +132,14 @@ public class WorskpaceMetamodelProvider implements IMetamodelProvider {
 			throw new WrappedException(new RuntimeException(NLS.bind(Messages.WorskpaceMetamodelProvider_URINotReferringMetamodel, uri)));
 		}
 	}
+	
+	public static EPackage getFirstEPackageContent(Resource resource) {
+		for (EObject content : resource.getContents()) {
+			if (content instanceof EPackage) {
+				return (EPackage) content;
+			}
+		}
+		return null;
+	}
+	
 }

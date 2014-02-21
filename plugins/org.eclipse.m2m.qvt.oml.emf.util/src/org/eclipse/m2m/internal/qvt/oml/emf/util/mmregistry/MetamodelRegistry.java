@@ -53,6 +53,15 @@ public class MetamodelRegistry {
 			return fDesc.getModel();
 		}
     }
+    
+    
+    public static boolean isMetamodelFileName(String fileName) {
+    	return fileName.endsWith(".ecore") //$NON-NLS-1$
+	        || fileName.endsWith(".xcore") //$NON-NLS-1$
+	        || fileName.endsWith(".emof") //$NON-NLS-1$
+	        || fileName.endsWith(".oclinecore") //$NON-NLS-1$
+	        ;
+    }
 	
 	
     public static final String MM_POINT_ID = "metamodelProvider"; //$NON-NLS-1$
