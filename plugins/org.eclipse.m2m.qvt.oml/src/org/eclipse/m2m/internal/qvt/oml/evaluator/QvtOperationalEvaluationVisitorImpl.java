@@ -662,9 +662,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		// call merged mappings
 		callMergedMappings(currentMappingCalled, evalEnv);
 		
-		// result may have changed in body, end section, or merged mappings, so retrieve it again (fixed by bug 388325)
-		result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
-
         return result;
     }
     
