@@ -734,6 +734,7 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
             VariableCS[] iterVars = new VariableCS[iterators.size()];
             for (int i = 0, n = iterVars.length; i < n; i++) {
                 iterVars[i] = createVariableCS(iterators.get(i), null, null);
+                setOffsets(iterVars[i], iterators.get(i));
             }
             forExpCS.setVariable1(iterVars[0]);
             if (iterVars.length > 1) {
