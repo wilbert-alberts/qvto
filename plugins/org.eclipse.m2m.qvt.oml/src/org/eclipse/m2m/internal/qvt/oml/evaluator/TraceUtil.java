@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 424584
+ *     Yuri Blankenstein - bug 428325
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -61,10 +62,30 @@ import org.eclipse.ocl.utilities.PredefinedType;
 public class TraceUtil {
 	
 	private TraceUtil() {
-		super();
 	}
 
-    static TraceRecord getTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
+	static TraceRecord getTraceRecord(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
+		InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);
+		Trace trace = internEnv.getTraces();
+
+		Object selfObj = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
+
+		Object key = createKey(selfObj, evalEnv, mappingOperation);
+		if (key != null) {
+			TraceRecord record = trace.getRecordBySource(mappingOperation, key);
+			if (record != null && Boolean.TRUE.equals(TraceUtil.checkResultMatch(record, evalEnv))) {
+				return record;
+			}
+			// nothing found, mapping executed for the first time on the given
+			// source
+			return null;
+		}
+
+		// Fall back on 'original' TraceUtil
+		return TraceUtil.getTraceRecordDefault(evalEnv, mappingOperation);
+	}
+
+    private static TraceRecord getTraceRecordDefault(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
     	InternalEvaluationEnv internEnv = evalEnv.getAdapter(InternalEvaluationEnv.class);    	
     	Trace trace = internEnv.getTraces();
         Object selfObj = evalEnv.getValueOf(Environment.SELF_VARIABLE_NAME);
@@ -205,13 +226,53 @@ public class TraceUtil {
 		// Note: add it here so we ensure the record is fully initialized
         addUnique(traceRecord, trace.getTraceRecords());
         
-        if(isParameterLessContextual(mappingOperation)) {
-        	// parameter-less contextual operation can be cached efficiently
-        	addTraceRecordBySourceObject(trace, traceRecord);
-        }
+        addTraceRecordByMapping(evalEnv, mappingOperation, traceRecord, trace);
         
         return traceRecord;
     }
+
+	/**
+	 * Improves performance a lot for mapping operations with parameters by
+	 * means of (re)using the cache.
+	 */
+	private static void addTraceRecordByMapping(QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation,
+			TraceRecord traceRecord, Trace trace) {
+		Object selfObj = null;
+		if (traceRecord.getContext() != null && traceRecord.getContext().getContext() != null) {
+			EValue value = traceRecord.getContext().getContext().getValue();
+			selfObj = value.getOclObject();
+		}
+		Object key = createKey(selfObj, evalEnv, mappingOperation);
+		if (key != null) {
+			trace.addRecordBySource(key, mappingOperation, traceRecord);
+		}
+	}
+
+	/**
+	 * Creates a key for mapping operations, based on the context (if available)
+	 * and all parameters (if any).
+	 */
+	private static Object createKey(Object selfObj, QvtOperationalEvaluationEnv evalEnv, MappingOperation mappingOperation) {
+		EList<EParameter> eParameters = mappingOperation.getEParameters();
+		if (eParameters.isEmpty()) {
+			// Backwards compatible for isParameterLessContextual
+			return selfObj;
+		}
+
+		ArrayList<Object> key = new ArrayList<Object>(eParameters.size() + 1);
+		key.add(selfObj);
+		for (EParameter param : eParameters) {
+			if (param instanceof VarParameter) {
+				VarParameter varParam = (VarParameter) param;
+				if (varParam.getKind() == DirectionKind.OUT) {
+					continue;
+				}
+			}
+			key.add(evalEnv.getValueOf(param.getName()));
+		}
+
+		return key;
+	}
 
     static Object fetchResultFromTrace(QvtOperationalEvaluationEnv evalEnv, TraceRecord trace) {
     	MappingOperation operation = trace.getMappingOperation().getRuntimeMappingOperation();
@@ -424,23 +485,7 @@ public class TraceUtil {
         return Boolean.TRUE;
     }
     
-	private static void addTraceRecordBySourceObject(Trace traces, TraceRecord newObject) {
-		EMappingOperation eMapping = newObject.getMappingOperation();				
-		MappingOperation mapping = eMapping.getRuntimeMappingOperation();
-		assert mapping != null;
-
-		EMappingContext context = newObject.getContext();
-		if(context != null && context.getContext() != null) {
-			EValue value = context.getContext().getValue();
-			Object source = value.getOclObject();
-			if(source != null) {
-				traces.addRecordBySource(source, mapping, newObject);
-			}
-		}
-	}
-	
-	private static boolean isParameterLessContextual(
-			MappingOperation mappingOperation) {
+	private static boolean isParameterLessContextual(MappingOperation mappingOperation) {
 		return QvtOperationalParserUtil.isContextual(mappingOperation) && mappingOperation.getEParameters().isEmpty();
 	}
 	

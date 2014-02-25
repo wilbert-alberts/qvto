@@ -289,9 +289,12 @@ public class ModelParameterExtent {
 			}
 		}
 
-		elements.clear();
-		if(result != null) {
-			elements.addAll(result);
+		int resultSize = result != null ? result.size() : 0;
+		if (elements.size() != resultSize) {
+			elements.clear();
+			if(result != null) {
+				elements.addAll(result);
+			}
 		}
 	}
 
