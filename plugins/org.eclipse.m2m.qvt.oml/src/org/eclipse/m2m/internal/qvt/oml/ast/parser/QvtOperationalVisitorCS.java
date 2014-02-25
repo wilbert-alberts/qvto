@@ -4243,9 +4243,9 @@ public class QvtOperationalVisitorCS
 				else {
 					mappingParam.setExtent(env.resolveModelParameter(typeSpec.myType, directionKind));
 				}
-				if (mappingParam.getExtent() == null && directionKind == DirectionKind.OUT) {
-					env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
-				}
+				//if (mappingParam.getExtent() == null && directionKind == DirectionKind.OUT) {
+				//	env.reportError(ValidationMessages.OutParamWithoutExtent, paramCS);
+				//}
 			}
 		}
 		
