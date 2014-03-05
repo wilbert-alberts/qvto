@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,16 +8,18 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 428610
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
@@ -33,12 +35,12 @@ import org.eclipse.swt.widgets.Display;
 public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
 	
 	public QvtLaunchConfigurationTabGroup() {
-        myValidationRS = new ResourceSetImpl();
+		super();
 	}
 	
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
-                new QvtLauncherTab(TRANSFORMATION_MAKER, myValidationRS),
+                new QvtLauncherTab(TRANSFORMATION_MAKER),
                 new QvtTransformationConfigurationTab(TRANSFORMATION_MAKER),
                 new CommonTab()
 		};
@@ -60,11 +62,21 @@ public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationT
 	}
 	
     protected final ITransformationMaker TRANSFORMATION_MAKER = new ITransformationMaker() {
+    	
+    	private Map<String, QvtInterpretedTransformation> transformationsMap = new HashMap<String, QvtInterpretedTransformation>();
+    	
 		public QvtTransformation makeTransformation(String name) throws MdaException {
-			QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(name));
-            return new QvtInterpretedTransformation(qvtModule);
+			
+			QvtInterpretedTransformation transformation = transformationsMap.get(name);
+			
+			if (transformation == null) {
+				QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(name));
+				transformation = new QvtInterpretedTransformation(qvtModule);
+				transformationsMap.put(name, transformation);
+			}
+			
+			return transformation;
 		}
     };
     
-    private final ResourceSet myValidationRS;
 }

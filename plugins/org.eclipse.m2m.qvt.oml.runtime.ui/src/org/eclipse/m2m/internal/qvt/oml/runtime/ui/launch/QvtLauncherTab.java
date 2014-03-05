@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 416584
+ *     Christopher Gerking - bug 428610
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
@@ -24,7 +25,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
@@ -51,10 +51,8 @@ import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -69,7 +67,7 @@ import org.eclipse.ui.PlatformUI;
 
 /** @author pkobiakov */
 public class QvtLauncherTab extends MdaLaunchTab {
-	public QvtLauncherTab(ITransformationMaker transformationMaker, ResourceSet validationRS) {
+	public QvtLauncherTab(ITransformationMaker transformationMaker) {
 		myTransformationMaker = transformationMaker;
 
         myUriListeners = new ArrayList<IUriGroup.IModifyListener>(1);
@@ -127,13 +125,14 @@ public class QvtLauncherTab extends MdaLaunchTab {
                     }
             	};
             	BrowseInterpretedTransformationDialog.ISelectionListener selectionListener = new BrowseInterpretedTransformationDialog.ISelectionListener() {
+            		            		
 					public IStatus selectionChanged(URI selectedUri) {
 						String transfName = ""; //$NON-NLS-1$
 				        try {
 				            if (selectedUri == null) {
 				            	return TransformationControls.makeStatus(IStatus.ERROR, Messages.QvtLauncherTab_NoTransformationModule);
 				            }
-				            QvtTransformation transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(selectedUri));
+				            QvtTransformation transformation = myTransformationMaker.makeTransformation(selectedUri.toString());
 				            transfName = transformation.getModuleName();
 				        }
 				        catch (Exception e) {

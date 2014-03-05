@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtBuilderLaunchConfigurationDelegate;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 
@@ -24,7 +23,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 public class QvtBuilderLauncherTab extends QvtLauncherTab {
 
 	public QvtBuilderLauncherTab(ITransformationMaker transformationMaker) {
-		super(transformationMaker, new ResourceSetImpl());
+		super(transformationMaker);
 	}
 	
 	@Override
