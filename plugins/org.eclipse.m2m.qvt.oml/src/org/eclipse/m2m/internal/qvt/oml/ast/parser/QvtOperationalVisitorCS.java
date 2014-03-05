@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,7 +10,7 @@
  *     Christopher Gerking - bugs 302594, 310991, 289982
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
- *                         424584
+ *                         424584, 424869
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -1981,20 +1981,20 @@ public class QvtOperationalVisitorCS
 			}
 		}
 		
-		// 3rd pass: properties
-		for(MappingModuleCS moduleCS : sortedModuless) {
-			Module module = (Module) moduleCS.getAst();
-			createModuleProperties(module, moduleCS, moduleEnvsMap.get(moduleCS));
-		}
-		
-		// 4th pass: method headers
+		// 3th pass: method headers
 		HashMap<MappingModuleCS, HashMap<MappingMethodCS, ImperativeOperation>> methodMaps = new HashMap<MappingModuleCS, HashMap<MappingMethodCS, ImperativeOperation>>(); 
 		for(MappingModuleCS moduleCS : sortedModuless) {
 			HashMap<MappingMethodCS, ImperativeOperation> methodMap = visitMethodHeaders(moduleCS, moduleEnvsMap.get(moduleCS));
 			methodMaps.put(moduleCS, methodMap);
 		}
 
-		// 4th pass: method bodies
+		// 4rd pass: properties
+		for(MappingModuleCS moduleCS : sortedModuless) {
+			Module module = (Module) moduleCS.getAst();
+			createModuleProperties(module, moduleCS, moduleEnvsMap.get(moduleCS));
+		}
+		
+		// 5th pass: method bodies
 		for(MappingModuleCS moduleCS : sortedModuless) {
 			visitMethodBodies(moduleCS, methodMaps.get(moduleCS), moduleEnvsMap.get(moduleCS));
 		}

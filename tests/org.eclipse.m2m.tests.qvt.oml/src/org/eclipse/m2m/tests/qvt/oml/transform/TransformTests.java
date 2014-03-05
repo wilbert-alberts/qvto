@@ -12,7 +12,7 @@
  *                         397215, 397959, 358709, 388801, 254962, 414555
  *     Alex Paperno - bugs 410470, 392429, 294127, 400720, 314443, 404647, 413131,
  *                         274105, 274505, 415029, 419299, 403440, 267917, 420970,
- *                         424584
+ *                         424584, 424869
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.transform;
 
@@ -381,6 +381,7 @@ public class TransformTests {
         		new FilesToFilesData("bug427348"), //$NON-NLS-1$
         		new FilesToFilesData("bug428316"), //$NON-NLS-1$
         		new FilesToFilesData("bug428618"), //$NON-NLS-1$
+        		new FilesToFilesData("bug424896"), //$NON-NLS-1$
         		};
     }
 
