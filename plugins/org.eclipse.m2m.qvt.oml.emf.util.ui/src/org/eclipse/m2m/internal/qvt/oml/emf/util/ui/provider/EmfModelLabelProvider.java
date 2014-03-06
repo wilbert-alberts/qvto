@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
@@ -42,7 +42,7 @@ public class EmfModelLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		if(element instanceof EmfModelContentProvider.ResourceNode) {
 			Resource res = ((EmfModelContentProvider.ResourceNode)element).getResource();
-			EPackage ePackage = WorskpaceMetamodelProvider.getFirstEPackageContent(res);
+			EPackage ePackage = WorkspaceMetamodelProvider.getFirstEPackageContent(res);
 			if(ePackage != null) {
 				return myEmfProvider.getImage(ePackage);
 			}

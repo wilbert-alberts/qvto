@@ -40,7 +40,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapPackage;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
@@ -256,7 +256,7 @@ public class QvtMetamodelMappingPage extends PropertyPage {
     
     private static EPackage loadEPackage(String uriStr) {    	
 		try {
-			return WorskpaceMetamodelProvider.loadResourceMetamodel(uriStr);
+			return WorkspaceMetamodelProvider.loadResourceMetamodel(uriStr);
 		} catch (RuntimeException exc) {
 			// do nothing here
 		}

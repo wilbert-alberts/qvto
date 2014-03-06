@@ -39,7 +39,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.CompletionProposalU
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionData;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.completion.QvtCompletionProposal;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapFactory;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MModelURIMapPackage;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
@@ -113,7 +113,7 @@ public class WorkspaceMetamodelCollector extends AbstractMetamodelCollector {
 	private static EPackage loadPackage(URI uri) {
 		ResourceSet rs = new ResourceSetImpl();
 		Resource res = rs.getResource(uri, true);
-		return WorskpaceMetamodelProvider.getFirstEPackageContent(res);
+		return WorkspaceMetamodelProvider.getFirstEPackageContent(res);
 	}
 	
 	private static void addToSettings(QvtCompletionData data, URI resURI, EPackage pack) {

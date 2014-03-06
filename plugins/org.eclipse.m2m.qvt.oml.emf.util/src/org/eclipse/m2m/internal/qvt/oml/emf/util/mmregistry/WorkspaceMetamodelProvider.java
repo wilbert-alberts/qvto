@@ -31,12 +31,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.osgi.util.NLS;
 
-public class WorskpaceMetamodelProvider implements IMetamodelProvider {
+public class WorkspaceMetamodelProvider implements IMetamodelProvider {
 
 	private ResourceSet resSet;
 	private List<IMetamodelDesc> metamodels;
 	
-	public WorskpaceMetamodelProvider(ResourceSet resolutionRSet) {
+	public WorkspaceMetamodelProvider(ResourceSet resolutionRSet) {
 		if(resolutionRSet == null) {
 			throw new IllegalArgumentException("Null resolution resource set"); //$NON-NLS-1$
 		}

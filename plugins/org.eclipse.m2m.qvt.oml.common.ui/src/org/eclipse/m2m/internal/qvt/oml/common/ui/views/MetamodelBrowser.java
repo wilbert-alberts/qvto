@@ -69,7 +69,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.DelegatingPropertySource;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.metamodel.MetamodelImageRegistry;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ui.provider.EMFProviderUtil;
@@ -526,7 +526,7 @@ public class MetamodelBrowser  implements IAdaptable {
         	globalRegistryNode.addChild(new MetamodelNode(rootEntry.getValue(), globalRegistryNode, false));    		
 		}        
         
-        WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());
+        WorkspaceMetamodelProvider ws = new WorkspaceMetamodelProvider(new ResourceSetImpl());
         List<IResource> wsModels = collectWorkspaceMetamodels();
                 
         for (IResource res : wsModels) {
@@ -846,7 +846,7 @@ public class MetamodelBrowser  implements IAdaptable {
     	}
     	
 		URI resURI = URI.createPlatformResourceURI(ecoreFilePath.toString(), false);
-		WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());
+		WorkspaceMetamodelProvider ws = new WorkspaceMetamodelProvider(new ResourceSetImpl());
 		IMetamodelDesc modelFileDesc = ws.addMetamodel(resURI.toString(), resURI);
 		
 		this.workspaceModels.addChild(new ResourceModelNode(resURI, modelFileDesc, workspaceModels));
@@ -864,7 +864,7 @@ public class MetamodelBrowser  implements IAdaptable {
 		if(resourceModelNode != null) {			
 			URI resourceURI = resourceModelNode.uri;
 			
-			WorskpaceMetamodelProvider ws = new WorskpaceMetamodelProvider(new ResourceSetImpl());			
+			WorkspaceMetamodelProvider ws = new WorkspaceMetamodelProvider(new ResourceSetImpl());			
 			IMetamodelDesc modelFileDesc = ws.addMetamodel(resourceURI.toString(), resourceURI);
 			
 			ResourceModelNode newNode = new ResourceModelNode(resourceURI, modelFileDesc, workspaceModels);

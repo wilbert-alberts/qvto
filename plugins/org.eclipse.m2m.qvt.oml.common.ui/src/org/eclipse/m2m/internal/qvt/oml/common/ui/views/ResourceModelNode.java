@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtilPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelDesc;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.swt.graphics.Image;
 
 class ResourceModelNode extends MetamodelContainerNode {		
@@ -66,7 +66,7 @@ class ResourceModelNode extends MetamodelContainerNode {
 				
 				EPackage result = null;
 				try {
-					result = WorskpaceMetamodelProvider.loadResourceMetamodel(uri.toString());
+					result = WorkspaceMetamodelProvider.loadResourceMetamodel(uri.toString());
 				} catch (RuntimeException e) {
 					return null;
 				}

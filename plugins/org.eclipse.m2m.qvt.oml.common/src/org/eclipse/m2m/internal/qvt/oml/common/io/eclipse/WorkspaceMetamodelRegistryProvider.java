@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.m2m.internal.qvt.oml.common.CommonPlugin;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.IMetamodelRegistryProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.MetamodelRegistry;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorskpaceMetamodelProvider;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.mmregistry.WorkspaceMetamodelProvider;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MappingContainer;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.MetamodelURIMappingHelper;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.urimap.URIMapping;
@@ -99,7 +99,7 @@ public class WorkspaceMetamodelRegistryProvider implements IMetamodelRegistryPro
 	}
 	
 	private MetamodelRegistry createRegistry(MappingContainer mappings) {
-		WorskpaceMetamodelProvider metamodelProvider = new WorskpaceMetamodelProvider(resolutionRSet);				
+		WorkspaceMetamodelProvider metamodelProvider = new WorkspaceMetamodelProvider(resolutionRSet);				
 		
 		for (URIMapping nextMapping : mappings.getMapping()) {
 			URI uri = null;
