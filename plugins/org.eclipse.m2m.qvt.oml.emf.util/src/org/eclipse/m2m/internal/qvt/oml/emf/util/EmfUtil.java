@@ -100,19 +100,34 @@ public class EmfUtil {
 			@Override
 			protected Resource delegatedGetResource(URI uri, boolean loadOnDemand) {
 				Resource resource = super.delegatedGetResource(uri, loadOnDemand);
+				if (resource == null && false == loadOnDemand) {
+					resource = lookupMetamodelRegistry(uri);
+				}
+				return resource;
+			}
+			
+			@Override
+			protected Resource demandCreateResource(URI uri) {
+				Resource resource = super.demandCreateResource(uri);
 				if (resource == null) {
-					URI trimmedURI = uri.trimFragment();
-					try {
-						IMetamodelDesc descriptor = MetamodelRegistry.getInstance().getMetamodelDesc(trimmedURI.toString());
-						EPackage ePackage = descriptor.getModel();
-						resource = ePackage.eResource();
-						if (resource == null) {
-							resource = new ResourceImpl(trimmedURI);
-							resource.getContents().add(ePackage);
-						}
-					} catch (EmfException e) {
-						EmfUtilPlugin.log(e);
+					resource = lookupMetamodelRegistry(uri);
+				}
+				return resource;
+			}
+			
+			private Resource lookupMetamodelRegistry(URI uri) {
+				Resource resource = null;
+				URI trimmedURI = uri.trimFragment();
+				try {
+					IMetamodelDesc descriptor = MetamodelRegistry.getInstance().getMetamodelDesc(trimmedURI.toString());
+					EPackage ePackage = descriptor.getModel();
+					resource = ePackage.eResource();
+					if (resource == null) {
+						resource = new ResourceImpl(trimmedURI);
+						resource.getContents().add(ePackage);
 					}
+				} catch (EmfException e) {
+					EmfUtilPlugin.log(e);
 				}
 				return resource;
 			}
