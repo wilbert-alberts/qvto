@@ -85,13 +85,13 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
     }
 
     private void build(final IProject project, final ILaunchConfiguration configuration, final PrintWriter printWriter) throws Exception {
-        String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
+        String moduleUri = QvtLaunchUtil.getTransformationURI(configuration);
         final QvtInterpretedTransformation transformation;
 		try {
-			QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName));
+			QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleUri));
 			transformation = new QvtInterpretedTransformation(qvtModule);
 		} catch (MdaException e) {
-            createMarker(project, NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleName));
+            createMarker(project, NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleUri));
             return;
 		}
         
@@ -117,12 +117,12 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
     }
     
     private void clean(IProject project, ILaunchConfiguration configuration) throws Exception {
-        String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
+        String moduleUri = QvtLaunchUtil.getTransformationURI(configuration);
         final QvtInterpretedTransformation transformation;
 		try {
-			transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName)));
+			transformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleUri)));
 		} catch (MdaException e) {
-            createMarker(project, NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleName));
+            createMarker(project, NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleUri));
             return;
 		}
         

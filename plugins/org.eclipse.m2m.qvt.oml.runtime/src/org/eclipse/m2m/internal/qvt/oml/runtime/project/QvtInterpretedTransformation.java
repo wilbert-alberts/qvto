@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -119,6 +119,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 	
 	public String getModuleName() throws MdaException {
 		return myModule.getModule().getName();
+	}
+	
+	public URI getURI() throws MdaException {
+		return myModule.getUnit().getURI();
 	}
 
 	public List<TransformationParameter> getParameters() throws MdaException {

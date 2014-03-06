@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,9 @@
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
@@ -25,7 +27,6 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.PersistedValuesWizard;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
@@ -147,13 +148,16 @@ public class RunInterpretedTransformationWizard extends PersistedValuesWizard {
         
         workingCopy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false); 
         
-        InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.TRANSFORMATION, myTransformation);
+        workingCopy.setAttribute(IQvtLaunchConstants.MODULE, String.valueOf(myTransformation.getURI()));
 
         myTransformationParametersPage.applyConfiguration(workingCopy);
         
 		if (myTransformationParametersPage.isOpenInEditor()) {
 			List<TargetUriData> targetUris = QvtLaunchUtil.getTargetUris(workingCopy);
-			InMemoryLaunchUtils.setAttribute(workingCopy, IQvtLaunchConstants.DONE_ACTION, createShowResultAction(targetUris));
+			Map<String, Object> attributes = workingCopy.getAttributes();
+			Map<String, Object> attributesCopy = new LinkedHashMap<String, Object>(attributes);
+			attributesCopy.put(IQvtLaunchConstants.DONE_ACTION, createShowResultAction(targetUris));
+			workingCopy.setAttributes(attributesCopy);
 		}
         
         workingCopy.setAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, myTransformationData.getConfiguration());

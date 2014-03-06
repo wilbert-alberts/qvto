@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,12 +59,7 @@ public class QvtLaunchUtil {
 	}
 		
 	public static String getTransformationURI(ILaunchConfiguration configuration) throws CoreException {
-		String uriStr = configuration.getAttribute(IQvtLaunchConstants.MODULE, (String) null);
-		if(uriStr == null) {
-			// FIXME - why 2 ways of URI reference? legacy reasons?			
-			uriStr = configuration.getAttribute(IQvtLaunchConstants.TRANSFORMATION, (String) null);
-		}
-		return uriStr;
+		return configuration.getAttribute(IQvtLaunchConstants.MODULE, (String) null);
 	}
 	
 	public static String getTraceFileURI(ILaunchConfiguration configuration) throws CoreException {

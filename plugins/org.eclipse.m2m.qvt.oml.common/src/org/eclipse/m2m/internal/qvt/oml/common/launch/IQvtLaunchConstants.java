@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,7 +15,6 @@ package org.eclipse.m2m.internal.qvt.oml.common.launch;
 public interface IQvtLaunchConstants {
 	String PREFIX = "org.eclipse.m2m.qvt.oml.interpreter.";  //$NON-NLS-1$
 	
-    String TRANSFORMATION   = PREFIX + "transformationId"; //$NON-NLS-1$
 	String MODULE           = PREFIX + "module"; //$NON-NLS-1$
 	String TARGET_MODEL     = PREFIX + "targetModel"; //$NON-NLS-1$
     String TRACE_FILE       = PREFIX + "traceFile"; //$NON-NLS-1$

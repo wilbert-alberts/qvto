@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,17 +25,21 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.IStatusHandler;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.EmptyDebugTarget;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
-import org.eclipse.m2m.internal.qvt.oml.common.launch.InMemoryLaunchUtils;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ShallowProcess;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.StreamsProxy;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.Logger;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
+import org.eclipse.osgi.util.NLS;
 
 
 public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
@@ -53,12 +57,15 @@ public class InMemoryQvtLaunchConfigurationDelegate extends QvtLaunchConfigurati
     
 
 	public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {        
-        Object transObj = InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.TRANSFORMATION);
-        if (transObj instanceof QvtTransformation == false) {
-            throw new IllegalArgumentException("Invalid transformation " + transObj); //$NON-NLS-1$
-        }
-        final QvtTransformation qvtTransformation = (QvtTransformation) transObj;
-        final Runnable doneAction = (Runnable) InMemoryLaunchUtils.getAttribute(configuration, IQvtLaunchConstants.DONE_ACTION);
+        String moduleUri = QvtLaunchUtil.getTransformationURI(configuration);
+        final QvtTransformation qvtTransformation;
+		try {
+			qvtTransformation = new QvtInterpretedTransformation(TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleUri)));
+		} catch (MdaException e) {
+			throw new IllegalArgumentException(NLS.bind(Messages.QvtBuilderLaunchTab_TransformationNotFound, moduleUri));
+		}
+
+        final Runnable doneAction = (Runnable) configuration.getAttributes().get(IQvtLaunchConstants.DONE_ACTION);
         
         final StreamsProxy streamsProxy = new StreamsProxy();
         

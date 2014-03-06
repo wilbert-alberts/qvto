@@ -71,9 +71,9 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
  
     public static QvtModule getQvtModule(ILaunchConfiguration configuration) throws CoreException {
-        String moduleName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
 		try {
-			return TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleName));
+	        String moduleUri = QvtLaunchUtil.getTransformationURI(configuration);
+			return TransformationUtil.getQvtModule(EmfUtil.makeUri(moduleUri));
 		} catch (MdaException e) {
         	IStatus errorStatus = MiscUtil.makeErrorStatus(e.getMessage());
         	throw new CoreException(errorStatus);
