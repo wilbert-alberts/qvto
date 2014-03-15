@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
@@ -67,6 +69,28 @@ import org.eclipse.ui.PlatformUI;
 
 /** @author pkobiakov */
 public class QvtLauncherTab extends MdaLaunchTab {
+
+	public static Method ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD = null;
+	static
+	{
+		try {
+			for (Method method : AbstractLaunchConfigurationTab.class.getDeclaredMethods()) {
+				if ("setWarningMessage".equals(method.getName()) && (method.getParameterTypes().length == 1) && (method.getParameterTypes()[0] == String.class)) {
+					ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD = method;
+					break;
+				}
+			}
+		} catch (Throwable e) {}
+	}
+
+	protected void compatibilitySetWarningMessage(String message) {
+		if (ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD != null) {
+			try {
+				ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD.invoke(this, message);
+			} catch (Throwable e) {}		// Not available in Juno
+		}
+	}
+
 	public QvtLauncherTab(ITransformationMaker transformationMaker) {
 		myTransformationMaker = transformationMaker;
 
@@ -283,7 +307,14 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
         else{
             setMessage(null);
-            setWarningMessage(null);
+//			setWarningMessage(null);
+			if (ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD != null) {
+				try {
+					ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD.invoke(this, new Object[]{null});
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}		// Not available in Juno
+			}
             setErrorMessage(null);
             String moduleName;
             try {
@@ -354,7 +385,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
 
 		public void setWarningMessage(String message) {
-            QvtLauncherTab.this.setWarningMessage(message);
+			compatibilitySetWarningMessage(message);
             QvtLauncherTab.this.getLaunchConfigurationDialog().updateMessage();
 		}
     };

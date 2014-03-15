@@ -41,6 +41,14 @@ import org.eclipse.ui.PlatformUI;
 
 public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurationTab {
 
+	protected void compatibilitySetWarningMessage(String message) {
+		if (QvtLauncherTab.ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD != null) {
+			try {
+				QvtLauncherTab.ABSTRACT_LAUNCH_CONFIGURATION_TAB_SET_WARNING_METHOD.invoke(this, message);
+			} catch (Throwable e) {}		// Not available in Juno
+		}
+	}
+	
     public QvtTransformationConfigurationTab(ITransformationMaker transformationMaker) {
         myTransformationMaker = transformationMaker;
         myData = new ApplyTransformationData();
@@ -56,7 +64,7 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
             }
 
 			public void setWarningMessage(String message) {
-                QvtTransformationConfigurationTab.this.setWarningMessage(message);
+				compatibilitySetWarningMessage(message);
                 QvtTransformationConfigurationTab.this.getLaunchConfigurationDialog().updateMessage();
 			}
         });
