@@ -294,7 +294,6 @@
 	--=== // Transformation header (start) ===--
 	transformation_h ::= qualifierList transformation qualifiedNameCS transformation_signature transformation_usage_refineOpt
 		/.$BeginCode
-					EList qualifierList = (EList) getRhsSym(1);
 					EList transfUsages = $EMPTY_ELIST;
 					TransformationRefineCS transfRefine = null;
 					Object transformation_usage_refineOpt = getRhsSym(5);
@@ -304,17 +303,14 @@
 						transfUsages = (EList) transformation_usage_refineOpt;
 					}
 					CSTNode result = createTransformationHeaderCS(
-							qualifierList,
+							(EList) getRhsSym(1),
 							(PathNameCS)getRhsSym(3),
 							(SimpleSignatureCS)getRhsSym(4),
 							transfUsages,
 							transfRefine
 						);
-					if (qualifierList.isEmpty()) {
-						setOffsets(result, getRhsIToken(2));
-					} else {
-						setOffsets(result, (CSTNode) qualifierList.get(0));
-					}
+					setOffsets(result, getRhsIToken(2));
+
 					if (transfRefine == null) {
 						if (transfUsages.isEmpty()) {
 							setOffsets(result, result, (SimpleSignatureCS)getRhsSym(4));
@@ -2045,19 +2041,15 @@
 
 	transformation_h ::= qualifierList transformation qualifiedNameCS
 		/.$BeginCode
-					EList qualifierList = (EList) getRhsSym(1);
 					CSTNode result = createTransformationHeaderCS(
-							qualifierList,
+							(EList) getRhsSym(1),
 							(PathNameCS)getRhsSym(3),
 							createSimpleSignatureCS($EMPTY_ELIST),
 							$EMPTY_ELIST,
 							null
 						);
-					if (qualifierList.isEmpty()) {
-						setOffsets(result, getRhsIToken(2), (PathNameCS)getRhsSym(3));
-					} else {
-						setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)getRhsSym(3));
-					}
+					setOffsets(result, getRhsIToken(2), (PathNameCS)getRhsSym(3));
+
 					setResult(result);
 		  $EndCode
 		./

@@ -16,10 +16,8 @@
 package org.eclipse.m2m.internal.qvt.oml.cst;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.cst.CSTNode;
 import org.eclipse.ocl.cst.PathNameCS;
-import org.eclipse.ocl.cst.StringLiteralExpCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,20 +48,22 @@ public interface TransformationHeaderCS extends CSTNode {
 	String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * Returns the value of the '<em><b>Qualifiers</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.cst.StringLiteralExpCS}.
+	 * Returns the value of the '<em><b>Qualifiers</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS}.
+	 * The literals are from the enumeration {@link org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Qualifiers</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Qualifiers</em>' containment reference list.
+	 * @return the value of the '<em>Qualifiers</em>' attribute list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getTransformationHeaderCS_Qualifiers()
-	 * @model containment="true"
+	 * @model unique="false"
 	 * @generated
 	 */
-	EList<StringLiteralExpCS> getQualifiers();
+	EList<QualifierKindCS> getQualifiers();
 
 	/**
 	 * Returns the value of the '<em><b>Path Name CS</b></em>' containment reference.

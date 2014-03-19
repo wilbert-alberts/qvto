@@ -837,34 +837,16 @@ public abstract class AbstractQVTParser extends AbstractOCLParser {
 		return result;
 	}
 
-	
-	protected final void setTransformationHeaderQualifiers(TransformationHeaderCS header, 
-			EList<OCLExpressionCS> qualifiers) {
-		for (OCLExpressionCS qualifier : qualifiers) {
-			if (qualifier instanceof StringLiteralExpCS) {
-				header.getQualifiers().add((StringLiteralExpCS)qualifier);
-			}
-			else if (qualifier instanceof SimpleNameCS)	{
-				IToken tokenQualifier = ((SimpleNameCS)qualifier).getStartToken();
-				if (tokenQualifier != null) {
-					StringLiteralExpCS qualifierExp = createStringLiteralExpCS(tokenQualifier);
-					setOffsets(qualifierExp, tokenQualifier);
-					header.getQualifiers().add(qualifierExp);
-				}
-			}
-		}
-	}
-	
-	protected final TransformationHeaderCS createTransformationHeaderCS(EList<OCLExpressionCS> qualifiers, 
+	protected final TransformationHeaderCS createTransformationHeaderCS(EList<SimpleNameCS> qualifiers, 
 			PathNameCS pathNameCS, SimpleSignatureCS simpleSignatureCS, EList<ModuleUsageCS> transfUsages, 
 			TransformationRefineCS transfRefineCS) {
-				TransformationHeaderCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTransformationHeaderCS();
-				setTransformationHeaderQualifiers(result, qualifiers);
-				result.getParameters().addAll(simpleSignatureCS.getParams());
-				result.getModuleUsages().addAll(transfUsages);
-				result.setTransformationRefineCS(transfRefineCS);
-				result.setPathNameCS(pathNameCS);
-				return result;
+		TransformationHeaderCS result = org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory.eINSTANCE.createTransformationHeaderCS();
+		result.getQualifiers().addAll(createQualifiersListCS(qualifiers));
+		result.getParameters().addAll(simpleSignatureCS.getParams());
+		result.getModuleUsages().addAll(transfUsages);
+		result.setTransformationRefineCS(transfRefineCS);
+		result.setPathNameCS(pathNameCS);
+		return result;
 	}
 	
     protected ImperativeIterateExpCS createImperativeIterateExpCS(

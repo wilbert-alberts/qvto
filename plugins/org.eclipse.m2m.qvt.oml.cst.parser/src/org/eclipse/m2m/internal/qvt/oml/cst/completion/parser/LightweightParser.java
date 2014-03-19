@@ -4262,7 +4262,6 @@ protected String getRhsTokenText(int i) {
             case 558: {
                //#line 297 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				EList qualifierList = (EList) getRhsSym(1);
 				EList transfUsages = ourEmptyEList;
 				TransformationRefineCS transfRefine = null;
 				Object transformation_usage_refineOpt = getRhsSym(5);
@@ -4272,17 +4271,14 @@ protected String getRhsTokenText(int i) {
 					transfUsages = (EList) transformation_usage_refineOpt;
 				}
 				CSTNode result = createTransformationHeaderCS(
-						qualifierList,
+						(EList) getRhsSym(1),
 						(PathNameCS)getRhsSym(3),
 						(SimpleSignatureCS)getRhsSym(4),
 						transfUsages,
 						transfRefine
 					);
-				if (qualifierList.isEmpty()) {
-					setOffsets(result, getRhsIToken(2));
-				} else {
-					setOffsets(result, (CSTNode) qualifierList.get(0));
-				}
+				setOffsets(result, getRhsIToken(2));
+
 				if (transfRefine == null) {
 					if (transfUsages.isEmpty()) {
 						setOffsets(result, result, (SimpleSignatureCS)getRhsSym(4));
@@ -4308,7 +4304,7 @@ protected String getRhsTokenText(int i) {
             // Rule 564:  transformation_refine ::= refines moduleref
             //
             case 564: {
-               //#line 344 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 340 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTransformationRefineCS(
 						(ModuleRefCS)getRhsSym(2)
@@ -4322,7 +4318,7 @@ protected String getRhsTokenText(int i) {
             // Rule 565:  library_h ::= library qualifiedNameCS library_signatureOpt module_usageListOpt
             //
             case 565: {
-               //#line 357 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 353 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS name = (PathNameCS)getRhsSym(2);
 				SimpleSignatureCS signature = (getRhsSym(3) == null) ? createSimpleSignatureCS(ourEmptyEList) : (SimpleSignatureCS)getRhsSym(3);
@@ -4349,7 +4345,7 @@ protected String getRhsTokenText(int i) {
             // Rule 567:  library_h ::= library libraryDeclaration
             //
             case 567: {
-               //#line 382 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 378 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTransformationHeaderCS(
 						ourEmptyEList,
@@ -4374,7 +4370,7 @@ protected String getRhsTokenText(int i) {
             // Rule 571:  module_usageList ::= module_usage
             //
             case 571: {
-               //#line 404 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 400 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -4386,7 +4382,7 @@ protected String getRhsTokenText(int i) {
             // Rule 572:  module_usageList ::= module_usageList module_usage
             //
             case 572: {
-               //#line 411 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 407 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsSym(2));
@@ -4406,7 +4402,7 @@ protected String getRhsTokenText(int i) {
             // Rule 577:  access_usage ::= access module_kindOpt moduleref_list
             //
             case 577: {
-               //#line 426 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 422 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList moduleRefList = (EList)getRhsSym(3);
 				CSTNode result = createModuleUsageCS(
@@ -4423,7 +4419,7 @@ protected String getRhsTokenText(int i) {
             // Rule 578:  extends_usage ::= extends module_kindOpt moduleref_list
             //
             case 578: {
-               //#line 438 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 434 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList moduleRefList = (EList)getRhsSym(3);
 				CSTNode result = createModuleUsageCS(
@@ -4447,7 +4443,7 @@ protected String getRhsTokenText(int i) {
             // Rule 581:  module_kind ::= transformation
             //
             case 581: {
-               //#line 455 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 451 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createModuleKindCS(
 						ModuleKindEnum.TRANSFORMATION
@@ -4461,7 +4457,7 @@ protected String getRhsTokenText(int i) {
             // Rule 582:  module_kind ::= library
             //
             case 582: {
-               //#line 464 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 460 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createModuleKindCS(
 						ModuleKindEnum.LIBRARY
@@ -4475,7 +4471,7 @@ protected String getRhsTokenText(int i) {
             // Rule 583:  moduleref_list ::= moduleref
             //
             case 583: {
-               //#line 474 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 470 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -4487,7 +4483,7 @@ protected String getRhsTokenText(int i) {
             // Rule 584:  moduleref_list ::= moduleref_list , moduleref
             //
             case 584: {
-               //#line 481 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 477 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -4499,7 +4495,7 @@ protected String getRhsTokenText(int i) {
             // Rule 585:  moduleref_list ::= moduleref_list qvtErrorToken
             //
             case 585: {
-               //#line 488 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 484 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				setResult(result);
@@ -4510,7 +4506,7 @@ protected String getRhsTokenText(int i) {
             // Rule 586:  moduleref ::= pathNameCS simple_signatureOpt
             //
             case 586: {
-               //#line 495 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 491 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS signature = (SimpleSignatureCS)getRhsSym(2);
 				CSTNode result = createModuleRefCS(
@@ -4527,7 +4523,7 @@ protected String getRhsTokenText(int i) {
             // Rule 587:  module_elementList ::= module_elementList module_element
             //
             case 587: {
-               //#line 510 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 506 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList list = (EList)getRhsSym(1);
 				list.add(getRhsSym(2));
@@ -4554,7 +4550,7 @@ protected String getRhsTokenText(int i) {
             // Rule 597:  _modeltype ::= modeltype IDENTIFIER compliance_kindOpt uses packageref_list modeltype_whereOpt ;
             //
             case 597: {
-               //#line 533 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 529 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList whereList = (EList)getRhsSym(6);
 				EList packageRefList = (EList)getRhsSym(5);
@@ -4580,7 +4576,7 @@ protected String getRhsTokenText(int i) {
             // Rule 599:  _modeltype ::= modeltype modeltypeDeclaration
             //
             case 599: {
-               //#line 557 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 553 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ModelTypeCS result = createModelTypeCS(
 						new Token(0, 0, 0),
@@ -4605,7 +4601,7 @@ protected String getRhsTokenText(int i) {
             // Rule 602:  modeltype_where ::= where expression_block
             //
             case 602: {
-               //#line 574 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 570 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 				setResult(blockExpCS.getBodyExpressions());
@@ -4616,7 +4612,7 @@ protected String getRhsTokenText(int i) {
             // Rule 603:  packageref_list ::= packageref
             //
             case 603: {
-               //#line 581 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 577 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -4628,7 +4624,7 @@ protected String getRhsTokenText(int i) {
             // Rule 604:  packageref_list ::= packageref_list , packageref
             //
             case 604: {
-               //#line 588 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 584 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -4640,7 +4636,7 @@ protected String getRhsTokenText(int i) {
             // Rule 605:  packageref_list ::= packageref_list qvtErrorToken
             //
             case 605: {
-               //#line 595 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 591 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -4651,7 +4647,7 @@ protected String getRhsTokenText(int i) {
             // Rule 606:  packageref ::= pathNameCS
             //
             case 606: {
-               //#line 602 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 598 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)getRhsSym(1),
@@ -4666,7 +4662,7 @@ protected String getRhsTokenText(int i) {
             // Rule 607:  packageref ::= pathNameCS ( uri )
             //
             case 607: {
-               //#line 612 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 608 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
 						(PathNameCS)getRhsSym(1),
@@ -4681,7 +4677,7 @@ protected String getRhsTokenText(int i) {
             // Rule 608:  packageref ::= uri
             //
             case 608: {
-               //#line 622 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 618 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPackageRefCS(
 						null,
@@ -4703,7 +4699,7 @@ protected String getRhsTokenText(int i) {
             // Rule 613:  classifierDefCS ::= intermediate class qvtIdentifierCS classifierExtensionOpt { classifierFeatureListOpt } semicolonOpt
             //
             case 613: {
-               //#line 645 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 641 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createIntermediateClassDefCS(
 					getRhsIToken(3),
@@ -4719,7 +4715,7 @@ protected String getRhsTokenText(int i) {
             // Rule 614:  classifierDefCS ::= exception qvtIdentifierCS classifierExtensionOpt { classifierFeatureListOpt } semicolonOpt
             //
             case 614: {
-               //#line 657 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 653 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createExceptionDefCS(
 					getRhsIToken(2),
@@ -4743,7 +4739,7 @@ protected String getRhsTokenText(int i) {
             // Rule 616:  classifierExtensionOpt ::= extends type_list
             //
             case 616: {
-               //#line 671 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 667 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(2);
 				setResult(result);
@@ -4754,7 +4750,7 @@ protected String getRhsTokenText(int i) {
             // Rule 617:  type_list ::= typeCS
             //
             case 617: {
-               //#line 677 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 673 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -4766,7 +4762,7 @@ protected String getRhsTokenText(int i) {
             // Rule 618:  type_list ::= type_list , typeCS
             //
             case 618: {
-               //#line 684 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 680 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -4778,7 +4774,7 @@ protected String getRhsTokenText(int i) {
             // Rule 619:  type_list ::= type_list qvtErrorToken
             //
             case 619: {
-               //#line 691 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 687 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -4797,7 +4793,7 @@ protected String getRhsTokenText(int i) {
             // Rule 622:  classifierFeatureList ::= classifierFeatureCS
             //
             case 622: {
-               //#line 702 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 698 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -4809,7 +4805,7 @@ protected String getRhsTokenText(int i) {
             // Rule 623:  classifierFeatureList ::= classifierFeatureList ; classifierFeatureCS
             //
             case 623: {
-               //#line 709 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 705 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -4821,7 +4817,7 @@ protected String getRhsTokenText(int i) {
             // Rule 624:  classifierFeatureList ::= classifierFeatureList qvtErrorToken
             //
             case 624: {
-               //#line 716 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 712 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -4832,7 +4828,7 @@ protected String getRhsTokenText(int i) {
             // Rule 625:  classifierFeatureCS ::= stereotype_qualifier_list feature_key_list qvtIdentifierCS : typeCS multiplicityOpt ordered_prop opposite_propertyOpt init_partOpt
             //
             case 625: {
-               //#line 723 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 719 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList stereotypeQualifiers = (EList) getRhsSym(1);
 				EList featureKeys = (EList) getRhsSym(2);
@@ -4886,7 +4882,7 @@ protected String getRhsTokenText(int i) {
             // Rule 628:  init_partOpt ::= = OclExpressionCS
             //
             case 628: {
-               //#line 769 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 765 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = (CSTNode) getRhsSym(2);
 				setResult(result);
@@ -4905,7 +4901,7 @@ protected String getRhsTokenText(int i) {
             // Rule 630:  stereotype_qualifier_list ::= STEREOTYPE_QUALIFIER_OPEN identifier_list STEREOTYPE_QUALIFIER_CLOSE
             //
             case 630: {
-               //#line 778 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 774 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(2);
 				setResult(result);
@@ -4916,7 +4912,7 @@ protected String getRhsTokenText(int i) {
             // Rule 631:  identifier_list ::= qvtIdentifierCS
             //
             case 631: {
-               //#line 785 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 781 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsIToken(1));
@@ -4928,7 +4924,7 @@ protected String getRhsTokenText(int i) {
             // Rule 632:  identifier_list ::= identifier_list , qvtIdentifierCS
             //
             case 632: {
-               //#line 792 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 788 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsIToken(3));
@@ -4940,7 +4936,7 @@ protected String getRhsTokenText(int i) {
             // Rule 633:  identifier_list ::= identifier_list qvtErrorToken
             //
             case 633: {
-               //#line 799 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 795 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -4959,7 +4955,7 @@ protected String getRhsTokenText(int i) {
             // Rule 635:  feature_key_list ::= feature_key_list feature_key
             //
             case 635: {
-               //#line 808 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 804 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsSym(2));
@@ -4971,7 +4967,7 @@ protected String getRhsTokenText(int i) {
             // Rule 636:  feature_key_list ::= feature_key_list qvtErrorToken
             //
             case 636: {
-               //#line 815 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 811 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -5006,7 +5002,7 @@ protected String getRhsTokenText(int i) {
             // Rule 641:  feature_key ::= static
             //
             case 641: {
-               //#line 830 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 826 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -5025,7 +5021,7 @@ protected String getRhsTokenText(int i) {
             // Rule 643:  multiplicityOpt ::= LBRACKET multiplicity_range RBRACKET
             //
             case 643: {
-               //#line 840 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 836 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = (CSTNode) getRhsSym(2);
 				setResult(result);
@@ -5036,7 +5032,7 @@ protected String getRhsTokenText(int i) {
             // Rule 644:  multiplicity_range ::= IntegerLiteralExpCS
             //
             case 644: {
-               //#line 847 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 843 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMultiplicityDefCS(
 						(PrimitiveLiteralExpCS) getRhsSym(1),
@@ -5051,7 +5047,7 @@ protected String getRhsTokenText(int i) {
             // Rule 645:  multiplicity_range ::= UnlimitedNaturalLiteralExpCS
             //
             case 645: {
-               //#line 857 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 853 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PrimitiveLiteralExpCS lowerBound = createIntegerLiteralExpCS(Integer.toString(0));
 				setOffsets(lowerBound, getRhsIToken(1));
@@ -5086,7 +5082,7 @@ protected String getRhsTokenText(int i) {
             // Rule 649:  multiplicity_range ::= IntegerLiteralExpCS DOTDOT UnlimitedNaturalLiteralExpCS
             //
             case 649: {
-               //#line 875 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 871 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMultiplicityDefCS(
 						(PrimitiveLiteralExpCS) getRhsSym(1),
@@ -5101,7 +5097,7 @@ protected String getRhsTokenText(int i) {
             // Rule 650:  ordered_prop ::= ordered
             //
             case 650: {
-               //#line 886 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 882 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
 				setOffsets(result, getRhsIToken(1));
@@ -5113,7 +5109,7 @@ protected String getRhsTokenText(int i) {
             // Rule 651:  ordered_prop ::= $Empty
             //
             case 651: {
-               //#line 893 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 889 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
 				setResult(result);
@@ -5131,7 +5127,7 @@ protected String getRhsTokenText(int i) {
             // Rule 653:  opposite_propertyOpt ::= opposites navigable_prop qvtIdentifierCS multiplicityOpt
             //
             case 653: {
-               //#line 902 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 898 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MultiplicityDefCS multiplicityDef = (MultiplicityDefCS) getRhsSym(4);
 				CSTNode result = createOppositePropertyCS(
@@ -5151,7 +5147,7 @@ protected String getRhsTokenText(int i) {
             // Rule 654:  navigable_prop ::= ~
             //
             case 654: {
-               //#line 918 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 914 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.FALSE.toString());
 				setOffsets(result, getRhsIToken(1));
@@ -5163,7 +5159,7 @@ protected String getRhsTokenText(int i) {
             // Rule 655:  navigable_prop ::= $Empty
             //
             case 655: {
-               //#line 925 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 921 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createBooleanLiteralExpCS(Boolean.TRUE.toString());
 				setResult(result);
@@ -5174,7 +5170,7 @@ protected String getRhsTokenText(int i) {
             // Rule 656:  _property ::= configuration property qvtIdentifierCS : typeCS ;
             //
             case 656: {
-               //#line 934 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 930 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createConfigPropertyCS(
 						getRhsIToken(3),
@@ -5189,7 +5185,7 @@ protected String getRhsTokenText(int i) {
             // Rule 657:  _property ::= configuration property qvtIdentifierCS : typeCS qvtErrorToken
             //
             case 657: {
-               //#line 944 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 940 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createConfigPropertyCS(
 						getRhsIToken(3),
@@ -5204,7 +5200,7 @@ protected String getRhsTokenText(int i) {
             // Rule 658:  _property ::= property qvtIdentifierCS : typeCS = OclExpressionCS ;
             //
             case 658: {
-               //#line 954 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 950 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
 						getRhsIToken(2),
@@ -5220,7 +5216,7 @@ protected String getRhsTokenText(int i) {
             // Rule 659:  _property ::= property qvtIdentifierCS = OclExpressionCS ;
             //
             case 659: {
-               //#line 965 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 961 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
 						getRhsIToken(2),
@@ -5236,7 +5232,7 @@ protected String getRhsTokenText(int i) {
             // Rule 660:  _property ::= property qvtIdentifierCS : typeCS ;
             //
             case 660: {
-               //#line 976 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 972 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLocalPropertyCS(
 						getRhsIToken(2),
@@ -5252,7 +5248,7 @@ protected String getRhsTokenText(int i) {
             // Rule 661:  _property ::= intermediate property scoped_identifier : typeCS ;
             //
             case 661: {
-               //#line 987 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 983 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createContextualPropertyCS(
 						(ScopedNameCS)getRhsSym(3),
@@ -5268,7 +5264,7 @@ protected String getRhsTokenText(int i) {
             // Rule 662:  _property ::= intermediate property scoped_identifier : typeCS = OclExpressionCS ;
             //
             case 662: {
-               //#line 998 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 994 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createContextualPropertyCS(
 						(ScopedNameCS)getRhsSym(3),
@@ -5284,7 +5280,7 @@ protected String getRhsTokenText(int i) {
             // Rule 666:  helper_header ::= helper_info scoped_identifier complete_signature
             //
             case 666: {
-               //#line 1016 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1012 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CompleteSignatureCS completeSignature = (CompleteSignatureCS)getRhsSym(3);
 				Object[] helperInfo = (Object[])getRhsSym(1);
@@ -5313,7 +5309,7 @@ protected String getRhsTokenText(int i) {
             // Rule 667:  helper_header ::= helper_info qvtErrorToken
             //
             case 667: {
-               //#line 1041 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1037 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				Object[] helperInfo = (Object[])getRhsSym(1);
 				MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
@@ -5341,7 +5337,7 @@ protected String getRhsTokenText(int i) {
             // Rule 668:  helper_info ::= qualifierList helper_kind
             //
             case 668: {
-               //#line 1065 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1061 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {getRhsSym(1), getRhsIToken(2)});
 	                  break;
@@ -5351,7 +5347,7 @@ protected String getRhsTokenText(int i) {
             // Rule 671:  helper_decl ::= helper_header ;
             //
             case 671: {
-               //#line 1074 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1070 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				MappingQueryCS result = createMappingQueryCS(
@@ -5368,7 +5364,7 @@ protected String getRhsTokenText(int i) {
             // Rule 672:  helper_decl ::= helper_header qvtErrorToken
             //
             case 672: {
-               //#line 1087 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1083 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				MappingQueryCS result = createMappingQueryCS(
@@ -5385,7 +5381,7 @@ protected String getRhsTokenText(int i) {
             // Rule 673:  helper_simple_def ::= helper_header = OclExpressionCS ;
             //
             case 673: {
-               //#line 1100 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1096 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				OCLExpressionCS expression = (OCLExpressionCS)getRhsSym(3);
@@ -5408,7 +5404,7 @@ protected String getRhsTokenText(int i) {
             // Rule 674:  helper_compound_def ::= helper_header expression_block semicolonOpt
             //
             case 674: {
-               //#line 1119 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1115 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				BlockExpCS blockExpCS = (BlockExpCS)getRhsSym(2);
@@ -5426,7 +5422,7 @@ protected String getRhsTokenText(int i) {
             // Rule 677:  constructor_header ::= qualifierList constructor scoped_identifier simple_signature
             //
             case 677: {
-               //#line 1138 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1134 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS signature = (SimpleSignatureCS) getRhsSym(4);					
 				MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
@@ -5450,7 +5446,7 @@ protected String getRhsTokenText(int i) {
             // Rule 678:  constructor_decl ::= constructor_header ;
             //
             case 678: {
-               //#line 1158 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1154 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
 				ConstructorCS result = createConstructorCS(
@@ -5466,7 +5462,7 @@ protected String getRhsTokenText(int i) {
             // Rule 679:  constructor_decl ::= constructor_header qvtErrorToken
             //
             case 679: {
-               //#line 1170 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1166 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
 				ConstructorCS result = createConstructorCS(
@@ -5482,7 +5478,7 @@ protected String getRhsTokenText(int i) {
             // Rule 680:  constructor_def ::= constructor_header expression_block semicolonOpt
             //
             case 680: {
-               //#line 1182 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1178 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS) getRhsSym(1);
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
@@ -5499,7 +5495,7 @@ protected String getRhsTokenText(int i) {
             // Rule 683:  entry_header ::= main simple_signature
             //
             case 683: {
-               //#line 1201 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1197 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				IToken nameToken = getRhsIToken(1);				
 				ScopedNameCS nameCS = createScopedNameCS(null, getRhsTokenText(1));								
@@ -5522,7 +5518,7 @@ protected String getRhsTokenText(int i) {
             // Rule 684:  entry_header ::= main qvtErrorToken
             //
             case 684: {
-               //#line 1220 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1216 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingDeclarationCS(
 						null,
@@ -5539,7 +5535,7 @@ protected String getRhsTokenText(int i) {
             // Rule 685:  entry_decl ::= entry_header ;
             //
             case 685: {
-               //#line 1233 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1229 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				MappingQueryCS result = createMappingQueryCS(
@@ -5556,7 +5552,7 @@ protected String getRhsTokenText(int i) {
             // Rule 686:  entry_def ::= entry_header expression_block semicolonOpt
             //
             case 686: {
-               //#line 1246 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1242 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDecl = (MappingDeclarationCS)getRhsSym(1);
 				BlockExpCS blockExpCS = (BlockExpCS)getRhsSym(2);
@@ -5574,7 +5570,7 @@ protected String getRhsTokenText(int i) {
             // Rule 687:  _tag ::= tag StringLiteralExpCS scoped_identifier tag_valueOpt
             //
             case 687: {
-               //#line 1264 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1260 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS valueExpression = (OCLExpressionCS) getRhsSym(4);
 				CSTNode result = createTagCS(
@@ -5598,7 +5594,7 @@ protected String getRhsTokenText(int i) {
             // Rule 689:  tag_valueOpt ::= = OclExpressionCS
             //
             case 689: {
-               //#line 1279 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1275 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(2));
 	                  break;
@@ -5608,7 +5604,7 @@ protected String getRhsTokenText(int i) {
             // Rule 692:  mapping_decl ::= mapping_full_header ;
             //
             case 692: {
-               //#line 1292 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1288 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 				MappingRuleCS result = createMappingRuleCS(
@@ -5625,7 +5621,7 @@ protected String getRhsTokenText(int i) {
             // Rule 693:  mapping_def ::= mapping_full_header { mapping_body } semicolonOpt
             //
             case 693: {
-               //#line 1305 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1301 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingSectionsCS mappingSections = (MappingSectionsCS)getRhsSym(3);
 				setOffsets(mappingSections, getRhsIToken(2), getRhsIToken(4));
@@ -5655,7 +5651,7 @@ protected String getRhsTokenText(int i) {
             // Rule 694:  mapping_def ::= mapping_full_header { qvtErrorToken
             //
             case 694: {
-               //#line 1331 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1327 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
 				MappingRuleCS result = createMappingRuleCS(
@@ -5672,7 +5668,7 @@ protected String getRhsTokenText(int i) {
             // Rule 695:  mapping_full_header ::= mapping_header _whenOpt
             //
             case 695: {
-               //#line 1344 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1340 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(new Object[] {getRhsSym(1), getRhsSym(2)});
 	                  break;
@@ -5682,7 +5678,7 @@ protected String getRhsTokenText(int i) {
             // Rule 696:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier complete_signature mapping_extraList
             //
             case 696: {
-               //#line 1350 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1346 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS directionKind = (DirectionKindCS)getRhsSym(3);
 				CompleteSignatureCS completeSignature = (CompleteSignatureCS)getRhsSym(5);
@@ -5711,7 +5707,7 @@ protected String getRhsTokenText(int i) {
             // Rule 697:  mapping_header ::= qualifierList mapping param_directionOpt scoped_identifier qvtErrorToken
             //
             case 697: {
-               //#line 1375 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1371 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS directionKind = (DirectionKindCS)getRhsSym(3);
 				MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
@@ -5737,7 +5733,7 @@ protected String getRhsTokenText(int i) {
             // Rule 698:  mapping_header ::= qualifierList mapping qvtErrorToken
             //
             case 698: {
-               //#line 1397 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1393 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingDeclarationCS mappingDeclarationCS = createMappingDeclarationCS(
 					null,
@@ -5761,7 +5757,7 @@ protected String getRhsTokenText(int i) {
             // Rule 699:  mapping_extraList ::= mapping_extraList mapping_extra
             //
             case 699: {
-               //#line 1418 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1414 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<MappingExtensionCS> extensionList = (EList<MappingExtensionCS>)getRhsSym(1);
 				extensionList.add((MappingExtensionCS)getRhsSym(2));
@@ -5781,7 +5777,7 @@ protected String getRhsTokenText(int i) {
             // Rule 702:  mapping_extension ::= mapping_extension_key scoped_identifier_list
             //
             case 702: {
-               //#line 1431 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1427 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingExtensionCS result = createMappingExtension(getRhsTokenText(1), (EList<ScopedNameCS>)getRhsSym(2));
 
@@ -5804,7 +5800,7 @@ protected String getRhsTokenText(int i) {
             // Rule 708:  _when ::= when expression_block
             //
             case 708: {
-               //#line 1450 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1446 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 				setResult(blockExpCS.getBodyExpressions());
@@ -5823,7 +5819,7 @@ protected String getRhsTokenText(int i) {
             // Rule 710:  mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt
             //
             case 710: {
-               //#line 1459 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1455 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 	                        MappingInitCS mappingInitCS = (MappingInitCS)getRhsSym(1);
 				MappingBodyCS mappingBodyCS = (MappingBodyCS)getRhsSym(2);
@@ -5861,7 +5857,7 @@ protected String getRhsTokenText(int i) {
             // Rule 713:  init_section ::= init expression_block
             //
             case 713: {
-               //#line 1490 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1486 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 				CSTNode result = createMappingInitCS(
@@ -5878,7 +5874,7 @@ protected String getRhsTokenText(int i) {
             // Rule 714:  init_section ::= init qvtErrorToken
             //
             case 714: {
-               //#line 1503 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1499 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingInitCS(
 						ourEmptyEList,
@@ -5894,7 +5890,7 @@ protected String getRhsTokenText(int i) {
             // Rule 715:  population_sectionOpt ::= $Empty
             //
             case 715: {
-               //#line 1516 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1512 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				MappingBodyCS result = createMappingBodyCS(
 						ourEmptyEList,
@@ -5911,7 +5907,7 @@ protected String getRhsTokenText(int i) {
             // Rule 717:  population_section ::= expression_list
             //
             case 717: {
-               //#line 1530 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1526 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<OCLExpressionCS> expressionList = (EList<OCLExpressionCS>) getRhsSym(1);
 				MappingBodyCS result = createMappingBodyCS(
@@ -5935,7 +5931,7 @@ protected String getRhsTokenText(int i) {
             // Rule 718:  population_section ::= population expression_block
             //
             case 718: {
-               //#line 1550 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1546 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 				MappingBodyCS result = createMappingBodyCS(
@@ -5951,7 +5947,7 @@ protected String getRhsTokenText(int i) {
             // Rule 719:  population_section ::= population qvtErrorToken
             //
             case 719: {
-               //#line 1562 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1558 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingBodyCS(
 						ourEmptyEList,
@@ -5973,7 +5969,7 @@ protected String getRhsTokenText(int i) {
             // Rule 722:  end_section ::= end expression_block
             //
             case 722: {
-               //#line 1577 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1573 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
 				CSTNode result = createMappingEndCS(
@@ -5990,7 +5986,7 @@ protected String getRhsTokenText(int i) {
             // Rule 723:  end_section ::= end qvtErrorToken
             //
             case 723: {
-               //#line 1590 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1586 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingEndCS(
 						ourEmptyEList,
@@ -6013,7 +6009,7 @@ protected String getRhsTokenText(int i) {
             // Rule 726:  objectDeclCS ::= typespec
             //
             case 726: {
-               //#line 1608 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1604 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createOutExpCS(null, (TypeSpecCS)getRhsSym(1));
 				setResult(result);
@@ -6024,7 +6020,7 @@ protected String getRhsTokenText(int i) {
             // Rule 730:  objectDeclCS ::= objectIdentifierCS : typespecOpt
             //
             case 730: {
-               //#line 1619 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1615 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 			SimpleNameCS varName = createSimpleNameCS(SimpleTypeEnum.IDENTIFIER_LITERAL, getRhsIToken(1));
 			setOffsets(varName, getRhsIToken(1));
@@ -6037,7 +6033,7 @@ protected String getRhsTokenText(int i) {
             // Rule 731:  outExpCS ::= object objectDeclCS expression_block
             //
             case 731: {
-               //#line 1628 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1624 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(3);
 				CSTNode result = setupOutExpCS(
@@ -6056,7 +6052,7 @@ protected String getRhsTokenText(int i) {
             // Rule 732:  outExpCS ::= object objectDeclCS qvtErrorToken
             //
             case 732: {
-               //#line 1642 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1638 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ObjectExpCS objectDeclCS = ((ObjectExpCS) getRhsSym(2));  
 				CSTNode result = createOutExpCS(
@@ -6076,7 +6072,7 @@ protected String getRhsTokenText(int i) {
             // Rule 733:  featureMappingCallExpCS ::= map simpleNameCS ( argumentsCSopt )
             //
             case 733: {
-               //#line 1658 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1654 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
 						null,
@@ -6093,7 +6089,7 @@ protected String getRhsTokenText(int i) {
             // Rule 734:  featureMappingCallExpCS ::= xmap simpleNameCS ( argumentsCSopt )
             //
             case 734: {
-               //#line 1670 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1666 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
 						null,
@@ -6110,7 +6106,7 @@ protected String getRhsTokenText(int i) {
             // Rule 735:  featureMappingCallExpCS ::= map simpleNameCS :: simpleNameCS ( argumentsCSopt )
             //
             case 735: {
-               //#line 1683 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1679 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
 						(SimpleNameCS)getRhsSym(2),
@@ -6127,7 +6123,7 @@ protected String getRhsTokenText(int i) {
             // Rule 736:  featureMappingCallExpCS ::= xmap simpleNameCS :: simpleNameCS ( argumentsCSopt )
             //
             case 736: {
-               //#line 1695 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1691 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createFeatureMappingCallExpCS(
 						(SimpleNameCS)getRhsSym(2),
@@ -6144,7 +6140,7 @@ protected String getRhsTokenText(int i) {
             // Rule 737:  mappingCallExpCS ::= map pathNameCS ( argumentsCSopt )
             //
             case 737: {
-               //#line 1708 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1704 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingCallExpCS(
 						(PathNameCS)getRhsSym(2),
@@ -6160,7 +6156,7 @@ protected String getRhsTokenText(int i) {
             // Rule 738:  mappingCallExpCS ::= xmap pathNameCS ( argumentsCSopt )
             //
             case 738: {
-               //#line 1719 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1715 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createMappingCallExpCS(
 						(PathNameCS)getRhsSym(2),
@@ -6183,7 +6179,7 @@ protected String getRhsTokenText(int i) {
             // Rule 740:  resolveConditionOpt ::= | OclExpressionCS
             //
             case 740: {
-               //#line 1736 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1732 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 setResult((OCLExpressionCS)getRhsSym(2));
                       break;
@@ -6207,7 +6203,7 @@ protected String getRhsTokenText(int i) {
             // Rule 743:  IDENTIFIEROpt ::= IDENTIFIER :
             //
             case 743: {
-               //#line 1748 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1744 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 setResult(getRhsIToken(1));
                       break;
@@ -6224,7 +6220,7 @@ protected String getRhsTokenText(int i) {
             // Rule 746:  resolveOpArgsExpCS ::= IDENTIFIEROpt typeCS resolveConditionOpt
             //
             case 746: {
-               //#line 1759 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1755 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveOpArgsExpCS(
                         getRhsIToken(1),      // target_type_variable?
@@ -6246,7 +6242,7 @@ protected String getRhsTokenText(int i) {
             // Rule 753:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt )
             //
             case 753: {
-               //#line 1779 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1775 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
                             getRhsIToken(1),
@@ -6261,7 +6257,7 @@ protected String getRhsTokenText(int i) {
             // Rule 754:  resolveExpCS ::= lateOpt resolveOp ( resolveOpArgsExpCSOpt qvtErrorToken
             //
             case 754: {
-               //#line 1790 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1786 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
                             getRhsIToken(1),
@@ -6276,7 +6272,7 @@ protected String getRhsTokenText(int i) {
             // Rule 755:  resolveExpCS ::= lateOpt resolveOp qvtErrorToken
             //
             case 755: {
-               //#line 1801 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1797 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveExpCS(
                         getRhsIToken(1),
@@ -6291,7 +6287,7 @@ protected String getRhsTokenText(int i) {
             // Rule 756:  resolveExpCS ::= late qvtErrorToken
             //
             case 756: {
-               //#line 1812 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1808 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
     			IToken lateToken = getRhsIToken(1);
                 CSTNode result = createResolveExpCS(
@@ -6307,7 +6303,7 @@ protected String getRhsTokenText(int i) {
             // Rule 761:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCS )
             //
             case 761: {
-               //#line 1829 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1825 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
                         getRhsIToken(1),
@@ -6323,7 +6319,7 @@ protected String getRhsTokenText(int i) {
             // Rule 762:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier )
             //
             case 762: {
-               //#line 1841 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1837 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
                         getRhsIToken(1),
@@ -6339,7 +6335,7 @@ protected String getRhsTokenText(int i) {
             // Rule 763:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier , resolveOpArgsExpCSOpt qvtErrorToken
             //
             case 763: {
-               //#line 1854 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1850 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
                         getRhsIToken(1),
@@ -6355,7 +6351,7 @@ protected String getRhsTokenText(int i) {
             // Rule 764:  resolveInExpCS ::= lateOpt resolveInOp ( scoped_identifier qvtErrorToken
             //
             case 764: {
-               //#line 1866 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1862 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
                         getRhsIToken(1),
@@ -6371,7 +6367,7 @@ protected String getRhsTokenText(int i) {
             // Rule 765:  resolveInExpCS ::= lateOpt resolveInOp ( qvtErrorToken
             //
             case 765: {
-               //#line 1878 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1874 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                     CSTNode result = createResolveInExpCS(
                             getRhsIToken(1),
@@ -6387,7 +6383,7 @@ protected String getRhsTokenText(int i) {
             // Rule 766:  resolveInExpCS ::= lateOpt resolveInOp qvtErrorToken
             //
             case 766: {
-               //#line 1890 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1886 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
                 CSTNode result = createResolveInExpCS(
                         getRhsIToken(1),
@@ -6403,7 +6399,7 @@ protected String getRhsTokenText(int i) {
             // Rule 769:  OperationCallExpCS ::= primaryExpCS -> resolveResolveInExpCS
             //
             case 769: {
-               //#line 1906 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1902 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				CallExpCS result = (CallExpCS)getRhsSym(3);
@@ -6417,7 +6413,7 @@ protected String getRhsTokenText(int i) {
             // Rule 770:  OperationCallExpCS ::= primaryExpCS . resolveResolveInExpCS
             //
             case 770: {
-               //#line 1915 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1911 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				CallExpCS result = (CallExpCS)getRhsSym(3);
@@ -6431,7 +6427,7 @@ protected String getRhsTokenText(int i) {
             // Rule 772:  OperationCallExpCS ::= primaryExpCS -> featureMappingCallExpCS
             //
             case 772: {
-               //#line 1932 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1928 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				CallExpCS result = (CallExpCS)getRhsSym(3);
@@ -6445,7 +6441,7 @@ protected String getRhsTokenText(int i) {
             // Rule 773:  OperationCallExpCS ::= primaryExpCS . featureMappingCallExpCS
             //
             case 773: {
-               //#line 1941 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1937 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				OCLExpressionCS source = (OCLExpressionCS)getRhsSym(1);
 				CallExpCS result = (CallExpCS)getRhsSym(3);
@@ -6465,7 +6461,7 @@ protected String getRhsTokenText(int i) {
             // Rule 777:  simpleNameCS ::= result
             //
             case 777: {
-               //#line 1957 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1953 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(
 						SimpleTypeEnum.IDENTIFIER_LITERAL,
@@ -6480,7 +6476,7 @@ protected String getRhsTokenText(int i) {
             // Rule 778:  letExpSubCS3 ::= untypedInitializedVariableCS
             //
             case 778: {
-               //#line 1971 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1967 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -6492,7 +6488,7 @@ protected String getRhsTokenText(int i) {
             // Rule 779:  letExpSubCS3 ::= letExpSubCS3 , untypedInitializedVariableCS
             //
             case 779: {
-               //#line 1978 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1974 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -6504,7 +6500,7 @@ protected String getRhsTokenText(int i) {
             // Rule 780:  LetExpCS ::= let letExpSubCS3 in OclExpressionCS
             //
             case 780: {
-               //#line 1986 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1982 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList variables = (EList)getRhsSym(2);
 				CSTNode result = createLetExpCS(
@@ -6520,7 +6516,7 @@ protected String getRhsTokenText(int i) {
             // Rule 781:  LetExpCS ::= let letExpSubCS3 in qvtErrorToken
             //
             case 781: {
-               //#line 1997 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 1993 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList variables = (EList)getRhsSym(2);
 				CSTNode result = createLetExpCS(
@@ -6542,7 +6538,7 @@ protected String getRhsTokenText(int i) {
             // Rule 783:  equalityWithLetCS ::= equalityNotLetCS != relationalWithLetCS
             //
             case 783: {
-               //#line 2014 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2010 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleNameCS simpleNameCS = createSimpleNameCS(
 							SimpleTypeEnum.STRING_LITERAL,
@@ -6565,7 +6561,7 @@ protected String getRhsTokenText(int i) {
             // Rule 784:  _import ::= import library unit ;
             //
             case 784: {
-               //#line 2038 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2034 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createLibraryImportCS(
 						(PathNameCS)getRhsSym(3)
@@ -6579,21 +6575,17 @@ protected String getRhsTokenText(int i) {
             // Rule 785:  transformation_h ::= qualifierList transformation qualifiedNameCS
             //
             case 785: {
-               //#line 2048 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2044 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
-				EList qualifierList = (EList) getRhsSym(1);
 				CSTNode result = createTransformationHeaderCS(
-						qualifierList,
+						(EList) getRhsSym(1),
 						(PathNameCS)getRhsSym(3),
 						createSimpleSignatureCS(ourEmptyEList),
 						ourEmptyEList,
 						null
 					);
-				if (qualifierList.isEmpty()) {
-					setOffsets(result, getRhsIToken(2), (PathNameCS)getRhsSym(3));
-				} else {
-					setOffsets(result, (CSTNode) qualifierList.get(0), (PathNameCS)getRhsSym(3));
-				}
+				setOffsets(result, getRhsIToken(2), (PathNameCS)getRhsSym(3));
+
 				setResult(result);
 	                  break;
             }
@@ -6602,7 +6594,7 @@ protected String getRhsTokenText(int i) {
             // Rule 787:  renaming ::= rename typeCS . qvtIdentifierCS = StringLiteralExpCS ;
             //
             case 787: {
-               //#line 2068 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2060 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createRenameCS(
 						(TypeCS)getRhsSym(2),
@@ -6626,7 +6618,7 @@ protected String getRhsTokenText(int i) {
             // Rule 789:  qualifierList ::= qualifierList qualifier
             //
             case 789: {
-               //#line 2088 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2080 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList) getRhsSym(1);
 				result.add(getRhsSym(2));
@@ -6650,7 +6642,7 @@ protected String getRhsTokenText(int i) {
             // Rule 792:  qualifier ::= static
             //
             case 792: {
-               //#line 2100 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2092 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleNameCS(SimpleTypeEnum.KEYWORD_LITERAL, getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -6670,7 +6662,7 @@ protected String getRhsTokenText(int i) {
             // Rule 794:  colon_param_listOpt ::= : param_list
             //
             case 794: {
-               //#line 2111 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2103 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				setResult(getRhsSym(2));
 	                  break;
@@ -6680,7 +6672,7 @@ protected String getRhsTokenText(int i) {
             // Rule 795:  complete_signature ::= simple_signature colon_param_listOpt
             //
             case 795: {
-               //#line 2117 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2109 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				SimpleSignatureCS simpleSignatureCS = (SimpleSignatureCS)getRhsSym(1);
 				EList<ParameterDeclarationCS> resultList = (EList<ParameterDeclarationCS>)getRhsSym(2);
@@ -6702,7 +6694,7 @@ protected String getRhsTokenText(int i) {
             // Rule 798:  simple_signature ::= ( param_listOpt )
             //
             case 798: {
-               //#line 2132 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2124 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createSimpleSignatureCS((EList<ParameterDeclarationCS>)getRhsSym(2));
 				setOffsets(result, getRhsIToken(1), getRhsIToken(3));
@@ -6722,7 +6714,7 @@ protected String getRhsTokenText(int i) {
             // Rule 801:  param_list ::= param_list , param
             //
             case 801: {
-               //#line 2144 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2136 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -6734,7 +6726,7 @@ protected String getRhsTokenText(int i) {
             // Rule 802:  param_list ::= param_list , qvtErrorToken
             //
             case 802: {
-               //#line 2151 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2143 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -6745,7 +6737,7 @@ protected String getRhsTokenText(int i) {
             // Rule 803:  param_list ::= param
             //
             case 803: {
-               //#line 2157 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2149 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -6757,7 +6749,7 @@ protected String getRhsTokenText(int i) {
             // Rule 804:  param_list ::= qvtErrorToken
             //
             case 804: {
-               //#line 2164 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2156 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				setResult(result);
@@ -6768,7 +6760,7 @@ protected String getRhsTokenText(int i) {
             // Rule 805:  param ::= param_directionOpt IDENTIFIER : typespec
             //
             case 805: {
-               //#line 2171 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2163 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
 				CSTNode result = createParameterDeclarationCS(
@@ -6788,7 +6780,7 @@ protected String getRhsTokenText(int i) {
             // Rule 806:  param ::= param_directionOpt typespec
             //
             case 806: {
-               //#line 2187 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2179 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				DirectionKindCS paramDirectionCS = (DirectionKindCS) getRhsSym(1);
 				TypeSpecCS paramTypeCS = (TypeSpecCS) getRhsSym(2);
@@ -6816,7 +6808,7 @@ protected String getRhsTokenText(int i) {
             // Rule 809:  param_direction ::= in
             //
             case 809: {
-               //#line 2208 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2200 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.IN
@@ -6830,7 +6822,7 @@ protected String getRhsTokenText(int i) {
             // Rule 810:  param_direction ::= out
             //
             case 810: {
-               //#line 2217 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2209 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.OUT
@@ -6844,7 +6836,7 @@ protected String getRhsTokenText(int i) {
             // Rule 811:  param_direction ::= inout
             //
             case 811: {
-               //#line 2226 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2218 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createDirectionKindCS(
 						DirectionKindEnum.INOUT
@@ -6858,7 +6850,7 @@ protected String getRhsTokenText(int i) {
             // Rule 812:  typespec ::= typeCS
             //
             case 812: {
-               //#line 2237 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2229 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
 					(TypeCS)getRhsSym(1),
@@ -6872,7 +6864,7 @@ protected String getRhsTokenText(int i) {
             // Rule 813:  typespec ::= typeCS @ IDENTIFIER
             //
             case 813: {
-               //#line 2246 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2238 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createTypeSpecCS(
 					(TypeCS)getRhsSym(1),
@@ -6886,7 +6878,7 @@ protected String getRhsTokenText(int i) {
             // Rule 819:  scoped_identifier ::= typeCS2 :: IDENTIFIER
             //
             case 819: {
-               //#line 2263 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2255 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), getRhsTokenText(3));		
 				setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(3));
@@ -6898,7 +6890,7 @@ protected String getRhsTokenText(int i) {
             // Rule 820:  scoped_identifier ::= typeCS2 :: qvtErrorToken
             //
             case 820: {
-               //#line 2270 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2262 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				ScopedNameCS result = createScopedNameCS((TypeCS)getRhsSym(1), ""); 		 //$NON-NLS-1$
 				setOffsets(result, (CSTNode) getRhsSym(1), getRhsIToken(2));
@@ -6910,7 +6902,7 @@ protected String getRhsTokenText(int i) {
             // Rule 821:  scoped_identifier ::= scoped_identifier2
             //
             case 821: {
-               //#line 2277 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2269 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS pathNameCS = (PathNameCS)getRhsSym(1);
 				String name = pathNameCS.getSimpleNames().remove(pathNameCS.getSimpleNames().size() - 1).getValue();
@@ -6931,7 +6923,7 @@ protected String getRhsTokenText(int i) {
             // Rule 822:  scoped_identifier2 ::= IDENTIFIER
             //
             case 822: {
-               //#line 2293 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2285 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -6943,7 +6935,7 @@ protected String getRhsTokenText(int i) {
             // Rule 823:  scoped_identifier2 ::= main
             //
             case 823: {
-               //#line 2300 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2292 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -6955,7 +6947,7 @@ protected String getRhsTokenText(int i) {
             // Rule 824:  scoped_identifier2 ::= scoped_identifier2 :: IDENTIFIER
             //
             case 824: {
-               //#line 2307 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2299 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6968,7 +6960,7 @@ protected String getRhsTokenText(int i) {
             // Rule 825:  scoped_identifier2 ::= scoped_identifier2 :: qvtErrorToken
             //
             case 825: {
-               //#line 2315 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2307 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -6981,7 +6973,7 @@ protected String getRhsTokenText(int i) {
             // Rule 826:  scoped_identifier_list ::= scoped_identifier
             //
             case 826: {
-               //#line 2323 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2315 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList<Object> result = new BasicEList<Object>();
 				result.add(getRhsSym(1));
@@ -6993,7 +6985,7 @@ protected String getRhsTokenText(int i) {
             // Rule 827:  scoped_identifier_list ::= scoped_identifier_list , scoped_identifier
             //
             case 827: {
-               //#line 2330 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2322 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				result.add(getRhsSym(3));
@@ -7005,7 +6997,7 @@ protected String getRhsTokenText(int i) {
             // Rule 828:  scoped_identifier_list ::= scoped_identifier_list qvtErrorToken
             //
             case 828: {
-               //#line 2337 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2329 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				EList result = (EList)getRhsSym(1);
 				setResult(result);
@@ -7016,7 +7008,7 @@ protected String getRhsTokenText(int i) {
             // Rule 829:  qualifiedNameCS ::= qvtIdentifierCS
             //
             case 829: {
-               //#line 2344 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2336 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				CSTNode result = createPathNameCS(getRhsIToken(1));
 				setOffsets(result, getRhsIToken(1));
@@ -7028,7 +7020,7 @@ protected String getRhsTokenText(int i) {
             // Rule 830:  qualifiedNameCS ::= qualifiedNameCS . qvtIdentifierCS
             //
             case 830: {
-               //#line 2351 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2343 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -7041,7 +7033,7 @@ protected String getRhsTokenText(int i) {
             // Rule 831:  qualifiedNameCS ::= qualifiedNameCS . qvtErrorToken
             //
             case 831: {
-               //#line 2359 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2351 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				result = extendPathNameCS(result, getRhsIToken(3));
@@ -7054,7 +7046,7 @@ protected String getRhsTokenText(int i) {
             // Rule 832:  qualifiedNameCS ::= qualifiedNameCS qvtErrorToken
             //
             case 832: {
-               //#line 2367 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
+               //#line 2359 "../lpg/btParserTemplateF.gi" //$NON-NLS-1$
 				
 				PathNameCS result = (PathNameCS)getRhsSym(1);
 				setResult(result);

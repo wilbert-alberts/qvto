@@ -2263,7 +2263,7 @@ public class QvtOperationalVisitorCS
 			for(QualifierKindCS duplicate : qualifierDups) {
 				String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_duplicateQualifierOnOperation, 
 						duplicate.getName(), QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));			
-				env.reportError(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
+				env.reportWarning(errMessage, QvtOperationalParserUtil.getMethodNameProblemNodeCS(methodCS));
 			}
 			
 	        if(myCompilerOptions.isGenerateCompletionData()) {
@@ -3190,13 +3190,28 @@ public class QvtOperationalVisitorCS
 	}
  
 	protected void visitTransformationHeaderCS(TransformationHeaderCS headerCS,	QvtOperationalModuleEnv env, Module module) {
-		if (!headerCS.getQualifiers().isEmpty()) {
-			env.reportWarning(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_transfQualifiersNotSupported,
-					new Object[] { }), 
-					headerCS.getQualifiers().get(0).getStartOffset(),
-					headerCS.getQualifiers().get(headerCS.getQualifiers().size()-1).getEndOffset());
-		}
+        for (QualifierKindCS nextQualifierCS : headerCS.getQualifiers()) {                
+        	switch (nextQualifierCS) {
+			case BLACKBOX:
+				module.setIsBlackbox(true);
+				break;
+			case ABSTRACT:
+			case STATIC:
+				// only 'blackbox' qualifier for constructor is currently supported
+				String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnTransformation, nextQualifierCS.getName(),
+						QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS));
+				env.reportWarning(errMessage, headerCS.getStartOffset(), headerCS.getPathNameCS().getEndOffset());
+				break;
+			}
+        }
 		
+		Collection<QualifierKindCS> qualifierDups = QvtOperationalParserUtil.selectDuplicateQualifiers(headerCS.getQualifiers());
+		for(QualifierKindCS duplicate : qualifierDups) {
+			String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_duplicateQualifierOnTransformation, 
+					duplicate.getName(), QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS));			
+			env.reportWarning(errMessage, headerCS.getStartOffset(), headerCS.getPathNameCS().getEndOffset());
+		}
+
 		if(!QvtOperationalParserUtil.hasSimpleName(headerCS)) {
 			env.reportError(NLS.bind(ValidationMessages.moduleNameMustBeSimpleIdentifierError, new Object[] { 
 					QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS) }), headerCS.getPathNameCS());

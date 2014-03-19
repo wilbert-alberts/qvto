@@ -19,26 +19,20 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage;
 import org.eclipse.m2m.internal.qvt.oml.cst.ModuleUsageCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.ParameterDeclarationCS;
+import org.eclipse.m2m.internal.qvt.oml.cst.QualifierKindCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS;
 import org.eclipse.m2m.internal.qvt.oml.cst.TransformationRefineCS;
-
 import org.eclipse.ocl.cst.PathNameCS;
-import org.eclipse.ocl.cst.StringLiteralExpCS;
-
 import org.eclipse.ocl.cst.impl.CSTNodeImpl;
 
 /**
@@ -67,14 +61,14 @@ public class TransformationHeaderCSImpl extends CSTNodeImpl implements Transform
 	public static final String copyright = "Copyright (c) 2007 Borland Software Corporation\r\n\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n  \r\nContributors:\r\n    Borland Software Corporation - initial API and implementation\r\n\r\n"; //$NON-NLS-1$
 
 	/**
-	 * The cached value of the '{@link #getQualifiers() <em>Qualifiers</em>}' containment reference list.
+	 * The cached value of the '{@link #getQualifiers() <em>Qualifiers</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getQualifiers()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<StringLiteralExpCS> qualifiers;
+	protected EList<QualifierKindCS> qualifiers;
 
 	/**
 	 * The cached value of the '{@link #getPathNameCS() <em>Path Name CS</em>}' containment reference.
@@ -140,9 +134,9 @@ public class TransformationHeaderCSImpl extends CSTNodeImpl implements Transform
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<StringLiteralExpCS> getQualifiers() {
+	public EList<QualifierKindCS> getQualifiers() {
 		if (qualifiers == null) {
-			qualifiers = new EObjectContainmentEList<StringLiteralExpCS>(StringLiteralExpCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS);
+			qualifiers = new EDataTypeEList<QualifierKindCS>(QualifierKindCS.class, this, CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS);
 		}
 		return qualifiers;
 	}
@@ -265,8 +259,6 @@ public class TransformationHeaderCSImpl extends CSTNodeImpl implements Transform
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
-				return ((InternalEList<?>)getQualifiers()).basicRemove(otherEnd, msgs);
 			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
 				return basicSetPathNameCS(null, msgs);
 			case CSTPackage.TRANSFORMATION_HEADER_CS__PARAMETERS:
@@ -312,7 +304,7 @@ public class TransformationHeaderCSImpl extends CSTNodeImpl implements Transform
 		switch (featureID) {
 			case CSTPackage.TRANSFORMATION_HEADER_CS__QUALIFIERS:
 				getQualifiers().clear();
-				getQualifiers().addAll((Collection<? extends StringLiteralExpCS>)newValue);
+				getQualifiers().addAll((Collection<? extends QualifierKindCS>)newValue);
 				return;
 			case CSTPackage.TRANSFORMATION_HEADER_CS__PATH_NAME_CS:
 				setPathNameCS((PathNameCS)newValue);
@@ -379,6 +371,22 @@ public class TransformationHeaderCSImpl extends CSTNodeImpl implements Transform
 				return transformationRefineCS != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (qualifiers: "); //$NON-NLS-1$
+		result.append(qualifiers);
+		result.append(')');
+		return result.toString();
 	}
 
 } //TransformationHeaderCSImpl

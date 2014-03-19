@@ -254,7 +254,7 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/PackageRefCS/uriCS"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/TransformationHeaderCS">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TransformationHeaderCS/qualifiers"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute QVTOperationalCST.ecore#//cst/TransformationHeaderCS/qualifiers"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TransformationHeaderCS/pathNameCS"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TransformationHeaderCS/parameters"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/TransformationHeaderCS/moduleUsages"/>

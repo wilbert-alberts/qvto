@@ -2118,8 +2118,8 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransformationHeaderCS_Qualifiers() {
-		return (EReference)transformationHeaderCSEClass.getEStructuralFeatures().get(0);
+	public EAttribute getTransformationHeaderCS_Qualifiers() {
+		return (EAttribute)transformationHeaderCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3029,7 +3029,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		createEReference(packageRefCSEClass, PACKAGE_REF_CS__URI_CS);
 
 		transformationHeaderCSEClass = createEClass(TRANSFORMATION_HEADER_CS);
-		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__QUALIFIERS);
+		createEAttribute(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__QUALIFIERS);
 		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__PATH_NAME_CS);
 		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__PARAMETERS);
 		createEReference(transformationHeaderCSEClass, TRANSFORMATION_HEADER_CS__MODULE_USAGES);
@@ -3445,7 +3445,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 		initEReference(getPackageRefCS_UriCS(), theCSTPackage_1.getStringLiteralExpCS(), null, "uriCS", null, 0, 1, PackageRefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(transformationHeaderCSEClass, TransformationHeaderCS.class, "TransformationHeaderCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getTransformationHeaderCS_Qualifiers(), theCSTPackage_1.getStringLiteralExpCS(), null, "qualifiers", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getTransformationHeaderCS_Qualifiers(), this.getQualifierKindCS(), "qualifiers", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTransformationHeaderCS_PathNameCS(), theCSTPackage_1.getPathNameCS(), null, "pathNameCS", null, 1, 1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTransformationHeaderCS_Parameters(), this.getParameterDeclarationCS(), null, "parameters", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTransformationHeaderCS_ModuleUsages(), this.getModuleUsageCS(), null, "moduleUsages", null, 0, -1, TransformationHeaderCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

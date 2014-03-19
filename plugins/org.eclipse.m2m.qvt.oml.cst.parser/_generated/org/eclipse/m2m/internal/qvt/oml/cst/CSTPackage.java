@@ -5197,7 +5197,7 @@ public interface CSTPackage extends EPackage {
 	int TRANSFORMATION_HEADER_CS__AST = org.eclipse.ocl.cst.CSTPackage.CST_NODE__AST;
 
 	/**
-	 * The feature id for the '<em><b>Qualifiers</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Qualifiers</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -8718,15 +8718,15 @@ public interface CSTPackage extends EPackage {
 	EClass getTransformationHeaderCS();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS#getQualifiers <em>Qualifiers</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS#getQualifiers <em>Qualifiers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Qualifiers</em>'.
+	 * @return the meta object for the attribute list '<em>Qualifiers</em>'.
 	 * @see org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS#getQualifiers()
 	 * @see #getTransformationHeaderCS()
 	 * @generated
 	 */
-	EReference getTransformationHeaderCS_Qualifiers();
+	EAttribute getTransformationHeaderCS_Qualifiers();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.TransformationHeaderCS#getPathNameCS <em>Path Name CS</em>}'.
@@ -10877,12 +10877,12 @@ public interface CSTPackage extends EPackage {
 		EClass TRANSFORMATION_HEADER_CS = eINSTANCE.getTransformationHeaderCS();
 
 		/**
-		 * The meta object literal for the '<em><b>Qualifiers</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Qualifiers</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TRANSFORMATION_HEADER_CS__QUALIFIERS = eINSTANCE.getTransformationHeaderCS_Qualifiers();
+		EAttribute TRANSFORMATION_HEADER_CS__QUALIFIERS = eINSTANCE.getTransformationHeaderCS_Qualifiers();
 
 		/**
 		 * The meta object literal for the '<em><b>Path Name CS</b></em>' containment reference feature.
