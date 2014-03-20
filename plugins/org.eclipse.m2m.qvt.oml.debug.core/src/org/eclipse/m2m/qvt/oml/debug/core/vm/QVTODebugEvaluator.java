@@ -27,7 +27,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompiledUnit;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModelInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtGenericEvaluationVisitor;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtGenericVisitorDecorator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtInterruptedExecutionException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitor;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
@@ -478,38 +478,17 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 		return (DebugInterceptor)createDebugInterceptor();
 	}
 	
-	private final class DebugInterceptor extends QvtGenericEvaluationVisitor implements InternalEvaluator {
+	private final class DebugInterceptor extends QvtGenericVisitorDecorator {
 		
-		public ModuleInstance callTransformationImplicitConstructor(OperationalTransformation transformation, List<ModelInstance> args) {
-			return QVTODebugEvaluator.this.callTransformationImplicitConstructor(transformation, args);
-		}
-		
-		public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
-			return QVTODebugEvaluator.this.runMainEntry(transformation, args);
+		private DebugInterceptor(QVTODebugEvaluator qvtExtVisitor) {
+			super(qvtExtVisitor);
 		}
 
 		public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
 			fCurrentLocation = newLocalLocation(getOperationalEvaluationEnv(), transformation, transformation
 					.getStartPosition(), getNodeLength(transformation));
 			
-			return QVTODebugEvaluator.this.execute(transformation);
-		}
-
-		private DebugInterceptor(QvtOperationalEvaluationVisitor qvtExtVisitor) {
-			super(qvtExtVisitor);
-		}
-
-		public void setOperationalEvaluationEnv(
-				QvtOperationalEvaluationEnv evalEnv) {
-			QVTODebugEvaluator.this.setOperationalEvaluationEnv(evalEnv);
-		}
-
-		public QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
-			return QVTODebugEvaluator.this.getOperationalEvaluationEnv();
-		}
-
-		public IContext getContext() {
-			return QVTODebugEvaluator.this.getContext();
+			return getInternalEvalDelegate().execute(transformation);
 		}
 
 		@Override
@@ -521,8 +500,7 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 		}
 
 		@Override
-		protected Object genericPostVisitAST(ASTNode element,
-				Object preVisitState, Object result) {
+		protected Object genericPostVisitAST(ASTNode element, Object preVisitState, Object result) {
 			return postElementVisit(element, preVisitState, result);
 		}
 	}

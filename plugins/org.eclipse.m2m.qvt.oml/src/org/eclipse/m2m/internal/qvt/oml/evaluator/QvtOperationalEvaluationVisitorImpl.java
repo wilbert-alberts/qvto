@@ -2390,33 +2390,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     protected InternalEvaluator createInterruptibleVisitor() {
     	final EvaluationMonitor monitor = getContext().getMonitor();
     	    
-    	class InterruptVisitor extends QvtGenericEvaluationVisitor.Any implements InternalEvaluator {
+    	class InterruptVisitor extends QvtGenericVisitorDecorator.Any {
+    		
     		public InterruptVisitor() {
     			super(QvtOperationalEvaluationVisitorImpl.this);
-			}
-    		
-    		public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
-    			return QvtOperationalEvaluationVisitorImpl.this.execute(transformation);
-    		}
-    		
-    		public QvtOperationalEvaluationEnv getOperationalEvaluationEnv() {
-    			return QvtOperationalEvaluationVisitorImpl.this.getOperationalEvaluationEnv();
-    		}
-    		
-    		public void setOperationalEvaluationEnv(QvtOperationalEvaluationEnv evalEnv) {
-    			QvtOperationalEvaluationVisitorImpl.this.setOperationalEvaluationEnv(evalEnv);
-    		}
-    		
-    		public IContext getContext() {
-    			return QvtOperationalEvaluationVisitorImpl.this.getContext();
-    		}
-
-    		public ModuleInstance callTransformationImplicitConstructor(OperationalTransformation transformation, List<ModelInstance> args) {
-    			return QvtOperationalEvaluationVisitorImpl.this.callTransformationImplicitConstructor(transformation, args);
-    		}
-    		
-    		public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
-				return QvtOperationalEvaluationVisitorImpl.this.runMainEntry(transformation, args);
 			}
     		
     		@Override

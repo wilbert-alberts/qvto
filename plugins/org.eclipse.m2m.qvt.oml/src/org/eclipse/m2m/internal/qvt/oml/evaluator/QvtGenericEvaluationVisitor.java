@@ -102,35 +102,11 @@ public abstract class QvtGenericEvaluationVisitor
 				CallOperationAction, SendSignalAction, Constraint, EClass, EObject> 
 	implements QvtOperationalEvaluationVisitor {
 
-	static abstract class Any extends QvtGenericEvaluationVisitor {
-				
-		protected Any(QvtOperationalEvaluationVisitor qvtExtVisitor) {
-			super(qvtExtVisitor);
-		}
-
-		protected abstract Object genericVisitAny(Object object);
-
-		@Override
-		protected Object genericPreVisitAST(ASTNode visited) {
-			return genericVisitAny(visited);			
-		}
-		
-		@Override
-		protected Object genericPreVisitVisitable(Visitable visited) {
-			return genericVisitAny(visited);
-		}	
-			
-		@Override
-		protected void genericPreVisitEObject(EObject visited) {
-			genericVisitAny(visited);			
-		}
-	}
-	
 	public QvtGenericEvaluationVisitor(QvtOperationalEvaluationVisitor qvtExtVisitor) {
 		super(qvtExtVisitor);
 	}
 			
-	private QvtOperationalEvaluationVisitor getQVTDelegate() {
+	protected QvtOperationalEvaluationVisitor getQVTDelegate() {
 		return (QvtOperationalEvaluationVisitor) getDelegate();
 	}	
 	
