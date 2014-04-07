@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009,2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 414662
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
@@ -17,7 +18,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -125,41 +125,40 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	}
 
 	private void createManifest(IFolder metaFolder, IProgressMonitor monitor) throws CoreException {
-	    IFile manifest = metaFolder.getFile("MANIFEST.MF"); //$NON-NLS-1$
-	    StringWriter contents = new StringWriter();
-	    PrintWriter wr = new PrintWriter(contents, true);	    
+		IFile manifest = metaFolder.getFile("MANIFEST.MF"); //$NON-NLS-1$
+		StringWriter contents = new StringWriter();
+		PrintWriter wr = new PrintWriter(contents, true);
 
-	    wr.println("Manifest-Version: 1.0"); //$NON-NLS-1$
-	    wr.println("Bundle-ManifestVersion: 2"); //$NON-NLS-1$
-	    wr.append("Bundle-Name: ").println(fData.getName()); //$NON-NLS-1$
-	    wr.append("Bundle-SymbolicName: ").println(fData.getID()); //$NON-NLS-1$
-	    wr.append("Bundle-Version: ").println(fData.getVersion()); //$NON-NLS-1$
-	    wr.append("Bundle-Vendor: ").println(fData.getProviderName()); //$NON-NLS-1$
-	    
-	    if(fGenerator != null) {
-	    	 IPluginReference[] dependencies = getDependencies();	    	 
-	    	 if(dependencies.length > 0) {
-	    		 wr.append("Require-Bundle: "); //$NON-NLS-1$
-	    		 
-	    		 int i = 0;
-	    		 for (IPluginReference pluginReference : dependencies) {
-	    			 if(i++ > 0) {
-	    				 wr.println(',');
-	    			 }
-	    			 wr.append(pluginReference.getId());
-	    		 }
-	    		 wr.println();	    		 
-	    	 }
-	    }
-	    
-	    if(fData.isCreateJava() && getEEnv(BUNDLE_EXEC_ENV) != null) {
-	    	wr.append("Bundle-RequiredExecutionEnvironment: ").println(BUNDLE_EXEC_ENV); //$NON-NLS-1$
-	    }
+		wr.println("Manifest-Version: 1.0"); //$NON-NLS-1$
+		wr.println("Bundle-ManifestVersion: 2"); //$NON-NLS-1$
+		wr.append("Bundle-Name: ").println(fData.getName()); //$NON-NLS-1$
+		wr.append("Bundle-SymbolicName: ").println(fData.getID()); //$NON-NLS-1$
+		wr.append("Bundle-Version: ").println(fData.getVersion()); //$NON-NLS-1$
+		wr.append("Bundle-Vendor: ").println(fData.getProviderName()); //$NON-NLS-1$
 
-	    wr.flush();
-	    
+		IPluginReference[] dependencies = getDependencies();
+		if (dependencies.length > 0) {
+			wr.append("Require-Bundle:"); //$NON-NLS-1$
+
+			int i = 0;
+			for (IPluginReference pluginReference : dependencies) {
+				if (i++ > 0) {
+					wr.println(',');
+				}
+				wr.append(' ');
+				wr.append(pluginReference.getId());
+			}
+			wr.println();
+		}
+
+		if (fData.isCreateJava() && getEEnv(BUNDLE_EXEC_ENV) != null) {
+			wr.append("Bundle-RequiredExecutionEnvironment: ").println(BUNDLE_EXEC_ENV); //$NON-NLS-1$
+		}
+
+		wr.flush();
+
 		InputStream is = createContentStreamForNewFile(manifest, contents.getBuffer().toString());
-	    manifest.create(is, false, monitor);
+		manifest.create(is, false, monitor);
 	}
 
 	/*
@@ -178,22 +177,16 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	}
 
 
-	private void generateTopLevelPluginClass(IProject project, IProgressMonitor monitor) throws CoreException {
-		fGenerator = new PluginClassCodeGenerator(project, fData);
+	private void generateTopLevelPluginClass(IProgressMonitor monitor) throws CoreException {
 		fGenerator.generate(monitor);
 		monitor.done();
 	}
 
 	private IPluginReference[] getDependencies() {
-		ArrayList<IPluginReference> result = new ArrayList<IPluginReference>();
-		if (fGenerator != null) {
-			IPluginReference[] refs = fGenerator.getDependencies();
-			for (int i = 0; i < refs.length; i++) {
-				result.add(refs[i]);
-			}
+		if (fGenerator == null) {
+			return new IPluginReference[0];
 		}
-
-		return (IPluginReference[]) result.toArray(new IPluginReference[result.size()]);
+		return fGenerator.getDependencies();
 	}
 	
 	private void setupJava(IProject project, boolean pde, IProgressMonitor monitor) throws CoreException, JavaModelException {		
@@ -219,7 +212,7 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 		javaProject.setRawClasspath(entries, monitor);
 		
 		if(fData.isDoGenerateClass()) {
-			generateTopLevelPluginClass(project, new SubProgressMonitor(monitor, 1));
+			generateTopLevelPluginClass(new SubProgressMonitor(monitor, 1));
 		}
 
 		monitor.worked(1);		
@@ -234,6 +227,8 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 		
 		if (fData.isPlugin()) {
 			addNatureToProject(fProjectHandle, PLUGIN_NATURE, monitor);
+			
+			fGenerator = new PluginClassCodeGenerator(fProjectHandle, fData);
 			
 			if(fData.isCreateJava()) {
 				setupJava(fProjectHandle, true, monitor);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009,2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 414662
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
@@ -25,26 +26,33 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ui.QVTUIPlugin;
 import org.eclipse.pde.core.plugin.IPluginReference;
 import org.eclipse.pde.ui.templates.PluginReference;
 
 class PluginClassCodeGenerator {
 	
-	private static final String BUNDLE_CORE_RUNTIME = "org.eclipse.core.runtime"; //$NON-NLS-1$
-
-	private IProject fProject;
-	private String fQualifiedClassName;
+	private final IProject fProject;
+	private final String fQualifiedClassName;
 	
-	private String fSourceFolderName;
-	private boolean fIsUIPlugin;
-	private String fOSGiFramework;
-	private String fPluginID;
+	private final String fSourceFolderName;
+	private final boolean fIsUIPlugin;
+	private final String fOSGiFramework;
+	private final String fPluginID;
+	
+	private boolean fIsPlugin;
 
 	public PluginClassCodeGenerator(IProject project, NewProjectData projectData) {
 		fProject = project;
 		fQualifiedClassName = projectData.getClassName();
 		fSourceFolderName = projectData.getSourceFolderName();
+		fIsUIPlugin = false;
+		fOSGiFramework = null;
+		fPluginID = projectData.getID();
+		fIsPlugin = projectData.isPlugin();
 	}
 
 	public IFile generate(IProgressMonitor monitor) throws CoreException {
@@ -205,8 +213,13 @@ class PluginClassCodeGenerator {
 			result.add(new PluginReference("org.eclipse.ui", null, 0)); //$NON-NLS-1$
 		}
 		if (fOSGiFramework == null) {
-			result.add(new PluginReference(BUNDLE_CORE_RUNTIME, null, 0));
+			result.add(new PluginReference(Platform.PI_RUNTIME, null, 0));
 		}
+		if (fIsPlugin) {
+			result.add(new PluginReference(QvtPlugin.ID, null, 0));
+			result.add(new PluginReference(QVTOProjectPlugin.ID, null, 0));
+		}
+		
 		return (IPluginReference[]) result.toArray(new IPluginReference[result.size()]);
 	}
 
