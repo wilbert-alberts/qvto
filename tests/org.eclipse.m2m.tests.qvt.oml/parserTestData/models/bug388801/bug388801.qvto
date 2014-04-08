@@ -33,7 +33,7 @@ main() {
 	
 	
 	var c : OrderedSet(EClass) = null;
-	assert fatal (c->isEmpty());
+	assert fatal (c->oclIsUndefined());
 	
 	var intermC : C = object C {};
 	

@@ -21,9 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -151,7 +149,6 @@ import org.eclipse.ocl.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.ecore.SendSignalAction;
 import org.eclipse.ocl.expressions.CollectionItem;
-import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.expressions.CollectionLiteralExp;
 import org.eclipse.ocl.expressions.CollectionLiteralPart;
 import org.eclipse.ocl.expressions.CollectionRange;
@@ -167,7 +164,6 @@ import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.SetType;
 import org.eclipse.ocl.types.TupleType;
 import org.eclipse.ocl.types.VoidType;
-import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.CollectionUtil;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.ASTNode;
@@ -342,103 +338,99 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 
     @SuppressWarnings("unchecked")
 	public Object visitAssignExp(final AssignExp assignExp) {
-        QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
+		QvtOperationalEvaluationEnv env = getOperationalEvaluationEnv();
 		InternalEvaluationEnv internEnv = env.getAdapter(InternalEvaluationEnv.class);
-        
-    	boolean isDeferred = false;    	
-        // TODO: modify the following code for more complex l-values
-        OCLExpression<EClassifier> lValue = assignExp.getLeft();
-        if (assignExp.getValue().size() == 1) {
-        	isDeferred = QvtResolveUtil.hasDeferredRightSideValue(assignExp);
-            if(isDeferred) {
-                Object ownerObj = getAssignExpLValueOwner(lValue);
-                if (ownerObj instanceof EObject) {
-                    PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp.getLeft();
-                    EStructuralFeature referredProperty = lvalueExp.getReferredProperty();
-                    internEnv.setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
-                }        	
-            }        	
-        }
-                
-        Object exprValue = null;
-        for (OCLExpression<EClassifier> exp : assignExp.getValue()) {
-        	exprValue = visitExpression(exp);
-        }
 
-        if(isDeferred) {
-        	// the source of resolve calls has been evaluated above -> assignment of the left value is not executed now 
-        	// but at deferred time in the end of the transformation
-        	return null;
-        }        
-        
-        if (lValue instanceof VariableExp<?, ?>) {
-            VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) lValue;
-            Variable<EClassifier, EParameter> referredVariable = varExp.getReferredVariable();
-            if (referredVariable != null) {
-                String varName = referredVariable.getName();
-                Object oldValue = getRuntimeValue(varName);
-                EClassifier variableType = lValue.getType();
-                if (variableType instanceof CollectionType && exprValue != getInvalid()) {
-                    Collection<Object> leftOclCollection = null;
-                	if (oldValue instanceof Collection) {
-	                    Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
-	                    if (assignExp.isIsReset()) {
-	                        leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind(oldOclCollection);
-	                    } else {
-	                        leftOclCollection = oldOclCollection;
-	                    }
-                	} else {
-	                	if (oldValue == null && assignExp.isIsReset() && exprValue instanceof Collection) {
-	                		leftOclCollection = EvaluationUtil.createNewCollectionOfSameKind((Collection<Object>) exprValue);
-	                	} else {
-	                		leftOclCollection = EvaluationUtil.createNewCollection((CollectionType<EClassifier, EOperation>) variableType);
-	                	}
-                	}
-                	
-                    final CollectionKind leftCollectionKind = getCollectionKind(leftOclCollection);
-					if (exprValue instanceof Collection) {
-                        if(leftCollectionKind == CollectionKind.ORDERED_SET_LITERAL) {
-                            // can't use CollectionUtil.union(), the result type is not OrderedSet              
-                            LinkedHashSet<Object> values = new LinkedHashSet<Object>();
-                            values.addAll(leftOclCollection);
-                            values.addAll((Collection<?>)exprValue);
-                            leftOclCollection = CollectionUtil.createNewOrderedSet(values);
-                        } else if(leftCollectionKind != null){
-                        	leftOclCollection = CollectionUtil.union(leftOclCollection, (Collection<?>) exprValue);                        	
-                        } else {
-                        	// QVT mutable types
-                        	leftOclCollection.addAll((Collection<?>)exprValue);
-                        }
-                    } else if (leftCollectionKind == CollectionKind.ORDERED_SET_LITERAL
-                            || leftCollectionKind == CollectionKind.SEQUENCE_LITERAL) {
-                        leftOclCollection = CollectionUtil.append(leftOclCollection, exprValue);
-                    } else if(leftCollectionKind != null) {
-                        leftOclCollection = CollectionUtil.including(leftOclCollection, exprValue);
-                    } else {
-                    	// QVT mutable types
-                    	leftOclCollection.add(exprValue);
-                    }
+		boolean isDeferred = false;
+		// TODO: modify the following code for more complex l-values
+		OCLExpression<EClassifier> lValue = assignExp.getLeft();
+		if (assignExp.getValue().size() == 1) {
+			isDeferred = QvtResolveUtil.hasDeferredRightSideValue(assignExp);
+			if (isDeferred) {
+				Object ownerObj = getAssignExpLValueOwner(lValue);
+				if (ownerObj instanceof EObject) {
+					PropertyCallExp<EClassifier, EStructuralFeature> lvalueExp = (PropertyCallExp<EClassifier, EStructuralFeature>) assignExp
+							.getLeft();
+					EStructuralFeature referredProperty = lvalueExp.getReferredProperty();
+					internEnv
+							.setLastAssignmentLvalueEval(new EObjectEStructuralFeaturePair((EObject) ownerObj, referredProperty));
+				}
+			}
+		}
 
-                    replaceInEnv(varName, leftOclCollection, variableType);
-                } else {
-                    replaceInEnv(varName, exprValue, variableType);
-                }
-            }
-        } else if (lValue instanceof PropertyCallExp<?, ?>) {
-            Object ownerObj = getAssignExpLValueOwner(lValue);
-            if (ownerObj instanceof EObject) {
-                EObject oldIP = setCurrentEnvInstructionPointer(assignExp);
-                env.callSetter(
-                        (EObject) ownerObj,
-                        ((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty(),
-                        exprValue, isUndefined(exprValue), assignExp.isIsReset());
-                setCurrentEnvInstructionPointer(oldIP);
-            }
-        } else {
-            throw new UnsupportedOperationException("Unsupported LValue type: " + ((lValue == null) ? null : lValue.getType())); //$NON-NLS-1$
-        }
+		Object exprValue = null;
+		for (OCLExpression<EClassifier> exp : assignExp.getValue()) {
+			exprValue = visitExpression(exp);
+		}
 
-        return exprValue;
+		if (isDeferred) {
+			// the source of resolve calls has been evaluated above ->
+			// assignment of the left value is not executed now
+			// but at deferred time in the end of the transformation
+			return null;
+		}
+
+		if (lValue instanceof VariableExp<?, ?>) {
+			VariableExp<EClassifier, EParameter> varExp = (VariableExp<EClassifier, EParameter>) lValue;
+			Variable<EClassifier, EParameter> referredVariable = varExp.getReferredVariable();
+			if (referredVariable != null) {
+				String varName = referredVariable.getName();
+				Object oldValue = getRuntimeValue(varName);
+				Object newValue = null;
+				EClassifier variableType = lValue.getType();
+				if (variableType instanceof CollectionType && exprValue != getInvalid()) {
+					if (assignExp.isIsReset()) {
+						if (exprValue instanceof MutableList || exprValue instanceof Dictionary || isUndefined(exprValue)) {
+							newValue = exprValue;
+						}
+						else if (exprValue instanceof Collection) {
+							Collection<Object> exprValueCollection = (Collection<Object>) exprValue;
+							newValue = CollectionUtil.createNewCollection(exprValueCollection);
+						}
+					} else {
+						Collection<Object> newOclCollection = null;
+
+						if (oldValue instanceof Collection) {
+							Collection<Object> oldOclCollection = (Collection<Object>) oldValue;
+
+							if (oldOclCollection instanceof MutableList || oldOclCollection instanceof Dictionary) {
+								newOclCollection = oldOclCollection;
+							} else {
+								newOclCollection = CollectionUtil.createNewCollection(oldOclCollection);
+							}
+						} else if (isUndefined(oldValue)) {
+							newOclCollection = EvaluationUtil
+									.createNewCollection((CollectionType<EClassifier, EOperation>) variableType);
+						}
+
+						if (exprValue instanceof Collection) {
+							newOclCollection.addAll((Collection<Object>) exprValue);
+						} else {
+							newOclCollection.add(exprValue);
+						}
+
+						newValue = newOclCollection;
+					}
+				} else {
+					newValue = exprValue;
+				}
+
+				replaceInEnv(varName, newValue, variableType);
+			}
+		} else if (lValue instanceof PropertyCallExp<?, ?>) {
+			Object ownerObj = getAssignExpLValueOwner(lValue);
+			if (ownerObj instanceof EObject) {
+				EObject oldIP = setCurrentEnvInstructionPointer(assignExp);
+				env.callSetter((EObject) ownerObj,
+						((PropertyCallExp<EClassifier, EStructuralFeature>) lValue).getReferredProperty(), exprValue,
+						isUndefined(exprValue), assignExp.isIsReset());
+				setCurrentEnvInstructionPointer(oldIP);
+			}
+		} else {
+			throw new UnsupportedOperationException("Unsupported LValue type: " + ((lValue == null) ? null : lValue.getType())); //$NON-NLS-1$
+		}
+
+		return exprValue;
     }
     
     private Object getAssignExpLValueOwner(OCLExpression<EClassifier> lValue) {
@@ -606,13 +598,15 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	// avoid overriding values    	
     	for (VarParameter resultParam : operation.getResult()) {    		
     		if(evalEnv.getValueOf(resultParam.getName()) == null) {
-    			replaceInEnv(resultParam.getName(), null, resultParam.getEType());    			
+    			Object initialValue = EvaluationUtil.createInitialValue(resultParam.getEType(), getStandardLibrary(), evalEnv);
+    			replaceInEnv(resultParam.getName(), initialValue, resultParam.getEType());    			
     		}
 		}
-
+    	
     	if(operation.getResult().size() > 1) {
     		if(evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME) == null) {
-    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, null, operation.getEType());
+    			Object initialValue = EvaluationUtil.createInitialValue(operation.getEType(), getStandardLibrary(), evalEnv);
+    			replaceInEnv(Environment.RESULT_VARIABLE_NAME, initialValue, operation.getEType());
     		}
     	}    	
     }
@@ -1162,10 +1156,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(initExpression != null) {
 			value = visitExpression(initExpression);
 			// check that collection is initialized to empty collection in case of 'null' 
-			if(value == null && referredVariable.getType() instanceof CollectionType<?, ?>) {
-				value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
-						getQVTVisitor().getEvaluationEnvironment());
-			}
 		} else { 
 			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
 					getQVTVisitor().getEvaluationEnvironment());
@@ -1739,24 +1729,26 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     private Object createOrGetResult(MappingOperation mappingOperation) {
         Object result = null;
         
-        if (!mappingOperation.getResult().isEmpty()) {
-        	result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
-            if (isUndefined(result)) { // if nothing was assigned to the result in the init section
-                EList<VarParameter> resultParams = mappingOperation.getResult();
-                if(resultParams.size() > 1) {
-                	result = createTupleResult(mappingOperation);
+        for (VarParameter varParam : mappingOperation.getResult()) {
+        	result = getRuntimeValue(varParam.getName());
+        	
+        	if (isUndefined(result)) {
+        		
+        		if (false == varParam.getEType() instanceof VoidType<?>) {
+                    result = createInstance(varParam.getEType(), ((MappingParameter) varParam).getExtent());
+                    replaceInEnv(varParam.getName(), result, varParam.getEType());
                 } 
-                else {
-        			VarParameter type = (resultParams.isEmpty() ? null : resultParams.get(0));
-                    if (type != null && false == type.getEType() instanceof VoidType<?>) {
-                        result = createInstance(type.getEType(), ((MappingParameter) type).getExtent());
-                    }    			
-                }
-                
-                replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
-            }
+        	}
         }
         
+        if (mappingOperation.getResult().size() > 1) {
+        	result = createTupleResult(mappingOperation);
+        	replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
+        }
+        else {
+        	result = getRuntimeValue(Environment.RESULT_VARIABLE_NAME);
+        }
+               
         return result;
     }
 
@@ -2218,29 +2210,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	return evalEnv.createTuple(operation.getEType(), values);
     }
     
-    private static CollectionKind getCollectionKind(Collection<?> collection) {
-    	if (collection instanceof MutableList<?>) {
-    		return null;
-    	}
-    	if (collection instanceof Dictionary<?,?>) {
-    		return null;
-    	}
-        if (collection instanceof ArrayList<?>) {
-            return CollectionKind.SEQUENCE_LITERAL;
-        }
-        if (collection instanceof LinkedHashSet<?>) {
-            return CollectionKind.ORDERED_SET_LITERAL;
-        }
-        // Remark: check Set after Ordered set
-        if (collection instanceof HashSet<?>) {
-            return CollectionKind.SET_LITERAL;
-        }        
-        if (collection instanceof Bag<?>) {
-            return CollectionKind.BAG_LITERAL;
-        }
-        return null;
-    }
-
 	private List<Object> makeArgs(OperationCallExp<EClassifier, EOperation> operationCallExp) {
     	EOperation referredOperation = operationCallExp.getReferredOperation();
     	Iterator<EParameter> iterParam = referredOperation.getEParameters().iterator();

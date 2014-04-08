@@ -1,7 +1,11 @@
+modeltype e uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
 transformation bug428618();
 
 main() {
+
 	var c : Collection(String);
+	assert fatal (c = null);
 	
 	c := Sequence{"a"};
 	c += "b";
@@ -13,4 +17,72 @@ main() {
 	assert fatal (c = Set{"a", "b"});
 	assert fatal (c <> Sequence{"a", "b"});
 
+	var p : EPackage = object EPackage {};
+	
+	-- check deferred initialization
+	var coll1 : Collection(EPackage);
+	coll1 := OrderedSet{p};
+	assert fatal (coll1->includes(p));
+	
+	-- check changed collection type
+	coll1 := Sequence{p};
+	coll1 += p;		
+	assert fatal (coll1->size() = 2);
+	
+	-- check incremental assignment on 'invalid''
+	coll1 += invalid;
+	assert fatal (coll1->oclIsUndefined());
+	
+	-- check mutation of List
+	coll1 := List{};
+	var coll2 : Collection(EPackage) = coll1;
+	coll2 += p;
+	assert fatal (coll1->includes(p));
+	
+	coll1 := List{};
+	coll2 := coll1;
+	coll2 += p;
+	assert fatal (coll1->includes(p));
+	
+	-- check implicit initialization on declaration
+	var coll3 : OrderedSet(EPackage);
+	assert fatal(coll3->isEmpty());
+	
+	-- check explicit 'null' assignment
+	coll3 := null;
+	assert fatal (coll3 = null);
+	
+	-- check implicit initialization on incremental assignment
+	coll3 += p;
+	assert fatal (coll3->includes(p));
+	
+	-- check implicit result initialization inside mapping 'init' section
+	map m1();
+	
+	-- check implicit initialization inside tuple result
+	map m2();
+		
 }
+
+mapping m1() : OrderedSet(EPackage) {
+	
+	init {
+		assert fatal (result->isEmpty());
+	}
+	
+}
+
+mapping m2() : r1 : OrderedSet(EPackage), r2 : EPackage {
+	
+	init {
+		assert fatal (not result->oclIsUndefined());
+		assert fatal (r1->isEmpty());
+		
+		r1 += object EPackage{};
+		
+		assert fatal (r1->size() = 1);
+	}
+	
+	assert fatal (not r2.oclIsUndefined());
+	assert fatal (r1->size() = 1);
+} 
