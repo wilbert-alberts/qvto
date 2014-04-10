@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 267917
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -87,7 +88,7 @@ public abstract class QvtModule {
         
         OperationalTransformation transfModule = (OperationalTransformation) module;
         ImperativeOperation mainMethod = QvtOperationalParserUtil.getMainOperation(module);
-        if(mainMethod == null) {
+        if(!transfModule.isIsBlackbox() && mainMethod == null) {
         	return Collections.emptyList();
         }
 

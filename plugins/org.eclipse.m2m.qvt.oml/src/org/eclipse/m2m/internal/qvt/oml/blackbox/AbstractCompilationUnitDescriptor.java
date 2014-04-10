@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bugs 289982, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
@@ -17,6 +17,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 
 
@@ -80,5 +81,7 @@ public abstract class AbstractCompilationUnitDescriptor {
 	}
 	
 	public abstract Collection<CallHandler> getBlackboxCallHandler(ImperativeOperation operation, QvtOperationalModuleEnv env);
+	
+	public abstract Collection<CallHandler> getBlackboxCallHandler(OperationalTransformation transformation, QvtOperationalModuleEnv env);
 
 }

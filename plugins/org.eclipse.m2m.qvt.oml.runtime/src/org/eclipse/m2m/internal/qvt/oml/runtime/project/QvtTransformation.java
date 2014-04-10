@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -74,6 +75,8 @@ public interface QvtTransformation {
     List<TransformationParameter> getParameters() throws MdaException;
     
     boolean hasEntryOperation() throws MdaException;
+    
+    boolean isBlackbox() throws MdaException;
 
     ResourceSet getResourceSet() throws MdaException;
 

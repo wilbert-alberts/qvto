@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -131,6 +132,10 @@ public class QvtInterpretedTransformation implements QvtTransformation {
 
 	public boolean hasEntryOperation() throws MdaException {
 		return QvtOperationalParserUtil.getMainOperation(myModule.getModule()) != null;
+	}
+	
+	public boolean isBlackbox() throws MdaException {
+		return myModule.getModule().isIsBlackbox();
 	}
 
     public Set<QvtConfigurationProperty> getConfigurationProperties() throws MdaException {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bugs 289982, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -94,7 +94,13 @@ class OperationBuilder {
 				Helper helper = ExpressionsFactory.eINSTANCE.createHelper();
         		helper.setIsQuery(operKind == Kind.QUERY);
         		operation = helper;
-				break;	
+				break;
+			case TRANSFORMATION:
+				if (isContextual) {
+					reportError(NLS.bind(JavaBlackboxMessages.TransformationRequiresContextlessOperation, method.getName()), method);
+				}
+				operation = EcoreFactory.eINSTANCE.createEOperation();
+				break;
 			default:
 				assert false : "unsupported operation kind"; //$NON-NLS-1$
     			operation = EcoreFactory.eINSTANCE.createEOperation();

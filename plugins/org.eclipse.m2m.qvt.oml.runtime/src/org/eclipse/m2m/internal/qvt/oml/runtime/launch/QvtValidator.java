@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
@@ -51,7 +52,7 @@ public class QvtValidator {
 			boolean useTrace, ValidationType validationType) throws MdaException {
         IStatus result = StatusUtil.makeOkStatus();
         
-        if (!transformation.hasEntryOperation()) {
+        if (!transformation.isBlackbox() && !transformation.hasEntryOperation()) {
             return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_TransformaionMissedEntryOp,
             		transformation.getModuleName()));
         }

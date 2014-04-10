@@ -8,15 +8,21 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.EvaluationUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.ocl.util.TypeUtil;
 
 public class OperationMatcher {
@@ -61,6 +67,30 @@ public class OperationMatcher {
 			if (!TypeUtil.exactTypeMatch(env, libraryOp.getEType(), imperativeOp.getResult().get(0).getEType())) {
 				return false;
 			}
+		}
+		
+		return true;
+	}
+	
+	public static boolean matchOperation(QvtOperationalEnv env, OperationalTransformation trans, EOperation libraryOp) {
+		
+		if (!libraryOp.getName().equals(trans.getName())) {
+			return false;
+		}
+		
+		List<ETypedElement> expectedParams = EvaluationUtil.getBlackboxSignature(trans);
+		
+		if (expectedParams.size() != libraryOp.getEParameters().size()) {
+			return false;
+		}
+		for (int i = 0, in = expectedParams.size(); i < in; ++i) {
+			if (!TypeUtil.compatibleTypeMatch(env, expectedParams.get(i).getEType(), libraryOp.getEParameters().get(i).getEType())) {
+				return false;
+			}
+		}
+				
+		if (libraryOp.getEType() != env.getOCLStandardLibrary().getOclVoid()) {
+			return false;
 		}
 		
 		return true;

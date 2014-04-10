@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,8 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - 414616, 424584
+ *     Alex Paperno - bugs 414616, 424584
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -325,11 +326,14 @@ public class QvtOperationalValidationVisitor extends QvtOperationalAstWalker {
 				}
 			}
 		} else {
-			ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation((Module) instantiatedClass);
-			if(mainOperation instanceof EntryOperation == false || 
-				mainOperation.getEParameters().isEmpty() == false) {
-				String message = NLS.bind(ValidationMessages.QvtOperationalValidationVisitor_ParameterlessMainExpected, instantiatedClass.getName());
-				fEnv.reportError(message, instantiationExp.getStartPosition(), instantiationExp.getEndPosition());
+			Module instantiatedModule = (Module) instantiatedClass;
+			if (!instantiatedModule.isIsBlackbox()) {
+				ImperativeOperation mainOperation = QvtOperationalParserUtil.getMainOperation(instantiatedModule);
+				if(mainOperation instanceof EntryOperation == false || 
+					mainOperation.getEParameters().isEmpty() == false) {
+					String message = NLS.bind(ValidationMessages.QvtOperationalValidationVisitor_ParameterlessMainExpected, instantiatedModule.getName());
+					fEnv.reportError(message, instantiationExp.getStartPosition(), instantiationExp.getEndPosition());
+				}
 			}
 		}
 		

@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 400233
+ *     Christopher Gerking - bug 400233, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.qvt.oml.blackbox.java.JavaModelInstance;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.ocl.TypeResolver;
@@ -192,7 +193,10 @@ class Java2QVTTypeResolver {
 		}
 		else if(type == void.class) {
 			return stdLibrary.getOclVoid();
-		}		
+		}
+		else if(type == JavaModelInstance.class) {
+			return fEnv.getQVTStandardLibrary().getModelClass();
+		}
 		
 		return lookupByInstanceClass(type);
 	}

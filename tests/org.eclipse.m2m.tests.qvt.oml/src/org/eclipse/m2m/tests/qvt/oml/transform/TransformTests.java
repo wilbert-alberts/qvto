@@ -63,7 +63,7 @@ public class TransformTests {
 
         for (ModelTestData data : datas) {
             if(!JAVALESS_EXCLUDES.contains(data.getName()) && JavalessUtil.isValidJavalessData(data)) {
-                JavalessQvtTest test = new JavalessQvtTest(data);                
+                JavalessQvtTest test = new JavalessQvtTest(data, JAVALESS_PATCH_OUTPUT.contains(data.getName()));                
                 suite.addTest(test);
             }
         }
@@ -382,6 +382,11 @@ public class TransformTests {
         		new FilesToFilesData("bug428316"), //$NON-NLS-1$
         		new FilesToFilesData("bug428618"), //$NON-NLS-1$
         		new FilesToFilesData("bug424896"), //$NON-NLS-1$
+        		new FileToFileData("bug427237", //$NON-NLS-1$
+                        new String[][] {
+                        {"prop", "1"},  //$NON-NLS-1$ //$NON-NLS-2$
+                }), 
+        		new FileToFileData("bug427237a"), //$NON-NLS-1$
         		};
     }
 
@@ -407,5 +412,13 @@ public class TransformTests {
             
             // generated ECORE models -> not applicable to dynamic models  
             "blackboxlib_annotation_java", //$NON-NLS-1$
+
+    		// EObjects are created inside blackbox transformation and later merged with javaless objects 
+            "bug427237a", //$NON-NLS-1$
+    }));
+
+    private static final Set<String> JAVALESS_PATCH_OUTPUT = new HashSet<String>(Arrays.asList(new String[] {
+    		// EObjects are created inside blackbox transformation thus don't belong to javaless package 
+            "bug427237", //$NON-NLS-1$
     }));
 }

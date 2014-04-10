@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bug 289982, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -44,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.cst.CSTFactory;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 
@@ -283,6 +284,35 @@ public class JavaBlackboxProvider extends AbstractBlackboxProvider {
 				
 				for (EOperation libraryOp : listOp) {
 					if (OperationMatcher.matchOperation(env, imperativeOp, libraryOp)) {
+						if (result.isEmpty()) {
+							result = new LinkedList<CallHandler>();
+						}
+						result.add(CallHandlerAdapter.getDispatcher(libraryOp));
+					}
+				}
+			}
+			
+			return result;			
+		}
+		
+		public Collection<CallHandler> getBlackboxCallHandler(OperationalTransformation transformation, QvtOperationalModuleEnv env) {
+			Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
+			Collection<CallHandler> result = Collections.emptyList();
+
+			for(Map.Entry<ModuleHandle, Map<String, List<EOperation>>> nextEntry : fModules.entrySet()) {
+				if (!env.getImportedNativeLibs().isEmpty()) {
+					if (!importedLibs.contains(nextEntry.getKey().getModuleName())) {
+						continue;
+					}
+				}
+				
+				List<EOperation> listOp = nextEntry.getValue().get(transformation.getName());
+				if (listOp == null) {
+					continue;
+				}
+				
+				for (EOperation libraryOp : listOp) {
+					if (OperationMatcher.matchOperation(env, transformation, libraryOp)) {
 						if (result.isEmpty()) {
 							result = new LinkedList<CallHandler>();
 						}

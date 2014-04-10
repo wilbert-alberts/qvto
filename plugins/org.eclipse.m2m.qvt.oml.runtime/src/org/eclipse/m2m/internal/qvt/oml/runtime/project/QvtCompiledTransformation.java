@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -97,6 +98,10 @@ public class QvtCompiledTransformation implements QvtTransformation, CompiledTra
 
 	public boolean hasEntryOperation() throws MdaException {
 		return getImpl().hasEntryOperation();
+	}
+	
+	public boolean isBlackbox() throws MdaException {
+		return getImpl().isBlackbox();
 	}
 
     @Override

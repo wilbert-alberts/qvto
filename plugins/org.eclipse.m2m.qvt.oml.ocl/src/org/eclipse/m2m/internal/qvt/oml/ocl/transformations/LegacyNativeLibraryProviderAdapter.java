@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bugs 289982, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ocl.transformations;
 
@@ -30,6 +30,7 @@ import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.OperationMatcher;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.ResolutionContext;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.ocl.OclQvtoPlugin;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
@@ -129,6 +130,32 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 			Collection<CallHandler> result = Collections.emptyList();
 			for (EOperation libraryOp : listOp) {
 				if (OperationMatcher.matchOperation(env, imperativeOp, libraryOp)) {
+					if (result.isEmpty()) {
+						result = new LinkedList<CallHandler>();
+					}
+					result.add(CallHandlerAdapter.getDispatcher(libraryOp));
+				}
+			}
+			
+			return result;
+		}
+		
+		public Collection<CallHandler> getBlackboxCallHandler(OperationalTransformation operationalTrans, QvtOperationalModuleEnv env) {
+			if (!env.getImportedNativeLibs().isEmpty()) {
+				Set<String> importedLibs = env.getImportedNativeLibs().get(getURI());
+				if (!importedLibs.contains(fLibrary.getId())) {
+					return Collections.emptyList();
+				}
+			}
+			
+			List<EOperation> listOp = fDefinedOperations.get(operationalTrans.getName());
+			if (listOp == null) {
+				return Collections.emptyList();
+			}
+			
+			Collection<CallHandler> result = Collections.emptyList();
+			for (EOperation libraryOp : listOp) {
+				if (OperationMatcher.matchOperation(env, operationalTrans, libraryOp)) {
 					if (result.isEmpty()) {
 						result = new LinkedList<CallHandler>();
 					}

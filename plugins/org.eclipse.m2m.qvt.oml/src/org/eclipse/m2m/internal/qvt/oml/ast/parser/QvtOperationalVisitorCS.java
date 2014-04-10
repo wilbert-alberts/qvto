@@ -7,7 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991, 289982
+ *     Christopher Gerking - bugs 302594, 310991, 289982, 427237
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
  *                         424584, 424869
@@ -2397,6 +2397,10 @@ public class QvtOperationalVisitorCS
 	            		new Object[] { classifierDefCS.getSimpleNameCS().getValue() }), classifierDefCS.getSimpleNameCS());
 				continue;
 			}
+			if (module.isIsBlackbox()) {
+				String error = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_intermediateClassDefinitionInsideBlackboxModule, classifierDefCS.getSimpleNameCS().getValue());
+				env.reportError(error, classifierDefCS);
+			}
 
 			if(intermediateClassFactory == null) {
 				intermediateClassFactory = new IntermediateClassFactory(module);
@@ -2957,7 +2961,7 @@ public class QvtOperationalVisitorCS
     		
     		PathNameCS modulePathNameCS = moduleRefCS.getPathNameCS();
     		if(modulePathNameCS == null) {
-    			// should already have reported error CST parse error
+    			// should already have reported CST parse error
     			continue;
     		}
     		
@@ -3085,15 +3089,21 @@ public class QvtOperationalVisitorCS
 				moduleImport.setEndPosition(moduleUsageCS.getEndOffset());
     			modulePathNameCS.setAst(importedModule);
 				
-				if(kind == ImportKind.EXTENSION) {
-					if(module instanceof OperationalTransformation && importedModule  instanceof OperationalTransformation) {
+    			if(kind == ImportKind.EXTENSION) {
+    				if (importedModule.isIsBlackbox()) {
+    	    			String message = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_extendsOfBlackboxModule, 
+    	    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS));
+    	    			env.reportError(message, moduleRefCS);
+    				}
+    				
+					if (module instanceof OperationalTransformation && importedModule instanceof OperationalTransformation) {
 						validateImportedSignature(env, (OperationalTransformation) module, (OperationalTransformation) importedModule, moduleImport);
 					}					
 				
 					if (module instanceof Library && !(importedModule instanceof Library) && moduleUsageCS.eContainer() instanceof TransformationHeaderCS) {
 		    			env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_libraryCantExtendNonLibrary, 
 		    					QvtOperationalParserUtil.getStringRepresentation(modulePathNameCS)), moduleRefCS);
-					}
+					}					
 				}
 				
 				module.getModuleImport().add(moduleImport);
@@ -3120,6 +3130,13 @@ public class QvtOperationalVisitorCS
 
 			EStructuralFeature eFeature = null;
 			if (propCS instanceof ContextualPropertyCS) {
+				
+				if (module.isIsBlackbox()) {
+					String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_intermediatePropertyDefinitionInsideBlackboxModule,
+							QvtOperationalParserUtil.getPropertyProblemNode(prop, env));
+					env.reportError(warning, propCS);
+				}
+				
 				EClass ctxType = ((ContextualProperty) prop).getContext();
 				if (ctxType != null && env.lookupProperty(ctxType, prop.getName()) != null) {
 					// need to check now for duplicates, as MDT OCL lookup now returns the most specific 
@@ -3137,6 +3154,12 @@ public class QvtOperationalVisitorCS
 				// using AST-CST map as this mapping is not optional but always required
 				env.getASTNodeToCSTNodeMap().put(prop, propCS); 
 			} else {
+				
+				if (propCS instanceof LocalPropertyCS && module.isIsBlackbox()) {
+					String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_localPropertyDefinitionInsideBlackboxModule, prop.getName());
+					env.reportError(warning, propCS);
+				}
+				
 				//eFeature = env.getUMLReflection().createProperty(prop.getName(), prop.getEType());
 				eFeature = prop;				
 				//QvtOperationalParserUtil.addLocalPropertyAST(eFeature, prop);
@@ -3162,8 +3185,11 @@ public class QvtOperationalVisitorCS
 		}
 
 		if (module instanceof OperationalTransformation) {
-			IntermediatePropertyHierarchy intermPropDefHierarchy = ((OperationalTransformation) module).getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
-			for (EStructuralFeature prop : ((OperationalTransformation) module).getIntermediateProperty()) {			
+			
+			OperationalTransformation transformation = (OperationalTransformation) module;
+			
+			IntermediatePropertyHierarchy intermPropDefHierarchy = transformation.getIntermediateProperty().isEmpty() ? null : new IntermediatePropertyHierarchy(module, env);				
+			for (EStructuralFeature prop : transformation.getIntermediateProperty()) {			
 				if (prop instanceof ContextualProperty) {
 					ContextualProperty ctxProperty = (ContextualProperty) prop;				
 					EClass ctxType = ctxProperty.getContext();
@@ -3186,6 +3212,20 @@ public class QvtOperationalVisitorCS
 					}				
 				}
 			}
+			
+			if (transformation.isIsBlackbox()) {
+				Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler((OperationalTransformation) module, env.getAdapter(QvtOperationalModuleEnv.class));
+				if (handlers.isEmpty()) {
+					String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_noBlackboxImplementationFound,
+							QvtOperationalParserUtil.getMappingModuleQualifiedName(moduleCS.getHeaderCS()));
+					env.reportWarning(warning, moduleCS.getHeaderCS());
+				}
+				if (handlers.size() > 1) {
+					String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ambiguousBlackboxImplementationFound,
+							QvtOperationalParserUtil.getMappingModuleQualifiedName(moduleCS.getHeaderCS()));
+					env.reportWarning(warning, moduleCS.getHeaderCS());
+				}
+			}
 		}
 	}
  
@@ -3197,10 +3237,9 @@ public class QvtOperationalVisitorCS
 				break;
 			case ABSTRACT:
 			case STATIC:
-				// only 'blackbox' qualifier for constructor is currently supported
-				String errMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnTransformation, nextQualifierCS.getName(),
+				String warnMessage = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_unsupportedQualifierOnTransformation, nextQualifierCS.getName(),
 						QvtOperationalParserUtil.getMappingModuleQualifiedName(headerCS));
-				env.reportWarning(errMessage, headerCS.getStartOffset(), headerCS.getPathNameCS().getEndOffset());
+				env.reportWarning(warnMessage, headerCS.getStartOffset(), headerCS.getPathNameCS().getEndOffset());
 				break;
 			}
         }
@@ -3336,7 +3375,7 @@ public class QvtOperationalVisitorCS
 		if (modelTypeCS == null) {
 			return null;
 		}
-
+		
 		SimpleNameCS identifierCS = modelTypeCS.getIdentifierCS();
 		ModelType modelType = QvtOperationalStdLibrary.INSTANCE.createModel(identifierCS != null ? identifierCS.getValue() : null);
 		identifierCS.setAst(modelType);
@@ -3592,6 +3631,12 @@ public class QvtOperationalVisitorCS
 		else {
 			visitMappingQueryCS((MappingQueryCS) methodCS, env, methodEnv, declaredOperation);
 		}
+		
+		if(QvtOperationalParserUtil.getOwningModule(declaredOperation).isIsBlackbox()) {
+			String warning = NLS.bind(ValidationMessages.QvtOperationalVisitorCS_operationDefinitionInsideBlackboxModule,
+					QvtOperationalParserUtil.getMappingStringRepresentation(methodCS));
+			env.reportError(warning, QvtOperationalParserUtil.getMethodHeaderProblemNodeCS(methodCS));
+		} 
 		
 		if(declaredOperation.isIsBlackbox() && !QvtOperationalParserUtil.isDisjunctiveMappingOperation(methodCS)) {
 			Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler(declaredOperation, env.getAdapter(QvtOperationalModuleEnv.class));

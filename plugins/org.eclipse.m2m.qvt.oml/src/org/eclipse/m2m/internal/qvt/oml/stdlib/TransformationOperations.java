@@ -55,7 +55,7 @@ public class TransformationOperations extends AbstractContextualOperations {
 		return new CallHandler() {
 			public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
 				ModuleInstance moduleInstance = (ModuleInstance) source;
-				CallHandler mainHandler = moduleInstance.getAdapter(InternalTransformation.class).getEntryOperationHandler();
+				CallHandler mainHandler = moduleInstance.getAdapter(InternalTransformation.class).getTransformationHandler();
 				if(mainHandler == null) {
 					// module has no main operation => return invalid
 					return CallHandlerAdapter.getInvalidResult(evalEnv);

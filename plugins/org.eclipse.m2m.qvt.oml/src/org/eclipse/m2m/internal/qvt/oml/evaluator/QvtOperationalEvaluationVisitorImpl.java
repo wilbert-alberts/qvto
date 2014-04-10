@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,9 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 392080, 392153, 394498, 397215, 397218, 269744, 415660, 415315, 414642, 428618
+ *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 
+ *     							  392080, 392153, 394498, 397215, 397218, 269744, 
+ *     							  415660, 415315, 414642, 427237, 428618
  *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -39,6 +41,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
@@ -103,6 +106,9 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.MutableListImpl;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.model.ExceptionInstance;
 import org.eclipse.m2m.internal.qvt.oml.trace.Trace;
 import org.eclipse.m2m.internal.qvt.oml.trace.TraceRecord;
+import org.eclipse.m2m.qvt.oml.blackbox.java.JavaModelExtent;
+import org.eclipse.m2m.qvt.oml.blackbox.java.JavaModelInstance;
+import org.eclipse.m2m.qvt.oml.blackbox.java.JavaModelType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AltExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssertExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.AssignExp;
@@ -546,7 +552,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	}
     	
 		Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler(operation,
-				//getOperationalEnv().getAdapter(QvtOperationalModuleEnv.class));
 				(QvtOperationalModuleEnv) moduleEnv);
     	if (handlers.isEmpty()) {
         	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.NoBlackboxOperationFound,
@@ -969,7 +974,17 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				
 				ModuleInstance moduleInstance = nestedVisitor.callTransformationImplicitConstructor(targetTransf, actualArguments);
 				//nestedEvalEnv.add(QvtOperationalEnv.THIS, moduleInstance);
-				moduleInstance.getAdapter(InternalTransformation.class).setEntryOperationHandler(createEntryOperationHandler(nestedVisitor));
+				
+				CallHandler handler = null;
+				
+				if (targetTransf.isIsBlackbox()) {
+					handler = createBlackboxTransformationHandler(nestedVisitor);
+				}
+				else {
+					handler = createEntryOperationHandler(nestedVisitor);
+				}
+				
+				moduleInstance.getAdapter(InternalTransformation.class).setTransformationHandler(handler);
 				return moduleInstance;
 			} finally {
 				setOperationalEvaluationEnv(currentEnv);
@@ -1027,27 +1042,40 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		setCurrentEnvInstructionPointer(transformation);		
 		return instance;
 	}	
-	
+		
 	// FIXME - review the strange case of having various return types
 	private Object doVisitTransformation(OperationalTransformation transformation) {
-        ImperativeOperation entryPoint = QvtOperationalParserUtil.getMainOperation(transformation);        
-        if (entryPoint == null) {
-            throw new IllegalArgumentException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable, transformation.getName()));
-        }
-
+        
         QvtOperationalEvaluationEnv evaluationEnv = getOperationalEvaluationEnv();        
 		List<ModelInstance> modelArgs = EvaluationUtil.getTransfromationModelArguments(evaluationEnv, transformation);		
 
-		TransformationInstance moduleInstance = callTransformationImplicitConstructor(transformation, modelArgs);    	
-		CallHandler entryOperationHandler = createEntryOperationHandler(this);
+		TransformationInstance moduleInstance = callTransformationImplicitConstructor(transformation, modelArgs); 
+				
+		CallHandler handler;
+		List<Object> args;
+		
+		if (transformation.isIsBlackbox()) {
+			handler = createBlackboxTransformationHandler(this);
+			args = Collections.emptyList(); // blackbox transformation always composes arguments inside handler.invoke()
+		}
+		else {
+			ImperativeOperation entryPoint = QvtOperationalParserUtil.getMainOperation(transformation);        
+	        if (entryPoint == null) {
+	            throw new IllegalArgumentException(NLS.bind(EvaluationMessages.ExtendedOclEvaluatorVisitorImpl_ModuleNotExecutable, transformation.getName()));
+	        }
+			
+			handler = createEntryOperationHandler(this);
+			args = makeEntryOperationArgs(entryPoint, transformation);
+		}
 		InternalTransformation internTransf = moduleInstance.getAdapter(InternalTransformation.class);		
-		internTransf.setEntryOperationHandler(entryOperationHandler);
+		internTransf.setTransformationHandler(handler);
         			
         // call main entry operation
-        OperationCallResult callResult = (OperationCallResult) entryOperationHandler.invoke(
-        		null, moduleInstance,
-        		makeEntryOperationArgs(entryPoint, 
-        		transformation).toArray(), evaluationEnv);
+        OperationCallResult callResult = (OperationCallResult) handler.invoke(
+        		null, 
+        		moduleInstance,
+        		args.toArray(), 
+        		evaluationEnv);
         
         QvtEvaluationResult evalResult = EvaluationUtil.createEvaluationResult(callResult.myEvalEnv);
         
@@ -1078,7 +1106,40 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			}
 		};
 	}
-
+	
+	private CallHandler createBlackboxTransformationHandler(final InternalEvaluator evaluator) {
+		return new CallHandler() {
+			public Object invoke(ModuleInstance module, Object source, Object[] args, QvtOperationalEvaluationEnv evalEnv) {
+				TransformationInstance transformation = (TransformationInstance) source;				
+				
+				EcoreEnvironment moduleEnv = ASTBindingHelper.resolveEnvironment(transformation.getTransformation());
+		    	if (false == moduleEnv instanceof QvtOperationalModuleEnv) {
+		    		moduleEnv = ASTBindingHelper.getEnvironment(transformation, QvtOperationalModuleEnv.class);
+		    	}
+		    	
+		    	Collection<CallHandler> handlers = BlackboxRegistry.INSTANCE.getBlackboxCallHandler(transformation.getTransformation(),
+						(QvtOperationalModuleEnv) moduleEnv);
+		    	if (handlers.isEmpty()) {
+		        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.NoBlackboxOperationFound,
+		        			QvtOperationalParserUtil.safeGetQualifiedName(getOperationalEnv(), transformation.getTransformation()))));
+		    	}
+		    	if (handlers.size() > 1) {
+		        	throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.AmbiguousBlackboxOperationFound,
+		        			QvtOperationalParserUtil.safeGetQualifiedName(getOperationalEnv(), transformation.getTransformation()))));
+		    	}
+		    	
+		    	evaluateModelParameterConditions(transformation.getTransformation());
+		    	
+		    	List<Object> actualArgs = makeBlackboxTransformationArgs(transformation, evalEnv);
+		    	
+				Object result = handlers.iterator().next().invoke(transformation, source, actualArgs.toArray(), evalEnv);					
+				
+				return new OperationCallResult(result, evalEnv);
+				
+			}
+		};
+	}
+	
 	protected void processDeferredTasks() {
 		InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
 		internalEvalEnv.processDeferredTasks();
@@ -2261,9 +2322,12 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
     }
     
-	private List<Object> makeEntryOperationArgs(ImperativeOperation entryPoint, OperationalTransformation module) {
+    private List<Object> makeEntryOperationArgs(ImperativeOperation entryPoint, OperationalTransformation module) {
+    	
+    	assert !module.isIsBlackbox() : "Non-blackbox module expected";
+    	
 		List<Object> args = new ArrayList<Object>(entryPoint.getEParameters().size());
-		
+				
 		int paramIndex = 0;
 		for (EParameter param : entryPoint.getEParameters()) {
 			int matchedIndex = paramIndex;
@@ -2302,7 +2366,72 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 		return args;
 	}
+    	
+	private List<Object> makeBlackboxTransformationArgs(TransformationInstance transformation, QvtOperationalEvaluationEnv evalEnv) {
+		
+		assert transformation.getTransformation().isIsBlackbox() : "Blackbox transformation expected";
+		
+		List<Object> actualArgs = new ArrayList<Object>();   	
+    	
+		for (ETypedElement param : EvaluationUtil.getBlackboxSignature(transformation.getTransformation())) {
+    		Object arg = null;
+    		if (param instanceof ModelParameter) {
+    			ModelInstance modelInst = transformation.getModel((ModelParameter) param);
+    			arg = createJavaModelInstance(modelInst, evalEnv);
+    		}
+    		else if (param instanceof EStructuralFeature) {
+    			arg = evalEnv.navigateProperty((EStructuralFeature) param, Collections.EMPTY_LIST, transformation);
+    		}
+    		actualArgs.add(arg);
+    	}
+    	
+		return actualArgs;
+	}
 
+	private JavaModelInstance createJavaModelInstance(final ModelInstance modelInst, final QvtOperationalEvaluationEnv evalEnv) {
+		return new JavaModelInstance() {
+			
+			final JavaModelType modelType = new JavaModelType() {
+				
+				public String getName() {
+					return modelInst.getModelType().getName();
+				}
+				
+				public List<EPackage> getMetamodels() {
+					return modelInst.getModelType().getMetamodel();
+				}
+			};
+			
+			final JavaModelExtent modelExtent = new JavaModelExtent() {
+				
+				public void removeObject(EObject obj) {
+					modelInst.getExtent().removeElement(obj);
+				}
+				
+				public List<EObject> getRootObjects() {
+					return modelInst.getExtent().getRootObjects();
+				}
+				
+				public List<Object> getAllObjects() {
+					return modelInst.getExtent().getAllObjects();
+				}
+				
+				public void addObject(EObject obj) {
+					modelInst.getExtent().addObject(obj);
+				}
+			};
+			
+			public JavaModelType getType() {
+				return modelType;
+			}
+			
+			public JavaModelExtent getExtent() {
+				return modelExtent;
+			}
+		};
+	}
+		
+	
 //    private EStructuralFeature getRenamedProperty(EStructuralFeature property) {
 //    	EAnnotation annotation = property.getEAnnotation(Environment.OCL_NAMESPACE_URI);
 //    	if (annotation != null) {
@@ -2387,6 +2516,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 	public OperationCallResult runMainEntry(OperationalTransformation transformation, List<Object> args) {
 		ImperativeOperation entryOperation = QvtOperationalParserUtil.getMainOperation(transformation);				
 		
+		evaluateModelParameterConditions(transformation);
+		
+		OperationCallResult result = executeImperativeOperation(entryOperation, null, args, false);        	        					
+		processDeferredTasks();
+		return result;
+	}
+
+	private void evaluateModelParameterConditions(OperationalTransformation transformation) {
 		for (ModelParameter parameter : transformation.getModelParameter()) {
 			if (parameter.getEType() instanceof ModelType && parameter.getKind() != DirectionKind.OUT) {
 				ModelType parameterType = (ModelType) parameter.getEType();
@@ -2397,15 +2534,10 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		    		if(!isConditionMet) {
 		    			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.ModelTypeConstraintFailed, 
 		    					parameter.getName(), transformation.getName())));
-		    		}
-		    		
+		    		}		    		
 				}
 			}
 		}
-		
-		OperationCallResult result = executeImperativeOperation(entryOperation, null, args, false);        	        					
-		processDeferredTasks();
-		return result;
 	}    
     
     /**

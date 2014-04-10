@@ -298,7 +298,7 @@ public class ModelParameterExtent {
 		}
 	}
 
-	  public static void delete(List<EObject> rootEObjects, EObject eObject) {
+	private static void delete(List<EObject> rootEObjects, EObject eObject) {
 		Set<EObject> eObjects = new HashSet<EObject>();
 		Set<EObject> crossResourceEObjects = new HashSet<EObject>();
 		eObjects.add(eObject);

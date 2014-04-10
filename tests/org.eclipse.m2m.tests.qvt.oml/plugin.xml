@@ -55,6 +55,10 @@
     		<library name="Bug289982_Lib" class="org.eclipse.m2m.tests.qvt.oml.bbox.Bug289982_Library">
     			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
     		</library>
+
+    		<library name="Bug427237_Lib" class="org.eclipse.m2m.tests.qvt.oml.bbox.Bug427237_Library">
+    			<metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+    		</library>
 		</unit>
 		
    		<unit name="Collections" namespace="org.bar">

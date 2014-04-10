@@ -44,8 +44,8 @@ public interface TransformationInstance extends ModuleInstance, ThisInstanceReso
 		*/
 		ModelInstance getIntermediateExtent();
 		
-		void setEntryOperationHandler(CallHandler handler);
+		void setTransformationHandler(CallHandler handler);
 	
-		CallHandler getEntryOperationHandler();
+		CallHandler getTransformationHandler();
 	}
 }

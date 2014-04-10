@@ -28,7 +28,7 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 
 	private final Map<ModelParameter, ModelInstance> fModelParams;
 	private ModelInstance fIntermediateData;
-	private CallHandler fEntryHandler;
+	private CallHandler fTransHandler;
 	
 	TransformationInstanceImpl(OperationalTransformation type) {
 		super(type);
@@ -66,19 +66,13 @@ class TransformationInstanceImpl extends ModuleInstanceImpl implements Transform
 
 		return super.getAdapter(adapterType);
 	}
-		
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance#getEntryOperationHandler()
-	 */
-	public CallHandler getEntryOperationHandler() {
-		return fEntryHandler;
+	
+	public CallHandler getTransformationHandler() {
+		return fTransHandler;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance#setEntryOperationHandler(org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler)
-	 */
-	public void setEntryOperationHandler(CallHandler handler) {
-		fEntryHandler = handler;
+	public void setTransformationHandler(CallHandler handler) {
+		fTransHandler = handler;
 	}
 	
 	@Override

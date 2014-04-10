@@ -51,11 +51,15 @@ public class TestQvtInterpreter extends TestTransformation {
     
     protected ITransformer getTransformer() {
     	// execute compiled XMI
-    	final ResourceSetImpl resSet = new ResourceSetImpl();
+		return new DefaultTransformer(true, getMetamodelRegistry());
+    }
+
+	protected Registry getMetamodelRegistry() {
+		final ResourceSetImpl resSet = new ResourceSetImpl();
 		Registry metamodelRegistry = getData().getMetamodelResolutionRegistry(getProject(), resSet);
 		resSet.setPackageRegistry(metamodelRegistry);
-		return new DefaultTransformer(true, metamodelRegistry);
-    }
+		return metamodelRegistry;
+	}
        
 	@Override
     public void setUp() throws Exception {   

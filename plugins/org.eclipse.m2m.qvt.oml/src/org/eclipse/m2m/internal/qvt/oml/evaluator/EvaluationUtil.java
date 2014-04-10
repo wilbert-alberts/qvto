@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,14 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 388801, 358709
+ *     Christopher Gerking - bugs 388801, 358709, 427237
  *     Alex Paperno - bug 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.InternalEvaluationEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelExtentContents;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.ModelParameterExtent;
@@ -87,7 +89,7 @@ public class EvaluationUtil {
 			}			
 		}
 		
-        List<Object> outParamValues = makeOutParamValues(mainEvalEnv);
+        List<Object> outParamValues = transformation.isIsBlackbox() ? Collections.emptyList() : makeOutParamValues(mainEvalEnv);
 		
 		ModelParameterExtent unboundExtent = mainEvalEnv.getAdapter(InternalEvaluationEnv.class).getUnboundExtent();
 		return new QvtEvaluationResult(extents, unboundExtent.getRootObjects(), outParamValues);
@@ -293,6 +295,17 @@ public class EvaluationUtil {
 		}
 		
 		return initialValue;
+		
+	}
+	
+	public static List<ETypedElement> getBlackboxSignature(OperationalTransformation transformation) {
+		
+		List<ETypedElement> signatureTypedElements = new ArrayList<ETypedElement>();
+		
+		signatureTypedElements.addAll(transformation.getModelParameter());
+		signatureTypedElements.addAll(transformation.getConfigProperty());
+		
+		return signatureTypedElements;
 		
 	}
     

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391,
  *                    424584
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bugs 289982, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -70,6 +70,11 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_unsupportedInheritanceOnBlackboxMapping;
 	public static String QvtOperationalVisitorCS_noBlackboxImplementationFound;
 	public static String QvtOperationalVisitorCS_ambiguousBlackboxImplementationFound;
+	public static String QvtOperationalVisitorCS_operationDefinitionInsideBlackboxModule;
+	public static String QvtOperationalVisitorCS_intermediatePropertyDefinitionInsideBlackboxModule;
+	public static String QvtOperationalVisitorCS_localPropertyDefinitionInsideBlackboxModule;
+	public static String QvtOperationalVisitorCS_intermediateClassDefinitionInsideBlackboxModule;
+	public static String QvtOperationalVisitorCS_extendsOfBlackboxModule;
 	public static String QvtOperationalVisitorCS_instantiatedTypeDoesNotConformToReferredType;
     public static String QvtOperationalVisitorCS_ResolveInMappingNotFound;
     public static String QvtOperationalVisitorCS_transformationNameDuplicates;
