@@ -492,7 +492,7 @@ public class ModelParameterExtent {
 	    @Override
 	    public void notifyChanged(Notification notification) {
 	    	Object newValue = notification.getNewValue();
-	    	if (newValue instanceof EObject) {
+	    	if (notification.getEventType() == Notification.ADD && newValue instanceof EObject) {
 	    		myResourceAdditionalEObjects.add((EObject) newValue);
 	    	}
 	    }
