@@ -25,6 +25,7 @@ public class AllCallAPITests {
 		suite.addTestSuite(DynamicModelInvocationTest.class);
 		suite.addTestSuite(DynamicRegisteredModelInvocationTest.class);
 		suite.addTestSuite(ChildInTreeInputInvocationTest.class);
+		suite.addTestSuite(Bug431055.class);
 		
 		//$JUnit-END$
 		return suite;

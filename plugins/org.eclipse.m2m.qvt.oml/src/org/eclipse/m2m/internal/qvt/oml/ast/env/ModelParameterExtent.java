@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -64,17 +65,12 @@ public class ModelParameterExtent {
 		myInitialEObjects = new ArrayList<EObject>(initialEObjs);
 		myAdditionalEObjects = new ArrayList<EObject>(INITIAL_EXTENT_SIZE);
 		myModelParameter = modelParameter;
+		myReadonlyAdapter = isReadonly() ? new ReadonlyExtentAdapter() : null;
 		
-		if (isReadonly()) {
-			for (EObject eObj : myInitialEObjects) {
-				eObj.eAdapters().add(new ReadonlyExtentAdapter());
-			}			
-		}
-		else {
-			for (EObject eObject : myInitialEObjects) {
-				getInMemoryResource(true).getContents().add(eObject);
-			}
-		}
+		myResourceAdditionalEObjects = !isReadonly() ? new HashSet<EObject>() : Collections.<EObject>emptySet();
+		myResourceAdapter = !isReadonly() ? new ResourceModificationAdapter() : null;
+		myResourceInstalledAdapters = !isReadonly() ? new HashSet<Resource>() : Collections.<Resource>emptySet();
+
 		
 		// Remark: 
 		// As initial objects may have non-null containers, so can be in the middle of an object tree,
@@ -89,8 +85,27 @@ public class ModelParameterExtent {
 				containerMap.put(nextInitialRoot, nextInitialRoot.eContainer());
 			}
 		}
-		
+
 		myInitialObj2ContainerMap = (containerMap != null) ? containerMap : Collections.<EObject, EObject>emptyMap();
+		
+		if (isReadonly()) {
+			for (EObject eObj : myInitialEObjects) {
+				eObj.eAdapters().add(myReadonlyAdapter);
+			}			
+		}
+		else {
+			for (EObject eObject : myInitialEObjects) {
+				if (eObject.eResource() == null) {
+					getInMemoryResource(true).getContents().add(eObject);
+				}
+				else {
+					// Here we expect that eObject's Resource is configured to deliver notifications (which is the default behavior).
+					eObject.eResource().eAdapters().add(myResourceAdapter);
+					myResourceInstalledAdapters.add(eObject.eResource());
+					eObject.eResource().eSetDeliver(true);
+				}
+			}
+		}
 	}
 
 	private Resource getInMemoryResource(boolean createOnDemand) {
@@ -130,7 +145,7 @@ public class ModelParameterExtent {
 		while (auxParent != null) {
 			Adapter adapter = EcoreUtil.getAdapter(auxParent.eAdapters(), ReadonlyExtentAdapter.class);
 			if (adapter != null) {				
-				return ((ReadonlyExtentAdapter) adapter).getModelParameterExtent().myModelParameter;
+				return ((ReadonlyExtentAdapter) adapter).getModelParameter();
 			}
 			auxParent = auxParent.eContainer();
 		}
@@ -201,13 +216,10 @@ public class ModelParameterExtent {
 		Set<EObject> allRootObjects = new LinkedHashSet<EObject>(myInitialEObjects);
 		allRootObjects.addAll(myAdditionalEObjects);
 		
-		Resource inMemoryResource = getInMemoryResource(false);
-		if (inMemoryResource != null) {
-			for (EObject obj : inMemoryResource.getContents()) {
-				// don't forget about UML stereotype applications which are the root objects
-				if (obj.eContainer() == null) {
-					allRootObjects.add(obj);
-				}
+		// don't forget about UML stereotype applications which are the root objects
+		for (EObject obj : myResourceAdditionalEObjects) {
+			if (obj.eContainer() == null) {
+				allRootObjects.add(obj);
 			}
 		}
 		
@@ -233,6 +245,7 @@ public class ModelParameterExtent {
 			myAdditionalEObjects.remove(element);
 			myPurgeLimitSize = Math.max(myAdditionalEObjects.size(), INITIAL_EXTENT_SIZE);
 		}
+		myResourceAdditionalEObjects.remove(element);
 		
 		return true;
 	}
@@ -250,6 +263,12 @@ public class ModelParameterExtent {
 					eObj.eAdapters().remove(adapter);
 				}
 			}			
+		}
+		for (Resource res : myResourceInstalledAdapters) {
+			Adapter adapter = EcoreUtil.getAdapter(res.eAdapters(), ResourceModificationAdapter.class);
+			if (adapter != null) {
+				res.eAdapters().remove(adapter);
+			}
 		}
 	}
 	
@@ -341,12 +360,17 @@ public class ModelParameterExtent {
 	private static final int INITIAL_EXTENT_SIZE = 150;
 	private int myCountAddedAfterPurge = 0;
 	private int myPurgeLimitSize = INITIAL_EXTENT_SIZE;
-	
+	private static int ourExtentId = 0;
 	
 	private final List<EObject> myInitialEObjects;
 	private final List<EObject> myAdditionalEObjects;
 	private final ModelParameter myModelParameter;
 	private final Map<EObject, EObject> myInitialObj2ContainerMap;
+	private final ReadonlyExtentAdapter myReadonlyAdapter;
+	
+	private final Set<EObject> myResourceAdditionalEObjects;
+	private final ResourceModificationAdapter myResourceAdapter;
+	private final Set<Resource> myResourceInstalledAdapters;
 
 	
 	private static class ExtentContents implements ModelExtentContents {
@@ -412,18 +436,18 @@ public class ModelParameterExtent {
 //	}
 	
 	
-	private static class ExtentResource extends ResourceImpl {
-		
-		private static int ourExtentId = 0;
+	private class ExtentResource extends ResourceImpl {
 		
 		ExtentResource() {
 			setURI(URI.createURI("extent:/" + (++ourExtentId))); //$NON-NLS-1$
 			setTrackingModification(false);
+			eAdapters().add(myResourceAdapter);
+			myResourceInstalledAdapters.add(this);
 		}
 		
 		@Override
 		public boolean eNotificationRequired() {		
-			return false;
+			return !isReadonly();
 		}
 		
 		@Override
@@ -449,25 +473,28 @@ public class ModelParameterExtent {
 
 	private class ReadonlyExtentAdapter extends AbstractGenericAdapter<ReadonlyExtentAdapter> {
 
-		public ReadonlyExtentAdapter() {
-		}
-		
-		public ModelParameterExtent getModelParameterExtent() {
-			return ModelParameterExtent.this;
-		}
-		
 		public boolean isAdapterForType(Object type) {	
 			return ReadonlyExtentAdapter.class == type;
 		}
 
-	    @Override
-	    public boolean equals(Object obj) {
-	        return obj instanceof ReadonlyExtentAdapter;
-	    }
+		public ModelParameter getModelParameter() {
+			return myModelParameter;
+		}
+		
+	}
+
+	private class ResourceModificationAdapter extends AbstractGenericAdapter<ResourceModificationAdapter> {
+
+		public boolean isAdapterForType(Object type) {	
+			return ResourceModificationAdapter.class == type;
+		}
 
 	    @Override
-	    public int hashCode() {
-	        return ReadonlyExtentAdapter.class.hashCode();
+	    public void notifyChanged(Notification notification) {
+	    	Object newValue = notification.getNewValue();
+	    	if (newValue instanceof EObject) {
+	    		myResourceAdditionalEObjects.add((EObject) newValue);
+	    	}
 	    }
 	    
 	}
