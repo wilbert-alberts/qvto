@@ -7,7 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991, 289982, 427237
+ *     Christopher Gerking - bugs 302594, 310991, 289982, 427237, 425634
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
  *                         424584, 424869
@@ -4780,11 +4780,13 @@ public class QvtOperationalVisitorCS
             	mappingOperations.add(operation);
             }
         }
+
+        String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + EmfUtil.PATH_SEPARATOR; //$NON-NLS-1$
+        mappingFQName += mappingName;
+
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
         } else {
-            String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + EmfUtil.PATH_SEPARATOR; //$NON-NLS-1$
-            mappingFQName += mappingName;
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
                         mappingFQName}), resolveInExpCS.getInMappingName() != null ? resolveInExpCS.getInMappingName() : resolveInExpCS);
@@ -4797,6 +4799,23 @@ public class QvtOperationalVisitorCS
         
         ResolveExp result = populateResolveExp(resolveInExpCS, env, resolveInExp);
         //        DeprecatedImplicitSourceCallHelper.validateCallExp(resolveInExpCS, result, env);
+               
+        if (mappingOperations.size() == 1 && resolveInExp.getTarget() != null) {
+        	EClassifier targetVariableType = resolveInExp.getTarget().getType();
+        	EClassifier mappingResultType = mappingOperations.get(0).getEType();
+        	
+        	if(!TypeUtil.compatibleTypeMatch(env, mappingResultType, targetVariableType)) {
+        		env.reportWarning(
+        			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTargetVariableType, 
+        					new Object[] {
+        					QvtOperationalTypesUtil.getTypeFullName(targetVariableType), 
+        					QvtOperationalTypesUtil.getTypeFullName(mappingResultType),
+        					mappingFQName
+        					}),
+        			resolveInExpCS.getTarget());
+        	}
+        }
+        
         return result;
     }
     

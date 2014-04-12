@@ -101,7 +101,7 @@ mapping nonContextualMapping(in par : EClass) : EPackage {
 	init {
 		par.resolve(EClass);
 		resolve(EClass);
-		resolveIn(nonContextualMapping, EClass);
+		resolveIn(nonContextualMapping, /*<warn>*/EClass/*</warn>*/);
 		
 		var isKindOf := this.oclIsKindOf(OclAny);
 		-- TODO - uncomment when OclVoid is not used for module implicit source		
@@ -133,7 +133,7 @@ main() {
 
 		eClass.resolve(EClass);
 		resolve(EClass);
-		resolveIn(nonContextualMapping, EClass);
+		resolveIn(nonContextualMapping, /*<warn>*/EClass/*</warn>*/);
 
 		
 		var strVal := localProp;

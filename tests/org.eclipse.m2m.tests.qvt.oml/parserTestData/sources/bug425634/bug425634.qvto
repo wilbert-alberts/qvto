@@ -1,0 +1,17 @@
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation bug425634();
+
+main() {
+	var p1 = resolveoneIn(m1, /*<warn>*/EClass/*</warn>*/);
+	var p2 = resolveoneIn(m1, EClassifier);
+	var p3 = resolveoneIn(m1, ENamedElement);
+	var p4 = resolveoneIn(m1, /*<warn>*/EPackage/*</warn>*/);
+
+	var p5 = resolveoneIn(m2, EClass);
+	var p6 = resolveoneIn(m2, EClassifier);
+	var p7 = resolveoneIn(m2, ENamedElement);
+}
+
+abstract mapping m1() : EClassifier {}
+abstract mapping m2() : EClass {}

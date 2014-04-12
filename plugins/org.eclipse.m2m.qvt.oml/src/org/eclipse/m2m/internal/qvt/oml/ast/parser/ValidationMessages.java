@@ -10,7 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 272869, 268636, 414363, 419299, 414619, 420970, 413391,
  *                    424584
- *     Christopher Gerking - bugs 289982, 427237
+ *     Christopher Gerking - bugs 289982, 427237, 425634
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.parser;
 
@@ -123,6 +123,7 @@ public final class ValidationMessages extends NLS {
 	public static String QvtOperationalVisitorCS_cantUseLibraryAsType;
 	public static String QvtOperationalVisitorCS_unsupportedQualifierOnTransformation;
 	public static String QvtOperationalVisitorCS_duplicateQualifierOnTransformation;
+	public static String QvtOperationalVisitorCS_incompatibleTargetVariableType;
     
 	public static String readOnlyPropertyModificationError;
 	public static String StringTypeMessageLogArgumentError;
