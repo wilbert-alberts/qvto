@@ -7,7 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 392153
+ *     Christopher Gerking - bugs 392153, 425069
  *     Alex Paperno - bugs 400720, 415029
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
@@ -459,6 +459,14 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 		}
 		
 		return super.isKindOf(object, classifier);
+	}
+	
+	@Override
+	public EClassifier getType(Object object) {
+		if (object == null) {
+			return QvtOperationalStdLibrary.INSTANCE.getOCLStdLib().getOclVoid();
+		}
+		return super.getType(object);
 	}
 	
 	@Override

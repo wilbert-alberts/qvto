@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991, 397959
+ *     Christopher Gerking - bugs 302594, 310991, 397959, 425069
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -62,6 +62,7 @@ import org.eclipse.ocl.lpg.ProblemHandler;
 import org.eclipse.ocl.lpg.ProblemHandler.Severity;
 import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.OCLStandardLibraryUtil;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
@@ -332,6 +333,18 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		
 	@Override
 	public List<EOperation> getAdditionalOperations(EClassifier classifier) {
+		
+		if (classifier instanceof VoidType<?>) {
+			List<EOperation> result = new ArrayList<EOperation>();
+
+			getAllContextualOperations(result, this);
+			
+			for (QvtEnvironmentBase nextImportedEnv : getImportsByExtends()) {
+				getAllContextualOperations(result, nextImportedEnv);
+			}
+			return result;
+		}
+		
 		if(classifier instanceof org.eclipse.ocl.ecore.CollectionType) {
 			org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) classifier;			
 			List<EOperation> result = new ArrayList<EOperation>();
@@ -350,6 +363,17 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 		}
 		
 		return super.getAdditionalOperations(classifier);
+	}
+
+	private void getAllContextualOperations(List<EOperation> result, QvtEnvironmentBase env) {
+		for (EOperation operation : env.getModuleContextType().getEOperations()) {
+			if (operation instanceof ImperativeOperation) {
+				ImperativeOperation imperative = (ImperativeOperation) operation;
+				if (QvtOperationalParserUtil.isContextual(imperative)) {
+					result.add(imperative);
+				}
+			}
+		}
 	}
 	
 	private void getLocalAdditionalCollectionOperations(org.eclipse.ocl.ecore.CollectionType collectionType, List<EOperation> result) {

@@ -10,7 +10,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 309762, 310991, 325192, 377882, 388325, 
  *     							  392080, 392153, 394498, 397215, 397218, 269744, 
- *     							  415660, 415315, 414642, 427237, 428618
+ *     							  415660, 415315, 414642, 427237, 428618, 425069
  *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970, 424584
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -702,9 +702,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				source = doImplicitListCoercion(((ImperativeOperation) referredOperation).getContext().getEType(), source);
 			}
             List<Object> args = makeArgs(operationCallExp);
-            // does not make sense continue at all, call on null or invalid results in invalid 
-        	if(isUndefined(source)) {
-        		return getInvalid();
+            // does not make sense continue at all, call on invalid results in invalid 
+        	if(source == getInvalid()) {
+        		return source;
         	}
 
             ImperativeOperation method = null;
@@ -720,7 +720,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     			method = (ImperativeOperation)referredOperation;
     		}
 
-            if(method != null) {          
+            if(method != null) {
+            	
+            	if (QvtOperationalParserUtil.isContextual(method) && source == null) {
+            		if (QvtOperationalParserUtil.getContextualType(method) != getStandardLibrary().getOclVoid()) {
+            			return getInvalid();
+            		}
+            	}
+            	
             	if(operationCallExp instanceof ImperativeCallExp) {
             		ImperativeCallExp imperativeCall = (ImperativeCallExp) operationCallExp;
             		if(imperativeCall.isIsVirtual()) {
@@ -1365,8 +1372,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		if(logExp.getCondition() != null && !Boolean.TRUE.equals(visitExpression(logExp.getCondition()))) {
 			return null;
 		}
-		InternalEvaluationEnv internalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);		
-		Object invalid = internalEnv.getInvalid();
+		Object invalid = getInvalid();
 		String invalidRepr = "<Invalid>"; //$NON-NLS-1$
 		// process logging level
 		Integer level = null;
@@ -1891,7 +1897,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         nestedEnv.setOperation(method);
         
         nestedEnv.getOperationArgs().addAll(args);
-        if (!isUndefined(source)) {
+        if (source != getInvalid()) {
             nestedEnv.setOperationSelf(source);
         }
         

@@ -41,6 +41,7 @@ import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.types.CollectionType;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.types.TupleType;
+import org.eclipse.ocl.types.VoidType;
 import org.eclipse.ocl.util.TypeUtil;
 import org.eclipse.ocl.utilities.TypedElement;
 import org.eclipse.ocl.utilities.UMLReflection;
@@ -83,6 +84,11 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		List<EOperation> matches = null;
 
 		for (EOperation oper : operations) {
+			if (owner instanceof VoidType<?> && oper instanceof ImperativeOperation) {
+				if (QvtOperationalParserUtil.getContextualType((ImperativeOperation) oper) != owner) {
+					continue;
+				}
+			}
 			if (name.equals(uml.getName(oper))
 				&& matchArgs(owner, uml.getParameters(oper), args)) {
 
