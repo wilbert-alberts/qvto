@@ -4737,7 +4737,7 @@ public class QvtOperationalVisitorCS
 	}
 
     private org.eclipse.ocl.ecore.OCLExpression visitResolveExpCS(ResolveExpCS resolveExpCS, QvtOperationalEnv env) {
-        ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp());
+        ResolveExp resolveExp = populateResolveExp(resolveExpCS, env, ExpressionsFactory.eINSTANCE.createResolveExp(), null);
 //        if (resolveExp.getSource() == null) {
 //            env.reportError(NLS.bind(ValidationMessages.ResolveExpMustHaveASource, new Object[] { }), resolveExpCS);
 //        }
@@ -4783,9 +4783,11 @@ public class QvtOperationalVisitorCS
 
         String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + EmfUtil.PATH_SEPARATOR; //$NON-NLS-1$
         mappingFQName += mappingName;
+        EClassifier mappingResultType = null;
 
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
+            mappingResultType = mappingOperations.get(0).getEType();
         } else {
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
@@ -4797,12 +4799,11 @@ public class QvtOperationalVisitorCS
             }
         }
         
-        ResolveExp result = populateResolveExp(resolveInExpCS, env, resolveInExp);
+        ResolveExp result = populateResolveExp(resolveInExpCS, env, resolveInExp, mappingResultType);
         //        DeprecatedImplicitSourceCallHelper.validateCallExp(resolveInExpCS, result, env);
                
         if (mappingOperations.size() == 1 && resolveInExp.getTarget() != null) {
         	EClassifier targetVariableType = resolveInExp.getTarget().getType();
-        	EClassifier mappingResultType = mappingOperations.get(0).getEType();
         	
         	if(!TypeUtil.compatibleTypeMatch(env, mappingResultType, targetVariableType)) {
         		env.reportWarning(
@@ -4819,7 +4820,7 @@ public class QvtOperationalVisitorCS
         return result;
     }
     
-    private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp) {
+    private ResolveExp populateResolveExp(ResolveExpCS resolveExpCS, QvtOperationalEnv env, ResolveExp resolveExp, EClassifier mappingResultType) {
         // AST binding
         if(myCompilerOptions.isGenerateCompletionData()) {      
             ASTBindingHelper.createCST2ASTBinding(resolveExpCS, resolveExp, env);
@@ -4892,10 +4893,11 @@ public class QvtOperationalVisitorCS
                 }
             }
         } else {
+        	EClassifier resultType = mappingResultType == null ? env.getOCLStandardLibrary().getOclAny() : mappingResultType;
             if (resolveExp.isOne()) {
-                resolveExp.setType(env.getOCLStandardLibrary().getOclAny());
+                resolveExp.setType(resultType);
             } else {
-        		EClassifier resolveType = (EClassifier) env.getOCLFactory().createSequenceType(env.getOCLStandardLibrary().getOclAny());
+        		EClassifier resolveType = (EClassifier) env.getOCLFactory().createSequenceType(resultType);
                 resolveExp.setType(TypeUtil.resolveType(env, resolveType));
             }
         }

@@ -1,0 +1,17 @@
+modeltype ecore uses "http://www.eclipse.org/emf/2002/Ecore";
+transformation bug432786;
+
+main() {
+	var p1 : EClassifier = resolveoneIn(m1);
+	assert fatal (p1 = null);
+	  
+	var obj = map m1();
+	var p2 : ENamedElement = resolveoneIn(m1);  
+	assert fatal (p2 = obj);
+}
+
+mapping m1() : EClassifier {
+	init {
+		result := object EClass{};	
+	}
+}

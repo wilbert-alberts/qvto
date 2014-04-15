@@ -388,6 +388,7 @@ public class TransformTests {
                 }), 
         		new FileToFileData("bug427237a"), //$NON-NLS-1$
         		new FilesToFilesData("bug425069"), //$NON-NLS-1$
+        		new FilesToFilesData("bug432786"), //$NON-NLS-1$
         		};
     }
 
