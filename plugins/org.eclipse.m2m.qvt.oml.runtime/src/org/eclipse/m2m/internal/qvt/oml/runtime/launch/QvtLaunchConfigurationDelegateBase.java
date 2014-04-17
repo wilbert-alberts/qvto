@@ -198,7 +198,7 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
         Iterator<ModelExtentContents> itrExtent = out.getExtents().iterator();
         for (TargetUriData outUriData : targetData) {
         	if (!itrExtent.hasNext()) {
-        		throw new MdaException("Imcomplete transformation results"); //$NON-NLS-1$
+        		throw new MdaException("Incomplete transformation results"); //$NON-NLS-1$
         	}
         	saveTransformationResult(itrExtent.next(), outUriData, resSet);
         }

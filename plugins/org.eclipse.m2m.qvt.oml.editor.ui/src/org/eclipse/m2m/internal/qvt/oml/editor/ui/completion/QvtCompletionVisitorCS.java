@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.m2m.internal.qvt.oml.ast.binding.ASTBindingHelper;
@@ -34,10 +35,8 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 public class QvtCompletionVisitorCS extends QvtOperationalVisitorCS {
     private QvtOperationalEnv myEnv; 
 
-    public QvtCompletionVisitorCS(
-            AbstractQVTParser parser,
-            QvtCompilerOptions options) {
-        super(parser, options);
+    public QvtCompletionVisitorCS(AbstractQVTParser parser, QvtCompilerOptions options, Monitor monitor) {
+        super(parser, options, monitor);
         myEnv = (QvtOperationalEnv) parser.getEnvironment();
     }
 

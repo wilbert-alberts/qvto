@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,13 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml.util;
 
 import java.util.Map;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 
 /**
@@ -34,11 +37,17 @@ public interface IContext {
 	/**
 	 * Retrieve the monitor associated with this context.
 	 * <p>
-	 * It can be used to interrupt execution from another thread then the
+	 * It can be used to interrupt execution from another thread than the
 	 * execution thread.
 	 * 
 	 * @return the monitor object, never <code>null</code>
+	 * @since 3.4
 	 */
+    IProgressMonitor getProgressMonitor();
+    
+    /**
+     * @deprecated Use getProgressMonitor() method
+     */
     EvaluationMonitor getMonitor();
 		
     Map<String, Object> getConfigProperties();

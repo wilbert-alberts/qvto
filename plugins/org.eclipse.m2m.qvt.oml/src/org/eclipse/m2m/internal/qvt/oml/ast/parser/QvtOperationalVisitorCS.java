@@ -7,7 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991, 289982, 427237, 425634
+ *     Christopher Gerking - bugs 302594, 310991, 289982, 391289, 425634, 427237
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
  *                         424584, 424869
@@ -29,9 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
@@ -60,6 +62,7 @@ import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
 import org.eclipse.m2m.internal.qvt.oml.blackbox.BlackboxRegistry;
 import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerMessages;
+import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.cst.AssertExpCS;
@@ -262,16 +265,24 @@ public class QvtOperationalVisitorCS
 	 */
     private List<ResolveExp> myLateResolveExps;
     
+    private final Monitor myMonitor;
+    
 	public QvtOperationalVisitorCS(
 			OCLLexer lexStream,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> environment, QvtCompilerOptions options) {
 		super(new OCLParser(lexStream));
         myCompilerOptions = options;
+        myMonitor = CompilerUtils.createNullMonitor();
 	}
 	
 	public QvtOperationalVisitorCS(AbstractQVTParser parser, QvtCompilerOptions options) {
+		this(parser, options, CompilerUtils.createNullMonitor());
+	}
+	
+	public QvtOperationalVisitorCS(AbstractQVTParser parser, QvtCompilerOptions options, Monitor monitor) {
 		super(parser);		
 		myCompilerOptions = options;
+		myMonitor = monitor;
 	}
 	
 	public QvtCompilerOptions getCompilerOptions() {
@@ -665,6 +676,11 @@ public class QvtOperationalVisitorCS
 	        Environment<EPackage, EClassifier, EOperation, EStructuralFeature, 
 	        EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction,
 	        Constraint, EClass, EObject> env) {
+		
+		if (isAborted()) {
+			CompilerUtils.throwOperationCanceled();
+		}
+		
 	    try {
             if (oclExpressionCS instanceof BlockExpCS) {
                 return visitBlockExpCS((BlockExpCS) oclExpressionCS, env);
@@ -774,6 +790,9 @@ public class QvtOperationalVisitorCS
 	        QvtPlugin.error(ex);
 	        QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
 	    }
+		catch (OperationCanceledException ex) {
+			throw ex;
+	 	}
 	    catch (RuntimeException ex) {
 	        //QvtPlugin.log(ex);
 	    	QvtOperationalUtil.reportError(env, ValidationMessages.QvtOperationalVisitorCS_oclParseNPE, oclExpressionCS);
@@ -5791,4 +5810,9 @@ public class QvtOperationalVisitorCS
 		}
 		return null;
 	}
+	
+	private boolean isAborted() {
+		return myMonitor.isCanceled();
+	}
+	
 }

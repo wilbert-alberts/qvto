@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.launch;
 
@@ -28,7 +29,6 @@ import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.QvtRuntimePlugin;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelegateBase {
@@ -42,12 +42,11 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 	}
 	
 	// FIXME - do refactoring of this area 
-	public void launch(final ILaunchConfiguration configuration, String mode, final ILaunch launch, IProgressMonitor monitor) throws CoreException {
+	public void launch(final ILaunchConfiguration configuration, String mode, final ILaunch launch, final IProgressMonitor monitor) throws CoreException {
         
 		try {
             final QvtTransformation qvtTransformation = new QvtInterpretedTransformation(getQvtModule(configuration));
-            final EvaluationMonitor execMonitor = createMonitor();
-                                    
+                                                
             final StreamsProxy streamsProxy = new StreamsProxy();
    
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
@@ -60,7 +59,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
                 	
                 	Context context = QvtLaunchUtil.createContext(configuration);
                     context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
-                    context.setMonitor(execMonitor);
+                    context.setProgressMonitor(monitor);
                     
                 	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
                 	
@@ -74,7 +73,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
             	boolean isTerminated = false;
             	@Override
             	public void terminate() throws DebugException {            		
-            		execMonitor.cancel();
+            		monitor.setCanceled(true);
             		isTerminated = true;	            		
             		super.terminate();            		
             	}
@@ -128,20 +127,6 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 		catch(Exception e) {
 			throw new CoreException(org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil.makeErrorStatus(e));
 		}
-	}
-
-	private EvaluationMonitor createMonitor() {
-		return new EvaluationMonitor() {
-			boolean fIsCanceled = false;
-			
-			public void cancel() {
-				fIsCanceled = true;
-			}
-			
-			public boolean isCanceled() {
-				return fIsCanceled;
-			}
-		};
 	}
     
   

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,13 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 422269, 431082
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml;
 
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
@@ -24,6 +26,7 @@ import org.eclipse.m2m.qvt.oml.util.Log;
  * 
  * @noimplement This interface is not intended to be implemented by clients.
  */
+@SuppressWarnings("deprecation")
 public interface ExecutionContext {
 
 	/**
@@ -63,6 +66,18 @@ public interface ExecutionContext {
 	 * request.
 	 * 
 	 * @return the monitor implementation, never <code>null</code>
+	 * @deprecated Use getProgressMonitor() method
 	 */
 	EvaluationMonitor getMonitor();
+	
+	/**
+	 * Gets the evaluation monitor assigned to this context. The execution
+	 * engine will query the monitor the check for the user interruption
+	 * request.
+	 * 
+	 * @return the monitor implementation, never <code>null</code>
+	 * @since 3.4
+	 */
+	IProgressMonitor getProgressMonitor();
+	
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 422269, 431082
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml;
 
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
@@ -27,12 +30,12 @@ import org.eclipse.m2m.qvt.oml.util.Log;
  * @noextend This class is not intended to be subclassed by clients.
  * @see TransformationExecutor
  */
+@SuppressWarnings("deprecation")
 public final class ExecutionContextImpl implements ExecutionContext {
 
-	private Map<String, Object> fConfigProperties = new HashMap<String, Object>(
-			5);
+	private Map<String, Object> fConfigProperties = new HashMap<String, Object>(5);
 
-	private EvaluationMonitor fMonitor;
+	private IProgressMonitor fMonitor;
 
 	private Log fLog;
 
@@ -41,15 +44,14 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	 */
 	public ExecutionContextImpl() {
 		fLog = Log.NULL_LOG;
-		fMonitor = ExecutionContextImpl.createDefaultMonitor();
+		fMonitor = createDefaultMonitor();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.m2m.qvt.oml.ExecutionContext#getConfigProperty(java.lang.
-	 * String)
+	 * org.eclipse.m2m.qvt.oml.ExecutionContext#getConfigProperty(java.lang.String)
 	 */
 	public Object getConfigProperty(String name) {
 		if (name == null) {
@@ -113,6 +115,13 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	 * @see org.eclipse.m2m.qvt.oml.ExecutionContext#getMonitor()
 	 */
 	public EvaluationMonitor getMonitor() {
+		return EvaluationMonitor.EvaluationMonitorWrapper.convert(fMonitor);
+	}
+
+	/**
+	 * @since 3.4
+	 */
+	public IProgressMonitor getProgressMonitor() {
 		return fMonitor;
 	}
 
@@ -121,26 +130,32 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	 * 
 	 * @param monitor
 	 *            the monitor implementation, never <code>null</code>
+	 * @deprecated
 	 */
 	public void setMonitor(EvaluationMonitor monitor) {
 		if (monitor == null) {
 			throw new IllegalArgumentException("null monitor"); //$NON-NLS-1$
 		}
 
-		fMonitor = monitor;
+		setProgressMonitor(EvaluationMonitor.EvaluationMonitorWrapper.convert(monitor));
 	}
 
-	private static EvaluationMonitor createDefaultMonitor() {
-		return new EvaluationMonitor() {
-			boolean myIsCancelled;
+	/**
+	 * Set evaluation monitor to this context
+	 * 
+	 * @param monitor
+	 *            the monitor implementation, never <code>null</code>
+	 * @since 3.4
+	 */
+	public void setProgressMonitor(IProgressMonitor monitor) {
+		if (monitor == null) {
+			throw new IllegalArgumentException("null monitor"); //$NON-NLS-1$
+		}
 
-			public void cancel() {
-				myIsCancelled = true;
-			}
-
-			public boolean isCanceled() {
-				return myIsCancelled;
-			}
-		};
+		fMonitor = monitor;
+	}
+	
+	private static IProgressMonitor createDefaultMonitor() {
+		return new NullProgressMonitor();
 	}
 }

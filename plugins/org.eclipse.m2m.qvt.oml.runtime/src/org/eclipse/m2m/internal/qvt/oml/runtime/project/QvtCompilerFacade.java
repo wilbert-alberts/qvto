@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.project;
 
@@ -79,7 +80,7 @@ public class QvtCompilerFacade {
 
 			final QVTOCompiler compiler = CompilerUtils.createCompiler();
 			final CompiledUnit module = compiler.compile(sourceUnit, compilerOptions, 
-					new BasicMonitor.EclipseSubProgress(monitor, 0));
+					BasicMonitor.toMonitor(monitor));
 			
 			return new CompilationResult() {
 				public CompiledUnit getCompiledModule() {

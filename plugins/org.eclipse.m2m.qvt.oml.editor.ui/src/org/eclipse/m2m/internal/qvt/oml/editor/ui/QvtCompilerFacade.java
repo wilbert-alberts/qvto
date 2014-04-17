@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
@@ -56,7 +57,7 @@ public class QvtCompilerFacade {
         if (monitor == null) {
             monitor = new NullProgressMonitor();
         }
-        monitor.beginTask(Messages.QvtCompilerFacade_compilingDoc , 4);
+        monitor.beginTask(Messages.QvtCompilerFacade_compilingDoc, 4);
         CompiledUnit result = null;
 		
 		try {
@@ -73,7 +74,7 @@ public class QvtCompilerFacade {
 				final UnitProxy inMemoryUnit = new InMemoryUnitProxy(unit.getNamespace(), unit.getName(), unit.getURI(), contents, unitResolver);
 				
 				QVTOCompiler compiler = CompilerUtils.createCompiler();				
-                result = compiler.compile(inMemoryUnit, options, new BasicMonitor.EclipseSubProgress(monitor, 2));
+                result = compiler.compile(inMemoryUnit, options, CompilerUtils.createMonitor(BasicMonitor.toMonitor(monitor), 3));
                 
                 if (result != null) {
                     documentProvider.setMappingModule(result);

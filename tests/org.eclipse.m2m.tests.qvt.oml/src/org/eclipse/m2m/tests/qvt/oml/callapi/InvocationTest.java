@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 422269, 431082
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.callapi;
 
@@ -20,6 +21,8 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -33,7 +36,6 @@ import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
-import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -154,39 +156,30 @@ public class InvocationTest extends TestCase {
 	}
 
 	public void testInterruption() throws Exception {
-		final EvaluationMonitor monitor = new EvaluationMonitor() {
-			boolean canceled = false;
-			
-			public void cancel() {
-				canceled = true;
-			}			
-			public boolean isCanceled() {			
-				return canceled;
-			}
-		};
+		final IProgressMonitor monitor = new NullProgressMonitor();
 		
 		Log log = new Log() {
 			public void log(int level, String message, Object param) {
-				monitor.cancel();
+				monitor.setCanceled(true);
 			}
 
 			public void log(int level, String message) {
-				monitor.cancel();				
+				monitor.setCanceled(true);				
 			}
 
 			public void log(String message, Object param) {
-				monitor.cancel();				
+				monitor.setCanceled(true);		
 			}
 
 			public void log(String message) {
-				monitor.cancel();				
+				monitor.setCanceled(true);				
 			}
 		};
 		
-		fContext.setMonitor(monitor);
+		fContext.setProgressMonitor(monitor);
 		fContext.setLog(log);
 
-		final ExecutionDiagnostic  diagnostic = fExecutor.execute(fContext, fInput, fOutput);	
+		final ExecutionDiagnostic diagnostic = fExecutor.execute(fContext, fInput, fOutput);	
 		assertEquals(Diagnostic.CANCEL, diagnostic.getSeverity());
 		assertEquals(ExecutionDiagnostic.USER_INTERRUPTED, diagnostic.getCode());		
 		assertEquals(1, diagnostic.getStackTrace().size());

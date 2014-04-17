@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -138,7 +139,6 @@ import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.UnpackExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.VariableInitExp;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.WhileExp;
 import org.eclipse.m2m.qvt.oml.util.Dictionary;
-import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.m2m.qvt.oml.util.MutableList;
@@ -2492,7 +2492,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     }
     
     protected InternalEvaluator createInterruptibleVisitor() {
-    	final EvaluationMonitor monitor = getContext().getMonitor();
+    	final IProgressMonitor monitor = getContext().getProgressMonitor();
     	    
     	class InterruptVisitor extends QvtGenericVisitorDecorator.Any {
     		

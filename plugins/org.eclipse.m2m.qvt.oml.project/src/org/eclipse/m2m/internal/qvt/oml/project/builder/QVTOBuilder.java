@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 391289, 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.project.builder;
 
@@ -35,6 +36,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.ProgressMonitorWrapper;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -82,27 +86,32 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     
 	@Override
 	protected IProject[] build(int kind, Map<String,String> args, IProgressMonitor monitor) throws CoreException {
-    	if(monitor == null) {
-    		monitor = new NullProgressMonitor();
-    	}
+    					
+   		monitor = new ProgressMonitorWrapper(monitor == null ? new NullProgressMonitor() : monitor) {
+   			@Override
+   			public boolean isCanceled() {
+   				return super.isCanceled() || isInterrupted();
+   			}
+   		};
     	
-    	monitor.beginTask(getProject().getFullPath().toString(), 1);
-    	
-        if (kind == IncrementalProjectBuilder.FULL_BUILD) {
-            fullBuild(monitor);
-        } else {
-            incrementalBuild(monitor);
-        }
-        
+   		try {
+	    	monitor.setTaskName("Build " + getProject().getFullPath().toString()); //$NON-NLS-1$
+	    		    	
+	        if (kind == IncrementalProjectBuilder.FULL_BUILD) {
+	            fullBuild(monitor);
+	        } else {
+	            incrementalBuild(monitor);
+	        }
+   		} finally {
+   			monitor.done();
+   		}
+   		
         fireBuildEvent();
-        
-        monitor.worked(1);
-        
+                
         IProject[] projectDependencies = getConfig().getProjectDependencies(true);
         
-        
-        monitor.done();        
-		return projectDependencies;
+        return projectDependencies;
+	    	    
     }
     
     private void fullBuild(IProgressMonitor monitor) throws CoreException {
@@ -112,6 +121,8 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     @Override
 	protected void clean(final IProgressMonitor monitor) throws CoreException {        
         
+   		monitor.setTaskName("Clean " + getProject().getFullPath().toString()); //$NON-NLS-1$
+		
     	getProject().accept(new IResourceProxyVisitor() {
 			public boolean visit(IResourceProxy proxy) throws CoreException {
 				if (proxy.getType() == IResource.FILE) {
@@ -124,6 +135,8 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 			}
     		
     	}, IContainer.INCLUDE_TEAM_PRIVATE_MEMBERS);
+    	
+    	monitor.done();
     }
     
     private void incrementalBuild(IProgressMonitor monitor) throws CoreException {
@@ -201,8 +214,9 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
     
     private void rebuildAll(IProgressMonitor monitor) throws CoreException {
     	
-        IFile[] files = collectFiles();
-        monitor.worked(1);
+		SubMonitor progress = SubMonitor.convert(monitor, "Rebuild all", 10); //$NON-NLS-1$
+		
+        IFile[] files = collectFiles(progress.newChild(1, SubMonitor.SUPPRESS_NONE));
         
         CompiledUnit[] units;
 		try {
@@ -220,7 +234,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 	        List<UnitProxy> allUnits = ResolverUtils.findAllUnits(resolver);
 
 	        units = compiler.compile(allUnits.toArray(new UnitProxy[allUnits.size()]),
-						options, new BasicMonitor.EclipseSubProgress(monitor, 1));
+						options, CompilerUtils.createMonitor(BasicMonitor.toMonitor(progress.newChild(8, SubMonitor.SUPPRESS_NONE)), 8));
 	        
 	        if(shouldSaveXMI()) {
 	        	ResourceSet metamodelResourceSet = compiler.getResourceSet();
@@ -228,7 +242,7 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 	        	ExeXMISerializer.saveUnitXMI(units, registry != null ? registry : EPackage.Registry.INSTANCE);
 	        }
 		}
-		catch(OperationCanceledException e) {
+		catch (OperationCanceledException e) {
 			throw e;
 		}
 		catch (Exception e) {
@@ -236,8 +250,8 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
 		}
 		
         for (int i = 0; i < units.length; i++) {                    
-            if(monitor.isCanceled()) {
-            	throw new OperationCanceledException();
+        	if(monitor.isCanceled()) {
+            	CompilerUtils.throwOperationCanceled();
             }
             
         	CompiledUnit nextUnit = units[i];
@@ -251,6 +265,8 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
                 createQvtMarker(sourceFile, nextMessage);
             }
         }
+        
+        progress.worked(1);
     }
         
     private void createQvtMarker(IFile curFile, QvtMessage e) {
@@ -279,9 +295,10 @@ public class QVTOBuilder extends IncrementalProjectBuilder {
         return myConfig;
     }
     
-    private IFile[] collectFiles() throws CoreException {
+    private IFile[] collectFiles(IProgressMonitor monitor) throws CoreException {
+    	
         final ArrayList<IFile> result = new ArrayList<IFile>();
-        getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+        getProject().refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
         
         IContainer srcContainer = null;
         try {

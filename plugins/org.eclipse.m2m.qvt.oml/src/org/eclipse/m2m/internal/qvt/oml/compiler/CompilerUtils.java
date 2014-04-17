@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,14 +8,15 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 391289
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.BasicMonitor;
@@ -78,7 +79,7 @@ public class CompilerUtils {
 		return unitDiagnostic;
 	}
 	
-	static Monitor createMonitor(Monitor monitor, int ticks) {
+	public static Monitor createMonitor(Monitor monitor, int ticks) {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			return Eclipse.createMonitor(monitor, ticks);			
 		}
@@ -86,7 +87,7 @@ public class CompilerUtils {
 		return monitor;
 	}
 	
-	static void throwOperationCanceled() throws RuntimeException {
+	public static void throwOperationCanceled() throws RuntimeException {
 		if(EMFPlugin.IS_ECLIPSE_RUNNING) {
 			Eclipse.throwOperationCanceled();
 		} else {
@@ -94,7 +95,7 @@ public class CompilerUtils {
 		}
 	}
 	
-	static Monitor createNullMonitor() {
+	public static Monitor createNullMonitor() {
 		return new BasicMonitor();
 	}
 	
@@ -118,7 +119,7 @@ public class CompilerUtils {
     }
     
     public static QVTOCompiler createCompiler() {
-    	// FIXME - eliminate eclipse dependency here, the call should be should be responsible
+    	// FIXME - eliminate eclipse dependency here, the call should be responsible
     	// for setting this up, as different domains have different requirements,
     	// like editor, builders etc.
     	if(EMFPlugin.IS_ECLIPSE_RUNNING && EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE) {
@@ -135,11 +136,7 @@ public class CompilerUtils {
         }    	
 
     	static Monitor createMonitor(Monitor monitor, int ticks) {
-			if (monitor instanceof IProgressMonitor) {
-				return new BasicMonitor.EclipseSubProgress((IProgressMonitor) monitor, ticks);
-			} else {
-				return new BasicMonitor.EclipseSubProgress(BasicMonitor.toIProgressMonitor(monitor), ticks);
-			}
+			return new BasicMonitor.EclipseSubProgress(BasicMonitor.toIProgressMonitor(monitor), ticks, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
     	}
     	
     	static void throwOperationCanceled() throws RuntimeException {

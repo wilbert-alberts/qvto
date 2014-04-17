@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 391289
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui.completion;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 import lpg.runtime.IPrsStream;
 import lpg.runtime.IToken;
 
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnv;
@@ -113,8 +115,8 @@ public class QvtCompletionCompiler extends QVTOCompiler {
     }
     
     @Override
-    protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options) {
-		return new QvtCompletionVisitorCS(parser, options) {
+    protected QvtOperationalVisitorCS createAnalyzer(AbstractQVTParser parser, QvtCompilerOptions options, Monitor monitor) {
+		return new QvtCompletionVisitorCS(parser, options, monitor) {
 			@Override
 			protected void setEnv(QvtOperationalEnv env) {			
 				super.setEnv(env);

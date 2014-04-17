@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.tests.qvt.oml.bbox;
 
@@ -384,9 +385,11 @@ public class AnnotatedJavaLibrary {
 		context.getLog().log(param);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Operation (withExecutionContext=true)
 	public void cancelExecution(IContext context) {
 		context.getMonitor().cancel();
+		// context.getProgressMonitor().setCanceled(true);
 	}
 	
 	@Operation (contextual=true, withExecutionContext=true)

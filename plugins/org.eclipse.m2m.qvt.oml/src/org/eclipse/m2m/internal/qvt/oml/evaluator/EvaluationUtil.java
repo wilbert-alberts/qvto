@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 388801, 358709, 427237
+ *     Christopher Gerking - bugs 388801, 358709, 427237, 431082
  *     Alex Paperno - bug 419299 
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
@@ -206,7 +206,7 @@ public class EvaluationUtil {
 		};
 
 		nestedContext.setLog(parentContext.getLog());
-		nestedContext.setMonitor(parentContext.getMonitor());
+		nestedContext.setProgressMonitor(parentContext.getProgressMonitor());
 		nestedContext.getSessionData().setValue(AGGREGATING_ROOT_ENV, evalEnv);
 
 		return nestedContext;

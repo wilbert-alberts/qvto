@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2013 R.Dvorak and others.
+ * Copyright (c) 2009, 2014 R.Dvorak and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,13 +7,18 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -123,11 +128,16 @@ public class InternalTransformationExecutor {
 	 * 
 	 * @return the diagnostic indicating possible problems of the load action
 	 */
-	public Diagnostic loadTransformation() {
-		if (fLoadDiagnostic == null) {
-			doLoad();
+	public Diagnostic loadTransformation(IProgressMonitor monitor) {
+		try {
+			if (fLoadDiagnostic == null) {
+				doLoad(monitor);
+			}
+			return fLoadDiagnostic;
+		} 
+		finally {
+			monitor.done();
 		}
-		return fLoadDiagnostic;
 	}
 	
 	/**
@@ -141,7 +151,7 @@ public class InternalTransformationExecutor {
 	 * @return compiled unit or <code>null</code> if it failed to be obtained
 	 */
 	public CompiledUnit getUnit() {
-		loadTransformation();
+		loadTransformation(new NullProgressMonitor());
 		return fCompiledUnit;
 	}	
 
@@ -160,30 +170,40 @@ public class InternalTransformationExecutor {
 	 *             if the context or any of the model parameters is
 	 *             <code>null</code>
 	 */
-	public ExecutionDiagnostic execute(ExecutionContext executionContext,
-			ModelExtent... modelParameters) {
+	public ExecutionDiagnostic execute(ExecutionContext executionContext, ModelExtent... modelParameters) {
 		// Java API check for nulls etc.
 		if (executionContext == null) {
 			throw new IllegalArgumentException();
 		}
-		checkLegalModelParams(modelParameters);
-
-		// ensure transformation unit is loaded
-		loadTransformation();
-
-		// check if we have successfully loaded the transformation unit
-		if (!isSuccess(fLoadDiagnostic)) {
-			return fLoadDiagnostic;
-		}
-
-		try {
-			return doExecute(modelParameters,
-					createInternalContext(executionContext));
-		} catch (QvtRuntimeException e) {
-			Log logger = executionContext.getLog();
-			logger.log(EvaluationMessages.TerminatingExecution);
-
-			return createExecutionFailure(e);
+		
+		IProgressMonitor monitor = executionContext.getProgressMonitor();
+				
+		try {							
+			SubMonitor progress = SubMonitor.convert(monitor, "Execute " + getURI().toString(), 2); //$NON-NLS-1$
+						
+			checkLegalModelParams(modelParameters);
+	
+			// ensure transformation unit is loaded
+			loadTransformation(progress.newChild(1));
+			
+			// check if we have successfully loaded the transformation unit
+			if (!isSuccess(fLoadDiagnostic)) {
+				return fLoadDiagnostic;
+			}
+	
+			try {
+				return doExecute(modelParameters,
+						createInternalContext(executionContext, progress.newChild(1)));
+			} catch (QvtRuntimeException e) {
+				Log logger = executionContext.getLog();
+				logger.log(EvaluationMessages.TerminatingExecution);
+	
+				return createExecutionFailure(e);
+			}
+		} finally {
+			if (monitor != null) {
+				monitor.done();
+			}
 		}
 	}
 
@@ -237,7 +257,7 @@ public class InternalTransformationExecutor {
 		// nothing interesting here
 	}
 
-	private void doLoad() {
+	private void doLoad(IProgressMonitor monitor) {
 		fLoadDiagnostic = ExecutionDiagnosticImpl.OK_INSTANCE;
 
 		UnitProxy unit = UnitResolverFactory.Registry.INSTANCE.getUnit(fURI);
@@ -250,7 +270,7 @@ public class InternalTransformationExecutor {
 
 		QVTOCompiler compiler = createCompiler();
 		try {
-			fCompiledUnit = compiler.compile(unit, null, null);
+			fCompiledUnit = compiler.compile(unit, null, BasicMonitor.toMonitor(monitor));
 			fCompilationRs = compiler.getResourceSet();
 		//	fCompilerKernel = compiler.getKernel();
 
@@ -442,11 +462,10 @@ public class InternalTransformationExecutor {
 				|| severity == Diagnostic.INFO;
 	}
 
-	private static IContext createInternalContext(
-			ExecutionContext executionContext) {
+	private static IContext createInternalContext(ExecutionContext executionContext, IProgressMonitor monitor) {
 		Context ctx = new Context();
 		ctx.setLog(executionContext.getLog());
-		ctx.setMonitor(executionContext.getMonitor());
+		ctx.setProgressMonitor(monitor);
 
 		for (String key : executionContext.getConfigPropertyNames()) {
 			Object value = executionContext.getConfigProperty(key);

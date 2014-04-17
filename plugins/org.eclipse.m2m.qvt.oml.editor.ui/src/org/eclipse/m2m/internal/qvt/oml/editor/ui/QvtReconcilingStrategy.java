@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,13 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 391289
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.editor.ui;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -69,7 +71,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         CompiledUnit compilationResult = null;
         try {
 			myReconcilingListener.aboutToBeReconciled();			
-	        compilationResult = getCompiler(editingInQvtSourceContainer);	        
+	        compilationResult = getCompilationResult(editingInQvtSourceContainer);	        
         } 
         catch (Exception ex) {
             handleError(ex);
@@ -78,7 +80,7 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
         }
     }
 
-	private CompiledUnit getCompiler(boolean editingInQvtSourceContainer) {
+	private CompiledUnit getCompilationResult(boolean editingInQvtSourceContainer) {
 		CompiledUnit compilationResult;
 		QvtCompilerOptions options = new QvtCompilerOptions();
 		options.setShowAnnotations(editingInQvtSourceContainer);
@@ -90,6 +92,11 @@ public class QvtReconcilingStrategy implements IReconcilingStrategy, IReconcilin
 	}
 
 	private void handleError(Exception ex) {
+		
+		if (ex instanceof OperationCanceledException) {
+			return;
+		}
+		
 		if (myLoggedCompilationExceptionsCount < MAX_LOGGED_COMPILATION_EXCEPTIONS) {
 		    myLoggedCompilationExceptionsCount ++;
 		    Activator.log(ex);

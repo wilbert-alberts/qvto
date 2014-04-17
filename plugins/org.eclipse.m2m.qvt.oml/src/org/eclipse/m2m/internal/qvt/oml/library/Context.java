@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.library;
 
@@ -15,6 +16,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.ISessionData;
@@ -23,18 +26,19 @@ import org.eclipse.m2m.qvt.oml.util.Log;
 /**
  * @noextend
  */
+@SuppressWarnings("deprecation")
 public class Context implements IContext {
 
     private final Map<String, Object>  myConfiguration;
     private SessionDataImpl myData;
 
     private Log myLog;
-    private EvaluationMonitor myMonitor;
+    private IProgressMonitor myMonitor;
     
     public Context() {
     	myConfiguration = new HashMap<String, Object>();
     	myLog = Log.NULL_LOG;
-		myMonitor = new DefaultMonitor();
+		myMonitor = new NullProgressMonitor();
 		myData = new SessionDataImpl();
     }
 
@@ -46,7 +50,7 @@ public class Context implements IContext {
     	return new SessionDataImpl(myData);
     }
 
-    public void setMonitor(EvaluationMonitor monitor) {
+    public void setProgressMonitor(IProgressMonitor monitor) {
     	if(monitor == null) {
     		throw new IllegalArgumentException("Non-null monitor required"); //$NON-NLS-1$
     	}
@@ -54,8 +58,15 @@ public class Context implements IContext {
 		this.myMonitor = monitor;
 	}
     
-    public EvaluationMonitor getMonitor() {    
+    public IProgressMonitor getProgressMonitor() {    
     	return myMonitor;
+    }
+    
+    /**
+     * @deprecated Use getProgressMonitor() method
+     */
+    public EvaluationMonitor getMonitor() {    
+    	return EvaluationMonitor.EvaluationMonitorWrapper.convert(myMonitor);
     }
     
     public void setLog(Log log) {
@@ -92,19 +103,6 @@ public class Context implements IContext {
     }
     
             
-    private static class DefaultMonitor implements EvaluationMonitor {
-    	
-		private boolean myIsCancelled;
-
-		public void cancel() {
-			myIsCancelled = true;
-		}
-
-		public boolean isCanceled() {
-			return myIsCancelled;
-		}
-	}
-    
     private static class SessionDataImpl implements ISessionData {
     	
     	private HashMap<Object, Object> fData;

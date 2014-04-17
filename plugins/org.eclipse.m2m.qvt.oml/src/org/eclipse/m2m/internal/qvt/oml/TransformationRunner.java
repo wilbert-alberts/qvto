@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2013 R.Dvorak and others.
+ * Copyright (c) 2009, 2014 R.Dvorak and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - bug 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml;
 
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
@@ -98,9 +100,9 @@ public class TransformationRunner  {
 			return fDiagnostic;
 		}
 		
-		fDiagnostic = QvtPlugin.createDiagnostic("Transformation runner initiliaze");
+		fDiagnostic = QvtPlugin.createDiagnostic("Transformation runner initialize"); //$NON-NLS-1$
 		
-		Diagnostic loadDiagnostic = fExecutor.loadTransformation();
+		Diagnostic loadDiagnostic = fExecutor.loadTransformation(new NullProgressMonitor());
 		if(!QvtPlugin.isSuccess(loadDiagnostic)) {
 			fDiagnostic.add(loadDiagnostic);
 		}
