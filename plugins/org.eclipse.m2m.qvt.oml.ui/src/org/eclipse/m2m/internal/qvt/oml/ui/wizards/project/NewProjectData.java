@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,8 +8,11 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 319078
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
+
+import org.eclipse.core.runtime.IPath;
 
 class NewProjectData {	
 
@@ -33,7 +36,9 @@ class NewProjectData {
 	
 	private String fID;
 	
-	private String fVersion; 
+	private String fVersion;
+	
+	private IPath fLocation;
 	
 	public NewProjectData() {
 		super();
@@ -125,5 +130,13 @@ class NewProjectData {
 
 	public void setQVTSourceFolderName(String sourceFolderName) {
 		fQVTSourceFolderName = sourceFolderName;
+	}
+	
+	public IPath getLocation() {
+		return fLocation;
+	}
+
+	public void setLocation(IPath location) {
+		fLocation = location;
 	}
 }

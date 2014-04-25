@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,25 +8,20 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bug 319078
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -116,61 +111,15 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 			String propertyName, Object data) {
 		fConfig = config;
 	}
-	
-    /*
-     * Copied from BasicNewProjectResourceWizard (modified)
-     */
-    private WorkspaceModifyOperation createNewSimpleProjectOperation() {
-        final IProject newProjectHandle = fMainPage.getProjectHandle();
-        URI location = null;
-        if (!fMainPage.useDefaults()) {
-            location = fMainPage.getLocationURI();
-        }
-
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        final IProjectDescription description = workspace.newProjectDescription(newProjectHandle.getName());
-        description.setLocationURI(location);
-
-        WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
-            @Override
-			protected void execute(IProgressMonitor monitor) throws CoreException {
-                createProject(description, newProjectHandle, monitor);
-                doPostCreateProjectAction(newProjectHandle, monitor);
-            }
-        };
-        return op;
-    }
-    
-	private WorkspaceModifyOperation createNewPluginProjectOperation() {
+	    
+	private WorkspaceModifyOperation createNewProjectOperation() {
 		return new NewProjectCreationOperation(fMainPage.getProjectHandle(), fProjectData) {
 			@Override
 			protected void createContents(IProgressMonitor monitor, IProject project) throws CoreException, InterruptedException {
-		        doPostCreateProjectAction(project, monitor);
+				doPostCreateProjectAction(project, monitor);
 			}
 		};
 	}    
-
-    /*
-     * Copied from BasicNewProjectResourceWizard (not modified)
-     */
-    void createProject(IProjectDescription description, IProject projectHandle,
-            IProgressMonitor monitor) throws CoreException, OperationCanceledException {
-        
-    	try {
-            monitor.beginTask("", 2000);//$NON-NLS-1$
-
-            projectHandle.create(description, new SubProgressMonitor(monitor, 1000));
-
-            if (monitor.isCanceled()) {
-                throw new OperationCanceledException();
-            }
-
-            projectHandle.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(monitor, 1000));
-
-        } finally {
-            monitor.done();
-        }
-    }
 
 	@Override
 	public boolean performFinish() {
@@ -191,15 +140,8 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 				// it has been previously selected in the new content page
 				fProjectData.setDoGenerateClass(false);
 			}
-			
-            final WorkspaceModifyOperation operation;
-            if (fMainPage.isCreatePlugin()) {
-                operation = createNewPluginProjectOperation();
-            } else {
-                operation = createNewSimpleProjectOperation();
-            }
-            
-			getContainer().run(false, true, operation);
+		                      
+			getContainer().run(false, true, createNewProjectOperation());
 		} 
         catch (InterruptedException e) {
         	// operation canceled
@@ -220,17 +162,18 @@ public class NewQVTProjectWizard extends Wizard implements INewWizard, IExecutab
 
 
     private void doPostCreateProjectAction(IProject createdProject, IProgressMonitor monitor) throws CoreException {
-		// Create QVT source container
+		monitor.beginTask("Create QVT source container", 2); //$NON-NLS-1$
+	    	
     	IContainer srcContainer = fMainPage.getQVTSourceContainerHandle();
     	if(srcContainer instanceof IFolder) {
-        	SourceContainerUpdater.ensureDestinationExists((IFolder)srcContainer, monitor);    		
+        	SourceContainerUpdater.ensureDestinationExists((IFolder)srcContainer, new SubProgressMonitor(monitor, 1));    		
     	}
     	
     	QVTOBuilderConfig qvtConfig = QVTOBuilderConfig.getConfig(createdProject);
     	qvtConfig.setSourceContainer(srcContainer);
     	qvtConfig.addTransformationNature();
 
-        monitor.worked(1);
+    	monitor.worked(1);
     }
     
     private INewQVTElementDestinationWizardDelegate getDestinationProvider() {

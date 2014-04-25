@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009,2014 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 414662
+ *     Christopher Gerking - bugs 319078, 414662
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ui.wizards.project;
 
@@ -18,22 +18,28 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
@@ -80,11 +86,6 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	}
 	
 	protected void createContents(IProgressMonitor monitor, IProject project) throws CoreException, InterruptedException {
-	}
-	
-	protected int getNumberOfWorkUnits() {
-		int numUnits = 4;
-		return numUnits;
 	}
 	
 	private void createBuildProperties(IProject project, IProgressMonitor monitor) throws CoreException {
@@ -168,12 +169,12 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	 */
 	@Override
 	protected void execute(IProgressMonitor monitor) throws CoreException, InvocationTargetException, InterruptedException {
-		monitor.beginTask(Messages.NewProjectCreationOperation_createQVTProjectTask, getNumberOfWorkUnits());
+		SubMonitor progress = SubMonitor.convert(monitor, Messages.NewProjectCreationOperation_createQVTProjectTask, 2);
 
-		createProject(monitor);
-		monitor.worked(1);
-
-		createContents(monitor, fProjectHandle);
+		createProject(progress.newChild(1));
+		createContents(progress.newChild(1), fProjectHandle);
+		
+		monitor.done();
 	}
 
 
@@ -219,33 +220,50 @@ class NewProjectCreationOperation extends WorkspaceModifyOperation {
 	}
 	
 	private void createProject(IProgressMonitor monitor) throws CoreException, JavaModelException {
-		if(!fProjectHandle.exists()) {
-			fProjectHandle.create(monitor);
-		}
-
-		fProjectHandle.open(monitor);
+        SubMonitor subMonitor = SubMonitor.convert(monitor, 7);
 		
-		if (fData.isPlugin()) {
-			addNatureToProject(fProjectHandle, PLUGIN_NATURE, monitor);
+        URI location = URIUtil.toURI(fData.getLocation());
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		final IProjectDescription description = workspace.newProjectDescription(fProjectHandle.getName());
+		if (location != null && ResourcesPlugin.getWorkspace().getRoot().getLocationURI().equals(location)) {
+			location = null;
+		}
+		description.setLocationURI(location); 
+						
+		if(!fProjectHandle.exists()) {
+			fProjectHandle.create(description, subMonitor.newChild(1));
+		}
+		subMonitor.setWorkRemaining(6);
+
+        if (subMonitor.isCanceled()) {
+            throw new OperationCanceledException();
+        }
+
+        fProjectHandle.open(IResource.BACKGROUND_REFRESH, subMonitor.newChild(1));
+        
+        if (fData.isPlugin()) {
+			addNatureToProject(fProjectHandle, PLUGIN_NATURE, subMonitor.newChild(1));
 			
 			fGenerator = new PluginClassCodeGenerator(fProjectHandle, fData);
 			
 			if(fData.isCreateJava()) {
-				setupJava(fProjectHandle, true, monitor);
+				setupJava(fProjectHandle, true, subMonitor.newChild(1));
 			}
+			subMonitor.setWorkRemaining(3);
 			
 			// generate the manifest file
 			IFolder metaFolder = fProjectHandle.getFolder("META-INF"); //$NON-NLS-1$
-			metaFolder.create(true, true, monitor);
+			metaFolder.create(true, true, subMonitor.newChild(1));
 
-			createManifest(metaFolder, monitor);
-			monitor.worked(1);
+			createManifest(metaFolder, subMonitor.newChild(1));
 			
 			// generate the build.properties file
-			createBuildProperties(fProjectHandle, monitor);
+			createBuildProperties(fProjectHandle, subMonitor.newChild(1));
 
 		} else if(fData.isCreateJava()) {
-			setupJava(fProjectHandle, false, monitor);
+			subMonitor.setWorkRemaining(1);
+			setupJava(fProjectHandle, false, subMonitor.newChild(1));
 		}
 	}
 
