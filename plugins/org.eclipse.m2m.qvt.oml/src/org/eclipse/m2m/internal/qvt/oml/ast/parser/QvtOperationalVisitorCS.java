@@ -4825,14 +4825,16 @@ public class QvtOperationalVisitorCS
         	EClassifier targetVariableType = resolveInExp.getTarget().getType();
         	
         	if(!TypeUtil.compatibleTypeMatch(env, mappingResultType, targetVariableType)) {
-        		env.reportWarning(
-        			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTargetVariableType, 
-        					new Object[] {
-        					QvtOperationalTypesUtil.getTypeFullName(targetVariableType), 
-        					QvtOperationalTypesUtil.getTypeFullName(mappingResultType),
-        					mappingFQName
-        					}),
-        			resolveInExpCS.getTarget());
+        		if(!TypeUtil.compatibleTypeMatch(env, targetVariableType, mappingResultType)) {
+	        		env.reportWarning(
+	        			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTargetVariableType, 
+	        					new Object[] {
+	        					QvtOperationalTypesUtil.getTypeFullName(targetVariableType), 
+	        					QvtOperationalTypesUtil.getTypeFullName(mappingResultType),
+	        					mappingFQName
+	        					}),
+	        			resolveInExpCS.getTarget());
+        		}
         	}
         }
         
