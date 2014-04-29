@@ -31,6 +31,7 @@ public class EvaluationMessages extends NLS {
 	public static String TerminatingExecution;
 	public static String UknownSourceLabel;
 	public static String MappingPreconditionFailed;
+	public static String MappingPostconditionFailed;
 	public static String ModelTypeConstraintFailed;
 	public static String NoBlackboxOperationFound;
 	public static String AmbiguousBlackboxOperationFound;

@@ -3752,6 +3752,31 @@ public class QvtOperationalVisitorCS
 			}
 		}
 
+		BlockExp whereExp = null;
+		
+		if (!methodCS.getPosts().isEmpty()) {
+			whereExp = ImperativeOCLFactory.eINSTANCE.createBlockExp();
+			whereExp.setStartPosition(methodCS.getPosts().get(0).getStartOffset());
+			whereExp.setEndPosition(methodCS.getPosts().get(methodCS.getPosts().size()-1).getEndOffset());
+			whereExp.setType(env.getOCLStandardLibrary().getOclVoid());
+		}
+
+		for (OCLExpressionCS postExp : methodCS.getPosts()) {
+			org.eclipse.ocl.ecore.OCLExpression post = visitOclExpressionCS(postExp, newEnv);
+			if (post != null) {
+				EClassifier postType = post.getType();
+				if (postType != newEnv.getOCLStandardLibrary().getBoolean()) {
+					newEnv.reportError(NLS.bind(ValidationMessages.mappingWhereNotBooleanError,
+							new Object[] { QvtOperationalTypesUtil.getTypeFullName(postType) }), postExp);
+				}
+				else {
+					whereExp.getBody().add(post);
+				}
+			}
+		}
+		
+		operation.setWhere(whereExp);
+		
 		List<org.eclipse.ocl.ecore.OCLExpression> inits = Collections.emptyList();
 		if ((methodCS.getMappingBody() != null) && (methodCS.getMappingBody().getMappingInitCS() != null)) {
 			inits = visitMappingSectionCS(methodCS.getMappingBody().getMappingInitCS(), newEnv);

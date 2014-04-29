@@ -2087,13 +2087,22 @@ public interface CSTPackage extends EPackage {
 	int MAPPING_RULE_CS__GUARDS = MAPPING_METHOD_CS_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Posts</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_RULE_CS__POSTS = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Mapping Body</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS__MAPPING_BODY = MAPPING_METHOD_CS_FEATURE_COUNT + 1;
+	int MAPPING_RULE_CS__MAPPING_BODY = MAPPING_METHOD_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Mapping Rule CS</em>' class.
@@ -2102,7 +2111,7 @@ public interface CSTPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 2;
+	int MAPPING_RULE_CS_FEATURE_COUNT = MAPPING_METHOD_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingQueryCSImpl <em>Mapping Query CS</em>}' class.
@@ -7847,6 +7856,17 @@ public interface CSTPackage extends EPackage {
 	EReference getMappingRuleCS_Guards();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getPosts <em>Posts</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Posts</em>'.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getPosts()
+	 * @see #getMappingRuleCS()
+	 * @generated
+	 */
+	EReference getMappingRuleCS_Posts();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10157,6 +10177,14 @@ public interface CSTPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_RULE_CS__GUARDS = eINSTANCE.getMappingRuleCS_Guards();
+
+		/**
+		 * The meta object literal for the '<em><b>Posts</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING_RULE_CS__POSTS = eINSTANCE.getMappingRuleCS_Posts();
 
 		/**
 		 * The meta object literal for the '<em><b>Mapping Body</b></em>' containment reference feature.

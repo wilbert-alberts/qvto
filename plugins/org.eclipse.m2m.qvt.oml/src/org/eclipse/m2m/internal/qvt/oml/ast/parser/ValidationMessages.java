@@ -169,6 +169,7 @@ public final class ValidationMessages extends NLS {
 	public static String OutParamsNotSupported;
 	public static String OutParamWithoutExtent;
 	public static String mappingGuardNotBooleanError;
+	public static String mappingWhereNotBooleanError;
 	public static String ModelTypeWhereNotBooleanError;
 	
 	public static String ContextlessConstructor;

@@ -151,6 +151,9 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
           eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
           containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="posts" upperBound="-1"
+          eType="ecore:EClass platform:/plugin/org.eclipse.ocl/model/OCLCST.ecore#//cst/OCLExpressionCS"
+          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="mappingBody" eType="#//cst/MappingSectionsCS"
           containment="true"/>
     </eClassifiers>

@@ -10,7 +10,7 @@ transformation bug420970(in m1:ECORE, in m2:ECORE, in m3:ECORE, out m4:ECORE) ac
 
 		var tr2 =  new A(m1,m2,m4);
 		var retcode2 = tr2.transform();
-		assert fatal (retcode2.toString().startsWith("FAILED raised: (Exception : WHERE condition failed for model parameter 'i2' of transformation 'A' "));
+		assert fatal (retcode2.toString().startsWith("FAILED raised: (Exception : WHERE condition failed for model parameter 'i2' of transformation 'A'"));
 
 		var tr3 =  new A(m1,m3,m4);
 		var retcode3 = tr3.transform();

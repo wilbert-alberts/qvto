@@ -41,6 +41,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getPosts <em>Posts</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.impl.MappingRuleCSImpl#getMappingBody <em>Mapping Body</em>}</li>
  * </ul>
  * </p>
@@ -64,6 +65,16 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 	 * @ordered
 	 */
 	protected EList<OCLExpressionCS> guards;
+
+	/**
+	 * The cached value of the '{@link #getPosts() <em>Posts</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPosts()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OCLExpressionCS> posts;
 
 	/**
 	 * The cached value of the '{@link #getMappingBody() <em>Mapping Body</em>}' containment reference.
@@ -104,6 +115,18 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 			guards = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.MAPPING_RULE_CS__GUARDS);
 		}
 		return guards;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<OCLExpressionCS> getPosts() {
+		if (posts == null) {
+			posts = new EObjectContainmentEList<OCLExpressionCS>(OCLExpressionCS.class, this, CSTPackage.MAPPING_RULE_CS__POSTS);
+		}
+		return posts;
 	}
 
 	/**
@@ -159,6 +182,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARDS:
 				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
+			case CSTPackage.MAPPING_RULE_CS__POSTS:
+				return ((InternalEList<?>)getPosts()).basicRemove(otherEnd, msgs);
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return basicSetMappingBody(null, msgs);
 		}
@@ -175,6 +200,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARDS:
 				return getGuards();
+			case CSTPackage.MAPPING_RULE_CS__POSTS:
+				return getPosts();
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return getMappingBody();
 		}
@@ -194,6 +221,10 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 				getGuards().clear();
 				getGuards().addAll((Collection<? extends OCLExpressionCS>)newValue);
 				return;
+			case CSTPackage.MAPPING_RULE_CS__POSTS:
+				getPosts().clear();
+				getPosts().addAll((Collection<? extends OCLExpressionCS>)newValue);
+				return;
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				setMappingBody((MappingSectionsCS)newValue);
 				return;
@@ -212,6 +243,9 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 			case CSTPackage.MAPPING_RULE_CS__GUARDS:
 				getGuards().clear();
 				return;
+			case CSTPackage.MAPPING_RULE_CS__POSTS:
+				getPosts().clear();
+				return;
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				setMappingBody((MappingSectionsCS)null);
 				return;
@@ -229,6 +263,8 @@ public class MappingRuleCSImpl extends MappingMethodCSImpl implements MappingRul
 		switch (featureID) {
 			case CSTPackage.MAPPING_RULE_CS__GUARDS:
 				return guards != null && !guards.isEmpty();
+			case CSTPackage.MAPPING_RULE_CS__POSTS:
+				return posts != null && !posts.isEmpty();
 			case CSTPackage.MAPPING_RULE_CS__MAPPING_BODY:
 				return mappingBody != null;
 		}

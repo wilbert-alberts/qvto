@@ -1285,10 +1285,11 @@
 
 	mapping_decl ::= mapping_full_header ';'
 		/.$BeginCode
-		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
+					Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
 							(EList)mappingFullHeader[1],
+							(EList)mappingFullHeader[2],
 							null
 						);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(2));
@@ -1311,10 +1312,11 @@
 						}
 					}
 
-		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
+					Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
 							(EList)mappingFullHeader[1],
+							(EList)mappingFullHeader[2],
 							mappingSections
 						);
 					setOffsets(result, (MappingDeclarationCS)mappingFullHeader[0], getRhsIToken(4));
@@ -1324,9 +1326,10 @@
 
 	mapping_def ::= mapping_full_header '{' qvtErrorToken
 		/.$BeginCode
-		                        Object[] mappingFullHeader = (Object[])getRhsSym(1);
+					Object[] mappingFullHeader = (Object[])getRhsSym(1);
 					MappingRuleCS result = createMappingRuleCS(
 							(MappingDeclarationCS)mappingFullHeader[0],
+							$EMPTY_ELIST,
 							$EMPTY_ELIST,
 							null
 						);
@@ -1335,9 +1338,9 @@
 		  $EndCode
 		./
 
-	mapping_full_header ::= mapping_header _whenOpt
+	mapping_full_header ::= mapping_header _whenOpt _whereOpt
 		/.$BeginCode
-					setResult(new Object[] {getRhsSym(1), getRhsSym(2)});
+					setResult(new Object[] {getRhsSym(1), getRhsSym(2), getRhsSym(3)});
 		  $EndCode
 		./
 
@@ -1448,6 +1451,19 @@
 		  $EndCode
 		./
 	_when ::= when qvtErrorToken
+		/.$EmptyListAction./
+
+	_whereOpt -> _where
+	_whereOpt ::= %empty	 
+		/.$EmptyListAction./
+
+	_where ::= where expression_block
+		/.$BeginCode
+					BlockExpCS blockExpCS = (BlockExpCS) getRhsSym(2);
+					setResult(blockExpCS.getBodyExpressions());
+		  $EndCode
+		./
+	_where ::= where qvtErrorToken
 		/.$EmptyListAction./
 
 	mapping_body ::= init_sectionOpt population_sectionOpt end_sectionOpt

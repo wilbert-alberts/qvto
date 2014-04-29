@@ -586,8 +586,20 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		return null;
 	}
     
-    protected boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
+    private boolean isWhenPreconditionSatisfied(MappingOperation mappingOperation) {
     	for (OCLExpression<EClassifier> nextCond : mappingOperation.getWhen()) {
+    		if(!Boolean.TRUE.equals(visitExpression(nextCond))) {
+    			return false;
+    		}
+		}
+    	return true;
+    }
+    
+    private boolean isWherePreconditionSatisfied(MappingOperation mappingOperation) {
+    	if (false == mappingOperation.getWhere() instanceof BlockExp) {
+    		return true;
+    	}
+    	for (OCLExpression<EClassifier> nextCond : ((BlockExp) mappingOperation.getWhere()).getBody()) {
     		if(!Boolean.TRUE.equals(visitExpression(nextCond))) {
     			return false;
     		}
@@ -841,36 +853,45 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
  
         	return new MappingCallResult(null, evalEnv, MappingCallResult.PRECOND_FAILED);
         }
-				
+		
+		MappingCallResult result = executeMappingBody(mappingOperation, evalEnv);
+		if (!isWherePreconditionSatisfied(mappingOperation)) {
+			throwQVTException(new QvtAssertionFailed(NLS.bind(EvaluationMessages.MappingPostconditionFailed,
+					mappingOperation.getName())));
+		}
+		return result;
+    }
+
+	protected MappingCallResult executeMappingBody(MappingOperation mappingOperation, QvtOperationalEvaluationEnv evalEnv) {
         // check the traces whether the relation already holds
-        TraceRecord traceRecord = TraceUtil.getTraceRecord(evalEnv, mappingOperation);
-        if (traceRecord != null) {
-        	return new MappingCallResult(TraceUtil.fetchResultFromTrace(evalEnv, traceRecord), evalEnv, MappingCallResult.FETCHED_FROM_TRACE);
-        }
-        
-        if(!mappingOperation.getDisjunct().isEmpty()) {
+		TraceRecord traceRecord = TraceUtil.getTraceRecord(evalEnv, mappingOperation);
+		if (traceRecord != null) {
+			return new MappingCallResult(TraceUtil.fetchResultFromTrace(evalEnv, traceRecord), evalEnv, MappingCallResult.FETCHED_FROM_TRACE);
+		}
+		
+		if(!mappingOperation.getDisjunct().isEmpty()) {
 			return dispatchDisjunctMapping(mappingOperation);
 		}
-        
-        if (mappingOperation.isIsBlackbox()) {        	
-        	Object result = doVisitBlackboxOperation(mappingOperation);        	
-        	if (isUndefined(result)) {
-        		throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.BlackboxMappingFailedToAssignResult,
-        				QvtOperationalParserUtil.safeGetMappingQualifiedName(getOperationalEnv(), mappingOperation))));
-        	}
-        	
+		
+		if (mappingOperation.isIsBlackbox()) {        	
+			Object result = doVisitBlackboxOperation(mappingOperation);        	
+			if (isUndefined(result)) {
+				throwQVTException(new QvtRuntimeException(NLS.bind(EvaluationMessages.BlackboxMappingFailedToAssignResult,
+						QvtOperationalParserUtil.safeGetMappingQualifiedName(getOperationalEnv(), mappingOperation))));
+			}
+			
 			replaceInEnv(Environment.RESULT_VARIABLE_NAME, result, mappingOperation.getEType());
-	        TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
-	        
-	        // call merged mappings
+		    TraceUtil.addTraceRecord(getOperationalEvaluationEnv(), mappingOperation);
+		    
+		    // call merged mappings
 			callMergedMappings(mappingOperation, evalEnv);
-	        
-	        return new MappingCallResult(result, evalEnv, MappingCallResult.BODY_EXECUTED);        	
-        }
-                                        		
+		    
+		    return new MappingCallResult(result, evalEnv, MappingCallResult.BODY_EXECUTED);        	
+		}
+		                                		
 		return new MappingCallResult(((OperationBodyImpl) mappingOperation.getBody()).accept(getVisitor()), evalEnv,
 				MappingCallResult.BODY_EXECUTED);
-    }
+	}
 
     public Object execute(OperationalTransformation transformation) throws QvtRuntimeException {
     	try {
@@ -1848,10 +1869,9 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		while (itArgument.hasNext()) {
 			MappingParameter mappingParam = (MappingParameter) itParams.next();
 			itArgument.next();
-			if (mappingParam.getKind() != DirectionKind.OUT) {
-				continue;
+			if (mappingParam.getKind() == DirectionKind.OUT) {
+				itArgument.set(getRuntimeValue(mappingParam.getName()));
 			}
-			itArgument.set(getRuntimeValue(mappingParam.getName()));
 		}
     }
     
@@ -1982,7 +2002,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     			continue;
     		}
 
-    		MappingCallResult result = (MappingCallResult)executeImperativeOperation(nextDisjunct, source, args, false);
+    		MappingCallResult result = (MappingCallResult) executeImperativeOperation(nextDisjunct, source, args, false);
     		if(!result.isPreconditionFailed()) {
     			// precondition holds, mapping either executed, fetched from trace, or disjuncted
     			result.myStatus = MappingCallResult.BODY_EXECUTED; // from disjuncting mapping consider as executed

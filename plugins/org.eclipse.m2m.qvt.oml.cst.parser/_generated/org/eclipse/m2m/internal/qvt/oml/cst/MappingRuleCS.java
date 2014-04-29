@@ -27,6 +27,7 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getGuards <em>Guards</em>}</li>
+ *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getPosts <em>Posts</em>}</li>
  *   <li>{@link org.eclipse.m2m.internal.qvt.oml.cst.MappingRuleCS#getMappingBody <em>Mapping Body</em>}</li>
  * </ul>
  * </p>
@@ -58,6 +59,22 @@ public interface MappingRuleCS extends MappingMethodCS {
 	 * @generated
 	 */
 	EList<OCLExpressionCS> getGuards();
+
+	/**
+	 * Returns the value of the '<em><b>Posts</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.cst.OCLExpressionCS}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Posts</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Posts</em>' containment reference list.
+	 * @see org.eclipse.m2m.internal.qvt.oml.cst.CSTPackage#getMappingRuleCS_Posts()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<OCLExpressionCS> getPosts();
 
 	/**
 	 * Returns the value of the '<em><b>Mapping Body</b></em>' containment reference.

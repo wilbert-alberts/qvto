@@ -78,25 +78,25 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final static int NT_OFFSET = 163;
     public final int getNtOffset() { return NT_OFFSET; }
 
-    public final static int LA_STATE_OFFSET = 1773;
+    public final static int LA_STATE_OFFSET = 1781;
     public final int getLaStateOffset() { return LA_STATE_OFFSET; }
 
     public final static int MAX_LA = 1;
     public final int getMaxLa() { return MAX_LA; }
 
-    public final static int NUM_RULES = 834;
+    public final static int NUM_RULES = 838;
     public final int getNumRules() { return NUM_RULES; }
 
-    public final static int NUM_NONTERMINALS = 343;
+    public final static int NUM_NONTERMINALS = 345;
     public final int getNumNonterminals() { return NUM_NONTERMINALS; }
 
-    public final static int NUM_SYMBOLS = 506;
+    public final static int NUM_SYMBOLS = 508;
     public final int getNumSymbols() { return NUM_SYMBOLS; }
 
     public final static int SEGMENT_SIZE = 8192;
     public final int getSegmentSize() { return SEGMENT_SIZE; }
 
-    public final static int START_STATE = 835;
+    public final static int START_STATE = 839;
     public final int getStartState() { return START_STATE; }
 
     public final static int IDENTIFIER_SYMBOL = 1;
@@ -108,10 +108,10 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
     public final static int EOLT_SYMBOL = 28;
     public final int getEoltSymbol() { return EOLT_SYMBOL; }
 
-    public final static int ACCEPT_ACTION = 938;
+    public final static int ACCEPT_ACTION = 942;
     public final int getAcceptAction() { return ACCEPT_ACTION; }
 
-    public final static int ERROR_ACTION = 939;
+    public final static int ERROR_ACTION = 943;
     public final int getErrorAction() { return ERROR_ACTION; }
 
     public final static boolean BACKTRACK = true;
@@ -170,10 +170,10 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             1,1,1,0,0,0,1,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,1,0,0,0,1,0,1,1,1,
-            0,0,0,0,0,1,1,1,0,0,
-            0,1,0,0,0,0,1,1,1,0,
-            0,1,0,0,0,0,0,0,0,1,
-            0,1,0,0,0,0
+            1,0,0,0,0,0,0,1,1,1,
+            0,0,0,1,0,0,0,0,1,1,
+            1,0,0,1,0,0,0,0,0,0,
+            0,1,0,1,0,0,0,0
         };
     };
     public final static byte isNullable[] = IsNullable.isNullable;
@@ -215,7 +215,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             311,312,313,314,315,316,317,318,319,320,
             321,322,323,324,325,326,327,328,329,330,
             331,332,333,334,335,336,337,338,339,340,
-            341,342,343
+            341,342,343,344,345
         };
     };
     public final static char prosthesesIndex[] = ProsthesesIndex.prosthesesIndex;
@@ -316,31 +316,31 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             6,8,1,1,1,3,2,2,1,1,
             2,2,4,3,1,1,4,2,2,3,
             1,1,2,2,2,3,4,0,2,1,
-            1,2,5,3,2,6,5,3,2,0,
-            1,2,1,1,1,1,0,2,2,3,
-            0,1,2,2,0,1,1,2,2,0,
-            1,2,2,0,1,1,1,1,1,3,
-            3,3,5,5,7,7,5,5,0,2,
-            2,0,2,0,1,3,1,1,1,1,
-            0,1,5,5,3,2,1,1,1,1,
-            7,5,7,5,4,3,1,1,3,3,
-            1,3,3,1,1,1,1,1,3,4,
-            4,3,3,4,3,1,7,0,2,1,
-            1,1,0,2,2,0,1,3,0,1,
-            3,3,1,1,4,2,0,1,1,1,
-            1,1,3,1,1,1,1,1,3,3,
-            1,1,1,3,3,1,3,2,1,3,
-            3,2,1,1,-1,1,2,3,4,5,
-            6,7,8,9,10,-2,12,-3,-4,-5,
-            -6,-7,18,-10,1,2,3,4,5,6,
-            7,8,9,10,-11,1,2,3,4,5,
-            6,7,8,9,10,-13,1,2,3,4,
-            5,6,7,8,9,10,-22,1,2,3,
-            4,5,6,7,8,9,10,-23,1,2,
-            3,4,5,6,7,8,9,10,-14,1,
-            2,3,4,-12,1,2,-24,1,2,-8,
-            -9,13,14,15,11,-15,-16,11,-17,16,
-            17,-18,-19,-20,-21,-25,0,0,0,0,
+            1,2,5,3,3,6,5,3,2,0,
+            1,2,1,1,1,1,0,2,2,1,
+            0,2,2,3,0,1,2,2,0,1,
+            1,2,2,0,1,2,2,0,1,1,
+            1,1,1,3,3,3,5,5,7,7,
+            5,5,0,2,2,0,2,0,1,3,
+            1,1,1,1,0,1,5,5,3,2,
+            1,1,1,1,7,5,7,5,4,3,
+            1,1,3,3,1,3,3,1,1,1,
+            1,1,3,4,4,3,3,4,3,1,
+            7,0,2,1,1,1,0,2,2,0,
+            1,3,0,1,3,3,1,1,4,2,
+            0,1,1,1,1,1,3,1,1,1,
+            1,1,3,3,1,1,1,3,3,1,
+            3,2,1,3,3,2,1,1,-1,1,
+            2,3,4,5,6,7,8,9,10,-2,
+            12,-3,-4,-5,-6,-7,18,-10,1,2,
+            3,4,5,6,7,8,9,10,-11,1,
+            2,3,4,5,6,7,8,9,10,-13,
+            1,2,3,4,5,6,7,8,9,10,
+            -22,1,2,3,4,5,6,7,8,9,
+            10,-23,1,2,3,4,5,6,7,8,
+            9,10,-14,1,2,3,4,-12,1,2,
+            -24,1,2,-8,-9,13,14,15,11,-15,
+            -16,11,-17,16,17,-18,-19,-20,-21,-25,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
@@ -374,7 +374,8 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0
         };
     };
     public final static short baseCheck[] = BaseCheck.baseCheck;
@@ -453,31 +454,32 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             229,229,229,230,230,230,289,289,290,292,
             292,286,286,287,288,231,231,295,293,293,
             294,232,232,298,298,296,297,234,299,299,
-            233,233,300,301,301,302,304,304,304,307,
-            307,308,309,310,310,310,305,305,312,312,
-            303,313,313,316,316,314,314,317,317,317,
-            315,315,318,318,319,319,185,320,320,320,
-            185,321,321,322,322,322,322,323,323,324,
-            324,324,325,325,326,326,327,328,328,328,
-            328,329,329,330,330,330,330,331,331,331,
-            331,332,332,332,332,332,332,333,333,55,
-            55,96,55,55,96,96,1,1,334,334,
-            93,93,77,79,221,237,220,335,242,242,
-            336,336,336,337,337,291,260,260,248,339,
-            339,338,338,338,338,340,340,306,306,341,
-            341,341,18,18,342,342,342,342,342,285,
-            285,285,343,343,343,343,311,311,311,224,
-            224,224,224,270,12,1,40,852,851,55,
-            920,921,57,58,228,231,49,846,5,57,
-            61,62,50,834,1,40,852,851,55,920,
-            927,57,58,228,231,1,40,852,851,55,
-            920,929,57,58,228,231,1,40,852,851,
-            55,920,935,57,58,228,231,1,40,852,
-            851,55,920,936,57,58,228,231,1,40,
-            852,851,55,920,66,57,58,228,231,24,
-            38,852,30,31,46,933,852,53,933,852,
-            56,63,32,39,41,63,66,68,64,69,
-            932,934,70,71,76,78,81,939,0
+            233,233,300,301,301,302,304,304,304,308,
+            308,309,310,311,311,311,305,305,313,313,
+            306,306,314,314,303,315,315,318,318,316,
+            316,319,319,319,317,317,320,320,321,321,
+            185,322,322,322,185,323,323,324,324,324,
+            324,325,325,326,326,326,327,327,328,328,
+            329,330,330,330,330,331,331,332,332,332,
+            332,333,333,333,333,334,334,334,334,334,
+            334,335,335,55,55,96,55,55,96,96,
+            1,1,336,336,93,93,77,79,221,237,
+            220,337,242,242,338,338,338,339,339,291,
+            260,260,248,341,341,340,340,340,340,342,
+            342,307,307,343,343,343,18,18,344,344,
+            344,344,344,285,285,285,345,345,345,345,
+            312,312,312,224,224,224,224,270,12,1,
+            40,856,855,55,924,925,57,58,228,231,
+            49,850,5,57,61,62,50,838,1,40,
+            856,855,55,924,931,57,58,228,231,1,
+            40,856,855,55,924,933,57,58,228,231,
+            1,40,856,855,55,924,939,57,58,228,
+            231,1,40,856,855,55,924,940,57,58,
+            228,231,1,40,856,855,55,924,66,57,
+            58,228,231,24,38,856,30,31,46,937,
+            856,53,937,856,56,63,32,39,41,63,
+            66,68,64,69,936,938,70,71,76,78,
+            81,943,0
         };
     };
     public final static char baseAction[] = BaseAction.baseAction;
@@ -519,16 +521,16 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
 
     public interface TermAction {
         public final static char termAction[] = {0,
-            939,973,975,939,939,1716,1715,854,990,992,
-            993,991,989,850,981,982,983,984,985,986,
-            987,988,939,939,973,975,848,849,1716,1715,
-            939,990,992,993,991,989,967,981,982,983,
-            984,985,986,987,988,61,973,975,939,35,
-            1716,1715,939,973,975,56,939,1716,1715,865,
-            939,939,812,914,876,939,1752,939,939,939,
-            939,976,1168,999,887,62,938,939,939,909,
-            939,998,917,939,1171,939,939,926,939,939,
-            939,939,939,898
+            943,977,979,943,943,1724,1723,858,994,996,
+            997,995,993,854,985,986,987,988,989,990,
+            991,992,943,943,977,979,852,853,1724,1723,
+            943,994,996,997,995,993,971,985,986,987,
+            988,989,990,991,992,61,977,979,943,35,
+            1724,1723,943,977,979,56,943,1724,1723,869,
+            943,943,816,918,880,943,1760,943,943,943,
+            943,980,1172,1003,891,62,942,943,943,913,
+            943,1002,921,943,1175,943,943,930,943,943,
+            943,943,943,902
         };
     };
     public final static char termAction[] = TermAction.termAction;
@@ -634,7 +636,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,
-            0,0,0
+            0,0,0,0,0
         };
     };
     public final static char nonterminalIndex[] = NonterminalIndex.nonterminalIndex;
@@ -694,7 +696,7 @@ public class LightweightTypeParserprs implements lpg.runtime.ParseTable, Lightwe
 
     public interface ScopeState {
         public final static char scopeState[] = {0,
-            898,887,876,865,854,835,0
+            902,891,880,869,858,839,0
         };
     };
     public final static char scopeState[] = ScopeState.scopeState;

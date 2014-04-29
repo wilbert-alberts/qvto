@@ -179,6 +179,11 @@ public class QvtOperationalAstWalker implements QVTOperationalVisitor<Object> {
         for (OCLExpression<EClassifier> exp : mappingOperation.getWhen()) {
             doProcess(exp, mappingOperation);
         }
+        if (mappingOperation.getWhere() instanceof BlockExp) {
+        	for (OCLExpression<EClassifier> exp : ((BlockExp) mappingOperation.getWhere()).getBody()) {
+        		doProcess(exp, mappingOperation);
+        	}
+        }
         return null;
     }
 

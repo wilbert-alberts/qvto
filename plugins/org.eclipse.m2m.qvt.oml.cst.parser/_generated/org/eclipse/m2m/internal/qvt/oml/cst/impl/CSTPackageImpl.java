@@ -1380,8 +1380,17 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMappingRuleCS_MappingBody() {
+	public EReference getMappingRuleCS_Posts() {
 		return (EReference)mappingRuleCSEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMappingRuleCS_MappingBody() {
+		return (EReference)mappingRuleCSEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2916,6 +2925,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		mappingRuleCSEClass = createEClass(MAPPING_RULE_CS);
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__GUARDS);
+		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__POSTS);
 		createEReference(mappingRuleCSEClass, MAPPING_RULE_CS__MAPPING_BODY);
 
 		mappingQueryCSEClass = createEClass(MAPPING_QUERY_CS);
@@ -3332,6 +3342,7 @@ public class CSTPackageImpl extends EPackageImpl implements CSTPackage {
 
 		initEClass(mappingRuleCSEClass, MappingRuleCS.class, "MappingRuleCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMappingRuleCS_Guards(), theCSTPackage_1.getOCLExpressionCS(), null, "guards", null, 0, -1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getMappingRuleCS_Posts(), theCSTPackage_1.getOCLExpressionCS(), null, "posts", null, 0, -1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getMappingRuleCS_MappingBody(), this.getMappingSectionsCS(), null, "mappingBody", null, 0, 1, MappingRuleCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mappingQueryCSEClass, MappingQueryCS.class, "MappingQueryCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

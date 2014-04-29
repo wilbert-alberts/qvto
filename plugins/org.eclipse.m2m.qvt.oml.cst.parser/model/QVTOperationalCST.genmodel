@@ -137,6 +137,7 @@
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingRuleCS">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/guards"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/posts"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QVTOperationalCST.ecore#//cst/MappingRuleCS/mappingBody"/>
       </genClasses>
       <genClasses ecoreClass="QVTOperationalCST.ecore#//cst/MappingQueryCS">
