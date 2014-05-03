@@ -8,7 +8,8 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Alex Paperno - bugs 413131
+ *     Alex Paperno - bug 413131
+ *     Christopher Gerking - bug 433919
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -21,6 +22,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.UniqueEList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
@@ -119,8 +121,14 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	}			
 	
 	@Override
-	public EStructuralFeature findAttribute(EClassifier owner, String name) {	
-		EStructuralFeature property = super.findAttribute(owner, name);
+	public EStructuralFeature findAttribute(EClassifier owner, String name) {
+		
+		EStructuralFeature property = owner instanceof EClass ? ((EClass) owner).getEStructuralFeature(name) : null;
+		if (property != null) {
+			return property;
+		}
+		
+		property = super.findAttribute(owner, name);
 		if(property == null) {
 			// check for a renamed property
 			EStructuralFeature aliasedProperty = getEnvironment().lookupPropertyAlias(owner, name);

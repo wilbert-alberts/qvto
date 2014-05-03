@@ -8,7 +8,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 302594, 310991, 289982, 391289, 425634, 427237, 
- *     						   433585
+ *     						   433585, 433919
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
  *                         424584, 424869
@@ -5544,7 +5544,23 @@ public class QvtOperationalVisitorCS
 		}
 
 		return astNode;
-	}	
+	}
+	
+	protected PropertyCallExp<EClassifier, EStructuralFeature> simplePropertyName(
+			SimpleNameCS simpleNameCS,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, 
+    		EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+			OCLExpression<EClassifier> source, EClassifier owner, String simpleName) {
+		
+		if (source == null) {
+			Variable<EClassifier, EParameter> implicitSource = env.lookupImplicitSourceForProperty(simpleName);
+			source = createVariableExp(env, simpleNameCS, implicitSource);
+			owner = implicitSource.getType();
+		}
+		
+		return super.simplePropertyName(simpleNameCS, env, source, owner, simpleName);
+		
+	}
 
 	protected EClassifier listTypeCS(ListTypeCS listTypeCS,
 			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
