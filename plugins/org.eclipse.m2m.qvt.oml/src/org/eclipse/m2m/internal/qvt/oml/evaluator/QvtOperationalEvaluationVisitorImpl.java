@@ -1235,6 +1235,11 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         }
         
         ImperativeOperation operation = operationBody.getOperation();
+        
+        if(operation.getEType() == getStandardLibrary().getOclVoid()) {
+        	result = null;
+        }
+        
         if(operation.getResult().size() > 1) {
         	return createTupleResult(operation);
         }

@@ -7,7 +7,8 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 302594, 310991, 289982, 391289, 425634, 427237
+ *     Christopher Gerking - bugs 302594, 310991, 289982, 391289, 425634, 427237, 
+ *     						   433585
  *     Alex Paperno - bugs 272869, 268636, 404647, 414363, 414363, 401521,
  *                         419299, 414619, 403440, 415024, 420970, 413391,
  *                         424584, 424869
@@ -3902,8 +3903,7 @@ public class QvtOperationalVisitorCS
 			EClassifier returnType = (helper.getResult().isEmpty() ? helper.getEType() : helper.getResult().get(0).getEType());
 			EClassifier helperType = helper.getBody() != null && !helper.getBody().getContent().isEmpty() ? helper.getBody()
 					.getContent().get(helper.getBody().getContent().size() - 1).getType() : null;
-			if (QvtOperationalEnv.MAIN.equals(helper.getName()) 
-					&& (returnType == null || returnType == env.getOCLStandardLibrary().getOclVoid())) {
+			if (returnType == env.getOCLStandardLibrary().getOclVoid()) {
 				// OK
 			}
 			else  if (helperType != null && !QvtOperationalParserUtil.isAssignableToFrom(env, returnType, helperType)) {
