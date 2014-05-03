@@ -12,6 +12,7 @@
  *     							  392080, 392153, 394498, 397215, 397218, 269744, 
  *     							  415660, 415315, 414642, 427237, 428618, 425069
  *     Alex Paperno - bugs 294127, 416584, 419299, 267917, 420970, 424584
+ *     Christine Gerpheide - bugs 432969
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
@@ -200,8 +201,14 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		oclAnnotationSupport = parent.getOCLAnnotationSupport();
 	}    
     
-	protected QvtOperationalEvaluationVisitorImpl createNestedEvaluationVisitor(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
-		return new QvtOperationalEvaluationVisitorImpl(parent, nestedEvalEnv); 
+	protected InternalEvaluator createNestedEvaluationVisitor(QvtOperationalEvaluationVisitorImpl parent, QvtOperationalEvaluationEnv nestedEvalEnv) {
+		InternalEvaluator evalVisitor = (InternalEvaluator) getOperationalEnv().getFactory().createEvaluationVisitor(
+				parent.getOperationalEnv(), nestedEvalEnv, nestedEvalEnv.createExtentMap(null));
+		if (evalVisitor instanceof QvtOperationalEvaluationVisitorImpl) {
+			// ensure shared instance of oclAnnotationSupport to avoid repeated OCL parsing
+			((QvtOperationalEvaluationVisitorImpl) evalVisitor).oclAnnotationSupport = getOCLAnnotationSupport();
+		}
+		return evalVisitor;
 	}
 	
 	public Object visitDictLiteralExp(DictLiteralExp dictLiteralExp) {
@@ -996,7 +1003,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			// send arguments into the entry operation
 			nestedEvalEnv.getOperationArgs().addAll(actualArguments);
 			// Use per transformation instance visitor 
-			InternalEvaluator nestedVisitor = createNestedEvaluationVisitor(this, nestedEvalEnv).createInterruptibleVisitor();
+			InternalEvaluator nestedVisitor = createNestedEvaluationVisitor(this, nestedEvalEnv);
 			try {
 				setOperationalEvaluationEnv(nestedEvalEnv);
 				
@@ -1246,8 +1253,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			value = visitExpression(initExpression);
 			// check that collection is initialized to empty collection in case of 'null' 
 		} else { 
-			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getQVTVisitor().getEnvironment().getOCLStandardLibrary(),
-					getQVTVisitor().getEvaluationEnvironment());
+			value = EvaluationUtil.createInitialValue(referredVariable.getType(), getEnvironment().getOCLStandardLibrary(),
+					getEvaluationEnvironment());
 		}
 		
         replaceInEnv(referredVariable.getName(), value, variableInitExp.getType());
@@ -1360,7 +1367,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
     	if (resolveExp.isIsDeferred()) {
     		InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);
     		if(!internalEvalEnv.isDeferredExecution()) {	        	
-	            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, internalEvalEnv.getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
+	            LateResolveTask lateResolveTask = new LateResolveTask(resolveExp, internalEvalEnv.getLastAssignmentLvalueEval(),
+	            		(QvtOperationalEvaluationVisitor) getVisitor(), getOperationalEvaluationEnv(), this);
 	            internalEvalEnv.addDeferredTask(lateResolveTask);
 	            return null;
     		}
@@ -1372,7 +1380,8 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
         if (resolveInExp.isIsDeferred()) {
         	InternalEvaluationEnv internalEvalEnv = getOperationalEvaluationEnv().getAdapter(InternalEvaluationEnv.class);        	
         	if(!internalEvalEnv.isDeferredExecution()) {
-	            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, internalEvalEnv.getLastAssignmentLvalueEval(), getQVTVisitor(), getOperationalEvaluationEnv(), this);
+	            LateResolveInTask lateResolveInTask = new LateResolveInTask(resolveInExp, internalEvalEnv.getLastAssignmentLvalueEval(),
+	            		(QvtOperationalEvaluationVisitor) getVisitor(), getOperationalEvaluationEnv(), this);
 	            internalEvalEnv.addDeferredTask(lateResolveInTask);            
 	            return null;
         	}
@@ -2492,7 +2501,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 				EFactory eFactory = type.getEPackage().getEFactoryInstance();
 				if(eFactory instanceof IntermediateClassFactory) {
 					IntermediateClassFactory intermFactory = (IntermediateClassFactory) eFactory;
-					intermFactory.doInstancePropertyInit(newInstance, getQVTVisitor());
+					intermFactory.doInstancePropertyInit(newInstance, this);
 				}
 			}
 
@@ -2566,15 +2575,7 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 		}
 	}    
     
-    /**
-     * Performs cast on the result of {@link #getVisitor()}; 
-     * @see #getVisitor()
-     */
-    protected QvtOperationalEvaluationVisitor getQVTVisitor() {
-    	return (QvtOperationalEvaluationVisitor)getVisitor();
-    }
-    
-    
+
 	/**
 	 * TODO - Avoid using this exception return expression to interrupt execution flow for 
 	 * immediate return from an operation.
