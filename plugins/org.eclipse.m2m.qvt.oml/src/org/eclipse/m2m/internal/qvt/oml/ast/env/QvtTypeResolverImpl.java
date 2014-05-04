@@ -124,16 +124,15 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 		List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
 		getLocalAdditionalAttributes(owner, result);
 		
-		// recurse up the extension hierarchy
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getAllExtendedModules()) {
-			nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
-			result.addAll(nextSiblingEnv.getAdditionalAttributes(owner));
+		// search the extension hierarchy
+		for (QvtEnvironmentBase nextExtendedModule : fOwner.getAllExtendedModules()) {
+			nextExtendedModule.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);
 		}
 		
-		for (QvtEnvironmentBase nextSiblingEnv : fOwner.getImportsByAccess()) {
-			Module importedModule = nextSiblingEnv.getModuleContextType();
+		for (QvtEnvironmentBase nextImport : fOwner.getImportsByAccess()) {
+			Module importedModule = nextImport.getModuleContextType();
 			if(importedModule instanceof Library) {
-				nextSiblingEnv.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);				
+				nextImport.getQVTTypeResolver().getLocalAdditionalAttributes(owner, result);				
 			}
 		}				
 		

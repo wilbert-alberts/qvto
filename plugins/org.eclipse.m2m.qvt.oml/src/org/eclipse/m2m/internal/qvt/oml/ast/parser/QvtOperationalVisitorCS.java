@@ -5555,7 +5555,7 @@ public class QvtOperationalVisitorCS
 		if (source == null) {
 			Variable<EClassifier, EParameter> implicitSource = env.lookupImplicitSourceForProperty(simpleName);
 			source = createVariableExp(env, simpleNameCS, implicitSource);
-			owner = implicitSource.getType();
+			owner = source.getType();
 		}
 		
 		return super.simplePropertyName(simpleNameCS, env, source, owner, simpleName);
