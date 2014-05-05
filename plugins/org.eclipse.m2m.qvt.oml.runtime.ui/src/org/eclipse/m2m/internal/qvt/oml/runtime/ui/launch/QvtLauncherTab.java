@@ -283,7 +283,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
         else{
             setMessage(null);
-            setWarningMessage(null);
+			AbstractLaunchConfigurationTabCompatibility.setWarningMessage(this, null);
             setErrorMessage(null);
             String moduleName;
             try {
@@ -354,7 +354,9 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
 
 		public void setWarningMessage(String message) {
-            QvtLauncherTab.this.setWarningMessage(message);
+			if (!AbstractLaunchConfigurationTabCompatibility.setWarningMessage(QvtLauncherTab.this, message)) {
+				QvtLauncherTab.this.setMessage(message);
+			}			
             QvtLauncherTab.this.getLaunchConfigurationDialog().updateMessage();
 		}
     };

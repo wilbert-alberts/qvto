@@ -56,7 +56,10 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
             }
 
 			public void setWarningMessage(String message) {
-                QvtTransformationConfigurationTab.this.setWarningMessage(message);
+				if (!AbstractLaunchConfigurationTabCompatibility.setWarningMessage(QvtTransformationConfigurationTab.this, message)) {
+					QvtTransformationConfigurationTab.this.setMessage(message);
+				}
+			
                 QvtTransformationConfigurationTab.this.getLaunchConfigurationDialog().updateMessage();
 			}
         });
@@ -77,7 +80,8 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
         Dialog.applyDialogFont(composite);
     }
 
-    public void initializeFrom(ILaunchConfiguration configuration) {
+    @SuppressWarnings("unchecked")
+	public void initializeFrom(ILaunchConfiguration configuration) {
         String fileName = ""; //$NON-NLS-1$
         try {
             fileName = configuration.getAttribute(IQvtLaunchConstants.MODULE, ""); //$NON-NLS-1$
