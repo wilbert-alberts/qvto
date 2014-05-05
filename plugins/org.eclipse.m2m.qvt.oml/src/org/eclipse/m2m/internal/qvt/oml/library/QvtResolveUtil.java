@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - Bug 358709
+ *     Christopher Gerking - bugs 358709, 433292
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.library;
 
@@ -328,7 +328,7 @@ public class QvtResolveUtil {
     private static List<TraceRecord> lookupTraceRecordsBySource(Object source, EClassifier declaredSourceType, EMap<Object, EList<TraceRecord>> source2RecordMap) {
     	List<TraceRecord> result = null;
     	
-    	if (source == null) {
+    	if (declaredSourceType == null) {
     		for (EList<TraceRecord> rec : source2RecordMap.values()) {
         		if(result == null) {
         			result = new BasicEList<TraceRecord>();
