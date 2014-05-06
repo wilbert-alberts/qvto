@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
@@ -988,10 +987,6 @@ implements QvtOperationalEvaluationVisitor, InternalEvaluator, DeferredAssignmen
 			// Remark: Can we set configuration property in the concrete syntax on the explicit transf object.
 			// bug 416584: Now we need to access configuration properties of non-entry modules
 			Context nestedContext = EvaluationUtil.createAggregatedContext(currentEnv);
-			Map<String,Object> configProps = getOperationalEvaluationEnv().getContext().getConfigProperties(); 
-			for (String propName : configProps.keySet()) {
-				nestedContext.setConfigProperty(propName, configProps.get(propName));
-			}
 			
 			QvtOperationalEnvFactory envFactory = getOperationalEnv().getFactory();
 			QvtOperationalEvaluationEnv nestedEvalEnv = envFactory.createEvaluationEnvironment(nestedContext, null);

@@ -12,10 +12,12 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
 /**
@@ -80,4 +82,18 @@ public interface ExecutionContext {
 	 */
 	IProgressMonitor getProgressMonitor();
 	
+    /**
+     * Returns execution specific settings like QVTEvaluationOptions.EVALUATION_MAX_STACK_DEPTH
+     * 
+	 * @since 3.4
+	 */
+    ISessionData getSessionData();
+    
+    /**
+     * Returns all entries stored in the session data.
+     * 
+	 * @since 3.4
+	 */
+    Collection<ISessionData.Entry<Object>> getSessionDataEntries();
+
 }

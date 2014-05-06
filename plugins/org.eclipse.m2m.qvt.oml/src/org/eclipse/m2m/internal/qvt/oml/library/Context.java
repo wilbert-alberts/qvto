@@ -103,16 +103,20 @@ public class Context implements IContext {
     }
     
             
-    private static class SessionDataImpl implements ISessionData {
+    public static class SessionDataImpl implements ISessionData {
     	
-    	private HashMap<Object, Object> fData;
+    	private final Map<Entry<Object>, Object> fData;
     		
+    	public SessionDataImpl(Map<Entry<Object>, Object> data) {
+    		fData = data;
+    	}
+    	
     	SessionDataImpl() {
-    		fData = new HashMap<Object, Object>();
+    		this(new HashMap<Entry<Object>, Object>());
     	}
     	
     	SessionDataImpl(SessionDataImpl sessionData) {
-    		fData = new HashMap<Object, Object>(sessionData.fData);
+    		this(new HashMap<Entry<Object>, Object>(sessionData.fData));
     	}
     	
         @SuppressWarnings("unchecked")
@@ -123,8 +127,9 @@ public class Context implements IContext {
         	return entry.defaultValue();
         }
         
-        public <T> void setValue(Entry<T> key, T value) {
-        	fData.put(key, value);
+        @SuppressWarnings("unchecked")
+		public <T> void setValue(Entry<T> key, T value) {
+        	fData.put((Entry<Object>) key, value);
         }
     }    
 }

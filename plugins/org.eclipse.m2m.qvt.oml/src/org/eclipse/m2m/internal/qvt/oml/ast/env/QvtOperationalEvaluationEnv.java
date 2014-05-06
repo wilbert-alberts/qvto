@@ -72,9 +72,6 @@ import org.eclipse.ocl.util.Tuple;
 
 public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 	
-	// TODO - make this optional settings for execution
-	public static final int MAX_STACK_DEPTH = 300;
-	
 	protected QvtOperationalEvaluationEnv(IContext context, QvtOperationalEvaluationEnv parent) {
 		super(parent == null ? new EcoreEvaluationEnvironment((EcoreEnvironmentFactory)null) : parent);
 		if(parent == null) {
@@ -652,6 +649,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	private boolean isReadonlyGuardEnabled() {
 		return getContext().getSessionData().getValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED) == Boolean.TRUE;
+	}
+
+	public int getMaxStackDepth() {
+		return getContext().getSessionData().getValue(QVTEvaluationOptions.EVALUATION_MAX_STACK_DEPTH);
 	}
 
 	private void checkReadonlyGuard(EStructuralFeature eStructuralFeature, Object exprValue, EObject owner) {

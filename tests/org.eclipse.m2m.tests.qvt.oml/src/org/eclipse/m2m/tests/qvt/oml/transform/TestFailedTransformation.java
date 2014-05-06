@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,12 +15,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.eclipse.m2m.internal.qvt.oml.common.io.IOFile;
-import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.library.Context;
-import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
-import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 
 public class TestFailedTransformation extends TestTransformation {
@@ -49,14 +46,12 @@ public class TestFailedTransformation extends TestTransformation {
 	private QvtRuntimeException runTransformation() throws Exception {
         ITransformer transformer = TestQvtInterpreter.TRANSFORMER;
 		try {
-			IContext context = getData().getContext();
-			Context newContext = QvtLaunchUtil.createContext(context.getConfigProperties());
-			newContext.setLog(new WriterLog(myLogger));
-			newContext.getSessionData().setValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED, Boolean.TRUE);
+			Context context = (Context) getData().getContext();
+			context.setLog(new WriterLog(myLogger));
 			
 			transformer.transform(
 					getIFile(getData().getTransformation(getProject())),
-					getData().getIn(getProject()), newContext);
+					getData().getIn(getProject()), context);
 		} catch (QvtRuntimeException e) {
 			return e;			
 		}

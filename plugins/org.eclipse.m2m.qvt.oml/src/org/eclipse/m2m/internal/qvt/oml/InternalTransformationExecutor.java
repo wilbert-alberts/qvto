@@ -63,6 +63,7 @@ import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.ocl.EvaluationVisitor;
 import org.eclipse.ocl.ecore.CallOperationAction;
@@ -470,6 +471,10 @@ public class InternalTransformationExecutor {
 		for (String key : executionContext.getConfigPropertyNames()) {
 			Object value = executionContext.getConfigProperty(key);
 			ctx.setConfigProperty(key, value);
+		}
+		
+		for (ISessionData.Entry<Object> key : executionContext.getSessionDataEntries()) {
+			ctx.getSessionData().setValue(key, executionContext.getSessionData().getValue(key));
 		}
 
 		return ctx;

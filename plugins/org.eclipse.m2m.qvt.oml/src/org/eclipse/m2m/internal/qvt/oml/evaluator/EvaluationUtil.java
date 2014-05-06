@@ -171,7 +171,7 @@ public class EvaluationUtil {
     
     static void checkCurrentStackDepth(QvtOperationalEvaluationEnv env) throws QvtStackOverFlowError {
 		int depth = env.getDepth();
-		if(depth >= QvtOperationalEvaluationEnv.MAX_STACK_DEPTH) {
+		if(depth >= env.getMaxStackDepth()) {
 			InternalEvaluationEnv iternEnv = env.getAdapter(InternalEvaluationEnv.class);
 			iternEnv.throwQVTException(new QvtStackOverFlowError("Stack depth: " + depth)); //$NON-NLS-1$
 		}    	
@@ -209,6 +209,11 @@ public class EvaluationUtil {
 		nestedContext.setProgressMonitor(parentContext.getProgressMonitor());
 		nestedContext.getSessionData().setValue(AGGREGATING_ROOT_ENV, evalEnv);
 
+		Map<String,Object> configProps = parentContext.getConfigProperties();
+		for (String propName : configProps.keySet()) {
+			nestedContext.setConfigProperty(propName, configProps.get(propName));
+		}
+		
 		return nestedContext;
 	}
 		

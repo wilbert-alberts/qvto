@@ -24,6 +24,8 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
+import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessQvtTest;
 import org.eclipse.m2m.tests.qvt.oml.transform.javaless.JavalessUtil;
 
@@ -41,9 +43,24 @@ public class TransformTests {
 
         ModelTestData[] datas = createTestData();
 
-        suite.addTest(new TestFailedTransformation(new FileToFileData("scr878"))); //$NON-NLS-1$
+        suite.addTest(new TestFailedTransformation(new FileToFileData("scr878") { //$NON-NLS-1$
+        	@Override
+        	public IContext getContext() {
+	    		IContext ctx = super.getContext();
+	    		ctx.getSessionData().setValue(QVTEvaluationOptions.FLAG_READONLY_GUARD_ENABLED, Boolean.TRUE);
+	    		return ctx;
+        	}
+        }));
         suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug301134"))); //$NON-NLS-1$
         suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug323915"))); //$NON-NLS-1$
+        suite.addTest(new TestFailedTransformation(new FilesToFilesData("bug370098") { //$NON-NLS-1$
+        	@Override
+        	public IContext getContext() {
+        		IContext ctx = super.getContext();
+        		ctx.getSessionData().setValue(QVTEvaluationOptions.EVALUATION_MAX_STACK_DEPTH, 10);
+        		return ctx;
+        	}
+        }));
 
         for (ModelTestData data : datas) {
             suite.addTest(new TestQvtInterpreter(data));
@@ -391,6 +408,7 @@ public class TransformTests {
         		new FilesToFilesData("bug432786"), //$NON-NLS-1$
         		new FilesToFilesData("bug397398"), //$NON-NLS-1$
         		new FilesToFilesData("bug433292"), //$NON-NLS-1$
+        		new FilesToFilesData("bug370098"), //$NON-NLS-1$
         		};
     }
 

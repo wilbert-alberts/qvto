@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.m2m.qvt.oml;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,9 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.qvt.oml.util.EvaluationMonitor;
+import org.eclipse.m2m.qvt.oml.util.ISessionData;
 import org.eclipse.m2m.qvt.oml.util.Log;
 
 /**
@@ -33,11 +36,14 @@ import org.eclipse.m2m.qvt.oml.util.Log;
 @SuppressWarnings("deprecation")
 public final class ExecutionContextImpl implements ExecutionContext {
 
-	private Map<String, Object> fConfigProperties = new HashMap<String, Object>(5);
+	private final Map<String, Object> fConfigProperties = new HashMap<String, Object>(5);
 
 	private IProgressMonitor fMonitor;
 
 	private Log fLog;
+	
+	private final Map<ISessionData.Entry<Object>, Object> fSessionStorage = new HashMap<ISessionData.Entry<Object>, Object>(5);
+	private final ISessionData fSessionData;
 
 	/**
 	 * Constructs a default context for execution.
@@ -45,6 +51,7 @@ public final class ExecutionContextImpl implements ExecutionContext {
 	public ExecutionContextImpl() {
 		fLog = Log.NULL_LOG;
 		fMonitor = createDefaultMonitor();
+		fSessionData = new Context.SessionDataImpl(fSessionStorage);
 	}
 
 	/*
@@ -153,6 +160,20 @@ public final class ExecutionContextImpl implements ExecutionContext {
 		}
 
 		fMonitor = monitor;
+	}
+	
+	/**
+	 * @since 3.4
+	 */
+	public ISessionData getSessionData() {
+		return fSessionData;
+	}
+	
+	/**
+	 * @since 3.4
+	 */
+	public Collection<ISessionData.Entry<Object>> getSessionDataEntries() {
+		return fSessionStorage.keySet();
 	}
 	
 	private static IProgressMonitor createDefaultMonitor() {
