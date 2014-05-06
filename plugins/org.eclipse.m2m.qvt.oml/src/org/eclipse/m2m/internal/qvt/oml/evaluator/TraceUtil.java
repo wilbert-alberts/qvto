@@ -18,9 +18,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.BasicEList;
@@ -56,6 +58,7 @@ import org.eclipse.m2m.qvt.oml.util.MutableList;
 import org.eclipse.m2m.qvt.oml.util.Utils;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.types.TupleType;
+import org.eclipse.ocl.util.Bag;
 import org.eclipse.ocl.util.Tuple;
 import org.eclipse.ocl.utilities.PredefinedType;
 
@@ -339,12 +342,20 @@ public class TraceUtil {
         EValue value = TraceFactory.eINSTANCE.createEValue();
         value.setOclObject(cloneOclObject(oclObject));
         if (oclObject != null) {
-            if (oclObject instanceof Collection) {
-                Collection<Object> oclCollection = (Collection<Object>) oclObject;
-                // TODO: Write a test for checking collections
-                value.setCollectionType("OclCollection"); //$NON-NLS-1$
-                for (Object collectionElement : oclCollection) {
-                    value.getCollection().add(createEValue(collectionElement));
+            if (oclObject instanceof Dictionary) {
+            	Dictionary<Object, Object> dict = (Dictionary<Object, Object>) oclObject;
+                value.setCollectionType("Dictionary"); //$NON-NLS-1$
+                for (Object dictKey : dict.keys()) {
+                    ETuplePartValue tuplePartValue = TraceFactory.eINSTANCE.createETuplePartValue();
+                    tuplePartValue.setName("key"); //$NON-NLS-1$
+                    tuplePartValue.setValue(createEValue(dictKey));
+                    value.getCollection().add(tuplePartValue);
+
+                    Object dictValue = dict.get(dictKey);
+                    tuplePartValue = TraceFactory.eINSTANCE.createETuplePartValue();
+                    tuplePartValue.setName("value"); //$NON-NLS-1$
+                    tuplePartValue.setValue(createEValue(dictValue));
+                    value.getCollection().add(tuplePartValue);
                 }
             } else if (oclObject instanceof Tuple) {
                 Tuple<EOperation, EStructuralFeature> tuple = (Tuple<EOperation, EStructuralFeature>) oclObject;
@@ -358,6 +369,13 @@ public class TraceUtil {
                     tuplePartValue.setValue(partEValue);
                     value.getCollection().add(tuplePartValue);
                 }
+            } else if (oclObject instanceof Collection) {
+                    Collection<Object> oclCollection = (Collection<Object>) oclObject;
+                    // TODO: Write a test for checking collections
+                    value.setCollectionType(getCollectionTypeName(oclCollection));
+                    for (Object collectionElement : oclCollection) {
+                        value.getCollection().add(createEValue(collectionElement));
+                    }
             } else if (oclObject instanceof ModelInstance) {
                 value.setCollectionType("ModelType"); //$NON-NLS-1$
                 for (Object collectionElement : ((ModelInstance) oclObject).getExtent().getInitialObjects()) {
@@ -372,6 +390,24 @@ public class TraceUtil {
             }
         }
         return value;
+    }
+    
+    private static String getCollectionTypeName(Collection<?> c) {
+    	String result = "OclCollection"; //$NON-NLS-1$
+    	if (c instanceof MutableList<?>) {
+    		result = "List"; //$NON-NLS-1$
+    	} else if (c instanceof Dictionary<?, ?>) {
+    		result = "Dictionary"; //$NON-NLS-1$
+    	} else if (c instanceof Bag<?>) {
+    		result = "Bag"; //$NON-NLS-1$
+    	} else if (c instanceof LinkedHashSet<?>) {
+    		result = "OrderedSet"; //$NON-NLS-1$
+    	} else if (c instanceof Set<?>) {
+    		result = "Set"; //$NON-NLS-1$
+    	} else if (c instanceof ArrayList<?>) {
+    		result = "Sequence"; //$NON-NLS-1$
+    	}
+    	return result;
     }
 
 	private static Object cloneOclObject(Object obj) {
