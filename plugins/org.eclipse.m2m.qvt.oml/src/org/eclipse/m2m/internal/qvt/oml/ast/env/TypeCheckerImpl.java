@@ -124,7 +124,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	public EStructuralFeature findAttribute(EClassifier owner, String name) {
 		
 		EStructuralFeature property = owner instanceof EClass ? ((EClass) owner).getEStructuralFeature(name) : null;
-		if (property != null) {
+		if (property != null && getUMLReflection().getOwningClassifier(property) == owner) {
 			return property;
 		}
 		
