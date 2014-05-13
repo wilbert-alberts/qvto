@@ -3190,7 +3190,7 @@ public class QvtOperationalVisitorCS
 		        	EClassifier owner = getOCLEnvironment().getUMLReflection().getOwningClassifier(feature);
 		        	
 		        	// report error only if the existing feature is defined for the same module, i.e. if its owner is an explicit supertype of the module
-		        	if((getOCLEnvironment().getUMLReflection().getRelationship(owner, module) & UMLReflection.SUPERTYPE) != 0) {
+		        	if(TypeUtil.compatibleTypeMatch(env, module, owner)) {
 		        		HiddenElementAdapter.markAsHidden(eFeature);
 		        		env.reportError(NLS.bind(ValidationMessages.ModulePropertyAlreadyDefined, new Object[] { prop.getName() }), propCS.getSimpleNameCS());
 		        	}

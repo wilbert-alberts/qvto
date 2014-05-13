@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  * 
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
+ *     Christopher Gerking - bugs 302594, 310991
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.stdlib;
 
@@ -30,8 +31,10 @@ import org.eclipse.m2m.internal.qvt.oml.ast.parser.QvtOperationalParserUtil;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ContextualProperty;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ExpressionsPackage;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ImportKind;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ModelType;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.internal.qvt.oml.expressions.ModuleImport;
 import org.eclipse.m2m.internal.qvt.oml.expressions.VarParameter;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ImperativeOCLPackage;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.Typedef;
@@ -191,7 +194,22 @@ public class QVTUMLReflection
 	}
 
 	public List<EStructuralFeature> getAttributes(EClassifier classifier) {
-		List<EStructuralFeature> result = fUmlReflection.getAttributes(classifier);
+		List<EStructuralFeature> result = new ArrayList<EStructuralFeature>(fUmlReflection.getAttributes(classifier));
+		
+		// extract features of extended modules, which are no explicit supertypes (fixed by bugs 302594/310991)	
+		if (classifier instanceof Module) {
+    		Module module = (Module) classifier;
+        	
+	    	for (ModuleImport imp : module.getModuleImport()) {
+				if (imp.getKind() == ImportKind.EXTENSION) {
+					Module extendedModule = imp.getImportedModule();
+					
+					List<EStructuralFeature> attributes = getAttributes(extendedModule);
+					attributes.removeAll(result);
+					result.addAll(attributes);
+				}
+			}
+		}
 		
 		if(classifier instanceof Module || IntermediateClassFactory.isIntermediateClass(classifier)) {
 			List<EStructuralFeature> nonContextuals = new ArrayList<EStructuralFeature>(result != null ? result.size() : 5);

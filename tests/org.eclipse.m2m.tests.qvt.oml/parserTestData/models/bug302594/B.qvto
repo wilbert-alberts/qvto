@@ -1,6 +1,6 @@
-import models.bug302594.A;
+import AA;
 
-transformation B() extends A;
+transformation B() extends AA;
 
 main() {
 	prop := configProp;

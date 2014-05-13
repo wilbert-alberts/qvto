@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -243,9 +243,9 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
                 	// in case of extended modules, module properties are distributed across multiple owners without explicit supertyping
 					// => accept only if property is actually available on the owner, i.e. if the actual property owner is an explicit supertype of the owner
                 	EClassifier actualPropertyOwner = getUMLReflection().getOwningClassifier(property);
-                	if ((getUMLReflection().getRelationship(actualPropertyOwner, owner) & UMLReflection.SUPERTYPE) != 0) {
+                	if (TypeUtil.compatibleTypeMatch(this, owner, actualPropertyOwner)) {
                 		return vdcl;
-                	}	
+                	}
                 }
             }
 

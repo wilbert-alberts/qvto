@@ -1,4 +1,4 @@
-import models.bug302594.B;
+import B;
 
 modeltype Ecore uses ecore('http://www.eclipse.org/emf/2002/Ecore');
 
