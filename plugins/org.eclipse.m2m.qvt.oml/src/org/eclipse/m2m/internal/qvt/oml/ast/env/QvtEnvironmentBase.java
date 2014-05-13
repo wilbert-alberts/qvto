@@ -366,6 +366,9 @@ public abstract class QvtEnvironmentBase extends EcoreEnvironment implements QVT
 	}
 
 	private void getAllContextualOperations(List<EOperation> result, QvtEnvironmentBase env) {
+		if (env.getModuleContextType() == null) {
+			return;
+		}
 		for (EOperation operation : env.getModuleContextType().getEOperations()) {
 			if (operation instanceof ImperativeOperation) {
 				ImperativeOperation imperative = (ImperativeOperation) operation;
