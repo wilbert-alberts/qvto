@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *     Borland Software Corporation - initial API and implementation
  *     Christopher Gerking - bugs 392153, 425069
  *     Alex Paperno - bugs 400720, 415029
+ *     Christine Gerpheide - bug 432969
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
@@ -43,6 +44,7 @@ import org.eclipse.m2m.internal.qvt.oml.evaluator.ModuleInstance;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.NumberConversions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTEvaluationOptions;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QVTStackTraceElement;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtGenericVisitorDecorator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtStackTraceBuilder;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.ThisInstanceResolver;
@@ -653,6 +655,10 @@ public class QvtOperationalEvaluationEnv extends EcoreEvaluationEnvironment {
 
 	public int getMaxStackDepth() {
 		return getContext().getSessionData().getValue(QVTEvaluationOptions.EVALUATION_MAX_STACK_DEPTH);
+	}
+	
+	public List<Class<? extends QvtGenericVisitorDecorator>> getVisitorDecoratorClasses() {
+		return getContext().getSessionData().getValue(QVTEvaluationOptions.VISITOR_DECORATORS);
 	}
 
 	private void checkReadonlyGuard(EStructuralFeature eStructuralFeature, Object exprValue, EObject owner) {

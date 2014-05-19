@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2010 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,12 +9,15 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 416584
+ *     Christine Gerpheide - bug 432969
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.ast.env;
 
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -22,10 +25,14 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
+import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.InternalEvaluator;
+import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtGenericVisitorDecorator;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtOperationalEvaluationVisitorImpl;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.util.IContext;
@@ -152,7 +159,19 @@ public class QvtOperationalEnvFactory extends EcoreEnvironmentFactory {
 			return super.createEvaluationVisitor(env, evalEnv, extentMap);
 		}
 		
-		return QvtOperationalEvaluationVisitorImpl.createVisitor((QvtOperationalEnv)env, (QvtOperationalEvaluationEnv)evalEnv);
+		InternalEvaluator visitor = (InternalEvaluator) QvtOperationalEvaluationVisitorImpl.createVisitor((QvtOperationalEnv)env, (QvtOperationalEvaluationEnv)evalEnv);
+
+		// Wrap in any decorators
+		for(Class<? extends QvtGenericVisitorDecorator> cls : ((QvtOperationalEvaluationEnv)evalEnv).getVisitorDecoratorClasses()) {
+			try {
+				visitor = cls.getDeclaredConstructor(InternalEvaluator.class).newInstance(visitor);
+			} catch(Exception e) {
+				String message = NLS.bind("Error while constructing visitor decorator:''{0}''",  cls.getName());
+				QvtPlugin.getDefault().log(new Status(IStatus.ERROR, QvtPlugin.ID, message, e));
+			}
+		}
+		
+		return visitor;
 	}
 	
 	private static EPackage.Registry copyPackageRegistry(EPackage.Registry registry) {
