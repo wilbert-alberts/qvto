@@ -12,39 +12,27 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.m2m.qvt.oml.blackbox.java.Module;
 
-abstract class ModuleHandle {
-	
-	private final String className;
-	private final String simpleName;
-	ModuleHandle(String className, String moduleName) {
-		if(className == null || moduleName == null) {
-			throw new IllegalArgumentException();
-		}
+public class StandaloneModuleHandle extends ModuleHandle {
 		
-		this.className = className;			
-		this.simpleName = moduleName;
+	StandaloneModuleHandle(String className, String moduleName) throws ClassNotFoundException {
+		super(className, moduleName);
+		
+		getModuleJavaClass();
 	}
 	
-	
-	public String getModuleName() {
-		return simpleName;
+	public List<String> getUsedPackages() {
+		try {
+			return Arrays.asList(getModuleJavaClass().getAnnotation(Module.class).packageURIs());
+		}
+		catch(ClassNotFoundException e) {
+			return Collections.emptyList();
+		}
 	}
-	
-	public String getJavaClassName() {
-		return className;
-	}
-	
-	public abstract List<String> getUsedPackages();
-	
-	public Class<?> getModuleJavaClass() throws ClassNotFoundException {
-		return Class.forName(className);
-	}
-	
-	@Override
-	public String toString() {			
-		return simpleName + ", javaClass: " + className; //$NON-NLS-1$   
-	}		
+
 }

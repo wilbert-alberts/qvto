@@ -56,7 +56,7 @@ public class LegacyNativeLibSupport {
 				
         QvtOperationalModuleEnv libEnv = initLibEnvironment(lib, libModule);
         URI libUri = URI.createHierarchicalURI(AbstractCompilationUnitDescriptor.URI_SCHEME, AbstractCompilationUnitDescriptor.URI_AUTHORITY,
-        		null, new String[] {LegacyNativeLibraryProviderAdapter.PROVIDER_ID, lib.getId()}, null, null);
+        		null, new String[] {lib.getId()}, null, null);
 		libModule.eResource().setURI(libUri);
 
 		org.eclipse.m2m.internal.qvt.oml.expressions.Library opModule = QvtOperationalStdLibrary.createLibrary(lib.getId());

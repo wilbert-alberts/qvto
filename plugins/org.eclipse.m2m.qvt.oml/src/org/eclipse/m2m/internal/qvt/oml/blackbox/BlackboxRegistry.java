@@ -8,11 +8,12 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 289982, 427237
+ *     Christopher Gerking - bugs 289982, 326871, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -24,6 +25,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.m2m.internal.qvt.oml.QvtPlugin;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.java.StandaloneBlackboxProvider;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.OperationalTransformation;
 import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandler;
@@ -42,14 +44,14 @@ public class BlackboxRegistry {
 	public static BlackboxRegistry INSTANCE = new BlackboxRegistry();
 
 	// instance fields
-	private List<AbstractBlackboxProvider> fProviders;
+	private List<? extends AbstractBlackboxProvider> fProviders;
 		
 	private BlackboxRegistry() {
 		try {
 			if(EMFPlugin.IS_ECLIPSE_RUNNING) {
 				fProviders = Eclipse.readProviders();
 			} else {
-				fProviders = Collections.emptyList();
+				fProviders = Arrays.asList(new StandaloneBlackboxProvider());
 			}
 		} catch (RuntimeException e) {
 			fProviders = Collections.emptyList();
@@ -102,7 +104,7 @@ public class BlackboxRegistry {
 	                try {
 	                	Object extension = element.createExecutableExtension(CLASS_ATTR);
 	                	if(extension instanceof AbstractBlackboxProvider == false) {
-	                		QvtPlugin.error("Provider must implement AbstractBlackboxProvider interace: " + extension); //$NON-NLS-1$
+	                		QvtPlugin.error("Provider must implement AbstractBlackboxProvider interface: " + extension); //$NON-NLS-1$
 	                		continue;
 	                	}
 	

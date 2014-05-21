@@ -37,8 +37,6 @@ import org.eclipse.m2m.internal.qvt.oml.stdlib.CallHandlerAdapter;
 
 public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider {
 	
-	static final String PROVIDER_ID = "legacy"; //$NON-NLS-1$
-	
 	private Map<String, AbstractCompilationUnitDescriptor> fDescriptorMap;
 	private final Map<LibraryDescriptor, CompilationUnit> fBlackboxUnits = new LinkedHashMap<LibraryDescriptor, CompilationUnit>();
 	
@@ -46,11 +44,6 @@ public class LegacyNativeLibraryProviderAdapter extends AbstractBlackboxProvider
 		super();
 	}
 
-	@Override
-	protected String getProviderID() {
-		return PROVIDER_ID;
-	}	
-	
 	@Override
 	public Collection<AbstractCompilationUnitDescriptor> getModuleDescriptors(ResolutionContext loadContext) {
 		return getDescriptorMap().values();

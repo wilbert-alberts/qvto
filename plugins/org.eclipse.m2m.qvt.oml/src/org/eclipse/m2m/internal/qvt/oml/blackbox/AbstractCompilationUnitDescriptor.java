@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bugs 289982, 427237
+ *     Christopher Gerking - bugs 289982, 326871, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox;
 
@@ -52,7 +52,7 @@ public abstract class AbstractCompilationUnitDescriptor {
 	}
 	
 	protected AbstractCompilationUnitDescriptor(AbstractBlackboxProvider provider, String qualifiedName) {
-		this(provider, qualifiedName, new String [] { provider.getProviderID(), qualifiedName });
+		this(provider, qualifiedName, qualifiedName);
 	}
 		
 	protected AbstractBlackboxProvider getProvider() {

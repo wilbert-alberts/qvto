@@ -96,5 +96,6 @@ public @interface Operation {
 	 * semantics information, useful for a tooling support.
 	 * @return the String object (empty string if nothing has been explicitly specified)
 	 */
-	String description() default "";		
+	String description() default "";
+	
 }

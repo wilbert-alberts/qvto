@@ -9,7 +9,7 @@
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
  *     Alex Paperno - bugs 416584
- *     Christopher Gerking - bugs 391289, 431082
+ *     Christopher Gerking - bugs 326871, 391289, 431082
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.compiler;
 
@@ -568,8 +568,8 @@ public class QVTOCompiler {
 
     private CompiledUnit loadBlackboxUnit(UnitProxy unit) throws IOException {
     	ModelContents contents = (ModelContents) unit.getContents();
-
-    	List<EObject> topElements = contents.loadElements(getResourceSet().getPackageRegistry());
+    	
+    	List<EObject> topElements = contents.loadElements(CompilerUtils.getEPackageRegistry(unit.getURI(), fMetamodelRegistryProvider));
     	List<QvtOperationalModuleEnv> modelEnvs = new ArrayList<QvtOperationalModuleEnv>(topElements.size());
     	
     	for (EObject nextElement : topElements) {

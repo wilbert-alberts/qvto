@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 R.Dvorak and others.
+ * Copyright (c) 2009, 2014 R.Dvorak and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Radek Dvorak - initial API and implementation
+ *     Christopher Gerking - bug 326871
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -17,16 +18,22 @@ import org.osgi.framework.Bundle;
 
 class BundleModuleHandle extends ModuleHandle {
 
-	private final String bundleId;		
+	private final String bundleId;
+	private final List<String> usedPackages;		
 	
 	BundleModuleHandle(String bundleId, String className, String moduleName, List<String> usedPackages) {
-		super(className, moduleName, usedPackages);
+		super(className, moduleName);
 		
-		if(bundleId == null) {
-			throw new IllegalArgumentException("null bundle ID"); //$NON-NLS-1$
+		if(bundleId == null || usedPackages == null) {
+			throw new IllegalArgumentException();
 		}
 
 		this.bundleId = bundleId;
+		this.usedPackages = usedPackages;
+	}
+	
+	public List<String> getUsedPackages() {
+		return usedPackages;
 	}
 	
 	@Override

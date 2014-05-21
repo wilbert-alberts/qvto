@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 400233, 427237
+ *     Christopher Gerking - bugs 326871, 400233, 427237
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -39,7 +39,7 @@ class Java2QVTTypeResolver {
 
 	private QvtOperationalModuleEnv fEnv;
 	private List<EPackage> fPackages;
-	// used to delegate the OCL type determination to MDOT OCL UMLReflection 
+	// used to delegate the OCL type determination to MDT OCL UMLReflection 
 	private EClassifier fHelperEClassiferAdapter;
 	
 	Java2QVTTypeResolver(QvtOperationalModuleEnv env, List<EPackage> packages) {	

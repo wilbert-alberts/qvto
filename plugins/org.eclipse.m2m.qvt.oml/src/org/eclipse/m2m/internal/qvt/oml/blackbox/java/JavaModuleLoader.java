@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *   
  * Contributors:
  *     Borland Software Corporation - initial API and implementation
- *     Christopher Gerking - bug 289982
+ *     Christopher Gerking - bugs 289982, 326871
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.blackbox.java;
 
@@ -29,6 +29,7 @@ import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalEnvFactory;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalModuleEnv;
 import org.eclipse.m2m.internal.qvt.oml.ast.env.QvtOperationalStdLibrary;
+import org.eclipse.m2m.internal.qvt.oml.blackbox.LoadContext;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 
 abstract class JavaModuleLoader {
@@ -49,7 +50,7 @@ abstract class JavaModuleLoader {
 		return (fDiagnostics != null) ? fDiagnostics : Diagnostic.OK_INSTANCE;
 	}
 	
-	public Diagnostic loadModule(ModuleHandle moduleHandle, Map<String, List<EOperation>> definedOperations) {
+	public Diagnostic loadModule(ModuleHandle moduleHandle, Map<String, List<EOperation>> definedOperations, LoadContext loadContext) {
 		fDiagnostics = DiagnosticUtil.createRootDiagnostic(NLS.bind(JavaBlackboxMessages.LoadModuleDiagnostics, moduleHandle));
 		Class<?> javaClass;
 		try {
@@ -69,7 +70,7 @@ abstract class JavaModuleLoader {
 		}
 		
 		Library module = QvtOperationalStdLibrary.createLibrary(moduleHandle.getModuleName());		
-		fEnv = QvtOperationalEnvFactory.INSTANCE.createModuleEnvironment(module);
+		fEnv = new QvtOperationalEnvFactory(loadContext.getMetamodelRegistry()).createModuleEnvironment(module);
 		loadModule(fEnv, javaClass);
 		
 		Java2QVTTypeResolver typeResolver = new Java2QVTTypeResolver(fEnv, 
@@ -125,8 +126,8 @@ abstract class JavaModuleLoader {
 		return Modifier.isPublic(javaClass.getModifiers());
 	}
 	
-	private static List<EPackage> resolvePackages(List<String> nsURIs, DiagnosticChain diagnosticChain) {
-		EPackage.Registry registry = EPackage.Registry.INSTANCE;
+	private List<EPackage> resolvePackages(List<String> nsURIs, DiagnosticChain diagnosticChain) {
+		EPackage.Registry registry = fEnv.getEPackageRegistry();
 		List<EPackage> ePackages = new ArrayList<EPackage>(nsURIs.size());
 		for (String nextURI : nsURIs) {
 			EPackage resolvedPackage = registry.getEPackage(nextURI);

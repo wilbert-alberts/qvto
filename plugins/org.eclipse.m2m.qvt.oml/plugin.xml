@@ -6,11 +6,17 @@
    <extension-point id="blackboxProvider" name="Black box provider" schema="schema/blackboxProviders.exsd"/>
    <extension-point id="javaBlackboxUnits" name="Java blackbox compilation units" schema="schema/javaBlackboxUnits.exsd"/>
     
- <extension name="Java blackbox implementation provider" point="org.eclipse.m2m.qvt.oml.blackboxProvider">
+ <extension name="Java bundle blackbox implementation provider" point="org.eclipse.m2m.qvt.oml.blackboxProvider">
     <provider
-          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.JavaBlackboxProvider">
+          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.BundleBlackboxProvider">
     </provider>
  </extension>
+ 
+  <extension name="Java standalone blackbox implementation provider" point="org.eclipse.m2m.qvt.oml.blackboxProvider">
+    <provider
+          class="org.eclipse.m2m.internal.qvt.oml.blackbox.java.StandaloneBlackboxProvider">
+    </provider>
+  </extension>
  
  <extension point="org.eclipse.emf.ecore.generated_package">
    <package 
