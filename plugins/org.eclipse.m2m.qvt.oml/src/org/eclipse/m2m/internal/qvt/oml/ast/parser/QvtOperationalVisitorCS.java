@@ -5240,7 +5240,7 @@ public class QvtOperationalVisitorCS
 				
 				if (!QvtOperationalParserUtil.isAssignableToFrom(env, sourceType, argumentType)
 						&& !QvtOperationalParserUtil.isAssignableToFrom(env, argumentType, sourceType)) {
-					QvtOperationalUtil.reportError(env, NLS.bind(ValidationMessages.TypesDoNotConform, new Object[] {
+					QvtOperationalUtil.reportWarning(env, NLS.bind(ValidationMessages.TypesDoNotConform, new Object[] {
 					        QvtOperationalTypesUtil.getTypeFullName(argumentType),
 					        QvtOperationalTypesUtil.getTypeFullName(sourceType) }), opCallCS);
 				}

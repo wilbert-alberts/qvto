@@ -24,7 +24,7 @@ mapping EClass::foo2atombar () : atom:EClass, bar:EClass
 	log((index = 0).repr());
 
 	var t0 := index = 0;
-	var t1 := /*<error>*/Tuple(name:EString) = Tuple{name = "1"}/*</error>*/;
+	var t1 := /*<warn>*/Tuple(name:EString) = Tuple{name = "1"}/*</warn>*/;
 	var t2 : Tuple(name:EString) = Tuple{name = "1"};
 	
 	while(false) { 
