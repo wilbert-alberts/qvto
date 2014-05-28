@@ -576,7 +576,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		if (args.size() == 1) {
 			EClassifier argType = args.get(0).getType();
 
-			if (argType != owner) {
+			if (argType != owner && argType != null) {
 				// let us search the type of the argument to determine whether
 				// we can find this operation
 				result = findMostSpecificOperationMatching(argType, name, args);
