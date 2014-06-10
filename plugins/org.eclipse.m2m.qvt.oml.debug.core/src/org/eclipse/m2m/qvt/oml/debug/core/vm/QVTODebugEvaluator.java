@@ -110,10 +110,10 @@ public final class QVTODebugEvaluator extends QvtOperationalEvaluationVisitorImp
 	}
 	
 	@Override
-	protected QvtOperationalEvaluationVisitorImpl createNestedEvaluationVisitor(
+	protected InternalEvaluator createNestedEvaluationVisitor(
 			QvtOperationalEvaluationVisitorImpl parent,
 			QvtOperationalEvaluationEnv nestedEvalEnv) {
-		return new QVTODebugEvaluator(parent, nestedEvalEnv);
+		return new QVTODebugEvaluator(parent, nestedEvalEnv).createInterruptibleVisitor();
 	}
 	
 	@Override

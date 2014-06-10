@@ -71,6 +71,7 @@ public class DebuggerTests {
 				new SimpleDebugData("testBreakpointForExplicitOutExp"), //$NON-NLS-1$
 				new SimpleDebugData("testBreakpointForExpressionStatement"), //$NON-NLS-1$
 				new SimpleDebugData("testBreakpointForOpCallSource"), //$NON-NLS-1$
+				new SimpleDebugData("testBreakpointForNestedTransf"), //$NON-NLS-1$
 		};
 	}
 
