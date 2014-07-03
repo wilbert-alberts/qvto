@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +22,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.CompilerUtils;
 import org.eclipse.m2m.internal.qvt.oml.compiler.QVTOCompiler;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.PlatformPluginUnitResolver;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.osgi.framework.Bundle;
 
 /**
@@ -39,7 +40,7 @@ public class PlatformPluginUnitResolverTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		fBundle = Platform.getBundle("org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
+		fBundle = Platform.getBundle(AllTests.BUNDLE_ID);
 		assertNotNull(fBundle);
 	}
 

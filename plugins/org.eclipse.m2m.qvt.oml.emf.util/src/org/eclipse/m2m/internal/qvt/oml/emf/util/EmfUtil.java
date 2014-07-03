@@ -71,7 +71,7 @@ public class EmfUtil {
             return new ModelContent(Collections.singletonList(eObject));
         }
         Resource resource = resourceSet.getResource(uri.trimFragment(), true);
-        if (resource == null || resource.getContents().isEmpty()) {
+        if (resource == null) {
         	return null;
         }
         return new ModelContent(resource.getContents());
@@ -157,14 +157,17 @@ public class EmfUtil {
         return in;
     }
 	
-	public static boolean isUriExistsAsEObject(URI uri, ResourceSet rs) {
+	public static boolean isUriExistsAsEObject(URI uri, ResourceSet rs, boolean validateNonEmpty) {
     	ModelContent loadModel = null;
     	try {
     		loadModel = loadModel(uri, rs);
     	}
     	catch (Exception e) {
     	}
-        return loadModel != null;
+        if (loadModel == null) {
+        	return false;
+        }
+        return validateNonEmpty ? !loadModel.getContent().isEmpty() : true;
 	}
 
 	public static boolean isDynamic(EObject eObject) {
@@ -435,12 +438,12 @@ public class EmfUtil {
 		rs.eAdapters().clear();
 	}
 	
-	public static boolean isUriExists(URI uri, ResourceSet rs) {
+	public static boolean isUriExists(URI uri, ResourceSet rs, boolean validateNonEmpty) {
 		URIConverter uriConverter = (rs != null ? rs.getURIConverter() : URIConverter.INSTANCE);
 		if (uriConverter.exists(uri, Collections.emptyMap())) {
 			return true;
 		}
-		return isUriExistsAsEObject(uri, rs);
+		return isUriExistsAsEObject(uri, rs, validateNonEmpty);
 	}
 	
 	

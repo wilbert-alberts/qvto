@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2013 R.Dvorak and others.
+ * Copyright (c) 2009, 2014 R.Dvorak and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.compiler.URIUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.osgi.framework.Bundle;
 
 /**
@@ -30,10 +31,8 @@ import org.osgi.framework.Bundle;
  */
 public class URIUnitResolverTest extends TestCase {
 	
-	private static final String fTestPluginID = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
-
 	private static final URI TEST_UNIT_PLUGIN_URI = URI.createPlatformPluginURI(
-			"/" + fTestPluginID +"/deployed/org/eclipse/Foo.qvto", true);
+			"/" + AllTests.BUNDLE_ID +"/deployed/org/eclipse/Foo.qvto", true);
 	
 	
 	public URIUnitResolverTest(String name) {
@@ -41,7 +40,7 @@ public class URIUnitResolverTest extends TestCase {
 	}
 	
 	public void testBaseAndNamespace() throws Exception {
-		URI baseURI = URI.createPlatformPluginURI(fTestPluginID, true);
+		URI baseURI = URI.createPlatformPluginURI(AllTests.BUNDLE_ID, true);
 		
 		URIUnitResolver resolver = new URIUnitResolver(Collections.singletonList(baseURI));
 		UnitProxy unit = resolver.resolveUnit("deployed.org.eclipse.Foo");
@@ -55,7 +54,7 @@ public class URIUnitResolverTest extends TestCase {
 	}
 	
 	public void testNamespace() throws Exception {
-		URI baseURI = URI.createPlatformPluginURI(fTestPluginID + "/deployed", true);
+		URI baseURI = URI.createPlatformPluginURI(AllTests.BUNDLE_ID + "/deployed", true);
 		
 		URIUnitResolver resolver = new URIUnitResolver(Collections.singletonList(baseURI));
 		
@@ -68,7 +67,7 @@ public class URIUnitResolverTest extends TestCase {
 	}
 
 	public void testDefaultNamespace() throws Exception {
-		URI baseURI = URI.createPlatformPluginURI(fTestPluginID + "/deployed/org/eclipse", true);
+		URI baseURI = URI.createPlatformPluginURI(AllTests.BUNDLE_ID + "/deployed/org/eclipse", true);
 		
 		URIUnitResolver resolver = new URIUnitResolver(Collections.singletonList(baseURI));
 		
@@ -81,7 +80,7 @@ public class URIUnitResolverTest extends TestCase {
 	}
 	
 	public void testTrailPathSepBaseAndNamespace() throws Exception {
-		URI baseURI = URI.createURI(URI.createPlatformPluginURI(fTestPluginID, true).toString() + "/");
+		URI baseURI = URI.createURI(URI.createPlatformPluginURI(AllTests.BUNDLE_ID, true).toString() + "/");
 		
 		URIUnitResolver resolver = new URIUnitResolver(Collections.singletonList(baseURI));
 		UnitProxy unit = resolver.resolveUnit("deployed.org.eclipse.Foo");
@@ -95,7 +94,7 @@ public class URIUnitResolverTest extends TestCase {
 	}
 	
 	public void testUnresolvedByURI() throws Exception {
-		URI baseURI = URI.createURI(URI.createPlatformPluginURI(fTestPluginID, true).toString());		
+		URI baseURI = URI.createURI(URI.createPlatformPluginURI(AllTests.BUNDLE_ID, true).toString());		
 		URIUnitResolver resolver = new URIUnitResolver(Collections.singletonList(baseURI));
 		
 		String notExisting = "I'm Not there";
@@ -104,7 +103,7 @@ public class URIUnitResolverTest extends TestCase {
 	}	
 	
 	public void testFileURI() throws Exception {
-		Bundle testBundle = Platform.getBundle(fTestPluginID);
+		Bundle testBundle = Platform.getBundle(AllTests.BUNDLE_ID);
 		File bundleFile = FileLocator.getBundleFile(testBundle);
 		assertNotNull(bundleFile);
 		

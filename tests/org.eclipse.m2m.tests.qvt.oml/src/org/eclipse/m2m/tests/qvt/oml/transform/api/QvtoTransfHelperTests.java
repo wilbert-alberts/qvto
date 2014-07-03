@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.FilesToFilesData;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.transform.api.ExecDeployedTransformationTestCase.UseFileName;
@@ -94,7 +95,10 @@ public class QvtoTransfHelperTests {
 			new UseFileName(
 				new ApiTestData("exec3_withImport", Collections.<String>emptyList(), Collections.<String>emptyList())), //$NON-NLS-1$
 			new WrappedExecTransformationTestCase(
-				new ApiTestData("exec_erroneous", Collections.<String>emptyList(), Collections.<String>emptyList())) //$NON-NLS-1$
+				new ApiTestData("exec_erroneous", Collections.<String>emptyList(), Collections.<String>emptyList())), //$NON-NLS-1$
+    		
+    		new InoutValidationTestCase(
+    				new ApiTestData("inoutModels", Collections.<String>emptyList(), Collections.<String>emptyList())), //$NON-NLS-1$
     	};
     	
     	return testCases;
@@ -116,7 +120,7 @@ public class QvtoTransfHelperTests {
         }
         
         private static File getDestFolder(String name, IProject project) throws IOException {
-            File srcRootFolder = TestUtil.getPluginRelativeFile(TestUtil.BUNDLE, ApiTestCase.ROOT_DIR_NAME);
+            File srcRootFolder = TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID, ApiTestCase.ROOT_DIR_NAME);
             File srcFolder = ApiTestData.getFolder(srcRootFolder, name);
             File destFolder = ApiTestData.getFolder(new File(project.getLocation().toString() + "/models/"), srcFolder.getName()); //$NON-NLS-1$
             return destFolder;

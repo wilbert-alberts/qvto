@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,13 +41,15 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
  */
 public class AllTests {
 
+	public static final String BUNDLE_ID = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
+	
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(AllTests.suite());
 	}
 
 	public static Test suite() {
 		TestUtil.suppressGitPrefixPopUp();
-		TestSuite suite = new TestSuite("Tests for org.eclipse.m2m.tests.qvt.oml"); //$NON-NLS-1$
+		TestSuite suite = new TestSuite("Tests for " + BUNDLE_ID); //$NON-NLS-1$
 		//$JUnit-BEGIN$
 		suite.addTestSuite(IntermediatePropertyCleanupTest.class);
 		suite.addTest(AllCompileTests.suite());

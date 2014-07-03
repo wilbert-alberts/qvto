@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -92,9 +91,9 @@ public class MetamodelRegistry {
 		for(String nsURI : getMetamodelIds()) {
 			try {
 				IMetamodelDesc metamodelDesc = getMetamodelDesc(nsURI);
-				if(metamodelDesc.getLoadStatus().getSeverity() < IStatus.ERROR) {
+				//if(metamodelDesc.getLoadStatus().getSeverity() < IStatus.ERROR) {
 					packageRegistry.put(nsURI, new Desc(metamodelDesc));
-	        	}				
+	        	//}				
 			} catch (EmfException e) {
 				EmfUtilPlugin.log(e);
 			}
@@ -129,11 +128,11 @@ public class MetamodelRegistry {
 		}
 		
 		String base = rootURI.segment(0);
-		String commonBaseURI = rootURI.trimSegments(rootURI.segmentCount()).appendSegment(base).toString();
+		String commonBaseURI = rootURI.trimSegments(rootURI.segmentCount()).appendSegment(base).toString().toLowerCase();
 		
 		LinkedList<String> candidates = new LinkedList<String>();
 		for (String nextURI : registry.keySet()) {
-			if(nextURI.startsWith(commonBaseURI)) {
+			if(nextURI.toLowerCase().startsWith(commonBaseURI)) {
 				candidates.add(nextURI);
 			}
 		}
@@ -152,20 +151,21 @@ public class MetamodelRegistry {
         		return pack;
         	}
         }
-        // check all packages in the registry
-        for(String nextNsURI : registry.keySet()) {
-        	EPackage pack = registry.getEPackage(nextNsURI);
 
-        	while (pack.getESuperPackage() != null) {
-    			pack = pack.getESuperPackage();
-    		}
-        	
-        	if (nsURI.equals(pack.getNsURI())) {
-        		return pack;
-        	}
-        }
+        // too greedy to check all packages
+//        // check all packages in the registry
+//        for(String nextNsURI : registry.keySet()) {
+//        	EPackage pack = registry.getEPackage(nextNsURI);
+//
+//        	while (pack.getESuperPackage() != null) {
+//    			pack = pack.getESuperPackage();
+//    		}
+//        	
+//        	if (nsURI.equals(pack.getNsURI())) {
+//        		return pack;
+//        	}
+//        }
         
-		
 		return null;
 	}
 	

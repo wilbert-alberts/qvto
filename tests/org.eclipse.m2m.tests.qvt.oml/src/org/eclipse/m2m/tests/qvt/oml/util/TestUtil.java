@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,6 +59,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.QvtCompilerOptions;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.evaluator.QvtRuntimeException;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.RuntimeWorkspaceSetup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
@@ -68,8 +69,6 @@ import org.osgi.framework.Bundle;
  */
 public class TestUtil extends Assert {
 	
-	public static final String BUNDLE = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
-
 	private TestUtil() {}
 
 	static Set<CompiledUnit> collectAllCompiledModules(CompiledUnit unit, Set<CompiledUnit> result) {
@@ -204,7 +203,7 @@ public class TestUtil extends Assert {
 	}
 	
 	public static File getPluginRelativeFolder(final String folderName) throws IOException {
-        return getPluginRelativeFile(BUNDLE, folderName);
+        return getPluginRelativeFile(AllTests.BUNDLE_ID, folderName);
 	}
 	
     public static File getPluginRelativeFile(String plugin, String folderName) throws IOException {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.FilesToFilesData;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -69,7 +70,7 @@ public class QvtAntScriptTests {
         }
         
         private static File getDestFolder(String name, IProject project) throws IOException {
-            File srcRootFolder = TestUtil.getPluginRelativeFile(TestQvtAntScript.BUNDLE, TestQvtAntScript.ROOT_DIR_NAME);
+            File srcRootFolder = TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID, TestQvtAntScript.ROOT_DIR_NAME);
             File srcFolder = AntModelTestData.getFolder(srcRootFolder, name);
             File destFolder = AntModelTestData.getFolder(new File(project.getLocation().toString() + "/models/"), srcFolder.getName()); //$NON-NLS-1$
             return destFolder;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,7 @@ import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtDocumentProvider;
 import org.eclipse.m2m.internal.qvt.oml.editor.ui.QvtEditor;
 import org.eclipse.m2m.internal.qvt.oml.project.QVTOProjectPlugin;
 import org.eclipse.m2m.internal.qvt.oml.project.builder.QVTOBuilderConfig;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.util.SourceAnnotationReader;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -118,7 +119,7 @@ public abstract class AbstractTestQvtEditorSupport extends TestCase {
 	protected void initializeProject() throws Exception {
 		fTestProject = new TestProject("Editor", new String[] {QVTOProjectPlugin.NATURE_ID}); //$NON-NLS-1$
 	
-		File srcFolder = TestUtil.getPluginRelativeFile(TestUtil.BUNDLE, "parserTestData/editor/" + fTestFolder); //$NON-NLS-1$
+		File srcFolder = TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID, "parserTestData/editor/" + fTestFolder); //$NON-NLS-1$
 	    fSrcContainer = QVTOBuilderConfig.getConfig(fTestProject.getProject()).getSourceContainer();
 	    File destFolder = fSrcContainer.getLocation().toFile();
 	    FileUtil.copyFolder(srcFolder, destFolder);

@@ -3427,6 +3427,10 @@ public class QvtOperationalVisitorCS
 				String metamodelUri = visitLiteralExpCS(uriCS, env);
 				resolvedMetamodel = resolveMetamodel(env, metamodelUri, Collections.<SimpleNameCS>emptyList(), uriCS);
 				uriCS.setAst(resolvedMetamodel);
+				// since metamodel URI is specified but can't be resolved then no further lookup should be done  
+				if (resolvedMetamodel == null) {
+					continue;
+				}
 			}
 			
 			PathNameCS pathNameCS = packageRefCS.getPathNameCS();
@@ -3525,7 +3529,7 @@ public class QvtOperationalVisitorCS
 	
 	private EPackage resolveMetamodel(QvtOperationalModuleEnv env, String metamodelUri, List<SimpleNameCS> packagePath, CSTNode cstNode) {
 		EPackage resolvedMetamodel = null;
-		String metamodelName = (packagePath.isEmpty() ? metamodelUri : packagePath.toString());
+		String metamodelName = (packagePath.isEmpty() ? metamodelUri : QvtOperationalParserUtil.getStringRepresentation(packagePath, EmfUtil.PATH_SEPARATOR));
 		try {
 			List<EPackage> registerMetamodels = MetamodelResolutionHelper.registerMetamodel(env, metamodelUri, QvtOperationalParserUtil.getSequenceOfNames(packagePath));
 			

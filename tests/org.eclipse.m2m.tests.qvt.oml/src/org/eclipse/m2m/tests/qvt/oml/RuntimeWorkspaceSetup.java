@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -89,7 +89,7 @@ public class RuntimeWorkspaceSetup {
 			"org.eclipse.m2m.qvt.oml", //$NON-NLS-1$ 
 			"org.eclipse.m2m.qvt.oml.samples", //$NON-NLS-1$			
 			"org.eclipse.m2m.qvt.oml.ocl.emf.libraries", //$NON-NLS-1$                
-			"org.eclipse.m2m.tests.qvt.oml", //$NON-NLS-1$*/
+			AllTests.BUNDLE_ID,
 
 		});
 		return this;

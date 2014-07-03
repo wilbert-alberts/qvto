@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 S.Boyko and others.
+ * Copyright (c) 2013, 2014 S.Boyko and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -57,6 +57,7 @@ import org.eclipse.m2m.qvt.oml.debug.core.QVTOBreakpoint;
 import org.eclipse.m2m.qvt.oml.debug.core.QVTODebugCore;
 import org.eclipse.m2m.qvt.oml.debug.core.launch.QVTODebugConfiguration;
 import org.eclipse.m2m.qvt.oml.debug.core.srclookup.QVTOSourceLookupDirector;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.ReaderInputStream;
@@ -99,7 +100,7 @@ public class TestQvtoDebugger extends TestCase {
 		ILaunchConfigurationType type = manager.getLaunchConfigurationType(QvtLaunchConfigurationDelegate.LAUNCH_CONFIGURATION_TYPE_ID);
 		myLaunchConfigurationWorkingCopy = type.newInstance(null, CONFIG_NAME);
 
-		copyModelData(TestUtil.getPluginRelativeFile(TestUtil.BUNDLE + ".ui", TEST_DATA_FOLDER + "/tests"));  //$NON-NLS-1$  //$NON-NLS-2$
+		copyModelData(TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID + ".ui", TEST_DATA_FOLDER + "/tests"));  //$NON-NLS-1$  //$NON-NLS-2$
 	}
 	
     public void tearDown() throws Exception {

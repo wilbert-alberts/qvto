@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,8 +13,8 @@ package org.eclipse.m2m.tests.qvt.oml.transform.api;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
-import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 
 /**
  * @author sboyko
@@ -63,7 +63,7 @@ public class ExecDeployedTransformationTestCase extends ExecTransformationTestCa
     @Override
 	protected URI createScriptUri(String scriptName) {
     	if (myUseFilename) {
-			return URI.createPlatformPluginURI("/" + TestUtil.BUNDLE + "/" + ROOT_DIR_NAME //$NON-NLS-1$ //$NON-NLS-2$
+			return URI.createPlatformPluginURI("/" + AllTests.BUNDLE_ID + "/" + ROOT_DIR_NAME //$NON-NLS-1$ //$NON-NLS-2$
 					+ "/" + scriptName + "/" + scriptName + MDAConstants.QVTO_FILE_EXTENSION_WITH_DOT, false); //$NON-NLS-1$ //$NON-NLS-2$
     	} 
     	

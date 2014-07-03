@@ -47,6 +47,7 @@ import org.eclipse.m2m.internal.qvt.oml.library.Context;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.m2m.qvt.oml.util.ISessionData;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.TreeComparator;
 import org.eclipse.m2m.tests.qvt.oml.api.framework.comparator.edit.TreeEdit;
@@ -253,7 +254,7 @@ public abstract class ModelTestData {
     }
     
     public String getBundle() {
-    	return TestUtil.BUNDLE;
+    	return AllTests.BUNDLE_ID;
     }
     
     private final String myName;

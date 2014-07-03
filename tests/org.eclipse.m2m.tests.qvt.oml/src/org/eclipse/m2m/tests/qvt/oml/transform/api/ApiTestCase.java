@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,6 +23,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -75,7 +76,7 @@ public class ApiTestCase extends TestCase {
     }
     
     private void copyModelData() throws Exception {
-        File srcFolder = TestUtil.getPluginRelativeFile(TestUtil.BUNDLE, ROOT_DIR_NAME + "/" + myData.getName()); //$NON-NLS-1$
+        File srcFolder = TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID, ROOT_DIR_NAME + "/" + myData.getName()); //$NON-NLS-1$
         File destFolder = getDestFolder();
         destFolder.mkdirs();
         FileUtil.copyFolder(srcFolder, destFolder);

@@ -410,6 +410,8 @@ public class TransformTests {
         		new FilesToFilesData("bug433292"), //$NON-NLS-1$
         		new FilesToFilesData("bug370098"), //$NON-NLS-1$
         		new FilesToFilesData("bug326871"), //$NON-NLS-1$
+        		new FilesToFilesData("emptyExtents", Arrays.asList("in1.ecore", "in2.ecore"), Collections.singletonList("expected.ecore")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        		new FilesToFilesData("urilessModeltype"), //$NON-NLS-1$
         		};
     }
 

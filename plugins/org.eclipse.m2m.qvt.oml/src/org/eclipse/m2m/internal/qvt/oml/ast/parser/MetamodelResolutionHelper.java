@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,7 +38,7 @@ class MetamodelResolutionHelper {
         List<EPackage> metamodels = new ArrayList<EPackage>(1);
         
 		try {
-		    List<EPackage> desc = null;            
+		    List<EPackage> desc = Collections.emptyList();            
             if (metamodelUri != null && path.isEmpty()) {
                 EPackage ePackage = registry.getEPackage(metamodelUri);
                 if(ePackage != null) {                	
@@ -53,26 +53,24 @@ class MetamodelResolutionHelper {
                 desc = MetamodelRegistry.resolveMetamodels(registry, path);
             }
                         
-            if(desc != null) {
-				for(EPackage model : desc) {							        	
-		            // register meta-model for EClassifier lookup
-		        	if (model.getNsURI() == null) {
-						while (true) {
-							if (model.getESuperPackage() == null) {
-								break;
-							}
-							model = model.getESuperPackage();
+			for(EPackage model : desc) {							        	
+	            // register meta-model for EClassifier lookup
+	        	if (model.getNsURI() == null) {
+					while (true) {
+						if (model.getESuperPackage() == null) {
+							break;
 						}
-		        	}
-		        	
-		        	metamodels.add(model);
-		        	if(metamodelUri != null) {
-		        		qvtEnv.getEPackageRegistry().put(metamodelUri, model);
-		        	}
-		        	
-		            break;
-		        }
-            }
+						model = model.getESuperPackage();
+					}
+	        	}
+	        	
+	        	metamodels.add(model);
+	        	if(metamodelUri != null) {
+	        		qvtEnv.getEPackageRegistry().put(metamodelUri, model);
+	        	}
+	        	
+	            //break;
+	        }
 		} catch (EmfException e) {
 			// It's legal situation of unresolved metamodels
 		}

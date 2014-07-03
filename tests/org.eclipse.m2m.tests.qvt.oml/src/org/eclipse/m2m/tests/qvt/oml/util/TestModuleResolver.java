@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,6 +28,7 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.DeployedImportResolver;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.osgi.framework.Bundle;
 
 public class TestModuleResolver implements UnitResolver {
@@ -43,7 +44,7 @@ public class TestModuleResolver implements UnitResolver {
 	 * @return the resolver instance
 	 */
 	public static TestModuleResolver createdTestPluginResolver(String sourceContainerPath) {
-		return new TestModuleResolver(TestUtil.BUNDLE, sourceContainerPath);
+		return new TestModuleResolver(AllTests.BUNDLE_ID, sourceContainerPath);
 	}
 	
 	public TestModuleResolver(final String bundleSymbolicName, final String sourceContainerPath) {

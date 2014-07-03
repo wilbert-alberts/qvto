@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2008, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.internal.qvt.oml.common.io.FileUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.eclipse.m2m.tests.qvt.oml.TestProject;
 import org.eclipse.m2m.tests.qvt.oml.transform.ModelTestData;
 import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
@@ -42,7 +43,6 @@ import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
 public class TestQvtAntScript extends TestCase {
 	
 	public static final String ROOT_DIR_NAME = "antTestData"; //$NON-NLS-1$
-	public static final String BUNDLE = "org.eclipse.m2m.tests.qvt.oml"; //$NON-NLS-1$
 	private static final String FIELD_DELIM = ","; //$NON-NLS-1$
 
     public TestQvtAntScript(ModelTestData data) {
@@ -103,7 +103,7 @@ public class TestQvtAntScript extends TestCase {
     }
     
     private void copyModelData() throws Exception {
-        File srcFolder = TestUtil.getPluginRelativeFile(BUNDLE, ROOT_DIR_NAME + "/" + myData.getName()); //$NON-NLS-1$
+        File srcFolder = TestUtil.getPluginRelativeFile(AllTests.BUNDLE_ID, ROOT_DIR_NAME + "/" + myData.getName()); //$NON-NLS-1$
         File destFolder = getDestFolder();
         destFolder.mkdirs();
         FileUtil.copyFolder(srcFolder, destFolder);

@@ -38,7 +38,7 @@ import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.Log;
 import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
-import org.eclipse.m2m.tests.qvt.oml.util.TestUtil;
+import org.eclipse.m2m.tests.qvt.oml.AllTests;
 import org.osgi.framework.Bundle;
 
 /**
@@ -265,7 +265,7 @@ public class InvocationTest extends TestCase {
 	}
 	
 	public void testInvokeOnGenericURIs() throws Exception {
-		Bundle testBundle = Platform.getBundle(TestUtil.BUNDLE);
+		Bundle testBundle = Platform.getBundle(AllTests.BUNDLE_ID);
 		File bundleFile = FileLocator.getBundleFile(testBundle);
 		assertNotNull(bundleFile);
 
