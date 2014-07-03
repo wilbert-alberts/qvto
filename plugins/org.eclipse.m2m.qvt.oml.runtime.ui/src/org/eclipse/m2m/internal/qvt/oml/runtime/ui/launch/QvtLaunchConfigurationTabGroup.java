@@ -12,21 +12,13 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.runtime.ui.launch;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtModule;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
-import org.eclipse.m2m.internal.qvt.oml.runtime.project.TransformationUtil;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
 
@@ -61,22 +53,15 @@ public class QvtLaunchConfigurationTabGroup extends AbstractLaunchConfigurationT
 		});
 	}
 	
-    protected final ITransformationMaker TRANSFORMATION_MAKER = new ITransformationMaker() {
-    	
-    	private Map<String, QvtInterpretedTransformation> transformationsMap = new HashMap<String, QvtInterpretedTransformation>();
-    	
-		public QvtTransformation makeTransformation(String name) throws MdaException {
-			
-			QvtInterpretedTransformation transformation = transformationsMap.get(name);
-			
-			if (transformation == null) {
-				QvtModule qvtModule = TransformationUtil.getQvtModule(EmfUtil.makeUri(name));
-				transformation = new QvtInterpretedTransformation(qvtModule);
-				transformationsMap.put(name, transformation);
-			}
-			
-			return transformation;
+	@Override
+	public void dispose() {
+		super.dispose();
+    	try {
+			TRANSFORMATION_MAKER.cleanup();
+		} catch (MdaException e) {
 		}
-    };
+	}
+	
+    protected final ITransformationMaker TRANSFORMATION_MAKER = new ITransformationMaker.CachedTransformationMaker();
     
 }

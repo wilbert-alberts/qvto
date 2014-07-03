@@ -29,7 +29,7 @@
               name="%qvtBuilderTransformation"/>
 
         <launchConfigurationType
-              name="%qvtTransformation"
+              name="%qvtInterpreter"
               delegate="org.eclipse.m2m.internal.qvt.oml.runtime.launch.InMemoryQvtLaunchConfigurationDelegate"
               modes="run"
               id="org.eclipse.m2m.qvt.oml.InMemoryQvtTransformation"

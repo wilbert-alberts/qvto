@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,13 +12,10 @@
  *******************************************************************************/
 package org.eclipse.m2m.internal.qvt.oml.common.ui.controls;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.m2m.internal.qvt.oml.common.project.IRegistryConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
-import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry.Filter;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.UniSelectTransformationControl.ISelectionListener;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.dialogs.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -32,12 +29,8 @@ import org.eclipse.ui.dialogs.SelectionStatusDialog;
  */
 public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog {
 
-	public static interface ISelectionListener {
-        IStatus selectionChanged(URI selectedUri);
-    }
-
     public BrowseInterpretedTransformationDialog(Shell shell, UniSelectTransformationControl.IResourceFilter resourceFilter,
-    		ILabelProvider labelProvider, TransformationRegistry registry, String selectedTransId, ISelectionListener selectionListener) {
+    		TransformationRegistry registry, String selectedTransId, UniSelectTransformationControl.ISelectionListener selectionListener) {
         super(shell);
 
 		setTitle(Messages.BrowseInterpretedTransformationDialog_Title);
@@ -48,12 +41,11 @@ public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog
 		
         myResourceFilter = resourceFilter;
         myRegistry = registry;
-        myLabelProvider = labelProvider;
         myInitialTransId = selectedTransId;
         mySelectionListener = selectionListener;
     }
     
-    public URI getSelectedUri(){
+    public URI getSelectedUri() {
         return mySelectedUri;
     }
     
@@ -64,23 +56,18 @@ public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog
 
 		createMessageArea(composite);
         
-        myControl = new UniSelectTransformationControl(parent, myResourceFilter,
-        		myLabelProvider, myRegistry, new Filter() {
-					
-        			public boolean accept(IConfigurationElement element) {
-        				
-        				// bug 388329: accept only transformations
-        				return IRegistryConstants.TRANSFORMATION.equals(element.getName());
-            	
-        			}
-				});
-        myControl.addSelectionListener(new UniSelectTransformationControl.ISelectionListener() {
-            public void selectionChanged(URI uri) {
-            	IStatus selStatus = mySelectionListener.selectionChanged(uri);
-            	mySelectedUri = selStatus.isOK() ? uri : null;
-            	updateStatus(selStatus);
+        ISelectionListener selectionListener = new UniSelectTransformationControl.SelectionListenerAdapter(mySelectionListener) {
+        	
+            public IStatus selectionChanged(URI uri) {
+            	IStatus status = mySelectionListener.selectionChanged(uri);
+            	mySelectedUri = status.isOK() ? uri : null;
+            	updateStatus(status);
+            	return status;
             }
-        });
+        };
+        
+        myControl = new UniSelectTransformationControl(parent, myResourceFilter,
+        		myRegistry, TransformationRegistry.TRANSFORMATION_FILTER, selectionListener);
         myControl.selectTransformationByUri(myInitialTransId);
         
         return myControl;
@@ -92,9 +79,8 @@ public class BrowseInterpretedTransformationDialog extends SelectionStatusDialog
 
     private final String myInitialTransId;
     private final TransformationRegistry myRegistry;
-    private final ILabelProvider myLabelProvider;
     private final UniSelectTransformationControl.IResourceFilter myResourceFilter;
-    private final ISelectionListener mySelectionListener;
+    private final UniSelectTransformationControl.ISelectionListener mySelectionListener;
     
     private URI mySelectedUri;
     private UniSelectTransformationControl myControl;

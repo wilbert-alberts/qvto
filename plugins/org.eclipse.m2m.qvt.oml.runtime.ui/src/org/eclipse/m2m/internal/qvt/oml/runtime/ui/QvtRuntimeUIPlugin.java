@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class QvtRuntimeUIPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.internal.runtime.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.m2m.qvt.oml.runtime.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static QvtRuntimeUIPlugin plugin;

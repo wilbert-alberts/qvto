@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,19 +46,22 @@ public class Messages extends NLS {
 
     public static String SelectWorkspaceTransformationPage_Title;
     public static String SelectWorkspaceTransformationPage_Description;
-    public static String SelectWorkspaceTransformationPage_transformationSelected;
     
     public static String TransformationParametersPage_Title;
     public static String TransformationParametersPage_TitleWithTransf;
     public static String TransformationParametersPage_Description;
     
     public static String LaunchWorkspaceTransformationWizard_Title;
+    public static String LaunchWorkspaceTransformationWizard_runningTransformation;
     public static String LaunchWorkspaceTransformationWizard_FailedToLaunch;
     public static String LaunchWorkspaceTransformationWizard_Error;
     public static String LaunchWorkspaceTransformationWizard_ShowResultError;
+    public static String LaunchWorkspaceTransformationWizard_launchConfigName;
     
     public static String RunInterpretedTransformationAction_title;
     public static String RunInterpretedTransformationAction_message;
+    
+    public static String TransformationWizardUtil_savingTransformationResults;
 	
 	static {
 		// initialize resource bundle

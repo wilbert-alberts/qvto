@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,6 +28,20 @@ import org.eclipse.osgi.util.NLS;
 
 
 public abstract class TransformationRegistry {
+
+    public static final Filter EMPTY_FILTER = new Filter() {
+        public boolean accept(IConfigurationElement element) {
+            return true;
+        }        
+    };
+	
+    public static final Filter TRANSFORMATION_FILTER = new Filter() {
+        public boolean accept(IConfigurationElement element) {
+        	return IRegistryConstants.TRANSFORMATION.equals(element.getName());
+        }        
+    };
+	
+
     protected TransformationRegistry(String point) {
         myPoint = point;
     }
@@ -61,13 +75,6 @@ public abstract class TransformationRegistry {
             }
         }
     }
-    
-    public static final Filter EMPTY_FILTER = new Filter() {
-        public boolean accept(IConfigurationElement element) {
-            return true;
-        }        
-    };
-
     
     public List<CompiledTransformation> getTransformations(Filter filter) {
         List<CompiledTransformation> transformations = new ArrayList<CompiledTransformation>();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,6 @@ public class QvtRuntimePluginImages extends PluginImages {
         declareImages();
     }
     
-    public static final String QVT_COMPILED_TRANSFORMATION = "qvt_compiled_trabsformation"; //$NON-NLS-1$
     public static final String APPLY_WIZARD = "apply_wizard"; //$NON-NLS-1$
     public static final String SHOW_SOURCE = "show_source"; //$NON-NLS-1$
     public static final String SHOW_TARGET = "show_target"; //$NON-NLS-1$
@@ -39,7 +38,6 @@ public class QvtRuntimePluginImages extends PluginImages {
     
     @Override
 	protected void declareImages() {
-        declareRegistryImage(QVT_COMPILED_TRANSFORMATION, "icons/qvt-compiled-transformation.gif"); //$NON-NLS-1$
         declareRegistryImage(APPLY_WIZARD, "icons/apply-wizard.gif"); //$NON-NLS-1$
         declareRegistryImage(SHOW_SOURCE, "icons/show-source.gif"); //$NON-NLS-1$
         declareRegistryImage(SHOW_TARGET, "icons/show-target.gif"); //$NON-NLS-1$

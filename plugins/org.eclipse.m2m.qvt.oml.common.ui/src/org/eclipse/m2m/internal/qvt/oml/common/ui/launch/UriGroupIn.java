@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -66,11 +66,12 @@ public class UriGroupIn extends BaseUriGroup {
     }
     
     public void initializeFrom(TargetUriData uriData) {
+        myContentProvider = uriData.getContentProvider();
         myUriText.setText(uriData.getUriString());
     }
 
 	public TargetUriData getUriData() {
-		return new TargetUriData(getText());
+		return new TargetUriData(getText(), myContentProvider);
 	}
     
     public String getText() {
@@ -90,8 +91,8 @@ public class UriGroupIn extends BaseUriGroup {
             }
             else {
                 myActiveListener = new UriChooserListener(myUriText, getChooser(handler), shell);
-                myUriText.setEnabled(true);
-                myBrowseButton.setEnabled(true);
+                myUriText.setEnabled(myContentProvider == null);
+                myBrowseButton.setEnabled(myContentProvider == null);
             }
         }
     }
@@ -109,6 +110,7 @@ public class UriGroupIn extends BaseUriGroup {
 	}
     
     private final Text myUriText;
+    private TargetUriData.ContentProvider myContentProvider;
     private final Button myBrowseButton;
     private SelectionListener myActiveListener;
     private final ResourceSet myValidationRS;

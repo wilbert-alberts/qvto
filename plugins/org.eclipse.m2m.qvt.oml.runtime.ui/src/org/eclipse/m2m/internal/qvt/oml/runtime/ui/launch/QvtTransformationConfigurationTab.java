@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,6 +24,7 @@ import org.eclipse.m2m.internal.qvt.oml.common.MdaException;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.ISetMessageEx;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.config.QvtConfigurationProperty;
@@ -80,7 +81,7 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
         Dialog.applyDialogFont(composite);
     }
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public void initializeFrom(ILaunchConfiguration configuration) {
         String fileName = ""; //$NON-NLS-1$
         try {
@@ -91,8 +92,9 @@ public class QvtTransformationConfigurationTab extends AbstractLaunchConfigurati
         
         QvtTransformation qvtTransformation = null;
         try {
-        	qvtTransformation = myTransformationMaker.makeTransformation(fileName);
+        	qvtTransformation = myTransformationMaker.makeTransformation(EmfUtil.makeUri(fileName));
 		} catch (MdaException e) {
+			QvtRuntimeUIPlugin.getDefault().getLog().log(MiscUtil.makeErrorStatus(e));
 		}
         myData.setTransformation(qvtTransformation);
         

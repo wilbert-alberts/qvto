@@ -54,7 +54,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
 
 	public static final String QVTO_BUILDER_MARKER = "org.eclipse.m2m.qvt.oml.runtime.qvtBuilderMarker"; //$NON-NLS-1$
 	
-    public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
+    public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, final IProgressMonitor monitor) throws CoreException {
         
         try {
         	final String buildType = getVariableValue("build_type"); //$NON-NLS-1$
@@ -70,7 +70,7 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
                         clean(project, configuration);
                     }
                     else {
-                        build(project, configuration, printWriter);
+                        build(project, configuration, printWriter, monitor);
                     }
                 }
             };
@@ -84,7 +84,9 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
         }
     }
 
-    private void build(final IProject project, final ILaunchConfiguration configuration, final PrintWriter printWriter) throws Exception {
+    private void build(final IProject project, final ILaunchConfiguration configuration, final PrintWriter printWriter,
+    		final IProgressMonitor monitor) throws Exception {
+    	
         String moduleUri = QvtLaunchUtil.getTransformationURI(configuration);
         final QvtInterpretedTransformation transformation;
 		try {
@@ -97,18 +99,22 @@ public class QvtBuilderLaunchConfigurationDelegate extends LaunchConfigurationDe
         
         BaseProcess.IRunnable r = new BaseProcess.IRunnable() {
             public void run() throws Exception {
-                IStatus status = QvtLaunchConfigurationDelegateBase.validate(transformation, configuration);
-                if(status.getSeverity() > IStatus.WARNING) {
-                    createMarker(project, status.getMessage());
-                    return;
-                }
-
-            	Context context = QvtLaunchUtil.createContext(configuration);
-                context.setLog(new WriterLog(printWriter));
-
-                QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);
-                
-                transformation.cleanup();
+            	try {
+	                IStatus status = QvtLaunchConfigurationDelegateBase.validate(transformation, configuration);
+	                if(status.getSeverity() > IStatus.WARNING) {
+	                    createMarker(project, status.getMessage());
+	                    return;
+	                }
+	
+	            	Context context = QvtLaunchUtil.createContext(configuration);
+	                context.setLog(new WriterLog(printWriter));
+	                context.setProgressMonitor(monitor);
+	
+	                QvtLaunchConfigurationDelegateBase.doLaunch(transformation, configuration, context);
+            	}
+            	finally {
+            		transformation.cleanup();
+            	}
             }
         };
         

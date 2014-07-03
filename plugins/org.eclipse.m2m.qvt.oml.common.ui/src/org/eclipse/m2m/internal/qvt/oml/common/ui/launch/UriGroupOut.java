@@ -128,6 +128,7 @@ public class UriGroupOut extends BaseUriGroup {
 	public void initializeFrom(TargetUriData targetData) {
 		myUpdating = true;
 		try {
+			myContentProvider = targetData.getContentProvider();
 			myUriText.setText(targetData.getUriString() == null ? "" : targetData.getUriString()); //$NON-NLS-1$
 			myFeatureText.setText(targetData.getFeature() == null ? "" : targetData.getFeature()); //$NON-NLS-1$
 			myClearContentsCheckbox.setSelection(targetData.isClearContents());
@@ -142,7 +143,7 @@ public class UriGroupOut extends BaseUriGroup {
 	public TargetUriData getUriData() {
 		return new TargetUriData(
 				myData.getFeature().trim().length() == 0 ? TargetType.NEW_MODEL : myData.getTargetType(),
-				myData.getUriString(), myData.getFeature(), myData.isClearContents());
+				myData.getUriString(), myData.getFeature(), myData.isClearContents(), myContentProvider);
 	}
 	
     public String getText() {
@@ -165,8 +166,8 @@ public class UriGroupOut extends BaseUriGroup {
                 ((IDestinationChooser) chooser).initNewName(baseName, extension);
                 
                 myActiveListener = new UriChooserListener(myUriText, chooser, shell);
-            	myUriText.setEnabled(true);
-            	myUriButton.setEnabled(true);
+            	myUriText.setEnabled(myContentProvider == null);
+            	myUriButton.setEnabled(myContentProvider == null);
             }
         }
     }
@@ -179,7 +180,7 @@ public class UriGroupOut extends BaseUriGroup {
 		try {
 	        URI destUri = EmfUtil.makeUri(getText());
 			
-			TargetType targetType = (destUri != null && EmfUtil.isUriExists(destUri, myValidationRS)) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
+			TargetType targetType = (destUri != null && EmfUtil.isUriExists(destUri, myValidationRS, true)) ? TargetType.EXISTING_CONTAINER : TargetType.NEW_MODEL;
 			myData = new TargetUriData(targetType,
 					myUriText.getText().trim(),
 					myFeatureText.getText(),
@@ -190,18 +191,18 @@ public class UriGroupOut extends BaseUriGroup {
 					myFeatureText.setEnabled(false);
 					myFeatureButton.setEnabled(false);
 					myClearContentsCheckbox.setEnabled(false);
-					myUriText.setEnabled(true);
-					myUriButton.setEnabled(true);
+					myUriText.setEnabled(myContentProvider == null);
+					myUriButton.setEnabled(myContentProvider == null);
 					break;
 				}
 				
 				case EXISTING_CONTAINER: {
-					myFeatureText.setEnabled(myObject != null);
-					myFeatureButton.setEnabled(true);
+					myFeatureText.setEnabled(myContentProvider == null && myObject != null);
+					myFeatureButton.setEnabled(myContentProvider == null);
 
 					if (myObject != null) {
 			        	EStructuralFeature feature = myObject.eClass().getEStructuralFeature(myFeatureText.getText());
-						myClearContentsCheckbox.setEnabled(feature instanceof EReference);
+						myClearContentsCheckbox.setEnabled(myContentProvider == null && feature instanceof EReference);
 		        	}
 		        	else {
 		        		myClearContentsCheckbox.setEnabled(false);
@@ -268,6 +269,7 @@ public class UriGroupOut extends BaseUriGroup {
 	}
     
 	private TargetUriData myData;
+	private TargetUriData.ContentProvider myContentProvider;
 	private boolean myUpdating;
 	private EObject myObject;
 	private final ResourceSet myValidationRS;

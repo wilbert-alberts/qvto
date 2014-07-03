@@ -51,19 +51,22 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
    
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 
-                public void run() throws Exception { 
-                    IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
-                    if(status.getSeverity() > IStatus.WARNING) {
-                    	throw new CoreException(status);
-                    }      	
-                	
-                	Context context = QvtLaunchUtil.createContext(configuration);
-                    context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
-                    context.setProgressMonitor(monitor);
-                    
-                	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
-                	
-                	qvtTransformation.cleanup();
+                public void run() throws Exception {
+                	try {
+	                    IStatus status = QvtLaunchConfigurationDelegateBase.validate(qvtTransformation, configuration);                    
+	                    if(status.getSeverity() > IStatus.WARNING) {
+	                    	throw new CoreException(status);
+	                    }      	
+	                	
+	                	Context context = QvtLaunchUtil.createContext(configuration);
+	                    context.setLog(new WriterLog(streamsProxy.getOutputWriter()));
+	                    context.setProgressMonitor(monitor);
+	                    
+	                	QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation, configuration, context);
+                	}
+                	finally {
+                		qvtTransformation.cleanup();
+                	}
                 }
             };
             
@@ -120,7 +123,7 @@ public class QvtLaunchConfigurationDelegate extends QvtLaunchConfigurationDelega
 						QvtPlugin.getDefault().log(e.getStatus());
 					}
             	}
-            }, "QVT Run"); //$NON-NLS-1$
+            }, Messages.InMemoryQvtLaunchConfigurationDelegate_TransformationJobName);
             
             processThread.start();
 		}

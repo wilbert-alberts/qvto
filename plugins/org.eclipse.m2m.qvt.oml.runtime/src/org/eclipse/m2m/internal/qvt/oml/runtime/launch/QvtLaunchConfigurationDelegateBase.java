@@ -123,9 +123,15 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
 			}
 			TargetUriData nextUri = itrTargetData.next();
 			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
-		        URI inUri = toUri(nextUri.getUriString());
-		        ModelContent inModel = transformation.loadInput(inUri);
-		        inObjects.add(inModel);
+				ModelContent inModel = null;
+				if (nextUri.getContentProvider() != null) {
+					inModel = new ModelContent(nextUri.getContentProvider().getContents());
+				}
+				else {
+			        URI inUri = toUri(nextUri.getUriString());
+			        inModel = transformation.loadInput(inUri);
+				}
+				inObjects.add(inModel);
 			}
 			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
 				targetData.add(nextUri);
@@ -224,7 +230,12 @@ public abstract class QvtLaunchConfigurationDelegateBase extends LaunchConfigura
     }
     
     @SuppressWarnings("unchecked")
-	private static void saveTransformationResult(ModelExtentContents extent, TargetUriData targetData, ResourceSet resSet) throws MdaException {    	
+	private static void saveTransformationResult(ModelExtentContents extent, TargetUriData targetData, ResourceSet resSet) throws MdaException {
+    	if (targetData.getContentProvider() != null) {
+    		targetData.getContentProvider().setContents(extent.getAllRootElements());
+    		return;
+    	}
+    	
     	URI outUri = toUri(targetData.getUriString());
     	
         switch(targetData.getTargetType()) {

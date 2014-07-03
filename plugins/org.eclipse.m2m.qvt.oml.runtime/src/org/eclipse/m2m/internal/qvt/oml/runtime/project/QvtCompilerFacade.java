@@ -39,19 +39,6 @@ public class QvtCompilerFacade {
 	private QvtCompilerFacade() {
 	}
 
-	/**
-	 * Compile transf. script without completion data generation
-	 * 
-	 * @param uriTransf URI of the transf. file
-	 * @return
-	 * @throws MdaException
-	 */
-	public static CompilationResult getCompiledModule(URI uriTransf) throws MdaException {
-		QvtCompilerOptions compilerOptions = new QvtCompilerOptions();
-		compilerOptions.setGenerateCompletionData(false);
-		return getCompiledModule(uriTransf, compilerOptions, null);
-	}
-	
 	public static CompilationResult getCompiledModule(URI uriTransf, QvtCompilerOptions compilerOptions, IProgressMonitor monitor) throws MdaException {
 		// FIXME - why is that relied on being it an IFile?
 		IFile ifile = WorkspaceUtils.getWorkspaceFile(uriTransf);

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -48,12 +47,10 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.expressions.ImperativeOperation;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.internal.qvt.oml.project.QvtEngine;
-import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtValidator.ValidationType;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.ITransformationMaker;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformationRegistry;
-import org.eclipse.m2m.internal.qvt.oml.runtime.ui.wizards.QvtCompiledTransformationLabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -119,12 +116,8 @@ public class QvtLauncherTab extends MdaLaunchTab {
         button.addSelectionListener(new SelectionAdapter(){
             @Override
 			public void widgetSelected(SelectionEvent e) {
-            	UniSelectTransformationControl.IResourceFilter resourceFilter = new UniSelectTransformationControl.IResourceFilter() {
-                    public boolean accept(IResource resource) {
-                        return resource instanceof IFile && MDAConstants.QVTO_FILE_EXTENSION.equalsIgnoreCase(resource.getFileExtension());
-                    }
-            	};
-            	BrowseInterpretedTransformationDialog.ISelectionListener selectionListener = new BrowseInterpretedTransformationDialog.ISelectionListener() {
+            	
+            	UniSelectTransformationControl.ISelectionListener selectionListener = new UniSelectTransformationControl.SelectionListenerAdapter() {
             		            		
 					public IStatus selectionChanged(URI selectedUri) {
 						String transfName = ""; //$NON-NLS-1$
@@ -132,7 +125,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
 				            if (selectedUri == null) {
 				            	return TransformationControls.makeStatus(IStatus.ERROR, Messages.QvtLauncherTab_NoTransformationModule);
 				            }
-				            QvtTransformation transformation = myTransformationMaker.makeTransformation(selectedUri.toString());
+				            QvtTransformation transformation = myTransformationMaker.makeTransformation(selectedUri);
 				            transfName = transformation.getModuleName();
 				        }
 				        catch (Exception e) {
@@ -141,11 +134,13 @@ public class QvtLauncherTab extends MdaLaunchTab {
 				        return TransformationControls.makeStatus(IStatus.OK, NLS.bind(Messages.QvtLauncherTab_TransformationSelected, transfName));
 					}
             	};
-            	BrowseInterpretedTransformationDialog dialog = new BrowseInterpretedTransformationDialog(getShell(), resourceFilter,
-                		new QvtCompiledTransformationLabelProvider(), QvtTransformationRegistry.getInstance(), 
-                		myQvtFile.getText(), selectionListener);
+            	
+            	BrowseInterpretedTransformationDialog dialog = new BrowseInterpretedTransformationDialog(getShell(),
+            			UniSelectTransformationControl.QVTO_FILE_FILTER,
+                		QvtTransformationRegistry.getInstance(), myQvtFile.getText(), selectionListener);
                 dialog.create();
                 PlatformUI.getWorkbench().getHelpSystem().setHelp(dialog.getShell(), MDAConstants.QVTO_TRANSFORMATION_CONTEXTID);
+                
                 if (dialog.open() == Window.OK) {
                     URI selectedUri = dialog.getSelectedUri();
                     if (selectedUri != null){
@@ -171,7 +166,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
     	if (myTraceNameNonChanged || myTraceFile.getText().length() == 0) {
 	        String traceFileName = getTraceFileName();
 	        myTraceFile.setText(traceFileName);
-	        myTraceFile.setUseFileFlag(traceFileName != null);
+	        //myTraceFile.setUseFileFlag(traceFileName != null);
 	        if (traceFileName != null) {
 	            IPath path = Path.fromOSString(traceFileName);
 	        	myTraceFile.update(path.lastSegment().replaceAll(MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT, ""), //$NON-NLS-1$
@@ -181,8 +176,12 @@ public class QvtLauncherTab extends MdaLaunchTab {
     }
     
     private String getTraceFileName() {
-        URI targetUri = URI.createURI(myTransfSignatureControl.getTraceName());
-        return QvtLaunchUtil.getTraceFileName(targetUri);
+        URI uri = URI.createURI(myTransfSignatureControl.getTraceName());
+        if (uri.segmentCount() > 0) {
+        	uri = uri.trimFileExtension();
+        	uri = uri.appendFileExtension(MDAConstants.QVTO_TRACEFILE_EXTENSION);
+        }
+        return uri.isEmpty() ? null : uri.toString();
     }
 	
     @Override
@@ -323,7 +322,7 @@ public class QvtLauncherTab extends MdaLaunchTab {
         }
         
         try {
-        	myTransformation = myTransformationMaker.makeTransformation(fileName);
+        	myTransformation = myTransformationMaker.makeTransformation(uri);
         }
         catch (MdaException e) {
             setErrorMessage(e.getMessage());

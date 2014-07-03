@@ -140,6 +140,10 @@ public class QvtValidator {
             return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_EmptyInputTransfParam,
             		transfParam.getName()));
 		}
+		
+		if (targetData.getContentProvider() != null) {
+			return StatusUtil.makeOkStatus();
+		}
 
 		if (transfParam.getDirectionKind() == DirectionKind.IN) {
 			if (validationType == ValidationType.LIGHTWEIGHT_VALIDATION) {
@@ -275,7 +279,7 @@ public class QvtValidator {
 			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 		}
 		
-		if (!EmfUtil.isUriExists(sourceUri, validationRS)) {
+		if (!EmfUtil.isUriExists(sourceUri, validationRS, false)) {
 			return StatusUtil.makeErrorStatus(NLS.bind(Messages.QvtValidator_InvalidSourceUri, targetData.getUriString(), transfParam.getName()));
 		}
 		
@@ -352,9 +356,9 @@ public class QvtValidator {
         IStatus result = StatusUtil.makeOkStatus();
         switch(targetData.getTargetType()) {
         case NEW_MODEL: {
-        	if (EmfUtil.isUriExists(destUri, validationRS)) {
+        	if (EmfUtil.isUriExists(destUri, validationRS, true)) {
                 if (result.getSeverity() < IStatus.WARNING) {
-                	if (EmfUtil.isUriExistsAsEObject(destUri, validationRS)) {
+                	if (EmfUtil.isUriExistsAsEObject(destUri, validationRS, true)) {
                 		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists,
                 				destUri, transfParam.getName()));
                 	}
@@ -443,7 +447,7 @@ public class QvtValidator {
         IStatus result = StatusUtil.makeOkStatus();
         switch(targetData.getTargetType()) {
         case NEW_MODEL: {
-        	if (EmfUtil.isUriExists(destUri, validationRS)) {
+        	if (EmfUtil.isUriExists(destUri, validationRS, true)) {
                 if (result.getSeverity() < IStatus.WARNING) {
                		result = StatusUtil.makeWarningStatus(NLS.bind(Messages.QvtValidator_DestinationExists,
                				destUri, transfParam.getName()));

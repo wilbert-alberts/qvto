@@ -106,4 +106,13 @@ public final class TransformationExecutor {
 			ModelExtent... modelParameters) {
 		return fExector.execute(executionContext, modelParameters);
 	}
+	
+	/**
+	 * Clean all resources associated with the executor.
+	 * 
+	 * @since 3.4
+	 */
+	public void cleanup() {
+		fExector.cleanup();
+	}
 }

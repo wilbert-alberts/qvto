@@ -21,6 +21,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IStreamsProxy;
+import org.eclipse.m2m.internal.qvt.oml.NLS;
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.IQVTOVirtualMachineShell;
 import org.eclipse.m2m.qvt.oml.debug.core.vm.protocol.VMTerminateRequest;
@@ -59,13 +60,15 @@ public class QVTOVirtualProcess extends PlatformObject implements IProcess {
 		ILaunchConfiguration configuration = fLaunch.getLaunchConfiguration();
 		if(configuration != null) {
 			try {
-				transformationURI = QvtLaunchUtil.getTransformationURI(configuration).toString();
+				transformationURI = QvtLaunchUtil.getTransformationURI(configuration);
 			} catch (CoreException e) {
 				QVTODebugCore.log(e.getStatus());
 			}
 		}
 		
-		return transformationURI != null ? transformationURI : "QVTOProcess"; //$NON-NLS-1$
+		return transformationURI != null 
+				? NLS.bind(DebugMessages.QVTOVirtualProcess_processLabel, transformationURI) 
+						: DebugMessages.QVTOVirtualProcess_defaultLabel;
 	}
 
 	public ILaunch getLaunch() {

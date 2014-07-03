@@ -35,6 +35,10 @@ public class Messages extends NLS {
     
     public static String UniSelectTransformationControl_CurrentSelection;
     public static String UniSelectTransformationControl_DeployedTransformations;
+    public static String UniSelectTransformationControl_fetchingTransformations;
+    public static String UniSelectTransformationControl_addingTransformations;
+    public static String UniSelectTransformationControl_workspaceTransformations;
+	public static String UniSelectTransformationControl_platformTransformations;
 
     static {
         // initialize resource bundle

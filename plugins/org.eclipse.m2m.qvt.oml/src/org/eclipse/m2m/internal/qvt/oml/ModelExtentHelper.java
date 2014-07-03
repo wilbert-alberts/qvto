@@ -192,11 +192,13 @@ public class ModelExtentHelper {
 		}
 
 		for (Map.Entry<Resource, List<EObject>> nextExtent : linkedExtents.entrySet()) {
-			saveExtent(nextExtent.getValue(), nextExtent.getKey());
+			Resource rs = nextExtent.getKey();
+			mergeExtentToResource(rs, nextExtent.getValue());
+			EmfUtil.saveModel(rs, EmfUtil.DEFAULT_SAVE_OPTIONS);
 		}
 	}
 
-	private static void saveExtent(List<EObject> extentContent, Resource outExtent) throws EmfException {
+	public static void mergeExtentToResource(Resource outExtent, List<? extends EObject> extentContent) {
 		Set<EObject> essentialRootElements = getEssentialRootElements(extentContent);
 		if (essentialRootElements.isEmpty()) {
 			for (TreeIterator<EObject> it = outExtent.getAllContents(); it.hasNext();) {
@@ -222,8 +224,6 @@ public class ModelExtentHelper {
 			resolvedRootElements.removeAll(outExtent.getContents());
 			addAllContents(outExtent.getContents(), resolvedRootElements);
 		}
-		
-		EmfUtil.saveModel(outExtent, EmfUtil.DEFAULT_SAVE_OPTIONS);
 	}
 
 	private static Set<EObject> getResolvedContent(Collection<EObject> content, EObject metamodel) {
@@ -241,7 +241,7 @@ public class ModelExtentHelper {
 		return resolvedObjs;
 	}
     
-    private static Set<EObject> getEssentialRootElements(List<EObject> allRootElements) {
+    private static Set<EObject> getEssentialRootElements(List<? extends EObject> allRootElements) {
     	Set<EObject> roots = new LinkedHashSet<EObject>();
     	for (EObject e : allRootElements) {
     		EObject nextRoot = e;

@@ -173,7 +173,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 	@Override
 	protected EClassifier resolveGenericType(EClassifier owner, EClassifier paramType, EClassifier argType) {		
 		if(paramType instanceof TemplateParameterType) {
-			if(owner.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType()) {
+			if(owner != null && owner.eClass() == ImperativeOCLPackage.eINSTANCE.getDictionaryType()) {
 				DictionaryType dictionaryType = (DictionaryType) owner;
 				if(getQVTEnvironment().getQVTStandardLibrary().getKeyT() == paramType) {
 					return dictionaryType.getKeyType();
@@ -189,7 +189,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		// problems to QVT mutable collection types. Consequently, List(OclVoid) should 
 		// allow successful parsing of list->append('foo') 
 		EClassifier listMetaType = ImperativeOCLPackage.eINSTANCE.getListType();		
-		if(owner.eClass() == listMetaType) { 
+		if(owner != null && owner.eClass() == listMetaType) { 
 			if(fOCLStdlib.getT() == result) {
 				// super implementation resolved OclVoid to oclstdlib::T				
 				org.eclipse.ocl.ecore.CollectionType collectionType = (org.eclipse.ocl.ecore.CollectionType) owner;

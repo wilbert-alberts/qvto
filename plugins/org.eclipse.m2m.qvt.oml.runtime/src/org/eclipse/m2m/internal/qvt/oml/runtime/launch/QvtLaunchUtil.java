@@ -17,17 +17,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData;
 import org.eclipse.m2m.internal.qvt.oml.common.launch.TargetUriData.TargetType;
@@ -37,6 +32,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.util.MiscUtil;
 
 
 public class QvtLaunchUtil {
+	
 	private QvtLaunchUtil() {}
 
 	public static ILaunchConfigurationType getInMemoryLaunchConfigurationType() {
@@ -81,9 +77,14 @@ public class QvtLaunchUtil {
     	
         String uri = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.TARGET_MODEL, index), ""); //$NON-NLS-1$
     	String feature = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.FEATURE_NAME, index), ""); //$NON-NLS-1$
-    	boolean clearContents = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), true); 
+    	boolean clearContents = configuration.getAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), true);
     	
-    	return new TargetUriData(targetType, uri, feature, clearContents);
+    	TargetUriData.ContentProvider contentProvider = null;
+		if (configuration.getAttributes() != null) {
+			contentProvider = (TargetUriData.ContentProvider) configuration.getAttributes().get(getIndexedName(IQvtLaunchConstants.CONTENT_PROVIDER, index));
+		}
+    	
+    	return new TargetUriData(targetType, uri, feature, clearContents, contentProvider);
     }
     
     public static void saveTargetUriData(ILaunchConfigurationWorkingCopy configuration, List<TargetUriData> targetData) {
@@ -99,16 +100,15 @@ public class QvtLaunchUtil {
 		configuration.setAttribute(getIndexedName(IQvtLaunchConstants.TARGET_MODEL, index), targetData.getUriString()); 
     	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.FEATURE_NAME, index), targetData.getFeature()); 
     	configuration.setAttribute(getIndexedName(IQvtLaunchConstants.CLEAR_CONTENTS, index), targetData.isClearContents()); 
-    }
-    
-    public static String getTraceFileName(URI uri) {
-        IFile file = org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils.getFile(uri);
-        if(file == null) {
-            return null;
-        }
-        
-        IPath traceFilePath = new Path(file.getParent().getFullPath() + "/" + file.getName() + MDAConstants.QVTO_TRACEFILE_EXTENSION_WITH_DOT);  //$NON-NLS-1$
-        return URI.createPlatformResourceURI(traceFilePath.toOSString().toString(), false).toString();
+
+		if (targetData.getContentProvider() != null) {
+			try {
+				Map<String, Object> attributes = new LinkedHashMap<String, Object>(configuration.getAttributes());
+				attributes.put(getIndexedName(IQvtLaunchConstants.CONTENT_PROVIDER, index), targetData.getContentProvider());
+				configuration.setAttributes(attributes);
+			} catch (CoreException e) {
+			}
+		}
     }
     
     public static Map<String, Object> getConfigurationProperty(ILaunchConfiguration configuration) {
@@ -134,7 +134,7 @@ public class QvtLaunchUtil {
     public static Map<String, Object> loadConfigurationProperties(ILaunchConfiguration configuration) {
         Map<String, Object> map;
         try {
-            Map<String, String> configProps = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());
+			Map<String, String> configProps = configuration.getAttribute(IQvtLaunchConstants.CONFIGURATION_PROPERTIES, Collections.<String, String>emptyMap());
             map = new LinkedHashMap<String, Object>(configProps);
         } catch (CoreException e) {
             map = Collections.<String, Object>emptyMap();

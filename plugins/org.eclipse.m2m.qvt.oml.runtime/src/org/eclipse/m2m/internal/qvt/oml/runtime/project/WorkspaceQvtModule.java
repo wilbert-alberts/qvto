@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,15 +46,16 @@ public class WorkspaceQvtModule extends QvtModule {
     public final Module getModule() throws MdaException {
         if(myModule == null) {
             myUnit = loadModule();
-            myModule = myUnit.getModules().isEmpty() ? null : myUnit.getModules().get(0);
             
             QvtCompilerOptions options = getQvtCompilerOptions();
             if (options == null) {
                 options = new QvtCompilerOptions();
-            }            
+            }
             if (!options.isModuleWithErrorAllowed()) {
             	checkModuleErrors(myUnit);
             }            
+
+            myModule = myUnit.getModules().isEmpty() ? null : myUnit.getModules().get(0);
         }
         
         return myModule;

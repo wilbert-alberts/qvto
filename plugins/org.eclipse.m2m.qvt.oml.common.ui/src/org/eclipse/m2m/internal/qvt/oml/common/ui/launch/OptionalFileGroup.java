@@ -42,7 +42,7 @@ public class OptionalFileGroup {
             @Override
 			public void widgetSelected(SelectionEvent e) {
                 setUseFileFlag(getUseFileFlag());
-                fireModifiedEvent();
+                //fireModifiedEvent();
             }
         });
 

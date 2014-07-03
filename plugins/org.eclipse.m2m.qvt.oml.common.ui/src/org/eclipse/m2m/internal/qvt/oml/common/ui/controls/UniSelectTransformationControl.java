@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2009 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,13 +12,18 @@
 package org.eclipse.m2m.internal.qvt.oml.common.ui.controls;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.IAdapterManager;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -31,12 +36,15 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.m2m.internal.qvt.oml.common.MDAConstants;
 import org.eclipse.m2m.internal.qvt.oml.common.project.CompiledTransformation;
 import org.eclipse.m2m.internal.qvt.oml.common.project.TransformationRegistry;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.CommonPluginImages;
+import org.eclipse.m2m.internal.qvt.oml.common.ui.controls.UniSelectTransformationControl.ISelectionListener.TreeAction;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.Messages;
 import org.eclipse.m2m.internal.qvt.oml.common.ui.launch.TransformationControls;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
+import org.eclipse.m2m.internal.qvt.oml.emf.util.URIUtils;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.WorkspaceUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -44,38 +52,90 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.progress.DeferredTreeContentManager;
+import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
+import org.eclipse.ui.progress.PendingUpdateAdapter;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 public class UniSelectTransformationControl extends Composite {
+	
+	public static final IResourceFilter QVTO_FILE_FILTER = new IResourceFilter() {
+        public boolean accept(IResource resource) {
+            return resource instanceof IFile && MDAConstants.QVTO_FILE_EXTENSION.equalsIgnoreCase(resource.getFileExtension());
+        }
+	};
+	
     public static interface IResourceFilter {
         boolean accept(IResource resource);
     }
     
     public static interface ISelectionListener {
-        void selectionChanged(URI selectedUri);
+    	
+    	enum TreeAction {
+    		NONE,
+    		EXPAND,
+    		SELECT
+    	}
+
+		boolean accept(URI uri);
+		
+		TreeAction getTreeAction(URI uri);
+		
+		IStatus selectionChanged(URI uri);
+    }
+    
+    public static abstract class SelectionListenerAdapter implements ISelectionListener {
+    	
+    	private final ISelectionListener delegate;
+    	
+    	public SelectionListenerAdapter(ISelectionListener delegate) {
+    		this.delegate = delegate;
+    	}
+    	
+    	public SelectionListenerAdapter() {
+    		delegate = null;
+    	}
+    	
+		public boolean accept(URI uri) {
+			if (delegate != null) {
+				return delegate.accept(uri);
+			}
+			return true;
+		}
+
+		public TreeAction getTreeAction(URI uri) {
+			if (delegate != null) {
+				return delegate.getTreeAction(uri);
+			}
+			return TreeAction.NONE;
+		}
     }
 
     public UniSelectTransformationControl(Composite parentComposite, IResourceFilter resourceFilter,
-    		ILabelProvider transfLabelProvider, TransformationRegistry transfRegistry, TransformationRegistry.Filter transfFilter) {
+    		TransformationRegistry transfRegistry, TransformationRegistry.Filter transfFilter, ISelectionListener listener) {
         super(parentComposite,SWT.NULL);
         myResourceFilter = resourceFilter;
-        mySelectionListeners = new ArrayList<ISelectionListener>();
+        mySelectionListener = listener;
         
         setLayout(new GridLayout());
         setLayoutData(new GridData(GridData.FILL_BOTH));
         
         List<ITreeContentProviderEx> contentProviders = new ArrayList<ITreeContentProviderEx>(2);
-        contentProviders.add(WORKSPACE_CONTENT_PROVIDER);
+        contentProviders.add(new WorkspaceContentProvider());
         contentProviders.add(new CompiledTransfContentProvider());
 
-        List<ILabelProviderEx> labelProviders = new ArrayList<ILabelProviderEx>(2);
+        List<ILabelProviderEx> labelProviders = new ArrayList<ILabelProviderEx>(3);
+        
         labelProviders.add(new LabelProviderDelegate(new WorkbenchLabelProvider()) {
 			public boolean canHandle(Object element) {
 				return element instanceof IResource;
 			}
         });
-        labelProviders.add(new LabelProviderDelegate(transfLabelProvider) {
+        
+        labelProviders.add(new LabelProviderDelegate(new QvtCompiledTransformationLabelProvider()) {
 			public boolean canHandle(Object element) {
 				return element instanceof CompiledTransformation
 						|| element instanceof CompiledTransformationRoot;
@@ -96,6 +156,35 @@ public class UniSelectTransformationControl extends Composite {
 			}
         });
         
+        labelProviders.add(new ILabelProviderEx() {
+        	
+			public boolean canHandle(Object element) {
+				return element instanceof PendingUpdateAdapter;
+			}
+
+			public Image getImage(Object element) {
+				return CommonPluginImages.getInstance().getImage(CommonPluginImages.ACTIVITY);
+			}
+			
+			public String getText(Object element) {
+				return Messages.UniSelectTransformationControl_fetchingTransformations;
+			}
+			
+			public void addListener(ILabelProviderListener listener) {
+			}
+			
+			public void dispose() {
+			}
+			
+			public boolean isLabelProperty(Object element, String property) {
+				return false;
+			}
+
+			public void removeListener(ILabelProviderListener listener) {
+			}
+        });
+        
+        
         myViewer = new TreeViewer(this, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         myViewer.setContentProvider(new CompositeContentProvider(contentProviders));
         myViewer.setLabelProvider(new CompositeLabelProvider(labelProviders));
@@ -112,26 +201,38 @@ public class UniSelectTransformationControl extends Composite {
         data.widthHint = 350;
         myViewer.getControl().setLayoutData(data);
         
+        myContentManager = new DeferredTreeContentManager(myViewer) {
+			protected void addChildren(final Object parent, final Object[] children, IProgressMonitor monitor) {
+				WorkbenchJob updateJob = new WorkbenchJob(Messages.UniSelectTransformationControl_addingTransformations) {
+					public IStatus runInUIThread(IProgressMonitor updateMonitor) {
+						// Cancel the job if the tree viewer got closed
+						if (myViewer.getControl().isDisposed() || updateMonitor.isCanceled()) {
+							return Status.CANCEL_STATUS;
+						}
+						myViewer.add(parent, children);
+						return Status.OK_STATUS;
+					}
+				};
+				updateJob.setSystem(true);
+				updateJob.schedule();
+				try {
+					updateJob.join();
+				} catch (InterruptedException e) {
+				}
+			}
+		};
+        
         List<Object> inputs = new ArrayList<Object>(2);
         inputs.add(ResourcesPlugin.getWorkspace().getRoot());
         myCompiledTransformations = transfRegistry.getTransformations(transfFilter);
         inputs.add(new CompiledTransformationRoot(myCompiledTransformations));
         myViewer.setInput(inputs);
 
-
         TransformationControls.createLabel(this, Messages.UniSelectTransformationControl_CurrentSelection, TransformationControls.GRID);
         
         myFileNameText = new Text(this, SWT.BORDER);
         myFileNameText.setEnabled(false);
         myFileNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-    }
-    
-    public void addSelectionListener(ISelectionListener listener) {
-        mySelectionListeners.add(listener);
-    }
-    
-    public void removeSelectionListener(ISelectionListener listener) {
-        mySelectionListeners.remove(listener);
     }
     
     public URI getSelectedUri() {
@@ -171,10 +272,9 @@ public class UniSelectTransformationControl extends Composite {
     }
     
     private void fileSelectionChanged(URI selectedUri) {
-        for (Iterator<ISelectionListener> it = new ArrayList<ISelectionListener>(mySelectionListeners).iterator(); it.hasNext();) {
-            ISelectionListener listener = it.next();
+        if (mySelectionListener != null) {
             try {
-                listener.selectionChanged(selectedUri);
+            	mySelectionListener.selectionChanged(selectedUri);
             }
             catch(Exception e) {
             }
@@ -243,8 +343,8 @@ public class UniSelectTransformationControl extends Composite {
             
             if (selection != null && selection.getFirstElement() instanceof IFile){
             	IFile ifile = (IFile) selection.getFirstElement();
-                myFileNameText.setText(ifile.getName());
                 myUri = URI.createPlatformResourceURI(ifile.getFullPath().toOSString(), false);
+                myFileNameText.setText(myUri.toString());
             }
             else if (selection != null && selection.getFirstElement() instanceof CompiledTransformation){
             	CompiledTransformation transf = (CompiledTransformation) selection.getFirstElement();
@@ -257,13 +357,14 @@ public class UniSelectTransformationControl extends Composite {
     };
     
     
-    private TreeViewer myViewer;
+    private final TreeViewer myViewer;
     private Text myFileNameText;
     private final IResourceFilter myResourceFilter;
+    private final ISelectionListener mySelectionListener;
     private URI myUri;
     private final List<CompiledTransformation> myCompiledTransformations;
     
-    private final List<ISelectionListener> mySelectionListeners;
+    private final DeferredTreeContentManager myContentManager;
     
     private static final int DEFAUL_AUTO_EXPAND_LEVEL = 2;
     
@@ -323,9 +424,9 @@ public class UniSelectTransformationControl extends Composite {
 
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			for (ITreeContentProviderEx provider : myProviders) {
-				if (provider.canHandle(oldInput) || provider.canHandle(newInput)) {
+				//if (provider.canHandle(oldInput) || provider.canHandle(newInput)) {
 					provider.inputChanged(viewer, oldInput, newInput);
-				}
+				//}
 			}
 		}
     	
@@ -389,40 +490,92 @@ public class UniSelectTransformationControl extends Composite {
 		private final List<ILabelProviderEx> myProviders;
     }
     
-    private ITreeContentProviderEx WORKSPACE_CONTENT_PROVIDER = new ITreeContentProviderEx() {
-        
+    private class WorkspaceContentProvider implements ITreeContentProviderEx {
+
+	    private AbstractDeferredAdapter workspaceContentAdapter;
+		private IAdapterFactory workspaceContentProviderFactory;
+		
         public Object[] getChildren(Object parentElement) {
-            return myProvider.getChildren(parentElement);
+        	return getElements(parentElement);
         }
         
         public Object getParent(Object element) {
-            Object parent = myProvider.getParent(element);
-            if (parent != null) {
-                return parent;
-            }
-            
-            if (element instanceof IFile == false) {
-                return null;
-            }
-            
-            IFile file = (IFile) element;
-            return file.getParent();
+        	return myProvider.getParent(element);
         }
 
         public boolean hasChildren(Object element) {
-            return myProvider.hasChildren(element);
+        	if (element instanceof IFile) {
+        		return false;
+        	}
+        	return myContentManager.mayHaveChildren(element);
         }
 
         public Object[] getElements(Object inputElement) {
-            return myProvider.getElements(inputElement);
+			return myContentManager.getChildren(inputElement);
         }
 
         public void dispose() {
             myProvider.dispose();
+            workspaceContentAdapter.cancel();
+            IAdapterManager adapterManager = Platform.getAdapterManager();
+            adapterManager.unregisterAdapters(workspaceContentProviderFactory);
         }
 
         public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-            myProvider.inputChanged(viewer, oldInput, newInput);
+        	if (workspaceContentAdapter == null) {
+	    	    workspaceContentAdapter = new AbstractDeferredAdapter((TreeViewer) viewer) {
+	    			
+	    			public String getLabel(Object o) {
+	    				return Messages.UniSelectTransformationControl_workspaceTransformations;
+	    			}
+	    			
+	    			@Override
+	    			public Object[] getChildren(Object o) {
+	    				return myProvider.getElements(o);
+	    			}
+	
+	    			@Override
+	    			public boolean isAccepted(Object object, IProgressMonitor monitor) {
+	    				if (myResourceFilter == null || !myResourceFilter.accept((IResource) object)) {
+	    					return true;					
+	    				}
+	    				if (mySelectionListener == null) {
+	    					return true;
+	    				}
+	    				
+	    				URI uri = URIUtils.getResourceURI((IResource) object);
+	    				return mySelectionListener.accept(uri);
+	    			}
+	
+	    			@Override
+	    		    public TreeAction getTreeAction(Object object, IProgressMonitor monitor) {
+	    				if (mySelectionListener == null) {
+	    					return TreeAction.NONE;
+	    				}
+
+	    				URI uri = URIUtils.getResourceURI((IResource) object);
+	    				return mySelectionListener.getTreeAction(uri);
+	    		    }    			
+	    		};
+	
+	    		workspaceContentProviderFactory = new IAdapterFactory() {
+	    			
+	    			@SuppressWarnings("rawtypes")
+					public Object getAdapter(Object adaptableObject, Class adapterType) {
+	    				return workspaceContentAdapter;
+	    			}
+	
+	    			@SuppressWarnings("rawtypes")
+					public Class[] getAdapterList() {
+	    		        return new Class[] { IWorkbenchAdapter.class, IDeferredWorkbenchAdapter.class };
+	    			}			
+	    		};
+	
+		        IAdapterManager adapterManager = Platform.getAdapterManager();
+		        adapterManager.registerAdapters(workspaceContentProviderFactory, IResource.class);
+        	}
+        	
+        	myProvider.inputChanged(viewer, oldInput, newInput);
         }
 
 		public boolean canHandle(Object element) {
@@ -476,8 +629,11 @@ public class UniSelectTransformationControl extends Composite {
     	private final List<CompiledTransformation> myTrasformations;
     }
     
-    private static class CompiledTransfContentProvider implements ITreeContentProviderEx {
+    private class CompiledTransfContentProvider implements ITreeContentProviderEx {
     	
+	    private AbstractDeferredAdapter compiledTransformationAdapter;
+		private IAdapterFactory compiledTransformationProviderFactory;
+		
         public Object[] getChildren(Object parentElement) {
             return getElements(parentElement);
         }
@@ -487,23 +643,65 @@ public class UniSelectTransformationControl extends Composite {
         }
 
         public boolean hasChildren(Object element) {
-            Object[] children = getChildren(element);
-            return children.length > 0;
+			return myContentManager.mayHaveChildren(element);
         }
 
         public Object[] getElements(Object inputElement) {
-            if (inputElement instanceof CompiledTransformationRoot) {
-                return ((CompiledTransformationRoot) inputElement).getChildren();
-            }
-            else {
-                return new Object[0];
-            }
+			return myContentManager.getChildren(inputElement);
         }
 
         public void dispose() {
+			compiledTransformationAdapter.cancel();
+            IAdapterManager adapterManager = Platform.getAdapterManager();
+            adapterManager.unregisterAdapters(compiledTransformationProviderFactory);
         }
 
         public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+        	if (compiledTransformationAdapter == null) {
+	    	    compiledTransformationAdapter = new AbstractDeferredAdapter(myViewer) {
+	    			
+	    			public String getLabel(Object o) {
+	    				return Messages.UniSelectTransformationControl_platformTransformations;
+	    			}
+	    			
+	    			@Override
+	    			public Object[] getChildren(Object o) {
+	    				return ((CompiledTransformationRoot) o).getChildren();
+	    			}
+	
+	    			@Override
+	    			public boolean isAccepted(Object object, IProgressMonitor monitor) {
+	    				if (mySelectionListener == null) {
+	    					return true;
+	    				}
+	    				return mySelectionListener.accept(((CompiledTransformation) object).getUri());
+	    			}
+
+	    			@Override
+	    		    public TreeAction getTreeAction(Object object, IProgressMonitor monitor) {
+	    				if (mySelectionListener == null) {
+	    					return TreeAction.NONE;
+	    				}
+	    				return mySelectionListener.getTreeAction(((CompiledTransformation) object).getUri());
+	    		    }    			
+	    	    };
+	
+	    		compiledTransformationProviderFactory = new IAdapterFactory() {
+	
+	    			@SuppressWarnings("rawtypes")
+					public Object getAdapter(Object adaptableObject, Class adapterType) {
+	    				return compiledTransformationAdapter;
+	    			}
+	
+	    			@SuppressWarnings("rawtypes")
+					public Class[] getAdapterList() {
+	    		        return new Class[] { IWorkbenchAdapter.class, IDeferredWorkbenchAdapter.class };
+	    			}			
+	    		};
+
+		        IAdapterManager adapterManager = Platform.getAdapterManager();
+		        adapterManager.registerAdapters(compiledTransformationProviderFactory, CompiledTransformationRoot.class);
+        	}
         }
 
 		public boolean canHandle(Object element) {

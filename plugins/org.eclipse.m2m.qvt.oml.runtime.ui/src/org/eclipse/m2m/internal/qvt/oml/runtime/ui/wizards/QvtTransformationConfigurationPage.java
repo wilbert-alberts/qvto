@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,9 +22,10 @@ import org.eclipse.m2m.internal.qvt.oml.common.ui.wizards.AbstractCompositeWizar
  * @author abreslav
  */
 public class QvtTransformationConfigurationPage extends AbstractCompositeWizardPage {
-    public QvtTransformationConfigurationPage(String pageName,
-            ApplyTransformationData data) {
+	
+    public QvtTransformationConfigurationPage(String pageName, ApplyTransformationData data) {
         super(pageName);
+        
         myUI = new QvtTransformationConfigurationUI(data, new ISetMessageEx() {
             public void setErrorMessage(String message) {
                 QvtTransformationConfigurationPage.this.setErrorMessage(message);

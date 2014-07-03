@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -299,24 +299,27 @@ public class QvtoAntTransformationTask extends Task {
 	    try {
 	        ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
 	            public void run() throws Exception {
-	            	List<ModelContent> inObjects = new ArrayList<ModelContent>();
-	            	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
-	            	
-	        		loadTransformationParams(transformation, inObjects, targetData);
-	
-	        		String traceUri = getTraceUri(QvtoAntTransformationTask.this);
-	        		
-	                IStatus status = QvtValidator.validateTransformation(transformation, inObjects, traceUri);                    
-	                if (status.getSeverity() > IStatus.WARNING) {
-	                	throw new MdaException(status);
-	                }      	
-	        		
-					Context createContext = QvtLaunchUtil.createContext(getConfiguration());
-					createContext.setLog(createQVTLog());
-					
-					QvtLaunchConfigurationDelegateBase.doLaunch(transformation, inObjects, targetData, traceUri, createContext);
-	        		
-	        		transformation.cleanup();
+	            	try {
+		            	List<ModelContent> inObjects = new ArrayList<ModelContent>();
+		            	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
+		            	
+		        		loadTransformationParams(transformation, inObjects, targetData);
+		
+		        		String traceUri = getTraceUri(QvtoAntTransformationTask.this);
+		        		
+		                IStatus status = QvtValidator.validateTransformation(transformation, inObjects, traceUri);                    
+		                if (status.getSeverity() > IStatus.WARNING) {
+		                	throw new MdaException(status);
+		                }      	
+		        		
+						Context createContext = QvtLaunchUtil.createContext(getConfiguration());
+						createContext.setLog(createQVTLog());
+						
+						QvtLaunchConfigurationDelegateBase.doLaunch(transformation, inObjects, targetData, traceUri, createContext);
+	            	}
+	            	finally {
+	            		transformation.cleanup();
+	            	}
 	            }
 
 	        };

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2008 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -182,39 +182,42 @@ public abstract class AbstractApplyTransformationTask extends Task {
         
         final List<URI> inUris = new ArrayList<URI>();
         final List<URI> outUris = new ArrayList<URI>();
-        final QvtTransformation transf = getTransformationObject();
+        final QvtTransformation transformation = getTransformationObject();
         try {
             ShallowProcess.IRunnable r = new ShallowProcess.IRunnable() {
                 public void run() throws Exception {
-                	List<ModelContent> inObjects = new ArrayList<ModelContent>();
-                	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
-                	
-            		Iterator<TargetUriData> itrTargetData = targetUris.iterator();
-            		for (TransformationParameter transfParam : transf.getParameters()) {
-            			if (!itrTargetData.hasNext()) {
-            	            throw new BuildException(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ant.Messages.AbstractApplyTransformationTask_Required_attribute_is_not_specified,
-            	            		transfParam.getName()));
-            			}
-            			TargetUriData nextUri = itrTargetData.next();
-            			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
-            		        URI inUri = resolveUri(nextUri.getUriString());
-            		        inUris.add(inUri);
-            		        ModelContent inModel = transf.loadInput(inUri);
-            		        inObjects.add(inModel);
-            			}
-            			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
-            				targetData.add(nextUri);
-            			}
-            		}
-
-            		List<URI> resultUris = QvtLaunchConfigurationDelegateBase.doLaunch(transf, inObjects, targetData, getConfiguration(), getTraceFile());
-            		outUris.addAll(resultUris);
-            		
-            		transf.cleanup();
+                	try {
+	                	List<ModelContent> inObjects = new ArrayList<ModelContent>();
+	                	List<TargetUriData> targetData = new ArrayList<TargetUriData>();
+	                	
+	            		Iterator<TargetUriData> itrTargetData = targetUris.iterator();
+	            		for (TransformationParameter transfParam : transformation.getParameters()) {
+	            			if (!itrTargetData.hasNext()) {
+	            	            throw new BuildException(NLS.bind(org.eclipse.m2m.internal.qvt.oml.runtime.ant.Messages.AbstractApplyTransformationTask_Required_attribute_is_not_specified,
+	            	            		transfParam.getName()));
+	            			}
+	            			TargetUriData nextUri = itrTargetData.next();
+	            			if (transfParam.getDirectionKind() == DirectionKind.IN || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+	            		        URI inUri = resolveUri(nextUri.getUriString());
+	            		        inUris.add(inUri);
+	            		        ModelContent inModel = transformation.loadInput(inUri);
+	            		        inObjects.add(inModel);
+	            			}
+	            			if (transfParam.getDirectionKind() == DirectionKind.OUT || transfParam.getDirectionKind() == DirectionKind.INOUT) {
+	            				targetData.add(nextUri);
+	            			}
+	            		}
+	
+	            		List<URI> resultUris = QvtLaunchConfigurationDelegateBase.doLaunch(transformation, inObjects, targetData, getConfiguration(), getTraceFile());
+	            		outUris.addAll(resultUris);
+                	}
+                	finally {
+                		transformation.cleanup();
+                	}
                 }
             };
             
-            r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(transf, r);
+            r = QvtLaunchConfigurationDelegateBase.getSafeRunnable(transformation, r);
             
             r.run();
             
