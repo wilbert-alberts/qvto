@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,7 +38,6 @@ import org.eclipse.m2m.internal.qvt.oml.compiler.BlackboxUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.DelegatingUnitResolver;
 import org.eclipse.m2m.internal.qvt.oml.compiler.LegacyResolverSupport;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitContents;
-import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProvider;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitProxy;
 import org.eclipse.m2m.internal.qvt.oml.compiler.UnitResolver;
 
@@ -146,11 +145,6 @@ public class DeployedImportResolver extends DelegatingUnitResolver implements Le
 	    return registryEntries;
 	}
 	
-	// Unit resolver interface
-	public void acceptVisitor(UnitProvider.UnitVisitor visitor, String scopeQualifiedName, int depth, boolean includeExternal) {
-		throw new UnsupportedOperationException();		
-	}
-
 	@Override
 	protected UnitProxy doResolveUnit(String qualifiedName) {
 		CFile resolved = resolveImport(qualifiedName);

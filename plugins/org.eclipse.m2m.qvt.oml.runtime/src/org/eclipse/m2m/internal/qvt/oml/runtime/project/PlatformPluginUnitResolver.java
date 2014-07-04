@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2013 Borland Software Corporation and others.
+ * Copyright (c) 2009, 2014 Borland Software Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -184,13 +184,11 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 	}
 
    
-	// FIXME - make shared unit class with BundleUnitResolver.BundleUnit
 	private final class BundleUnit extends UnitProxy {
 
 		private final URL url;
 
-		private BundleUnit(String namespace, String unitName, URI unitURI,
-				URL unitURL) {
+		private BundleUnit(String namespace, String unitName, URI unitURI, URL unitURL) {
 			super(namespace, unitName, unitURI);
 			this.url = unitURL;
 		}
@@ -211,8 +209,7 @@ public class PlatformPluginUnitResolver extends DelegatingUnitResolver {
 						charset = "UTF-8"; //$NON-NLS-1$
 					}
 
-					return new InputStreamReader(connection.getInputStream(),
-							charset);
+					return new InputStreamReader(connection.getInputStream(), charset);
 				}
 			};
 		}
