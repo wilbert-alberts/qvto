@@ -13,7 +13,40 @@ main() {
 	var p6 = resolveoneIn(m2, EClassifier);
 	var p7 = resolveoneIn(m2, ENamedElement);
 	var p8 = resolveoneIn(m2, /*<warn>*/EPackage/*</warn>*/);
+	
+	var p10 = invresolveoneIn(EClassifier::m4, EClass);
+	var p11 = invresolveoneIn(EClassifier::m4, EDataType);
+	var p12 = invresolveoneIn(EClassifier::m4, EClassifier);
+	var p13 = invresolveoneIn(EClassifier::m4, ENamedElement);
+	var p14 = invresolveoneIn(EClassifier::m4, /*<warn>*/EPackage/*</warn>*/);
+
+	var p15 = invresolveoneIn(EClass::m5, EClass);
+	var p16 = invresolveoneIn(EClass::m5, EClassifier);
+	var p17 = invresolveoneIn(EClass::m5, ENamedElement);
+	var p18 = invresolveoneIn(EClass::m5, /*<warn>*/EPackage/*</warn>*/);
+	
+	var p20 = resolveoneIn(m6, EClass);
+	var p21 = resolveoneIn(m6, EDataType);
+	var p22 = resolveoneIn(m6, EClassifier);
+	var p23 = resolveoneIn(m6, ENamedElement);
+	var p24 = resolveoneIn(m6, /*<warn>*/EPackage/*</warn>*/);
+
+	var p25 = resolveoneIn(m7, EClass);
+	var p26 = resolveoneIn(m7, EClassifier);
+	var p27 = resolveoneIn(m7, ENamedElement);
+	var p28 = resolveoneIn(m7, /*<warn>*/EPackage/*</warn>*/);
+	
+	var p50 = /*<warn>*/invresolveoneIn(m2)/*</warn>*/;
+	var p51 = /*<warn>*/resolveoneIn(m3)/*</warn>*/;
 }
 
 abstract mapping m1() : EClassifier {}
 abstract mapping m2() : EClass {}
+
+abstract mapping m3() {}
+
+abstract mapping EClassifier::m4() {}
+abstract mapping EClass::m5() {}
+
+abstract mapping m6() : r1 : EClassifier, r2 : Set(OclVoid) {}
+abstract mapping m7() : r1 : EClass, r2 : Set(OclVoid) {}

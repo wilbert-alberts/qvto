@@ -4832,12 +4832,10 @@ public class QvtOperationalVisitorCS
         String mappingFQName = (eClassifier == null) ? "" : eClassifier.getName() + EmfUtil.PATH_SEPARATOR; //$NON-NLS-1$
         mappingFQName += mappingName;
         EClassifier mappingResultType = null;
-        EClassifier mappingContextType = null;
 
         if (mappingOperations.size() == 1) {
             env.registerResolveInExp(resolveInExp, eClassifier, mappingName);
             mappingResultType = mappingOperations.get(0).getEType();
-            mappingContextType = QvtOperationalParserUtil.getContextualType(mappingOperations.get(0));
         } else {
             if (mappingOperations.size() == 0) {
                 env.reportError(NLS.bind(ValidationMessages.QvtOperationalVisitorCS_ResolveInMappingNotFound, new Object[] {
@@ -4851,23 +4849,46 @@ public class QvtOperationalVisitorCS
         
         ResolveExp result = populateResolveExp(resolveInExpCS, env, resolveInExp, mappingResultType);
         //        DeprecatedImplicitSourceCallHelper.validateCallExp(resolveInExpCS, result, env);
-               
-        if (mappingOperations.size() == 1 && resolveInExp.getTarget() != null) {
-        	EClassifier targetVariableType = resolveInExp.getTarget().getType();
-        	EClassifier expectedTargetType = resolveInExp.isIsInverse() ? mappingContextType : mappingResultType;
-        	        	
-        	if((TypeUtil.getRelationship(env, expectedTargetType, targetVariableType) & UMLReflection.RELATED_TYPE) == 0) {       	
+        
+        if(mappingOperations.size() == 1) {
+        	MappingOperation mapping = mappingOperations.get(0);
+        	boolean isValidMapping = resolveInExp.isIsInverse() ? mapping.getContext() != null : !mapping.getResult().isEmpty();
+        	if (!isValidMapping) {
         		env.reportWarning(
-        			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTargetVariableType, 
-        					new Object[] {
-        					QvtOperationalTypesUtil.getTypeFullName(targetVariableType), 
-        					QvtOperationalTypesUtil.getTypeFullName(mappingResultType),
-        					mappingFQName
-        					}),
-        			resolveInExpCS.getTarget());
+            			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_invalidResolveInMapping, mappingFQName),
+            			resolveInExpCS);
+        	}
+        	else {                        		
+        		if (resolveInExp.getTarget() != null) {
+                	EClassifier targetVariableType = resolveInExp.getTarget().getType();
+                	boolean isCompatibleTargetType = false;
+                	
+                	if (resolveInExp.isIsInverse()) {
+                		EClassifier mappingContextType = QvtOperationalParserUtil.getContextualType(mapping);
+                		isCompatibleTargetType = (TypeUtil.getRelationship(env, mappingContextType, targetVariableType) & UMLReflection.RELATED_TYPE) != 0;
+                	}
+                	else {
+        	        	for (VarParameter resultParam : mapping.getResult()) {	        		
+        	        		if((TypeUtil.getRelationship(env, resultParam.getEType(), targetVariableType) & UMLReflection.RELATED_TYPE) != 0) {
+        	        			isCompatibleTargetType = true;
+        	        			break;
+        	        		}
+        	        	}
+                	}
+                	        	        	
+                	if(!isCompatibleTargetType) {       	
+                		env.reportWarning(
+                			NLS.bind(ValidationMessages.QvtOperationalVisitorCS_incompatibleTargetVariableType, 
+                					new Object[] {
+                					QvtOperationalTypesUtil.getTypeFullName(targetVariableType),
+                					mappingFQName
+                					}),
+                			resolveInExpCS.getTarget());
+                	}
+                }
         	}
         }
-        
+                       
         return result;
     }
     
