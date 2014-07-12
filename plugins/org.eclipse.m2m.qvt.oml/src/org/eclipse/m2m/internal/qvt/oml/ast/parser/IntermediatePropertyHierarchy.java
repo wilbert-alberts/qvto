@@ -105,7 +105,7 @@ public class IntermediatePropertyHierarchy {
 	private boolean isPartOfHierarchy(ContextualProperty c1, ContextualProperty c2) {
 		if(c1.getContext() != null && c2.getContext() != null) {						
 			int rel = TypeUtil.getRelationship(fEnv, c1.getContext(), c2.getContext());
-			return (rel | UMLReflection.RELATED_TYPE) != 0;
+			return (rel & UMLReflection.RELATED_TYPE) != 0;
 		}
 		return false;
 	}

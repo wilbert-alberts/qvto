@@ -15,7 +15,6 @@ package org.eclipse.m2m.internal.qvt.oml.evaluator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -215,15 +214,13 @@ public class TraceUtil {
 
         EList<VarParameter> results = mappingOperation.getResult();
 		if (!results.isEmpty()) {
-            for(VarParameter resultPar : results) {
-                String resultVarName = resultPar.getName();
-                EClassifier resultElementType = resultPar.getEType();
-            	
-                VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName, evalEnv);
-                eMappingResults.getResult().add(resultVPV);
-                EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
-                addUnique(traceRecord, resultMappings);
-            }
+            String resultVarName = results.size() == 1 ? results.get(0).getName() : Environment.RESULT_VARIABLE_NAME;
+            EClassifier resultElementType = results.size() == 1 ? results.get(0).getEType() : mappingOperation.getEType();
+			
+            VarParameterValue resultVPV = createVarParameterValue(mappingOperation, DirectionKind.OUT, resultElementType, resultVarName, evalEnv);
+            eMappingResults.getResult().add(resultVPV);
+            EList<TraceRecord> resultMappings = createOrGetListElementFromMap(trace.getTargetToTraceRecordMap(), resultVPV.getValue().getOclObject());
+            addUnique(traceRecord, resultMappings);
         }
 
 		// Note: add it here so we ensure the record is fully initialized
@@ -279,8 +276,7 @@ public class TraceUtil {
 
     static Object fetchResultFromTrace(QvtOperationalEvaluationEnv evalEnv, TraceRecord trace) {
     	MappingOperation operation = trace.getMappingOperation().getRuntimeMappingOperation();
-    	EList<VarParameter> resultParams = operation.getResult();    	
-    	if (resultParams.isEmpty()) {
+    	if (operation.getResult().isEmpty()) {
             return null;
         }
     	
@@ -297,33 +293,9 @@ public class TraceUtil {
 			itArgument.set(value.getValue().getOclObject());
 		}
     	
-    	EList<VarParameterValue> traceResult = trace.getResult().getResult();    	
-		if(resultParams.size() == 1) {
-    		return traceResult.get(0).getValue().getOclObject();
-    	}
-
-		assert resultParams.size() > 1 && operation.getEType() instanceof TupleType<?, ?>;
-    	@SuppressWarnings("unchecked")
-    	TupleType<EClassifier, EStructuralFeature> tupleType = (TupleType<EClassifier, EStructuralFeature>)operation.getEType();
-    	
-    	HashMap<EStructuralFeature, Object> partValues = new HashMap<EStructuralFeature, Object>(2);		 
-    	for (EStructuralFeature property : tupleType.oclProperties()) {
-    		VarParameterValue paramValue = null;
-    		for (VarParameterValue nextParamValue : traceResult) {
-    			if(property.getName().equals(nextParamValue.getName())) {
-    				paramValue = nextParamValue;
-    				break;
-    			}
-    		}
-    		
-    		Object value = null;
-    		if(paramValue != null && paramValue.getValue() != null) {
-				value = paramValue.getValue().getOclObject();    				
-    		}
-    		partValues.put(property, value);
-		}
-    	
-    	return evalEnv.createTuple(operation.getEType(), partValues);
+    	EList<VarParameterValue> traceResult = trace.getResult().getResult();
+    	assert traceResult.size() == 1;
+		return traceResult.get(0).getValue().getOclObject();
     }
     
     
@@ -496,16 +468,8 @@ public class TraceUtil {
         Object resultValue = evalEnv.getValueOf(Environment.RESULT_VARIABLE_NAME);
         if (resultValue != null) {
             List<Object> resultValues = new ArrayList<Object>(1); 
-            if (resultValue instanceof Tuple<?, ?>) {
-            	@SuppressWarnings("unchecked")
-            	Tuple<EOperation, EStructuralFeature> tupleResult = (Tuple<EOperation, EStructuralFeature>) resultValue;
-            	for (EStructuralFeature tupleFeature : tupleResult.getTupleType().oclProperties()) {
-            		resultValues.add(tupleResult.getValue(tupleFeature));
-            	}
-            }
-            else {
-            	resultValues.add(resultValue);
-            }
+           	resultValues.add(resultValue);
+
             if (nextRecord.getResult().getResult().size() != resultValues.size()) {
                 return null;
             }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2013 Borland Software Corporation and others
+ * Copyright (c) 2007, 2014 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -37,6 +38,7 @@ import org.eclipse.m2m.internal.qvt.oml.expressions.Library;
 import org.eclipse.m2m.internal.qvt.oml.expressions.Module;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.DictionaryType;
 import org.eclipse.m2m.qvt.oml.ecore.ImperativeOCL.ListType;
+import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.TypeResolver;
 import org.eclipse.ocl.ecore.CallOperationAction;
 import org.eclipse.ocl.ecore.Constraint;
@@ -286,6 +288,16 @@ public class QvtTypeResolverImpl implements QVTOTypeResolver {
 
 	public TupleType<EOperation, EStructuralFeature> resolveTupleType(
 			EList<? extends TypedElement<EClassifier>> parts) {
+
+        if (!parts.isEmpty()) {
+        	// prevent NPE in OCL call stack
+    		Environment<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> env =
+    				Environment.Registry.INSTANCE.getEnvironmentFor(parts.get(0));
+    		if (env == null) {
+    			return getDelegate().resolveTupleType(new BasicEList<TypedElement<EClassifier>>(1));
+    		}
+        }
+		
 		return getDelegate().resolveTupleType(parts);
 	}
 

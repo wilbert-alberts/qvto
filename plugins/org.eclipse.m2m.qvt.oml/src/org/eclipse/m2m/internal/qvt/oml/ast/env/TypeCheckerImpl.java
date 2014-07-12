@@ -332,7 +332,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 		boolean isTuple1 = type1 instanceof TupleType;
 		boolean isTuple2 = type2 instanceof TupleType;
 		if (isTuple1 && isTuple2) {
-			int currentRelation = UMLReflection.SAME_TYPE;
+			int currentRelation = 0;
 			int matchingFeaturesCount = 0;
 			@SuppressWarnings("unchecked")
 			EList<EStructuralFeature> features1 = ((TupleType<EOperation, EStructuralFeature>)type1).oclProperties();
@@ -343,14 +343,35 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				if (feature2 == null) {
 					return UMLReflection.UNRELATED_TYPE;
 				}
+				
 				int partRelShip = getRelationship(feature1.getEType(), feature2.getEType());
 				
-				if (partRelShip == UMLReflection.UNRELATED_TYPE ||
-					partRelShip == UMLReflection.STRICT_SUBTYPE && currentRelation == UMLReflection.STRICT_SUPERTYPE ||
-					partRelShip == UMLReflection.STRICT_SUPERTYPE && currentRelation == UMLReflection.STRICT_SUBTYPE ) {
+				if (partRelShip == UMLReflection.SAME_TYPE) {
+					// Tuple relation type not affected
+				}
+				else if (partRelShip == UMLReflection.RELATED_TYPE) {
+					currentRelation = UMLReflection.RELATED_TYPE;
+				}
+				else if ((partRelShip & UMLReflection.STRICT_SUBTYPE) != 0) {
+					if ((currentRelation & UMLReflection.STRICT_SUPERTYPE) != 0) {
+						currentRelation = UMLReflection.RELATED_TYPE;
+					}
+					else {
+						currentRelation |= partRelShip;
+					}
+				}
+				else if ((partRelShip & UMLReflection.STRICT_SUPERTYPE) != 0) {
+					if ((currentRelation & UMLReflection.STRICT_SUBTYPE) != 0) {
+						currentRelation = UMLReflection.RELATED_TYPE;
+					}
+					else {
+						currentRelation |= partRelShip;
+					}
+				}
+				else { // partRelShip == UMLReflection.UNRELATED_TYPE
 					return UMLReflection.UNRELATED_TYPE;
 				}
-				currentRelation = partRelShip;
+				
 				matchingFeaturesCount ++;
 			}
 			
@@ -358,7 +379,7 @@ class TypeCheckerImpl extends AbstractTypeChecker<EClassifier, EOperation, EStru
 				return UMLReflection.UNRELATED_TYPE;
 			}
 
-			return currentRelation;
+			return currentRelation == 0 ? UMLReflection.SAME_TYPE : currentRelation;
 		}	
 		
 		return super.getRelationship(type1, type2);

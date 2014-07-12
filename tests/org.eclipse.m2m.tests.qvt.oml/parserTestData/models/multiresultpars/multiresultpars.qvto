@@ -10,27 +10,25 @@ main() {
 	var r1 := src.map merging_fooAB();
 	var r1Ext := src.map merging_ExtentDirectedFooAB();
 
-	var c: Collection(OclAny) := src.resolve(EModelElement);
-	-- 2 - merging_fooAB, 2 - merging_ExtentDirectedFooAB,
+	var c: Collection(OclAny) := src.resolve(Tuple(a : EModelElement, b : EModelElement));
+	-- 1 - merging_fooAB, 1 - merging_ExtentDirectedFooAB,
 	-- (2 - merged_fooA, 2 - merged_fooB) called just once, then fetched from traces
 	-- (2 - superMerged_fooB) - called just once, then fetched from traces
-	var expectedOuts := 16; 
-	assert fatal (c->size() = expectedOuts);
+	assert fatal (c->size() = 8);
 	
-	assert (src.resolveIn(EPackage::merging_fooAB, EModelElement)->size() = 4);
-	assert (src.resolveIn(EPackage::merged_fooA, EModelElement)->size() = 4);	
-	assert (src.resolveIn(EPackage::merged_fooB, EModelElement)->size() = 4);	
-	assert (src.resolveIn(EPackage::merged_fooB, EPackage)->size() = 2);	
-	assert (src.resolveIn(EModelElement::superMerged_fooB, EModelElement)->size() = 4);		
+	assert (src.resolveIn(EPackage::merging_fooAB, Tuple(a : EModelElement, b : EModelElement))->size() = 1);
+	assert (src.resolveIn(EPackage::merged_fooA, Tuple(a : EModelElement, b : EModelElement))->size() = 2);	
+	assert (src.resolveIn(EPackage::merged_fooB, Tuple(a : EModelElement, b : EModelElement))->size() = 2);	
+	assert (src.resolveIn(EPackage::merged_fooB, Tuple(a : EClass, b : EPackage))->size() = 2);	
+	assert (src.resolveIn(EModelElement::superMerged_fooB, Tuple(a : EModelElement, b : EModelElement))->size() = 2);		
 			
 	var r2 := src.map merging_fooAB();
 	
-	assert fatal (Set{r2.a, r2.b} = src.resolveIn(EPackage::merging_fooAB, ENamedElement)->asSet());
+	assert fatal (Set{Tuple{a=r2.a, b=r2.b}} = src.resolveIn(EPackage::merging_fooAB, Tuple(a : EClass, b : EPackage))->asSet());
 	
-	assert fatal (src = r2.b.invresolveone()); 
-	assert fatal (src = r2.a.invresolveone());
+	assert fatal (src = r2.invresolveone());
 
-	assert fatal (src = r1.b.invresolveoneIn(EPackage::merging_fooAB, EPackage));
+	assert fatal (src = r1.invresolveoneIn(EPackage::merging_fooAB, EPackage));
 
 	-- check query 
 	var fooQueryResult : Tuple(p : EPackage, id : Integer) 
