@@ -2510,193 +2510,193 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	protected void createEmofAnnotations() {
-		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName";				
+		String source = "http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName";	
 		addAnnotation
 		  (getAltExp_Body(), 
 		   source, 
 		   new String[] {
 			 "body", "altBodyOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getAltExp_Condition(), 
 		   source, 
 		   new String[] {
 			 "body", "altCondOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getAssertExp_Assertion(), 
 		   source, 
 		   new String[] {
 			 "body", "assertOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getAssignExp_DefaultValue(), 
 		   source, 
 		   new String[] {
 			 "body", "defaultOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getAssignExp_Left(), 
 		   source, 
 		   new String[] {
 			 "body", "leftOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getAssignExp_Value(), 
 		   source, 
 		   new String[] {
 			 "body", "valueOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getBlockExp_Body(), 
 		   source, 
 		   new String[] {
 			 "body", "blockOwner"
-		   });						
+		   });	
 		addAnnotation
 		  (getCatchExp_Exception(), 
 		   source, 
 		   new String[] {
 			 "body", "tryExpression"
-		   });				
+		   });	
 		addAnnotation
 		  (getComputeExp_Body(), 
 		   source, 
 		   new String[] {
 			 "body", "computeOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getComputeExp_ReturnedElement(), 
 		   source, 
 		   new String[] {
 			 "body", "computeOwner"
-		   });						
+		   });	
 		addAnnotation
 		  (getDictLiteralExp_Part(), 
 		   source, 
 		   new String[] {
 			 "body", "partOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getDictLiteralPart_Key(), 
 		   source, 
 		   new String[] {
 			 "body", "keyOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getDictLiteralPart_Value(), 
 		   source, 
 		   new String[] {
 			 "body", "valOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getDictionaryType_KeyType(), 
 		   source, 
 		   new String[] {
 			 "body", "keyDict"
-		   });						
+		   });	
 		addAnnotation
 		  (getImperativeIterateExp_Target(), 
 		   source, 
 		   new String[] {
 			 "body", "tgtOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getImperativeLoopExp_Condition(), 
 		   source, 
 		   new String[] {
 			 "body", "loopCondOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getInstantiationExp_Argument(), 
 		   source, 
 		   new String[] {
 			 "body", "argOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getListLiteralExp_Element(), 
 		   source, 
 		   new String[] {
 			 "body", "elementOwner"
-		   });						
+		   });	
 		addAnnotation
 		  (getLogExp_Condition(), 
 		   source, 
 		   new String[] {
 			 "body", "logOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getOrderedTupleLiteralExp_Part(), 
 		   source, 
 		   new String[] {
 			 "body", "partOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getOrderedTupleLiteralPart_Value(), 
 		   source, 
 		   new String[] {
 			 "body", "tupValOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getOrderedTupleType_ElementType(), 
 		   source, 
 		   new String[] {
 			 "body", "eltTuple"
-		   });				
+		   });	
 		addAnnotation
 		  (getRaiseExp_Exception(), 
 		   source, 
 		   new String[] {
 			 "body", "raiseExpression"
-		   });						
+		   });	
 		addAnnotation
 		  (getSwitchExp_AlternativePart(), 
 		   source, 
 		   new String[] {
 			 "body", "altOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getSwitchExp_ElsePart(), 
 		   source, 
 		   new String[] {
 			 "body", "elsePartOwner"
-		   });				
+		   });	
 		addAnnotation
 		  (getTryExp_ExceptClause(), 
 		   source, 
 		   new String[] {
 			 "body", "exceptOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getTryExp_TryBody(), 
 		   source, 
 		   new String[] {
 			 "body", "tryBodyOwner"
-		   });						
+		   });	
 		addAnnotation
 		  (getUnlinkExp_Item(), 
 		   source, 
 		   new String[] {
 			 "body", "itemUnlink"
-		   });		
+		   });	
 		addAnnotation
 		  (getUnlinkExp_Target(), 
 		   source, 
 		   new String[] {
 			 "body", "tgtUnlink"
-		   });						
+		   });	
 		addAnnotation
 		  (getVariableInitExp_ReferredVariable(), 
 		   source, 
 		   new String[] {
 			 "body", "declaration"
-		   });				
+		   });	
 		addAnnotation
 		  (getWhileExp_Body(), 
 		   source, 
 		   new String[] {
 			 "body", "whileOwner"
-		   });		
+		   });	
 		addAnnotation
 		  (getWhileExp_Condition(), 
 		   source, 

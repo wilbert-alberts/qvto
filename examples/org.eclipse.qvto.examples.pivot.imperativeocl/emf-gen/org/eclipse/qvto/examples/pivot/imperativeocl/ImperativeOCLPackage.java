@@ -98,6 +98,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_EXPRESSION__EXTENSION = PivotPackage.OCL_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_EXPRESSION__OWNED_ANNOTATION = PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,15 +132,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_EXPRESSION__NAME = PivotPackage.OCL_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_EXPRESSION__OWNED_ANNOTATION = PivotPackage.OCL_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -207,6 +207,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ALT_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ALT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -232,15 +241,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ALT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ALT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -352,6 +352,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSERT_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -377,15 +386,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ASSERT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSERT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -506,6 +506,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ASSIGN_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -531,15 +540,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ASSIGN_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -669,6 +669,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BLOCK_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -694,15 +703,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int BLOCK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLOCK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -805,6 +805,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int BREAK_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -830,15 +839,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREAK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREAK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -932,6 +932,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CATCH_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -957,15 +966,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATCH_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATCH_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -1077,6 +1077,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int COMPUTE_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1102,15 +1111,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPUTE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPUTE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -1222,6 +1222,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CONTINUE_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTINUE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1247,15 +1256,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTINUE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTINUE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -1349,6 +1349,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_EXP__EXTENSION = PivotPackage.LITERAL_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICT_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1374,15 +1383,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICT_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -1485,6 +1485,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_PART__EXTENSION = PivotPackage.ELEMENT__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICT_LITERAL_PART__OWNED_ANNOTATION = PivotPackage.ELEMENT__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1585,6 +1594,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICTIONARY_TYPE__EXTENSION = PivotPackage.COLLECTION_TYPE__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE__OWNED_ANNOTATION = PivotPackage.COLLECTION_TYPE__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1610,15 +1628,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE__NAME = PivotPackage.COLLECTION_TYPE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICTIONARY_TYPE__OWNED_ANNOTATION = PivotPackage.COLLECTION_TYPE__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
@@ -1664,6 +1673,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE__TEMPLATE_PARAMETER = PivotPackage.COLLECTION_TYPE__TEMPLATE_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>Extended Bys</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE__EXTENDED_BYS = PivotPackage.COLLECTION_TYPE__EXTENDED_BYS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -1736,6 +1754,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int DICTIONARY_TYPE__IS_ABSTRACT = PivotPackage.COLLECTION_TYPE__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICTIONARY_TYPE__IS_ACTIVE = PivotPackage.COLLECTION_TYPE__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -1946,6 +1973,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_LOOP_EXP__EXTENSION = PivotPackage.LOOP_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION = PivotPackage.LOOP_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1971,15 +2007,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_LOOP_EXP__NAME = PivotPackage.LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION = PivotPackage.LOOP_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -2127,6 +2154,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int FOR_EXP__EXTENSION = IMPERATIVE_LOOP_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOR_EXP__OWNED_ANNOTATION = IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2152,15 +2188,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int FOR_EXP__NAME = IMPERATIVE_LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOR_EXP__OWNED_ANNOTATION = IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -2326,6 +2353,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int IMPERATIVE_ITERATE_EXP__EXTENSION = IMPERATIVE_LOOP_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPERATIVE_ITERATE_EXP__OWNED_ANNOTATION = IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2351,15 +2387,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int IMPERATIVE_ITERATE_EXP__NAME = IMPERATIVE_LOOP_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMPERATIVE_ITERATE_EXP__OWNED_ANNOTATION = IMPERATIVE_LOOP_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -2534,6 +2561,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int INSTANTIATION_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANTIATION_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2559,15 +2595,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int INSTANTIATION_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSTANTIATION_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -2688,6 +2715,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_LITERAL_EXP__EXTENSION = PivotPackage.LITERAL_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2713,15 +2749,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -2824,6 +2851,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LIST_TYPE__EXTENSION = PivotPackage.COLLECTION_TYPE__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__OWNED_ANNOTATION = PivotPackage.COLLECTION_TYPE__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2849,15 +2885,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE__NAME = PivotPackage.COLLECTION_TYPE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIST_TYPE__OWNED_ANNOTATION = PivotPackage.COLLECTION_TYPE__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
@@ -2903,6 +2930,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE__TEMPLATE_PARAMETER = PivotPackage.COLLECTION_TYPE__TEMPLATE_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>Extended Bys</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__EXTENDED_BYS = PivotPackage.COLLECTION_TYPE__EXTENDED_BYS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -2975,6 +3011,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIST_TYPE__IS_ABSTRACT = PivotPackage.COLLECTION_TYPE__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIST_TYPE__IS_ACTIVE = PivotPackage.COLLECTION_TYPE__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -3176,6 +3221,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP__EXTENSION = PivotPackage.OPERATION_CALL_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_EXP__OWNED_ANNOTATION = PivotPackage.OPERATION_CALL_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3201,15 +3255,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOG_EXP__NAME = PivotPackage.OPERATION_CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOG_EXP__OWNED_ANNOTATION = PivotPackage.OPERATION_CALL_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -3384,6 +3429,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_LITERAL_EXP__EXTENSION = PivotPackage.LITERAL_EXP__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3409,15 +3463,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -3520,6 +3565,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_LITERAL_PART__EXTENSION = PivotPackage.ELEMENT__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_LITERAL_PART__OWNED_ANNOTATION = PivotPackage.ELEMENT__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3611,6 +3665,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int ORDERED_TUPLE_TYPE__EXTENSION = PivotPackage.CLASS__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__OWNED_ANNOTATION = PivotPackage.CLASS__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3636,15 +3699,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_ANNOTATION = PivotPackage.CLASS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
@@ -3690,6 +3744,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE__TEMPLATE_PARAMETER = PivotPackage.CLASS__TEMPLATE_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>Extended Bys</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__EXTENDED_BYS = PivotPackage.CLASS__EXTENDED_BYS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -3762,6 +3825,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int ORDERED_TUPLE_TYPE__IS_ABSTRACT = PivotPackage.CLASS__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_TUPLE_TYPE__IS_ACTIVE = PivotPackage.CLASS__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -3927,6 +3999,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RAISE_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAISE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3952,15 +4033,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int RAISE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAISE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -4072,6 +4144,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int RETURN_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4097,15 +4178,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int RETURN_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RETURN_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -4208,6 +4280,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int SWITCH_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4233,15 +4314,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -4353,6 +4425,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TRY_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRY_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4378,15 +4459,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRY_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRY_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -4498,6 +4570,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int TYPEDEF__EXTENSION = PivotPackage.CLASS__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF__OWNED_ANNOTATION = PivotPackage.CLASS__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4523,15 +4604,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPEDEF__OWNED_ANNOTATION = PivotPackage.CLASS__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
@@ -4577,6 +4649,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF__TEMPLATE_PARAMETER = PivotPackage.CLASS__TEMPLATE_PARAMETER;
+
+	/**
+	 * The feature id for the '<em><b>Extended Bys</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF__EXTENDED_BYS = PivotPackage.CLASS__EXTENDED_BYS;
 
 	/**
 	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
@@ -4649,6 +4730,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPEDEF__IS_ABSTRACT = PivotPackage.CLASS__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPEDEF__IS_ACTIVE = PivotPackage.CLASS__IS_ACTIVE;
 
 	/**
 	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
@@ -4823,6 +4913,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNLINK_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLINK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4848,15 +4947,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNLINK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNLINK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -4968,6 +5058,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNPACK_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNPACK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4993,15 +5092,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNPACK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -5113,6 +5203,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int VARIABLE_INIT_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_INIT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5138,15 +5237,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int VARIABLE_INIT_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INIT_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
@@ -5258,6 +5348,15 @@ public interface ImperativeOCLPackage extends EPackage {
 	int WHILE_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
 
 	/**
+	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHILE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
+
+	/**
 	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5283,15 +5382,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @ordered
 	 */
 	int WHILE_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHILE_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
 
 	/**
 	 * The feature id for the '<em><b>Is Required</b></em>' attribute.

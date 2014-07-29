@@ -15,12 +15,16 @@ package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.domain.elements.DomainExpression;
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Variable;
 import org.eclipse.ocl.examples.pivot.internal.impl.CallExpImpl;
@@ -462,5 +466,13 @@ public class ResolveExpImpl extends CallExpImpl implements ResolveExp {
 		result.append(one);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	@NonNull
+	public List<? extends DomainExpression> getArgument() {
+		// TODO Auto-generated method stub
+		// FIXME need to look into this undesirable manually coded method
+		return null;
 	}
 } //ResolveExpImpl

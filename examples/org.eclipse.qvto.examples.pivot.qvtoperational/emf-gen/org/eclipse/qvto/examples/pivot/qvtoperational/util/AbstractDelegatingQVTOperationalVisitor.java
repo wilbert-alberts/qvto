@@ -14,8 +14,8 @@
  * This code is auto-generated
  * from: org.eclipse.qvto.examples.pivot.qvtoperational/model/QVTOperational.genmodel
  *
- * Do not edit it.
- */
+ * Only the copyright statement is editable.
+ *******************************************************************************/
 package	org.eclipse.qvto.examples.pivot.qvtoperational.util;
 
 import org.eclipse.jdt.annotation.NonNull;

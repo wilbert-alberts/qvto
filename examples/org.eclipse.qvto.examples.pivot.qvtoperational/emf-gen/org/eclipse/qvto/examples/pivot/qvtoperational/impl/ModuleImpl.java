@@ -41,6 +41,7 @@ import org.eclipse.ocl.examples.domain.ids.IdManager;
 import org.eclipse.ocl.examples.domain.ids.PackageId;
 import org.eclipse.ocl.examples.pivot.Package;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
+import org.eclipse.ocl.examples.pivot.ProfileApplication;
 import org.eclipse.ocl.examples.pivot.Property;
 import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.pivot.TemplateableElement;
@@ -70,6 +71,7 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNsPrefix <em>Ns Prefix</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getNsURI <em>Ns URI</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getOwnedType <em>Owned Type</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getProfileApplication <em>Profile Application</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getConfigProperty <em>Config Property</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#getEntry <em>Entry</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.qvtoperational.impl.ModuleImpl#isIsBlackbox <em>Is Blackbox</em>}</li>
@@ -152,6 +154,16 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * @ordered
 	 */
 	protected EList<Type> ownedType;
+
+	/**
+	 * The cached value of the '{@link #getProfileApplication() <em>Profile Application</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProfileApplication()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ProfileApplication> profileApplication;
 
 	/**
 	 * The cached value of the '{@link #getConfigProperty() <em>Config Property</em>}' reference list.
@@ -376,6 +388,18 @@ public class ModuleImpl extends ClassImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<ProfileApplication> getProfileApplication() {
+		if (profileApplication == null) {
+			profileApplication = new EObjectContainmentWithInverseEList<ProfileApplication>(ProfileApplication.class, this, QVTOperationalPackage.MODULE__PROFILE_APPLICATION, PivotPackage.PROFILE_APPLICATION__APPLYING_PACKAGE);
+		}
+		return profileApplication;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<Property> getConfigProperty() {
 		if (configProperty == null) {
 			configProperty = new EObjectResolvingEList<Property>(Property.class, this, QVTOperationalPackage.MODULE__CONFIG_PROPERTY);
@@ -525,6 +549,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return basicSetNestingPackage((org.eclipse.ocl.examples.pivot.Package)otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedType()).basicAdd(otherEnd, msgs);
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getProfileApplication()).basicAdd(otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getModuleImport()).basicAdd(otherEnd, msgs);
 		}
@@ -545,6 +571,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return basicSetNestingPackage(null, msgs);
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ((InternalEList<?>)getOwnedType()).basicRemove(otherEnd, msgs);
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				return ((InternalEList<?>)getProfileApplication()).basicRemove(otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__MODULE_IMPORT:
 				return ((InternalEList<?>)getModuleImport()).basicRemove(otherEnd, msgs);
 			case QVTOperationalPackage.MODULE__OWNED_TAG:
@@ -589,6 +617,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return getNsURI();
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return getOwnedType();
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				return getProfileApplication();
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
 				return getConfigProperty();
 			case QVTOperationalPackage.MODULE__ENTRY:
@@ -637,6 +667,10 @@ public class ModuleImpl extends ClassImpl implements Module {
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
 				getOwnedType().addAll((Collection<? extends Type>)newValue);
+				return;
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				getProfileApplication().clear();
+				getProfileApplication().addAll((Collection<? extends ProfileApplication>)newValue);
 				return;
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
 				getConfigProperty().clear();
@@ -694,6 +728,9 @@ public class ModuleImpl extends ClassImpl implements Module {
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				getOwnedType().clear();
 				return;
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				getProfileApplication().clear();
+				return;
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
 				getConfigProperty().clear();
 				return;
@@ -739,6 +776,8 @@ public class ModuleImpl extends ClassImpl implements Module {
 				return NS_URI_EDEFAULT == null ? nsURI != null : !NS_URI_EDEFAULT.equals(nsURI);
 			case QVTOperationalPackage.MODULE__OWNED_TYPE:
 				return ownedType != null && !ownedType.isEmpty();
+			case QVTOperationalPackage.MODULE__PROFILE_APPLICATION:
+				return profileApplication != null && !profileApplication.isEmpty();
 			case QVTOperationalPackage.MODULE__CONFIG_PROPERTY:
 				return configProperty != null && !configProperty.isEmpty();
 			case QVTOperationalPackage.MODULE__ENTRY:
@@ -772,6 +811,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 				case QVTOperationalPackage.MODULE__NS_PREFIX: return PivotPackage.PACKAGE__NS_PREFIX;
 				case QVTOperationalPackage.MODULE__NS_URI: return PivotPackage.PACKAGE__NS_URI;
 				case QVTOperationalPackage.MODULE__OWNED_TYPE: return PivotPackage.PACKAGE__OWNED_TYPE;
+				case QVTOperationalPackage.MODULE__PROFILE_APPLICATION: return PivotPackage.PACKAGE__PROFILE_APPLICATION;
 				default: return -1;
 			}
 		}
@@ -793,6 +833,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 				case PivotPackage.PACKAGE__NS_PREFIX: return QVTOperationalPackage.MODULE__NS_PREFIX;
 				case PivotPackage.PACKAGE__NS_URI: return QVTOperationalPackage.MODULE__NS_URI;
 				case PivotPackage.PACKAGE__OWNED_TYPE: return QVTOperationalPackage.MODULE__OWNED_TYPE;
+				case PivotPackage.PACKAGE__PROFILE_APPLICATION: return QVTOperationalPackage.MODULE__PROFILE_APPLICATION;
 				default: return -1;
 			}
 		}

@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.examples.codegen.oclinjunit.JUnitCodeGenerator;
 import org.eclipse.ocl.examples.domain.utilities.ProjectMap;
+import org.eclipse.ocl.examples.domain.utilities.StandaloneProjectMap;
 import org.eclipse.ocl.examples.pivot.Class;
 import org.eclipse.ocl.examples.pivot.ExpressionInOCL;
 import org.eclipse.ocl.examples.pivot.OCL;
@@ -37,7 +38,7 @@ public class ContainmentCodegenTests {
 	public void setUp()
 			throws Exception {
 		resourceSet = new ResourceSetImpl();
-		ProjectMap projectMap = ProjectMap.getAdapter(resourceSet);		
+		StandaloneProjectMap projectMap = ProjectMap.getAdapter(resourceSet);		
 		projectMap.initializeResourceSet(resourceSet);
 		mManager = MetaModelManager.getAdapter(resourceSet);		
 		ocl = OCL.newInstance();		
