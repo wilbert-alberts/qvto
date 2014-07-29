@@ -1,0 +1,180 @@
+import '/resource/org.eclipse.ocl.examples.pivot/model/Environment.ecore'
+import '/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore'
+import '/resource/org.eclipse.ocl.examples.pivot/model/PivotNameResolution.ocl'
+import '/resource/org.eclipse.qvto.examples.pivot.imperativeocl/model/ImperativeOCL.ecore'
+import 'QVTOperational.ecore'
+
+package env
+
+context Environment
+def : addElementsOf(element : pivot::Element) : Environment =
+	null
+
+def : addElementsOf(elements : Collection(pivot::Element)) : Environment =
+	null
+endpackage
+
+package qvtoperational
+
+context Module
+def : _env(child : pivot::Element) : env::Environment =
+	parentEnv().nestedEnv()		
+			.addElementsOf(self.moduleImport.module)
+			.nestedEnv()			
+			.addElements(self.ownedAttribute)
+			-- .addElements(self.ownedOperation->excluding(self.ownedOperation->any(oclIsKindOf(EntryOperation)))) -- To discuss, can entry main() operation be called ?
+			.addElements(self.ownedOperation) 
+			.addElements(self.ownedType)
+			.addElements(self.nestedPackage)
+			--.addElements(self.ownedTag)
+			.addElements(self.ownedVariable)
+		
+
+context OperationalTransformation
+def : _env(child : pivot::Element) : env::Environment =
+
+	if self.modelParameter->includes(child) then
+		parentEnv().nestedEnv()
+			.addElementsOf(self.moduleImport.module)
+			.nestedEnv()
+			.addElements(self.ownedAttribute)
+			-- .addElements(self.ownedOperation->excluding(self.ownedOperation->any(oclIsKindOf(EntryOperation)))) -- To discuss, can entry main() operation be called ?
+			.addElements(self.ownedOperation) 
+			.addElements(self.ownedType)
+			.addElements(self.nestedPackage)
+			--.addElements(self.ownedTag)
+			.addElements(self.ownedVariable)
+	else
+		parentEnv().nestedEnv()
+			.addElementsOf(self.moduleImport.module)
+			.nestedEnv()			
+			.addElements(self.ownedAttribute)
+			-- .addElements(self.ownedOperation->excluding(self.ownedOperation->any(oclIsKindOf(EntryOperation)))) -- To discuss, can entry main() operation be called ?
+			.addElements(self.ownedOperation)
+			.addElements(self.ownedType)
+			.addElements(self.nestedPackage)
+			--.addElements(self.ownedTag)
+			.addElements(self.ownedVariable)
+			.addElements(self.modelParameter)
+	endif
+
+
+-- context Library
+-- Doesn't need to overload super type
+
+context ModelType
+def : _env(child : pivot::Element) : env::Environment =
+	if self.additionalCondition->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.metamodel) -- Note this plays the role of the "import package" in OCL/QVTd 
+			-- .addElement(ADD SELF VAR FROM WHERE ???? -> OMG fix)
+	else
+		parentEnv().nestedEnv()
+			.addElements(self.metamodel)
+	endif
+
+-- context VarParameter
+-- Doesn't need to overload super type
+
+context ImperativeOperation
+def : _env(child : pivot::Element) : env::Environment =
+	if (self._body = child) then
+		parentEnv().nestedEnv()
+			.addElement(self._context)
+			.addElements(self.result)
+			.addElements(self.ownedParameter)
+	else -- any other 
+		parentEnv()
+	endif
+
+-- context EntryOperation
+-- Doesn't need to overload super type
+
+-- context Helper
+-- Doesn't need to overload super type
+
+-- context Constructor
+-- Doesn't need to overload super type
+
+-- context ContextualProperty
+-- Doesn't need to overload super type
+
+context  MappingOperation
+def : _env(child : pivot::Element) : env::Environment =
+	if (self._body = child) then
+		parentEnv().nestedEnv()
+		.addElement(self._context)
+		.addElements(self.result)
+		.addElements(self.ownedParameter)
+	else if (self.when = child) then
+		parentEnv().nestedEnv()
+		.addElement(self._context)
+		.addElements(self.ownedParameter)
+	else if (self.where = child) then
+		parentEnv().nestedEnv()
+		.addElement(self._context)
+		.addElements(self.ownedParameter)
+		.addElements(self.result)
+	else
+		parentEnv()
+	endif endif endif
+	
+-- context MappingParameter
+-- Doesn't need to overload super type
+
+context OperationBody
+def : _env(child : pivot::Element) : env::Environment =
+	if self.content->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.variable)
+			.addElements(self.content->select(x | self.content->indexOf(x) < self.content->indexOf(child))
+									->selectByKind(imperativeocl::VariableInitExp).referredVariable)
+	else
+		parentEnv()
+	endif
+
+-- context ConstructorBody
+-- Doesn't need to overload super type
+context MappingBody
+def : _env(child : pivot::Element) : env::Environment =
+	if self.content->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.variable)
+			.addElements(self.content->select(x | self.content->indexOf(x) < self.content->indexOf(child))
+									->selectByKind(imperativeocl::VariableInitExp).referredVariable)
+	else if self.initSection->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.variable)
+			.addElements(self.content->select(x | self.initSection->indexOf(x) < self.initSection->indexOf(child))
+									->selectByKind(imperativeocl::VariableInitExp).referredVariable)
+	else if self.endSection->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.variable)
+			.addElements(self.content->select(x | self.endSection->indexOf(x) < self.endSection->indexOf(child))
+									->selectByKind(imperativeocl::VariableInitExp).referredVariable)
+	else									
+		parentEnv()
+	endif endif endif
+	
+-- context ImperativeCallExp
+-- Doesn't need to overload super type
+
+-- context MappingCallExp
+-- Doesn't need to overload super type
+
+context ResolveExp
+def : _env(child : pivot::Element) : env::Environment =
+	if self.condition = child then
+		parentEnv().nestedEnv()
+			.addElement(self.target)
+	else
+		parentEnv()
+	endif
+	
+-- context ResolveInExp
+-- Doesn't need to overload super type
+
+-- context ObjectExp
+-- Doesn't need to overload super type
+
+endpackage
