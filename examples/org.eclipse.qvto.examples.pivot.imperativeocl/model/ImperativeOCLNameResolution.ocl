@@ -1,0 +1,120 @@
+import '/resource/org.eclipse.ocl.examples.pivot/model/Environment.ecore'
+import '/resource/org.eclipse.ocl.examples.pivot/model/Pivot.ecore'
+import '/resource/org.eclipse.ocl.examples.pivot/model/PivotNameResolution.ocl'
+import 'ImperativeOCL.ecore'
+
+package env
+
+context Environment
+def : addElementsOf(element : pivot::Element) : Environment =
+	null
+
+def : addElementsOf(elements : Collection(pivot::Element)) : Environment =
+	null
+endpackage
+
+package imperativeocl
+
+context BlockExp
+def : _env(child : pivot::Element) : env::Environment =
+	   parentEnv().nestedEnv()
+	
+
+-- FIXME OMG issue. It's not clear if the variable is available to be used by further expressions (sibling elements) or only for inner body expression
+-- in essence if a compute expression opens a new scope or not
+context ComputeExp
+def : _env(child : pivot::Element) : env::Environment =
+	if self._body = child then
+		parentEnv().addElement(self.returnedElement)
+	else
+		parentEnv()
+	endif 
+
+-- context WhileExp
+-- Doesn't need to overload super type
+
+-- context ImperativeLoopExp (Abstract)
+-- Doesn't need to overload super type
+
+context ForExp 
+def : _env(child : pivot::Element) : env::Environment =
+	if self.condition = child then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator)
+	else if self._body = child then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator)
+	else if self.iterator->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator->select(x | self.iterator->indexOf(x) < self.iterator->indexOf(child)))
+	else 
+		parentEnv()
+	endif endif endif 
+
+-- FIXME OMG issue. Messy in the spec. Shouldn't be an (OCL) IterateExp + ImperativeExp ?. Very confusing. Need deeper thought.
+-- Besides, the logic seems to be different to the OCL one. OCL assigns the body to the accumulator (the acc var is normally used
+-- in the body expressions), whereas QVTo concats (adds) the body to the accumulator (is the acc needed by the body? -> specify/clarify)
+context ImperativeIterateExp
+def : _env(child : pivot::Element) : env::Environment =
+	if self.condition = child then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator)
+			.addElement(self.target)
+	else if self._body = child then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator)
+	else if self.iterator->includes(child) then
+		parentEnv().nestedEnv()
+			.addElements(self.iterator->select(x | self.iterator->indexOf(x) < self.iterator->indexOf(child)))
+	else 
+		parentEnv()
+	endif endif endif 
+
+-- context SwitchExp
+-- Doesn't need to overload super type
+
+-- context AltExp
+-- Doesn't need to overload super type
+
+-- Note, since we have a Top-Down description, the VariableInitExp doesn't contribute nothing to the environment
+-- Parents will have to handle when a VariableInitExp is encountered.
+-- context VariableInitExp	
+-- Doesn't need to overload super type
+
+-- context AssignExp
+-- Doesn't need to overload super type
+
+-- context UnlinkExp
+-- Doesn't need to overload super type
+
+
+context TryExp
+def : _env(child : pivot::Element) : env::Environment =
+	if (self.tryBody->includes(child)) then
+		parentEnv().nestedEnv()
+	else
+		parentEnv()
+	endif
+
+-- FIXME Issue OMG. Smelly spec and pivot implementation. Think deeper.
+--context CatchExp
+--def : _env(child : pivot::Element) : env::Environment =
+--	if (self._body = child) then
+--		parentEnv().nestedEnv()
+--			.addElement(self.ex)
+--	else
+--		parentEnv()
+--	endif
+
+-- context RaiseExp
+-- Doesn't need to overload super type
+
+-- context ReturnExp
+-- context BreakExp
+-- context LogExp
+-- context AssertExp
+-- context InstantiationExp
+-- context 
+
+
+endpackage
