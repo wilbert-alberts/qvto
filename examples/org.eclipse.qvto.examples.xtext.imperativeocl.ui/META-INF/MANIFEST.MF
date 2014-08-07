@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.qvto.examples.xtext.imperativeocl;visibility:=reexpo
  org.eclipse.ocl.examples.xtext.essentialocl.ui;bundle-version="[3.3.0,4.0.0)";visibility:=reexport
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.qvto.examples.xtext.imperativeocl.ui,
  org.eclipse.qvto.examples.xtext.imperativeocl.ui.contentassist,
  org.eclipse.qvto.examples.xtext.imperativeocl.ui.contentassist.antlr,
