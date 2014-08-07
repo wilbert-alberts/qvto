@@ -44,6 +44,9 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.lookup.NewImperativeOCLLook
 import org.eclipse.qvto.examples.pivot.qvtoperational.Constructor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ConstructorBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ContextualProperty;
+import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelation;
+import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationDomain;
+import org.eclipse.qvto.examples.pivot.qvtoperational.DummyRelationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Helper;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ImperativeCallExp;
@@ -56,12 +59,14 @@ import org.eclipse.qvto.examples.pivot.qvtoperational.MappingParameter;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelParameter;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
 import org.eclipse.qvto.examples.pivot.qvtoperational.Module;
+import org.eclipse.qvto.examples.pivot.qvtoperational.ModuleImport;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ObjectExp;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationBody;
 import org.eclipse.qvto.examples.pivot.qvtoperational.OperationalTransformation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.QVTOperationalPackage;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ResolveExp;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ResolveInExp;
+import org.eclipse.qvto.examples.pivot.qvtoperational.Tag;
 import org.eclipse.qvto.examples.pivot.qvtoperational.VarParameter;
 import org.eclipse.qvto.examples.pivot.qvtoperational.util.QVTOperationalVisitor;
 
@@ -81,6 +86,9 @@ public class AutoQVTOperationalLookupVisitor
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ConstructorBody = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ConstructorBody", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ContextualProperty = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ContextualProperty", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_DomainEvaluator = PACKid_org_eclipse_ocl_examples_domain_evaluation.getClassId("DomainEvaluator", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_DummyRelation = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("DummyRelation", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_DummyRelationDomain = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("DummyRelationDomain", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_DummyRelationalTransformation = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("DummyRelationalTransformation", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Element = PACKid_$metamodel$.getClassId("Element", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_EntryOperation = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("EntryOperation", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Environment = PACKid_http_c_s_s_www_example_org_s_examples_s_env_ecore.getClassId("Environment", 0);
@@ -96,6 +104,7 @@ public class AutoQVTOperationalLookupVisitor
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ModelParameter = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ModelParameter", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ModelType = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ModelType", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Module = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("Module", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ModuleImport = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ModuleImport", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_OCLExpression = PACKid_$metamodel$.getClassId("OCLExpression", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ObjectExp = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ObjectExp", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Operation = PACKid_$metamodel$.getClassId("Operation", 0);
@@ -106,6 +115,7 @@ public class AutoQVTOperationalLookupVisitor
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Property = PACKid_$metamodel$.getClassId("Property", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ResolveExp = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ResolveExp", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_ResolveInExp = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("ResolveInExp", 0);
+    public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Tag = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("Tag", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Type = PACKid_$metamodel$.getClassId("Type", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_VarParameter = PACKid_http_c_s_s_www_eclipse_org_s_qvt_s_pivot_s_1_0_s_QVTOperational.getClassId("VarParameter", 0);
     public static final /*@NonNull*/ /*@NonInvalid*/ ClassId CLSSid_Variable = PACKid_$metamodel$.getClassId("Variable", 0);
@@ -248,12 +258,42 @@ public class AutoQVTOperationalLookupVisitor
     }
     
     /**
+     * visitDummyRelation(element : qvtoperational::DummyRelation) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitDummyRelation(final /*@NonNull*/ /*@NonInvalid*/ DummyRelation element_2) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_2);
+        return parentEnv;
+    }
+    
+    /**
+     * visitDummyRelationDomain(element : qvtoperational::DummyRelationDomain) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitDummyRelationDomain(final /*@NonNull*/ /*@NonInvalid*/ DummyRelationDomain element_3) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_3);
+        return parentEnv;
+    }
+    
+    /**
+     * visitDummyRelationalTransformation(element : qvtoperational::DummyRelationalTransformation) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitDummyRelationalTransformation(final /*@NonNull*/ /*@NonInvalid*/ DummyRelationalTransformation element_4) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_4);
+        return parentEnv;
+    }
+    
+    /**
      * visitEntryOperation(element : qvtoperational::EntryOperation) : env::Environment[?]
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitEntryOperation(final /*@NonNull*/ /*@NonInvalid*/ EntryOperation element_2) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_2);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitEntryOperation(final /*@NonNull*/ /*@NonInvalid*/ EntryOperation element_5) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_5);
         return parentEnv;
     }
     
@@ -262,8 +302,8 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitHelper(final /*@NonNull*/ /*@NonInvalid*/ Helper element_3) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_3);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitHelper(final /*@NonNull*/ /*@NonInvalid*/ Helper element_6) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_6);
         return parentEnv;
     }
     
@@ -272,8 +312,8 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitImperativeCallExp(final /*@NonNull*/ /*@NonInvalid*/ ImperativeCallExp element_4) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_4);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitImperativeCallExp(final /*@NonNull*/ /*@NonInvalid*/ ImperativeCallExp element_7) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_7);
         return parentEnv;
     }
     
@@ -295,17 +335,17 @@ public class AutoQVTOperationalLookupVisitor
      * else this.parentEnv(element)
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitImperativeOperation(final /*@NonNull*/ /*@NonInvalid*/ ImperativeOperation element_5) {
-        final /*@Nullable*/ /*@Thrown*/ OperationBody body = element_5.getBody();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitImperativeOperation(final /*@NonNull*/ /*@NonInvalid*/ ImperativeOperation element_8) {
+        final /*@Nullable*/ /*@Thrown*/ OperationBody body = element_8.getBody();
         final /*@Thrown*/ boolean eq = (body != null) ? body.equals(child) : (child == null);
         /*@Nullable*/ /*@Thrown*/ Environment symbol_1;
         if (eq) {
-            final /*@Nullable*/ /*@Thrown*/ VarParameter context = element_5.getContext();
+            final /*@Nullable*/ /*@Thrown*/ VarParameter context = element_8.getContext();
             final /*@NonNull*/ /*@Thrown*/ Environment addElement = context_0.addElement(context);
-            final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result = element_5.getResult();
+            final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result = element_8.getResult();
             assert result != null;
             final /*@NonNull*/ /*@Thrown*/ Environment addElements = addElement.addElements(result);
-            final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter = element_5.getOwnedParameter();
+            final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter = element_8.getOwnedParameter();
             final /*@NonNull*/ /*@Thrown*/ Environment inner = addElements.addElements(ownedParameter);
             final /*@Thrown*/ boolean hasFinalResult = inner.hasFinalResult();
             /*@Nullable*/ /*@Thrown*/ Environment symbol_0;
@@ -313,13 +353,13 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = inner;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_5);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_8);
                 symbol_0 = parentEnv;
             }
             symbol_1 = symbol_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_5);
+            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_8);
             symbol_1 = parentEnv_0;
         }
         return symbol_1;
@@ -330,8 +370,8 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitLibrary(final /*@NonNull*/ /*@NonInvalid*/ Library element_6) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_6);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitLibrary(final /*@NonNull*/ /*@NonInvalid*/ Library element_9) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_9);
         return parentEnv;
     }
     
@@ -388,15 +428,15 @@ public class AutoQVTOperationalLookupVisitor
      *   endif
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingBody(final /*@NonNull*/ /*@NonInvalid*/ MappingBody element_7) {
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> content = element_7.getContent();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingBody(final /*@NonNull*/ /*@NonInvalid*/ MappingBody element_10) {
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> content = element_10.getContent();
         assert content != null;
         final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_content = idResolver.createOrderedSetOfAll(ORD_CLSSid_OCLExpression, content);
         final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_content, child).booleanValue();
         /*@Nullable*/ /*@Thrown*/ Environment symbol_5;
         if (includes) {
             final /*@NonNull*/ /*@NonInvalid*/ DomainType TYP_imperativeocl_c_c_VariableInitExp_0 = idResolver.getType(CLSSid_VariableInitExp, null);
-            final /*@Nullable*/ /*@Thrown*/ List<Variable> variable = element_7.getVariable();
+            final /*@Nullable*/ /*@Thrown*/ List<Variable> variable = element_10.getVariable();
             assert variable != null;
             final /*@NonNull*/ /*@Thrown*/ Environment addElements = context.addElements(variable);
             /*@NonNull*/ /*@Thrown*/ OrderedSetValue.Accumulator accumulator = ValuesUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_OCLExpression);
@@ -448,20 +488,20 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = inner;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_7);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_10);
                 symbol_0 = parentEnv;
             }
             symbol_5 = symbol_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> initSection = element_7.getInitSection();
+            final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> initSection = element_10.getInitSection();
             assert initSection != null;
             final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_initSection = idResolver.createOrderedSetOfAll(ORD_CLSSid_OCLExpression, initSection);
             final /*@Thrown*/ boolean includes_0 = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_initSection, child).booleanValue();
             /*@Nullable*/ /*@Thrown*/ Environment symbol_4;
             if (includes_0) {
                 final /*@NonNull*/ /*@NonInvalid*/ DomainType TYP_imperativeocl_c_c_VariableInitExp_1 = idResolver.getType(CLSSid_VariableInitExp, null);
-                final /*@Nullable*/ /*@Thrown*/ List<Variable> variable_0 = element_7.getVariable();
+                final /*@Nullable*/ /*@Thrown*/ List<Variable> variable_0 = element_10.getVariable();
                 assert variable_0 != null;
                 final /*@NonNull*/ /*@Thrown*/ Environment addElements_0 = context.addElements(variable_0);
                 /*@NonNull*/ /*@Thrown*/ OrderedSetValue.Accumulator accumulator_1 = ValuesUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_OCLExpression);
@@ -513,20 +553,20 @@ public class AutoQVTOperationalLookupVisitor
                     symbol_1 = inner_0;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_7);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_10);
                     symbol_1 = parentEnv_0;
                 }
                 symbol_4 = symbol_1;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> endSection = element_7.getEndSection();
+                final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> endSection = element_10.getEndSection();
                 assert endSection != null;
                 final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_endSection = idResolver.createOrderedSetOfAll(ORD_CLSSid_OCLExpression, endSection);
                 final /*@Thrown*/ boolean includes_1 = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_endSection, child).booleanValue();
                 /*@Nullable*/ /*@Thrown*/ Environment symbol_3;
                 if (includes_1) {
                     final /*@NonNull*/ /*@NonInvalid*/ DomainType TYP_imperativeocl_c_c_VariableInitExp_2 = idResolver.getType(CLSSid_VariableInitExp, null);
-                    final /*@Nullable*/ /*@Thrown*/ List<Variable> variable_1 = element_7.getVariable();
+                    final /*@Nullable*/ /*@Thrown*/ List<Variable> variable_1 = element_10.getVariable();
                     assert variable_1 != null;
                     final /*@NonNull*/ /*@Thrown*/ Environment addElements_1 = context.addElements(variable_1);
                     /*@NonNull*/ /*@Thrown*/ OrderedSetValue.Accumulator accumulator_3 = ValuesUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_OCLExpression);
@@ -578,13 +618,13 @@ public class AutoQVTOperationalLookupVisitor
                         symbol_2 = inner_1;
                     }
                     else {
-                        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_1 = this.parentEnv(element_7);
+                        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_1 = this.parentEnv(element_10);
                         symbol_2 = parentEnv_1;
                     }
                     symbol_3 = symbol_2;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_2 = this.parentEnv(element_7);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_2 = this.parentEnv(element_10);
                     symbol_3 = parentEnv_2;
                 }
                 symbol_4 = symbol_3;
@@ -599,8 +639,8 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingCallExp(final /*@NonNull*/ /*@NonInvalid*/ MappingCallExp element_8) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_8);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingCallExp(final /*@NonNull*/ /*@NonInvalid*/ MappingCallExp element_11) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_11);
         return parentEnv;
     }
     
@@ -647,17 +687,17 @@ public class AutoQVTOperationalLookupVisitor
      *   endif
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingOperation(final /*@NonNull*/ /*@NonInvalid*/ MappingOperation element_9) {
-        final /*@Nullable*/ /*@Thrown*/ OperationBody body = element_9.getBody();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingOperation(final /*@NonNull*/ /*@NonInvalid*/ MappingOperation element_12) {
+        final /*@Nullable*/ /*@Thrown*/ OperationBody body = element_12.getBody();
         final /*@Thrown*/ boolean eq = (body != null) ? body.equals(child) : (child == null);
         /*@Nullable*/ /*@Thrown*/ Environment symbol_5;
         if (eq) {
-            final /*@Nullable*/ /*@Thrown*/ VarParameter context = element_9.getContext();
+            final /*@Nullable*/ /*@Thrown*/ VarParameter context = element_12.getContext();
             final /*@NonNull*/ /*@Thrown*/ Environment addElement = context_2.addElement(context);
-            final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result = element_9.getResult();
+            final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result = element_12.getResult();
             assert result != null;
             final /*@NonNull*/ /*@Thrown*/ Environment addElements = addElement.addElements(result);
-            final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter = element_9.getOwnedParameter();
+            final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter = element_12.getOwnedParameter();
             final /*@NonNull*/ /*@Thrown*/ Environment inner = addElements.addElements(ownedParameter);
             final /*@Thrown*/ boolean hasFinalResult = inner.hasFinalResult();
             /*@Nullable*/ /*@Thrown*/ Environment symbol_0;
@@ -665,19 +705,19 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = inner;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_9);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_12);
                 symbol_0 = parentEnv;
             }
             symbol_5 = symbol_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ DomainExpression when = element_9.getWhen();
+            final /*@Nullable*/ /*@Thrown*/ DomainExpression when = element_12.getWhen();
             final /*@Thrown*/ boolean eq_0 = (when != null) ? when.equals(child) : (child == null);
             /*@Nullable*/ /*@Thrown*/ Environment symbol_4;
             if (eq_0) {
-                final /*@Nullable*/ /*@Thrown*/ VarParameter context_0 = element_9.getContext();
+                final /*@Nullable*/ /*@Thrown*/ VarParameter context_0 = element_12.getContext();
                 final /*@NonNull*/ /*@Thrown*/ Environment addElement_0 = context_2.addElement(context_0);
-                final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter_0 = element_9.getOwnedParameter();
+                final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter_0 = element_12.getOwnedParameter();
                 final /*@NonNull*/ /*@Thrown*/ Environment inner_0 = addElement_0.addElements(ownedParameter_0);
                 final /*@Thrown*/ boolean hasFinalResult_0 = inner_0.hasFinalResult();
                 /*@Nullable*/ /*@Thrown*/ Environment symbol_1;
@@ -685,21 +725,21 @@ public class AutoQVTOperationalLookupVisitor
                     symbol_1 = inner_0;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_9);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_12);
                     symbol_1 = parentEnv_0;
                 }
                 symbol_4 = symbol_1;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ DomainExpression where = element_9.getWhere();
+                final /*@Nullable*/ /*@Thrown*/ DomainExpression where = element_12.getWhere();
                 final /*@Thrown*/ boolean eq_1 = (where != null) ? where.equals(child) : (child == null);
                 /*@Nullable*/ /*@Thrown*/ Environment symbol_3;
                 if (eq_1) {
-                    final /*@Nullable*/ /*@Thrown*/ VarParameter context_1 = element_9.getContext();
+                    final /*@Nullable*/ /*@Thrown*/ VarParameter context_1 = element_12.getContext();
                     final /*@NonNull*/ /*@Thrown*/ Environment addElement_1 = context_2.addElement(context_1);
-                    final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter_1 = element_9.getOwnedParameter();
+                    final /*@NonNull*/ /*@Thrown*/ List<? extends DomainTypedElement> ownedParameter_1 = element_12.getOwnedParameter();
                     final /*@NonNull*/ /*@Thrown*/ Environment addElements_0 = addElement_1.addElements(ownedParameter_1);
-                    final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result_0 = element_9.getResult();
+                    final /*@Nullable*/ /*@Thrown*/ List<VarParameter> result_0 = element_12.getResult();
                     assert result_0 != null;
                     final /*@NonNull*/ /*@Thrown*/ Environment inner_1 = addElements_0.addElements(result_0);
                     final /*@Thrown*/ boolean hasFinalResult_1 = inner_1.hasFinalResult();
@@ -708,13 +748,13 @@ public class AutoQVTOperationalLookupVisitor
                         symbol_2 = inner_1;
                     }
                     else {
-                        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_1 = this.parentEnv(element_9);
+                        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_1 = this.parentEnv(element_12);
                         symbol_2 = parentEnv_1;
                     }
                     symbol_3 = symbol_2;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_2 = this.parentEnv(element_9);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_2 = this.parentEnv(element_12);
                     symbol_3 = parentEnv_2;
                 }
                 symbol_4 = symbol_3;
@@ -729,8 +769,18 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingParameter(final /*@NonNull*/ /*@NonInvalid*/ MappingParameter element_10) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_10);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitMappingParameter(final /*@NonNull*/ /*@NonInvalid*/ MappingParameter element_13) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_13);
+        return parentEnv;
+    }
+    
+    /**
+     * visitModelParameter(element : qvtoperational::ModelParameter) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModelParameter(final /*@NonNull*/ /*@NonInvalid*/ ModelParameter element_14) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_14);
         return parentEnv;
     }
     
@@ -757,8 +807,8 @@ public class AutoQVTOperationalLookupVisitor
      *     endif
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModelType(final /*@NonNull*/ /*@NonInvalid*/ ModelType element_11) {
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> metamodel_0 = element_11.getMetamodel();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModelType(final /*@NonNull*/ /*@NonInvalid*/ ModelType element_15) {
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> metamodel_0 = element_15.getMetamodel();
         assert metamodel_0 != null;
         final /*@NonNull*/ /*@Thrown*/ Environment inner_0 = context.addElements(metamodel_0);
         final /*@Thrown*/ boolean hasFinalResult_0 = inner_0.hasFinalResult();
@@ -767,10 +817,10 @@ public class AutoQVTOperationalLookupVisitor
             symbol_1 = inner_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_11);
+            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_15);
             symbol_1 = parentEnv_0;
         }
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> additionalCondition = element_11.getAdditionalCondition();
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> additionalCondition = element_15.getAdditionalCondition();
         assert additionalCondition != null;
         final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_additionalCondition = idResolver.createOrderedSetOfAll(ORD_CLSSid_OCLExpression, additionalCondition);
         final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_additionalCondition, child).booleanValue();
@@ -807,18 +857,18 @@ public class AutoQVTOperationalLookupVisitor
      *       endif
      *   endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModule(final /*@NonNull*/ /*@NonInvalid*/ Module element_12) {
-        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainProperty> ownedAttribute = element_12.getOwnedAttribute();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModule(final /*@NonNull*/ /*@NonInvalid*/ Module element_16) {
+        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainProperty> ownedAttribute = element_16.getOwnedAttribute();
         final /*@NonNull*/ /*@Thrown*/ Environment addElements = context.addElements(ownedAttribute);
-        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainOperation> ownedOperation = element_12.getOwnedOperation();
+        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainOperation> ownedOperation = element_16.getOwnedOperation();
         final /*@NonNull*/ /*@Thrown*/ Environment addElements_0 = addElements.addElements(ownedOperation);
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainType> ownedType = element_12.getOwnedType();
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainType> ownedType = element_16.getOwnedType();
         assert ownedType != null;
         final /*@NonNull*/ /*@Thrown*/ Environment addElements_1 = addElements_0.addElements(ownedType);
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> nestedPackage = element_12.getNestedPackage();
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> nestedPackage = element_16.getNestedPackage();
         assert nestedPackage != null;
         final /*@NonNull*/ /*@Thrown*/ Environment addElements_2 = addElements_1.addElements(nestedPackage);
-        final /*@Nullable*/ /*@Thrown*/ List<Variable> ownedVariable = element_12.getOwnedVariable();
+        final /*@Nullable*/ /*@Thrown*/ List<Variable> ownedVariable = element_16.getOwnedVariable();
         assert ownedVariable != null;
         final /*@NonNull*/ /*@Thrown*/ Environment inner = addElements_2.addElements(ownedVariable);
         final /*@Thrown*/ boolean hasFinalResult = inner.hasFinalResult();
@@ -834,7 +884,7 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = null;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_12);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_16);
                 symbol_0 = parentEnv;
             }
             symbol_1 = symbol_0;
@@ -843,12 +893,22 @@ public class AutoQVTOperationalLookupVisitor
     }
     
     /**
+     * visitModuleImport(element : qvtoperational::ModuleImport) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitModuleImport(final /*@NonNull*/ /*@NonInvalid*/ ModuleImport element_17) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_17);
+        return parentEnv;
+    }
+    
+    /**
      * visitObjectExp(element : qvtoperational::ObjectExp) : env::Environment[?]
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitObjectExp(final /*@NonNull*/ /*@NonInvalid*/ ObjectExp element_13) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_13);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitObjectExp(final /*@NonNull*/ /*@NonInvalid*/ ObjectExp element_18) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_18);
         return parentEnv;
     }
     
@@ -873,15 +933,15 @@ public class AutoQVTOperationalLookupVisitor
      * else this.parentEnv(element)
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitOperationBody(final /*@NonNull*/ /*@NonInvalid*/ OperationBody element_14) {
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> content = element_14.getContent();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitOperationBody(final /*@NonNull*/ /*@NonInvalid*/ OperationBody element_19) {
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainExpression> content = element_19.getContent();
         assert content != null;
         final /*@NonNull*/ /*@Thrown*/ OrderedSetValue BOXED_content = idResolver.createOrderedSetOfAll(ORD_CLSSid_OCLExpression, content);
         final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_content, child).booleanValue();
         /*@Nullable*/ /*@Thrown*/ Environment symbol_1;
         if (includes) {
             final /*@NonNull*/ /*@NonInvalid*/ DomainType TYP_imperativeocl_c_c_VariableInitExp_0 = idResolver.getType(CLSSid_VariableInitExp, null);
-            final /*@Nullable*/ /*@Thrown*/ List<Variable> variable = element_14.getVariable();
+            final /*@Nullable*/ /*@Thrown*/ List<Variable> variable = element_19.getVariable();
             assert variable != null;
             final /*@NonNull*/ /*@Thrown*/ Environment addElements = context.addElements(variable);
             /*@NonNull*/ /*@Thrown*/ OrderedSetValue.Accumulator accumulator = ValuesUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_OCLExpression);
@@ -933,13 +993,13 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = inner;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_14);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_19);
                 symbol_0 = parentEnv;
             }
             symbol_1 = symbol_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_14);
+            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_19);
             symbol_1 = parentEnv_0;
         }
         return symbol_1;
@@ -991,13 +1051,13 @@ public class AutoQVTOperationalLookupVisitor
      *     endif
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitOperationalTransformation(final /*@NonNull*/ /*@NonInvalid*/ OperationalTransformation element_15) {
-        final /*@Nullable*/ /*@Thrown*/ List<ModelParameter> modelParameter = element_15.getModelParameter();
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> nestedPackage = element_15.getNestedPackage();
-        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainProperty> ownedAttribute = element_15.getOwnedAttribute();
-        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainOperation> ownedOperation = element_15.getOwnedOperation();
-        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainType> ownedType = element_15.getOwnedType();
-        final /*@Nullable*/ /*@Thrown*/ List<Variable> ownedVariable = element_15.getOwnedVariable();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitOperationalTransformation(final /*@NonNull*/ /*@NonInvalid*/ OperationalTransformation element_20) {
+        final /*@Nullable*/ /*@Thrown*/ List<ModelParameter> modelParameter = element_20.getModelParameter();
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainPackage> nestedPackage = element_20.getNestedPackage();
+        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainProperty> ownedAttribute = element_20.getOwnedAttribute();
+        final /*@NonNull*/ /*@Thrown*/ List<? extends DomainOperation> ownedOperation = element_20.getOwnedOperation();
+        final /*@Nullable*/ /*@Thrown*/ List<? extends DomainType> ownedType = element_20.getOwnedType();
+        final /*@Nullable*/ /*@Thrown*/ List<Variable> ownedVariable = element_20.getOwnedVariable();
         assert modelParameter != null;
         assert nestedPackage != null;
         assert ownedType != null;
@@ -1024,7 +1084,7 @@ public class AutoQVTOperationalLookupVisitor
                     symbol_0 = null;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_15);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_20);
                     symbol_0 = parentEnv;
                 }
                 symbol_1 = symbol_0;
@@ -1047,7 +1107,7 @@ public class AutoQVTOperationalLookupVisitor
                     symbol_2 = null;
                 }
                 else {
-                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_15);
+                    final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_20);
                     symbol_2 = parentEnv_0;
                 }
                 symbol_3 = symbol_2;
@@ -1073,12 +1133,12 @@ public class AutoQVTOperationalLookupVisitor
      * else this.parentEnv(element)
      * endif
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitResolveExp(final /*@NonNull*/ /*@NonInvalid*/ ResolveExp element_16) {
-        final /*@Nullable*/ /*@Thrown*/ DomainExpression condition = element_16.getCondition();
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitResolveExp(final /*@NonNull*/ /*@NonInvalid*/ ResolveExp element_21) {
+        final /*@Nullable*/ /*@Thrown*/ DomainExpression condition = element_21.getCondition();
         final /*@Thrown*/ boolean eq = (condition != null) ? condition.equals(child) : (child == null);
         /*@Nullable*/ /*@Thrown*/ Environment symbol_1;
         if (eq) {
-            final /*@Nullable*/ /*@Thrown*/ Variable target = element_16.getTarget();
+            final /*@Nullable*/ /*@Thrown*/ Variable target = element_21.getTarget();
             final /*@NonNull*/ /*@Thrown*/ Environment inner = context.addElement(target);
             final /*@Thrown*/ boolean hasFinalResult = inner.hasFinalResult();
             /*@Nullable*/ /*@Thrown*/ Environment symbol_0;
@@ -1086,13 +1146,13 @@ public class AutoQVTOperationalLookupVisitor
                 symbol_0 = inner;
             }
             else {
-                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_16);
+                final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_21);
                 symbol_0 = parentEnv;
             }
             symbol_1 = symbol_0;
         }
         else {
-            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_16);
+            final /*@Nullable*/ /*@Thrown*/ Environment parentEnv_0 = this.parentEnv(element_21);
             symbol_1 = parentEnv_0;
         }
         return symbol_1;
@@ -1103,8 +1163,18 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitResolveInExp(final /*@NonNull*/ /*@NonInvalid*/ ResolveInExp element_17) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_17);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitResolveInExp(final /*@NonNull*/ /*@NonInvalid*/ ResolveInExp element_22) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_22);
+        return parentEnv;
+    }
+    
+    /**
+     * visitTag(element : qvtoperational::Tag) : env::Environment[?]
+     * 
+     * this.parentEnv(element)
+     */
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitTag(final /*@NonNull*/ /*@NonInvalid*/ Tag element_23) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_23);
         return parentEnv;
     }
     
@@ -1113,8 +1183,8 @@ public class AutoQVTOperationalLookupVisitor
      * 
      * this.parentEnv(element)
      */
-    public /*@Nullable*/ /*@NonInvalid*/ Environment visitVarParameter(final /*@NonNull*/ /*@NonInvalid*/ VarParameter element_18) {
-        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_18);
+    public /*@Nullable*/ /*@NonInvalid*/ Environment visitVarParameter(final /*@NonNull*/ /*@NonInvalid*/ VarParameter element_24) {
+        final /*@Nullable*/ /*@Thrown*/ Environment parentEnv = this.parentEnv(element_24);
         return parentEnv;
     }
 }
