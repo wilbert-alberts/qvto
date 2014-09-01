@@ -15,20 +15,16 @@ package org.eclipse.qvto.examples.pivot.qvtoperational.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -36,20 +32,16 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.examples.domain.ids.IdManager;
 import org.eclipse.ocl.examples.domain.ids.PackageId;
 import org.eclipse.ocl.examples.pivot.Package;
 import org.eclipse.ocl.examples.pivot.PivotPackage;
 import org.eclipse.ocl.examples.pivot.ProfileApplication;
 import org.eclipse.ocl.examples.pivot.Property;
-import org.eclipse.ocl.examples.pivot.Root;
 import org.eclipse.ocl.examples.pivot.TemplateableElement;
 import org.eclipse.ocl.examples.pivot.Type;
 import org.eclipse.ocl.examples.pivot.Variable;
-
 import org.eclipse.ocl.examples.pivot.internal.impl.ClassImpl;
-
 import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.qvtoperational.EntryOperation;
 import org.eclipse.qvto.examples.pivot.qvtoperational.ModelType;
@@ -918,16 +910,7 @@ public class ModuleImpl extends ClassImpl implements Module {
 				packageId2 = packageId;
 				if (packageId2 == null) {
 					synchronized (this) {
-						EObject eContainer2 = eContainer();
-						String externalURI = eContainer2 instanceof Root ? ((Root)eContainer2).getExternalURI() : null;
-						@NonNull String nsUri = PivotPackage.eNS_URI;
-						if (nsUri.equals(externalURI)) {
-							packageId2 = IdManager.INSTANCE.getNsURIPackageId(nsUri, PivotPackage.eINSTANCE);
-						}
-						else {
-							packageId2 = IdManager.INSTANCE.getPackageId(this);
-						}
-						packageId = packageId2;
+						packageId = packageId2 = IdManager.getPackageId(this);
 					}
 				}
 			}
