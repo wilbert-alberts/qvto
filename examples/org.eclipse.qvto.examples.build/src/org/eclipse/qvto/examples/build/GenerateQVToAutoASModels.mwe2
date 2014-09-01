@@ -95,7 +95,7 @@ Workflow {
     	projectPrefix = imperativeOclProjectPrefix 
     	superProjectName = oclProjectName
     	superProjectPrefix = oclProjectPrefix
-    	baseProjectPrefix = oclProjectPrefix
+//    	baseProjectPrefix = oclProjectPrefix
     	genModelFile = imperativeOclGenModelProjectPath
     	modelPackageName = imperativeOclModelPackage
     	modelName = imperativeOclModelName
@@ -114,7 +114,7 @@ Workflow {
     	projectPrefix =  qvtOperationalProjectPrefix
     	superProjectName = imperativeOclProjectName
     	superProjectPrefix = imperativeOclProjectPrefix
-    	baseProjectPrefix = oclProjectPrefix
+//    	baseProjectPrefix = oclProjectPrefix
     	genModelFile = qvtOperationalGenModelProjectPath
     	modelPackageName = qvtOperationalModelPackage
     	modelName = qvtOperationalModelName

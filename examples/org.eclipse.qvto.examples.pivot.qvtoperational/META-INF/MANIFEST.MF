@@ -9,7 +9,6 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.qvto.examples.pivot.qvtoperational,
  org.eclipse.qvto.examples.pivot.qvtoperational.impl,
- org.eclipse.qvto.examples.pivot.qvtoperational.lookup,
  org.eclipse.qvto.examples.pivot.qvtoperational.util,
  org.eclipse.qvto.examples.pivot.qvtoperational.utilities
 Require-Bundle: org.eclipse.core.runtime,

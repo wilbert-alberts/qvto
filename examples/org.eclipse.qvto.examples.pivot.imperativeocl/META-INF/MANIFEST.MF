@@ -9,7 +9,6 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.qvto.examples.pivot.imperativeocl,
  org.eclipse.qvto.examples.pivot.imperativeocl.impl,
- org.eclipse.qvto.examples.pivot.imperativeocl.lookup,
  org.eclipse.qvto.examples.pivot.imperativeocl.manager,
  org.eclipse.qvto.examples.pivot.imperativeocl.util,
  org.eclipse.qvto.examples.pivot.imperativeocl.utilities
