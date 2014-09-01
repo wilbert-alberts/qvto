@@ -30,7 +30,7 @@ import "http://www.eclipse.org/qvt/pivot/1.0/ImperativeOCLCS" as imperativeocl
 TopLevelCS : ^import+=ImportCS* 
 	// unit+=UnitElementCS* FIXME
 	(ownedNestedPackage+= UnitPacakgeCS)*
-	(ownedType+=ModelTypeCS)*
+	//(ownedType+=ModelTypeCS)*
 ;
 
 enum ClassifierKind : DATATYPE='datatype' | PRIMITIVE='primitive' | EXCEPTION='exception' | CLASS='class';
