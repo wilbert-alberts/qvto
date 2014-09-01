@@ -17,7 +17,7 @@ package org.eclipse.qvto.examples.build.utilities;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
+import org.eclipse.ocl.examples.autogen.cs2as.CS2ASCodeGenerator;
 import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
 import org.eclipse.ocl.examples.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.qvto.examples.xtext.imperativeocl.ImperativeOCLStandaloneSetup;
@@ -47,11 +47,11 @@ public class GenerateCS2ASVisitors extends org.eclipse.ocl.examples.build.xtend.
 	@Override 
 	protected void generateContainmentVisitor(@NonNull GenPackage genPackage) {
 		if (isDerived()) {
-			AutoCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
+			CS2ASCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
 				superProjectPrefix, superProjectName, superVisitorClassName
 			);	
 		} else {
-			AutoCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
+			CS2ASCodeGenerator.generate(genPackage, projectPrefix, projectName, visitorPackageName, visitorClassName,
 				null, null, null);
 		}
 	}
