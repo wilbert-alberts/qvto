@@ -175,6 +175,8 @@
         name="extent" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Variable"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="ImperativeOCL.InstantiationExp.instantiatedClass"
         name="instantiatedClass" lowerBound="1" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Class"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initializationOperation"
+        eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="ImperativeOCL.ListLiteralExp" name="ListLiteralExp"
       eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//LiteralExp">
