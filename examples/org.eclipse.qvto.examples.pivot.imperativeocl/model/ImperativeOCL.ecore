@@ -31,7 +31,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="ImperativeOCL.AssertExp.log"
         name="log" eType="#ImperativeOCL.LogExp" containment="true" resolveProxies="false">
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
-        <details key="body" value="logExpression"/>
+        <details key="body" value="assertExpression"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="ImperativeOCL.AssertExp.severity"
@@ -119,11 +119,7 @@
       eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="ImperativeOCL.DictLiteralExp.part"
         name="part" ordered="false" upperBound="-1" eType="#ImperativeOCL.DictLiteralPart"
-        containment="true" resolveProxies="false">
-      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
-        <details key="body" value="partOwner"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        containment="true" resolveProxies="false" eOpposite="#//DictLiteralPart/partOwner"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="ImperativeOCL.DictLiteralPart" name="DictLiteralPart"
       eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//Element">
@@ -141,6 +137,8 @@
         <details key="body" value="valOwner"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="partOwner" lowerBound="1"
+        eType="#ImperativeOCL.DictLiteralExp" eOpposite="#ImperativeOCL.DictLiteralExp.part"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="ImperativeOCL.DictionaryType" name="DictionaryType"
       eSuperTypes="../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//CollectionType">
@@ -209,7 +207,7 @@
         name="element" upperBound="-1" eType="ecore:EClass ../../org.eclipse.ocl.examples.pivot/model/Pivot.ecore#//OCLExpression"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
-        <details key="body" value="elementOwner"/>
+        <details key="body" value="listLiteralExpression"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
