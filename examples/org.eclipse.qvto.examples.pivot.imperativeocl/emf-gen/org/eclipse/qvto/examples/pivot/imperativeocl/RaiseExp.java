@@ -48,6 +48,7 @@ public interface RaiseExp extends ImperativeExpression {
 	 * @see #setArgument(OCLExpression)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getRaiseExp_Argument()
 	 * @model containment="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='raiseExpression'"
 	 * @generated
 	 */
 	OCLExpression getArgument();

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.ocl.examples.domain.elements.Nameable;
 import org.eclipse.ocl.examples.pivot.CallExp;
 import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.DataType;
@@ -175,18 +176,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createLogExpAdapter();
 			}
 			@Override
-			public Adapter caseOrderedTupleLiteralExp(OrderedTupleLiteralExp object) {
-				return createOrderedTupleLiteralExpAdapter();
-			}
-			@Override
-			public Adapter caseOrderedTupleLiteralPart(OrderedTupleLiteralPart object) {
-				return createOrderedTupleLiteralPartAdapter();
-			}
-			@Override
-			public Adapter caseOrderedTupleType(OrderedTupleType object) {
-				return createOrderedTupleTypeAdapter();
-			}
-			@Override
 			public Adapter caseRaiseExp(RaiseExp object) {
 				return createRaiseExpAdapter();
 			}
@@ -211,10 +200,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createUnlinkExpAdapter();
 			}
 			@Override
-			public Adapter caseUnpackExp(UnpackExp object) {
-				return createUnpackExpAdapter();
-			}
-			@Override
 			public Adapter caseVariableInitExp(VariableInitExp object) {
 				return createVariableInitExpAdapter();
 			}
@@ -235,7 +220,7 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 				return createElementAdapter();
 			}
 			@Override
-			public Adapter caseNameable(org.eclipse.ocl.examples.domain.elements.Nameable object) {
+			public Adapter caseNameable(Nameable object) {
 				return createNameableAdapter();
 			}
 			@Override
@@ -593,48 +578,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp <em>Ordered Tuple Literal Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp
-	 * @generated
-	 */
-	public Adapter createOrderedTupleLiteralExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart <em>Ordered Tuple Literal Part</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart
-	 * @generated
-	 */
-	public Adapter createOrderedTupleLiteralPartAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType <em>Ordered Tuple Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType
-	 * @generated
-	 */
-	public Adapter createOrderedTupleTypeAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp <em>Raise Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -715,20 +658,6 @@ public class ImperativeOCLAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUnlinkExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp <em>Unpack Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp
-	 * @generated
-	 */
-	public Adapter createUnpackExpAdapter() {
 		return null;
 	}
 

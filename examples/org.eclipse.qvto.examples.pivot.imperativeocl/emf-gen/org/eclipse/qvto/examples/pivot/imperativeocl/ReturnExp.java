@@ -46,6 +46,7 @@ public interface ReturnExp extends ImperativeExpression {
 	 * @see #setValue(OCLExpression)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getReturnExp_Value()
 	 * @model containment="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='returnExpression'"
 	 * @generated
 	 */
 	OCLExpression getValue();

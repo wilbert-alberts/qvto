@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.eclipse.ocl.examples.domain.elements.Nameable;
 import org.eclipse.ocl.examples.pivot.CallExp;
 import org.eclipse.ocl.examples.pivot.CollectionType;
 import org.eclipse.ocl.examples.pivot.DataType;
@@ -358,42 +359,6 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP: {
-				OrderedTupleLiteralExp orderedTupleLiteralExp = (OrderedTupleLiteralExp)theEObject;
-				T result = caseOrderedTupleLiteralExp(orderedTupleLiteralExp);
-				if (result == null) result = caseLiteralExp(orderedTupleLiteralExp);
-				if (result == null) result = caseOCLExpression(orderedTupleLiteralExp);
-				if (result == null) result = caseTypedElement(orderedTupleLiteralExp);
-				if (result == null) result = caseNamedElement(orderedTupleLiteralExp);
-				if (result == null) result = caseElement(orderedTupleLiteralExp);
-				if (result == null) result = caseNameable(orderedTupleLiteralExp);
-				if (result == null) result = caseVisitable(orderedTupleLiteralExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_PART: {
-				OrderedTupleLiteralPart orderedTupleLiteralPart = (OrderedTupleLiteralPart)theEObject;
-				T result = caseOrderedTupleLiteralPart(orderedTupleLiteralPart);
-				if (result == null) result = caseElement(orderedTupleLiteralPart);
-				if (result == null) result = caseVisitable(orderedTupleLiteralPart);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE: {
-				OrderedTupleType orderedTupleType = (OrderedTupleType)theEObject;
-				T result = caseOrderedTupleType(orderedTupleType);
-				if (result == null) result = caseClass(orderedTupleType);
-				if (result == null) result = caseType(orderedTupleType);
-				if (result == null) result = caseNamespace(orderedTupleType);
-				if (result == null) result = caseNamedElement(orderedTupleType);
-				if (result == null) result = caseTemplateableElement(orderedTupleType);
-				if (result == null) result = caseParameterableElement(orderedTupleType);
-				if (result == null) result = caseElement(orderedTupleType);
-				if (result == null) result = caseNameable(orderedTupleType);
-				if (result == null) result = caseVisitable(orderedTupleType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ImperativeOCLPackage.RAISE_EXP: {
 				RaiseExp raiseExp = (RaiseExp)theEObject;
 				T result = caseRaiseExp(raiseExp);
@@ -471,19 +436,6 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 				if (result == null) result = caseElement(unlinkExp);
 				if (result == null) result = caseNameable(unlinkExp);
 				if (result == null) result = caseVisitable(unlinkExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ImperativeOCLPackage.UNPACK_EXP: {
-				UnpackExp unpackExp = (UnpackExp)theEObject;
-				T result = caseUnpackExp(unpackExp);
-				if (result == null) result = caseImperativeExpression(unpackExp);
-				if (result == null) result = caseOCLExpression(unpackExp);
-				if (result == null) result = caseTypedElement(unpackExp);
-				if (result == null) result = caseNamedElement(unpackExp);
-				if (result == null) result = caseElement(unpackExp);
-				if (result == null) result = caseNameable(unpackExp);
-				if (result == null) result = caseVisitable(unpackExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -810,51 +762,6 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Ordered Tuple Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Ordered Tuple Literal Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOrderedTupleLiteralExp(OrderedTupleLiteralExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Ordered Tuple Literal Part</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Ordered Tuple Literal Part</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOrderedTupleLiteralPart(OrderedTupleLiteralPart object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Ordered Tuple Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Ordered Tuple Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOrderedTupleType(OrderedTupleType object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Raise Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -945,21 +852,6 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Unpack Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Unpack Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseUnpackExp(UnpackExp object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Variable Init Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1045,7 +937,7 @@ public class ImperativeOCLSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNameable(org.eclipse.ocl.examples.domain.elements.Nameable object) {
+	public T caseNameable(Nameable object) {
 		return null;
 	}
 

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.ocl.examples.pivot.Operation;
 import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.ocl.examples.pivot.util.Visitor;
@@ -48,6 +49,7 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl#getArgument <em>Argument</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl#getExtent <em>Extent</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl#getInstantiatedClass <em>Instantiated Class</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.InstantiationExpImpl#getInitializationOperation <em>Initialization Operation</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,6 +85,16 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * @ordered
 	 */
 	protected org.eclipse.ocl.examples.pivot.Class instantiatedClass;
+
+	/**
+	 * The cached value of the '{@link #getInitializationOperation() <em>Initialization Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInitializationOperation()
+	 * @generated
+	 * @ordered
+	 */
+	protected Operation initializationOperation;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +208,44 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Operation getInitializationOperation() {
+		if (initializationOperation != null && ((EObject)initializationOperation).eIsProxy()) {
+			InternalEObject oldInitializationOperation = (InternalEObject)initializationOperation;
+			initializationOperation = (Operation)eResolveProxy(oldInitializationOperation);
+			if (initializationOperation != oldInitializationOperation) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION, oldInitializationOperation, initializationOperation));
+			}
+		}
+		return initializationOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Operation basicGetInitializationOperation() {
+		return initializationOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInitializationOperation(Operation newInitializationOperation) {
+		Operation oldInitializationOperation = initializationOperation;
+		initializationOperation = newInitializationOperation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION, oldInitializationOperation, initializationOperation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitInstantiationExp(this);
 	}
@@ -239,6 +289,9 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				if (resolve) return getInstantiatedClass();
 				return basicGetInstantiatedClass();
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION:
+				if (resolve) return getInitializationOperation();
+				return basicGetInitializationOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -262,6 +315,9 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				setInstantiatedClass((org.eclipse.ocl.examples.pivot.Class)newValue);
 				return;
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION:
+				setInitializationOperation((Operation)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -283,6 +339,9 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				setInstantiatedClass((org.eclipse.ocl.examples.pivot.Class)null);
 				return;
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION:
+				setInitializationOperation((Operation)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -301,6 +360,8 @@ public class InstantiationExpImpl extends ImperativeExpressionImpl implements In
 				return extent != null;
 			case ImperativeOCLPackage.INSTANTIATION_EXP__INSTANTIATED_CLASS:
 				return instantiatedClass != null;
+			case ImperativeOCLPackage.INSTANTIATION_EXP__INITIALIZATION_OPERATION:
+				return initializationOperation != null;
 		}
 		return super.eIsSet(featureID);
 	}

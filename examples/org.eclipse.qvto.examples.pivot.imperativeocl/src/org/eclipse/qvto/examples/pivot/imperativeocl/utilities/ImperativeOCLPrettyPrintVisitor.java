@@ -37,16 +37,12 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ListType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.LogExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.SwitchExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.TryExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.Typedef;
 import org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.WhileExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -172,24 +168,6 @@ public class ImperativeOCLPrettyPrintVisitor extends EssentialOCLPrettyPrintVisi
 	}
 
 	@Nullable
-	public Object visitOrderedTupleLiteralExp(OrderedTupleLiteralExp object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Nullable
-	public Object visitOrderedTupleLiteralPart(OrderedTupleLiteralPart object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Nullable
-	public Object visitOrderedTupleType(OrderedTupleType object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Nullable
 	public Object visitRaiseExp(RaiseExp object) {
 		// TODO Auto-generated method stub
 		return null;
@@ -221,12 +199,6 @@ public class ImperativeOCLPrettyPrintVisitor extends EssentialOCLPrettyPrintVisi
 
 	@Nullable
 	public Object visitUnlinkExp(UnlinkExp object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Nullable
-	public Object visitUnpackExp(UnpackExp object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

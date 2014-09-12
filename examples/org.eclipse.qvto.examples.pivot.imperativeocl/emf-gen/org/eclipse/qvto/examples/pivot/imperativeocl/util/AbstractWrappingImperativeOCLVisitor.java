@@ -241,39 +241,6 @@ public abstract class AbstractWrappingImperativeOCLVisitor<R, C, D extends Imper
 		}
 	}
 
-	public @Nullable R visitOrderedTupleLiteralExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp object) {
-		P prologue = preVisit(object);
-		try {
-			R result = delegate.visitOrderedTupleLiteralExp(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	public @Nullable R visitOrderedTupleLiteralPart(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart object) {
-		P prologue = preVisit(object);
-		try {
-			R result = delegate.visitOrderedTupleLiteralPart(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	public @Nullable R visitOrderedTupleType(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType object) {
-		P prologue = preVisit(object);
-		try {
-			R result = delegate.visitOrderedTupleType(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
 	public @Nullable R visitRaiseExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp object) {
 		P prologue = preVisit(object);
 		try {
@@ -333,17 +300,6 @@ public abstract class AbstractWrappingImperativeOCLVisitor<R, C, D extends Imper
 		P prologue = preVisit(object);
 		try {
 			R result = delegate.visitUnlinkExp(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	public @Nullable R visitUnpackExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp object) {
-		P prologue = preVisit(object);
-		try {
-			R result = delegate.visitUnpackExp(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {

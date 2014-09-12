@@ -117,18 +117,6 @@ public abstract class AbstractExtendingImperativeOCLVisitor<R, C>
 		return visitOperationCallExp(object);
 	}
 
-	public @Nullable R visitOrderedTupleLiteralExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp object) {
-		return visitLiteralExp(object);
-	}
-
-	public @Nullable R visitOrderedTupleLiteralPart(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart object) {
-		return visitElement(object);
-	}
-
-	public @Nullable R visitOrderedTupleType(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType object) {
-		return visitClass(object);
-	}
-
 	public @Nullable R visitRaiseExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp object) {
 		return visitImperativeExpression(object);
 	}
@@ -150,10 +138,6 @@ public abstract class AbstractExtendingImperativeOCLVisitor<R, C>
 	}
 
 	public @Nullable R visitUnlinkExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp object) {
-		return visitImperativeExpression(object);
-	}
-
-	public @Nullable R visitUnpackExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp object) {
 		return visitImperativeExpression(object);
 	}
 

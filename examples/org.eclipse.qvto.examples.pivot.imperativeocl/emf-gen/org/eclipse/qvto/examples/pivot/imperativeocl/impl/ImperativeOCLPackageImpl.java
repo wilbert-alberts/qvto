@@ -47,9 +47,6 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ListLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ListType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.LogExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart;
-import org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType;
 import org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ReturnExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.SeverityKind;
@@ -57,7 +54,6 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.SwitchExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.TryExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.Typedef;
 import org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp;
-import org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.WhileExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -207,27 +203,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass orderedTupleLiteralExpEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass orderedTupleLiteralPartEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass orderedTupleTypeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass raiseExpEClass = null;
 
 	/**
@@ -264,13 +239,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * @generated
 	 */
 	private EClass unlinkExpEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass unpackExpEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -621,6 +589,15 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCatchExp_ExceptionVariable() {
+		return (EReference)catchExpEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getCatchExp__Accept__ImperativeOCLVisitor() {
 		return catchExpEClass.getEOperations().get(0);
 	}
@@ -767,6 +744,15 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 */
 	public EReference getDictLiteralPart_Value() {
 		return (EReference)dictLiteralPartEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDictLiteralPart_PartOwner() {
+		return (EReference)dictLiteralPartEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -954,6 +940,15 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getInstantiationExp_InitializationOperation() {
+		return (EReference)instantiationExpEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getInstantiationExp__Accept__ImperativeOCLVisitor() {
 		return instantiationExpEClass.getEOperations().get(0);
 	}
@@ -1064,114 +1059,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 */
 	public EOperation getLogExp__Accept__Visitor() {
 		return logExpEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getOrderedTupleLiteralExp() {
-		return orderedTupleLiteralExpEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getOrderedTupleLiteralExp_Part() {
-		return (EReference)orderedTupleLiteralExpEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor() {
-		return orderedTupleLiteralExpEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleLiteralExp__Accept__Visitor() {
-		return orderedTupleLiteralExpEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getOrderedTupleLiteralPart() {
-		return orderedTupleLiteralPartEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getOrderedTupleLiteralPart_Value() {
-		return (EReference)orderedTupleLiteralPartEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor() {
-		return orderedTupleLiteralPartEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleLiteralPart__Accept__Visitor() {
-		return orderedTupleLiteralPartEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getOrderedTupleType() {
-		return orderedTupleTypeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getOrderedTupleType_ElementType() {
-		return (EReference)orderedTupleTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleType__Accept__ImperativeOCLVisitor() {
-		return orderedTupleTypeEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getOrderedTupleType__Accept__Visitor() {
-		return orderedTupleTypeEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -1440,51 +1327,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getUnpackExp() {
-		return unpackExpEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getUnpackExp_Source() {
-		return (EReference)unpackExpEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getUnpackExp_TargetVariable() {
-		return (EReference)unpackExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getUnpackExp__Accept__ImperativeOCLVisitor() {
-		return unpackExpEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getUnpackExp__Accept__Visitor() {
-		return unpackExpEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getVariableInitExp() {
 		return variableInitExpEClass;
 	}
@@ -1649,6 +1491,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		catchExpEClass = createEClass(CATCH_EXP);
 		createEReference(catchExpEClass, CATCH_EXP__BODY);
 		createEReference(catchExpEClass, CATCH_EXP__EXCEPTION);
+		createEReference(catchExpEClass, CATCH_EXP__EXCEPTION_VARIABLE);
 		createEOperation(catchExpEClass, CATCH_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
 		createEOperation(catchExpEClass, CATCH_EXP___ACCEPT__VISITOR);
 
@@ -1670,6 +1513,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		dictLiteralPartEClass = createEClass(DICT_LITERAL_PART);
 		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__KEY);
 		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__VALUE);
+		createEReference(dictLiteralPartEClass, DICT_LITERAL_PART__PART_OWNER);
 		createEOperation(dictLiteralPartEClass, DICT_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR);
 		createEOperation(dictLiteralPartEClass, DICT_LITERAL_PART___ACCEPT__VISITOR);
 
@@ -1696,6 +1540,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__ARGUMENT);
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__EXTENT);
 		createEReference(instantiationExpEClass, INSTANTIATION_EXP__INSTANTIATED_CLASS);
+		createEReference(instantiationExpEClass, INSTANTIATION_EXP__INITIALIZATION_OPERATION);
 		createEOperation(instantiationExpEClass, INSTANTIATION_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
 		createEOperation(instantiationExpEClass, INSTANTIATION_EXP___ACCEPT__VISITOR);
 
@@ -1712,21 +1557,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(logExpEClass, LOG_EXP__CONDITION);
 		createEOperation(logExpEClass, LOG_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
 		createEOperation(logExpEClass, LOG_EXP___ACCEPT__VISITOR);
-
-		orderedTupleLiteralExpEClass = createEClass(ORDERED_TUPLE_LITERAL_EXP);
-		createEReference(orderedTupleLiteralExpEClass, ORDERED_TUPLE_LITERAL_EXP__PART);
-		createEOperation(orderedTupleLiteralExpEClass, ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
-		createEOperation(orderedTupleLiteralExpEClass, ORDERED_TUPLE_LITERAL_EXP___ACCEPT__VISITOR);
-
-		orderedTupleLiteralPartEClass = createEClass(ORDERED_TUPLE_LITERAL_PART);
-		createEReference(orderedTupleLiteralPartEClass, ORDERED_TUPLE_LITERAL_PART__VALUE);
-		createEOperation(orderedTupleLiteralPartEClass, ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR);
-		createEOperation(orderedTupleLiteralPartEClass, ORDERED_TUPLE_LITERAL_PART___ACCEPT__VISITOR);
-
-		orderedTupleTypeEClass = createEClass(ORDERED_TUPLE_TYPE);
-		createEReference(orderedTupleTypeEClass, ORDERED_TUPLE_TYPE__ELEMENT_TYPE);
-		createEOperation(orderedTupleTypeEClass, ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR);
-		createEOperation(orderedTupleTypeEClass, ORDERED_TUPLE_TYPE___ACCEPT__VISITOR);
 
 		raiseExpEClass = createEClass(RAISE_EXP);
 		createEReference(raiseExpEClass, RAISE_EXP__ARGUMENT);
@@ -1762,12 +1592,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		createEReference(unlinkExpEClass, UNLINK_EXP__TARGET);
 		createEOperation(unlinkExpEClass, UNLINK_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
 		createEOperation(unlinkExpEClass, UNLINK_EXP___ACCEPT__VISITOR);
-
-		unpackExpEClass = createEClass(UNPACK_EXP);
-		createEReference(unpackExpEClass, UNPACK_EXP__SOURCE);
-		createEReference(unpackExpEClass, UNPACK_EXP__TARGET_VARIABLE);
-		createEOperation(unpackExpEClass, UNPACK_EXP___ACCEPT__IMPERATIVEOCLVISITOR);
-		createEOperation(unpackExpEClass, UNPACK_EXP___ACCEPT__VISITOR);
 
 		variableInitExpEClass = createEClass(VARIABLE_INIT_EXP);
 		createEReference(variableInitExpEClass, VARIABLE_INIT_EXP__REFERRED_VARIABLE);
@@ -1840,16 +1664,12 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		listTypeEClass.getESuperTypes().add(thePivotPackage.getCollectionType());
 		logExpEClass.getESuperTypes().add(thePivotPackage.getOperationCallExp());
 		logExpEClass.getESuperTypes().add(this.getImperativeExpression());
-		orderedTupleLiteralExpEClass.getESuperTypes().add(thePivotPackage.getLiteralExp());
-		orderedTupleLiteralPartEClass.getESuperTypes().add(thePivotPackage.getElement());
-		orderedTupleTypeEClass.getESuperTypes().add(thePivotPackage.getClass_());
 		raiseExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		returnExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		switchExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		tryExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		typedefEClass.getESuperTypes().add(thePivotPackage.getClass_());
 		unlinkExpEClass.getESuperTypes().add(this.getImperativeExpression());
-		unpackExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		variableInitExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		whileExpEClass.getESuperTypes().add(this.getImperativeExpression());
 		EGenericType g1 = createEGenericType(thePivotPackage.getVisitor());
@@ -1970,7 +1790,8 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 
 		initEClass(catchExpEClass, CatchExp.class, "CatchExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCatchExp_Body(), thePivotPackage.getOCLExpression(), null, "body", null, 0, -1, CatchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCatchExp_Exception(), thePivotPackage.getType(), null, "exception", null, 0, -1, CatchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCatchExp_Exception(), thePivotPackage.getType(), null, "exception", null, 1, -1, CatchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCatchExp_ExceptionVariable(), thePivotPackage.getVariable(), null, "exceptionVariable", null, 0, 1, CatchExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getCatchExp__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
@@ -2033,7 +1854,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEOperation(op, g1);
 
 		initEClass(dictLiteralExpEClass, DictLiteralExp.class, "DictLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDictLiteralExp_Part(), this.getDictLiteralPart(), null, "part", null, 0, -1, DictLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDictLiteralExp_Part(), this.getDictLiteralPart(), this.getDictLiteralPart_PartOwner(), "part", null, 0, -1, DictLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		op = initEOperation(getDictLiteralExp__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
@@ -2056,6 +1877,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEClass(dictLiteralPartEClass, DictLiteralPart.class, "DictLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDictLiteralPart_Key(), thePivotPackage.getOCLExpression(), null, "key", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDictLiteralPart_Value(), thePivotPackage.getOCLExpression(), null, "value", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDictLiteralPart_PartOwner(), this.getDictLiteralExp(), this.getDictLiteralExp_Part(), "partOwner", null, 1, 1, DictLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getDictLiteralPart__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
@@ -2146,6 +1968,7 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEReference(getInstantiationExp_Argument(), thePivotPackage.getOCLExpression(), null, "argument", null, 0, -1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInstantiationExp_Extent(), thePivotPackage.getVariable(), null, "extent", null, 0, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInstantiationExp_InstantiatedClass(), thePivotPackage.getClass_(), null, "instantiatedClass", null, 1, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInstantiationExp_InitializationOperation(), thePivotPackage.getOperation(), null, "initializationOperation", null, 0, 1, InstantiationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getInstantiationExp__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
@@ -2219,69 +2042,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		initEOperation(op, g1);
 
 		op = initEOperation(getLogExp__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(thePivotPackage.getVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		initEClass(orderedTupleLiteralExpEClass, OrderedTupleLiteralExp.class, "OrderedTupleLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrderedTupleLiteralExp_Part(), this.getOrderedTupleLiteralPart(), null, "part", null, 0, -1, OrderedTupleLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = initEOperation(getOrderedTupleLiteralExp__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(thePivotPackage.getVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		initEClass(orderedTupleLiteralPartEClass, OrderedTupleLiteralPart.class, "OrderedTupleLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrderedTupleLiteralPart_Value(), thePivotPackage.getOCLExpression(), null, "value", null, 1, 1, OrderedTupleLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = initEOperation(getOrderedTupleLiteralPart__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(thePivotPackage.getVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		initEClass(orderedTupleTypeEClass, OrderedTupleType.class, "OrderedTupleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrderedTupleType_ElementType(), thePivotPackage.getType(), null, "elementType", null, 0, -1, OrderedTupleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getOrderedTupleType__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = initEOperation(getOrderedTupleType__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
 		t1 = addETypeParameter(op, "R");
 		g1 = createEGenericType(thePivotPackage.getVisitor());
 		g2 = createEGenericType(t1);
@@ -2421,28 +2181,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		initEClass(unpackExpEClass, UnpackExp.class, "UnpackExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUnpackExp_Source(), thePivotPackage.getOCLExpression(), null, "source", null, 1, 1, UnpackExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUnpackExp_TargetVariable(), thePivotPackage.getVariable(), null, "targetVariable", null, 1, -1, UnpackExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getUnpackExp__Accept__ImperativeOCLVisitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(this.getImperativeOCLVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
-		op = initEOperation(getUnpackExp__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		t1 = addETypeParameter(op, "R");
-		g1 = createEGenericType(thePivotPackage.getVisitor());
-		g2 = createEGenericType(t1);
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "v", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(t1);
-		initEOperation(op, g1);
-
 		initEClass(variableInitExpEClass, VariableInitExp.class, "VariableInitExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVariableInitExp_ReferredVariable(), thePivotPackage.getVariable(), null, "referredVariable", null, 1, 1, VariableInitExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVariableInitExp_WithResult(), thePivotPackage.getBoolean(), "withResult", "false", 0, 1, VariableInitExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2530,6 +2268,12 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 			 "body", "assertOwner"
 		   });	
 		addAnnotation
+		  (getAssertExp_Log(), 
+		   source, 
+		   new String[] {
+			 "body", "assertExpression"
+		   });	
+		addAnnotation
 		  (getAssignExp_DefaultValue(), 
 		   source, 
 		   new String[] {
@@ -2554,10 +2298,22 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 			 "body", "blockOwner"
 		   });	
 		addAnnotation
+		  (getCatchExp_Body(), 
+		   source, 
+		   new String[] {
+			 "body", "catchExpression"
+		   });	
+		addAnnotation
 		  (getCatchExp_Exception(), 
 		   source, 
 		   new String[] {
-			 "body", "tryExpression"
+			 "body", "catchExpression"
+		   });	
+		addAnnotation
+		  (getCatchExp_ExceptionVariable(), 
+		   source, 
+		   new String[] {
+			 "body", "catchExpression"
 		   });	
 		addAnnotation
 		  (getComputeExp_Body(), 
@@ -2570,12 +2326,6 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "computeOwner"
-		   });	
-		addAnnotation
-		  (getDictLiteralExp_Part(), 
-		   source, 
-		   new String[] {
-			 "body", "partOwner"
 		   });	
 		addAnnotation
 		  (getDictLiteralPart_Key(), 
@@ -2614,10 +2364,28 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 			 "body", "argOwner"
 		   });	
 		addAnnotation
+		  (getInstantiationExp_Extent(), 
+		   source, 
+		   new String[] {
+			 "body", "instantiationExpression"
+		   });	
+		addAnnotation
+		  (getInstantiationExp_InstantiatedClass(), 
+		   source, 
+		   new String[] {
+			 "body", "instantiationExpression"
+		   });	
+		addAnnotation
+		  (getInstantiationExp_InitializationOperation(), 
+		   source, 
+		   new String[] {
+			 "body", "instantiationExpression"
+		   });	
+		addAnnotation
 		  (getListLiteralExp_Element(), 
 		   source, 
 		   new String[] {
-			 "body", "elementOwner"
+			 "body", "listLiteralExpression"
 		   });	
 		addAnnotation
 		  (getLogExp_Condition(), 
@@ -2626,28 +2394,22 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 			 "body", "logOwner"
 		   });	
 		addAnnotation
-		  (getOrderedTupleLiteralExp_Part(), 
+		  (getRaiseExp_Argument(), 
 		   source, 
 		   new String[] {
-			 "body", "partOwner"
-		   });	
-		addAnnotation
-		  (getOrderedTupleLiteralPart_Value(), 
-		   source, 
-		   new String[] {
-			 "body", "tupValOwner"
-		   });	
-		addAnnotation
-		  (getOrderedTupleType_ElementType(), 
-		   source, 
-		   new String[] {
-			 "body", "eltTuple"
+			 "body", "raiseExpression"
 		   });	
 		addAnnotation
 		  (getRaiseExp_Exception(), 
 		   source, 
 		   new String[] {
 			 "body", "raiseExpression"
+		   });	
+		addAnnotation
+		  (getReturnExp_Value(), 
+		   source, 
+		   new String[] {
+			 "body", "returnExpression"
 		   });	
 		addAnnotation
 		  (getSwitchExp_AlternativePart(), 
@@ -2672,6 +2434,18 @@ public class ImperativeOCLPackageImpl extends EPackageImpl implements Imperative
 		   source, 
 		   new String[] {
 			 "body", "tryBodyOwner"
+		   });	
+		addAnnotation
+		  (getTypedef_Base(), 
+		   source, 
+		   new String[] {
+			 "body", "typedef"
+		   });	
+		addAnnotation
+		  (getTypedef_Condition(), 
+		   source, 
+		   new String[] {
+			 "body", "typedef"
 		   });	
 		addAnnotation
 		  (getUnlinkExp_Item(), 

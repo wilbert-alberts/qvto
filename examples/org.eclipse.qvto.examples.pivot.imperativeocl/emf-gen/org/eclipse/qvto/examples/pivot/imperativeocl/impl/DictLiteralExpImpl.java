@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.LiteralExpImpl;
@@ -84,7 +84,7 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	 */
 	public EList<DictLiteralPart> getPart() {
 		if (part == null) {
-			part = new EObjectContainmentEList<DictLiteralPart>(DictLiteralPart.class, this, ImperativeOCLPackage.DICT_LITERAL_EXP__PART);
+			part = new EObjectContainmentWithInverseEList<DictLiteralPart>(DictLiteralPart.class, this, ImperativeOCLPackage.DICT_LITERAL_EXP__PART, ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER);
 		}
 		return part;
 	}
@@ -105,6 +105,21 @@ public class DictLiteralExpImpl extends LiteralExpImpl implements DictLiteralExp
 	 */
 	public <R> R accept(final Visitor<R> v) {
 		return ((ImperativeOCLVisitor<R>)v).visitDictLiteralExp(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ImperativeOCLPackage.DICT_LITERAL_EXP__PART:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPart()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**

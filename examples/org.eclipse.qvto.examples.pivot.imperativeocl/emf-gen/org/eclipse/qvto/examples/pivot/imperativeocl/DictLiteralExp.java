@@ -41,6 +41,7 @@ public interface DictLiteralExp extends EObject, LiteralExp {
 	/**
 	 * Returns the value of the '<em><b>Part</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner <em>Part Owner</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Part</em>' containment reference list isn't clear,
@@ -49,8 +50,8 @@ public interface DictLiteralExp extends EObject, LiteralExp {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Part</em>' containment reference list.
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getDictLiteralExp_Part()
-	 * @model containment="true" ordered="false"
-	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='partOwner'"
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner
+	 * @model opposite="partOwner" containment="true" ordered="false"
 	 * @generated
 	 */
 	EList<DictLiteralPart> getPart();

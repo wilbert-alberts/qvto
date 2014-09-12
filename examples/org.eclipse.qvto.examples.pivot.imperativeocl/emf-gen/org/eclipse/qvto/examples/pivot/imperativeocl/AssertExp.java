@@ -75,6 +75,7 @@ public interface AssertExp extends ImperativeExpression {
 	 * @see #setLog(LogExp)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getAssertExp_Log()
 	 * @model containment="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='assertExpression'"
 	 * @generated
 	 */
 	LogExp getLog();

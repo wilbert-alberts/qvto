@@ -85,16 +85,12 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 			case ImperativeOCLPackage.LIST_LITERAL_EXP: return createListLiteralExp();
 			case ImperativeOCLPackage.LIST_TYPE: return createListType();
 			case ImperativeOCLPackage.LOG_EXP: return createLogExp();
-			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_EXP: return createOrderedTupleLiteralExp();
-			case ImperativeOCLPackage.ORDERED_TUPLE_LITERAL_PART: return createOrderedTupleLiteralPart();
-			case ImperativeOCLPackage.ORDERED_TUPLE_TYPE: return createOrderedTupleType();
 			case ImperativeOCLPackage.RAISE_EXP: return createRaiseExp();
 			case ImperativeOCLPackage.RETURN_EXP: return createReturnExp();
 			case ImperativeOCLPackage.SWITCH_EXP: return createSwitchExp();
 			case ImperativeOCLPackage.TRY_EXP: return createTryExp();
 			case ImperativeOCLPackage.TYPEDEF: return createTypedef();
 			case ImperativeOCLPackage.UNLINK_EXP: return createUnlinkExp();
-			case ImperativeOCLPackage.UNPACK_EXP: return createUnpackExp();
 			case ImperativeOCLPackage.VARIABLE_INIT_EXP: return createVariableInitExp();
 			case ImperativeOCLPackage.WHILE_EXP: return createWhileExp();
 			default:
@@ -307,36 +303,6 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OrderedTupleLiteralExp createOrderedTupleLiteralExp() {
-		OrderedTupleLiteralExpImpl orderedTupleLiteralExp = new OrderedTupleLiteralExpImpl();
-		return orderedTupleLiteralExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OrderedTupleLiteralPart createOrderedTupleLiteralPart() {
-		OrderedTupleLiteralPartImpl orderedTupleLiteralPart = new OrderedTupleLiteralPartImpl();
-		return orderedTupleLiteralPart;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OrderedTupleType createOrderedTupleType() {
-		OrderedTupleTypeImpl orderedTupleType = new OrderedTupleTypeImpl();
-		return orderedTupleType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public RaiseExp createRaiseExp() {
 		RaiseExpImpl raiseExp = new RaiseExpImpl();
 		return raiseExp;
@@ -390,16 +356,6 @@ public class ImperativeOCLFactoryImpl extends EFactoryImpl implements Imperative
 	public UnlinkExp createUnlinkExp() {
 		UnlinkExpImpl unlinkExp = new UnlinkExpImpl();
 		return unlinkExp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UnpackExp createUnpackExp() {
-		UnpackExpImpl unpackExp = new UnpackExpImpl();
-		return unpackExp;
 	}
 
 	/**

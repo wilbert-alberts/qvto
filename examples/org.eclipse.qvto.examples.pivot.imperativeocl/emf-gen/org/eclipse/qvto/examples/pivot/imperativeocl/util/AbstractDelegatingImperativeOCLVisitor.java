@@ -113,18 +113,6 @@ public abstract class AbstractDelegatingImperativeOCLVisitor<R, C, D extends Imp
 		return delegate.visitLogExp(object);
 	}
 
-	public @Nullable R visitOrderedTupleLiteralExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp object) {
-		return delegate.visitOrderedTupleLiteralExp(object);
-	}
-
-	public @Nullable R visitOrderedTupleLiteralPart(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart object) {
-		return delegate.visitOrderedTupleLiteralPart(object);
-	}
-
-	public @Nullable R visitOrderedTupleType(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType object) {
-		return delegate.visitOrderedTupleType(object);
-	}
-
 	public @Nullable R visitRaiseExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp object) {
 		return delegate.visitRaiseExp(object);
 	}
@@ -147,10 +135,6 @@ public abstract class AbstractDelegatingImperativeOCLVisitor<R, C, D extends Imp
 
 	public @Nullable R visitUnlinkExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp object) {
 		return delegate.visitUnlinkExp(object);
-	}
-
-	public @Nullable R visitUnpackExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp object) {
-		return delegate.visitUnpackExp(object);
 	}
 
 	public @Nullable R visitVariableInitExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp object) {

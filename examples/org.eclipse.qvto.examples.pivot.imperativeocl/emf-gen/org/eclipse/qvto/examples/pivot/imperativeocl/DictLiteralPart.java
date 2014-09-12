@@ -30,6 +30,7 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getKey <em>Key</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner <em>Part Owner</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,6 +92,34 @@ public interface DictLiteralPart extends EObject, Element {
 	 * @generated
 	 */
 	void setValue(OCLExpression value);
+
+	/**
+	 * Returns the value of the '<em><b>Part Owner</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp#getPart <em>Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Part Owner</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Part Owner</em>' container reference.
+	 * @see #setPartOwner(DictLiteralExp)
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getDictLiteralPart_PartOwner()
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp#getPart
+	 * @model opposite="part" required="true" transient="false"
+	 * @generated
+	 */
+	DictLiteralExp getPartOwner();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner <em>Part Owner</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Part Owner</em>' container reference.
+	 * @see #getPartOwner()
+	 * @generated
+	 */
+	void setPartOwner(DictLiteralExp value);
 
 	/**
 	 * <!-- begin-user-doc -->

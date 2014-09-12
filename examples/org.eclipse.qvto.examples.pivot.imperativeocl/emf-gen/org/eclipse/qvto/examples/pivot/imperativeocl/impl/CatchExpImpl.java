@@ -16,12 +16,16 @@ package org.eclipse.qvto.examples.pivot.imperativeocl.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -29,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 import org.eclipse.ocl.examples.pivot.Type;
+import org.eclipse.ocl.examples.pivot.Variable;
 
 import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp;
@@ -44,6 +49,7 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.CatchExpImpl#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.CatchExpImpl#getException <em>Exception</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.CatchExpImpl#getExceptionVariable <em>Exception Variable</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,6 +75,16 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 	 * @ordered
 	 */
 	protected EList<Type> exception;
+
+	/**
+	 * The cached value of the '{@link #getExceptionVariable() <em>Exception Variable</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExceptionVariable()
+	 * @generated
+	 * @ordered
+	 */
+	protected Variable exceptionVariable;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -118,6 +134,44 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Variable getExceptionVariable() {
+		if (exceptionVariable != null && ((EObject)exceptionVariable).eIsProxy()) {
+			InternalEObject oldExceptionVariable = (InternalEObject)exceptionVariable;
+			exceptionVariable = (Variable)eResolveProxy(oldExceptionVariable);
+			if (exceptionVariable != oldExceptionVariable) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE, oldExceptionVariable, exceptionVariable));
+			}
+		}
+		return exceptionVariable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Variable basicGetExceptionVariable() {
+		return exceptionVariable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExceptionVariable(Variable newExceptionVariable) {
+		Variable oldExceptionVariable = exceptionVariable;
+		exceptionVariable = newExceptionVariable;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE, oldExceptionVariable, exceptionVariable));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitCatchExp(this);
 	}
@@ -157,6 +211,9 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 				return getBody();
 			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION:
 				return getException();
+			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE:
+				if (resolve) return getExceptionVariable();
+				return basicGetExceptionVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -178,6 +235,9 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 				getException().clear();
 				getException().addAll((Collection<? extends Type>)newValue);
 				return;
+			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE:
+				setExceptionVariable((Variable)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -196,6 +256,9 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION:
 				getException().clear();
 				return;
+			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE:
+				setExceptionVariable((Variable)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -212,6 +275,8 @@ public class CatchExpImpl extends ImperativeExpressionImpl implements CatchExp {
 				return body != null && !body.isEmpty();
 			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION:
 				return exception != null && !exception.isEmpty();
+			case ImperativeOCLPackage.CATCH_EXP__EXCEPTION_VARIABLE:
+				return exceptionVariable != null;
 		}
 		return super.eIsSet(featureID);
 	}

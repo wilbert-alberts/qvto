@@ -23,11 +23,14 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import org.eclipse.ocl.examples.pivot.OCLExpression;
 
 import org.eclipse.ocl.examples.pivot.internal.impl.ElementImpl;
 
 import org.eclipse.ocl.examples.pivot.util.Visitor;
+import org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralExp;
 import org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart;
 import org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -41,6 +44,7 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
  * <ul>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralPartImpl#getKey <em>Key</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralPartImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.DictLiteralPartImpl#getPartOwner <em>Part Owner</em>}</li>
  * </ul>
  * </p>
  *
@@ -177,6 +181,47 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public DictLiteralExp getPartOwner() {
+		if (eContainerFeatureID() != ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER) return null;
+		return (DictLiteralExp)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetPartOwner(DictLiteralExp newPartOwner, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newPartOwner, ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPartOwner(DictLiteralExp newPartOwner) {
+		if (newPartOwner != eInternalContainer() || (eContainerFeatureID() != ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER && newPartOwner != null)) {
+			if (EcoreUtil.isAncestor(this, newPartOwner))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newPartOwner != null)
+				msgs = ((InternalEObject)newPartOwner).eInverseAdd(this, ImperativeOCLPackage.DICT_LITERAL_EXP__PART, DictLiteralExp.class, msgs);
+			msgs = basicSetPartOwner(newPartOwner, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER, newPartOwner, newPartOwner));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public <R> R accept(final ImperativeOCLVisitor<R> v) {
 		return v.visitDictLiteralPart(this);
 	}
@@ -196,14 +241,46 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetPartOwner((DictLiteralExp)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ImperativeOCLPackage.DICT_LITERAL_PART__KEY:
 				return basicSetKey(null, msgs);
 			case ImperativeOCLPackage.DICT_LITERAL_PART__VALUE:
 				return basicSetValue(null, msgs);
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				return basicSetPartOwner(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				return eInternalContainer().eInverseRemove(this, ImperativeOCLPackage.DICT_LITERAL_EXP__PART, DictLiteralExp.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -218,6 +295,8 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 				return getKey();
 			case ImperativeOCLPackage.DICT_LITERAL_PART__VALUE:
 				return getValue();
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				return getPartOwner();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -235,6 +314,9 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 				return;
 			case ImperativeOCLPackage.DICT_LITERAL_PART__VALUE:
 				setValue((OCLExpression)newValue);
+				return;
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				setPartOwner((DictLiteralExp)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -254,6 +336,9 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 			case ImperativeOCLPackage.DICT_LITERAL_PART__VALUE:
 				setValue((OCLExpression)null);
 				return;
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				setPartOwner((DictLiteralExp)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -270,6 +355,8 @@ public class DictLiteralPartImpl extends ElementImpl implements DictLiteralPart 
 				return key != null;
 			case ImperativeOCLPackage.DICT_LITERAL_PART__VALUE:
 				return value != null;
+			case ImperativeOCLPackage.DICT_LITERAL_PART__PART_OWNER:
+				return getPartOwner() != null;
 		}
 		return super.eIsSet(featureID);
 	}

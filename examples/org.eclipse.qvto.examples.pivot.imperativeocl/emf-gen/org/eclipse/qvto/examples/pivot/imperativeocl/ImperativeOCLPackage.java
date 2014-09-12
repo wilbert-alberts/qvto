@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.pivot.PivotPackage;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
+ *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -1004,13 +1005,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int CATCH_EXP__EXCEPTION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Exception Variable</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATCH_EXP__EXCEPTION_VARIABLE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Catch Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
+	int CATCH_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -1521,13 +1531,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int DICT_LITERAL_PART__VALUE = PivotPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Part Owner</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DICT_LITERAL_PART__PART_OWNER = PivotPackage.ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Dict Literal Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DICT_LITERAL_PART_FEATURE_COUNT = PivotPackage.ELEMENT_FEATURE_COUNT + 2;
+	int DICT_LITERAL_PART_FEATURE_COUNT = PivotPackage.ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -2642,13 +2661,22 @@ public interface ImperativeOCLPackage extends EPackage {
 	int INSTANTIATION_EXP__INSTANTIATED_CLASS = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Initialization Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANTIATION_EXP__INITIALIZATION_OPERATION = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Instantiation Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INSTANTIATION_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 3;
+	int INSTANTIATION_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -3410,576 +3438,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int LOG_EXP_OPERATION_COUNT = PivotPackage.OPERATION_CALL_EXP_OPERATION_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl <em>Ordered Tuple Literal Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralExp()
-	 * @generated
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP = 19;
-
-	/**
-	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__EXTENSION = PivotPackage.LITERAL_EXP__EXTENSION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__OWNED_ANNOTATION = PivotPackage.LITERAL_EXP__OWNED_ANNOTATION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__OWNED_COMMENT = PivotPackage.LITERAL_EXP__OWNED_COMMENT;
-
-	/**
-	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__IS_STATIC = PivotPackage.LITERAL_EXP__IS_STATIC;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__NAME = PivotPackage.LITERAL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__IS_REQUIRED = PivotPackage.LITERAL_EXP__IS_REQUIRED;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__TYPE = PivotPackage.LITERAL_EXP__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Part</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP__PART = PivotPackage.LITERAL_EXP_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Ordered Tuple Literal Exp</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP_FEATURE_COUNT = PivotPackage.LITERAL_EXP_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>All Owned Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP___ALL_OWNED_ELEMENTS = PivotPackage.LITERAL_EXP___ALL_OWNED_ELEMENTS;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP___GET_VALUE__TYPE_STRING = PivotPackage.LITERAL_EXP___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP___ACCEPT__VISITOR = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Ordered Tuple Literal Exp</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_EXP_OPERATION_COUNT = PivotPackage.LITERAL_EXP_OPERATION_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl <em>Ordered Tuple Literal Part</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralPart()
-	 * @generated
-	 */
-	int ORDERED_TUPLE_LITERAL_PART = 20;
-
-	/**
-	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART__EXTENSION = PivotPackage.ELEMENT__EXTENSION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART__OWNED_ANNOTATION = PivotPackage.ELEMENT__OWNED_ANNOTATION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART__OWNED_COMMENT = PivotPackage.ELEMENT__OWNED_COMMENT;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART__VALUE = PivotPackage.ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Ordered Tuple Literal Part</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART_FEATURE_COUNT = PivotPackage.ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>All Owned Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART___ALL_OWNED_ELEMENTS = PivotPackage.ELEMENT___ALL_OWNED_ELEMENTS;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART___GET_VALUE__TYPE_STRING = PivotPackage.ELEMENT___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART___ACCEPT__VISITOR = PivotPackage.ELEMENT_OPERATION_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Ordered Tuple Literal Part</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_LITERAL_PART_OPERATION_COUNT = PivotPackage.ELEMENT_OPERATION_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleType()
-	 * @generated
-	 */
-	int ORDERED_TUPLE_TYPE = 21;
-
-	/**
-	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__EXTENSION = PivotPackage.CLASS__EXTENSION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_ANNOTATION = PivotPackage.CLASS__OWNED_ANNOTATION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_COMMENT = PivotPackage.CLASS__OWNED_COMMENT;
-
-	/**
-	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__IS_STATIC = PivotPackage.CLASS__IS_STATIC;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__NAME = PivotPackage.CLASS__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Template Signature</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_TEMPLATE_SIGNATURE = PivotPackage.CLASS__OWNED_TEMPLATE_SIGNATURE;
-
-	/**
-	 * The feature id for the '<em><b>Template Binding</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__TEMPLATE_BINDING = PivotPackage.CLASS__TEMPLATE_BINDING;
-
-	/**
-	 * The feature id for the '<em><b>Unspecialized Element</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__UNSPECIALIZED_ELEMENT = PivotPackage.CLASS__UNSPECIALIZED_ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Owning Template Parameter</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNING_TEMPLATE_PARAMETER = PivotPackage.CLASS__OWNING_TEMPLATE_PARAMETER;
-
-	/**
-	 * The feature id for the '<em><b>Template Parameter</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__TEMPLATE_PARAMETER = PivotPackage.CLASS__TEMPLATE_PARAMETER;
-
-	/**
-	 * The feature id for the '<em><b>Extended Bys</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__EXTENDED_BYS = PivotPackage.CLASS__EXTENDED_BYS;
-
-	/**
-	 * The feature id for the '<em><b>Instance Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__INSTANCE_CLASS_NAME = PivotPackage.CLASS__INSTANCE_CLASS_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Owned Attribute</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_ATTRIBUTE = PivotPackage.CLASS__OWNED_ATTRIBUTE;
-
-	/**
-	 * The feature id for the '<em><b>Owned Invariant</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_INVARIANT = PivotPackage.CLASS__OWNED_INVARIANT;
-
-	/**
-	 * The feature id for the '<em><b>Owned Operation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_OPERATION = PivotPackage.CLASS__OWNED_OPERATION;
-
-	/**
-	 * The feature id for the '<em><b>Package</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__PACKAGE = PivotPackage.CLASS__PACKAGE;
-
-	/**
-	 * The feature id for the '<em><b>Super Class</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__SUPER_CLASS = PivotPackage.CLASS__SUPER_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_RULE = PivotPackage.CLASS__OWNED_RULE;
-
-	/**
-	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__IS_ABSTRACT = PivotPackage.CLASS__IS_ABSTRACT;
-
-	/**
-	 * The feature id for the '<em><b>Is Active</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__IS_ACTIVE = PivotPackage.CLASS__IS_ACTIVE;
-
-	/**
-	 * The feature id for the '<em><b>Is Interface</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__IS_INTERFACE = PivotPackage.CLASS__IS_INTERFACE;
-
-	/**
-	 * The feature id for the '<em><b>Nested Type</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__NESTED_TYPE = PivotPackage.CLASS__NESTED_TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Owned Behavior</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__OWNED_BEHAVIOR = PivotPackage.CLASS__OWNED_BEHAVIOR;
-
-	/**
-	 * The feature id for the '<em><b>Element Type</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE__ELEMENT_TYPE = PivotPackage.CLASS_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Ordered Tuple Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE_FEATURE_COUNT = PivotPackage.CLASS_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>All Owned Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___ALL_OWNED_ELEMENTS = PivotPackage.CLASS___ALL_OWNED_ELEMENTS;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___GET_VALUE__TYPE_STRING = PivotPackage.CLASS___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Is Template</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___IS_TEMPLATE = PivotPackage.CLASS___IS_TEMPLATE;
-
-	/**
-	 * The operation id for the '<em>Parameterable Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___PARAMETERABLE_ELEMENTS = PivotPackage.CLASS___PARAMETERABLE_ELEMENTS;
-
-	/**
-	 * The operation id for the '<em>Is Compatible With</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT = PivotPackage.CLASS___IS_COMPATIBLE_WITH__PARAMETERABLEELEMENT;
-
-	/**
-	 * The operation id for the '<em>Is Template Parameter</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___IS_TEMPLATE_PARAMETER = PivotPackage.CLASS___IS_TEMPLATE_PARAMETER;
-
-	/**
-	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP;
-
-	/**
-	 * The operation id for the '<em>Specialize In</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___SPECIALIZE_IN__OCLEXPRESSION_TYPE = PivotPackage.CLASS___SPECIALIZE_IN__OCLEXPRESSION_TYPE;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = PivotPackage.CLASS_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE___ACCEPT__VISITOR = PivotPackage.CLASS_OPERATION_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Ordered Tuple Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ORDERED_TUPLE_TYPE_OPERATION_COUNT = PivotPackage.CLASS_OPERATION_COUNT + 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.RaiseExpImpl <em>Raise Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3987,7 +3445,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getRaiseExp()
 	 * @generated
 	 */
-	int RAISE_EXP = 22;
+	int RAISE_EXP = 19;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -4132,7 +3590,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getReturnExp()
 	 * @generated
 	 */
-	int RETURN_EXP = 23;
+	int RETURN_EXP = 20;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -4268,7 +3726,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getSwitchExp()
 	 * @generated
 	 */
-	int SWITCH_EXP = 24;
+	int SWITCH_EXP = 21;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -4413,7 +3871,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getTryExp()
 	 * @generated
 	 */
-	int TRY_EXP = 25;
+	int TRY_EXP = 22;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -4558,7 +4016,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getTypedef()
 	 * @generated
 	 */
-	int TYPEDEF = 26;
+	int TYPEDEF = 23;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -4901,7 +4359,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getUnlinkExp()
 	 * @generated
 	 */
-	int UNLINK_EXP = 27;
+	int UNLINK_EXP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -5039,151 +4497,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	int UNLINK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl <em>Unpack Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getUnpackExp()
-	 * @generated
-	 */
-	int UNPACK_EXP = 28;
-
-	/**
-	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__EXTENSION = IMPERATIVE_EXPRESSION__EXTENSION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Annotation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__OWNED_ANNOTATION = IMPERATIVE_EXPRESSION__OWNED_ANNOTATION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__OWNED_COMMENT = IMPERATIVE_EXPRESSION__OWNED_COMMENT;
-
-	/**
-	 * The feature id for the '<em><b>Is Static</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__IS_STATIC = IMPERATIVE_EXPRESSION__IS_STATIC;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__NAME = IMPERATIVE_EXPRESSION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Is Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__IS_REQUIRED = IMPERATIVE_EXPRESSION__IS_REQUIRED;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__TYPE = IMPERATIVE_EXPRESSION__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__SOURCE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Target Variable</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP__TARGET_VARIABLE = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Unpack Exp</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP_FEATURE_COUNT = IMPERATIVE_EXPRESSION_FEATURE_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>All Owned Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP___ALL_OWNED_ELEMENTS = IMPERATIVE_EXPRESSION___ALL_OWNED_ELEMENTS;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP___GET_VALUE__TYPE_STRING = IMPERATIVE_EXPRESSION___GET_VALUE__TYPE_STRING;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Accept</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP___ACCEPT__VISITOR = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Unpack Exp</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNPACK_EXP_OPERATION_COUNT = IMPERATIVE_EXPRESSION_OPERATION_COUNT + 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.VariableInitExpImpl <em>Variable Init Exp</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5191,7 +4504,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getVariableInitExp()
 	 * @generated
 	 */
-	int VARIABLE_INIT_EXP = 29;
+	int VARIABLE_INIT_EXP = 25;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -5336,7 +4649,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getWhileExp()
 	 * @generated
 	 */
-	int WHILE_EXP = 30;
+	int WHILE_EXP = 26;
 
 	/**
 	 * The feature id for the '<em><b>Extension</b></em>' containment reference list.
@@ -5481,7 +4794,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getImperativeOCLVisitor()
 	 * @generated
 	 */
-	int IMPERATIVE_OCL_VISITOR = 31;
+	int IMPERATIVE_OCL_VISITOR = 27;
 
 	/**
 	 * The number of structural features of the '<em>Visitor</em>' class.
@@ -5509,7 +4822,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getSeverityKind()
 	 * @generated
 	 */
-	int SEVERITY_KIND = 32;
+	int SEVERITY_KIND = 28;
 
 
 	/**
@@ -5805,6 +5118,17 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getCatchExp_Exception();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp#getExceptionVariable <em>Exception Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Exception Variable</em>'.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp#getExceptionVariable()
+	 * @see #getCatchExp()
+	 * @generated
+	 */
+	EReference getCatchExp_ExceptionVariable();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.CatchExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5978,6 +5302,17 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDictLiteralPart_Value();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner <em>Part Owner</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Part Owner</em>'.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#getPartOwner()
+	 * @see #getDictLiteralPart()
+	 * @generated
+	 */
+	EReference getDictLiteralPart_PartOwner();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.DictLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
@@ -6186,6 +5521,17 @@ public interface ImperativeOCLPackage extends EPackage {
 	EReference getInstantiationExp_InstantiatedClass();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getInitializationOperation <em>Initialization Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Initialization Operation</em>'.
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getInitializationOperation()
+	 * @see #getInstantiationExp()
+	 * @generated
+	 */
+	EReference getInstantiationExp_InitializationOperation();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6316,129 +5662,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getLogExp__Accept__Visitor();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp <em>Ordered Tuple Literal Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Ordered Tuple Literal Exp</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp
-	 * @generated
-	 */
-	EClass getOrderedTupleLiteralExp();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#getPart <em>Part</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Part</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#getPart()
-	 * @see #getOrderedTupleLiteralExp()
-	 * @generated
-	 */
-	EReference getOrderedTupleLiteralExp_Part();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleLiteralExp__Accept__Visitor();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart <em>Ordered Tuple Literal Part</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Ordered Tuple Literal Part</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart
-	 * @generated
-	 */
-	EClass getOrderedTupleLiteralPart();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Value</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#getValue()
-	 * @see #getOrderedTupleLiteralPart()
-	 * @generated
-	 */
-	EReference getOrderedTupleLiteralPart_Value();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleLiteralPart__Accept__Visitor();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType <em>Ordered Tuple Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Ordered Tuple Type</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType
-	 * @generated
-	 */
-	EClass getOrderedTupleType();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#getElementType <em>Element Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Element Type</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#getElementType()
-	 * @see #getOrderedTupleType()
-	 * @generated
-	 */
-	EReference getOrderedTupleType_ElementType();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleType__Accept__ImperativeOCLVisitor();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
-	 * @generated
-	 */
-	EOperation getOrderedTupleType__Accept__Visitor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp <em>Raise Exp</em>}'.
@@ -6742,58 +5965,6 @@ public interface ImperativeOCLPackage extends EPackage {
 	EOperation getUnlinkExp__Accept__Visitor();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp <em>Unpack Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Unpack Exp</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp
-	 * @generated
-	 */
-	EClass getUnpackExp();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Source</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#getSource()
-	 * @see #getUnpackExp()
-	 * @generated
-	 */
-	EReference getUnpackExp_Source();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#getTargetVariable <em>Target Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Target Variable</em>'.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#getTargetVariable()
-	 * @see #getUnpackExp()
-	 * @generated
-	 */
-	EReference getUnpackExp_TargetVariable();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor)
-	 * @generated
-	 */
-	EOperation getUnpackExp__Accept__ImperativeOCLVisitor();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor) <em>Accept</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Accept</em>' operation.
-	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp#accept(org.eclipse.ocl.examples.pivot.util.Visitor)
-	 * @generated
-	 */
-	EOperation getUnpackExp__Accept__Visitor();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.qvto.examples.pivot.imperativeocl.VariableInitExp <em>Variable Init Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6933,6 +6104,7 @@ public interface ImperativeOCLPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
+	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -7177,6 +6349,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference CATCH_EXP__EXCEPTION = eINSTANCE.getCatchExp_Exception();
 
 		/**
+		 * The meta object literal for the '<em><b>Exception Variable</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATCH_EXP__EXCEPTION_VARIABLE = eINSTANCE.getCatchExp_ExceptionVariable();
+
+		/**
 		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7319,6 +6499,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DICT_LITERAL_PART__VALUE = eINSTANCE.getDictLiteralPart_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Part Owner</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DICT_LITERAL_PART__PART_OWNER = eINSTANCE.getDictLiteralPart_PartOwner();
 
 		/**
 		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
@@ -7493,6 +6681,14 @@ public interface ImperativeOCLPackage extends EPackage {
 		EReference INSTANTIATION_EXP__INSTANTIATED_CLASS = eINSTANCE.getInstantiationExp_InstantiatedClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Initialization Operation</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INSTANTIATION_EXP__INITIALIZATION_OPERATION = eINSTANCE.getInstantiationExp_InitializationOperation();
+
+		/**
 		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7601,108 +6797,6 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation LOG_EXP___ACCEPT__VISITOR = eINSTANCE.getLogExp__Accept__Visitor();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl <em>Ordered Tuple Literal Exp</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralExpImpl
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralExp()
-		 * @generated
-		 */
-		EClass ORDERED_TUPLE_LITERAL_EXP = eINSTANCE.getOrderedTupleLiteralExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Part</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ORDERED_TUPLE_LITERAL_EXP__PART = eINSTANCE.getOrderedTupleLiteralExp_Part();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_LITERAL_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleLiteralExp__Accept__ImperativeOCLVisitor();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_LITERAL_EXP___ACCEPT__VISITOR = eINSTANCE.getOrderedTupleLiteralExp__Accept__Visitor();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl <em>Ordered Tuple Literal Part</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleLiteralPartImpl
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleLiteralPart()
-		 * @generated
-		 */
-		EClass ORDERED_TUPLE_LITERAL_PART = eINSTANCE.getOrderedTupleLiteralPart();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ORDERED_TUPLE_LITERAL_PART__VALUE = eINSTANCE.getOrderedTupleLiteralPart_Value();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_LITERAL_PART___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleLiteralPart__Accept__ImperativeOCLVisitor();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_LITERAL_PART___ACCEPT__VISITOR = eINSTANCE.getOrderedTupleLiteralPart__Accept__Visitor();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl <em>Ordered Tuple Type</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.OrderedTupleTypeImpl
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getOrderedTupleType()
-		 * @generated
-		 */
-		EClass ORDERED_TUPLE_TYPE = eINSTANCE.getOrderedTupleType();
-
-		/**
-		 * The meta object literal for the '<em><b>Element Type</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ORDERED_TUPLE_TYPE__ELEMENT_TYPE = eINSTANCE.getOrderedTupleType_ElementType();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_TYPE___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getOrderedTupleType__Accept__ImperativeOCLVisitor();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ORDERED_TUPLE_TYPE___ACCEPT__VISITOR = eINSTANCE.getOrderedTupleType__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.RaiseExpImpl <em>Raise Exp</em>}' class.
@@ -7947,48 +7041,6 @@ public interface ImperativeOCLPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation UNLINK_EXP___ACCEPT__VISITOR = eINSTANCE.getUnlinkExp__Accept__Visitor();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl <em>Unpack Exp</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.UnpackExpImpl
-		 * @see org.eclipse.qvto.examples.pivot.imperativeocl.impl.ImperativeOCLPackageImpl#getUnpackExp()
-		 * @generated
-		 */
-		EClass UNPACK_EXP = eINSTANCE.getUnpackExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference UNPACK_EXP__SOURCE = eINSTANCE.getUnpackExp_Source();
-
-		/**
-		 * The meta object literal for the '<em><b>Target Variable</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference UNPACK_EXP__TARGET_VARIABLE = eINSTANCE.getUnpackExp_TargetVariable();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation UNPACK_EXP___ACCEPT__IMPERATIVEOCLVISITOR = eINSTANCE.getUnpackExp__Accept__ImperativeOCLVisitor();
-
-		/**
-		 * The meta object literal for the '<em><b>Accept</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation UNPACK_EXP___ACCEPT__VISITOR = eINSTANCE.getUnpackExp__Accept__Visitor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.impl.VariableInitExpImpl <em>Variable Init Exp</em>}' class.

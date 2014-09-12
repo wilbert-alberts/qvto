@@ -51,7 +51,7 @@ public interface ListLiteralExp extends EObject, LiteralExp {
 	 * @return the value of the '<em>Element</em>' containment reference list.
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getListLiteralExp_Element()
 	 * @model containment="true"
-	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='elementOwner'"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='listLiteralExpression'"
 	 * @generated
 	 */
 	EList<OCLExpression> getElement();

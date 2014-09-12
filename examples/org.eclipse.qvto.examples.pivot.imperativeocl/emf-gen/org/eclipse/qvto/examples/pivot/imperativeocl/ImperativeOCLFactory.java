@@ -186,33 +186,6 @@ public interface ImperativeOCLFactory extends EFactory {
 	LogExp createLogExp();
 
 	/**
-	 * Returns a new object of class '<em>Ordered Tuple Literal Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Ordered Tuple Literal Exp</em>'.
-	 * @generated
-	 */
-	OrderedTupleLiteralExp createOrderedTupleLiteralExp();
-
-	/**
-	 * Returns a new object of class '<em>Ordered Tuple Literal Part</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Ordered Tuple Literal Part</em>'.
-	 * @generated
-	 */
-	OrderedTupleLiteralPart createOrderedTupleLiteralPart();
-
-	/**
-	 * Returns a new object of class '<em>Ordered Tuple Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Ordered Tuple Type</em>'.
-	 * @generated
-	 */
-	OrderedTupleType createOrderedTupleType();
-
-	/**
 	 * Returns a new object of class '<em>Raise Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -265,15 +238,6 @@ public interface ImperativeOCLFactory extends EFactory {
 	 * @generated
 	 */
 	UnlinkExp createUnlinkExp();
-
-	/**
-	 * Returns a new object of class '<em>Unpack Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Unpack Exp</em>'.
-	 * @generated
-	 */
-	UnpackExp createUnpackExp();
 
 	/**
 	 * Returns a new object of class '<em>Variable Init Exp</em>'.

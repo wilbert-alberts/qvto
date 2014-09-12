@@ -120,18 +120,6 @@ public abstract class AbstractImperativeOCLASSaverResolveVisitor
 		return visitOperationCallExp(object);
 	}
 
-	public @Nullable Object visitOrderedTupleLiteralExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralExp object) {
-		return visitLiteralExp(object);
-	}
-
-	public @Nullable Object visitOrderedTupleLiteralPart(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleLiteralPart object) {
-		return visitElement(object);
-	}
-
-	public @Nullable Object visitOrderedTupleType(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.OrderedTupleType object) {
-		return visitClass(object);
-	}
-
 	public @Nullable Object visitRaiseExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.RaiseExp object) {
 		return visitImperativeExpression(object);
 	}
@@ -153,10 +141,6 @@ public abstract class AbstractImperativeOCLASSaverResolveVisitor
 	}
 
 	public @Nullable Object visitUnlinkExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnlinkExp object) {
-		return visitImperativeExpression(object);
-	}
-
-	public @Nullable Object visitUnpackExp(@NonNull org.eclipse.qvto.examples.pivot.imperativeocl.UnpackExp object) {
 		return visitImperativeExpression(object);
 	}
 

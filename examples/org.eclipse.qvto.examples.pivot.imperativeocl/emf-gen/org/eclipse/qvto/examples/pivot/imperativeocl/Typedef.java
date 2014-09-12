@@ -50,6 +50,7 @@ public interface Typedef extends EObject, org.eclipse.ocl.examples.pivot.Class {
 	 * @see #setBase(Type)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getTypedef_Base()
 	 * @model required="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='typedef'"
 	 * @generated
 	 */
 	Type getBase();
@@ -76,6 +77,7 @@ public interface Typedef extends EObject, org.eclipse.ocl.examples.pivot.Class {
 	 * @see #setCondition(OCLExpression)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getTypedef_Condition()
 	 * @model containment="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='typedef'"
 	 * @generated
 	 */
 	OCLExpression getCondition();

@@ -16,6 +16,7 @@ package org.eclipse.qvto.examples.pivot.imperativeocl;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.ocl.examples.pivot.OCLExpression;
+import org.eclipse.ocl.examples.pivot.Operation;
 import org.eclipse.ocl.examples.pivot.Variable;
 import org.eclipse.ocl.examples.pivot.util.Visitor;
 import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
@@ -31,6 +32,7 @@ import org.eclipse.qvto.examples.pivot.imperativeocl.util.ImperativeOCLVisitor;
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getArgument <em>Argument</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getExtent <em>Extent</em>}</li>
  *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getInstantiatedClass <em>Instantiated Class</em>}</li>
+ *   <li>{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getInitializationOperation <em>Initialization Operation</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,7 +69,7 @@ public interface InstantiationExp extends ImperativeExpression {
 	 * @return the value of the '<em>Extent</em>' reference.
 	 * @see #setExtent(Variable)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getInstantiationExp_Extent()
-	 * @model
+	 * @model annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='instantiationExpression'"
 	 * @generated
 	 */
 	Variable getExtent();
@@ -94,6 +96,7 @@ public interface InstantiationExp extends ImperativeExpression {
 	 * @see #setInstantiatedClass(org.eclipse.ocl.examples.pivot.Class)
 	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getInstantiationExp_InstantiatedClass()
 	 * @model required="true"
+	 *        annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='instantiationExpression'"
 	 * @generated
 	 */
 	org.eclipse.ocl.examples.pivot.Class getInstantiatedClass();
@@ -107,6 +110,32 @@ public interface InstantiationExp extends ImperativeExpression {
 	 * @generated
 	 */
 	void setInstantiatedClass(org.eclipse.ocl.examples.pivot.Class value);
+
+	/**
+	 * Returns the value of the '<em><b>Initialization Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Initialization Operation</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Initialization Operation</em>' reference.
+	 * @see #setInitializationOperation(Operation)
+	 * @see org.eclipse.qvto.examples.pivot.imperativeocl.ImperativeOCLPackage#getInstantiationExp_InitializationOperation()
+	 * @model annotation="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName body='instantiationExpression'"
+	 * @generated
+	 */
+	Operation getInitializationOperation();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.qvto.examples.pivot.imperativeocl.InstantiationExp#getInitializationOperation <em>Initialization Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Initialization Operation</em>' reference.
+	 * @see #getInitializationOperation()
+	 * @generated
+	 */
+	void setInitializationOperation(Operation value);
 
 	/**
 	 * <!-- begin-user-doc -->
